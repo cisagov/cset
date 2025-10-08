@@ -66,9 +66,13 @@ export class DiagramService {
       .pipe(
         tap((response: any) => {
           if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
             this.assessSvc.completionRefreshRequested$.next({
               completedCount: response.completedCount,
-              totalCount: response.totalMaturityQuestionsCount || 0
+              totalCount: totalCount
             });
           }
         })
