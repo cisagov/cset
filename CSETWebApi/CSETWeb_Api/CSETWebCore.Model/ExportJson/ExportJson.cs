@@ -28,6 +28,8 @@ namespace CSETWebCore.Model.ExportJson
         public int? SubsectorId { get; set; }
         public string SubsectorName { get; set; }
 
+        public List<ObservationJson> Observations { get; set; }
+
 
     }
 
@@ -74,6 +76,8 @@ namespace CSETWebCore.Model.ExportJson
         public string QuestionText { get; set; }
         public int MaturityLevel { get; set; }
         public AnswerJson Answer { get; set; }
+
+        public List<ObservationJson> Observations { get; set; } = [];
 
         public List<MaturityQuestionJson> FollowupQuestions { get; set; } = [];
     }
@@ -124,6 +128,8 @@ namespace CSETWebCore.Model.ExportJson
         public string Title { get; set; }
 
         public AnswerJson Answer { get; set; }
+
+        public List<ObservationJson> Observations { get; set; } = [];
     }
 
 
@@ -133,14 +139,16 @@ namespace CSETWebCore.Model.ExportJson
     {
         public string AnswerText { get; set; }
         public string Comment { get; set; }
-        public List<ObservationJson> Observations { get; set; } = [];
     }
 
 
     public class ObservationJson
     {
         public int ObservationId { get; set; }
+        public int? AnswerId { get; set; }
+        public string Title { get; set; }
         public string Issue { get; set; }
+        public string Recommendations { get; set; }
     }
 
 

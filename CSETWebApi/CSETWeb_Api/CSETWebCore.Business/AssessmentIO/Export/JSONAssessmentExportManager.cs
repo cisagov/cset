@@ -4,7 +4,6 @@
 // 
 // 
 ////////////////////////////////
-
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
@@ -17,7 +16,6 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.ExportJson;
 using CSETWebCore.Model.Maturity;
-using CSETWebCore.Model.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +35,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
+
+        private List<ObservationJson> _answerObservations;
+        private List<ObservationJson> _assessmentObservations;
 
         /// <summary>
         /// Creates an export manager that uses the assessment business service to fetch
@@ -104,6 +105,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             var detailSections = new Dictionary<string, object>();
+
+            GetObservations(assessmentId);
+
+            assessment.Observations = _assessmentObservations;
 
 
 
@@ -234,6 +239,13 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         qJ.Answer.Comment = q.Comment;
                     }
 
+                    // Add observations if they exist for this answer
+                    var myObs = _answerObservations.Where(x => x.AnswerId == q.Answer_Id).ToList();
+                    foreach (var obs in myObs)
+                    {
+                        qJ.Observations.Add(obs);
+                    }
+
                     gj.Questions.Add(qJ);
                 }
 
@@ -256,6 +268,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     qqJ.Answer = new();
                     qqJ.Answer.AnswerText = qq.Answer;
                     qqJ.Answer.Comment = qq.Comment;
+
+
+
+                    // Add observations if they exist for this answer
+                    var myObs = _answerObservations.Where(x => x.AnswerId == qq.Answer_Id).ToList();
+                    foreach (var obs in myObs)
+                    {
+                        qqJ.Observations.Add(obs);
+                    }
 
                     qJ.FollowupQuestions.Add(qqJ);
 
@@ -398,16 +419,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return standardsJson;
             }
 
-            // Get all observations for this assessment
-            var observations = _context.FINDING
-                .Where(f => f.Answer_Id != 0)
-                .Join(_context.ANSWER.Where(a => a.Assessment_Id == assessmentId),
-                    f => f.Answer_Id,
-                    a => a.Answer_Id,
-                    (f, a) => new { Finding = f, Answer = a })
-                .ToList()
-                .GroupBy(x => x.Answer.Answer_Id)
-                .ToDictionary(g => g.Key, g => g.Select(x => x.Finding).ToList());
+
+
+
+
 
             // Map questions from QuestionResponse to StandardQuestionJson
             foreach (var category in questionResponse.Categories)
@@ -439,15 +454,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             };
 
                             // Add observations if they exist for this answer
-                            if (question.Answer_Id.HasValue && observations.ContainsKey(question.Answer_Id.Value))
+                            var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
+                            foreach (var obs in myObs)
                             {
-                                standardQuestion.Answer.Observations = observations[question.Answer_Id.Value]
-                                    .Select(f => new ObservationJson
-                                    {
-                                        ObservationId = f.Finding_Id,
-                                        Issue = f.Issue
-                                    })
-                                    .ToList();
+                                standardQuestion.Observations.Add(obs);
                             }
                         }
 
@@ -484,16 +494,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return standardsJson;
             }
 
-            // Get all observations for this assessment
-            var observations = _context.FINDING
-                .Where(f => f.Answer_Id != 0)
-                .Join(_context.ANSWER.Where(a => a.Assessment_Id == assessmentId),
-                    f => f.Answer_Id,
-                    a => a.Answer_Id,
-                    (f, a) => new { Finding = f, Answer = a })
-                .ToList()
-                .GroupBy(x => x.Answer.Answer_Id)
-                .ToDictionary(g => g.Key, g => g.Select(x => x.Finding).ToList());
 
             // Group requirements by SetName
             var standardGroups = requirementResponse.Categories
@@ -537,11 +537,37 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         }
 
 
-        private List<ObservationJson> GetObservations(int answerId)
+        /// <summary>
+        /// Get all observations for this assessment
+        /// </summary>
+        private void GetObservations(int assessmentId)
         {
-            var resp = new List<ObservationJson>();
+            // assessment level
+            var obs1 = _context.FINDING
+               .Where(f => f.Assessment_Id == assessmentId)
+               .Select(f => new ObservationJson
+               {
+                   ObservationId = f.Finding_Id,
+                   Title = f.Title ?? "",
+                   Issue = f.Issue ?? "",
+                   Recommendations = f.Recommendations ?? ""
+               }).ToList();
 
-            return resp;
+            _assessmentObservations = obs1;
+
+
+            // all answers
+            var obs2 = _context.FINDING
+                .Where(f => _context.ANSWER.Any(a => a.Assessment_Id == assessmentId && a.Answer_Id == f.Answer_Id))
+                .Select(f => new ObservationJson
+                {
+                    ObservationId = f.Finding_Id,
+                    AnswerId = (int)f.Answer_Id,
+                    Title = f.Title ?? "",
+                    Issue = f.Issue ?? "",
+                    Recommendations = f.Recommendations ?? ""
+                }).ToList();
+            _answerObservations = obs2;
         }
     }
 }
