@@ -575,18 +575,24 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var demog = biz.GetExtDemographics(assessment.Id);
 
 
-            var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
-            if (s != null)
+            if (demog.Sector != null)
             {
-                details.SectorId = s.SectorId;
-                details.SectorName = s.SectorName;
+                var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
+                if (s != null)
+                {
+                    details.SectorId = s.SectorId;
+                    details.SectorName = s.SectorName;
+                }
             }
 
-            var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
-            if (ss != null)
+            if (demog.Subsector != null)
             {
-                details.SubsectorId = demog.Subsector.Value;
-                details.SubsectorName = ss.IndustryName;
+                var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
+                if (ss != null)
+                {
+                    details.SubsectorId = demog.Subsector.Value;
+                    details.SubsectorName = ss.IndustryName;
+                }
             }
 
 
@@ -595,7 +601,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             details.AnnualBudgetFunding = demog.ListRevenueAmounts.FirstOrDefault(x => x.OptionValue == demog.AnnualRevenue)?.OptionText;
             details.NumberEmployeesInOrg = demog.ListNumberEmployeeTotal.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesTotal)?.OptionText;
             details.NumberEmployeesInDept = demog.ListNumberEmployeeUnit.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesUnit)?.OptionText;
-           
+
 
             return details;
         }
