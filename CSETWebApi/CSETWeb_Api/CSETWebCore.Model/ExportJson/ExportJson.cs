@@ -35,8 +35,8 @@ namespace CSETWebCore.Model.ExportJson
     {
         public int SectorId { get; set; }
         public string SectorName { get; set; }
-        public int? SelectedIndustryId { get; set; }
-        public string SelectedIndustryName { get; set; }
+        public int? SubsectorId { get; set; }
+        public string SubsectorName { get; set; }
     }
 
 
@@ -85,7 +85,7 @@ namespace CSETWebCore.Model.ExportJson
     /// This is only included if the assessment contains standards
     /// </summary>
     public class StandardsJson
-    { 
+    {
         public List<StandardJson> Standards { get; set; }
 
         /// <summary>
@@ -113,6 +113,7 @@ namespace CSETWebCore.Model.ExportJson
     {
         public int RequirementId { get; set; }
         public string RequirementText { get; set; }
+        public string Title { get; set; }
     }
 
 
@@ -120,6 +121,7 @@ namespace CSETWebCore.Model.ExportJson
     {
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
+        public string Title { get; set; }
 
         public AnswerJson Answer { get; set; }
     }

@@ -96,18 +96,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 SelfAssessment = assessmentDetail.SelfAssessment
             };
 
-            // Build out the Sector details early so we can populate AssessmentJson
-            var sectorDetails = BuildSectorDetails(assessmentDetail);
-
-            // Populate sector/subsector fields on AssessmentJson
-            if (sectorDetails != null)
-            {
-                assessment.SectorId = sectorDetails.SectorId;
-                assessment.SectorName = sectorDetails.SectorName;
-                assessment.SubsectorId = sectorDetails.SelectedIndustryId;
-                assessment.SubsectorName = sectorDetails.SelectedIndustryName;
-            }
-
 
             var contacts = _contactBusiness.GetContacts(assessmentId);
             StandardsJson standards = null;
@@ -191,7 +179,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var payload = new
             {
                 assessment,
-                sectorDetails,
                 contacts,
                 standards,
                 details = detailSections.Count > 0 ? detailSections : null,
@@ -281,54 +268,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     qJ.FollowupQuestions = null;
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Builds the sector details block for the export payload using the current assessment demographics.
-        /// </summary>
-        private SectorDetailsJson BuildSectorDetails(AssessmentDetail assessment)
-        {
-            if (assessment?.SectorId == null)
-            {
-                return null;
-            }
-
-            var sectorEntity = _context.SECTOR.FirstOrDefault(s => s.SectorId == assessment.SectorId.Value);
-            if (sectorEntity == null)
-            {
-                return null;
-            }
-
-            int? selectedIndustryId = assessment.IndustryId;
-
-            if (!selectedIndustryId.HasValue)
-            {
-                selectedIndustryId = _context.DETAILS_DEMOGRAPHICS
-                    .Where(x => x.Assessment_Id == assessment.Id && x.DataItemName == "SUBSECTOR")
-                    .Select(x => x.IntValue)
-                    .FirstOrDefault();
-            }
-
-            var industriesQuery = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == sectorEntity.SectorId);
-
-            var selectedIndustryEntity = selectedIndustryId.HasValue
-                ? industriesQuery.FirstOrDefault(x => x.IndustryId == selectedIndustryId.Value)
-                : null;
-
-            var exportDetails = new SectorDetailsJson
-            {
-                SectorId = sectorEntity.SectorId,
-                SectorName = sectorEntity.SectorName,
-            };
-
-            if (selectedIndustryEntity != null)
-            {
-                exportDetails.SelectedIndustryId = selectedIndustryEntity.IndustryId;
-                exportDetails.SelectedIndustryName = selectedIndustryEntity.IndustryName;
-            }
-
-            return exportDetails;
         }
 
 
@@ -484,7 +423,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         var standardQuestion = new StandardQuestionJson
                         {
                             QuestionId = question.QuestionId,
-                            QuestionText = question.QuestionText
+                            QuestionText = question.QuestionText,
+                            Title = question.DisplayNumber
                         };
 
                         // Add answer if present
@@ -581,7 +521,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             var requirementJson = new RequirementJson
                             {
                                 RequirementId = requirement.QuestionId,
-                                RequirementText = requirement.QuestionText
+                                RequirementText = requirement.QuestionText,
+                                Title = requirement.DisplayNumber
                             };
 
                             standardJson.Requirements.Add(requirementJson);
@@ -593,6 +534,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             return standardsJson;
+        }
+
+
+        private List<ObservationJson> GetObservations(int answerId)
+        {
+            var resp = new List<ObservationJson>();
+
+            return resp;
         }
     }
 }
