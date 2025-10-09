@@ -410,7 +410,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var standardsJson = new StandardsJson
             {
                 Mode = "Questions",
-                Questions = new List<StandardQuestionJson>()
+                Questions = new List<StandardQuestionSubCategoryJson>()
             };
 
             // Return empty structure if no questions found
@@ -419,19 +419,20 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return standardsJson;
             }
 
-
-
-
-
-
-            // Map questions from QuestionResponse to StandardQuestionJson
+            // Map questions from QuestionResponse to StandardQuestionJson grouped by subcategory
             foreach (var category in questionResponse.Categories)
             {
                 if (category.SubCategories == null) continue;
 
                 foreach (var subCategory in category.SubCategories)
                 {
-                    if (subCategory.Questions == null) continue;
+                    if (subCategory.Questions == null || subCategory.Questions.Count == 0) continue;
+
+                    var subCategoryJson = new StandardQuestionSubCategoryJson
+                    {
+                        SubCategory = subCategory.SubCategoryHeadingText,
+                        Questions = new List<StandardQuestionJson>()
+                    };
 
                     foreach (var question in subCategory.Questions)
                     {
@@ -461,8 +462,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             }
                         }
 
-                        standardsJson.Questions.Add(standardQuestion);
+                        subCategoryJson.Questions.Add(standardQuestion);
                     }
+
+                    standardsJson.Questions.Add(subCategoryJson);
                 }
             }
 

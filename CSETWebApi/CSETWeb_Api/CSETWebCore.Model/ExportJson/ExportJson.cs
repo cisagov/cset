@@ -97,11 +97,17 @@ namespace CSETWebCore.Model.ExportJson
         /// </summary>
         public string Mode { get; set; }
 
-
         /// <summary>
         /// This property is only applicable for assessments in Questions Mode.
-        /// It should not show up when in Requirements Mode.
+        /// Groups questions by subcategory with the subCategoryHeadingText.
         /// </summary>
+        public List<StandardQuestionSubCategoryJson> Questions { get; set; } = [];
+    }
+
+
+    public class StandardQuestionSubCategoryJson
+    {
+        public string SubCategory { get; set; }
         public List<StandardQuestionJson> Questions { get; set; } = [];
     }
 
