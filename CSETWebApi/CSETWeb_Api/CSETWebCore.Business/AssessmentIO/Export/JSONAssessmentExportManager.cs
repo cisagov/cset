@@ -7,7 +7,9 @@
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
@@ -69,6 +71,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             };
         }
 
+
         /// <summary>
         /// Returns the assessment details serialized as JSON for the supplied assessment id.
         /// </summary>
@@ -94,7 +97,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 AssessmentGuid = assessmentDetail.AssessmentGuid,
                 CreatedDate = assessmentDetail.CreatedDate,
                 Name = assessmentDetail.AssessmentName,
-                SelfAssessment = assessmentDetail.SelfAssessment
+                SelfAssessment = assessmentDetail.SelfAssessment,
+                OrganizationInfo = BuildOrgDetails(assessmentDetail)
             };
 
 
@@ -115,6 +119,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             // Standards-based assessment
             if (assessmentDetail.UseStandard)
             {
+                // SAL
+                var sal = new SalJson();
+                assessment.Sal = sal;
+                var biz = new SalBusiness(_context, null, _assessmentUtil, null, null);
+                var xx = biz.GetSals(assessmentId);
+                sal.OverallLevel = xx.Selected_Sal_Level;
+                sal.Methodology = xx.Methodology ?? "Simple";
+
+
                 // Ensure the standard selections are populated before exporting
                 if (assessmentDetail.Standards == null || assessmentDetail.Standards.Count == 0)
                 {
@@ -537,6 +550,54 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             return standardsJson;
+        }
+
+
+        /// <summary>
+        /// Builds the sector details block for the export payload using the current assessment demographics.
+        /// </summary>
+        private OrganizationInfoJson BuildOrgDetails(AssessmentDetail assessment)
+        {
+            var details = new OrganizationInfoJson();
+
+
+            // basic assessment properties
+            details.CityOrSiteName = assessment.CityOrSiteName;
+            details.StateProvRegion = assessment.StateProvRegion;
+            details.FacilityName = assessment.FacilityName;
+
+            details.FacilitatorName = assessment.FacilitatorName;
+
+
+
+            // get the demographics values for the assessment
+            var biz = new Demographic.DemographicExtBusiness(_context);
+            var demog = biz.GetExtDemographics(assessment.Id);
+
+
+            var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
+            if (s != null)
+            {
+                details.SectorId = s.SectorId;
+                details.SectorName = s.SectorName;
+            }
+
+            var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
+            if (ss != null)
+            {
+                details.SubsectorId = demog.Subsector.Value;
+                details.SubsectorName = ss.IndustryName;
+            }
+
+
+
+
+            details.AnnualBudgetFunding = demog.ListRevenueAmounts.FirstOrDefault(x => x.OptionValue == demog.AnnualRevenue).OptionText;
+            details.NumberEmployeesInOrg = demog.ListNumberEmployeeTotal.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesTotal).OptionText;
+            details.NumberEmployeesInDept = demog.ListNumberEmployeeUnit.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesUnit).OptionText;
+           
+
+            return details;
         }
 
 

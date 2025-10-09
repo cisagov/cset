@@ -23,22 +23,55 @@ namespace CSETWebCore.Model.ExportJson
         public DateTime? AssessmentDate { get; set; }
         public Guid AssessmentGuid { get; set; }
 
+        public OrganizationInfoJson OrganizationInfo { get; set; } = new OrganizationInfoJson();
+
+
+       
+
+        public SalJson Sal { get; set; }
+
+        public List<ObservationJson> Observations { get; set; }
+    }
+
+
+    public class OrganizationInfoJson
+    {
+        public string OrganizationType { get; set; }
+        public string OrganizationName { get; set; }
+        public string BusinessUnit { get; set; }
+
+
+        public string CityOrSiteName { get; set; }
+        public string StateProvRegion {  get; set; }
+        public string FacilityName { get; set; }
+
+
         public int SectorId { get; set; }
         public string SectorName { get; set; }
         public int? SubsectorId { get; set; }
         public string SubsectorName { get; set; }
 
-        public List<ObservationJson> Observations { get; set; }
+        public string FacilitatorName { get; set; }
 
+
+        public string NumberEmployeesInOrg { get; set; }
+        public string NumberEmployeesInDept { get; set; }
+        public string AnnualBudgetFunding { get; set; }
 
     }
 
-    public class SectorDetailsJson
+
+    public class SalJson
     {
-        public int SectorId { get; set; }
-        public string SectorName { get; set; }
-        public int? SubsectorId { get; set; }
-        public string SubsectorName { get; set; }
+        /// <summary>
+        /// Simple, GENERAL, NIST
+        /// </summary>
+        public string Methodology { get; set; }
+
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string OverallLevel { get; set; }
     }
 
 
