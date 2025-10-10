@@ -136,7 +136,8 @@ namespace CSETWebCore.Model.ExportJson
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public int MaturityLevel { get; set; }
-        public AnswerJson Answer { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
 
@@ -151,12 +152,15 @@ namespace CSETWebCore.Model.ExportJson
     /// </summary>
     public class StandardsJson
     {
-        public List<StandardJson> Standards { get; set; }
-
         /// <summary>
         /// Requirements Mode or Questions Mode
         /// </summary>
         public string Mode { get; set; }
+
+        /// <summary>
+        ///  This property is only applicable for assessments in Requirements Mode.
+        /// </summary>
+        public List<StandardJson> Standards { get; set; }
 
         /// <summary>
         /// This property is only applicable for assessments in Questions Mode.
@@ -185,6 +189,8 @@ namespace CSETWebCore.Model.ExportJson
         public int RequirementId { get; set; }
         public string RequirementText { get; set; }
         public string Title { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
     }
 
 
@@ -194,19 +200,29 @@ namespace CSETWebCore.Model.ExportJson
         public string QuestionText { get; set; }
         public string Title { get; set; }
 
-        public AnswerJson Answer { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
     }
 
 
-    ////// Shared between Maturity and Standards ///////////////////////
-
-    public class AnswerJson
+    public class ComponentQuestionJson
     {
+        public string ComponentName { get; set; }
+        public int ComponentSymbolId { get; set; }
+        public string QuestionText { get; set; }
+        public int QuestionId { get; set; }
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Zone { get; set; }
+        public string Sal { get; set; }
+        public string LayerName { get; set; }
+        public bool IsOverride { get; set; }
     }
+
+
+    ////// Shared between Maturity and Standards ///////////////////////
 
 
     public class ObservationJson

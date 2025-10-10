@@ -141,6 +141,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 // Build standards export using new DTO structure
                 standards = BuildStandardsJson(assessmentId, lang);
+
+                // Questions and Requirements are mutually exclusive - remove the unused array to avoid confusion
+                if (!standards.Mode.StartsWith("Questions"))
+                {
+                    standards.Questions = null;
+                }
+                if (!standards.Mode.StartsWith("Requirements"))
+                {
+                    standards.Standards = null;
+                }
             }
 
 
@@ -186,7 +196,28 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
 
-                detailSections["componentQuestions"] = componentQuestions;
+                var listCQJson = new List<ComponentQuestionJson>();
+                foreach (var cq in componentQuestions)
+                {
+                    var cqj = new ComponentQuestionJson()
+                    {
+                        ComponentName = cq.ComponentName,
+                        ComponentSymbolId = cq.Component_Symbol_Id,
+                        QuestionText = cq.Question,
+                        QuestionId = cq.QuestionId,
+                        AnswerText = cq.Answer,
+                        Zone = cq.Zone,
+                        Sal = cq.SAL,
+                        LayerName = cq.LayerName,
+                        IsOverride = cq.IsOverride
+                    };
+
+                    // TODO:  include Comment with component question
+
+                    listCQJson.Add(cqj);
+                }
+
+                detailSections["componentQuestions"] = listCQJson;
             }
 
             // Remove irrelevant data from the payload
@@ -253,9 +284,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     if (q.IsAnswerable)
                     {
-                        qJ.Answer = new();
-                        qJ.Answer.AnswerText = q.Answer;
-                        qJ.Answer.Comment = q.Comment;
+                        qJ.AnswerText = q.Answer;
+                        qJ.Comment = q.Comment;
                     }
 
                     // Add observations if they exist for this answer
@@ -283,10 +313,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     qqJ.QuestionId = qq.QuestionId;
                     qqJ.MaturityLevel = qq.MaturityLevel;
-
-                    qqJ.Answer = new();
-                    qqJ.Answer.AnswerText = qq.Answer;
-                    qqJ.Answer.Comment = qq.Comment;
+                    qqJ.AnswerText = qq.Answer;
+                    qqJ.Comment = qq.Comment;
 
 
 
@@ -462,23 +490,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             Title = question.DisplayNumber
                         };
 
-                        // Add answer if present
-                        if (!string.IsNullOrWhiteSpace(question.Answer) ||
-                            !string.IsNullOrWhiteSpace(question.Comment) ||
-                            question.Answer_Id.HasValue)
-                        {
-                            standardQuestion.Answer = new AnswerJson
-                            {
-                                AnswerText = question.Answer,
-                                Comment = question.Comment
-                            };
+                        standardQuestion.AnswerText = question.Answer;
+                        standardQuestion.Comment = question.Comment;
 
-                            // Add observations if they exist for this answer
-                            var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
-                            foreach (var obs in myObs)
-                            {
-                                standardQuestion.Observations.Add(obs);
-                            }
+                        // Add observations if they exist for this answer
+                        var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
+                        foreach (var obs in myObs)
+                        {
+                            standardQuestion.Observations.Add(obs);
                         }
 
                         subCategoryJson.Questions.Add(standardQuestion);
@@ -544,7 +563,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             {
                                 RequirementId = requirement.QuestionId,
                                 RequirementText = requirement.QuestionText,
-                                Title = requirement.DisplayNumber
+                                Title = requirement.DisplayNumber,
+                                AnswerText = requirement.Answer,
+                                Comment = requirement.Comment
                             };
 
                             standardJson.Requirements.Add(requirementJson);
