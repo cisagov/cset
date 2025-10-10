@@ -16,17 +16,22 @@ namespace CSETWebCore.Model.ExportJson
 {
     public class AssessmentJson
     {
+        public Guid AssessmentGuid { get; set; }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? CreatedDate { get; set; }
         public bool SelfAssessment { get; set; }
         public DateTime? AssessmentDate { get; set; }
-        public Guid AssessmentGuid { get; set; }
+
+        /// <summary>
+        /// Is this assessment using the CISA assessor workflow
+        /// </summary>
+        public bool AssessorWorkflow { get; set; }
+
+        public string FacilitatorName { get; set; }
 
         public OrganizationInfoJson OrganizationInfo { get; set; } = new OrganizationInfoJson();
-
-
-       
 
         public SalJson Sal { get; set; }
 
@@ -51,12 +56,35 @@ namespace CSETWebCore.Model.ExportJson
         public int? SubsectorId { get; set; }
         public string SubsectorName { get; set; }
 
-        public string FacilitatorName { get; set; }
+        public int? CisaRegion { get; set; }
+
+      
+
+        public string CriticalServiceName { get; set; }
 
 
         public string NumberEmployeesInOrg { get; set; }
         public string NumberEmployeesInDept { get; set; }
         public string AnnualBudgetFunding { get; set; }
+
+
+
+
+        public bool UsesStandard { get; set; }
+        public string Standard1 { get; set; }
+        public string Standard2 { get; set; }
+
+        public bool RequiredToComply { get; set; }
+        public string RegulationType1 { get; set; }
+        public string Reg1Other { get; set; }
+        public string RegulationType2 { get; set; }
+        public string Reg2Other { get; set; }
+
+        public List<string> ShareOrgs { get; set; } = [];
+        public string ShareOrgOther { get; set; }
+
+        public string Barrier1 { get; set; }
+        public string Barrier2 { get; set; }
 
     }
 

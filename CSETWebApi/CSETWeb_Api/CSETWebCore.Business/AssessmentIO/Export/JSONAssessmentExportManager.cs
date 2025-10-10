@@ -10,7 +10,6 @@ using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
@@ -102,6 +101,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 CreatedDate = assessmentDetail.CreatedDate,
                 Name = assessmentDetail.AssessmentName,
                 SelfAssessment = assessmentDetail.SelfAssessment,
+                FacilitatorName = assessmentDetail.FacilitatorName,
+                AssessorWorkflow = assessmentDetail.AssessorMode,
                 OrganizationInfo = BuildOrgDetails(assessmentDetail)
             };
 
@@ -125,12 +126,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             if (assessmentDetail.UseStandard)
             {
                 // SAL
-                var sal = new SalJson();
-                assessment.Sal = sal;
                 var biz = new SalBusiness(_context, null, _assessmentUtil, null, null);
-                var xx = biz.GetSals(assessmentId);
-                sal.OverallLevel = xx.Selected_Sal_Level;
-                sal.Methodology = xx.Methodology ?? "Simple";
+                var salInfo = biz.GetSals(assessmentId);
+                assessment.Sal = new SalJson();
+                assessment.Sal.OverallLevel = salInfo.Selected_Sal_Level;
+                assessment.Sal.Methodology = salInfo.Methodology ?? "Simple";
 
 
                 // Ensure the standard selections are populated before exporting
@@ -572,12 +572,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             details.StateProvRegion = assessment.StateProvRegion;
             details.FacilityName = assessment.FacilityName;
 
-            details.FacilitatorName = assessment.FacilitatorName;
-
-
 
             // get the demographics values for the assessment
-            var biz = new Demographic.DemographicExtBusiness(_context);
+            var biz = new DemographicExtBusiness(_context);
             var demog = biz.GetExtDemographics(assessment.Id);
 
 
@@ -601,12 +598,38 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 }
             }
 
+            details.CisaRegion = demog.CisaRegion;
 
 
+            details.CriticalServiceName = demog.CriticalServiceName;
+
+
+            // IOD demographic fields
 
             details.AnnualBudgetFunding = demog.ListRevenueAmounts.FirstOrDefault(x => x.OptionValue == demog.AnnualRevenue)?.OptionText;
             details.NumberEmployeesInOrg = demog.ListNumberEmployeeTotal.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesTotal)?.OptionText;
             details.NumberEmployeesInDept = demog.ListNumberEmployeeUnit.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesUnit)?.OptionText;
+
+            details.OrganizationName = demog.OrganizationName;
+            details.OrganizationType = demog.ListOrgTypes.FirstOrDefault(x => x.OptionValue == demog.OrganizationType)?.OptionText;
+            details.BusinessUnit = demog.BusinessUnit;
+            details.UsesStandard = demog.UsesStandard;
+            details.Standard1 = demog.Standard1;
+            details.Standard2 = demog.Standard2;
+            details.RequiredToComply = demog.RequiredToComply;
+            details.RegulationType1 = demog.ListRegulationTypes.FirstOrDefault(x => x.OptionValue == demog.RegulationType1)?.OptionText;
+            details.Reg1Other = demog.Reg1Other;
+            details.RegulationType2 = demog.ListRegulationTypes.FirstOrDefault(x => x.OptionValue == demog.RegulationType2)?.OptionText;
+            details.Reg2Other = demog.Reg2Other;
+
+            foreach (var o in demog.ShareOrgs)
+            {
+                details.ShareOrgs.Add(demog.ListShareOrgs.FirstOrDefault(x => x.OptionValue == o)?.OptionText);
+            }
+            details.ShareOrgOther = demog.ShareOther;
+            
+            details.Barrier1 = demog.Barrier1;
+            details.Barrier2 = demog.Barrier2;
 
 
             return details;
@@ -662,6 +685,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     CybersecurityItIcsStaffCount = serviceDemographics.CybersecurityItIcsStaffCount
                 };
             }
+
 
             // Map organization demographics if it has data
             if (hasOrgData)
