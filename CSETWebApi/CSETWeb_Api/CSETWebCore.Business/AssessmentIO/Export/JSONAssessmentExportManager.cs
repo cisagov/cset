@@ -4,6 +4,7 @@
 // 
 // 
 ////////////////////////////////
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
@@ -35,6 +36,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
+        private readonly ICisDemographicBusiness _cisDemographicBusiness;
         private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
 
@@ -53,6 +55,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             IAssessmentUtil assessmentUtil,
             IQuestionRequirementManager questionRequirement,
             ITokenManager tokenManager,
+            ICisDemographicBusiness cisDemographicBusiness,
             CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
@@ -62,6 +65,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             _assessmentUtil = assessmentUtil ?? throw new ArgumentNullException(nameof(assessmentUtil));
             _questionRequirement = questionRequirement ?? throw new ArgumentNullException(nameof(questionRequirement));
             _tokenManager = tokenManager ?? throw new ArgumentNullException(nameof(tokenManager));
+            _cisDemographicBusiness = cisDemographicBusiness ?? throw new ArgumentNullException(nameof(cisDemographicBusiness));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _serializerOptions = new JsonSerializerOptions
             {
@@ -114,7 +118,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             assessment.Observations = _assessmentObservations;
 
-
+            // Build CIS demographics
+            var cisDemographics = BuildCisDemographics(assessmentId);
 
             // Standards-based assessment
             if (assessmentDetail.UseStandard)
@@ -198,6 +203,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 assessment,
                 contacts,
+                cisDemographics,
                 standards,
                 details = detailSections.Count > 0 ? detailSections : null,
                 maturityModels
@@ -604,6 +610,111 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             return details;
+        }
+
+
+        /// <summary>
+        /// Builds the CIS demographics block for the export payload using CIS-specific demographic data.
+        /// </summary>
+        private CisDemographicsJson BuildCisDemographics(int assessmentId)
+        {
+            // Get all three types of CIS demographics
+            var serviceDemographics = _cisDemographicBusiness.GetServiceDemographics(assessmentId);
+            var organizationDemographics = _cisDemographicBusiness.GetOrgDemographics(assessmentId);
+            var serviceComposition = _cisDemographicBusiness.GetServiceComposition(assessmentId);
+
+            // Check if any demographics data exists
+            bool hasServiceData = !string.IsNullOrEmpty(serviceDemographics.CriticalServiceDescription) ||
+                                  !string.IsNullOrEmpty(serviceDemographics.ItIcsName) ||
+                                  !string.IsNullOrEmpty(serviceDemographics.BudgetBasis);
+
+            bool hasOrgData = !string.IsNullOrEmpty(organizationDemographics.OrganizationName) ||
+                              !string.IsNullOrEmpty(organizationDemographics.ParentOrganization) ||
+                              organizationDemographics.VisitDate.HasValue;
+
+            bool hasCompositionData = !string.IsNullOrEmpty(serviceComposition.NetworksDescription) ||
+                                      !string.IsNullOrEmpty(serviceComposition.ServicesDescription) ||
+                                      serviceComposition.PrimaryDefiningSystem.HasValue;
+
+            // If no CIS demographics data exists, return null
+            if (!hasServiceData && !hasOrgData && !hasCompositionData)
+            {
+                return null;
+            }
+
+            // Build the CIS demographics JSON object
+            var cisDemographics = new CisDemographicsJson();
+
+            // Map service demographics if it has data
+            if (hasServiceData)
+            {
+                cisDemographics.ServiceDemographics = new CisServiceDemographicsJson
+                {
+                    CriticalServiceDescription = serviceDemographics.CriticalServiceDescription,
+                    ItIcsName = serviceDemographics.ItIcsName,
+                    MultiSite = serviceDemographics.MultiSite,
+                    MultiSiteDescription = serviceDemographics.MultiSiteDescription,
+                    BudgetBasis = serviceDemographics.BudgetBasis,
+                    AuthorizedOrganizationalUserCount = serviceDemographics.AuthorizedOrganizationalUserCount,
+                    AuthorizedNonOrganizationalUserCount = serviceDemographics.AuthorizedNonOrganizationalUserCount,
+                    CustomersCount = serviceDemographics.CustomersCount,
+                    ItIcsStaffCount = serviceDemographics.ItIcsStaffCount,
+                    CybersecurityItIcsStaffCount = serviceDemographics.CybersecurityItIcsStaffCount
+                };
+            }
+
+            // Map organization demographics if it has data
+            if (hasOrgData)
+            {
+                cisDemographics.OrganizationDemographics = new CisOrganizationDemographicsJson
+                {
+                    MotivationCrr = organizationDemographics.MotivationCrr,
+                    MotivationCrrDescription = organizationDemographics.MotivationCrrDescription,
+                    MotivationRrap = organizationDemographics.MotivationRrap,
+                    MotivationRrapDescription = organizationDemographics.MotivationRrapDescription,
+                    MotivationOrganizationRequest = organizationDemographics.MotivationOrganizationRequest,
+                    MotivationOrganizationRequestDescription = organizationDemographics.MotivationOrganizationRequestDescription,
+                    MotivationLawEnforcementRequest = organizationDemographics.MotivationLawEnforcementRequest,
+                    MotivationLawEnforcementRequestDescription = organizationDemographics.MotivationLawEnforcementRequestDescription,
+                    MotivationDirectThreats = organizationDemographics.MotivationDirectThreats,
+                    MotivationDirectThreatsDescription = organizationDemographics.MotivationDirectThreatsDescription,
+                    MotivationSpecialEvent = organizationDemographics.MotivationSpecialEvent,
+                    MotivationSpecialEventDescription = organizationDemographics.MotivationSpecialEventDescription,
+                    MotivationOther = organizationDemographics.MotivationOther,
+                    MotivationOtherDescription = organizationDemographics.MotivationOtherDescription,
+                    ParentOrganization = organizationDemographics.ParentOrganization,
+                    OrganizationName = organizationDemographics.OrganizationName,
+                    SiteName = organizationDemographics.SiteName,
+                    StreetAddress = organizationDemographics.StreetAddress,
+                    VisitDate = organizationDemographics.VisitDate,
+                    CompletedForSltt = organizationDemographics.CompletedForSltt,
+                    CompletedForFederal = organizationDemographics.CompletedForFederal,
+                    CompletedForNationalSpecialEvent = organizationDemographics.CompletedForNationalSpecialEvent,
+                    CikrSector = organizationDemographics.CikrSector,
+                    SubSector = organizationDemographics.SubSector,
+                    CustomersCount = organizationDemographics.CustomersCount,
+                    ItIcsStaffCount = organizationDemographics.ItIcsStaffCount,
+                    CybersecurityItIcsStaffCount = organizationDemographics.CybersecurityItIcsStaffCount
+                };
+            }
+
+            // Map service composition if it has data
+            if (hasCompositionData)
+            {
+                cisDemographics.ServiceComposition = new CisServiceCompositionJson
+                {
+                    NetworksDescription = serviceComposition.NetworksDescription,
+                    ServicesDescription = serviceComposition.ServicesDescription,
+                    ApplicationsDescription = serviceComposition.ApplicationsDescription,
+                    ConnectionsDescription = serviceComposition.ConnectionsDescription,
+                    PersonnelDescription = serviceComposition.PersonnelDescription,
+                    OtherDefiningSystemDescription = serviceComposition.OtherDefiningSystemDescription,
+                    PrimaryDefiningSystem = serviceComposition.PrimaryDefiningSystem,
+                    SecondaryDefiningSystems = serviceComposition.SecondaryDefiningSystems
+                };
+            }
+
+            return cisDemographics;
         }
 
 

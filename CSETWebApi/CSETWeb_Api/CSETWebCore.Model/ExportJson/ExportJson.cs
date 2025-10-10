@@ -209,4 +209,77 @@ namespace CSETWebCore.Model.ExportJson
         public bool IsPrimaryPoc { get; set; }
         public bool IsSiteParticipant { get; set; }
     }
+
+
+    ////// CIS Demographics Content ///////////////////////
+
+    /// <summary>
+    /// Container for all CIS-specific demographics data
+    /// </summary>
+    public class CisDemographicsJson
+    {
+        public CisServiceDemographicsJson ServiceDemographics { get; set; }
+        public CisOrganizationDemographicsJson OrganizationDemographics { get; set; }
+        public CisServiceCompositionJson ServiceComposition { get; set; }
+    }
+
+
+    public class CisServiceDemographicsJson
+    {
+        public string CriticalServiceDescription { get; set; }
+        public string ItIcsName { get; set; }
+        public bool MultiSite { get; set; }
+        public string MultiSiteDescription { get; set; }
+        public string BudgetBasis { get; set; }
+        public string AuthorizedOrganizationalUserCount { get; set; }
+        public string AuthorizedNonOrganizationalUserCount { get; set; }
+        public string CustomersCount { get; set; }
+        public string ItIcsStaffCount { get; set; }
+        public string CybersecurityItIcsStaffCount { get; set; }
+    }
+
+
+    public class CisOrganizationDemographicsJson
+    {
+        public bool MotivationCrr { get; set; }
+        public string MotivationCrrDescription { get; set; }
+        public bool MotivationRrap { get; set; }
+        public string MotivationRrapDescription { get; set; }
+        public bool MotivationOrganizationRequest { get; set; }
+        public string MotivationOrganizationRequestDescription { get; set; }
+        public bool MotivationLawEnforcementRequest { get; set; }
+        public string MotivationLawEnforcementRequestDescription { get; set; }
+        public bool MotivationDirectThreats { get; set; }
+        public string MotivationDirectThreatsDescription { get; set; }
+        public bool MotivationSpecialEvent { get; set; }
+        public string MotivationSpecialEventDescription { get; set; }
+        public bool MotivationOther { get; set; }
+        public string MotivationOtherDescription { get; set; }
+        public string ParentOrganization { get; set; }
+        public string OrganizationName { get; set; }
+        public string SiteName { get; set; }
+        public string StreetAddress { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public bool CompletedForSltt { get; set; }
+        public bool CompletedForFederal { get; set; }
+        public bool CompletedForNationalSpecialEvent { get; set; }
+        public string CikrSector { get; set; }
+        public string SubSector { get; set; }
+        public string CustomersCount { get; set; }
+        public string ItIcsStaffCount { get; set; }
+        public string CybersecurityItIcsStaffCount { get; set; }
+    }
+
+
+    public class CisServiceCompositionJson
+    {
+        public string NetworksDescription { get; set; }
+        public string ServicesDescription { get; set; }
+        public string ApplicationsDescription { get; set; }
+        public string ConnectionsDescription { get; set; }
+        public string PersonnelDescription { get; set; }
+        public string OtherDefiningSystemDescription { get; set; }
+        public int? PrimaryDefiningSystem { get; set; }
+        public List<int> SecondaryDefiningSystems { get; set; }
+    }
 }
