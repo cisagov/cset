@@ -323,7 +323,7 @@ namespace CSETWebCore.Model.ExportJson
         public string ConnectionsDescription { get; set; }
         public string PersonnelDescription { get; set; }
         public string OtherDefiningSystemDescription { get; set; }
-        public int? PrimaryDefiningSystem { get; set; }
-        public List<int> SecondaryDefiningSystems { get; set; }
+        public string PrimaryDefiningSystem { get; set; }
+        public List<string> SecondaryDefiningSystems { get; set; }
     }
 }

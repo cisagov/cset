@@ -749,6 +749,37 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             // Map service composition if it has data
             if (hasCompositionData)
             {
+                // Build lookup dictionary to map defining system IDs to descriptive text
+                // This maps IDs (1-10) from CIS_CSI_DEFINING_SYSTEMS to their human-readable descriptions
+                var definingSystemsLookup = _context.CIS_CSI_DEFINING_SYSTEMS
+                    .AsNoTracking()
+                    .ToDictionary(x => x.Defining_System_Id, x => x.Defining_System);
+
+                // Map primary defining system from ID to descriptive text
+                string primaryText = null;
+                if (serviceComposition.PrimaryDefiningSystem.HasValue &&
+                    definingSystemsLookup.TryGetValue(serviceComposition.PrimaryDefiningSystem.Value, out var primaryDesc))
+                {
+                    primaryText = primaryDesc;
+                }
+
+                // Map secondary defining systems from list of IDs to list of descriptive texts
+                var secondaryTexts = new List<string>();
+                if (serviceComposition.SecondaryDefiningSystems != null)
+                {
+                    foreach (var id in serviceComposition.SecondaryDefiningSystems)
+                    {
+                        if (definingSystemsLookup.TryGetValue(id, out var desc) && !string.IsNullOrWhiteSpace(desc))
+                        {
+                            // Avoid duplicates while preserving order
+                            if (!secondaryTexts.Contains(desc))
+                            {
+                                secondaryTexts.Add(desc);
+                            }
+                        }
+                    }
+                }
+
                 cisDemographics.ServiceComposition = new CisServiceCompositionJson
                 {
                     NetworksDescription = serviceComposition.NetworksDescription,
@@ -757,8 +788,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     ConnectionsDescription = serviceComposition.ConnectionsDescription,
                     PersonnelDescription = serviceComposition.PersonnelDescription,
                     OtherDefiningSystemDescription = serviceComposition.OtherDefiningSystemDescription,
-                    PrimaryDefiningSystem = serviceComposition.PrimaryDefiningSystem,
-                    SecondaryDefiningSystems = serviceComposition.SecondaryDefiningSystems
+                    PrimaryDefiningSystem = primaryText,
+                    SecondaryDefiningSystems = secondaryTexts
                 };
             }
 
