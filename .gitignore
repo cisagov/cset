@@ -5,6 +5,7 @@
 dist
 AGENTS.md
 CLAUDE.md
+WARP.md
 .claude/
 .serena/
 

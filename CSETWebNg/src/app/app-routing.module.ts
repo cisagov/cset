@@ -73,7 +73,6 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 //import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
@@ -186,19 +185,11 @@ import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
-import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
 
 
 const appRoutes: Routes = [
-  // reports routing
-  {
-    path: 'report-test',
-    component: LayoutSwitcherComponent,
-    children: [
-      { path: '', component: ReportTestComponent }
-    ]
-  },
   {
     path: 'home',
     component: LayoutSwitcherComponent,
@@ -470,9 +461,7 @@ const appRoutes: Routes = [
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
       { path: 'allReviewedQuestions', component: AllReviewedComponent },
-      { path: 'deficiency', component: DeficiencyTemplateComponent }
-
-
+      { path: 'coverpage', component: CoverPageComponent }
     ]
   },
   { path: '**', redirectTo: 'home' }

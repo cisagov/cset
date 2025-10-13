@@ -31,6 +31,7 @@ import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { forkJoin, Observable, tap } from 'rxjs';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cpg-deficiency',
@@ -39,22 +40,23 @@ import { forkJoin, Observable, tap } from 'rxjs';
   standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
-  
-  info: any;
-  
+  // assessmentName: string;
+  // assessmentDate: string;
+  // assessorName: string;
+  // facilityName: string;
+  // selfAssessment: boolean;
+
+  info: AssessmentDetail;
+
   // deficient answers in the principal model (CPG)
   loadingCpg = false;
   cpgDeficiencyList: any[] = [];
-  
+
   // deficient SSG answers
   loadingSsg = false;
   ssgBonusModels: number[];
   ssgModels: any[] = [];
+
 
   /**
    * 
@@ -81,9 +83,12 @@ export class CpgDeficiencyComponent implements OnInit {
 
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.loadingCpg = true;
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
 
       this.assessSvc.assessment = assessmentDetail;
+      this.info = assessmentDetail;
+      console.log(this.info)
+
       // get the deficient answers for the CPG model
       const assessment = this.assessSvc.assessment;
       const maturityModel = assessment?.maturityModel;
@@ -104,14 +109,7 @@ export class CpgDeficiencyComponent implements OnInit {
   getCpgModel(modelId: number) {
     this.loadingCpg = true;
     this.maturitySvc.getMaturityDeficiency(modelId).subscribe((response: any) => {
-      const { information, deficienciesList } = response;
-
-      this.info = information;
-      this.assessmentName = information.assessment_Name;
-      this.assessmentDate = information.assessment_Date;
-      this.assessorName = information.assessor_Name;
-      this.selfAssessment = information.selfAssessment;
-      this.facilityName = information.facility_Name;
+      const { deficienciesList } = response;
       this.cpgDeficiencyList = deficienciesList;
 
       this.loadingCpg = false;

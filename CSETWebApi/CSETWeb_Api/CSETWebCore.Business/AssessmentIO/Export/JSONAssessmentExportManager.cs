@@ -4,22 +4,23 @@
 // 
 // 
 ////////////////////////////////
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Gallery;
-using CSETWebCore.Model.Question;
+using CSETWebCore.Model.ExportJson;
 using CSETWebCore.Model.Maturity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -29,8 +30,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly IContactBusiness _contactBusiness;
         private readonly IReportsDataBusiness _reportsDataBusiness;
         private readonly IQuestionBusiness _questionBusiness;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
+
+        private List<ObservationJson> _answerObservations;
+        private List<ObservationJson> _assessmentObservations;
 
         /// <summary>
         /// Creates an export manager that uses the assessment business service to fetch
@@ -41,12 +48,18 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             IContactBusiness contactBusiness,
             IReportsDataBusiness reportsDataBusiness,
             IQuestionBusiness questionBusiness,
+            IAssessmentUtil assessmentUtil,
+            IQuestionRequirementManager questionRequirement,
+            ITokenManager tokenManager,
             CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
             _contactBusiness = contactBusiness ?? throw new ArgumentNullException(nameof(contactBusiness));
             _reportsDataBusiness = reportsDataBusiness ?? throw new ArgumentNullException(nameof(reportsDataBusiness));
             _questionBusiness = questionBusiness ?? throw new ArgumentNullException(nameof(questionBusiness));
+            _assessmentUtil = assessmentUtil ?? throw new ArgumentNullException(nameof(assessmentUtil));
+            _questionRequirement = questionRequirement ?? throw new ArgumentNullException(nameof(questionRequirement));
+            _tokenManager = tokenManager ?? throw new ArgumentNullException(nameof(tokenManager));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _serializerOptions = new JsonSerializerOptions
             {
@@ -59,181 +72,225 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <summary>
         /// Returns the assessment details serialized as JSON for the supplied assessment id.
         /// </summary>
-        public string GetJson(int assessmentId, bool removePCII = false)
+        public string GetJson(int assessmentId, string lang, bool removePCII = false)
         {
             if (assessmentId <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(assessmentId));
             }
 
-            AssessmentDetail assessment = _assessmentBusiness.GetAssessmentDetail(assessmentId);
+            AssessmentDetail assessmentDetail = _assessmentBusiness.GetAssessmentDetail(assessmentId);
 
-            if (assessment == null || assessment.Id == 0)
+            if (assessmentDetail == null || assessmentDetail.Id == 0)
             {
                 throw new InvalidOperationException($"Assessment {assessmentId} was not found.");
             }
 
+            // Create JSON object
+            var assessment = new AssessmentJson()
+            {
+                Id = assessmentDetail.Id,
+                AssessmentDate = assessmentDetail.AssessmentDate,
+                AssessmentGuid = assessmentDetail.AssessmentGuid,
+                CreatedDate = assessmentDetail.CreatedDate,
+                Name = assessmentDetail.AssessmentName,
+                SelfAssessment = assessmentDetail.SelfAssessment
+            };
+
+
             var contacts = _contactBusiness.GetContacts(assessmentId);
-            List<StandardQuestions> standardQuestions = null;
-            QuestionResponse questionList = null;
-            List<MatRelevantAnswers> maturityQuestions = null;
+            StandardsJson standards = null;
+            List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
 
+
             var detailSections = new Dictionary<string, object>();
-            SectorExportDetails sectorDetails = null;
+
+            GetObservations(assessmentId);
+
+            assessment.Observations = _assessmentObservations;
+
+
 
             // Standards-based assessment
-            if (assessment.UseStandard)
+            if (assessmentDetail.UseStandard)
             {
                 // Ensure the standard selections are populated before exporting
-                if (assessment.Standards == null || assessment.Standards.Count == 0)
+                if (assessmentDetail.Standards == null || assessmentDetail.Standards.Count == 0)
                 {
-                    _assessmentBusiness.GetSelectedStandards(ref assessment);
+                    _assessmentBusiness.GetSelectedStandards(ref assessmentDetail);
                 }
 
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
-                standardQuestions = _reportsDataBusiness.GetQuestionsForEachStandard();
+                // Build standards export using new DTO structure
+                standards = BuildStandardsJson(assessmentId, lang);
+            }
 
-                // Fallback to question list for unanswered standards so export matches api/QuestionList
-                if (standardQuestions == null || !standardQuestions.Any())
+
+            // Maturity model-based assessment
+            if (assessmentDetail.UseMaturity)
+            {
+                var maturityBusiness = new MaturityBusiness(_context, null);
+                var modelListJ = new List<ModelJson>();
+
+                var modelIdList = GetApplicableModels(assessmentId);
+
+                foreach (var modelId in modelIdList)
                 {
-                    _questionBusiness.SetQuestionAssessmentId(assessment.Id);
-                    questionList = _questionBusiness.GetQuestionListWithSet("*");
+                    // get the questions structure for the maturity model
+                    MaturityResponse resp = new();
+                    maturityBusiness.GetMaturityQuestions(assessmentId, false, 0, resp, modelId, lang);
 
-                    if (questionList?.Categories != null)
+
+                    var modelJ = new ModelJson
                     {
-                        var standardMap = new Dictionary<string, StandardQuestions>(StringComparer.OrdinalIgnoreCase);
+                        ModelId = modelId,
+                        ModelTitle = resp.Title,
+                        ModelName = resp.ModelName,
+                        Levels = resp.Levels
+                    };
 
-                        foreach (var group in questionList.Categories)
-                        {
-                            var key = string.IsNullOrWhiteSpace(group.SetName) ? "STANDARD" : group.SetName;
-                            if (!standardMap.TryGetValue(key, out var stdQuestions))
-                            {
-                                stdQuestions = new StandardQuestions
-                                {
-                                    StandardShortName = key,
-                                    Questions = new List<SimpleStandardQuestions>()
-                                };
-                                standardMap[key] = stdQuestions;
-                            }
+                    modelListJ.Add(modelJ);
 
-                            foreach (var subCategory in group.SubCategories)
-                            {
-                                foreach (var question in subCategory.Questions)
-                                {
-                                    stdQuestions.Questions.Add(new SimpleStandardQuestions
-                                    {
-                                        ShortName = key,
-                                        CategoryAndNumber = !string.IsNullOrWhiteSpace(question.DisplayNumber)
-                                            ? $"{group.GroupHeadingText} #{question.DisplayNumber}"
-                                            : group.GroupHeadingText,
-                                        Question = question.QuestionText,
-                                        QuestionId = question.QuestionId,
-                                        Answer = question.Answer
-                                    });
-                                }
-                            }
-                        }
 
-                        standardQuestions = standardMap.Values.Where(x => x.Questions.Any()).ToList();
+                    foreach (var r in resp.Groupings)
+                    {
+                        MapGrouping(modelJ.Groupings, r);
                     }
                 }
 
-                detailSections["standardQuestions"] = standardQuestions;
-                detailSections["questionList"] = questionList;
+                maturityModels = modelListJ;
             }
 
-            // Maturity model-based assessment
-            if (assessment.UseMaturity)
-            {
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
-                maturityQuestions = _reportsDataBusiness.GetQuestionsList();
-
-                detailSections["maturityQuestions"] = maturityQuestions;
-            }
 
             // Network diagram-based assessment
-            if (assessment.UseDiagram)
+            if (assessmentDetail.UseDiagram)
             {
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
 
                 detailSections["componentQuestions"] = componentQuestions;
             }
 
-            object details = detailSections.Count > 0 ? detailSections : null;
-
-            // Build out the Sector details
-            sectorDetails = BuildSectorDetails(assessment);
-
             // Remove irrelevant data from the payload
-            CleanData(assessment);
+            CleanData(assessmentDetail);
 
             // Remove PCII data if requested
             if (removePCII)
             {
-                RemovePCII(assessment);
-
+                RemovePCII(assessmentDetail);
             }
 
             // Build out the full payload for serialization
             var payload = new
             {
                 assessment,
-                sectorDetails,
                 contacts,
-                details
+                standards,
+                details = detailSections.Count > 0 ? detailSections : null,
+                maturityModels
             };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
         }
 
+
         /// <summary>
-        /// Builds the sector details block for the export payload using the current assessment demographics.
+        /// Recurse Groupings to populate the JSON classes
         /// </summary>
-        private SectorExportDetails BuildSectorDetails(AssessmentDetail assessment)
+        private void MapGrouping(List<GroupingJson> groupingsJ, MaturityGrouping g)
         {
-            if (assessment?.SectorId == null)
+            var gj = new GroupingJson();
+            groupingsJ.Add(gj);
+            gj.GroupingId = g.GroupingId;
+            gj.Title = g.Title;
+
+
+            // child groupings
+            foreach (MaturityGrouping subGroup in g.SubGroupings)
             {
-                return null;
+                MapGrouping(gj.Groupings, subGroup);
             }
 
-            var sectorEntity = _context.SECTOR.FirstOrDefault(s => s.SectorId == assessment.SectorId.Value);
-            if (sectorEntity == null)
+            if (g.SubGroupings.Count == 0)
             {
-                return null;
+                gj.Groupings = null;
             }
 
-            int? selectedIndustryId = assessment.IndustryId;
 
-            if (!selectedIndustryId.HasValue)
+            // questions within grouping
+            foreach (var q in g.Questions)
             {
-                selectedIndustryId = _context.DETAILS_DEMOGRAPHICS
-                    .Where(x => x.Assessment_Id == assessment.Id && x.DataItemName == "SUBSECTOR")
-                    .Select(x => x.IntValue)
-                    .FirstOrDefault();
+                var qJ = new MaturityQuestionJson();
+
+                if (q.ParentQuestionId == null)
+                {
+                    qJ.QuestionText = q.QuestionText;
+                    if (string.IsNullOrEmpty(qJ.QuestionText))
+                    {
+                        qJ.QuestionText = q.SecurityPractice;
+                    }
+                    qJ.QuestionId = q.QuestionId;
+                    qJ.MaturityLevel = q.MaturityLevel;
+
+                    if (q.IsAnswerable)
+                    {
+                        qJ.Answer = new();
+                        qJ.Answer.AnswerText = q.Answer;
+                        qJ.Answer.Comment = q.Comment;
+                    }
+
+                    // Add observations if they exist for this answer
+                    var myObs = _answerObservations.Where(x => x.AnswerId == q.Answer_Id).ToList();
+                    foreach (var obs in myObs)
+                    {
+                        qJ.Observations.Add(obs);
+                    }
+
+                    gj.Questions.Add(qJ);
+                }
+
+
+                // look for child/followup questions
+                var followups = g.Questions.Where(x => x.ParentQuestionId == q.QuestionId).ToList();
+
+                foreach (var qq in followups)
+                {
+                    var qqJ = new MaturityQuestionJson();
+                    qqJ.QuestionText = qq.QuestionText;
+                    if (string.IsNullOrEmpty(qqJ.QuestionText))
+                    {
+                        qqJ.QuestionText = qq.SecurityPractice;
+                    }
+
+                    qqJ.QuestionId = qq.QuestionId;
+                    qqJ.MaturityLevel = qq.MaturityLevel;
+
+                    qqJ.Answer = new();
+                    qqJ.Answer.AnswerText = qq.Answer;
+                    qqJ.Answer.Comment = qq.Comment;
+
+
+
+                    // Add observations if they exist for this answer
+                    var myObs = _answerObservations.Where(x => x.AnswerId == qq.Answer_Id).ToList();
+                    foreach (var obs in myObs)
+                    {
+                        qqJ.Observations.Add(obs);
+                    }
+
+                    qJ.FollowupQuestions.Add(qqJ);
+
+                    // assuming no followup-to-followup right now
+                    qqJ.FollowupQuestions = null;
+                }
+
+                if (followups.Count == 0)
+                {
+                    qJ.FollowupQuestions = null;
+                }
             }
-
-            var industriesQuery = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == sectorEntity.SectorId);
-
-            var selectedIndustryEntity = selectedIndustryId.HasValue
-                ? industriesQuery.FirstOrDefault(x => x.IndustryId == selectedIndustryId.Value)
-                : null;
-
-            var exportDetails = new SectorExportDetails
-            {
-                SectorId = sectorEntity.SectorId,
-                SectorName = sectorEntity.SectorName,
-            };
-
-            if (selectedIndustryEntity != null)
-            {
-                exportDetails.SelectedIndustryId = selectedIndustryEntity.IndustryId;
-                exportDetails.SelectedIndustryName = selectedIndustryEntity.IndustryName;
-            }
-
-            return exportDetails;
         }
+
 
         /// <summary>
         /// Removes export-only fields from the assessment payload to avoid leaking
@@ -264,6 +321,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
         }
 
+
         /// <summary>
         /// Removes PCII data from the assessment payload to avoid leaking sensitive
         /// information that is not required by the exported JSON document.
@@ -277,12 +335,239 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             assessment.SectorId = null;
         }
 
-        private sealed class SectorExportDetails
+
+        /// <summary>
+        /// Determine which models are in scope for the assessment.
+        /// The CompletionCounter class knows how to determine this.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        private List<int> GetApplicableModels(int assessmentId)
         {
-            public int SectorId { get; set; }
-            public string SectorName { get; set; }
-            public int? SelectedIndustryId { get; set; }
-            public string SelectedIndustryName { get; set; }
+            CompletionCounter cc = new(_context);
+            return cc.DetermineInScopeModels(assessmentId).ToList();
+        }
+
+
+        /// <summary>
+        /// Gets the application mode for standards (Questions or Requirements mode).
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns>Application mode string (e.g., "Questions", "Requirements")</returns>
+        private string GetStandardsApplicationMode(int assessmentId)
+        {
+            var mode = _context.STANDARD_SELECTION
+                .Where(x => x.Assessment_Id == assessmentId)
+                .Select(x => x.Application_Mode)
+                .FirstOrDefault();
+
+            // Default to Questions mode if not set
+            if (string.IsNullOrWhiteSpace(mode))
+            {
+                return "Questions";
+            }
+
+            // Normalize the mode to either "Questions" or "Requirements"
+            return mode.Trim().StartsWith("Q", StringComparison.OrdinalIgnoreCase)
+                ? "Questions"
+                : "Requirements";
+        }
+
+
+        /// <summary>
+        /// Builds the StandardsJson export object based on the assessment's application mode.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="lang"></param>
+        /// <returns>StandardsJson containing either Questions or Requirements mode data</returns>
+        private StandardsJson BuildStandardsJson(int assessmentId, string lang)
+        {
+            var mode = GetStandardsApplicationMode(assessmentId);
+
+            if (mode == "Questions")
+            {
+                return BuildQuestionsMode(assessmentId, lang);
+            }
+            else
+            {
+                return BuildRequirementsMode(assessmentId, lang);
+            }
+        }
+
+
+        /// <summary>
+        /// Builds StandardsJson for Questions mode.
+        /// </summary>
+        private StandardsJson BuildQuestionsMode(int assessmentId, string lang)
+        {
+            // Initialize QuestionRequirementManager for this assessment
+            _questionRequirement.InitializeManager(assessmentId);
+
+            // Initialize QuestionBusiness to get questions
+            _questionBusiness.SetQuestionAssessmentId(assessmentId);
+            var questionResponse = _questionBusiness.GetQuestionListWithSet("*");
+
+            var standardsJson = new StandardsJson
+            {
+                Mode = "Questions",
+                Questions = new List<StandardQuestionJson>()
+            };
+
+            // Return empty structure if no questions found
+            if (questionResponse == null || questionResponse.Categories == null)
+            {
+                return standardsJson;
+            }
+
+
+
+
+
+
+            // Map questions from QuestionResponse to StandardQuestionJson
+            foreach (var category in questionResponse.Categories)
+            {
+                if (category.SubCategories == null) continue;
+
+                foreach (var subCategory in category.SubCategories)
+                {
+                    if (subCategory.Questions == null) continue;
+
+                    foreach (var question in subCategory.Questions)
+                    {
+                        var standardQuestion = new StandardQuestionJson
+                        {
+                            QuestionId = question.QuestionId,
+                            QuestionText = question.QuestionText,
+                            Title = question.DisplayNumber
+                        };
+
+                        // Add answer if present
+                        if (!string.IsNullOrWhiteSpace(question.Answer) ||
+                            !string.IsNullOrWhiteSpace(question.Comment) ||
+                            question.Answer_Id.HasValue)
+                        {
+                            standardQuestion.Answer = new AnswerJson
+                            {
+                                AnswerText = question.Answer,
+                                Comment = question.Comment
+                            };
+
+                            // Add observations if they exist for this answer
+                            var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
+                            foreach (var obs in myObs)
+                            {
+                                standardQuestion.Observations.Add(obs);
+                            }
+                        }
+
+                        standardsJson.Questions.Add(standardQuestion);
+                    }
+                }
+            }
+
+            return standardsJson;
+        }
+
+
+        /// <summary>
+        /// Builds StandardsJson for Requirements mode.
+        /// </summary>
+        private StandardsJson BuildRequirementsMode(int assessmentId, string lang)
+        {
+            // Initialize QuestionRequirementManager for this assessment
+            _questionRequirement.InitializeManager(assessmentId);
+
+            // Get requirements using RequirementBusiness with a valid token manager
+            var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var requirementResponse = rb.GetRequirementsList();
+
+            var standardsJson = new StandardsJson
+            {
+                Mode = "Requirements",
+                Standards = new List<StandardJson>()
+            };
+
+            // Return empty structure if no requirements found
+            if (requirementResponse == null || requirementResponse.Categories == null)
+            {
+                return standardsJson;
+            }
+
+
+            // Group requirements by SetName
+            var standardGroups = requirementResponse.Categories
+                .GroupBy(c => c.SetName)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            foreach (var standardGroup in standardGroups)
+            {
+                var standardJson = new StandardJson
+                {
+                    SetName = standardGroup.Key,
+                    Requirements = new List<RequirementJson>()
+                };
+
+                foreach (var category in standardGroup.Value)
+                {
+                    if (category.SubCategories == null) continue;
+
+                    foreach (var subCategory in category.SubCategories)
+                    {
+                        if (subCategory.Questions == null) continue;
+
+                        foreach (var requirement in subCategory.Questions)
+                        {
+                            var requirementJson = new RequirementJson
+                            {
+                                RequirementId = requirement.QuestionId,
+                                RequirementText = requirement.QuestionText,
+                                Title = requirement.DisplayNumber
+                            };
+
+                            standardJson.Requirements.Add(requirementJson);
+                        }
+                    }
+                }
+
+                standardsJson.Standards.Add(standardJson);
+            }
+
+            return standardsJson;
+        }
+
+
+        /// <summary>
+        /// Get all observations for this assessment
+        /// </summary>
+        private void GetObservations(int assessmentId)
+        {
+            // assessment level
+            var obs1 = _context.FINDING
+               .Where(f => f.Assessment_Id == assessmentId)
+               .Select(f => new ObservationJson
+               {
+                   ObservationId = f.Finding_Id,
+                   Title = f.Title ?? "",
+                   Issue = f.Issue ?? "",
+                   Recommendations = f.Recommendations ?? ""
+               }).ToList();
+
+            _assessmentObservations = obs1;
+
+
+            // all answers
+            var obs2 = _context.FINDING
+                .Where(f => _context.ANSWER.Any(a => a.Assessment_Id == assessmentId && a.Answer_Id == f.Answer_Id))
+                .Select(f => new ObservationJson
+                {
+                    ObservationId = f.Finding_Id,
+                    AnswerId = (int)f.Answer_Id,
+                    Title = f.Title ?? "",
+                    Issue = f.Issue ?? "",
+                    Recommendations = f.Recommendations ?? ""
+                }).ToList();
+            _answerObservations = obs2;
         }
     }
 }

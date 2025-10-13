@@ -20,34 +20,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t; read: 'reports.all.reviewed questions'">
 
-    <div class="flex-container">
-        <div class="column mt-3">
-            <p class="report-title">
-                {{ t('reviewed report title 1') }}
-            </p>
-            <p class="report-title">
-                {{ t('reviewed report title 2') }}
-            </p>
-        </div>
-
-        <div class="column d-flex justify-content-center">
-            <p style="text-align:center;">
-                <img width="471" height="529" alt="cset" src="assets/images/DetailFiles/image002.jpg">
-            </p>
-        </div>
-        <div class="cover-page-bottom">
-            <app-logo-for-reports></app-logo-for-reports>
-            <app-info-block [response]="response" />
-        </div>
-    </div>
-
-    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
-        <app-report-disclaimer></app-report-disclaimer>
-    </div>
-
-    <div class="page-break">
-        <app-report-advisory></app-report-advisory>
-    </div>
+    <app-cover-page [response]="info" [title]="t('reviewed report title 1')" />
 
     <div class="page-break">
         <app-questions-reviewed [data]="response"></app-questions-reviewed>

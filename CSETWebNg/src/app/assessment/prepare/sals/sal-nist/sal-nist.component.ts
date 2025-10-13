@@ -27,7 +27,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SalService } from '../../../../services/sal.service';
 import { ConfigService } from '../../../../services/config.service';
-import { Sal } from '../../../../models/sal.model';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -41,8 +40,8 @@ import { TranslocoService } from '@jsverse/transloco';
 export class SalNistComponent implements OnInit {
 
   // Sal_Levels: Sal;
-  topModel: NistModel;
-  dialogRef: MatDialogRef<ConfirmComponent>;
+  topModel!: NistModel;
+  dialogRef!: MatDialogRef<ConfirmComponent> | null;
 
 
   constructor(private route: ActivatedRoute,
@@ -53,16 +52,6 @@ export class SalNistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // retrieve the existing sal_selection for this assessment
-    this.salsSvc.getSalSelection().subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.error('Error Getting all standards: ' + (<Error>error).stack);
-      });
-
     this.salsSvc.getInformationTypes().subscribe(
       (data: NistModel) => {
         this.topModel = data;
@@ -171,7 +160,7 @@ export class SalNistComponent implements OnInit {
     }
     selectedSal.selected = e.target.checked;
     this.salsSvc.updateNistSalSelection(selectedSal)
-      .subscribe(response => {
+      .subscribe((response: any) => {
         this.salsSvc.selectedSAL = response;
       });
   }

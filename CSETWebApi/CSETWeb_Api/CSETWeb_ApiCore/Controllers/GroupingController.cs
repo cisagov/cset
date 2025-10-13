@@ -64,7 +64,18 @@ namespace CSETWebCore.Api.Controllers
             var biz = new GroupingBusiness(assessmentId, _context);
             biz.PersistSelections(request);
 
-            _hooks.HookGroupingSelectionChanged(assessmentId);
+            var stats = _hooks.HookGroupingSelectionChanged(assessmentId);
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
+                    TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
+                    TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
+                });
+            }
+
+            return Ok();
 
             return Ok();
         }

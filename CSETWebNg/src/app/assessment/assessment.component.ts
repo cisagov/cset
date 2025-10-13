@@ -27,7 +27,9 @@ import {
   EventEmitter,
   OnInit,
   Output, HostListener,
-  ApplicationRef
+  ApplicationRef,
+  Renderer2,
+  ElementRef
 } from '@angular/core';
 import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -111,11 +113,11 @@ export class AssessmentComponent implements OnInit {
     this.evaluateWindowSize();
   }
 
-  @HostListener('wheel', ['$event'])
-  onWheel(event: WheelEvent) {
-    this.scrollWhitePanel(event);
-  }
+  private wheelListener: (() => void) | undefined;
 
+  /**
+   * 
+   */
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -127,7 +129,9 @@ export class AssessmentComponent implements OnInit {
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
     private completionSvc: CompletionService,
-    private demoSvc: DemographicService
+    private demoSvc: DemographicService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -141,6 +145,14 @@ export class AssessmentComponent implements OnInit {
       this.isSet = true;
       this.appRef.tick();
     }
+
+    this.wheelListener = this.renderer.listen(
+      this.el.nativeElement,
+      'wheel',
+      (event: WheelEvent) => this.scrollWhitePanel(event),
+      { passive: true }
+    );
+
     this.evaluateWindowSize();
 
     if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
@@ -304,5 +316,9 @@ export class AssessmentComponent implements OnInit {
 
   ngOnDestroy() {
     this.completionSubscription?.unsubscribe();
+
+    if (this.wheelListener) {
+      this.wheelListener();
+    }
   }
 }

@@ -22,36 +22,8 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <div class="flex-container">
-        <div class="column mt-3">
-            <p class="report-title">
-                {{ 'reports.observations tear-out sheets.report title' | transloco | uppercase }}
-            </p>
-        </div>
-        <div class="column d-flex justify-content-center">
-            <p style="text-align:center;">
-                <img width="471" height="529" alt="cset" src="assets/images/TearOutFiles/image002.jpg">
-            </p>
-        </div>
-
-        <div class="cover-page-bottom">
-            <app-logo-for-reports></app-logo-for-reports>
-            <app-info-block [response]="response" />
-        </div>
-    </div>
-
-
-
-    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
-        <app-report-disclaimer></app-report-disclaimer>
-    </div>
-
-
-
-    <div class="page-break">
-        <app-report-advisory></app-report-advisory>
-    </div>
-
+    <app-cover-page [response]="info"
+        [title]="'reports.observations tear-out sheets.report title' | transloco | uppercase" />
 
 
     <div class="page-break">

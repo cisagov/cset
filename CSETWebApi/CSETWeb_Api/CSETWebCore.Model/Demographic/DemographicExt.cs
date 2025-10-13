@@ -31,6 +31,8 @@ namespace CSETWebCore.Model.Demographic
 
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
+
+        public bool? Acknowledgement { get; set; }
         public List<int> SsgSectors { get; set; } = [];
 
         public int? OrgPointOfContact { get; set; }

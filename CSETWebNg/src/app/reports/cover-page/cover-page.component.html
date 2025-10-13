@@ -1,7 +1,5 @@
 <!----------------------
-
    Copyright 2025 Battelle Energy Alliance, LLC
-
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -20,31 +18,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
-
-    <app-cover-page [response]="info" [title]="'SECURITY DIRECTIVE PIPELINE 2021-02C (SD02 Series)'" />
-    <div class=" page-break">
+<div class="flex-container">
+    <div class="column mt-3">
+        <p class="report-title">
+            {{title}}
+        </p>
+    </div>
+    <div class="column d-flex justify-content-center">
+        <p style="text-align:center;">
+            <img width="471" height="529" alt="cset" src="assets/images/DetailFiles/image002.jpg">
+        </p>
     </div>
 
-    <h1>Answer Summary</h1>
-
-    <div class="mb-4">
-        This report indicates how each question of the Security Directive Pipeline
-        was answered by checking the boxes that were selected.
+    <div class="cover-page-bottom">
+        <app-logo-for-reports></app-logo-for-reports>
+        <app-info-block [response]="response" />
     </div>
+</div>
 
-    <div>
-        <div *ngIf="loading">
-            <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-        </div>
+<div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+    <app-report-disclaimer></app-report-disclaimer>
+</div>
 
-        <div *ngIf="!loading">
-            <div *ngFor="let section of domains">
-                <div *ngIf="!!section" class="w-100">
-                    <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="page-break">
+    <app-report-advisory></app-report-advisory>
+</div>

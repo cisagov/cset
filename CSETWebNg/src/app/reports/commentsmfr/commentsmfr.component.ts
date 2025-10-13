@@ -30,17 +30,18 @@ import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-commentsmfr',
-    templateUrl: './commentsmfr.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'app-commentsmfr',
+  templateUrl: './commentsmfr.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class CommentsMfrComponent implements OnInit {
   response: any = null;
   remarks: string;
-
+  info: AssessmentDetail;
   loading: boolean = false;
 
   questionAliasSingular: string;
@@ -71,11 +72,15 @@ export class CommentsMfrComponent implements OnInit {
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;
-
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
         this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
         this.aliasTranslated = this.tSvc.translate(`titles.${this.response?.information.questionsAlias.toLowerCase()}`);

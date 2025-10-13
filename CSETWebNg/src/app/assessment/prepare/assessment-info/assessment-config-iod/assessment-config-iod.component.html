@@ -142,11 +142,12 @@
         <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
           {{contact.lastName}}</option>
       </select>
-      <div class="mt-2">
-        <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
+      <div class="mt-4">
+        <label for="self-assessment" class="tw:mr-3">{{ t('self assessment') }}</label>
+        <input type="checkbox" name="self-assessment" id="self-assessment"
           [(ngModel)]="demographics.selfAssessment" [checked]="demographics.selfAssessment"
-          (change)="updateDemographics()">
-        <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
+          (change)="updateDemographics()" class="tw:toggle">
+
       </div>
     </div>
 

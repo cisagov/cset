@@ -26,6 +26,8 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
   selector: 'observations',
@@ -36,6 +38,7 @@ import { TranslocoService } from '@jsverse/transloco';
 export class ObservationTearoutsComponent implements OnInit {
 
   response: any;
+  info: AssessmentDetail;
 
   /**
    * Constructor.
@@ -46,7 +49,8 @@ export class ObservationTearoutsComponent implements OnInit {
     private titleService: Title,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
@@ -58,6 +62,11 @@ export class ObservationTearoutsComponent implements OnInit {
         this.titleService.setTitle(title);
       },
       error => console.error('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
+    );
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
     );
   }
 

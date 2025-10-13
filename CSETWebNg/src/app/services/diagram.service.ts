@@ -26,6 +26,8 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -49,14 +51,32 @@ export class DiagramService {
 
 
   /**
-   * 
+   *
    */
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService,
+    private assessSvc: AssessmentService
+  ) {
     this.apiUrl = this.configSvc.apiUrl + 'diagram/';
   }
 
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
+      .pipe(
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
 
   // flipped to 'true' while waiting for a diagram to be fetched
@@ -108,13 +128,13 @@ export class DiagramService {
   }
 
   /**
-   * 
+   *
    */
   updateAssetType(guid: string, componentType: string, label: string) {
     return this.http.post(this.apiUrl + 'assetType?guid=' + guid + '&type=' + componentType + '&label=' + label, '');
   }
   /**
-   * 
+   *
    */
   changeShapeToComponent(componentType: string, id: string, label: string) {
     return this.http.post(this.apiUrl + 'changeShapeToComponent?type=' + componentType + '&id=' + id + '&label=' + label, '');

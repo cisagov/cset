@@ -5,12 +5,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TypescriptDefaultsService } from '@ngstack/code-editor';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-cmmc2-scorecard-report',
-    templateUrl: './cmmc2-scorecard-report.component.html',
-    styleUrls: ['../../../reports/reports.scss'],
-    standalone: false
+  selector: 'app-cmmc2-scorecard-report',
+  templateUrl: './cmmc2-scorecard-report.component.html',
+  styleUrls: ['../../../reports/reports.scss'],
+  standalone: false
 })
 export class Cmmc2ScorecardReportComponent {
 
@@ -21,7 +22,7 @@ export class Cmmc2ScorecardReportComponent {
 
   @Input()
   scorecards: any[];
-
+  response: AssessmentDetail;
   targetLevel: number;
 
   /**
@@ -44,13 +45,11 @@ export class Cmmc2ScorecardReportComponent {
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
       });
 
-    this.maturitySvc.getCmmcReportData().subscribe((r: any) => {
-      const info = r.reportData.information;
-      this.assessmentDate = info.assessment_Date;
-      this.assessorName = info.assessor_Name;
-      this.facilityName = info.facility_Name;
-      this.selfAssessment = info.selfAssessment;
-    });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+      }
+    );
 
     this.maturitySvc.getCmmcScorecards().subscribe((x: any) => {
       this.targetLevel = x.targetLevel;

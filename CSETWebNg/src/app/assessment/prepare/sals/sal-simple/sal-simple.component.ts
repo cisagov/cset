@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
 
 @Component({
@@ -40,15 +39,5 @@ export class SalSimpleComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, public salsSvc: SalService) { }
 
-  ngOnInit() {
-    // retrieve the existing sal_selection for this assessment
-    this.salsSvc.getSalSelection().subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.error('Error Getting all standards: ' + (<Error>error).stack);
-      });
-  }
+  ngOnInit() {  }
 }

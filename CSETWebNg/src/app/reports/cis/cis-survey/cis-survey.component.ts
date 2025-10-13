@@ -25,12 +25,14 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
+import { ReportService } from '../../../services/report.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-cis-survey',
-    templateUrl: './cis-survey.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'app-cis-survey',
+  templateUrl: './cis-survey.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class CisSurveyComponent implements OnInit {
 
@@ -49,31 +51,26 @@ export class CisSurveyComponent implements OnInit {
 
   baselineAssessmentId?: number;
   baselineAssessmentName: string;
+  response: AssessmentDetail;
 
   constructor(
     public cisSvc: CisService,
     public assessSvc: AssessmentService,
-    public titleService: Title
+    public titleService: Title,
+    public reportSvc: ReportService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.titleService.setTitle("Survey Report - CISA CIS");
     this.loading = true;
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
-
-      this.baselineAssessmentId = assessmentDetail.baselineAssessmentId;
-      this.baselineAssessmentName = assessmentDetail.baselineAssessmentName;
-      this.cisSvc.baselineAssessmentId = this.baselineAssessmentId;
-    });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+      }
+    );
 
     this.cisSvc.getCisSection(0).subscribe((resp: any) => {
       this.domains.push(resp);
