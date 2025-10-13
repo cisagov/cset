@@ -26,12 +26,12 @@
     {{t('no search results')}}
   </div>
   <div *ngFor="let row of rows" class="m-4" style="height: 240px;">
-    <swiper-container class="gallery-slider">
+   
       <div class="swiper-wrapper">
-        <swiper-slide *ngFor="let c of row; let i = index">
+        <div *ngFor="let c of row; let i = index">
           <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card"
             (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)"
-            style="width: 300px;">
+            style="width: 290px;margin-right:10px">
 
             <div class="card-body gallery-card-body cursor-pointer"
               style="min-height:150px; max-height:150px; z-index:1" (click)="navSvc.beginNewAssessmentGallery(c.item)">
@@ -52,8 +52,7 @@
                   class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
             </div>
           </div>
-        </swiper-slide>
+        </div>
       </div>
-    </swiper-container>
   </div>
 </div>
