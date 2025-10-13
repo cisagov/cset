@@ -28,7 +28,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwiperOptions } from 'swiper/types';
+
 
 
 
@@ -64,68 +64,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Set a longer timeout to ensure DOM is fully rendered including dynamic content
-    setTimeout(() => {
-      this.initializeSwipers();
-    }, 100);
-
-    // Listen for changes to the DOM that might affect swiper containers
-    const observer = new MutationObserver(() => {
-      this.initializeSwipers();
-    });
-
-    // Start observing the document for added nodes
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-
-  private initializeSwipers(): void {
-    // Use querySelectorAll to get all swiper containers
-    const swiperEls = document.querySelectorAll('swiper-container');
-    const swiperConfig: SwiperOptions = {
-      slidesPerView: "auto",
-      spaceBetween: 7,
-      navigation: {
-        nextEl: '.swiper-button-next', // selector for external button
-        prevEl: '.swiper-button-prev', // selector for external button
-        disabledClass: 'swiper-button-hidden'
-      },
-      loop: false,
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-        },
-        620: {
-          slidesPerView: 2,
-        },
-        800: {
-          slidesPerView: 3,
-        },
-        1220: {
-          slidesPerView: 4,
-        },
-        1460: {
-          slidesPerView: 5,
-        }
-      },
-    }
-
-    // Configure each swiper instance
-    swiperEls.forEach(swiperEl => {
-      // Skip already initialized swipers
-      if (swiperEl.hasAttribute('data-initialized')) {
-        return;
-      }
-
-      // Apply configuration to each swiper element
-      Object.assign(swiperEl, swiperConfig);
-
-      // Mark as initialized
-      swiperEl.setAttribute('data-initialized', 'true');
-
-      // Initialize this particular swiper instance
-      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
-      swiperEl.initialize();
-    });
+    
   }
 
   getImageSrc(src: string) {

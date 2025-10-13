@@ -607,7 +607,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
 import { CodeEditorModule, provideCodeEditor } from '@ngstack/code-editor';
 import { ImportComponent } from './import/import.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
-import { register as registerSwiper } from 'swiper/element/bundle';
 import { AdminSettingsComponent } from './initial/admin-settings/admin-settings.component';
 import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
@@ -616,9 +615,6 @@ import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr
 import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 
-
-
-registerSwiper();
 ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
     declarations: [
