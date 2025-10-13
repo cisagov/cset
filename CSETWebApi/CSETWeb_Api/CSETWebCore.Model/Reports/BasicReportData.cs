@@ -37,7 +37,6 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> MaturityQuestionsWithAlt { get; set; }
         public List<RankedQuestions> top5Questions { get; set; }
         public List<StandardQuestions> StandardsQuestions { get; set; }
-        public List<usp_getFinancialQuestions_Result> FinancialQuestionsTable { get; set; }
         public List<ComponentQuestion> ComponentQuestions { get; set; }
         public List<List<DiagramZones>> Zones { get; set; }
         public List<CieQuestionAnswerPairing> QuestionAnswerPairings { get; set; }

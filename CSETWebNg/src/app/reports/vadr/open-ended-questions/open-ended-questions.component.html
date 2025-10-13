@@ -22,24 +22,8 @@
 -------------------------->
 <div class="report-body mb-5">
 
-  <div class="flex-container">
-    <div class="column mt-3">
-      <p class="report-title">
-        OPEN ENDED QUESTIONS REPORT
-      </p>
-      <p class="report-title" style="font-size: 36px">
-        Validated Architecture Design Review (VADR)
-      </p>
-    </div>
-    <div class="column d-flex justify-content-center">
-      <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
-    </div>
-
-    <div class="cover-page-bottom">
-      <app-logo-for-reports></app-logo-for-reports>
-      <app-info-block [response]="response" />
-    </div>
-  </div>
+  <app-cover-page [response]="info"
+    [title]="'OPEN ENDED QUESTIONS REPORT Validated Architecture Design Review (VADR)'" />
   <div class="page-break">
 
     <div class="disclaimer-blurb m-4">

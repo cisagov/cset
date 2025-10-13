@@ -38,15 +38,17 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../../dialogs/question-filters/question-filters.component";
 import { MaturityFilteringService } from "../../../services/filtering/maturity-filtering/maturity-filtering.service";
 import { ngxCsv } from "ngx-csv/ngx-csv";
+import { AssessmentService } from "../../../services/assessment.service";
+import { AssessmentDetail } from "../../../models/assessment-info.model";
 
 @Component({
-    selector: "app-open-ended-questions",
-    templateUrl: "./open-ended-questions.component.html",
-    styleUrls: [
-        "../../reports.scss",
-        "./open-ended-questions.component.scss",
-    ],
-    standalone: false
+  selector: "app-open-ended-questions",
+  templateUrl: "./open-ended-questions.component.html",
+  styleUrls: [
+    "../../reports.scss",
+    "./open-ended-questions.component.scss",
+  ],
+  standalone: false
 })
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
@@ -78,6 +80,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
   };
 
   loaded = false;
+  info: AssessmentDetail;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
   constructor(
@@ -89,7 +92,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
     public navSvc: NavigationService,
     public filterSvc: QuestionFilterService,
     public maturityFilteringSvc: MaturityFilteringService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
@@ -101,6 +105,11 @@ export class OpenEndedQuestionsComponent implements OnInit {
       this.response = r;
       // this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   // previous = 0;

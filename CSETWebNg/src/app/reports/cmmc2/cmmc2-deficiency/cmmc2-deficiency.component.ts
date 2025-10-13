@@ -26,32 +26,41 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-cmmc2-deficiency',
-    templateUrl: './cmmc2-deficiency.component.html',
-    styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
-    standalone: false
+  selector: 'app-cmmc2-deficiency',
+  templateUrl: './cmmc2-deficiency.component.html',
+  styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
+  standalone: false
 })
 export class Cmmc2DeficiencyComponent implements OnInit {
 
   model: any;
   loading: boolean = false;
   keyToCategory: any;
-
+  response: AssessmentDetail;
   deficienciesList = [];
 
   constructor(
     public configSvc: ConfigService,
     private titleService: Title,
     private maturitySvc: MaturityService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
     this.titleService.setTitle("CMMC 2.0 Deficiency Report - " + this.configSvc.behaviors.defaultTitle);
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+      }
+    );
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {

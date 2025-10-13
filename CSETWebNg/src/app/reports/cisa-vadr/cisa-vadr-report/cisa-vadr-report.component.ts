@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cisa-vadr-report',
@@ -35,12 +36,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 export class CisaVadrReportComponent implements OnInit {
 
   model: any;
-
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  response: AssessmentDetail;
 
   /**
    * 
@@ -55,15 +51,11 @@ export class CisaVadrReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
-
-      this.assessSvc.assessment = assessmentDetail;
-    });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+      }
+    );
 
     this.reportSvc.getModelContent('CISA VADR').subscribe((resp: any) => {
       this.model = resp;

@@ -22,7 +22,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-  <div class="flex-container">
+  <!-- <div class="flex-container">
     <div class="column mt-3">
 
       <p class="report-title">
@@ -37,8 +37,8 @@
       <app-logo-for-reports></app-logo-for-reports>
       <app-info-block [response]="response" />
     </div>
-  </div>
-
+  </div> -->
+  <app-cover-page [response]="info" [title]="t('reports.core.executive summary.report title') | uppercase" />
 
   <div class="page-break">
 
