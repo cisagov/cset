@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
-    internal class CSET_10_2_0_to_AutoUpgrade : ICSETJSONFileUpgrade
+    internal class CSET_10_3_1_to_AutoUpgrade : ICSETJSONFileUpgrade
     {
         /// <summary>
         /// this is the string we will be upgrading to
