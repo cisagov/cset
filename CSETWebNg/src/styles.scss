@@ -27,6 +27,7 @@ SOFTWARE.
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @import './styles.css';
+@import './sass/_dark-theme.scss';
 
 .ag-theme-alpine{
   --ag-font-family: inherit;
