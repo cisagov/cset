@@ -76,8 +76,6 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok();
-
-            return Ok();
         }
     }
 }
