@@ -62,12 +62,8 @@ internal class CSET_10_2_0_to_10_3_1_Upgrade : ICSETJSONFileUpgrade
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "SUBSECTOR", demo["IndustryId"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "POC", demo["PointOfContact"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "SCOPED", demo["IsScoped"]);
-                
-                // Map ASSET-VALUE and SIZE using the dictionaries
-                AddDetailsDemographicWithMapping(newDetailsDemographics, assessmentId, "ASSET-VALUE", 
-                    demo["AssetValue"], AssetValueMapping);
-                AddDetailsDemographicWithMapping(newDetailsDemographics, assessmentId, "SIZE", 
-                    demo["Size"], SizeMapping);
+                AddDetailsDemographic(newDetailsDemographics, assessmentId, "ASSET-VALUE", demo["AssetValue"], AssetValueMapping);
+                AddDetailsDemographic(newDetailsDemographics, assessmentId, "SIZE", demo["Size"], SizeMapping);
 
                 // Facilitator might be null
                 var facilitator = demo["Facilitator"];
@@ -82,65 +78,46 @@ internal class CSET_10_2_0_to_10_3_1_Upgrade : ICSETJSONFileUpgrade
         return j.ToString();
     }
     
-    private void AddDetailsDemographicWithMapping(JArray array, int assessmentId, string dataItemName, 
-        JToken value, Dictionary<string, int> mapping)
-    {
-        int? intValue = null;
-        string stringValue = null;
-
-        if (value != null && value.Type == JTokenType.String)
-        {
-            var strValue = value.Value<string>();
-            
-            // Try to map to ID
-            if (!string.IsNullOrEmpty(strValue) && mapping.TryGetValue(strValue, out int mappedId))
-            {
-                intValue = mappedId;
-            }
-            else
-            {
-                // If mapping fails, store as string for manual review
-                stringValue = strValue;
-            }
-        }
-
-        var entry = new JObject
-        {
-            ["Assessment_Id"] = assessmentId,
-            ["DataItemName"] = dataItemName,
-            ["StringValue"] = stringValue,
-            ["IntValue"] = intValue,
-            ["FloatValue"] = null,
-            ["BoolValue"] = null,
-            ["DateTimeValue"] = null
-        };
-
-        array.Add(entry);
-    }
-    
-    private void AddDetailsDemographic(JArray array, int assessmentId, string dataItemName, JToken value)
+    private void AddDetailsDemographic(JArray array, int assessmentId, string dataItemName, JToken value, Dictionary<string, int> mapping = null)
     {
         string stringValue = null;
         int? intValue = null;
         bool? boolValue = null;
         double? floatValue = null;
 
-        if (value != null && value.Type != JTokenType.Null)
-            switch (value.Type)
+        if (mapping != null)
+        {
+            if (value != null && value.Type == JTokenType.String)
             {
-                case JTokenType.String:
-                    stringValue = value.Value<string>();
-                    break;
-                case JTokenType.Integer:
-                    intValue = value.Value<int>();
-                    break;
-                case JTokenType.Boolean:
-                    boolValue = value.Value<bool>();
-                    break;
-                case JTokenType.Float:
-                    floatValue = value.Value<double>();
-                    break;
+                var strValue = value.Value<string>();
+                
+                if (!string.IsNullOrEmpty(strValue) && mapping.TryGetValue(strValue, out int mappedId))
+                {
+                    intValue = mappedId;
+                }
             }
+
+        }
+        else
+        {
+
+            if (value != null && value.Type != JTokenType.Null)
+                switch (value.Type)
+                {
+                    case JTokenType.String:
+                        stringValue = value.Value<string>();
+                        break;
+                    case JTokenType.Integer:
+                        intValue = value.Value<int>();
+                        break;
+                    case JTokenType.Boolean:
+                        boolValue = value.Value<bool>();
+                        break;
+                    case JTokenType.Float:
+                        floatValue = value.Value<double>();
+                        break;
+                }
+        }
 
         var entry = new JObject
         {
@@ -156,9 +133,7 @@ internal class CSET_10_2_0_to_10_3_1_Upgrade : ICSETJSONFileUpgrade
         array.Add(entry);
     }
     
-    /// <summary>
-    /// </summary>
-    /// <returns></returns>
+    
     public System.Version GetVersion()
     {
         return ImportUpgradeManager.ParseVersion(versionString);
