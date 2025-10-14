@@ -1,0 +1,21 @@
+<!----------------------
+   Copyright 2025 Battelle Energy Alliance, LLC
+-------------------------->
+
+<button
+  class="theme-toggle-btn"
+  (click)="toggleTheme()"
+  [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+  [title]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+  type="button">
+
+  <!-- Sun icon for dark mode (shows when dark mode is active) -->
+  <mat-icon *ngIf="isDarkMode" class="theme-icon">light_mode</mat-icon>
+
+  <!-- Moon icon for light mode (shows when light mode is active) -->
+  <mat-icon *ngIf="!isDarkMode" class="theme-icon">dark_mode</mat-icon>
+
+  <span class="theme-toggle-text">
+    {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+  </span>
+</button>
