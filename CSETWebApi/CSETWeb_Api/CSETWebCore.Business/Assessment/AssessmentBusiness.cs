@@ -486,15 +486,10 @@ namespace CSETWebCore.Business.Assessment
 
                 // Some demographics
                 var d1 = new Demographic.DemographicBusiness(_context, _assessmentUtil);
-                var d1Sector = d1.GetDemographics(assessmentId).SectorId;
-                assessment.SectorId = d1Sector;
+                var d1Demographics = d1.GetDemographics(assessmentId);
+                assessment.SectorId = d1Demographics.SectorId;
+                assessment.IndustryId = d1Demographics.IndustryId;
 
-                var d2 = new Demographic.DemographicExtBusiness(_context);
-                var d2Sector = (int?)d2.GetX(assessmentId, "SECTOR");
-                if (d2Sector != null)
-                {
-                    assessment.SectorId = d2Sector;
-                }
 
                 assessment.SsgSectorIds = [];
                 var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
@@ -505,13 +500,12 @@ namespace CSETWebCore.Business.Assessment
 
 
                 // facilitator
-                assessment.SelfAssessment = (bool)(d2.GetX(assessmentId, "SELF-ASSESS") ?? false);
                 assessment.FacilitatorName = assessment.CreatorName;
 
-                var demo = d1.GetDemographics(assessmentId);
-                if (demo != null)
+
+                if (d1Demographics != null)
                 {
-                    var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == demo.FacilitatorId);
+                    var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == d1Demographics.FacilitatorId);
                     if (acFacilitator != null)
                     {
                         var userFacilitator = _context.USERS.FirstOrDefault(x => x.UserId == acFacilitator.UserId);
