@@ -49,9 +49,10 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         private void ClearSectorChangedFlag()
         {
-            var dd = _context.DETAILS_DEMOGRAPHICS.Where(x => 
+            string dataItem = Constants.Constants.ACK_SECTOR_UPDATED_PPD21;
+            var dd = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => 
                 x.Assessment_Id == _assessmentId 
-                && x.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21).FirstOrDefault();
+                && x.DataItemName == dataItem);
 
             if (dd == null)
             {

@@ -109,7 +109,7 @@ namespace CSETWeb_ApiCore
 
                     builder.WithOrigins(allowedOrigins)
                           .AllowAnyMethod()
-                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
+                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid", "pwd")
                           .WithExposedHeaders("content-disposition");
                 });
             });
@@ -189,6 +189,10 @@ namespace CSETWeb_ApiCore
                     provider.GetRequiredService<IContactBusiness>(),
                     provider.GetRequiredService<IReportsDataBusiness>(),
                     provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<IAssessmentUtil>(),
+                    provider.GetRequiredService<IQuestionRequirementManager>(),
+                    provider.GetRequiredService<ITokenManager>(),
+                    provider.GetRequiredService<ICisDemographicBusiness>(),
                     provider.GetRequiredService<CSETContext>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();

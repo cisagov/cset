@@ -2,33 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-sd-owner-deficiency',
-    templateUrl: './sd-owner-deficiency.component.html',
-    styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss'],
-    standalone: false
+  selector: 'app-sd-owner-deficiency',
+  templateUrl: './sd-owner-deficiency.component.html',
+  styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss'],
+  standalone: false
 })
 
 export class SdOwnerDeficiencyComponent {
   loading = false;
 
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  info: AssessmentDetail;
 
   responseYes: any;
   responseNo: any;
   responseNa: any;
   responseU: any;
-  
+
   yesAnswers = 0;
   noAnswers = 0;
   naAnswers = 0;
   unanswered = 0;
-  
+
   yesPercent = 0;
   noPercent = 0;
   naPercent = 0;
@@ -62,12 +59,8 @@ export class SdOwnerDeficiencyComponent {
   }
 
   getAssessmentDetails() {
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.info = assessmentDetail;
     });
   }
 
@@ -80,7 +73,7 @@ export class SdOwnerDeficiencyComponent {
         this.responseU = r.unanswered;
 
         this.getAnswerBreakdown(r);
-    });
+      });
   }
 
   getAnswerBreakdown(data: any) {
@@ -94,7 +87,7 @@ export class SdOwnerDeficiencyComponent {
         this.yesAnswers++;
       }
       if (i == this.responseYes.length - 1) {
-        this.graphData.push({"name": "Yes", "value": this.yesAnswers});
+        this.graphData.push({ "name": "Yes", "value": this.yesAnswers });
       }
     }
 
@@ -103,7 +96,7 @@ export class SdOwnerDeficiencyComponent {
         this.noAnswers++;
       }
       if (i == this.responseNo.length - 1) {
-        this.graphData.push({"name": "No", "value": this.noAnswers});
+        this.graphData.push({ "name": "No", "value": this.noAnswers });
       }
     }
 
@@ -112,7 +105,7 @@ export class SdOwnerDeficiencyComponent {
         this.naAnswers++;
       }
       if (i == this.responseNa.length - 1) {
-        this.graphData.push({"name": "N/A", "value": this.naAnswers});
+        this.graphData.push({ "name": "N/A", "value": this.naAnswers });
       }
     }
 
@@ -121,7 +114,7 @@ export class SdOwnerDeficiencyComponent {
         this.unanswered++;
       }
       if (i == this.responseU.length - 1) {
-        this.graphData.push({"name": "Unanswered", "value": this.unanswered});
+        this.graphData.push({ "name": "Unanswered", "value": this.unanswered });
       }
     }
 
