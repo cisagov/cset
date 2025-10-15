@@ -16,29 +16,102 @@ namespace CSETWebCore.Model.ExportJson
 {
     public class AssessmentJson
     {
+        public Guid AssessmentGuid { get; set; }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? CreatedDate { get; set; }
         public bool SelfAssessment { get; set; }
         public DateTime? AssessmentDate { get; set; }
-        public Guid AssessmentGuid { get; set; }
+
+        /// <summary>
+        /// Is this assessment using the CISA assessor workflow
+        /// </summary>
+        public bool AssessorWorkflow { get; set; }
+
+        public string FacilitatorName { get; set; }
+
+        public OrganizationInfoJson OrganizationInfo { get; set; } = new OrganizationInfoJson();
+
+        public SalJson Sal { get; set; }
+
+        public List<ObservationJson> Observations { get; set; }
+    }
+
+
+    public class OrganizationInfoJson
+    {
+        public string OrganizationType { get; set; }
+        public string OrganizationName { get; set; }
+        public string BusinessUnit { get; set; }
+
+
+        public string CityOrSiteName { get; set; }
+        public string StateProvRegion { get; set; }
+        public string FacilityName { get; set; }
+
 
         public int SectorId { get; set; }
         public string SectorName { get; set; }
         public int? SubsectorId { get; set; }
         public string SubsectorName { get; set; }
 
-        public List<ObservationJson> Observations { get; set; }
+        public int? CisaRegion { get; set; }
 
+
+
+        public string CriticalServiceName { get; set; }
+
+
+        public string NumberEmployeesInOrg { get; set; }
+        public string NumberEmployeesInDept { get; set; }
+        public string AnnualBudgetFunding { get; set; }
+
+
+
+
+        public bool UsesStandard { get; set; }
+        public string Standard1 { get; set; }
+        public string Standard2 { get; set; }
+
+        public bool RequiredToComply { get; set; }
+        public string RegulationType1 { get; set; }
+        public string Reg1Other { get; set; }
+        public string RegulationType2 { get; set; }
+        public string Reg2Other { get; set; }
+
+        public List<string> ShareOrgs { get; set; } = [];
+        public string ShareOrgOther { get; set; }
+
+        public string Barrier1 { get; set; }
+        public string Barrier2 { get; set; }
 
     }
 
-    public class SectorDetailsJson
+
+    public class SalJson
     {
-        public int SectorId { get; set; }
-        public string SectorName { get; set; }
-        public int? SubsectorId { get; set; }
-        public string SubsectorName { get; set; }
+        /// <summary>
+        /// Simple, GENERAL, NIST
+        /// </summary>
+        public string Methodology { get; set; }
+
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string OverallLevel { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Confidentiality { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Integrity { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Availability { get; set; }
     }
 
 
@@ -75,7 +148,8 @@ namespace CSETWebCore.Model.ExportJson
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public int MaturityLevel { get; set; }
-        public AnswerJson Answer { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
 
@@ -90,18 +164,27 @@ namespace CSETWebCore.Model.ExportJson
     /// </summary>
     public class StandardsJson
     {
-        public List<StandardJson> Standards { get; set; }
-
         /// <summary>
         /// Requirements Mode or Questions Mode
         /// </summary>
         public string Mode { get; set; }
 
+        /// <summary>
+        ///  This property is only applicable for assessments in Requirements Mode.
+        /// </summary>
+        public List<StandardJson> Standards { get; set; }
 
         /// <summary>
         /// This property is only applicable for assessments in Questions Mode.
-        /// It should not show up when in Requirements Mode.
+        /// Groups questions by subcategory with the subCategoryHeadingText.
         /// </summary>
+        public List<StandardQuestionSubCategoryJson> Questions { get; set; } = [];
+    }
+
+
+    public class StandardQuestionSubCategoryJson
+    {
+        public string SubCategory { get; set; }
         public List<StandardQuestionJson> Questions { get; set; } = [];
     }
 
@@ -118,6 +201,8 @@ namespace CSETWebCore.Model.ExportJson
         public int RequirementId { get; set; }
         public string RequirementText { get; set; }
         public string Title { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
     }
 
 
@@ -127,28 +212,43 @@ namespace CSETWebCore.Model.ExportJson
         public string QuestionText { get; set; }
         public string Title { get; set; }
 
-        public AnswerJson Answer { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
     }
 
 
-    ////// Shared between Maturity and Standards ///////////////////////
-
-    public class AnswerJson
+    public class ComponentQuestionJson
     {
+        public string ComponentName { get; set; }
+        public int ComponentSymbolId { get; set; }
+        public string QuestionText { get; set; }
+        public int QuestionId { get; set; }
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Zone { get; set; }
+        public string Sal { get; set; }
+        public string LayerName { get; set; }
+        public bool IsOverride { get; set; }
     }
+
+
+    ////// Shared between Maturity and Standards ///////////////////////
 
 
     public class ObservationJson
     {
         public int ObservationId { get; set; }
         public int? AnswerId { get; set; }
+        public string Importance { get; set; }
+        public string Summary { get; set; }
         public string Title { get; set; }
         public string Issue { get; set; }
+        public string Impacts { get; set; }
         public string Recommendations { get; set; }
+        public string Vulnerabilities { get; set; }
+        public string AutoGeneratedBy { get; set; }
     }
 
 
@@ -164,5 +264,93 @@ namespace CSETWebCore.Model.ExportJson
         public bool Invited { get; set; }
         public bool IsPrimaryPoc { get; set; }
         public bool IsSiteParticipant { get; set; }
+    }
+
+
+    ////// CIS Demographics Content ///////////////////////
+
+    /// <summary>
+    /// Container for all CIS-specific demographics data
+    /// </summary>
+    public class CisDemographicsJson
+    {
+        public CisServiceDemographicsJson ServiceDemographics { get; set; }
+        public CisOrganizationDemographicsJson OrganizationDemographics { get; set; }
+        public CisServiceCompositionJson ServiceComposition { get; set; }
+    }
+
+
+    public class CisServiceDemographicsJson
+    {
+        public string CriticalServiceDescription { get; set; }
+        public string ItIcsName { get; set; }
+        public bool MultiSite { get; set; }
+        public string MultiSiteDescription { get; set; }
+        public string BudgetBasis { get; set; }
+        public string AuthorizedOrganizationalUserCount { get; set; }
+        public string AuthorizedNonOrganizationalUserCount { get; set; }
+        public string CustomersCount { get; set; }
+        public string ItIcsStaffCount { get; set; }
+        public string CybersecurityItIcsStaffCount { get; set; }
+    }
+
+
+    public class CisOrganizationDemographicsJson
+    {
+        public bool MotivationCrr { get; set; }
+        public string MotivationCrrDescription { get; set; }
+        public bool MotivationRrap { get; set; }
+        public string MotivationRrapDescription { get; set; }
+        public bool MotivationOrganizationRequest { get; set; }
+        public string MotivationOrganizationRequestDescription { get; set; }
+        public bool MotivationLawEnforcementRequest { get; set; }
+        public string MotivationLawEnforcementRequestDescription { get; set; }
+        public bool MotivationDirectThreats { get; set; }
+        public string MotivationDirectThreatsDescription { get; set; }
+        public bool MotivationSpecialEvent { get; set; }
+        public string MotivationSpecialEventDescription { get; set; }
+        public bool MotivationOther { get; set; }
+        public string MotivationOtherDescription { get; set; }
+        public string ParentOrganization { get; set; }
+        public string OrganizationName { get; set; }
+        public string SiteName { get; set; }
+        public string StreetAddress { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public bool CompletedForSltt { get; set; }
+        public bool CompletedForFederal { get; set; }
+        public bool CompletedForNationalSpecialEvent { get; set; }
+        public string CikrSector { get; set; }
+        public string SubSector { get; set; }
+        public string CustomersCount { get; set; }
+        public string ItIcsStaffCount { get; set; }
+        public string CybersecurityItIcsStaffCount { get; set; }
+    }
+
+
+    public class CisServiceCompositionJson
+    {
+        public string NetworksDescription { get; set; }
+        public string ServicesDescription { get; set; }
+        public string ApplicationsDescription { get; set; }
+        public string ConnectionsDescription { get; set; }
+        public string PersonnelDescription { get; set; }
+        public string OtherDefiningSystemDescription { get; set; }
+        public string PrimaryDefiningSystem { get; set; }
+        public List<string> SecondaryDefiningSystems { get; set; }
+    }
+
+
+    /// <summary>
+    /// Represents the complete assessment export payload structure.
+    /// Used for type-safe PCII removal and serialization.
+    /// </summary>
+    public class AssessmentExportPayload
+    {
+        public AssessmentJson Assessment { get; set; }
+        public List<ContactJson> Contacts { get; set; }
+        public CisDemographicsJson CisDemographics { get; set; }
+        public StandardsJson Standards { get; set; }
+        public Dictionary<string, object> Details { get; set; }
+        public List<ModelJson> MaturityModels { get; set; }
     }
 }

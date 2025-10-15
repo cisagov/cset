@@ -65,6 +65,8 @@ namespace CSETWebCore.Business.Demographic
             d.NumberEmployeesUnit = myDD.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
             d.AnnualRevenue = myDD.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
+
+            d.CriticalServiceName = myDD.Find(z => z.DataItemName == "CRIT-SERVICE")?.StringValue;
             d.CriticalServiceRevenuePercent = myDD.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
             d.NumberPeopleServedByCritSvc = myDD.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
 
