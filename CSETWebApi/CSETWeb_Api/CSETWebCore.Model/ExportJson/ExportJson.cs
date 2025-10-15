@@ -47,7 +47,7 @@ namespace CSETWebCore.Model.ExportJson
 
 
         public string CityOrSiteName { get; set; }
-        public string StateProvRegion {  get; set; }
+        public string StateProvRegion { get; set; }
         public string FacilityName { get; set; }
 
 
@@ -58,7 +58,7 @@ namespace CSETWebCore.Model.ExportJson
 
         public int? CisaRegion { get; set; }
 
-      
+
 
         public string CriticalServiceName { get; set; }
 
@@ -100,6 +100,18 @@ namespace CSETWebCore.Model.ExportJson
         /// L, M, H, VH
         /// </summary>
         public string OverallLevel { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Confidentiality { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Integrity { get; set; }
+        /// <summary>
+        /// L, M, H, VH
+        /// </summary>
+        public string Availability { get; set; }
     }
 
 
