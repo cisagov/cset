@@ -192,6 +192,7 @@ namespace CSETWeb_ApiCore
                     provider.GetRequiredService<IAssessmentUtil>(),
                     provider.GetRequiredService<IQuestionRequirementManager>(),
                     provider.GetRequiredService<ITokenManager>(),
+                    provider.GetRequiredService<ICisDemographicBusiness>(),
                     provider.GetRequiredService<CSETContext>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
