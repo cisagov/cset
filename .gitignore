@@ -8,6 +8,12 @@ CLAUDE.md
 WARP.md
 .claude/
 .serena/
+*.md
+
+/CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.agent.xml
+/CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.ask.xml
+/CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.ask2agent.xml
+/CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.edit.xml
 
 ## Mac OS ##
 .DS_Store
