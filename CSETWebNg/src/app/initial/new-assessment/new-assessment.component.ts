@@ -64,7 +64,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
   }
 
   getImageSrc(src: string) {
@@ -126,6 +126,16 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   //   }
   //
   // }
+  getFavoritesCount(): number {
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return 0;
+    }
+
+    return this.gallerySvc.rows.reduce((count, row) => {
+      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+      return count + favoriteItems.length;
+    }, 0);
+  }
   getFilteredItems(): any[] {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
       return [];
@@ -135,7 +145,13 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       return this.gallerySvc.rows.reduce((acc, row) => {
         return acc.concat(row.galleryItems || []);
       }, []);
-    } else {
+    }  if (this.selectedCategory === 'favorites') {
+      return this.gallerySvc.rows.reduce((acc, row) => {
+        const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+        return acc.concat(favoriteItems);
+      }, []);
+    }
+    else {
       const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
       return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
     }
@@ -157,5 +173,25 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
+  /**
+   * Toggle favorite status
+   */
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation(); // Prevent card click or other events
 
+    const newFavoriteStatus = !card.isFavorite;
+
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        // Update local state immediately
+        card.isFavorite = newFavoriteStatus;
+
+        console.log(`Favorite toggled: ${card.title} is now ${newFavoriteStatus ? 'favorited' : 'unfavorited'}`);
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+        alert('Failed to update favorite. Please try again.');
+      }
+    );
+  }
 }

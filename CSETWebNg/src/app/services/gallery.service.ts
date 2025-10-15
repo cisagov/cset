@@ -90,4 +90,10 @@ export class GalleryService {
   postSelections(galleryItemGuid: number) {
     return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemGuid, headers);
   }
+  toggleFavorite(galleryItemGuid: string, isFavorite: boolean) {
+    return this.http.post(this.configSvc.apiUrl + 'gallery/togglefavorite', {
+      galleryItemGuid: galleryItemGuid,
+      isFavorite: isFavorite
+    }, headers);
+  }
 }

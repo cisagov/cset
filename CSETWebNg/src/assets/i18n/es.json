@@ -945,5 +945,7 @@
     "done": "Completado",
     "favorites": "Favoritos"
   },
-  "categories": "Categorias"
+  "categories": "Categorias",
+  "all assessments": "Todas las evaluaciones",
+  "favorites": "Favoritos"
 }
