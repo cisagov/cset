@@ -108,17 +108,16 @@ export class ContactItemComponent implements OnInit, OnChanges {
     if (this.contact.evaluateCanEdit) {
       this.editMode = this.contact.evaluateCanEdit();
     }
-    this.assessmentCreator()
+    this.assessmentCreator();
   }
 
   // if parent closes, this will detect the 'true' change 
   // on the 'impliedSave' property
-  ngOnChanges(changes: SimpleChanges ) {
-        console.log('in implied save', this.contact)
+  ngOnChanges(changes: SimpleChanges) {
 
     let impliedSave = changes['impliedSave'];
-    if (impliedSave != null && impliedSave.currentValue) {
-      this.saveContact();
+    if (impliedSave != null && impliedSave.currentValue && !this.editMode) {
+      this.finishEdit();
     }
   }
 

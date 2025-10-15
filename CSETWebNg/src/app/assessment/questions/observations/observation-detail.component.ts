@@ -90,7 +90,6 @@ export class ObservationDetailComponent implements OnInit {
    * 
    */
   save() {
-    console.log('save click')
     this.impliedSave = true;
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;

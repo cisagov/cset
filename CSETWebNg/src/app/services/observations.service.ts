@@ -37,6 +37,7 @@ const headers = {
   providedIn: 'root'
 })
 export class ObservationsService {
+  impliedSave: boolean = false;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
