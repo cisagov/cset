@@ -51,21 +51,13 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="multisiteService">Multi-site Service?</label>
-        <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup>
-          <label ngbButtonLabel class="btn btn-level border-2 mb-1 px-4" [class.active]="!csiServiceDemographic.multiSite">
-            <input ngbButton type="radio" class="btn-check" autocomplete="off" name="multisiteService"
-              [(ngModel)]="csiServiceDemographic.multiSite"
-              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="false" />
-            {{t('answer-options.button-labels.no')}}
-          </label>
-          <label ngbButtonLabel class="btn btn-level border-2 mb-1 px-4" [class.active]="csiServiceDemographic.multiSite">
-            <input ngbButton type="radio" class="btn-check" autocomplete="off" name="multisiteService"
-              [(ngModel)]="csiServiceDemographic.multiSite"
-              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="true" />
-            {{t('answer-options.button-labels.yes')}}
-          </label>
-        </div>
+        <label class="form-label me-2" for="multisiteService">Multi-site Service?</label>
+        <input type="checkbox"
+               name="multisiteService"
+               id="multisiteService"
+               class="tw:toggle"
+               [(ngModel)]="csiServiceDemographic.multiSite"
+               (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
         <input [ngClass]="{
           'alert-danger':
             !csiServiceDemographic.multiSiteDescription &&

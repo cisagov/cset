@@ -27,18 +27,21 @@ import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-cmmc2-comments-marked',
-    templateUrl: './cmmc2-comments-marked.component.html',
-    styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
-    standalone: false
+  selector: 'app-cmmc2-comments-marked',
+  templateUrl: './cmmc2-comments-marked.component.html',
+  styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
+  standalone: false
 })
 export class Cmmc2CommentsMarkedComponent implements OnInit {
 
   model: any;
   loading: boolean = false;
   keyToCategory: any;
+  response: AssessmentDetail;
 
   commentsList = [];
   markedForReviewList = [];
@@ -48,10 +51,19 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
     private titleService: Title,
     private maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+        console.log(this.response)
+      }
+    );
+
     this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));

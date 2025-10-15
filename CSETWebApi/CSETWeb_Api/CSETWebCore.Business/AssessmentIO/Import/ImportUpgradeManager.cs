@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -36,7 +37,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             upgraders.Add("10.0.1.0", new CSET_10_0_1_to_10_1_0_Upgrade());
             upgraders.Add("10.1.0.0", new CSET_10_1_0_to_10_1_1_Upgrade());
             upgraders.Add("10.1.1.0", new CSET_10_1_1_to_10_2_0_Upgrade());
-            upgraders.Add("10.2.0.0", null);
+            upgraders.Add("10.3.0.0", new CSET_10_2_0_to_10_3_1_Upgrade());
+            upgraders.Add("10.3.1.0", null);
         }
 
 
@@ -110,6 +112,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     version = NormalizeVersion(fileUpgrade.GetVersion());
                 }
             }
+            
 
             return json;
         }

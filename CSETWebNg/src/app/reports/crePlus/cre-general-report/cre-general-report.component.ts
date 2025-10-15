@@ -30,6 +30,7 @@ import { Title } from '@angular/platform-browser';
 import { CreService } from '../../../services/cre.service';
 import { TranslocoScope, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class CreGeneralReportComponent implements OnInit {
 
   numberMilsSelected: number;
   numberOdsSelected: number;
+  info: AssessmentDetail;
 
 
   /**
@@ -82,12 +84,8 @@ export class CreGeneralReportComponent implements OnInit {
       this.titleService.setTitle(this.title);
     });
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.info = assessmentDetail;
     });
 
     this.distribCoreDomainMil = await this.buildAllDistrib([22, 23, 24]);

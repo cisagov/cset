@@ -28,17 +28,19 @@ import { ConfigService } from '../../services/config.service';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'securityplan',
-    templateUrl: './securityplan.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'securityplan',
+  templateUrl: './securityplan.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class SecurityplanComponent implements OnInit {
   translationSub: any;
   response: any;
+  info: AssessmentDetail;
 
   componentCount = 0;
   networkDiagramImage: SafeHtml;
@@ -53,7 +55,7 @@ export class SecurityplanComponent implements OnInit {
     public reportSvc: ReportService,
     public analysisSvc: ReportAnalysisService,
     public configSvc: ConfigService,
-    private assessmentSvc: AssessmentService,
+    private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService,
   ) { }
@@ -91,6 +93,11 @@ export class SecurityplanComponent implements OnInit {
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   usesRAC() {

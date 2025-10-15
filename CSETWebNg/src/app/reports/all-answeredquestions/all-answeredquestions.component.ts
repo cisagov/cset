@@ -27,31 +27,40 @@ import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-    selector: 'app-all-answeredquestions',
-    templateUrl: './all-answeredquestions.component.html',
-    styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
-    standalone: false
+  selector: 'app-all-answeredquestions',
+  templateUrl: './all-answeredquestions.component.html',
+  styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
+  standalone: false
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
   response: any;
+  info: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
     public reportSvc: ReportService,
     public titleService: Title,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
-
     this.reportSvc.getStandardAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
         this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
+      }
+    );
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
       }
     );
   }

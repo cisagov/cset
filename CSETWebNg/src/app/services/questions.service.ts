@@ -32,6 +32,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { LinebreakPipe } from '../helpers/linebreak.pipe';
 import { AnswerOptionConfig } from '../models/module-config.model';
+import { tap } from 'rxjs/operators';
 
 const headers = {
   headers: new HttpHeaders()
@@ -74,7 +75,8 @@ export class QuestionsService {
     private tSvc: TranslocoService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService,
-    public linebreakPipe: LinebreakPipe
+    public linebreakPipe: LinebreakPipe,
+    private assessSvc: AssessmentService
   ) { }
 
   /**
@@ -92,9 +94,22 @@ export class QuestionsService {
    * Sets the application mode of the assessment.
    */
   setMode(mode: string) {
-    return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers);
+    return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers)
+      .pipe(
+      tap((response: any) => {
+        if (response?.completedCount !== undefined) {
+          const totalCount =
+            (response.totalMaturityQuestionsCount || 0) +
+            (response.totalDiagramQuestionsCount || 0) +
+            (response.totalStandardQuestionsCount || 0);
+           this.assessSvc.completionRefreshRequested$.next({
+            completedCount: response.completedCount,
+            totalCount: totalCount
+          });
+        }
+      })
+    );
   }
-
   /**
    * Retrieves the list of questions.
    */
@@ -161,16 +176,44 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
+    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers).pipe(
+      tap((response: any) => {
+        if (response?.completedCount !== undefined) {
+          // Find whichever count has a value (only one will)
+          const totalCount =
+            (response.totalMaturityQuestionsCount || 0) +
+            (response.totalDiagramQuestionsCount || 0) +
+            (response.totalStandardQuestionsCount || 0);
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: response.completedCount,
+            totalCount: totalCount
+          });
+        }
+      })
+    );
   }
 
   /**
    * Posts a block of answers to the API.
    */
   storeSubCategoryAnswers(answers: SubCategoryAnswers) {
-    return this.http.post(this.configSvc.apiUrl + 'answersubcategory', answers, headers);
+    return this.http.post(this.configSvc.apiUrl + 'answersubcategory', answers, headers)
+      .pipe(
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            // Find whichever count has a value (only one will)
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
-
   /**
    * Retrieves the extra detail content for the question.
    * @param questionId
@@ -428,7 +471,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getRegulatoryCitations(questionId: number) {
     return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
@@ -480,11 +523,11 @@ export class QuestionsService {
   }
 
   /**
-   * 
-   * @param origString 
-   * @param searchStr 
-   * @param replaceStr 
-   * @returns 
+   *
+   * @param origString
+   * @param searchStr
+   * @param replaceStr
+   * @returns
    */
   replaceAll(origString: string, searchStr: string, replaceStr: string) {
     // escape regexp special characters in search string

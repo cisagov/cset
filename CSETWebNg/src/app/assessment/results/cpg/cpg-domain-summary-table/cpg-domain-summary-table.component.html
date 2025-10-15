@@ -21,21 +21,21 @@
   SOFTWARE. 
 -------------------------->
 <div class="w-100 d-block" *transloco="let t">
-    <table class="table">
+    <table class="table w-fit">
         <tr>
-            <th class="text-start align-top">{{t('reports.category')}}</th>
-            <th class="text-end align-top">{{t('answer-options.labels.imp-cpg')}}</th>
-            <th class="text-end align-top">{{t('answer-options.labels.prog-cpg')}}</th>
-            <th class="text-end align-top">{{t('answer-options.labels.scoped-cpg')}}</th>
-            <th class="text-end align-top">{{t('answer-options.labels.not-cpg')}}</th>
+            <th class="text-start align-top pe-3">{{t('reports.category')}}</th>
+            <th class="text-end align-top pe-3">{{t('answer-options.labels.imp-cpg')}}</th>
+            <th class="text-end align-top pe-3">{{t('answer-options.labels.prog-cpg')}}</th>
+            <th class="text-end align-top pe-3">{{t('answer-options.labels.scoped-cpg')}}</th>
+            <th class="text-end align-top pe-3">{{t('answer-options.labels.not-cpg')}}</th>
             <th class="text-end align-top">{{t('answer-options.button-labels.unanswered')}}</th>
         </tr>
         <tr *ngFor="let func of data">
-            <td>{{func.name}}</td>
-            <td class="text-end">{{formatPercent(func, 0)}}</td>
-            <td class="text-end">{{formatPercent(func, 1)}}</td>
-            <td class="text-end">{{formatPercent(func, 2)}}</td>
-            <td class="text-end">{{formatPercent(func, 3)}}</td>
+            <td class="pe-3">{{func.name}}</td>
+            <td class="text-end pe-3">{{formatPercent(func, 0)}}</td>
+            <td class="text-end pe-3">{{formatPercent(func, 1)}}</td>
+            <td class="text-end pe-3">{{formatPercent(func, 2)}}</td>
+            <td class="text-end pe-3">{{formatPercent(func, 3)}}</td>
             <td class="text-end">{{formatPercent(func, 4)}}</td>
         </tr>
     </table>

@@ -30,15 +30,18 @@ import { ReportAnalysisService } from '../../../services/report-analysis.service
 import { ReportService } from '../../../services/report.service';
 import { RraDataService } from '../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-rra-deficiency',
-    templateUrl: './rra-deficiency.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'app-rra-deficiency',
+  templateUrl: './rra-deficiency.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class RraDeficiencyComponent implements OnInit {
   response: any;
+  info: AssessmentDetail;
 
   loading: boolean = false;
 
@@ -56,7 +59,8 @@ export class RraDeficiencyComponent implements OnInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public rraDataSvc: RraDataService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) { }
 
 
@@ -106,6 +110,12 @@ export class RraDeficiencyComponent implements OnInit {
       this.createTopRankedGoals(r);
     },
       error => console.error('RRA detail load Error: ' + (<Error>error).message)
+    );
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
     );
   }
 

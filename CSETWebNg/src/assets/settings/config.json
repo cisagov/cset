@@ -547,6 +547,7 @@
     {
       "moduleName": "MVRA",
       "modelId": "9",
+      "hideTopLevelGroupingName": true,
       "answerOptions": [
         {
           "code": "Y",

@@ -31,18 +31,21 @@ import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 import { VadrDataService } from '../../../services/vadr-data.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-vadr-report',
-    templateUrl: './vadr-report.component.html',
-    styleUrls: ['../../reports.scss']
-    // styleUrls: ['./vadr-report.component.scss']
-    ,
-    standalone: false
+  selector: 'app-vadr-report',
+  templateUrl: './vadr-report.component.html',
+  styleUrls: ['../../reports.scss']
+  // styleUrls: ['./vadr-report.component.scss']
+  ,
+  standalone: false
 })
 export class VadrReportComponent implements OnInit {
   mainResponse: any;
   response: any;
+  info: AssessmentDetail;
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -75,6 +78,7 @@ export class VadrReportComponent implements OnInit {
   warningCount = 0;
   chart1: Chart;
 
+
   numberOfStandards = -1;
 
   pageInitialized = false;
@@ -94,7 +98,8 @@ export class VadrReportComponent implements OnInit {
     public cmmcStyleSvc: CmmcStyleService,
     public vadrDataSvc: VadrDataService,
     public configSvc: ConfigService,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public assessSvc: AssessmentService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
@@ -139,6 +144,12 @@ export class VadrReportComponent implements OnInit {
         this.mainResponse = r;
       },
       error => console.error('Main RRA report load Error: ' + (<Error>error).message)
+    );
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
     );
   }
 

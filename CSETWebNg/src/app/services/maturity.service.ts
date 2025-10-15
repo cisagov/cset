@@ -28,6 +28,7 @@ import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
 import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -216,12 +217,22 @@ export class MaturityService {
       this.configSvc.apiUrl + "MaturityLevel",
       level,
       headers
-    )
+    ).pipe(
+      tap((response: any) => {
+        // Emit completion stats when response arrives
+        if (response?.completedCount !== undefined) {
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: response.completedCount,
+            totalCount: response.totalMaturityQuestionsCount || 0
+          });
+        }
+      })
+    );
   }
 
 
   /**
-   * Asks the API for all maturity questions/answers for the current assessment. 
+   * Asks the API for all maturity questions/answers for the current assessment.
    */
   getQuestionsList(fillEmpty: boolean, groupingId?: number) {
     let url = this.configSvc.apiUrl + 'maturity/questions?fill=' + fillEmpty;
