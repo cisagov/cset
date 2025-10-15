@@ -30,6 +30,9 @@ SOFTWARE.
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
 @use '@angular/material' as mat;
+// @use 'swiper/swiper.css';
+// @use 'swiper/css/navigation';
+// @use 'swiper/css/pagination';
 
 
 
@@ -4010,7 +4013,7 @@ h6.dropdown-header {
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding: 1rem 1rem 0 1rem !important;
+  padding: .3rem .3rem 0 .3rem !important;
 }
 
 .gallery-card-body-buttons {

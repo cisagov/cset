@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 #nullable enable
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 
@@ -43,6 +44,7 @@ namespace CSETWebCore.Model.Assessment
         public string? CriticalService { get; set; }
         public int? PointOfContact { get; set; }
         public bool? IsScoped { get; set; }
+        public bool? Acknowledgement { get; set; }
 
         [DisplayName("CISA Region")]
         public int? CisaRegion { get; set; }

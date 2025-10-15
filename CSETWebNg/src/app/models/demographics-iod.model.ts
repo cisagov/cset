@@ -24,6 +24,7 @@
 
 
 export interface DemographicsIod {
+  acknowledgement?:boolean;
   assessmentId?: number;
   version?: number;
   organizationType?: number;

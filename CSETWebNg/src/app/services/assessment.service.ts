@@ -303,6 +303,10 @@ export class AssessmentService {
     return this.http.post(this.apiUrl + 'remarks', JSON.stringify(remarks), headers);
   }
 
+  saveAcknowledgement(){
+    return this.http.post(this.apiUrl + 'acknowledge', null, headers);
+  }
+
   /**
    *
    */

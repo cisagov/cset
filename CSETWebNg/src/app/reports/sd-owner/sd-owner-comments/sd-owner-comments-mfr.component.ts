@@ -30,12 +30,13 @@ import { MaturityService } from '../../../services/maturity.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-sd-owner-comments-mfr',
-    templateUrl: './sd-owner-comments-mfr.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'app-sd-owner-comments-mfr',
+  templateUrl: './sd-owner-comments-mfr.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 
 export class SdOwnerCommentsMfrComponent {
@@ -44,6 +45,7 @@ export class SdOwnerCommentsMfrComponent {
   loading: boolean = false;
   questionAliasSingular: string;
   aliasTranslated: string;
+  info: AssessmentDetail;
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -80,6 +82,11 @@ export class SdOwnerCommentsMfrComponent {
     this.assessSvc.getOtherRemarks().subscribe((resp: any) => {
       this.remarks = resp;
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   getQuestion(q) {

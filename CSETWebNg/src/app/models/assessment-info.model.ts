@@ -43,7 +43,7 @@ export interface AssessmentDetail {
     assets?: string;
 
     galleryItemGuid?: string;
-    
+
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
@@ -73,7 +73,8 @@ export interface AssessmentDetail {
     pciiNumber?: string;
     is_PCII?: boolean;
     assessorMode?: boolean;
-    done?:boolean;
+    done?: boolean;
+    creatorName?: string;
 }
 
 export interface MaturityModel {

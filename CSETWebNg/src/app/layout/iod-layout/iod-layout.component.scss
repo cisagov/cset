@@ -29,9 +29,9 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
-@use 'swiper/scss';
-@use 'swiper/scss/navigation';
-@use 'swiper/scss/pagination';
+// @use 'swiper/swiper.css';
+// @use 'swiper/css/navigation';
+// @use 'swiper/css/pagination';
 
 
 $white: #ffffff;
@@ -3999,7 +3999,7 @@ h6.dropdown-header {
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding: 1rem 1rem 0 1rem !important;
+  padding: .3rem .3rem 0 .3rem !important;
 }
 
 .gallery-card-body-buttons {
@@ -4109,7 +4109,6 @@ h6.dropdown-header {
 
 .gallery-card-footer {
   background-color: #ffc107 !important;
-
 }
 
 .card-footer {

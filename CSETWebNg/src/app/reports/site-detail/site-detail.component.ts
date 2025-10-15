@@ -31,15 +31,17 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'site-detail',
-    templateUrl: './site-detail.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'site-detail',
+  templateUrl: './site-detail.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class SiteDetailComponent implements OnInit {
   response: any = null;
+  info: AssessmentDetail;
   chartStandardsSummary: Chart;
   responseResultsByCategory: any;
 
@@ -70,7 +72,7 @@ export class SiteDetailComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
-    private assessmentSvc: AssessmentService,
+    private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService
   ) { }
@@ -107,6 +109,11 @@ export class SiteDetailComponent implements OnInit {
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   processAcetAdminData() {

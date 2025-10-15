@@ -28,17 +28,20 @@ import { MaturityService } from '../../../services/maturity.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'app-vadr-deficiency',
-    templateUrl: './vadr-deficiency.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'app-vadr-deficiency',
+  templateUrl: './vadr-deficiency.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class VadrDeficiencyComponent implements OnInit {
 
   response: any;
+  info: AssessmentDetail;
 
   loading: boolean = false;
 
@@ -54,7 +57,8 @@ export class VadrDeficiencyComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
@@ -70,6 +74,11 @@ export class VadrDeficiencyComponent implements OnInit {
         this.loading = false;
       },
       error => console.error('Deficiency Report Error: ' + (<Error>error).message)
+    );
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
     );
   }
 
