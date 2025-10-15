@@ -338,4 +338,19 @@ namespace CSETWebCore.Model.ExportJson
         public string PrimaryDefiningSystem { get; set; }
         public List<string> SecondaryDefiningSystems { get; set; }
     }
+
+
+    /// <summary>
+    /// Represents the complete assessment export payload structure.
+    /// Used for type-safe PCII removal and serialization.
+    /// </summary>
+    public class AssessmentExportPayload
+    {
+        public AssessmentJson Assessment { get; set; }
+        public List<ContactJson> Contacts { get; set; }
+        public CisDemographicsJson CisDemographics { get; set; }
+        public StandardsJson Standards { get; set; }
+        public Dictionary<string, object> Details { get; set; }
+        public List<ModelJson> MaturityModels { get; set; }
+    }
 }
