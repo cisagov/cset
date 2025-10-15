@@ -860,7 +860,7 @@ namespace CSETWebCore.Business.Assessment
                 // Use shorter names on assessments with multiple types.
                 assessment.TypeTitle += ", " + assessment.MaturityModel?.ModelTitle;
 
-                var modelObject = _overlay.GetJObject("MATURITY_MODELS", "maturity_model_id", (assessment.MaturityModel.ModelId).ToString(), lang);
+                var modelObject = _overlay.GetJObject("MATURITY_MODELS", "maturity_model_id", (assessment.MaturityModel?.ModelId).ToString(), lang);
                 if (modelObject != null)
                 {
                     assessment.TypeTitle = modelObject.Value<string>("model_title");
