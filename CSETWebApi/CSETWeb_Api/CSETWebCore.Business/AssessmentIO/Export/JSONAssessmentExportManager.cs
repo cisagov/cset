@@ -110,7 +110,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             var contacts = GetContactDetails(assessmentId);
-            
+
             StandardsJson standards = null;
             List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
@@ -134,6 +134,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 assessment.Sal = new SalJson();
                 assessment.Sal.OverallLevel = salInfo.Selected_Sal_Level;
                 assessment.Sal.Methodology = salInfo.Methodology ?? "Simple";
+                assessment.Sal.Confidentiality = salInfo.CLevel;
+                assessment.Sal.Integrity = salInfo.ILevel;
+                assessment.Sal.Availability = salInfo.ALevel;
 
 
                 // Ensure the standard selections are populated before exporting
@@ -651,7 +654,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 details.ShareOrgs.Add(demog.ListShareOrgs.FirstOrDefault(x => x.OptionValue == o)?.OptionText);
             }
             details.ShareOrgOther = demog.ShareOther;
-            
+
             details.Barrier1 = demog.Barrier1;
             details.Barrier2 = demog.Barrier2;
 
@@ -851,12 +854,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             // Get contact details from business layer
             var contactDetails = _contactBusiness.GetContacts(assessmentId);
-            
+
             // Build role lookup dictionary to resolve AssessmentRoleId to role name
             var roleLookup = _context.ASSESSMENT_ROLES
                 .AsNoTracking()
                 .ToDictionary(r => r.AssessmentRoleId, r => r.AssessmentRole);
-            
+
             // Map to ContactJson, excluding database keys and foreign keys
             return MapToContactJson(contactDetails, roleLookup);
         }
