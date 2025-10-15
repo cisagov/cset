@@ -206,7 +206,7 @@
             <label class="form-label" for="email">{{ t('contact.email') }}</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email"
               [(ngModel)]="contact.primaryEmail" #email="ngModel" [placeholder]="t('contact.email address')"
-              (keydown.esc)="abandonEdit()" matInput email>
+              (keydown.esc)="abandonEdit()" matInput email required>
 
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email
               address.</div>

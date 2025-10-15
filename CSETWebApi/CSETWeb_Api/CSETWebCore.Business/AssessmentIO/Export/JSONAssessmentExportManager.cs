@@ -4,9 +4,11 @@
 // 
 // 
 ////////////////////////////////
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
@@ -14,8 +16,10 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.ExportJson;
 using CSETWebCore.Model.Maturity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +37,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
+        private readonly ICisDemographicBusiness _cisDemographicBusiness;
         private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
 
@@ -51,6 +56,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             IAssessmentUtil assessmentUtil,
             IQuestionRequirementManager questionRequirement,
             ITokenManager tokenManager,
+            ICisDemographicBusiness cisDemographicBusiness,
             CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
@@ -60,6 +66,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             _assessmentUtil = assessmentUtil ?? throw new ArgumentNullException(nameof(assessmentUtil));
             _questionRequirement = questionRequirement ?? throw new ArgumentNullException(nameof(questionRequirement));
             _tokenManager = tokenManager ?? throw new ArgumentNullException(nameof(tokenManager));
+            _cisDemographicBusiness = cisDemographicBusiness ?? throw new ArgumentNullException(nameof(cisDemographicBusiness));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _serializerOptions = new JsonSerializerOptions
             {
@@ -68,6 +75,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
         }
+
 
         /// <summary>
         /// Returns the assessment details serialized as JSON for the supplied assessment id.
@@ -94,11 +102,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 AssessmentGuid = assessmentDetail.AssessmentGuid,
                 CreatedDate = assessmentDetail.CreatedDate,
                 Name = assessmentDetail.AssessmentName,
-                SelfAssessment = assessmentDetail.SelfAssessment
+                SelfAssessment = assessmentDetail.SelfAssessment,
+                FacilitatorName = assessmentDetail.FacilitatorName,
+                AssessorWorkflow = assessmentDetail.AssessorMode,
+                OrganizationInfo = BuildOrgDetails(assessmentDetail)
             };
 
 
-            var contacts = _contactBusiness.GetContacts(assessmentId);
+            var contacts = GetContactDetails(assessmentId);
+
             StandardsJson standards = null;
             List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
@@ -110,11 +122,23 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             assessment.Observations = _assessmentObservations;
 
-
+            // Build CIS demographics
+            var cisDemographics = BuildCisDemographics(assessmentId);
 
             // Standards-based assessment
             if (assessmentDetail.UseStandard)
             {
+                // SAL
+                var biz = new SalBusiness(_context, null, _assessmentUtil, null, null);
+                var salInfo = biz.GetSals(assessmentId);
+                assessment.Sal = new SalJson();
+                assessment.Sal.OverallLevel = salInfo.Selected_Sal_Level;
+                assessment.Sal.Methodology = salInfo.Methodology ?? "Simple";
+                assessment.Sal.Confidentiality = salInfo.CLevel;
+                assessment.Sal.Integrity = salInfo.ILevel;
+                assessment.Sal.Availability = salInfo.ALevel;
+
+
                 // Ensure the standard selections are populated before exporting
                 if (assessmentDetail.Standards == null || assessmentDetail.Standards.Count == 0)
                 {
@@ -123,6 +147,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 // Build standards export using new DTO structure
                 standards = BuildStandardsJson(assessmentId, lang);
+
+                // Questions and Requirements are mutually exclusive - remove the unused array to avoid confusion
+                if (!standards.Mode.StartsWith("Questions"))
+                {
+                    standards.Questions = null;
+                }
+                if (!standards.Mode.StartsWith("Requirements"))
+                {
+                    standards.Standards = null;
+                }
             }
 
 
@@ -168,27 +202,48 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
 
-                detailSections["componentQuestions"] = componentQuestions;
+                var listCQJson = new List<ComponentQuestionJson>();
+                foreach (var cq in componentQuestions)
+                {
+                    var cqj = new ComponentQuestionJson()
+                    {
+                        ComponentName = cq.ComponentName,
+                        ComponentSymbolId = cq.Component_Symbol_Id,
+                        QuestionText = cq.Question,
+                        QuestionId = cq.QuestionId,
+                        AnswerText = cq.Answer,
+                        Zone = cq.Zone,
+                        Sal = cq.SAL,
+                        LayerName = cq.LayerName,
+                        IsOverride = cq.IsOverride
+                    };
+
+                    // TODO:  include Comment with component question
+
+                    listCQJson.Add(cqj);
+                }
+
+                detailSections["componentQuestions"] = listCQJson;
             }
 
             // Remove irrelevant data from the payload
             CleanData(assessmentDetail);
 
-            // Remove PCII data if requested
+            // Build out the full payload for serialization
+            var payload = new AssessmentExportPayload
+            {
+                Assessment = assessment,
+                Contacts = contacts,
+                CisDemographics = cisDemographics,
+                Standards = standards,
+                Details = detailSections.Count > 0 ? detailSections : null,
+                MaturityModels = maturityModels
+            };
+
             if (removePCII)
             {
-                RemovePCII(assessmentDetail);
+                RemovePCII(payload);
             }
-
-            // Build out the full payload for serialization
-            var payload = new
-            {
-                assessment,
-                contacts,
-                standards,
-                details = detailSections.Count > 0 ? detailSections : null,
-                maturityModels
-            };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
         }
@@ -234,9 +289,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     if (q.IsAnswerable)
                     {
-                        qJ.Answer = new();
-                        qJ.Answer.AnswerText = q.Answer;
-                        qJ.Answer.Comment = q.Comment;
+                        qJ.AnswerText = q.Answer;
+                        qJ.Comment = q.Comment;
                     }
 
                     // Add observations if they exist for this answer
@@ -264,10 +318,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     qqJ.QuestionId = qq.QuestionId;
                     qqJ.MaturityLevel = qq.MaturityLevel;
-
-                    qqJ.Answer = new();
-                    qqJ.Answer.AnswerText = qq.Answer;
-                    qqJ.Answer.Comment = qq.Comment;
+                    qqJ.AnswerText = qq.Answer;
+                    qqJ.Comment = qq.Comment;
 
 
 
@@ -326,13 +378,37 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// Removes PCII data from the assessment payload to avoid leaking sensitive
         /// information that is not required by the exported JSON document.
         /// </summary>
-        private static void RemovePCII(AssessmentDetail assessment)
+        private static void RemovePCII(AssessmentExportPayload payload)
         {
-            if (assessment == null)
+            if (payload == null)
             {
                 return;
             }
-            assessment.SectorId = null;
+
+            if (payload.Assessment == null)
+            {
+                return;
+            }
+
+            if (payload.Assessment.OrganizationInfo == null)
+            {
+                return;
+            }
+
+            // Remove PCII fields from organization info
+            payload.Assessment.OrganizationInfo.CityOrSiteName = null;
+            payload.Assessment.OrganizationInfo.FacilityName = null;
+            payload.Assessment.OrganizationInfo.StateProvRegion = null;
+            payload.Assessment.OrganizationInfo.SectorId = 0;
+            payload.Assessment.OrganizationInfo.SectorName = null;
+            payload.Assessment.OrganizationInfo.SubsectorId = null;
+            payload.Assessment.OrganizationInfo.SubsectorName = null;
+            payload.Assessment.OrganizationInfo.OrganizationName = null;
+
+            // Remove PCII fields from CIS demographics
+            payload.CisDemographics.ServiceComposition = null;
+            payload.CisDemographics.ServiceDemographics = null;
+            payload.CisDemographics.OrganizationDemographics = null;
         }
 
 
@@ -410,7 +486,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var standardsJson = new StandardsJson
             {
                 Mode = "Questions",
-                Questions = new List<StandardQuestionJson>()
+                Questions = new List<StandardQuestionSubCategoryJson>()
             };
 
             // Return empty structure if no questions found
@@ -419,19 +495,20 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return standardsJson;
             }
 
-
-
-
-
-
-            // Map questions from QuestionResponse to StandardQuestionJson
+            // Map questions from QuestionResponse to StandardQuestionJson grouped by subcategory
             foreach (var category in questionResponse.Categories)
             {
                 if (category.SubCategories == null) continue;
 
                 foreach (var subCategory in category.SubCategories)
                 {
-                    if (subCategory.Questions == null) continue;
+                    if (subCategory.Questions == null || subCategory.Questions.Count == 0) continue;
+
+                    var subCategoryJson = new StandardQuestionSubCategoryJson
+                    {
+                        SubCategory = subCategory.SubCategoryHeadingText,
+                        Questions = new List<StandardQuestionJson>()
+                    };
 
                     foreach (var question in subCategory.Questions)
                     {
@@ -442,27 +519,20 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             Title = question.DisplayNumber
                         };
 
-                        // Add answer if present
-                        if (!string.IsNullOrWhiteSpace(question.Answer) ||
-                            !string.IsNullOrWhiteSpace(question.Comment) ||
-                            question.Answer_Id.HasValue)
-                        {
-                            standardQuestion.Answer = new AnswerJson
-                            {
-                                AnswerText = question.Answer,
-                                Comment = question.Comment
-                            };
+                        standardQuestion.AnswerText = question.Answer;
+                        standardQuestion.Comment = question.Comment;
 
-                            // Add observations if they exist for this answer
-                            var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
-                            foreach (var obs in myObs)
-                            {
-                                standardQuestion.Observations.Add(obs);
-                            }
+                        // Add observations if they exist for this answer
+                        var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
+                        foreach (var obs in myObs)
+                        {
+                            standardQuestion.Observations.Add(obs);
                         }
 
-                        standardsJson.Questions.Add(standardQuestion);
+                        subCategoryJson.Questions.Add(standardQuestion);
                     }
+
+                    standardsJson.Questions.Add(subCategoryJson);
                 }
             }
 
@@ -522,7 +592,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             {
                                 RequirementId = requirement.QuestionId,
                                 RequirementText = requirement.QuestionText,
-                                Title = requirement.DisplayNumber
+                                Title = requirement.DisplayNumber,
+                                AnswerText = requirement.Answer,
+                                Comment = requirement.Comment
                             };
 
                             standardJson.Requirements.Add(requirementJson);
@@ -538,6 +610,220 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
         /// <summary>
+        /// Builds the sector details block for the export payload using the current assessment demographics.
+        /// </summary>
+        private OrganizationInfoJson BuildOrgDetails(AssessmentDetail assessment)
+        {
+            var details = new OrganizationInfoJson();
+
+
+            // basic assessment properties
+            details.CityOrSiteName = assessment.CityOrSiteName;
+            details.StateProvRegion = assessment.StateProvRegion;
+            details.FacilityName = assessment.FacilityName;
+
+
+            // get the demographics values for the assessment
+            var biz = new DemographicExtBusiness(_context);
+            var demog = biz.GetExtDemographics(assessment.Id);
+
+
+            if (demog.Sector != null)
+            {
+                var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
+                if (s != null)
+                {
+                    details.SectorId = s.SectorId;
+                    details.SectorName = s.SectorName;
+                }
+            }
+
+            if (demog.Subsector != null)
+            {
+                var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
+                if (ss != null)
+                {
+                    details.SubsectorId = demog.Subsector.Value;
+                    details.SubsectorName = ss.IndustryName;
+                }
+            }
+
+            details.CisaRegion = demog.CisaRegion;
+
+
+            details.CriticalServiceName = demog.CriticalServiceName;
+
+
+            // IOD demographic fields
+
+            details.AnnualBudgetFunding = demog.ListRevenueAmounts.FirstOrDefault(x => x.OptionValue == demog.AnnualRevenue)?.OptionText;
+            details.NumberEmployeesInOrg = demog.ListNumberEmployeeTotal.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesTotal)?.OptionText;
+            details.NumberEmployeesInDept = demog.ListNumberEmployeeUnit.FirstOrDefault(x => x.OptionValue == demog.NumberEmployeesUnit)?.OptionText;
+
+            details.OrganizationName = demog.OrganizationName;
+            details.OrganizationType = demog.ListOrgTypes.FirstOrDefault(x => x.OptionValue == demog.OrganizationType)?.OptionText;
+            details.BusinessUnit = demog.BusinessUnit;
+            details.UsesStandard = demog.UsesStandard;
+            details.Standard1 = demog.Standard1;
+            details.Standard2 = demog.Standard2;
+            details.RequiredToComply = demog.RequiredToComply;
+            details.RegulationType1 = demog.ListRegulationTypes.FirstOrDefault(x => x.OptionValue == demog.RegulationType1)?.OptionText;
+            details.Reg1Other = demog.Reg1Other;
+            details.RegulationType2 = demog.ListRegulationTypes.FirstOrDefault(x => x.OptionValue == demog.RegulationType2)?.OptionText;
+            details.Reg2Other = demog.Reg2Other;
+
+            foreach (var o in demog.ShareOrgs)
+            {
+                details.ShareOrgs.Add(demog.ListShareOrgs.FirstOrDefault(x => x.OptionValue == o)?.OptionText);
+            }
+            details.ShareOrgOther = demog.ShareOther;
+
+            details.Barrier1 = demog.Barrier1;
+            details.Barrier2 = demog.Barrier2;
+
+
+            return details;
+        }
+
+
+        /// <summary>
+        /// Builds the CIS demographics block for the export payload using CIS-specific demographic data.
+        /// </summary>
+        private CisDemographicsJson BuildCisDemographics(int assessmentId)
+        {
+            // Get all three types of CIS demographics
+            var serviceDemographics = _cisDemographicBusiness.GetServiceDemographics(assessmentId);
+            var organizationDemographics = _cisDemographicBusiness.GetOrgDemographics(assessmentId);
+            var serviceComposition = _cisDemographicBusiness.GetServiceComposition(assessmentId);
+
+            // Check if any demographics data exists
+            bool hasServiceData = !string.IsNullOrEmpty(serviceDemographics.CriticalServiceDescription) ||
+                                  !string.IsNullOrEmpty(serviceDemographics.ItIcsName) ||
+                                  !string.IsNullOrEmpty(serviceDemographics.BudgetBasis);
+
+            bool hasOrgData = !string.IsNullOrEmpty(organizationDemographics.OrganizationName) ||
+                              !string.IsNullOrEmpty(organizationDemographics.ParentOrganization) ||
+                              organizationDemographics.VisitDate.HasValue;
+
+            bool hasCompositionData = !string.IsNullOrEmpty(serviceComposition.NetworksDescription) ||
+                                      !string.IsNullOrEmpty(serviceComposition.ServicesDescription) ||
+                                      serviceComposition.PrimaryDefiningSystem.HasValue;
+
+            // If no CIS demographics data exists, return null
+            if (!hasServiceData && !hasOrgData && !hasCompositionData)
+            {
+                return null;
+            }
+
+            // Build the CIS demographics JSON object
+            var cisDemographics = new CisDemographicsJson();
+
+            // Map service demographics if it has data
+            if (hasServiceData)
+            {
+                cisDemographics.ServiceDemographics = new CisServiceDemographicsJson
+                {
+                    CriticalServiceDescription = serviceDemographics.CriticalServiceDescription,
+                    ItIcsName = serviceDemographics.ItIcsName,
+                    MultiSite = serviceDemographics.MultiSite,
+                    MultiSiteDescription = serviceDemographics.MultiSiteDescription,
+                    BudgetBasis = serviceDemographics.BudgetBasis,
+                    AuthorizedOrganizationalUserCount = serviceDemographics.AuthorizedOrganizationalUserCount,
+                    AuthorizedNonOrganizationalUserCount = serviceDemographics.AuthorizedNonOrganizationalUserCount,
+                    CustomersCount = serviceDemographics.CustomersCount,
+                    ItIcsStaffCount = serviceDemographics.ItIcsStaffCount,
+                    CybersecurityItIcsStaffCount = serviceDemographics.CybersecurityItIcsStaffCount
+                };
+            }
+
+
+            // Map organization demographics if it has data
+            if (hasOrgData)
+            {
+                cisDemographics.OrganizationDemographics = new CisOrganizationDemographicsJson
+                {
+                    MotivationCrr = organizationDemographics.MotivationCrr,
+                    MotivationCrrDescription = organizationDemographics.MotivationCrrDescription,
+                    MotivationRrap = organizationDemographics.MotivationRrap,
+                    MotivationRrapDescription = organizationDemographics.MotivationRrapDescription,
+                    MotivationOrganizationRequest = organizationDemographics.MotivationOrganizationRequest,
+                    MotivationOrganizationRequestDescription = organizationDemographics.MotivationOrganizationRequestDescription,
+                    MotivationLawEnforcementRequest = organizationDemographics.MotivationLawEnforcementRequest,
+                    MotivationLawEnforcementRequestDescription = organizationDemographics.MotivationLawEnforcementRequestDescription,
+                    MotivationDirectThreats = organizationDemographics.MotivationDirectThreats,
+                    MotivationDirectThreatsDescription = organizationDemographics.MotivationDirectThreatsDescription,
+                    MotivationSpecialEvent = organizationDemographics.MotivationSpecialEvent,
+                    MotivationSpecialEventDescription = organizationDemographics.MotivationSpecialEventDescription,
+                    MotivationOther = organizationDemographics.MotivationOther,
+                    MotivationOtherDescription = organizationDemographics.MotivationOtherDescription,
+                    ParentOrganization = organizationDemographics.ParentOrganization,
+                    OrganizationName = organizationDemographics.OrganizationName,
+                    SiteName = organizationDemographics.SiteName,
+                    StreetAddress = organizationDemographics.StreetAddress,
+                    VisitDate = organizationDemographics.VisitDate,
+                    CompletedForSltt = organizationDemographics.CompletedForSltt,
+                    CompletedForFederal = organizationDemographics.CompletedForFederal,
+                    CompletedForNationalSpecialEvent = organizationDemographics.CompletedForNationalSpecialEvent,
+                    CikrSector = organizationDemographics.CikrSector,
+                    SubSector = organizationDemographics.SubSector,
+                    CustomersCount = organizationDemographics.CustomersCount,
+                    ItIcsStaffCount = organizationDemographics.ItIcsStaffCount,
+                    CybersecurityItIcsStaffCount = organizationDemographics.CybersecurityItIcsStaffCount
+                };
+            }
+
+            // Map service composition if it has data
+            if (hasCompositionData)
+            {
+                // Build lookup dictionary to map defining system IDs to descriptive text
+                // This maps IDs (1-10) from CIS_CSI_DEFINING_SYSTEMS to their human-readable descriptions
+                var definingSystemsLookup = _context.CIS_CSI_DEFINING_SYSTEMS
+                    .AsNoTracking()
+                    .ToDictionary(x => x.Defining_System_Id, x => x.Defining_System);
+
+                // Map primary defining system from ID to descriptive text
+                string primaryText = null;
+                if (serviceComposition.PrimaryDefiningSystem.HasValue &&
+                    definingSystemsLookup.TryGetValue(serviceComposition.PrimaryDefiningSystem.Value, out var primaryDesc))
+                {
+                    primaryText = primaryDesc;
+                }
+
+                // Map secondary defining systems from list of IDs to list of descriptive texts
+                var secondaryTexts = new List<string>();
+                if (serviceComposition.SecondaryDefiningSystems != null)
+                {
+                    foreach (var id in serviceComposition.SecondaryDefiningSystems)
+                    {
+                        if (definingSystemsLookup.TryGetValue(id, out var desc) && !string.IsNullOrWhiteSpace(desc))
+                        {
+                            // Avoid duplicates while preserving order
+                            if (!secondaryTexts.Contains(desc))
+                            {
+                                secondaryTexts.Add(desc);
+                            }
+                        }
+                    }
+                }
+
+                cisDemographics.ServiceComposition = new CisServiceCompositionJson
+                {
+                    NetworksDescription = serviceComposition.NetworksDescription,
+                    ServicesDescription = serviceComposition.ServicesDescription,
+                    ApplicationsDescription = serviceComposition.ApplicationsDescription,
+                    ConnectionsDescription = serviceComposition.ConnectionsDescription,
+                    PersonnelDescription = serviceComposition.PersonnelDescription,
+                    OtherDefiningSystemDescription = serviceComposition.OtherDefiningSystemDescription,
+                    PrimaryDefiningSystem = primaryText,
+                    SecondaryDefiningSystems = secondaryTexts
+                };
+            }
+
+            return cisDemographics;
+        }
+
+
+        /// <summary>
         /// Get all observations for this assessment
         /// </summary>
         private void GetObservations(int assessmentId)
@@ -548,9 +834,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                .Select(f => new ObservationJson
                {
                    ObservationId = f.Finding_Id,
+                   Importance = f.Importance.Value ?? "",
+                   Summary = f.Summary ?? "",
                    Title = f.Title ?? "",
                    Issue = f.Issue ?? "",
-                   Recommendations = f.Recommendations ?? ""
+                   Impacts = f.Impact ?? "",
+                   Recommendations = f.Recommendations ?? "",
+                   Vulnerabilities = f.Vulnerabilities ?? "",
+                   AutoGeneratedBy = null
                }).ToList();
 
             _assessmentObservations = obs1;
@@ -563,11 +854,74 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     ObservationId = f.Finding_Id,
                     AnswerId = (int)f.Answer_Id,
+                    Importance = f.Importance.Value ?? "",
+                    Summary = f.Summary ?? "",
                     Title = f.Title ?? "",
                     Issue = f.Issue ?? "",
-                    Recommendations = f.Recommendations ?? ""
+                    Impacts = f.Impact ?? "",
+                    Recommendations = f.Recommendations ?? "",
+                    Vulnerabilities = f.Vulnerabilities ?? "",
+                    AutoGeneratedBy = f.Auto_Generated == 2 ? "VADR" : null
                 }).ToList();
             _answerObservations = obs2;
+        }
+
+
+        /// <summary>
+        /// Gets contact details for the assessment and maps them to export-friendly ContactJson objects.
+        /// Resolves role names from AssessmentRoleId and excludes database keys.
+        /// </summary>
+        /// <param name="assessmentId">The assessment ID</param>
+        /// <returns>List of ContactJson objects suitable for JSON export</returns>
+        private List<ContactJson> GetContactDetails(int assessmentId)
+        {
+            // Get contact details from business layer
+            var contactDetails = _contactBusiness.GetContacts(assessmentId);
+
+            // Build role lookup dictionary to resolve AssessmentRoleId to role name
+            var roleLookup = _context.ASSESSMENT_ROLES
+                .AsNoTracking()
+                .ToDictionary(r => r.AssessmentRoleId, r => r.AssessmentRole);
+
+            // Map to ContactJson, excluding database keys and foreign keys
+            return MapToContactJson(contactDetails, roleLookup);
+        }
+
+
+        /// <summary>
+        /// Maps ContactDetail objects to ContactJson for export.
+        /// This intentionally excludes database keys (AssessmentContactId, AssessmentId, AssessmentRoleId)
+        /// and additional fields not part of the public export schema.
+        /// </summary>
+        /// <param name="contacts">Collection of ContactDetail objects from the database</param>
+        /// <param name="roleLookup">Dictionary mapping AssessmentRoleId to role name</param>
+        /// <returns>List of ContactJson objects suitable for JSON export</returns>
+        private static List<ContactJson> MapToContactJson(
+            IEnumerable<ContactDetail> contacts,
+            IDictionary<int, string> roleLookup)
+        {
+            return contacts.Select(c =>
+            {
+                // Resolve role name from AssessmentRoleId
+                string roleName = null;
+                if (roleLookup.TryGetValue(c.AssessmentRoleId, out var r))
+                {
+                    roleName = r;
+                }
+
+                return new ContactJson
+                {
+                    UserId = c.UserId.HasValue ? c.UserId.Value.ToString() : null,
+                    FirstName = c.FirstName,
+                    LastName = c.LastName,
+                    Email = c.PrimaryEmail,
+                    Phone = c.Phone,
+                    Role = roleName,
+                    Invited = c.Invited,
+                    IsPrimaryPoc = c.IsPrimaryPoc,
+                    IsSiteParticipant = c.IsSiteParticipant
+                };
+            }).ToList();
         }
     }
 }
