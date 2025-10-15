@@ -27,7 +27,7 @@
   </div>
   <div *ngFor="let row of rows" class="m-4" style="height: 240px;">
    
-      <div class="swiper-wrapper">
+      <div class="swiper-wrapper" style="display: flex; flex-wrap: wrap;">
         <div *ngFor="let c of row; let i = index">
           <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card"
             (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)"
