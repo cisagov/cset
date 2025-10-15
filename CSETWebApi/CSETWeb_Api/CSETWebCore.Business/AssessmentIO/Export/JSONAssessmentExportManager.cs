@@ -229,22 +229,21 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             // Remove irrelevant data from the payload
             CleanData(assessmentDetail);
 
-            // Remove PCII data if requested
+            // Build out the full payload for serialization
+            var payload = new AssessmentExportPayload
+            {
+                Assessment = assessment,
+                Contacts = contacts,
+                CisDemographics = cisDemographics,
+                Standards = standards,
+                Details = detailSections.Count > 0 ? detailSections : null,
+                MaturityModels = maturityModels
+            };
+
             if (removePCII)
             {
-                RemovePCII(assessmentDetail);
+                RemovePCII(payload);
             }
-
-            // Build out the full payload for serialization
-            var payload = new
-            {
-                assessment,
-                contacts,
-                cisDemographics,
-                standards,
-                details = detailSections.Count > 0 ? detailSections : null,
-                maturityModels
-            };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
         }
@@ -379,13 +378,37 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// Removes PCII data from the assessment payload to avoid leaking sensitive
         /// information that is not required by the exported JSON document.
         /// </summary>
-        private static void RemovePCII(AssessmentDetail assessment)
+        private static void RemovePCII(AssessmentExportPayload payload)
         {
-            if (assessment == null)
+            if (payload == null)
             {
                 return;
             }
-            assessment.SectorId = null;
+
+            if (payload.Assessment == null)
+            {
+                return;
+            }
+
+            if (payload.Assessment.OrganizationInfo == null)
+            {
+                return;
+            }
+
+            // Remove PCII fields from organization info
+            payload.Assessment.OrganizationInfo.CityOrSiteName = null;
+            payload.Assessment.OrganizationInfo.FacilityName = null;
+            payload.Assessment.OrganizationInfo.StateProvRegion = null;
+            payload.Assessment.OrganizationInfo.SectorId = 0;
+            payload.Assessment.OrganizationInfo.SectorName = null;
+            payload.Assessment.OrganizationInfo.SubsectorId = null;
+            payload.Assessment.OrganizationInfo.SubsectorName = null;
+            payload.Assessment.OrganizationInfo.OrganizationName = null;
+
+            // Remove PCII fields from CIS demographics
+            payload.CisDemographics.ServiceComposition = null;
+            payload.CisDemographics.ServiceDemographics = null;
+            payload.CisDemographics.OrganizationDemographics = null;
         }
 
 
