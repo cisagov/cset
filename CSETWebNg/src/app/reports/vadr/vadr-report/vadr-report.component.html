@@ -22,33 +22,8 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <div class="flex-container">
-        <div class="column mt-3">
-            <p class="report-title">
-                Validated Architecture Design Review
-            </p>
-            <p class="report-title" style="font-size: 36px">
-                (VADR) REPORT
-            </p>
-        </div>
-        <div class="column d-flex justify-content-center">
-            <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
-        </div>
 
-        <div class="cover-page-bottom">
-            <app-logo-for-reports></app-logo-for-reports>
-            <app-info-block [response]="mainResponse" />
-        </div>
-    </div>
-
-    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
-        <app-report-disclaimer></app-report-disclaimer>
-    </div>
-
-    <div class="page-break">
-        <app-report-advisory></app-report-advisory>
-    </div>
-
+    <app-cover-page [response]="info" [title]="'Validated Architecture Design Review (VADR) REPORT'" />
     <div class="page-break">
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">

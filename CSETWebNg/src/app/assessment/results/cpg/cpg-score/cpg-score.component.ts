@@ -18,25 +18,26 @@ import { CpgService } from '../../../../services/cpg.service';
 export class CpgScoreComponent implements OnInit {
 
   @Input()
-  techDomain: string;
+  itScore?: number;
 
-  itScore: number;
-  otScore: number;
+  @Input()
+  otScore?: number;
+
+  @Input()
+  techDomain?: string;
+
+  TECH_DOMAIN_OT = ['OT', 'OT+IT', null];
+  TECH_DOMAIN_IT = ['IT', 'OT+IT', null];
 
   /**
    * 
    */
   constructor(
     public cpgSvc: CpgService
-  ) {  }
+  ) { }
 
   /**
    * 
    */
-  ngOnInit(): void {
-    this.cpgSvc.getScore().subscribe((resp: any) => {
-      this.otScore = resp.otScore;
-      this.itScore = resp.itScore;
-    });
-  }
+  ngOnInit(): void { }
 }

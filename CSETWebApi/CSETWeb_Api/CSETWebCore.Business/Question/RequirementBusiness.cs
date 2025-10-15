@@ -40,10 +40,10 @@ namespace CSETWebCore.Business.Question
         {
             _assessmentUtil = assessmentUtil;
             _questionRequirement = questionRequirement;
-            _tokenManager = tokenManager;
+            _tokenManager = tokenManager ?? throw new ArgumentNullException(nameof(tokenManager));
             _context = context;
 
-            _parmSub = new ParameterSubstitution(context, tokenManager);
+            _parmSub = new ParameterSubstitution(context, _tokenManager);
         }
 
         public void SetRequirementAssessmentId(int assessmentId)

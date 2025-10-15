@@ -29,13 +29,15 @@ import { ChartService } from '../../../services/chart.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'executive',
-    templateUrl: './executive-cmmc2.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'executive',
+  templateUrl: './executive-cmmc2.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   loadingLevels = true;
@@ -46,7 +48,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   responseGeneral: any;
   responseLevels: any;
   responseDomains: any;
-
+  response: AssessmentDetail;
   scores: any;
 
   responseSprs: any;
@@ -65,7 +67,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     private maturitySvc: MaturityService,
     private titleService: Title,
     public configSvc: ConfigService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) {
 
   }
@@ -86,6 +89,12 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
         this.targetLevel = r.maturityModels.find(m => m.maturityModelName == 'CMMC2F' || m.maturityModelName == 'CMMC2')?.targetLevel;
       },
       error => console.error('Executive report load Error: ' + (<Error>error).message)
+    );
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+      }
     );
 
     this.maturitySvc.getSprsScore().subscribe((r: any) => {

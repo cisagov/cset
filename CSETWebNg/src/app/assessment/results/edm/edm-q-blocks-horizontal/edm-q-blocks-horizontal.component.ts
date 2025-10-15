@@ -88,7 +88,7 @@ export class EdmQBlocksHorizontalComponent implements OnChanges {
       case 'red': return 'red-score';
       case 'yellow': return 'yellow-score';
       case 'green': return 'green-score';
-      default: return 'default-score';
+      default: return 'unanswered-score';
     }
   }
 

@@ -37,8 +37,12 @@
           {{ `reports.core.cre.final reports.${modelId}.only selected` | transloco }}
      </p>
 
+      <p>
+          <app-key-display-1></app-key-display-1>
+     </p>
+
      <table class="w-100 cset-table">
-          <tr>
+          <tr class="d-none">
                <th>Number</th>
                <th>Question Text</th>
                <th>Rating</th>
@@ -49,6 +53,12 @@
                          <h1 class="mt-2 mb-0">
                               {{domain.title}}
                          </h1>
+                    </td>
+               </tr>
+
+               <tr>
+                    <td colspan="3" class="b-none">
+                         <app-heatmap [scores]="dictHeatmaps[domain.groupingId].children" [showGoalLabels]="false"></app-heatmap>
                     </td>
                </tr>
 

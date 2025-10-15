@@ -27,12 +27,13 @@ import { CmuReportModel } from '../../../models/reports.model';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { CmuService } from './../../../services/cmu.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-crr-deficiency',
-    templateUrl: './crr-deficiency.component.html',
-    styleUrls: ['./../crr-report/crr-report.component.scss'],
-    standalone: false
+  selector: 'app-crr-deficiency',
+  templateUrl: './crr-deficiency.component.html',
+  styleUrls: ['./../crr-report/crr-report.component.scss'],
+  standalone: false
 })
 export class CrrDeficiencyComponent implements OnInit {
   crrModel: CmuReportModel;
@@ -40,6 +41,7 @@ export class CrrDeficiencyComponent implements OnInit {
   keyToCategory: any;
 
   deficienciesList = [];
+  info: AssessmentDetail;
 
   constructor(
     public configSvc: ConfigService,
@@ -56,6 +58,7 @@ export class CrrDeficiencyComponent implements OnInit {
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {
         this.crrModel = r;
+        this.info = r.assessmentDetails;
         const categories = [];
 
         // Build up deficiencies list

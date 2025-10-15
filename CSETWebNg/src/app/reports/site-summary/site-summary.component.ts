@@ -32,18 +32,20 @@ import { QuestionsService } from '../../services/questions.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 import Chart from 'chart.js/auto';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'site-summary',
-    templateUrl: './site-summary.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'site-summary',
+  templateUrl: './site-summary.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
   chartPercentCompliance: Chart;
   translationSub: any;
   response: any;
+  info: AssessmentDetail;
   responseResultsByCategory: any;
 
   networkDiagramImage: SafeHtml;
@@ -78,7 +80,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     private sanitizer: DomSanitizer,
     private maturitySvc: MaturityService,
-    private assessmentSvc: AssessmentService,
+    private assessSvc: AssessmentService,
     public tSvc: TranslocoService
   ) { }
 
@@ -124,6 +126,11 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   /**

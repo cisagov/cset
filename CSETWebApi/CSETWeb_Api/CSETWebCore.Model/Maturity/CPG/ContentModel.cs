@@ -68,4 +68,12 @@ namespace CSETWebCore.Model.Maturity.CPG
 
         // may also want to include full Properties list at some point		
     }
+
+
+    public class AnswerDistribDomainResponse
+    {
+        public List<AnswerDistribDomain> Distrib { get; set; } = [];
+
+        public double ComplianceScore { get; set; }
+    }
 }

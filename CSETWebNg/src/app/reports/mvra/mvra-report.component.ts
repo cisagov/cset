@@ -25,25 +25,35 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-mvra-report',
-    templateUrl: './mvra-report.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'app-mvra-report',
+  templateUrl: './mvra-report.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class MvraReportComponent implements OnInit {
 
   response: any;
+  info: AssessmentDetail;
 
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("MVRA Report - " + this.configSvc.behaviors.defaultTitle);
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {

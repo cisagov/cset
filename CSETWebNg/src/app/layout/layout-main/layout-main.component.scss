@@ -29,10 +29,10 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
-@use 'swiper/scss';
-@use 'swiper/scss/navigation';
-@use 'swiper/scss/pagination';
 @use '@angular/material' as mat;
+// @use 'swiper/swiper.css';
+// @use 'swiper/css/navigation';
+// @use 'swiper/css/pagination';
 
 
 
@@ -601,6 +601,10 @@ input[type="number"] {
 table.cset-table {
   width: 100%;
   color: $primary-color;
+}
+
+table.cset-table ul {
+  list-style: unset !important;
 }
 
 table.cset-table tr:nth-child(even) {
@@ -2254,6 +2258,10 @@ input[type="checkbox"]+label {
   padding: 3px 0;
 }
 
+.question-row ul {
+  list-style: unset;
+}
+
 .no-bottom-border {
   border-bottom: none;
 }
@@ -3193,6 +3201,10 @@ hr.ranked-questions {
   width: 20% !important;
 }
 
+.w-fit {
+  width: fit-content !important;
+}
+
 .va-neg-17rem {
   vertical-align: -0.17rem !important;
 }
@@ -3298,7 +3310,7 @@ table.td-text-start td {
 }
 
 .b-none {
-  border: none;
+  border: none !important;
 }
 
 .b-primary {
@@ -4001,7 +4013,7 @@ h6.dropdown-header {
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding: 1rem 1rem 0 1rem !important;
+  padding: .3rem .3rem 0 .3rem !important;
 }
 
 .gallery-card-body-buttons {

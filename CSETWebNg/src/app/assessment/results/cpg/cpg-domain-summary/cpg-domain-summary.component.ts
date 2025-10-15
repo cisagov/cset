@@ -33,7 +33,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation }
 export class CpgDomainSummaryComponent implements OnInit, OnChanges {
 
   @Input()
-  answerDistribByDomain = [];
+  distrib = [];
 
   chartWidth = 700;
   view = [this.chartWidth, 300];
@@ -48,6 +48,7 @@ export class CpgDomainSummaryComponent implements OnInit, OnChanges {
    * 
    */
   ngOnInit(): void {
+    this.resizeChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -65,12 +66,12 @@ export class CpgDomainSummaryComponent implements OnInit, OnChanges {
     const barGap = 10;
     const ticksHeight = 35;
 
-    if (!this.answerDistribByDomain) {
+    if (!this.distrib) {
       return;
     }
 
-    let chartHeight = this.answerDistribByDomain.length * barHeight + 
-      (this.answerDistribByDomain.length - 1) * barGap +
+    let chartHeight = this.distrib.length * barHeight + 
+      (this.distrib.length - 1) * barGap +
       ticksHeight;
 
     this.view = [this.chartWidth, chartHeight];

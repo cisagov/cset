@@ -29,6 +29,7 @@ import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cre-final-report',
@@ -45,6 +46,7 @@ export class CreFinalReportComponent implements OnInit {
   facilityName: string;
   selfAssessment: boolean;
   modelId: number;
+  info: AssessmentDetail;
 
 
   constructor(
@@ -67,14 +69,10 @@ export class CreFinalReportComponent implements OnInit {
       this.titleService.setTitle(this.title);
     }, 500);
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.info = assessmentDetail
     });
   }
 
- 
+
 }

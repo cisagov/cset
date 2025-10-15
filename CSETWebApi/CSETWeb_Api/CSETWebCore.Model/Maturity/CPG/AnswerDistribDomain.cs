@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.Business.Maturity
+namespace CSETWebCore.Model.Maturity.CPG
 {
     public class AnswerDistribDomain
     {

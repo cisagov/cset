@@ -29,16 +29,18 @@ import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'executive-summary',
-    templateUrl: './executive-summary.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'executive-summary',
+  templateUrl: './executive-summary.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class ExecutiveSummaryComponent implements OnInit {
   response: any;
+  info: AssessmentDetail;
 
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
@@ -62,7 +64,7 @@ export class ExecutiveSummaryComponent implements OnInit {
     public reportSvc: ReportService,
     public analysisSvc: ReportAnalysisService,
     private titleService: Title,
-    private assessmentSvc: AssessmentService,
+    private assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService,
   ) { }
@@ -74,6 +76,12 @@ export class ExecutiveSummaryComponent implements OnInit {
     this.tSvc.selectTranslate('core.executive summary.report title', {}, { scope: 'reports' })
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {

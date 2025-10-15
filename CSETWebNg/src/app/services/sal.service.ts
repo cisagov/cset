@@ -27,6 +27,8 @@ import { NistSpecialFactor } from '../assessment/prepare/sals/sal-nist/nist-sal.
 import { Sal } from '../models/sal.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from './assessment.service';
+import { tap } from 'rxjs/operators';
 
 const headers = {
   headers: new HttpHeaders()
@@ -57,7 +59,8 @@ export class SalService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private assessSvc:AssessmentService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'SAL';
     this.apiUrlGenSal = this.configSvc.apiUrl + 'GeneralSal';
@@ -73,9 +76,25 @@ export class SalService {
   }
 
   updateStandardSelection(sal: Sal): any {
-    return this.http.post(this.apiUrl, sal, headers);
-  }
+    return this.http.post(this.apiUrl, sal, headers)
+      .pipe(
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
 
+          } else {
+            console.log('No completedCount in response');
+          }
+        })
+      );
+  }
   updateNistSpecialFactors(nistSal: NistSpecialFactor): any {
     return this.http.post(this.apiUrl + '/NistDataSpecialFactor', nistSal, headers);
   }
@@ -140,7 +159,7 @@ export class SalService {
 
 
   /**
-   * 
+   *
    */
   saveSalLevels(level: string, ltype: string) {
     switch (ltype) {
@@ -167,7 +186,7 @@ export class SalService {
     }
 
     this.updateStandardSelection(this.selectedSAL).subscribe(
-      (data: Sal) => {
+      (data: any) => {
         this.selectedSAL = data;
       },
       error => {
@@ -180,7 +199,7 @@ export class SalService {
   /**
  * Primarily used to shorten the word MODERATE on NIST SAL grid
  * because it is too wide to display well on a phone.
- * 
+ *
  * Also translates to non-English if needed
  * @param level
  */

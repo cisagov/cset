@@ -63,7 +63,7 @@ export class CrrResultsDetailComponent implements OnInit {
       case 'N':
         return 'red-score';
       case 'U':
-        return 'default-score';
+        return 'unanswered-score';
     }
   }
 

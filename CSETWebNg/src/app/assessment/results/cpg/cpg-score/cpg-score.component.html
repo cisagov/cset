@@ -20,11 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="border border-secondary p-3 rounded mb-4" style="width: fit-content">
-     <div *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
-          Operation Technology (OT) Compliance Score: {{otScore}}%
+<div class="border border-secondary p-3 rounded mb-4 w-fit">
+     <div *ngIf="TECH_DOMAIN_OT.includes(techDomain)">
+          Operation Technology (OT): {{otScore | number:'1.1-2'}}%
      </div>
-     <div *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
-          Information Technology (IT) Compliance Score: {{itScore}}%
+     <div *ngIf="TECH_DOMAIN_IT.includes(techDomain)">
+          Information Technology (IT): {{itScore | number:'1.1-2'}}%
      </div>
 </div>

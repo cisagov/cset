@@ -80,7 +80,9 @@ namespace CSETWebCore.Api.Controllers
 
         /// <summary>
         /// Returns the answer percentage distributions for each of the
-        /// 8 CPG domains.
+        /// 8 CPG domains.  Also included in the response is the 
+        /// compliance score - a percentage of "Y" answers, with "In Progress" 
+        /// answers being given a half score.
         /// </summary>
         [HttpGet]
         [Route("api/answerdistrib/cpg/domains")]
@@ -91,23 +93,6 @@ namespace CSETWebCore.Api.Controllers
 
             var cpgBiz = new CpgBusiness(_context, lang);
             var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId, modelId, techDomain);
-
-            return Ok(resp);
-        }
-
-
-        /// <summary>
-        /// Returns the CPG scores for OT and IT.
-        /// </summary>
-        [HttpGet]
-        [Route("api/cpg/score")]
-        public IActionResult GetScore()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var lang = _tokenManager.GetCurrentLanguage();
-
-            var cpgBiz = new CpgBusiness(_context, lang);
-            var resp = cpgBiz.CalculateScore(assessmentId);
 
             return Ok(resp);
         }

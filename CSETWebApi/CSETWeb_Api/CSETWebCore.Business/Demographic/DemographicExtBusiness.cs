@@ -50,6 +50,7 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
             d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+            d.Acknowledgement = myDD.Find(z => z.DataItemName == "ACK_SECTOR_UPDATED_PPD21")?.BoolValue;
 
             var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
             foreach (var ssg in ssgs)
@@ -64,6 +65,8 @@ namespace CSETWebCore.Business.Demographic
             d.NumberEmployeesUnit = myDD.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
             d.AnnualRevenue = myDD.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
+
+            d.CriticalServiceName = myDD.Find(z => z.DataItemName == "CRIT-SERVICE")?.StringValue;
             d.CriticalServiceRevenuePercent = myDD.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
             d.NumberPeopleServedByCritSvc = myDD.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
 
@@ -174,7 +177,7 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            var sectors = _context.SECTOR.Where(x => x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+            var sectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
             d.ListSectors = new List<ListItem2>();
             foreach (var sec in sectors)

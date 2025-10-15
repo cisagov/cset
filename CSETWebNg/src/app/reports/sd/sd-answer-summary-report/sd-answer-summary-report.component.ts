@@ -25,23 +25,19 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionsNestedService } from '../../../services/questions-nested.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-sd-answer-summary-report',
-    templateUrl: './sd-answer-summary-report.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'app-sd-answer-summary-report',
+  templateUrl: './sd-answer-summary-report.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class SdAnswerSummaryReportComponent implements OnInit {
   domains: any[] = [];
 
   loading = false;
-
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  info: AssessmentDetail;
 
 
   constructor(
@@ -57,12 +53,8 @@ export class SdAnswerSummaryReportComponent implements OnInit {
     this.titleService.setTitle("Answer Summary - Pipeline SD02 Series");
     this.loading = true;
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.info = assessmentDetail
     });
 
     this.questionsNestedSvc.getSection(0).subscribe((resp: any) => {
