@@ -99,6 +99,7 @@
 
 
     <div class="ms-auto">
+        
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
@@ -180,6 +181,7 @@
                 <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.admin')}}</span>
             </button>
+            <app-theme-toggle></app-theme-toggle>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.logout')}}</span>
