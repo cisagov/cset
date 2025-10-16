@@ -167,7 +167,7 @@ export class PageVisibilityService {
       }
 
       if (c == ('SHOW-FEEDBACK')) {
-        show = show && this.configSvc.behaviors.showFeedback;
+        show = show && (this.configSvc.behaviors?.showFeedback ?? false);
       }
 
       if (c == 'IS-CSA') {
@@ -291,7 +291,7 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has || (
-        (this.assessSvc.assessment?.useMaturity ?? false) 
+        (this.assessSvc.assessment?.useMaturity ?? false)
         && (this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())) ?? false)
       )
     });

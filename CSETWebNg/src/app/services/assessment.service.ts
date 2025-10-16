@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Subject} from 'rxjs';
+import { BehaviorSubject, filter, first, firstValueFrom, Observable, Subject, take, timeout } from 'rxjs';
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
@@ -33,7 +33,6 @@ import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { Answer } from '../models/questions.model';
-import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { ConversionService } from './conversion.service';
 import { ConstantsService } from './constants.service';
 
@@ -53,8 +52,11 @@ export class AssessmentService {
   userRoleId: number;
   roles: Role[];
   currentTab: string;
-  private apiUrl: string;
   private initialized = false;
+
+  private get apiUrl(): string {
+    return this.configSvc.apiUrl;
+  }
   public applicationMode: string;
   public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
   public completionRefreshRequested$ = new Subject<any>();
@@ -100,18 +102,45 @@ export class AssessmentService {
     private convSvc: ConversionService
   ) {
     if (!this.initialized) {
-      this.apiUrl = this.configSvc.apiUrl;
-
-      this.http.get(this.apiUrl + 'contacts/allroles')
-        .subscribe((response: Role[]) => (this.roles = response));
-
-      this.http.get(this.apiUrl + "MaturityModels")
-        .subscribe((data: MaturityModel[]) => {
-          AssessmentService.allMaturityModels = data;
-        });
-
+      // Defer API calls until config is loaded
+      this.initializeData();
       this.initialized = true;
     }
+  }
+
+  /**
+   * Initialize data by loading roles and maturity models.
+   * Waits for config to be loaded before making API calls.
+   */
+  private initializeData() {
+    // Check if config is already loaded
+    if (this.configSvc.apiUrl) {
+      this.loadRolesAndModels();
+    } else {
+      // Wait for config to load via observable with timeout
+      this.configSvc.configReady$
+        .pipe(
+          filter(ready => ready === true),
+          take(1),
+          timeout(10000) // 10 second timeout
+        )
+        .subscribe({
+          next: () => this.loadRolesAndModels(),
+          error: (err) => {
+            console.error('Timeout waiting for config to load in AssessmentService', err);
+          }
+        });
+    }
+  }
+
+  private loadRolesAndModels() {
+    this.http.get(this.apiUrl + 'contacts/allroles')
+      .subscribe((response: Role[]) => (this.roles = response));
+
+    this.http.get(this.apiUrl + "MaturityModels")
+      .subscribe((data: MaturityModel[]) => {
+        AssessmentService.allMaturityModels = data;
+      });
   }
 
   /**
