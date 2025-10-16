@@ -77,7 +77,10 @@ fi
 ts=$(date +%Y-%m-%d_%H.%M.%S)
 
 
+
 echo 'Beginning asynchronous build processes...'
+
+echo "Build folder timestamp: $ts"
 
 build_ng $ts | sed "s/^/NG BUILD: /" &
 
