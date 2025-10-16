@@ -25,7 +25,7 @@
   <div class="tw:w-full tw:md:w-1/4 tw:bg-gray-200 tw:p-4 tw:rounded-l-lg">
     <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('categories') }}</h2>
 
-    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">
+    <div class="tw:pb-4 ">
       <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
               [ngClass]="{
             'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'favorites',
@@ -49,17 +49,17 @@
     <!-- Category List -->
     <div>
       <!-- All Categories -->
-      <div class="tw:mb-2">
-        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [ngClass]="{
-          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',
-          'tw:text-gray-800': selectedCategory !== 'all'
-        }"
-                (click)="selectCategory('all')">
-          <i class="fas fa-th-large tw:mr-2"></i>
-          {{ t('all assessments') }}
-        </button>
-      </div>
+<!--      <div class="tw:mb-2">-->
+<!--        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"-->
+<!--                [ngClass]="{-->
+<!--          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',-->
+<!--          'tw:text-gray-800': selectedCategory !== 'all'-->
+<!--        }"-->
+<!--                (click)="selectCategory('all')">-->
+<!--          <i class="fas fa-th-large tw:mr-2"></i>-->
+<!--          {{ t('all assessments') }}-->
+<!--        </button>-->
+<!--      </div>-->
 
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
@@ -129,7 +129,7 @@
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
 
@@ -139,7 +139,7 @@
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
 
@@ -149,7 +149,7 @@
                   class="btn btn-outline-light btn-circle gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <!-- Info Button: Hover only -->

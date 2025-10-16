@@ -49,7 +49,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
-  selectedCategory = 'all';
+  selectedCategory = 'favorites';
 
   constructor(
     public dialog: MatDialog,
@@ -173,7 +173,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
-  
+
   /**
    * Toggle favorite status
    */
