@@ -144,6 +144,11 @@ export class ImportAssessmentService {
   extractAssessmentHint(message: string) {
     let hint = "";
 
+    if (typeof message !== 'string') {
+      return;
+    }
+
+
     // We could use regex here, but this works.
     let firstSplit = message.split("- ");
     let firstString = firstSplit[1];
