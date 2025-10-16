@@ -27,7 +27,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
 import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
-import { Observable } from 'rxjs';
+import { filter, Observable, take, timeout } from 'rxjs';
 import { tap } from 'rxjs/operators';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -90,6 +90,36 @@ export class MaturityService {
   ) {
     this.cmmcData = null;
 
+    // Defer API calls until config is loaded
+    this.initializeGroupings();
+  }
+
+  /**
+   * Initialize groupings by loading MVRA and CIS titles.
+   * Waits for config to be loaded before making API calls.
+   */
+  private initializeGroupings() {
+    // Check if config is already loaded
+    if (this.configSvc.apiUrl) {
+      this.loadGroupings();
+    } else {
+      // Wait for config to load via observable with timeout
+      this.configSvc.configReady$
+        .pipe(
+          filter(ready => ready === true),
+          take(1),
+          timeout(10000) // 10 second timeout
+        )
+        .subscribe({
+          next: () => this.loadGroupings(),
+          error: (err) => {
+            console.error('Timeout waiting for config to load in MaturityService', err);
+          }
+        });
+    }
+  }
+
+  private loadGroupings() {
     // get MVRA grouping titles
     this.getGroupingTitles(9).subscribe((l: any[]) => {
       this.mvraGroupings = l;
