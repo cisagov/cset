@@ -31,6 +31,7 @@ import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
 import { QuestionsService } from '../questions.service';
 import { ConstantsService } from '../constants.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 export interface NavTreeNode {
@@ -83,6 +84,28 @@ export class NavigationService implements OnDestroy, OnInit {
    * Defines the grouping or question to scroll to when "resuming"
    */
   resumeQuestionsTarget: string | null = null;
+
+  /**
+   * Observable that emits true when the workflow XML is loaded and navigation tree is built.
+   * Components should wait for this before attempting to set current page or navigate.
+   */
+  private workflowReadySubject = new BehaviorSubject<boolean>(false);
+  public workflowReady$ = this.workflowReadySubject.asObservable();
+
+  /**
+   * Tracks whether the workflow XML has finished loading.
+   */
+  private workflowReady = false;
+
+  /**
+   * Tracks requests to set the current page that arrive before the workflow is ready.
+   */
+  private pendingCurrentPage: Array<{ id: string; opts?: { suppressNavigation?: boolean; source?: string } }> = [];
+
+  /**
+   * Set to track warned workflow IDs to avoid duplicate console warnings
+   */
+  private warnedIds = new Set<string>();
 
 
 
@@ -159,6 +182,11 @@ export class NavigationService implements OnDestroy, OnInit {
    *
    */
   setWorkflow(name: string) {
+    this.workflowReady = false;
+    this.workflowReadySubject.next(false);
+    this.pendingCurrentPage = [];
+    this.warnedIds.clear();
+
     const url = 'assets/navigation/workflow-' + name + '.xml';
     this.http.get(url, { responseType: 'text' }).subscribe((xml: string) => {
 
@@ -188,6 +216,11 @@ export class NavigationService implements OnDestroy, OnInit {
 
       // build the sidenav tree
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
+
+      // Signal that the workflow is ready
+      this.workflowReady = true;
+      this.workflowReadySubject.next(true);
+      this.flushPendingCurrentPage();
     },
       (err: HttpErrorResponse) => {
         console.error(err);
@@ -455,10 +488,37 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   /**
-   *
+   * Checks if a workflow element exists.
+   * @param id The workflow element ID to check
+   * @returns true if the element exists in the workflow
    */
-  setCurrentPage(id: string) {
-    this.navTreeSvc.setCurrentPage(id);
+  hasElement(id: string): boolean {
+    if (!id || !this.workflow) {
+      return false;
+    }
+    return !!this.workflow.getElementById(id);
+  }
+
+  /**
+   * Sets the current page in the navigation tree.
+   * @param id The workflow element ID
+   * @param opts Optional configuration
+   * @param opts.suppressNavigation If true, skip router navigation (for URL-driven sync)
+   * @param opts.source Source of the setCurrentPage call for debugging
+   */
+  setCurrentPage(id: string, opts?: { suppressNavigation?: boolean; source?: string }) {
+    // Guard: empty ID
+    if (!id) {
+      return;
+    }
+
+    // Defer if the workflow has not finished loading
+    if (!this.workflowReady || !this.workflow) {
+      this.enqueuePendingCurrentPage(id, opts);
+      return;
+    }
+
+    this.applyCurrentPage(id, opts);
   }
 
   /**
@@ -466,6 +526,60 @@ export class NavigationService implements OnDestroy, OnInit {
    */
   clearNoMatterWhat() {
     this.navTreeSvc.clearNoMatterWhat();
+  }
+
+  private enqueuePendingCurrentPage(id: string, opts?: { suppressNavigation?: boolean; source?: string }) {
+    if (!id) {
+      return;
+    }
+
+    const existingIndex = this.pendingCurrentPage.findIndex(item => item.id === id);
+    const entry = { id, opts };
+
+    if (existingIndex >= 0) {
+      this.pendingCurrentPage[existingIndex] = entry;
+    } else {
+      this.pendingCurrentPage.push(entry);
+    }
+  }
+
+  private flushPendingCurrentPage() {
+    if (!this.pendingCurrentPage.length) {
+      return;
+    }
+
+    const pending = [...this.pendingCurrentPage];
+    this.pendingCurrentPage = [];
+
+    pending.forEach(item => {
+      this.applyCurrentPage(item.id, item.opts);
+    });
+  }
+
+  private applyCurrentPage(id: string, _opts?: { suppressNavigation?: boolean; source?: string }) {
+    if (!id) {
+      return;
+    }
+
+    if (!this.workflowReady || !this.workflow) {
+      this.enqueuePendingCurrentPage(id, _opts);
+      return;
+    }
+
+    if (!this.hasElement(id)) {
+      if (!this.warnedIds.has(id)) {
+        console.warn(`No workflow element found for id '${id}'`);
+        this.warnedIds.add(id);
+      }
+      return;
+    }
+
+    // No-op if already on this page
+    if (this.navTreeSvc.currentPage === id) {
+      return;
+    }
+
+    this.navTreeSvc.setCurrentPage(id);
   }
 
   /**
