@@ -145,7 +145,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       return this.gallerySvc.rows.reduce((acc, row) => {
         return acc.concat(row.galleryItems || []);
       }, []);
-    }  if (this.selectedCategory === 'favorites') {
+    } if (this.selectedCategory === 'favorites') {
       return this.gallerySvc.rows.reduce((acc, row) => {
         const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
         return acc.concat(favoriteItems);
@@ -173,6 +173,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
+  
   /**
    * Toggle favorite status
    */
@@ -185,6 +186,15 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       () => {
         // Update local state immediately
         card.isFavorite = newFavoriteStatus;
+
+        // update the local model wherever that card occurs
+        this.gallerySvc.galleryData.rows.forEach((row: any) => {
+          row.galleryItems.forEach((item: any) => {
+            if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+              item.isFavorite = card.isFavorite;
+            }
+          });
+        });
 
         console.log(`Favorite toggled: ${card.title} is now ${newFavoriteStatus ? 'favorited' : 'unfavorited'}`);
       },
