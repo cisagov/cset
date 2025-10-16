@@ -122,18 +122,67 @@
         </div>
 
         <!-- Card Footer -->
+<!--        <div class="card-footer"-->
+<!--             [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"-->
+<!--             style="text-align:right;">-->
+<!--          <button [matTooltip]="c.isFavorite ? t('tooltip.remove favorite') : t('tooltip.add favorite')"-->
+<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
+<!--                  class="btn btn-outline-light btn-circle gallery-btn-favorite"-->
+<!--                  (click)="toggleFavorite($event, c)"-->
+<!--                  style="margin-right:5px;">-->
+<!--            <i class="fa-solid fa-star tw:scale-125 tw:inline-block"-->
+<!--               [ngClass]="c.isFavorite ? 'tw:text-yellow-500' : ''"-->
+<!--               style="text-shadow: 0 0 3px currentColor"></i>-->
+<!--          </button>-->
+<!--          <button [matTooltip]="t('tooltip.view detail')"-->
+<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
+<!--                  class="btn btn-outline-light btn-circle gallery-btn-info"-->
+<!--                  (click)="openDialog(c)"-->
+<!--                  style="margin-right:5px;">-->
+<!--            <i class="fa-solid fa-info tw:scale-125 tw:inline-block"-->
+<!--               style="text-shadow: 0 0 3px currentColor"></i>-->
+<!--          </button>-->
+
+<!--          <button [matTooltip]="t('tooltip.create assessment')"-->
+<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
+<!--                  class="btn btn-light btn-circle gallery-btn-play"-->
+<!--                  (click)="navSvc.beginNewAssessmentGallery(c)">-->
+<!--            <i class="fa-solid fa-play"></i>-->
+<!--          </button>-->
+<!--        </div>-->
+        <!-- Card Footer -->
         <div class="card-footer"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
              style="text-align:right;">
-          <button [matTooltip]="c.isFavorite ? t('tooltip.remove favorite') : t('tooltip.add favorite')"
-                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
+          <button *ngIf="c.isFavorite && c.gallery_Item_Guid!=hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+
+          <!-- Button 2: ON hover (favorite style) -->
+          <button *ngIf="c.isFavorite && c.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+
+          <!-- Button 3: ON hover (NOT favorite - matches Info button exactly) -->
+          <button *ngIf="!c.isFavorite && c.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.add favorite')"
                   class="btn btn-outline-light btn-circle gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block"
-               [ngClass]="c.isFavorite ? 'tw:text-yellow-500' : ''"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-500"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
+          <!-- Info Button: Hover only -->
           <button [matTooltip]="t('tooltip.view detail')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
                   class="btn btn-outline-light btn-circle gallery-btn-info"
@@ -143,6 +192,7 @@
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
 
+          <!-- Play Button: Hover only -->
           <button [matTooltip]="t('tooltip.create assessment')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
                   class="btn btn-light btn-circle gallery-btn-play"
