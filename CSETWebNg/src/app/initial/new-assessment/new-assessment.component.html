@@ -120,36 +120,6 @@
             {{c.title}}
           </h6>
         </div>
-
-        <!-- Card Footer -->
-<!--        <div class="card-footer"-->
-<!--             [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"-->
-<!--             style="text-align:right;">-->
-<!--          <button [matTooltip]="c.isFavorite ? t('tooltip.remove favorite') : t('tooltip.add favorite')"-->
-<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
-<!--                  class="btn btn-outline-light btn-circle gallery-btn-favorite"-->
-<!--                  (click)="toggleFavorite($event, c)"-->
-<!--                  style="margin-right:5px;">-->
-<!--            <i class="fa-solid fa-star tw:scale-125 tw:inline-block"-->
-<!--               [ngClass]="c.isFavorite ? 'tw:text-yellow-500' : ''"-->
-<!--               style="text-shadow: 0 0 3px currentColor"></i>-->
-<!--          </button>-->
-<!--          <button [matTooltip]="t('tooltip.view detail')"-->
-<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
-<!--                  class="btn btn-outline-light btn-circle gallery-btn-info"-->
-<!--                  (click)="openDialog(c)"-->
-<!--                  style="margin-right:5px;">-->
-<!--            <i class="fa-solid fa-info tw:scale-125 tw:inline-block"-->
-<!--               style="text-shadow: 0 0 3px currentColor"></i>-->
-<!--          </button>-->
-
-<!--          <button [matTooltip]="t('tooltip.create assessment')"-->
-<!--                  [hidden]="c.gallery_Item_Guid!=hoverIndex"-->
-<!--                  class="btn btn-light btn-circle gallery-btn-play"-->
-<!--                  (click)="navSvc.beginNewAssessmentGallery(c)">-->
-<!--            <i class="fa-solid fa-play"></i>-->
-<!--          </button>-->
-<!--        </div>-->
         <!-- Card Footer -->
         <div class="card-footer"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
@@ -195,9 +165,10 @@
           <!-- Play Button: Hover only -->
           <button [matTooltip]="t('tooltip.create assessment')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                  class="btn btn-light btn-circle gallery-btn-play"
+                  class="btn btn-outline-light btn-circle gallery-btn-play"
+                  style="margin-right:5px;"
                   (click)="navSvc.beginNewAssessmentGallery(c)">
-            <i class="fa-solid fa-play"></i>
+            <i class="fa-solid fa-play tw:inline-block"></i>
           </button>
         </div>
       </div>

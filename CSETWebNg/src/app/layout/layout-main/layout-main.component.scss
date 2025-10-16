@@ -780,8 +780,8 @@ table.td-align-top td {
 
 /* override a few bootstrap classes */
 .form-container {
-  border: 1px solid #dee2e6; 
-  border-radius: .375rem; 
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
   padding: .375rem 2.25rem .375rem .75rem;
 }
 
@@ -1428,9 +1428,9 @@ div.spinner-size-20 {
 }
 
 .center-item {
-  position: fixed; 
-  top: 50%; 
-  left: 50%; 
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -4128,7 +4128,7 @@ h6.dropdown-header {
   padding: .5rem .75rem;
 }
 
-.gallery-btn-play {
+.gallery-btn-play :hover{
   color: #ffc107 !important;
 }
 
