@@ -49,7 +49,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
-  selectedCategory = 'all';
+  selectedCategory = 'favorites';
 
   constructor(
     public dialog: MatDialog,
@@ -64,7 +64,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
   }
 
   getImageSrc(src: string) {
@@ -111,21 +111,9 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   selectCategory(category: string): void {
     this.selectedCategory = category;
   }
-
-  // Add this method to get filtered items based on selected category
-  // getFilteredItems(): any[] {
-  //   if (this.selectedCategory === 'all') {
-  //     // Return all items from all categories
-  //     return this.gallerySvc.rows.reduce((acc, row) => {
-  //       return acc.concat(row.galleryItems);
-  //     }, []);
-  //   } else {
-  //     // Return items from selected category only
-  //     const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
-  //     return selectedRow ? selectedRow.galleryItems : [];
-  //   }
-  //
-  // }
+  getFavoritesCount(): number {
+    return this.getUniqueFavorites().length;
+  }
   getFilteredItems(): any[] {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
       return [];
@@ -135,7 +123,10 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       return this.gallerySvc.rows.reduce((acc, row) => {
         return acc.concat(row.galleryItems || []);
       }, []);
-    } else {
+    } if (this.selectedCategory === 'favorites') {
+      return this.getUniqueFavorites();
+    }
+    else {
       const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
       return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
     }
@@ -158,4 +149,43 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
 
+  /**
+   * Toggle favorite status
+   */
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation(); // Prevent card click or other events
+    const newFavoriteStatus = !card.isFavorite;
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        // Update local state immediately
+        card.isFavorite = newFavoriteStatus;
+        this.gallerySvc.galleryData.rows.forEach((row: any) => {
+          row.galleryItems.forEach((item: any) => {
+            if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+              item.isFavorite = card.isFavorite;
+            }
+          });
+        });
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+        alert('Failed to update favorite. Please try again.');
+      }
+    );
+  }
+  private getUniqueFavorites():any[]{
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return [];
+    }
+    const allFavorites = this.gallerySvc.rows.reduce((acc, row) => {
+      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+      return acc.concat(favoriteItems);
+    }, []);
+    const uniqueFavorite = new Map();
+    allFavorites.forEach(fav => {
+      uniqueFavorite.set(fav.gallery_Item_Guid, fav);
+    });
+
+    return Array.from(uniqueFavorite.values());
+  }
 }

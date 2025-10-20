@@ -1120,5 +1120,7 @@
     "done": "Done",
     "favorites": "Favorites"
   },
-  "categories": "Categories"
+  "categories": "Categories",
+  "all assessments": "All Assessments",
+  "favorites": "Favorites"
 }
