@@ -110,9 +110,9 @@ export class ContactItemComponent implements OnInit {
   }
 
   isEmailValid() {
-    // allow blank/null emails as valid
-    if (!this.contact.primaryEmail) {
-      return true;
+    // require non-blank email
+    if (!this.contact.primaryEmail || this.contact.primaryEmail.trim() === '') {
+      return false;
     }
     return this.emailSvc.validAddress(this.contact.primaryEmail);
   }
@@ -226,7 +226,7 @@ export class ContactItemComponent implements OnInit {
   }
 
   existsDuplicateEmail(newEmail: string) {
-    if (!newEmail) {
+    if (!newEmail || newEmail.trim() === '') {
       return false;
     }
 

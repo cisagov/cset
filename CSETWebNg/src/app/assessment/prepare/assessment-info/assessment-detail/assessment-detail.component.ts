@@ -69,7 +69,20 @@ export class AssessmentDetailComponent implements OnInit {
    */
   ngOnInit() {
     if (this.assessSvc.id()) {
-      this.getAssessmentDetail();
+      // If assessment is not loaded yet (direct URL navigation), load it first
+      if (!this.assessSvc.assessment) {
+        this.assessSvc.loadAssessment(this.assessSvc.id())
+          .then(() => {
+            this.getAssessmentDetail();
+          })
+          .catch((err) => {
+            console.error('Failed to load assessment:', err);
+            // Could also show user-friendly error message here
+            // this.dialog.showErrorMessage('Unable to load assessment. Please try again.');
+          });
+      } else {
+        this.getAssessmentDetail();
+      }
     }
 
     this.demoSvc.getDemographic().subscribe((data: any) => {
