@@ -252,7 +252,7 @@ export class MyAssessmentsComponent implements OnInit {
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
-          const isCIS=assessment?.selectedMaturityModel==='CIS';
+          const isCIS = assessment?.selectedMaturityModel === 'CIS';
 
           const progressBarHtml = isCIS ? '' : `
       <div class="tw:flex-1 tw:min-w-0">
@@ -344,28 +344,28 @@ export class MyAssessmentsComponent implements OnInit {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-              assessments.forEach((item, index, arr) => {
+            assessments.forEach((item, index, arr) => {
 
-                // determine assessment type display
-                item.type = this.determineAssessmentType(item);
-
-
-                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-                item.totalAvailableQuestionsCount =
-                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
 
 
-              });
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+              item.totalAvailableQuestionsCount =
+                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
 
-              this.sortedAssessments = assessments;
-              if (this.gridApi) {
-                this.gridApi.setGridOption('rowData', this.filteredAssessments);
-              }
-            },
+            });
+
+
+            this.sortedAssessments = assessments;
+            if (this.gridApi && !this.gridApi.isDestroyed()) {
+              this.gridApi.setGridOption('rowData', this.filteredAssessments);
+            }
+          },
             error => {
               console.error(
                 'Unable to get Assessments for ' +
@@ -623,11 +623,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportAllInProgress = false;
   }
 
-
+  /**
+   * 
+   */
   temp() {
     this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
 
+  /**
+   * 
+   */
   get filteredAssessments(): UserAssessment[] {
     if (!this.sortedAssessments) return [];
     switch (this.currentFilter) {
@@ -642,6 +647,9 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
     this.currentFilter = filter;
     if (this.gridApi) {
@@ -649,13 +657,19 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   getCompletionPercentage(assessment: UserAssessment): number {
     if (!assessment.totalAvailableQuestionsCount || assessment.totalAvailableQuestionsCount === 0) {
       return 0;
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-  // Actions cell with delete and export buttons
+
+  /**
+   * Actions cell with delete and export buttons
+   */
   actionsRenderer(params: any): string {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
@@ -699,6 +713,9 @@ export class MyAssessmentsComponent implements OnInit {
     return `<div class="tw:flex tw:h-full tw:gap-1">${buttons}</div>`;
   }
 
+  /**
+   * 
+   */
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     if (this.sortedAssessments) {
@@ -711,6 +728,9 @@ export class MyAssessmentsComponent implements OnInit {
     }, 50);
   }
 
+  /**
+   * 
+   */
   getProgressTooltip(assessment: UserAssessment): string {
     if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
       return this.tSvc.translate('welcome page.blank assessment');
@@ -723,6 +743,9 @@ export class MyAssessmentsComponent implements OnInit {
     return this.tSvc.translate('welcome page.blank assessment');
   }
 
+  /**
+   * 
+   */
   onCellClicked(event: any): void {
     const target = event.event.target;
     const actionElement = target.closest('[data-action]');
@@ -765,6 +788,9 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   toggleFavorite(assessment: UserAssessment): void {
     const newFavoriteStatus = !assessment.favorite;
 
@@ -804,6 +830,10 @@ export class MyAssessmentsComponent implements OnInit {
     // Ensure minimum height
     this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);
   }
+
+  /**
+   * 
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.calculateGridHeight();
@@ -814,13 +844,22 @@ export class MyAssessmentsComponent implements OnInit {
       }, 100);
     }
   }
+
+  /**
+   * 
+   */
   onPaginationChanged(): void {
-    if (this.gridApi) {
+    if (this.gridApi && !this.gridApi.isDestroyed()) {
       const currentPage = this.gridApi.paginationGetCurrentPage();
-      sessionStorage.setItem('cset-assessments-page', currentPage.toString());
+      if (!!currentPage) {
+        sessionStorage.setItem('cset-assessments-page', currentPage.toString());
+      }
     }
   }
 
+  /**
+   * 
+   */
   onFirstDataRendered(): void {
     // Wait for grid to fully initialize
     setTimeout(() => {
