@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using CSETWebCore.Model.Gallery;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -80,6 +81,21 @@ namespace CSETWebCore.Api.Controllers
 
                 var responseList = query.ToList();
                 return Ok(responseList);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("api/gallery/togglefavorite")]
+        public IActionResult ToggleFavorite([FromBody] FavoriteRequest request)
+        {
+            try
+            {
+                int userId = _tokenManager.GetUserId() ?? 0;
+                _stateManager.ToggleFavorite(userId, request.GalleryItemGuid, request.IsFavorite);
+                return Ok();
             }
             catch (Exception e)
             {
