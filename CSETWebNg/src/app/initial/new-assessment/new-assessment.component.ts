@@ -111,21 +111,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   selectCategory(category: string): void {
     this.selectedCategory = category;
   }
-
-  // Add this method to get filtered items based on selected category
-  // getFilteredItems(): any[] {
-  //   if (this.selectedCategory === 'all') {
-  //     // Return all items from all categories
-  //     return this.gallerySvc.rows.reduce((acc, row) => {
-  //       return acc.concat(row.galleryItems);
-  //     }, []);
-  //   } else {
-  //     // Return items from selected category only
-  //     const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
-  //     return selectedRow ? selectedRow.galleryItems : [];
-  //   }
-  //
-  // }
   getFavoritesCount(): number {
     return this.getUniqueFavorites().length;
   }
@@ -169,26 +154,18 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
    */
   toggleFavorite(event: Event, card: any): void {
     event.stopPropagation(); // Prevent card click or other events
-
     const newFavoriteStatus = !card.isFavorite;
-
     this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
       () => {
         // Update local state immediately
         card.isFavorite = newFavoriteStatus;
-
-        // update the local model wherever that card occurs
         this.gallerySvc.galleryData.rows.forEach((row: any) => {
-          console.log(row.galleryItems);
           row.galleryItems.forEach((item: any) => {
-            console.log(item);
             if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
               item.isFavorite = card.isFavorite;
             }
           });
         });
-
-        console.log(`Favorite toggled: ${card.title} is now ${newFavoriteStatus ? 'favorited' : 'unfavorited'}`);
       },
       (error) => {
         console.error('Error toggling favorite:', error);

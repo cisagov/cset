@@ -132,8 +132,6 @@
             <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-
-          <!-- Button 2: ON hover (favorite style) -->
           <button *ngIf="c.isFavorite && c.gallery_Item_Guid==hoverIndex"
                   [matTooltip]="t('tooltip.remove favorite')"
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
@@ -142,8 +140,6 @@
             <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-
-          <!-- Button 3: ON hover (NOT favorite - matches Info button exactly) -->
           <button *ngIf="!c.isFavorite && c.gallery_Item_Guid==hoverIndex"
                   [matTooltip]="t('tooltip.add favorite')"
                   class="btn btn-outline-light btn-circle gallery-btn-favorite"
@@ -152,7 +148,6 @@
             <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-yellow-400"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-          <!-- Info Button: Hover only -->
           <button [matTooltip]="t('tooltip.view detail')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
                   class="btn btn-outline-light btn-circle gallery-btn-info"
@@ -161,8 +156,6 @@
             <i class="fa-solid fa-info tw:scale-125 tw:inline-block"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-
-          <!-- Play Button: Hover only -->
           <button [matTooltip]="t('tooltip.create assessment')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
                   class="btn btn-outline-light btn-circle gallery-btn-play"
