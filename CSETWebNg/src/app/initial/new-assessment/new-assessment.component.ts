@@ -127,14 +127,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   //
   // }
   getFavoritesCount(): number {
-    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
-      return 0;
-    }
-
-    return this.gallerySvc.rows.reduce((count, row) => {
-      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
-      return count + favoriteItems.length;
-    }, 0);
+    return this.getUniqueFavorites().length;
   }
   getFilteredItems(): any[] {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
@@ -146,10 +139,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         return acc.concat(row.galleryItems || []);
       }, []);
     } if (this.selectedCategory === 'favorites') {
-      return this.gallerySvc.rows.reduce((acc, row) => {
-        const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
-        return acc.concat(favoriteItems);
-      }, []);
+      return this.getUniqueFavorites();
     }
     else {
       const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
@@ -189,7 +179,9 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
         // update the local model wherever that card occurs
         this.gallerySvc.galleryData.rows.forEach((row: any) => {
+          console.log(row.galleryItems);
           row.galleryItems.forEach((item: any) => {
+            console.log(item);
             if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
               item.isFavorite = card.isFavorite;
             }
@@ -203,5 +195,20 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         alert('Failed to update favorite. Please try again.');
       }
     );
+  }
+  private getUniqueFavorites():any[]{
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return [];
+    }
+    const allFavorites = this.gallerySvc.rows.reduce((acc, row) => {
+      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+      return acc.concat(favoriteItems);
+    }, []);
+    const uniqueFavorite = new Map();
+    allFavorites.forEach(fav => {
+      uniqueFavorite.set(fav.gallery_Item_Guid, fav);
+    });
+
+    return Array.from(uniqueFavorite.values());
   }
 }
