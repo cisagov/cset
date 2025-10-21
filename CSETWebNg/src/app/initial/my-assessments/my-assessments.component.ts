@@ -248,7 +248,7 @@ export class MyAssessmentsComponent implements OnInit {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
           const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-          const favoriteClass = assessment.favorite ? 'tw:text-red-500' : 'tw:text-gray-400';
+          const favoriteClass = assessment.favorite ? 'tw:text-amber-500' : 'tw:text-gray-400';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
@@ -271,9 +271,9 @@ export class MyAssessmentsComponent implements OnInit {
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-              <span class="material-icons text-lg ${favoriteClass}">
+               <i class="fa-solid fa-star tw:scale-125 ${favoriteClass}">
                 ${favoriteIcon}
-              </span>
+              </i>
             </button>
 
             <span class="cursor-pointer cset-icons-flag-dark tw:text-lg p-1 ${flagClass}"
@@ -624,14 +624,14 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   temp() {
     this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
 
   /**
-   * 
+   *
    */
   get filteredAssessments(): UserAssessment[] {
     if (!this.sortedAssessments) return [];
@@ -648,7 +648,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
     this.currentFilter = filter;
@@ -658,7 +658,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   getCompletionPercentage(assessment: UserAssessment): number {
     if (!assessment.totalAvailableQuestionsCount || assessment.totalAvailableQuestionsCount === 0) {
@@ -714,7 +714,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
@@ -729,7 +729,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   getProgressTooltip(assessment: UserAssessment): string {
     if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
@@ -744,7 +744,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   onCellClicked(event: any): void {
     const target = event.event.target;
@@ -789,7 +789,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   toggleFavorite(assessment: UserAssessment): void {
     const newFavoriteStatus = !assessment.favorite;
@@ -832,7 +832,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
@@ -846,7 +846,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   onPaginationChanged(): void {
     if (this.gridApi && !this.gridApi.isDestroyed()) {
@@ -858,7 +858,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   onFirstDataRendered(): void {
     // Wait for grid to fully initialize
