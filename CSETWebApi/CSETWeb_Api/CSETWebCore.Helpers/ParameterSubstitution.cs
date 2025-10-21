@@ -111,7 +111,7 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<ParameterToken> GetDefaultParametersForAssessment(List<RequirementPlus> reqs)
+        public List<ParameterToken> GetDefaultParametersForAssessment(List<RequirementPlus> reqs, string lang)
         {
             List<ParameterToken> pTokens = [];
 
@@ -122,7 +122,8 @@ namespace CSETWebCore.Helpers
             // get the 'base' parameter values (parameter_name) for the requirement
             var qBaseLevel = from p in _context.PARAMETERS
                              join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                             where requirementIds.Contains(r.Requirement_Id)
+                             where requirementIds.Contains(r.Requirement_Id) 
+                                && p.Lang == lang
                              select new { p, r };
 
             foreach (var b in qBaseLevel)
@@ -134,7 +135,8 @@ namespace CSETWebCore.Helpers
             var qAssessLevel = from pa in _context.PARAMETER_ASSESSMENT
                                join p in _context.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
                                join pr in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals pr.Parameter_Id
-                               where pa.Assessment_ID == _assessmentId
+                               where pa.Assessment_ID == _assessmentId 
+                                && p.Lang == lang
                                 && requirementIds.Contains(pr.Requirement_Id)
                                select new { p, pa, pr };
 

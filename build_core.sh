@@ -80,7 +80,7 @@ ts=$(date +%Y-%m-%d_%H.%M.%S)
 
 echo 'Beginning asynchronous build processes...'
 
-echo "Build folder timestamp: $ts"
+echo -e "\nBuild folder timestamp: $ts\n"
 
 build_ng $ts | sed "s/^/NG BUILD: /" &
 
@@ -102,4 +102,5 @@ echo 'All build processes complete.'
 date
 
 echo 'CSETWeb BUILD COMPLETE'
+echo -e "\nBuild folder timestamp: $ts\n"
 
