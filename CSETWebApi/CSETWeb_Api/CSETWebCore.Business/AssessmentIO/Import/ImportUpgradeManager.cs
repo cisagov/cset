@@ -37,8 +37,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             upgraders.Add("10.0.1.0", new CSET_10_0_1_to_10_1_0_Upgrade());
             upgraders.Add("10.1.0.0", new CSET_10_1_0_to_10_1_1_Upgrade());
             upgraders.Add("10.1.1.0", new CSET_10_1_1_to_10_2_0_Upgrade());
+            upgraders.Add("10.2.0.0", new CSET_10_2_0_to_10_3_1_Upgrade());
             upgraders.Add("10.3.0.0", new CSET_10_2_0_to_10_3_1_Upgrade());
-            upgraders.Add("10.3.1.0", null);
+            upgraders.Add("10.3.1.0", new CSET_10_3_1_to_12_4_0_3_Upgrade());  // New upgrader needed
+            upgraders.Add("12.4.0.3", new CSET_12_4_0_3_to_12_4_0_4_Upgrade()); // New upgrader needed
+            upgraders.Add("12.4.0.4", null); // Terminal version
         }
 
 
