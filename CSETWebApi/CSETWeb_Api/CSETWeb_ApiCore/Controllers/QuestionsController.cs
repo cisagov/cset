@@ -530,12 +530,14 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ParametersForAssessment")]
         public IActionResult GetDefaultParametersForAssessment()
         {
+            var lang = _token.GetCurrentLanguage();
+
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
             var controls = rm.GetControls().Requirements.ToList();
 
             var parmSub = new ParameterSubstitution(_context, _token);
 
-            return Ok(parmSub.GetDefaultParametersForAssessment(controls));
+            return Ok(parmSub.GetDefaultParametersForAssessment(controls, lang));
         }
 
 

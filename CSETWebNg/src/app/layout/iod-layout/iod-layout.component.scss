@@ -2246,10 +2246,6 @@ input[type="checkbox"]+label {
   padding: 3px 0;
 }
 
-.question-row ul {
-  list-style: unset;
-}
-
 .no-bottom-border {
   border-bottom: none;
 }
@@ -2977,6 +2973,20 @@ table.assessment-documents th {
   font-size: 1rem;
   color: $primary-550;
   margin-bottom: .2rem;
+}
+
+ol.alpha-bracket {
+  list-style-type: none;
+  counter-reset: list-counter;
+}
+
+ol.alpha-bracket li {
+  counter-increment: list-counter;
+  margin-bottom: 5px;
+}
+
+ol.alpha-bracket li::before {
+  content: "[" counter(list-counter, lower-alpha) "] ";
 }
 
 
