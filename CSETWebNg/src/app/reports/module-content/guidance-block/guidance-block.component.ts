@@ -33,7 +33,7 @@ import { Question } from '../../../models/questions.model';
 export class GuidanceBlockComponent implements OnInit {
 
   @Input('question')
-  q: Question;
+  q!: Question;
 
   
 
