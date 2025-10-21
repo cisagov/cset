@@ -43,6 +43,19 @@ internal class CSET_10_2_0_to_10_3_1_Upgrade : ICSETJSONFileUpgrade
     public string ExecuteUpgrade(string json)
     {
         var j = JObject.Parse(json);
+        var documentFile = j["jDOCUMENT_FILE"];
+        foreach (var demo in documentFile)
+        {
+            if (demo["CreatedTimestamp"] == null || demo["CreatedTimestamp"].Type == JTokenType.Null)
+            {
+                demo["CreatedTimestamp"] = new DateTime(1900, 1, 1);
+            }
+            if (demo["UpdatedTimestamp"] == null || demo["UpdatedTimestamp"].Type == JTokenType.Null)
+            {
+                demo["UpdatedTimestamp"] = new DateTime(1900, 1, 1);
+            }
+        }
+        
 
         // Get the old demographics data
         var demographics = j["jDEMOGRAPHICS"];

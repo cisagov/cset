@@ -5,6 +5,11 @@
 // 
 //////////////////////////////// 
 
+using System;
+using System.Runtime.InteropServices.JavaScript;
+using ClosedXML.Excel;
+using Newtonsoft.Json.Linq;
+
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
     internal class CSET_10_1_0_to_10_1_1_Upgrade : ICSETJSONFileUpgrade
@@ -21,7 +26,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public string ExecuteUpgrade(string json)
         {
-            return json;
+            var j = JObject.Parse(json);
+            var documentFile = j["jDOCUMENT_FILE"];
+            foreach (var demo in documentFile)
+            {
+                if (demo["CreatedTimestamp"] == null || demo["CreatedTimestamp"].Type == JTokenType.Null)
+                {
+                    demo["CreatedTimestamp"] = new DateTime(1900, 1, 1);
+                }
+                if (demo["UpdatedTimestamp"] == null || demo["UpdatedTimestamp"].Type == JTokenType.Null)
+                {
+                    demo["UpdatedTimestamp"] = new DateTime(1900, 1, 1);
+                }
+            }
+
+            return j.ToString();
         }
 
         /// <summary>
