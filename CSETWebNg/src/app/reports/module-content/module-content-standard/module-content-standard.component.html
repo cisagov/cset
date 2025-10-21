@@ -35,7 +35,7 @@
 
             <div [innerHTML]="questionsSvc.formatParameters(req.requirementText)" class="mb-4"></div>
 
-            <app-guidance-block [supplementalInfo]="req.supplementalInfo"
+            <app-guidance-block [question]="req"
                 *ngIf="reportSvc.showGuidance"></app-guidance-block>
 
             <app-references-block [sourceDocs]="req.sourceDocs" [additionalDocs]="req.additionalDocs"
