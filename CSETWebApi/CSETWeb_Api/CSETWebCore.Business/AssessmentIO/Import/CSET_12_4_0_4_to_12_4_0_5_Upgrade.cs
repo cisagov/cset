@@ -45,7 +45,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
 
     public string ExecuteUpgrade(string json)
     {
-        // Document file column changes
+        
         var j = JObject.Parse(json);
         // Update to DETAILS_DEMOGRAPHICS from DEMOGRAPHICS
         var demographics = j["jDEMOGRAPHICS"];
