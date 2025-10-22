@@ -271,7 +271,7 @@ export class MyAssessmentsComponent implements OnInit {
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-               <i class="fa-solid fa-star tw:scale-125 ${favoriteClass}">
+               <i class="fa-solid fa-star ${favoriteClass}">
                 ${favoriteIcon}
               </i>
             </button>
