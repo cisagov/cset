@@ -55,7 +55,7 @@ namespace CSETWebCore.Business.Observations
             List<Observation> observations = new List<Observation>();
 
             var obsList = _context.FINDING
-                .Where(x => x.Assessment_ID == _assessmentId && x.Answer_Id == null)
+                .Where(x => x.Assessment_Id == _assessmentId && x.Answer_Id == null)
                 .Include(i => i.Importance)
                // .Include(k => k.FINDING_CONTACT)
                 .ToList();
@@ -168,6 +168,11 @@ namespace CSETWebCore.Business.Observations
                 webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
                 webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
                 obs.Observation_Contacts.Add(webContact);
+            }
+
+            if (obs.Assessment_Id == null)
+            {
+                obs.AnswerLevel = true;
             }
 
             return obs;

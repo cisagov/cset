@@ -112,8 +112,7 @@
                    id="self-assessment"
                    [(ngModel)]="demographicData['selfAssessment']"
                    (change)="update($event)"
-                   class="tw:toggle"
-                   [attr.style]="'--color-base-100: ' + (demographicData['selfAssessment'] ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData['selfAssessment'] ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+                   class="tw:toggle">
           </div>
         </div>
         <div *ngIf="showOrganizationName()" class="mb-3">

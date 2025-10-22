@@ -37,10 +37,12 @@ import { ModuleBehavior } from '../../../models/module-config.model';
   standalone: false
 })
 export class GroupingBlockComponent implements OnInit {
-  @Input('grouping') grouping: QuestionGrouping;
+  @Input('grouping') grouping!: QuestionGrouping;
 
-  modelId: number;
-  moduleBehavior: ModuleBehavior;
+  modelId?: number;
+  moduleBehavior!: ModuleBehavior;
+
+  HIDEABLE_LEVELS = [0, 1];
 
   /**
    *
@@ -57,7 +59,7 @@ export class GroupingBlockComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.modelId = this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelId;
+    this.modelId = this.maturityFilteringService.assesmentSvc.assessment.maturityModel?.modelId;
     this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
   }
 
@@ -89,7 +91,8 @@ export class GroupingBlockComponent implements OnInit {
   isGroupingNameVisible(): boolean {
     // look for a behavior to suppress the grouping name by its type
     if (this.moduleBehavior?.hasOwnProperty('hideTopLevelGroupingName')) {
-      if ((this.moduleBehavior.hideTopLevelGroupingName ?? false) && this.grouping.groupingLevel == 1) {
+      if ((this.moduleBehavior.hideTopLevelGroupingName ?? false) 
+          && this.HIDEABLE_LEVELS.includes(this.grouping.groupingLevel)) {
         return false;
       }
     }

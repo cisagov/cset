@@ -32,7 +32,9 @@ import { TranslocoService } from '@jsverse/transloco';
   providedIn: 'root'
 })
 export class AnalysisService {
-  private apiUrl: string;
+  private get apiUrl(): string {
+    return this.configSvc.apiUrl + "analysis/";
+  }
 
   constructor(
     private http: HttpClient,
@@ -40,7 +42,6 @@ export class AnalysisService {
     private chartSvc: ChartService,
     private tSvc: TranslocoService
   ) {
-    this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
 
   getAnswerColors() {

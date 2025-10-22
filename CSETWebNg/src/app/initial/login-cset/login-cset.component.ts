@@ -109,6 +109,7 @@ export class LoginCsetComponent implements OnInit {
       .login(this.model.email, this.model.password)
       .subscribe(
         data => {
+          sessionStorage.removeItem('cset-assessments-page');
           if (this.assessmentId) {
             this.assessSvc
               .getAssessmentToken(this.assessmentId)

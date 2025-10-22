@@ -25,6 +25,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { SelectableGroupingsService } from '../../../services/selectable-groupings.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-cre-final-report-grid',
@@ -34,12 +35,14 @@ import { SelectableGroupingsService } from '../../../services/selectable-groupin
 })
 export class CreFinalReportGridComponent implements OnInit {
 
-  @Input() modelId: number;
+  @Input() modelId!: number;
 
   model: any;
-  groupings: [];
+  groupings!: [];
 
-  modelSupportSelectableGroupings = false;
+  modelSupportsSelectableGroupings = false;
+
+  dictHeatmaps: Record<number, any> = {};
 
 
   /**
@@ -55,12 +58,20 @@ export class CreFinalReportGridComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.modelSupportSelectableGroupings = this.selectableGroupingsSvc.modelsThatSupportSelectableGroupings.includes(this.modelId);
+    this.modelSupportsSelectableGroupings = this.selectableGroupingsSvc.modelsThatSupportSelectableGroupings.includes(this.modelId);
 
-    this.reportSvc.getModelContent(this.modelId.toString()).subscribe((x) => {
-      this.model = x;
-
+    forkJoin({
+      modelContent: this.reportSvc.getModelContent(this.modelId.toString()),
+      heatmap: this.reportSvc.getHeatmap(this.modelId)
+    }).subscribe(({ modelContent, heatmap }) => {
+      // Handle model content
+      this.model = modelContent;
       this.groupings = this.model?.groupings;
+
+      // build heatmap dictionary
+      heatmap.forEach(y => {
+        this.dictHeatmaps[y.groupingId] = y;
+      });
     });
   }
 
@@ -80,7 +91,7 @@ export class CreFinalReportGridComponent implements OnInit {
         return 'red-score';
       case 'U':
       case null:
-        return 'default-score';
+        return 'unanswered-score';
     }
   }
 }

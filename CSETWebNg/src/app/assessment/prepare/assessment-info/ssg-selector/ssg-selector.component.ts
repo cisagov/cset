@@ -11,7 +11,7 @@ import { SsgService } from '../../../../services/ssg.service';
 export class SsgSelectorComponent implements OnChanges {
 
   @Input('value') ssgSectorIds: number[] = [];
-  @Input('sectorList') inputSectorList: any[];
+  @Input('sectorList') inputSectorList!: any[];
 
   @Output('valueChange') valueChange = new EventEmitter<number[]>();
 
@@ -66,9 +66,12 @@ export class SsgSelectorComponent implements OnChanges {
    * 
    */
   isSectorChecked(sectorId: number): boolean {
+    const relatedSectorId = this.getRelatedSector(sectorId);
+
     if (this.ssgSectorIds) {
-      return this.ssgSectorIds.includes(sectorId);
+      return (this.ssgSectorIds.includes(sectorId) || this.ssgSectorIds.includes(relatedSectorId));
     }
+
     return false;
   }
 
@@ -83,8 +86,19 @@ export class SsgSelectorComponent implements OnChanges {
       this.ssgSectorIds.push(newSectorId);
     } else {
       this.ssgSectorIds = this.ssgSectorIds?.filter(n => n !== newSectorId) ?? [];
+      // clear out its sister
+      this.ssgSectorIds = this.ssgSectorIds?.filter(n => n !== this.getRelatedSector(newSectorId));
     }
 
     this.valueChange.emit(this.ssgSectorIds);
+  }
+
+  /**
+   * 
+   * @param num 
+   * @returns 
+   */
+  getRelatedSector(num: number): number {
+    return this.ssgSvc.relatedSectors[num];
   }
 }

@@ -248,36 +248,39 @@ export class MyAssessmentsComponent implements OnInit {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
           const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-          const favoriteClass = assessment.favorite ? 'tw:text-red-500' : 'tw:text-gray-400';
+          const favoriteClass = assessment.favorite ? 'tw:text-amber-500' : 'tw:text-gray-400';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
+          const isCIS = assessment?.selectedMaturityModel === 'CIS';
 
+          const progressBarHtml = isCIS ? '' : `
+      <div class="tw:flex-1 tw:min-w-0">
+        <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
+                  value="${percentage}"
+                  max="100"
+                  title="${tooltipText}"></progress>
+      </div>
+      <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
+        ${percentage}%
+      </span>
+    `;
           return `
           <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
             <button class="btn btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-              <span class="material-icons text-lg ${favoriteClass}">
+               <i class="fa-solid fa-star tw:scale-125 ${favoriteClass}">
                 ${favoriteIcon}
-              </span>
+              </i>
             </button>
 
             <span class="cursor-pointer cset-icons-flag-dark tw:text-lg p-1 ${flagClass}"
                   title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
             </span>
+             ${progressBarHtml}
 
-            <div class="tw:flex-1 tw:min-w-0">
-              <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
-                        value="${percentage}"
-                        max="100"
-                        title="${tooltipText}"></progress>
-            </div>
-
-            <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
-              ${percentage}%
-            </span>
           </div>
         `;
         },
@@ -359,6 +362,9 @@ export class MyAssessmentsComponent implements OnInit {
 
 
             this.sortedAssessments = assessments;
+            if (this.gridApi && !this.gridApi.isDestroyed()) {
+              this.gridApi.setGridOption('rowData', this.filteredAssessments);
+            }
           },
             error => {
               console.error(
@@ -395,6 +401,10 @@ export class MyAssessmentsComponent implements OnInit {
    * If it can't find a defintion, just use the selected model's title.
    */
   getMaturityModelShortName(a: UserAssessment) {
+    if (!a.selectedMaturityModel) {
+      return '[unknown]';
+    }
+
     const key = `modules.${a.selectedMaturityModel.toLowerCase()}.model short title`;
     const val = this.tSvc.translate(key);
     if (key == val) {
@@ -613,11 +623,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportAllInProgress = false;
   }
 
-
+  /**
+   *
+   */
   temp() {
     this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
 
+  /**
+   *
+   */
   get filteredAssessments(): UserAssessment[] {
     if (!this.sortedAssessments) return [];
     switch (this.currentFilter) {
@@ -632,17 +647,29 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   */
   setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
     this.currentFilter = filter;
+    if (this.gridApi) {
+      this.gridApi.setGridOption('rowData', this.filteredAssessments);
+    }
   }
 
+  /**
+   *
+   */
   getCompletionPercentage(assessment: UserAssessment): number {
     if (!assessment.totalAvailableQuestionsCount || assessment.totalAvailableQuestionsCount === 0) {
       return 0;
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-  // Actions cell with delete and export buttons
+
+  /**
+   * Actions cell with delete and export buttons
+   */
   actionsRenderer(params: any): string {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
@@ -686,14 +713,24 @@ export class MyAssessmentsComponent implements OnInit {
     return `<div class="tw:flex tw:h-full tw:gap-1">${buttons}</div>`;
   }
 
+  /**
+   *
+   */
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
+    if (this.sortedAssessments) {
+      params.api.setGridOption('rowData', this.filteredAssessments);
+    }
+
     params.api.sizeColumnsToFit();
     setTimeout(() => {
       this.calculateGridHeight();
     }, 50);
   }
 
+  /**
+   *
+   */
   getProgressTooltip(assessment: UserAssessment): string {
     if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
       return this.tSvc.translate('welcome page.blank assessment');
@@ -706,6 +743,9 @@ export class MyAssessmentsComponent implements OnInit {
     return this.tSvc.translate('welcome page.blank assessment');
   }
 
+  /**
+   *
+   */
   onCellClicked(event: any): void {
     const target = event.event.target;
     const actionElement = target.closest('[data-action]');
@@ -716,6 +756,10 @@ export class MyAssessmentsComponent implements OnInit {
 
     switch (action) {
       case 'navigate':
+        if (actionElement) {
+          actionElement.innerHTML = `<span class="tw:loading tw:loading-spinner tw:loading-sm"></span> ${actionElement.textContent}`;
+          actionElement.style.pointerEvents = 'none';
+        }
         this.navSvc.beginAssessment(assessmentId);
         break;
 
@@ -744,6 +788,9 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   */
   toggleFavorite(assessment: UserAssessment): void {
     const newFavoriteStatus = !assessment.favorite;
 
@@ -783,6 +830,10 @@ export class MyAssessmentsComponent implements OnInit {
     // Ensure minimum height
     this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);
   }
+
+  /**
+   *
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.calculateGridHeight();
@@ -792,5 +843,36 @@ export class MyAssessmentsComponent implements OnInit {
         this.gridApi.sizeColumnsToFit();
       }, 100);
     }
+  }
+
+  /**
+   *
+   */
+  onPaginationChanged(): void {
+    if (this.gridApi && !this.gridApi.isDestroyed()) {
+      const currentPage = this.gridApi.paginationGetCurrentPage();
+      if (!!currentPage) {
+        sessionStorage.setItem('cset-assessments-page', currentPage.toString());
+      }
+    }
+  }
+
+  /**
+   *
+   */
+  onFirstDataRendered(): void {
+    // Wait for grid to fully initialize
+    setTimeout(() => {
+      const savedPage = sessionStorage.getItem('cset-assessments-page');
+      if (savedPage && this.gridApi) {
+        const pageNumber = parseInt(savedPage);
+        const totalPages = this.gridApi.paginationGetTotalPages();
+        if (pageNumber >= 0 && pageNumber < totalPages) {
+          this.gridApi.paginationGoToPage(pageNumber);
+        } else {
+          console.error('Invalid page number, staying on page 0');
+        }
+      }
+    }, 200);
   }
 }

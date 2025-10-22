@@ -23,13 +23,8 @@
 
 <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-sheet-a [title]="t('reports.core.cis.deficiencies.report title')" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-        [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
+    <app-cover-page [response]="response" [title]="t('reports.core.cis.deficiencies.report title')" />
 
-    <div class="page-break">
-        <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
-    </div>
 
     <div class="page-break">
     </div>

@@ -31,8 +31,6 @@ import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import { SwiperOptions } from 'swiper/types';
-
 
 @Component({
   selector: 'app-search-page',
@@ -42,8 +40,6 @@ import { SwiperOptions } from 'swiper/types';
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
   @Input() searchQuery: string;
-
-  swiperInstance: any;
 
   hoverIndex = -1;
 
@@ -115,7 +111,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             // create a plainText property for the elipsis display in case a description has HTML markup
             dom.innerHTML = item.description;
             item.plainText = dom.innerText;
-
             this.galleryItems.push(item);
             this.galleryItemsTmp.push(item);
           })
@@ -139,57 +134,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.initializeSwipers();
     this.checkNavigation();
   }
 
   private initializeSwipers(): void {
-    // Use querySelectorAll to get all swiper containers
-    const swiperEls = document.querySelectorAll('swiper-container');
-    const swiperConfig: SwiperOptions = {
-      slidesPerView: 1,
-      spaceBetween: 7,
-      slidesPerGroup: 1,
-      breakpoints: {
-        200: {
-          slidesPerView: 1,
-        },
-        620: {
-          slidesPerView: 2,
-        },
-        800: {
-          slidesPerView: 3,
-        },
-        1220: {
-          slidesPerView: 4,
-        },
-        1460: {
-          slidesPerView: 5
-        }
-      },
-      on: {
-        resize: () => {
-        }
-      }
-    };
 
-    // Configure each swiper instance
-    swiperEls.forEach(swiperEl => {
-      // Skip already initialized swipers
-      if (swiperEl.hasAttribute('data-initialized')) {
-        return;
-      }
-
-      // Apply configuration to each swiper element
-      Object.assign(swiperEl, swiperConfig);
-
-      // Mark as initialized
-      swiperEl.setAttribute('data-initialized', 'true');
-
-      // Initialize this particular swiper instance
-      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
-      swiperEl.initialize();
-    });
   }
 
   shuffleCards(i: number) {
@@ -210,24 +159,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   checkNavigation() {
-    /*let swiperPrev = document.getElementsByClassName('swiper-button-prev');
-    let swiperNext = document.getElementsByClassName('swiper-button-next');
-    if (window.innerWidth < 620) {
-
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].setAttribute('style', 'display:none');
-          swiperNext[i].setAttribute('style', 'display:none');
-        }
-      }
-    } else {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].removeAttribute('style');
-          swiperNext[i].removeAttribute('style');
-        }
-      }
-    }*/
   }
 
   showButtons(show: boolean) {
@@ -301,5 +232,28 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       panelClass: 'new-assessment-dialog-responsive',
       data: data
     });
+  }
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation();
+    const newFavoriteStatus = !card.isFavorite;
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        card.isFavorite = newFavoriteStatus;
+
+        this.galleryItems.forEach((item: any) => {
+          if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+            item.isFavorite = card.isFavorite;
+          }
+        });
+        this.galleryItemsTmp.forEach((tmpItem: any) => {
+          if (tmpItem.item.gallery_Item_Guid == card.gallery_Item_Guid) {
+            tmpItem.item.isFavorite = card.isFavorite;
+          }
+        });
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+      }
+    );
   }
 }

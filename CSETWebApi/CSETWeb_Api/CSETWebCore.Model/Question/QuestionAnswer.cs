@@ -35,7 +35,7 @@ namespace CSETWebCore.Model.Question
         public List<ParameterToken> ParmSubs { get; set; }
         public string StdRefId { get; set; }
 
-        public bool IsAnswerable { get; set; }
+        public bool IsAnswerable { get; set; } = true;
 
         public string Answer { get; set; }
 
@@ -107,7 +107,7 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// CPG Practice description
         /// </summary>
-        public string SecurityPractice {  get; set; }
+        public string SecurityPractice { get; set; }
 
         /// <summary>
         /// CPG Outcome

@@ -22,7 +22,7 @@
 -------------------------->
 <ng-container *transloco="let t">
   <div class="tw:container tw:mx-auto p-6 tw:max-w-7xl">
-    <div *ngIf="sortedAssessments == null">
+    <div *ngIf="sortedAssessments == null" class="center-item">
       <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
@@ -229,7 +229,6 @@
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
-              [rowData]="filteredAssessments"
               [columnDefs]="columnDefs"
               [defaultColDef]="defaultColDef"
               [pagination]="true"
@@ -238,6 +237,8 @@
               [rowHeight]="50"
               [headerHeight]="50"
               (gridReady)="onGridReady($event)"
+              (paginationChanged)="onPaginationChanged()"
+              (firstDataRendered)="onFirstDataRendered()"
               (cellClicked)="onCellClicked($event)"
               [style.height.px]="dynamicGridHeight"
               style="width: 100%">
@@ -280,7 +281,7 @@
                    class="btn btn-secondary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center">
               <span class="mr-2 cset-icons-import"></span>
               {{ t('welcome page.import assessment') }}
-              <input type="file" class="hidden" accept="{{ importExtensions }}"
+              <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
                      (change)="importAssessmentFile($event)">
             </label>
           </div>
@@ -307,7 +308,7 @@
                  class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="hidden" accept="{{ importExtensions }},.cset"
+            <input type="file" class="tw:hidden" accept="{{ importExtensions }},.cset"
                    (change)="importAssessmentFile($event)">
           </label>
 
@@ -316,7 +317,7 @@
                  class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="hidden" accept="{{ importExtensions }}"
+            <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
                    (change)="importAssessmentFile($event)">
           </label>
         </div>

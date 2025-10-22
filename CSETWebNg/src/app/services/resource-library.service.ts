@@ -26,23 +26,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { ReferenceDocLink } from '../models/question-extras.model';
 
-const headers = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  params: new HttpParams()
-};
 
 /**
  * A service that provides everything needed for getting documents.
  */
 @Injectable()
 export class ResourceLibraryService {
-  apiUrl: string;
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    if (this.configSvc.apiUrl) {
-      this.apiUrl = this.configSvc.apiUrl;
-    } else {
-      this.apiUrl = 'http://localhost:46000/api/';
-    }
   }
 
   /**

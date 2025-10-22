@@ -591,7 +591,6 @@ namespace CSETWebCore.Api.Controllers
 
             data.DocumentLibraryEntries = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
-            data.FinancialQuestionsTable = _report.GetFinancialQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();

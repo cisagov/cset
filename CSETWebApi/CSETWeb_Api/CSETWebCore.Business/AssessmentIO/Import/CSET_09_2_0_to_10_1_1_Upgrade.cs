@@ -4,18 +4,18 @@
 // 
 // 
 //////////////////////////////// 
+
 using System;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
-    internal class CSET_10_2_0_to_AutoUpgrade : ICSETJSONFileUpgrade
+    internal class CSET_09_2_0_to_10_1_1_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>
         /// this is the string we will be upgrading to
         /// </summary>
-        static string versionString = "12.1.6.0";
+        static string versionString = "10.1.1";
 
         /// <summary>
         /// 
@@ -24,12 +24,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public string ExecuteUpgrade(string json)
         {
-            JObject oAssessment = JObject.Parse(json);
-            //deal with assessementdate
+            var j = JObject.Parse(json);
+            var documentFile = j["jDOCUMENT_FILE"];
+            foreach (var demo in documentFile)
+            {
+                if (demo["CreatedTimestamp"] == null || demo["CreatedTimestamp"].Type == JTokenType.Null)
+                {
+                    demo["CreatedTimestamp"] = new DateTime(1900, 1, 1);
+                }
+                if (demo["UpdatedTimestamp"] == null || demo["UpdatedTimestamp"].Type == JTokenType.Null)
+                {
+                    demo["UpdatedTimestamp"] = new DateTime(1900, 1, 1);
+                }
+            }
 
-           
-
-            return oAssessment.ToString();
+            return j.ToString();
         }
 
         /// <summary>

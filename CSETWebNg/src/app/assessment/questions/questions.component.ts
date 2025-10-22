@@ -273,6 +273,9 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
           this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
         }
 
+        // Clean filters back to defaults
+        this.filterSvc.forceRefresh();
+
         if (modified) {
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
@@ -335,7 +338,10 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    */
   visibleGroupCount() {
     let count = 0;
-    count += this.categories.filter(g => g.visible).length;
+    if (this.categories) {
+      count += this.categories.filter(g => g.visible).length;
+    }
+    
     return count;
   }
 

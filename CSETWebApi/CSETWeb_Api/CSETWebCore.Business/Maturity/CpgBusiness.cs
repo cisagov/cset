@@ -6,8 +6,10 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Model.Maturity.CPG;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -33,11 +35,12 @@ namespace CSETWebCore.Business.Maturity
 
         /// <summary>
         /// Returns the answer percentage distributions for each of the CPG domains.
+        /// Also includes the compliance score, calculated from that distribution.
         /// </summary>
         /// <returns></returns>
-        public List<AnswerDistribDomain> GetAnswerDistribForDomains(int assessmentId, int? modelId, string techDomain)
+        public AnswerDistribDomainResponse GetAnswerDistribForDomains(int assessmentId, int? modelId, string techDomain)
         {
-            var resp = new List<AnswerDistribDomain>();
+            var resp = new AnswerDistribDomainResponse();
 
             if (modelId == null)
             {
@@ -52,7 +55,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 // translate if necessary
                 item.title = _overlay.GetMaturityGrouping(item.grouping_id, _lang)?.Title ?? item.title;
-                if (!resp.Exists(x => x.Name == item.title))
+                if (!resp.Distrib.Exists(x => x.Name == item.title))
                 {
                     var domain = new AnswerDistribDomain()
                     {
@@ -60,12 +63,12 @@ namespace CSETWebCore.Business.Maturity
                         Series = InitializeSeries()
                     };
 
-                    resp.Add(domain);
+                    resp.Distrib.Add(domain);
                 }
             }
 
             // determine percentages for each answer count in the distribution
-            resp.ForEach(domain =>
+            resp.Distrib.ForEach(domain =>
             {
                 domain.Series.ForEach(y =>
                 {
@@ -74,6 +77,8 @@ namespace CSETWebCore.Business.Maturity
 
                 });
             });
+
+            resp.ComplianceScore = CalculateScore(dbListCpg);
 
             return resp;
         }
@@ -205,6 +210,25 @@ namespace CSETWebCore.Business.Maturity
                 .ToList();
 
             return groupedList;
+        }
+
+
+        /// <summary>
+        /// Calculates a percentage answered Yes.  
+        /// In Progress answers are given half credit.
+        /// </summary>
+        private double CalculateScore(IList<GetAnswerDistribGroupingsResult> distrib)
+        {
+            var summary = distrib
+                .GroupBy(x => x.answer_text)
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.answer_count));
+
+            double total = summary.Sum(x => x.Value) ?? 0;
+            double y = (double)summary.GetValueOrDefault("Y", 0);
+            double i = (double)summary.GetValueOrDefault("I", 0) * 0.5;
+
+            double score = ((y + i) / total) * 100d;
+            return score;
         }
     }
 }

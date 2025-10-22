@@ -114,6 +114,10 @@ namespace CSETWebCore.Api.Controllers
                         fileContents = memoryStream.ToArray();
                     }
 
+                    if (url.EndsWith('/'))
+                    {
+                        url = url.TrimEnd('/');
+                    }
                     bool isSuccess = await SendFileToApi($"{url}/api/assessment/import", fileContents, result.FileName);
                     if (isSuccess)
                     {
@@ -147,7 +151,9 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest("An assessment identifier is required.");
                 }
 
-                var json = _jsonAssessmentExportManager.GetJson(resolvedAssessmentId, removePCII);
+                var lang = _token.GetCurrentLanguage();
+
+                var json = _jsonAssessmentExportManager.GetJson(resolvedAssessmentId, lang, removePCII);
                 var contents = Encoding.UTF8.GetBytes(json);
                 var fileName = $"assessment-{resolvedAssessmentId}.json";
                 return File(contents, "application/json", fileName);

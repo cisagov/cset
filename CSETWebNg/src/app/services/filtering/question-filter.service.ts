@@ -158,12 +158,13 @@ export class QuestionFilterService {
   private initializeFilters(): void {
     // Start with base defaults
     this.showFilters = [...this.defaultFilterSettings];
-    const model=this.assessSvc.assessment?.maturityModel;
-    if(model?.levels){
-      this.maturityTargetLevel=model.maturityTargetLevel
-      model.levels.forEach(li=>{
-        const levelStr=li.level.toString();
-        if(li.level<=this.maturityTargetLevel && !this.showFilters.includes(levelStr)){
+    const model = this.assessSvc.assessment?.maturityModel;
+
+    if (model?.levels) {
+      this.maturityTargetLevel = model.maturityTargetLevel
+      model.levels.forEach(li => {
+        const levelStr = li.level.toString();
+        if (li.level <= this.maturityTargetLevel && !this.showFilters.includes(levelStr)) {
           this.showFilters.push(levelStr)
         }
       })
@@ -223,6 +224,7 @@ export class QuestionFilterService {
         return false;
       }
     }
+    
     return (this.showFilters.indexOf(ans) >= 0);
   }
 

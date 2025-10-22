@@ -90,47 +90,44 @@ namespace CSETWebCore.Business.Question
         /// <summary>
         /// Handles actions that should be taken when demographics are changed.
         /// </summary>
-        public void HookDemographicsChanged(int assessmentId)
+        public CompletionCounts HookDemographicsChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
 
         /// <summary>
         /// Handles actions that should be taken when a maturity 
         /// target level is changed.
         /// </summary>
-        public void HookTargetLevelChanged(int assessmentId)
+        public CompletionCounts HookTargetLevelChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
-
         /// <summary>
         /// Handles actions that should be taken when the SAL is changed.
         /// </summary>
-        public void HookSalChanged(int assessmentId)
+        public CompletionCounts HookSalChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
-
 
         /// <summary>
         /// Handles actions that should be taken when the questions/requirements mode is changed.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void HookQuestionsModeChanged(int assessmentId)
+        public CompletionCounts HookQuestionsModeChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
-
 
         /// <summary>
         /// Handles actions that should be taken when a 
         /// grouping selection is changed.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void HookGroupingSelectionChanged(int assessmentId)
+        public CompletionCounts HookGroupingSelectionChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+           return new CompletionCounter(_context).Count(assessmentId);
         }
 
 
@@ -138,9 +135,9 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void HookDiagramChanged(int assessmentId)
+        public CompletionCounts HookDiagramChanged(int assessmentId)
         {
-            new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace CSETWebCore.Business.Observations
             {
                 var observation = new FINDING
                 {
-                    Assessment_ID = obs.Assessment_Id,
+                    Assessment_Id = obs.Assessment_Id,
                     Answer_Id = obs.Answer_Id,
                     Summary = obs.Summary,
                     Importance_Id = obs.Importance_Id,

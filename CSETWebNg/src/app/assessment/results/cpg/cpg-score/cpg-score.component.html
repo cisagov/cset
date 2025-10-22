@@ -20,4 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-Reports Works!
+<div class="border border-secondary p-3 rounded mb-4 w-fit">
+     <div *ngIf="TECH_DOMAIN_OT.includes(techDomain)">
+          Operation Technology (OT): {{otScore | number:'1.1-2'}}%
+     </div>
+     <div *ngIf="TECH_DOMAIN_IT.includes(techDomain)">
+          Information Technology (IT): {{itScore | number:'1.1-2'}}%
+     </div>
+</div>

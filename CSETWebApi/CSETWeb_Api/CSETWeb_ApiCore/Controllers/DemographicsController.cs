@@ -73,23 +73,17 @@ namespace CSETWebCore.Api.Controllers
         {
             demographics.AssessmentId = _token.AssessmentForUser();
             var assessmentId = _demographic.SaveDemographics(demographics);
-            _hooks.HookDemographicsChanged(demographics.AssessmentId);
+           var stats= _hooks.HookDemographicsChanged(demographics.AssessmentId);
             var userId = _token.GetCurrentUserId();
-            if (userId != null)
+            if (userId != null && stats!= null)
             {
-                var completionStats = _assessment.GetAssessmentsCompletionForUser((int)userId)
-                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
-                
-                if (completionStats != null)
-                {
-                    return Ok(new {
-                        AssessmentId = assessmentId,
-                        CompletedCount = completionStats.CompletedCount,
-                        TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0,
-                        TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0,
-                        TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0
-                    });
-                }
+                return Ok(new {
+                    AssessmentId = assessmentId,
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
+                    TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
+                    TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
+                });
             }
             
             return Ok(assessmentId);

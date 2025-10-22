@@ -19,6 +19,7 @@ using System.Linq;
 using System.Xml.XPath;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Question;
+using Azure;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -120,8 +121,15 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
+            var stats = _hooks.HookTargetLevelChanged(assessmentId);
 
-            _hooks.HookTargetLevelChanged(assessmentId);
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                });
+            }
 
             return Ok();
         }
@@ -378,6 +386,8 @@ namespace CSETWebCore.Api.Controllers
             resp.ModelName = model.Model_Name;
             resp.ModelId = model.Maturity_Model_Id;
             resp.QuestionsAlias = model.Questions_Alias ?? "Questions";
+            resp.Levels = new MaturityBusiness(_context, _assessmentUtil).GetMaturityLevelsForModel(resp.ModelId, resp.MaturityTargetLevel);
+
 
             if (model.Answer_Options != null)
             {

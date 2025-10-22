@@ -28,7 +28,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwiperOptions } from 'swiper/types';
+
 
 
 
@@ -49,7 +49,7 @@ import { SwiperOptions } from 'swiper/types';
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
-  selectedCategory = 'all';
+  selectedCategory = 'favorites';
 
   constructor(
     public dialog: MatDialog,
@@ -64,68 +64,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Set a longer timeout to ensure DOM is fully rendered including dynamic content
-    setTimeout(() => {
-      this.initializeSwipers();
-    }, 100);
 
-    // Listen for changes to the DOM that might affect swiper containers
-    const observer = new MutationObserver(() => {
-      this.initializeSwipers();
-    });
-
-    // Start observing the document for added nodes
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-
-  private initializeSwipers(): void {
-    // Use querySelectorAll to get all swiper containers
-    const swiperEls = document.querySelectorAll('swiper-container');
-    const swiperConfig: SwiperOptions = {
-      slidesPerView: "auto",
-      spaceBetween: 7,
-      navigation: {
-        nextEl: '.swiper-button-next', // selector for external button
-        prevEl: '.swiper-button-prev', // selector for external button
-        disabledClass: 'swiper-button-hidden'
-      },
-      loop: false,
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-        },
-        620: {
-          slidesPerView: 2,
-        },
-        800: {
-          slidesPerView: 3,
-        },
-        1220: {
-          slidesPerView: 4,
-        },
-        1460: {
-          slidesPerView: 5,
-        }
-      },
-    }
-
-    // Configure each swiper instance
-    swiperEls.forEach(swiperEl => {
-      // Skip already initialized swipers
-      if (swiperEl.hasAttribute('data-initialized')) {
-        return;
-      }
-
-      // Apply configuration to each swiper element
-      Object.assign(swiperEl, swiperConfig);
-
-      // Mark as initialized
-      swiperEl.setAttribute('data-initialized', 'true');
-
-      // Initialize this particular swiper instance
-      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
-      swiperEl.initialize();
-    });
   }
 
   getImageSrc(src: string) {
@@ -172,21 +111,9 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   selectCategory(category: string): void {
     this.selectedCategory = category;
   }
-
-  // Add this method to get filtered items based on selected category
-  // getFilteredItems(): any[] {
-  //   if (this.selectedCategory === 'all') {
-  //     // Return all items from all categories
-  //     return this.gallerySvc.rows.reduce((acc, row) => {
-  //       return acc.concat(row.galleryItems);
-  //     }, []);
-  //   } else {
-  //     // Return items from selected category only
-  //     const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
-  //     return selectedRow ? selectedRow.galleryItems : [];
-  //   }
-  //
-  // }
+  getFavoritesCount(): number {
+    return this.getUniqueFavorites().length;
+  }
   getFilteredItems(): any[] {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
       return [];
@@ -196,7 +123,10 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       return this.gallerySvc.rows.reduce((acc, row) => {
         return acc.concat(row.galleryItems || []);
       }, []);
-    } else {
+    } if (this.selectedCategory === 'favorites') {
+      return this.getUniqueFavorites();
+    }
+    else {
       const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
       return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
     }
@@ -211,7 +141,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       'Industrial and Utilities': 'fas fa-industry',
       'Municipal and Health Care': 'fas fa-hospital',
       'NIST Special Publications': 'fas fa-book',
-      'Financial CSET': 'fas fa-dollar-sign',
+      'Financial': 'fas fa-dollar-sign',
       'Transportation': 'fas fa-truck',
       'Other': 'fas fa-ellipsis-h'
     };
@@ -219,4 +149,43 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
 
+  /**
+   * Toggle favorite status
+   */
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation(); // Prevent card click or other events
+    const newFavoriteStatus = !card.isFavorite;
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        // Update local state immediately
+        card.isFavorite = newFavoriteStatus;
+        this.gallerySvc.galleryData.rows.forEach((row: any) => {
+          row.galleryItems.forEach((item: any) => {
+            if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+              item.isFavorite = card.isFavorite;
+            }
+          });
+        });
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+        alert('Failed to update favorite. Please try again.');
+      }
+    );
+  }
+  private getUniqueFavorites():any[]{
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return [];
+    }
+    const allFavorites = this.gallerySvc.rows.reduce((acc, row) => {
+      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+      return acc.concat(favoriteItems);
+    }, []);
+    const uniqueFavorite = new Map();
+    allFavorites.forEach(fav => {
+      uniqueFavorite.set(fav.gallery_Item_Guid, fav);
+    });
+
+    return Array.from(uniqueFavorite.values());
+  }
 }

@@ -28,17 +28,20 @@ import { AggregationService } from '../../services/aggregation.service';
 import { ChartService } from '../../services/chart.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'trend-report',
-    templateUrl: './trend-report.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'trend-report',
+  templateUrl: './trend-report.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {
   response: any;
+  info: AssessmentDetail;
 
   // Charts for Components
   chartOverallCompl: Chart;
@@ -70,7 +73,8 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public chartSvc: ChartService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
 
@@ -124,6 +128,11 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   ngAfterViewChecked() {

@@ -20,40 +20,68 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="mx-4 mt-4">
-  <h4>{{t('titles.search results')}}</h4>
-  <div *ngIf="rows.length == 0">
-    {{t('no search results')}}
-  </div>
-  <div *ngFor="let row of rows" class="m-4" style="height: 240px;">
-    <swiper-container class="gallery-slider">
-      <div class="swiper-wrapper">
-        <swiper-slide *ngFor="let c of row; let i = index">
-          <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card"
-            (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)"
-            style="width: 300px;">
+<div *transloco="let t"  class="tw:flex tw:flex-col tw:md:flex-row tw:min-h-screen tw:m-4 tw:p-6 tw:rounded-lg">
 
-            <div class="card-body gallery-card-body cursor-pointer"
-              style="min-height:150px; max-height:150px; z-index:1" (click)="navSvc.beginNewAssessmentGallery(c.item)">
-              <div class="img-container">
-                <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
-              </div>
-              <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
-                style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-            </div>
+  <div class="tw:w-full tw:mx-auto tw:px-4 tw:md:px-12 tw:lg:px-16 tw:xl:px-20">
+    <div class="tw:mb-6">
+      <h2 class="tw:text-2xl tw:font-semibold">{{t('titles.search results')}}</h2>
+      <span class="tw:text-sm tw:text-gray-600">{{galleryItemsTmp.length}} items</span>
+    </div>
+    <div *ngIf="galleryItemsTmp.length === 0" class="tw:text-center tw:py-12">
+      <i class="fas fa-search tw:text-6xl tw:text-gray-300 tw:mb-4"></i>
+      <p class="tw:text-gray-500"> {{t('no search results')}}</p>
+    </div>
 
-            <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
-              style="text-align:right;">
-              <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)"
-                [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
-                  class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-              <button class="btn btn-light btn-circle btn-sm gallery-btn-play"
-                (click)="navSvc.beginNewAssessmentGallery(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"><i
-                  class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
-            </div>
+    <div class="tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:xl:grid-cols-4 tw:2xl:grid-cols-5 tw:gap-6">
+    <div *ngFor="let c of galleryItemsTmp; let i = index">
+      <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card"
+        (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
+
+        <div class="card-body gallery-card-body tw:cursor-pointer"
+          style="min-height:150px; max-height:150px;" (click)="navSvc.beginNewAssessmentGallery(c.item)">
+          <div class="img-container">
+            <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
           </div>
-        </swiper-slide>
+          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm">{{c.item.title}}</h6>
+        </div>
+
+        <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
+          style="text-align:right;">
+          <button *ngIf="c.item.isFavorite && c.item.gallery_Item_Guid!=hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+          <button *ngIf="c.item.isFavorite && c.item.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+          <button *ngIf="!c.item.isFavorite && c.item.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.add favorite')"
+                  class="btn btn-outline-light btn-circle gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c.item)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+          <button class="btn btn-outline-light btn-circle gallery-btn-info" (click)="openDialog(c.item)"
+            [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
+              class="fa-solid fa-info tw:scale-125 tw:inline-block">
+          </i>
+          </button>
+          <button class="btn btn-outline-light btn-circle gallery-btn-play"
+            (click)="navSvc.beginNewAssessmentGallery(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"><i
+              class="fa-solid fa-play tw:inline-block"></i></button>
+        </div>
       </div>
-    </swiper-container>
+    </div>
+  </div>
   </div>
 </div>

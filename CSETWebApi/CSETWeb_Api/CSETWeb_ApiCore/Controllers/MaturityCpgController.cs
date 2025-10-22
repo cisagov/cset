@@ -80,7 +80,9 @@ namespace CSETWebCore.Api.Controllers
 
         /// <summary>
         /// Returns the answer percentage distributions for each of the
-        /// 8 CPG domains.
+        /// 8 CPG domains.  Also included in the response is the 
+        /// compliance score - a percentage of "Y" answers, with "In Progress" 
+        /// answers being given a half score.
         /// </summary>
         [HttpGet]
         [Route("api/answerdistrib/cpg/domains")]

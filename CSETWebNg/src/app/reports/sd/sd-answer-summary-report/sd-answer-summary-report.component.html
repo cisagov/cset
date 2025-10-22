@@ -22,15 +22,8 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <app-cover-sheet-a [title]="'SECURITY DIRECTIVE PIPELINE 2021-02C (SD02 Series)'" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-        [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
-
-    <div class="page-break">
-        <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
-    </div>
-
-    <div class="page-break">
+    <app-cover-page [response]="info" [title]="'SECURITY DIRECTIVE PIPELINE 2021-02C (SD02 Series)'" />
+    <div class=" page-break">
     </div>
 
     <h1>Answer Summary</h1>

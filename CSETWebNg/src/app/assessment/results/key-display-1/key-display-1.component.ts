@@ -8,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class KeyDisplay1Component {
 
+  goalLegend = [
+    { scoreColor: 'green', scoreLabel: 'performed' },
+    { scoreColor: 'yellow', scoreLabel: 'incompletely performed' },
+    { scoreColor: 'red', scoreLabel: 'not performed' }
+  ];
+
+  questionLegend = [
+    { scoreColor: 'green', scoreLabel: 'Implemented' },
+    { scoreColor: 'blue', scoreLabel: 'In Progress' },
+    { scoreColor: 'gold', scoreLabel: 'Scoped' },
+    { scoreColor: 'red', scoreLabel: 'Not Implemented' },
+  ];
 }
