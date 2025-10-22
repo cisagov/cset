@@ -51,7 +51,7 @@ PG_USER="${PG_USER:-cset}"
 PG_PASSWORD="${PG_PASSWORD:-password}"
 PG_HOST="${PG_HOST:-localhost}"
 PG_HOST_PORT="${PG_HOST_PORT:-55432}"
-PG_DUMP_OUT="${PG_DUMP_OUT:-backup/${PG_DB}.pg17.dump}"
+PG_DUMP_OUT="${PG_DUMP_OUT:-backup/csetweb-from-mssql.sql}"
 PG_PLAIN_OUT="${PG_PLAIN_OUT:-}"  # empty disables plain SQL dump by default
 
 require() {
@@ -153,24 +153,6 @@ docker exec -e PGPASSWORD="$PG_PASSWORD" "$PG_CONTAINER" \
   psql -h localhost -U "$PG_USER" -d "$PG_DB" -v ON_ERROR_STOP=1 \
   -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' >/dev/null
 
-run_pgloader_local() {
-  echo "[+] Running local pgloader migration into Postgres"
-  # Ensure modern TDS protocol for SQL Server 2022
-  TDSVER=7.4 pgloader \
-    "mssql://sa:${MSSQL_SA_PASSWORD}@${MSSQL_HOST}:${MSSQL_PORT}/${MSSQL_DB}" \
-    "pgsql://${PG_USER}:${PG_PASSWORD}@${PG_HOST}:${PG_HOST_PORT}/${PG_DB}"
-}
-
-run_pgloader_docker() {
-  echo "[+] Running pgloader in Docker (fallback)"
-  # Use host.docker.internal to reach host-published ports on macOS/Windows; also works on recent Docker
-  docker run --rm \
-    --name cset-pgloader \
-    dimitri/pgloader:latest pgloader \
-    "mssql://sa:${MSSQL_SA_PASSWORD}@host.docker.internal:${MSSQL_PORT}/${MSSQL_DB}" \
-    "pgsql://${PG_USER}:${PG_PASSWORD}@host.docker.internal:${PG_HOST_PORT}/${PG_DB}"
-}
-
 # After restore, give SQL Server a brief moment and verify it's accepting queries
 echo -n "[+] Verifying MSSQL accept connections"
 for i in $(seq 1 10); do
@@ -185,59 +167,88 @@ for i in $(seq 1 10); do
   fi
 done
 
-# Attempt migration using selected mode
-case "$PGLOADER_MODE" in
-  local)
-    if [[ "$HAVE_PGLOADER" -ne 1 ]]; then
-      echo "[-] Local pgloader not found; set PGLOADER_MODE=docker or install pgloader"
-      exit 1
-    fi
-    for attempt in 1 2 3; do
-      if run_pgloader_local; then
-        break
-      fi
-      echo "[!] pgloader local attempt $attempt failed; retrying in 2s..."
-      sleep 2
-      if [[ $attempt -eq 3 ]]; then
-        echo "[-] pgloader local failed after retries; consider PGLOADER_MODE=docker"
-        exit 1
-      fi
-    done
-    ;;
-  docker|*)
-    run_pgloader_docker
-    ;;
-esac
+# Prepare staging database
+PG_DB_STAGE="${PG_DB_STAGE:-csetweb_stage}"
+LOG_DIR="DatabaseScripts/Migration/logs"
+mkdir -p "$LOG_DIR"
 
-# Produce a PostgreSQL 17 backup (custom format)
-echo "[+] Creating Postgres custom-format dump: $PG_DUMP_OUT"
+echo "[+] Preparing staging database '$PG_DB_STAGE'"
+docker exec "$PG_CONTAINER" dropdb -U "$PG_USER" --if-exists "$PG_DB_STAGE" 2>/dev/null || true
+docker exec "$PG_CONTAINER" createdb -U "$PG_USER" "$PG_DB_STAGE"
+
+echo "[+] Installing extensions in staging database"
+docker exec -e PGPASSWORD="$PG_PASSWORD" "$PG_CONTAINER" \
+  psql -h localhost -U "$PG_USER" -d "$PG_DB_STAGE" -v ON_ERROR_STOP=1 \
+  -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' >/dev/null
+
+# Use pgloader configuration file
+PGLOADER_LOAD_FILE="DatabaseScripts/Migration/pgloader-mssql-to-pg.load"
+if [[ ! -f "$PGLOADER_LOAD_FILE" ]]; then
+  echo "[-] pgloader config file not found: $PGLOADER_LOAD_FILE"
+  exit 1
+fi
+
+echo "[+] Running pgloader with configuration file: $PGLOADER_LOAD_FILE"
+docker run --rm \
+  --platform linux/amd64 \
+  --name cset-pgloader \
+  -e TDS_MAX_CONN=2048 \
+  -e TDSVER=7.4 \
+  -v "$PWD:/work" \
+  -w /work \
+  dimitri/pgloader:latest pgloader "$PGLOADER_LOAD_FILE" \
+  2>&1 | tee "$LOG_DIR/pgloader-run.log"
+
+# Check pgloader exit status
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+  echo "[-] pgloader failed. Check logs at $LOG_DIR/pgloader-run.log"
+  exit 1
+fi
+
+# Sanity check: verify assessments table was populated
+echo "[+] Verifying data in staging database"
+ASSESSMENTS_COUNT=$(docker exec -e PGPASSWORD="$PG_PASSWORD" "$PG_CONTAINER" \
+  psql -h localhost -U "$PG_USER" -d "$PG_DB_STAGE" -t -c 'SELECT COUNT(*) FROM dbo."ASSESSMENTS";' | tr -d '[:space:]')
+
+echo "[+] Assessments count in staging DB: $ASSESSMENTS_COUNT"
+if [[ "$ASSESSMENTS_COUNT" -eq 0 ]]; then
+  echo "[-] ERROR: No assessments were migrated! Check $LOG_DIR/pgloader-run.log"
+  exit 1
+fi
+
+# Produce a PostgreSQL plain SQL dump from staging database
+echo "[+] Creating Postgres plain SQL dump: $PG_DUMP_OUT"
 mkdir -p "$(dirname "$PG_DUMP_OUT")"
 docker exec -e PGPASSWORD="$PG_PASSWORD" "$PG_CONTAINER" \
-  pg_dump -h localhost -U "$PG_USER" -d "$PG_DB" -Fc \
+  pg_dump -h localhost -U "$PG_USER" -d "$PG_DB_STAGE" \
+  --schema=dbo --no-owner --no-privileges \
   > "$PG_DUMP_OUT"
 
-if [[ -n "$PG_PLAIN_OUT" ]]; then
-  echo "[+] Creating Postgres plain SQL dump: $PG_PLAIN_OUT"
+if [[ -n "$PG_PLAIN_OUT" && "$PG_PLAIN_OUT" != "$PG_DUMP_OUT" ]]; then
+  echo "[+] Creating additional Postgres dump: $PG_PLAIN_OUT"
   docker exec -e PGPASSWORD="$PG_PASSWORD" "$PG_CONTAINER" \
-    pg_dump -h localhost -U "$PG_USER" -d "$PG_DB" \
+    pg_dump -h localhost -U "$PG_USER" -d "$PG_DB_STAGE" \
     > "$PG_PLAIN_OUT"
 fi
 
 echo "[+] Completed. Outputs:"
-echo "    - $PG_DUMP_OUT"
-if [[ -n "$PG_PLAIN_OUT" ]]; then
+echo "    - $PG_DUMP_OUT (plain SQL dump from staging DB)"
+if [[ -n "$PG_PLAIN_OUT" && "$PG_PLAIN_OUT" != "$PG_DUMP_OUT" ]]; then
   echo "    - $PG_PLAIN_OUT"
 fi
 
 cat <<EOF
 
-How to restore (examples):
-  # custom format
-  createdb $PG_DB
-  pg_restore -U $PG_USER -d $PG_DB $PG_DUMP_OUT
+How to restore:
+  # Use the load-postgres-dump.sh script:
+  make load-postgres-dump
 
-  # plain SQL
-  psql -U $PG_USER -d $PG_DB -f ${PG_PLAIN_OUT:-<plain-sql-file>}
+  # Or manually:
+  psql -U $PG_USER -d csetweb -f $PG_DUMP_OUT
+
+Next steps:
+  1. Run 'make load-postgres-dump' to load into target database
+  2. Verify migration with DatabaseScripts/Migration/verify-migration.sh
 
 Cleanup temporary Postgres container:
   docker rm -f $PG_CONTAINER
