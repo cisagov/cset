@@ -6,13 +6,11 @@
 //////////////////////////////// 
 
 using System;
-using System.Runtime.InteropServices.JavaScript;
-using ClosedXML.Excel;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
-    internal class CSET_10_1_0_to_10_1_1_Upgrade : ICSETJSONFileUpgrade
+    internal class CSET_09_2_0_to_10_1_1_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>
         /// this is the string we will be upgrading to
