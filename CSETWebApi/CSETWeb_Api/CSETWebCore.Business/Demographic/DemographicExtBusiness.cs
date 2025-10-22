@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 
 
@@ -50,7 +49,18 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
             d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
-            d.Acknowledgement = myDD.Find(z => z.DataItemName == "ACK_SECTOR_UPDATED_PPD21")?.BoolValue;
+            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
+
+
+            // update sector if need be
+            var sectorUp = new SectorUpgradePpd21(_context);
+            var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
+            if (newSectorInfo?.Changed ?? false)
+            {
+                d.Sector = newSectorInfo.SectorId;
+                d.Subsector = null;
+            }
+
 
             var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
             foreach (var ssg in ssgs)
@@ -245,7 +255,7 @@ namespace CSETWebCore.Business.Demographic
             }
             return null;
         }
-        
+
         /// <summary>
         /// Inserts or updates a single record in DETAILS_DEMOGRAPHICS.
         /// Queries for an existing record, so not the most efficient for a bulk update.
