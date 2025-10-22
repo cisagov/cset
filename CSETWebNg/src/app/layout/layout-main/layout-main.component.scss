@@ -26,7 +26,7 @@ SOFTWARE.
 @use "sass:map";
 @use "../../../sass/mixins";
 @use "../../../sass/sal";
-@use "@angular/material/prebuilt-themes/indigo-pink.css";
+@use "../../../sass/theme-variables" as theme;
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
 @use '@angular/material' as mat;
@@ -169,7 +169,7 @@ $spacer: 18px;
 }
 
 body {
-  background-color: $gray-50;
+  background-color: var(--bg-primary);
   outline: none;
 }
 
@@ -1336,7 +1336,7 @@ ul.mat-tree-node {
 .side-nav-container .current-node>button {
   border: none;
   border-radius: .3rem !important;
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   color: $primary-600;
 }
 
@@ -2145,7 +2145,7 @@ input[type="checkbox"]+label {
 
 .mat-drawer-content.mat-sidenav-content {
   overflow: hidden;
-  background-color: $gray-150;
+  background-color: var(--bg-primary);
 }
 
 // Import Modules
@@ -2502,7 +2502,7 @@ ul.related-questions li {
 
 .mat-drawer,
 .mat-drawer-container {
-  background-color: $secondary-color;
+  background-color: var(--bg-primary);
 }
 
 mat-sidenav.mat-sidenav {
@@ -3092,7 +3092,7 @@ hr.ranked-questions {
 .cat-selected {
   font-weight: bold;
   color: $primary-900;
-  background-color: #eeeeee;
+  background-color: var(--bg-secondary);
   border-radius: 0.5rem;
 }
 
@@ -3112,7 +3112,7 @@ hr.ranked-questions {
   text-align: center;
   margin: 3px 1px;
   border-radius: 3px;
-  color: #a0a0a0;
+  color: var(--text-secondary);
   border: 1px solid #c0c0c0;
   background-color: #f0f0f0;
 }

@@ -1,0 +1,121 @@
+/*
+  Theme Variables for Dark Mode Support
+  Copyright 2025 Battelle Energy Alliance, LLC
+
+  Import this file in your component SCSS to use theme-aware colors
+*/
+
+// Function to get theme-aware colors
+// Usage: background-color: theme-bg-primary();
+@function theme-bg-primary() {
+  @return var(--bg-primary);
+}
+
+@function theme-bg-secondary() {
+  @return var(--bg-secondary);
+}
+
+@function theme-bg-tertiary() {
+  @return var(--bg-tertiary);
+}
+
+@function theme-text-primary() {
+  @return var(--text-primary);
+}
+
+@function theme-text-secondary() {
+  @return var(--text-secondary);
+}
+
+@function theme-text-disabled() {
+  @return var(--text-disabled);
+}
+
+@function theme-border-color() {
+  @return var(--border-color);
+}
+
+@function theme-cset-primary() {
+  @return var(--cset-primary);
+}
+
+@function theme-cset-primary-hover() {
+  @return var(--cset-primary-hover);
+}
+
+// Mixin for theme-aware background
+@mixin theme-background($light-color, $dark-color) {
+  background-color: $light-color;
+
+  .dark-theme &,
+  [data-theme="dark"] &,
+  [data-bs-theme="dark"] & {
+    background-color: $dark-color;
+  }
+}
+
+// Mixin for theme-aware text color
+@mixin theme-color($light-color, $dark-color) {
+  color: $light-color;
+
+  .dark-theme &,
+  [data-theme="dark"] &,
+  [data-bs-theme="dark"] & {
+    color: $dark-color;
+  }
+}
+
+// Mixin for theme-aware border
+@mixin theme-border($width, $style, $light-color, $dark-color) {
+  border: $width $style $light-color;
+
+  .dark-theme &,
+  [data-theme="dark"] &,
+  [data-bs-theme="dark"] & {
+    border-color: $dark-color;
+  }
+}
+
+// Common theme-aware color pairs
+$theme-colors: (
+  // Background colors
+  'bg-white': (#ffffff, #1d232a),
+  'bg-light': (#f9fafb, #191e24),
+  'bg-gray': (#e5e7eb, #15191e),
+  'bg-dark': (#1f2937, #0f1419),
+
+  // Text colors
+  'text-dark': (#000000, #ffffff),
+  'text-gray': (#6b7280, #9ca3af),
+  'text-light': (#9ca3af, #6b7280),
+
+  // Border colors
+  'border-light': (#e5e7eb, #374151),
+  'border-medium': (#d1d5db, #4b5563),
+  'border-dark': (#9ca3af, #6b7280),
+);
+
+// Function to get theme-aware color from map
+@function theme-aware-color($key, $mode: 'light') {
+  @if map-has-key($theme-colors, $key) {
+    $colors: map-get($theme-colors, $key);
+    @if $mode == 'light' {
+      @return nth($colors, 1);
+    } @else {
+      @return nth($colors, 2);
+    }
+  }
+  @warn "Color key '#{$key}' not found in theme-colors map";
+  @return null;
+}
+
+// Mixin to apply theme-aware color from the map
+@mixin apply-theme-color($property, $key) {
+  #{$property}: theme-aware-color($key, 'light');
+
+  .dark-theme &,
+  [data-theme="dark"] &,
+  [data-bs-theme="dark"] & {
+    #{$property}: theme-aware-color($key, 'dark');
+  }
+}
