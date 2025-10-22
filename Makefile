@@ -81,6 +81,10 @@ sql:
 launch-pgdb:
 	docker compose -f compose.dev.yml up -d db
 
+# target: make launch-dbs - Launch both MSSQL and Postgres databases from compose.dev.yml
+launch-dbs:
+	docker compose -f compose.dev.yml up -d
+
 # target: mssql-to-postgres - Convert MSSQL .bak to Postgres 17 backup
 mssql-to-postgres:
 	bash DatabaseScripts/Migration/convert-mssql-bak-to-postgres.sh

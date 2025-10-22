@@ -1,6 +1,8 @@
 ---
 services:
-  db:
+  postgresql:
+    container_name: cset-postgres
+    hostname: postgres
     image: postgres:17-alpine
     ports:
       - "5432:5432"
@@ -9,10 +11,26 @@ services:
       POSTGRES_USER: cset
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
     networks:
       - cset-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  sqlserver:
+    container_name: cset-mssql
+    hostname: mssql
+    image: "mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04"
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "1433:1433"
+    networks:
+      - cset-network
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./backup:/var/opt/mssql/backup
+      - ./DatabaseScripts:/var/opt/mssql/scripts
 
 networks:
   cset-network:
@@ -20,3 +38,4 @@ networks:
 
 volumes:
   postgres-data:
+  mssql_data:
