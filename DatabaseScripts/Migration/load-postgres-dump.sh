@@ -20,7 +20,7 @@ set -euo pipefail
 
 echo "[+] Loading Postgres dump into database"
 
-DUMP_PATH="${DUMP_PATH:-backup/csetweb.pg17.dump}"
+DUMP_PATH="${DUMP_PATH:-backup/csetweb.sql}"
 PG_HOST="${PG_HOST:-localhost}"
 PG_PORT="${PG_PORT:-5432}"
 PG_DB="${PG_DB:-csetweb}"
@@ -40,10 +40,11 @@ require() {
 }
 
 run_local() {
-  require pg_restore
   require psql
 
   export PGPASSWORD="$PG_PASSWORD"
+  LOG_DIR="DatabaseScripts/Migration/logs"
+  mkdir -p "$LOG_DIR"
 
   if [[ "$DROP_DB" == "true" ]]; then
     echo "[+] Dropping database '$PG_DB' (if exists)"
@@ -60,8 +61,13 @@ run_local() {
     -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' >/dev/null
 
   echo "[+] Restoring from $DUMP_PATH"
-  pg_restore -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" \
-    --clean --if-exists --no-owner --no-privileges "$DUMP_PATH"
+  psql -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" \
+    -v ON_ERROR_STOP=1 -f "$DUMP_PATH" 2>&1 | tee "$LOG_DIR/psql-load.log"
+  
+  if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+    echo "[-] psql restore failed. Check logs at $LOG_DIR/psql-load.log"
+    exit 1
+  fi
 }
 
 run_docker() {
@@ -70,6 +76,8 @@ run_docker() {
   # Use a client-only ephemeral container; mount backup dir and connect via host.docker.internal
   DUMP_DIR=$(cd "$(dirname "$DUMP_PATH")" && pwd)
   DUMP_FILE="$(basename "$DUMP_PATH")"
+  LOG_DIR="DatabaseScripts/Migration/logs"
+  mkdir -p "$LOG_DIR"
 
   echo "[+] Using Docker postgres:17-alpine client to restore"
 
@@ -77,15 +85,23 @@ run_docker() {
     -e PGPASSWORD="$PG_PASSWORD" \
     -v "$DUMP_DIR:/dump:ro" \
     postgres:17-alpine sh -c "\
+      set -e; \
       if [ '$DROP_DB' = 'true' ]; then \
         psql -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' -d postgres -v ON_ERROR_STOP=1 \
           -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$PG_DB' AND pid <> pg_backend_pid();\" || true && \
         dropdb -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' --if-exists '$PG_DB'; \
       fi; \
       createdb -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' '$PG_DB' 2>/dev/null || true; \
-      psql -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' -d '$PG_DB' -v ON_ERROR_STOP=1 -c \"CREATE EXTENSION IF NOT EXISTS \\\"uuid-ossp\\\";\" >/dev/null; \
-      pg_restore -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' -d '$PG_DB' --clean --if-exists --no-owner --no-privileges /dump/$DUMP_FILE \
-    "
+      psql -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' -d '$PG_DB' -v ON_ERROR_STOP=1 \
+        -c \"CREATE EXTENSION IF NOT EXISTS \\\"uuid-ossp\\\";\" >/dev/null; \
+      psql -h host.docker.internal -p '$PG_PORT' -U '$PG_USER' -d '$PG_DB' -v ON_ERROR_STOP=1 \
+        -f /dump/$DUMP_FILE \
+    " 2>&1 | tee "$LOG_DIR/psql-load.log"
+  
+  if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+    echo "[-] Docker psql restore failed. Check logs at $LOG_DIR/psql-load.log"
+    exit 1
+  fi
 }
 
 case "$MODE" in

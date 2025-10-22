@@ -1,0 +1,24 @@
+LOAD DATABASE
+     FROM mssql://sa:Password123@host.docker.internal:1433/CSETWebTest
+     INTO postgresql://cset:password@host.docker.internal:55432/csetweb_stage
+
+WITH
+     workers = 4,
+     prefetch rows = 20000,
+     batch rows = 5000,
+     concurrency = 1,
+     create tables,
+     create indexes,
+     reset sequences,
+     quote identifiers
+
+CAST
+     type xml to text drop typemod,
+     type ntext to text
+
+BEFORE LOAD DO
+     $$ CREATE SCHEMA IF NOT EXISTS dbo $$,
+     $$ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" $$
+
+AFTER LOAD DO
+     $$ ANALYZE $$;

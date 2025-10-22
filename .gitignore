@@ -19,6 +19,7 @@ WARP.md
 .DS_Store
 
 ## PostgreSQL ##
+backup/*.sql
 *.dump
 
 ## VS Code ##
