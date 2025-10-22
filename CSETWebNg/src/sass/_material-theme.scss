@@ -1,0 +1,90 @@
+/*
+  Angular Material Theme Configuration
+  Copyright 2025 Battelle Energy Alliance, LLC
+*/
+
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material (only once in your app)
+@include mat.core();
+
+// Define your custom color palettes
+$cset-primary-palette: (
+  50: #e0f0f7,
+  100: #b3d9ec,
+  200: #80c0e0,
+  300: #4da7d4,
+  400: #2694ca,
+  500: #015288,  // CSET primary color
+  600: #014b7d,
+  700: #014170,
+  800: #013863,
+  900: #002848,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$cset-accent-palette: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+// Light theme configuration
+$cset-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+// Dark theme configuration
+$cset-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+// Apply the light theme by default
+:root {
+  @include mat.all-component-themes($cset-light-theme);
+}
+
+// Apply dark theme when dark mode is active
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+  @include mat.all-component-colors($cset-dark-theme);
+}
