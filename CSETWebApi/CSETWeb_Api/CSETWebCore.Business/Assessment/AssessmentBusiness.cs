@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
@@ -489,6 +490,16 @@ namespace CSETWebCore.Business.Assessment
                 var d1Demographics = d1.GetDemographics(assessmentId);
                 assessment.SectorId = d1Demographics.SectorId;
                 assessment.IndustryId = d1Demographics.IndustryId;
+
+
+                // update sector if need be
+                var sectorUp = new SectorUpgradePpd21(_context);
+                var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
+                if (newSectorInfo?.Changed ?? false)
+                {
+                    assessment.SectorId = newSectorInfo.SectorId;
+                    assessment.IndustryId = null;
+                }
 
 
                 assessment.SsgSectorIds = [];
