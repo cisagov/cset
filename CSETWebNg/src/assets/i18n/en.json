@@ -36,6 +36,7 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework. Previously selected subsectors are no longer applicable and should be re-selected.",
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",
@@ -988,7 +989,9 @@
       "2": "The following sectors include additional guidance not covered in CSET. For more information about these sector-specific performance goals, please visit CISA's Cross-Sector Cybersecurity Performance Goals page:",
       "descriptions": {
         "sector-1": "organizations involved in the production, storage, or distribution of chemicals for industrial, agricultural, or consumer application",
-        "sector-13": "organizations that develop software for internal, commercial, or open source use"
+        "sector-19": "organizations involved in the production, storage, or distribution of chemicals for industrial, agricultural, or consumer application",
+        "sector-13": "organizations that develop software for internal, commercial, or open source use",
+        "sector-28": "organizations that develop software for internal, commercial, or open source use"
       }
     },
     "cre+": {
@@ -1117,5 +1120,7 @@
     "done": "Done",
     "favorites": "Favorites"
   },
-  "categories": "Categories"
+  "categories": "Categories",
+  "all assessments": "All Assessments",
+  "favorites": "Favorites"
 }

@@ -23,30 +23,43 @@
 <div *transloco="let t" class="tw:flex tw:flex-col tw:md:flex-row tw:min-h-screen tw:m-4 tw:p-6 tw:rounded-lg">
   <!-- Left Sidebar -->
   <div class="tw:w-full tw:md:w-1/4 tw:bg-gray-200 tw:p-4 tw:rounded-l-lg">
-    <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('Categories') }}</h2>
+    <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('categories') }}</h2>
 
-    <!-- Favorite Section -->
-    <!--    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">-->
-    <!--      <div class="tw:flex tw:items-center tw:text-gray-800">-->
-    <!--        <i class="fas fa-heart tw:mr-2"></i>-->
-    <!--        Favorites-->
-    <!--      </div>-->
-    <!--    </div>-->
+    <div class="tw:pb-4 ">
+      <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
+              [ngClass]="{
+            'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'favorites',
+            'tw:text-gray-800': selectedCategory !== 'favorites'
+          }"
+              (click)="selectCategory('favorites')">
+        <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-[#15288] tw:mr-2"
+           style="text-shadow: 0 0 3px currentColor"></i>
+        {{ t('favorites') }}
+
+        <span class="tw:float-right tw:bg-gray-400 tw:px-2 tw:py-1 tw:rounded tw:text-xs"
+              [ngClass]="{
+            'tw:bg-gray-400': selectedCategory === 'favorites',
+            'tw:bg-gray-300': selectedCategory !== 'favorites'
+          }">
+      {{getFavoritesCount()}}
+    </span>
+      </button>
+    </div>
 
     <!-- Category List -->
     <div>
       <!-- All Categories -->
-      <div class="tw:mb-2">
-        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [ngClass]="{
-          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',
-          'tw:text-gray-800': selectedCategory !== 'all'
-        }"
-                (click)="selectCategory('all')">
-          <i class="fas fa-th-large tw:mr-2"></i>
-          All Assessments
-        </button>
-      </div>
+<!--      <div class="tw:mb-2">-->
+<!--        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"-->
+<!--                [ngClass]="{-->
+<!--          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',-->
+<!--          'tw:text-gray-800': selectedCategory !== 'all'-->
+<!--        }"-->
+<!--                (click)="selectCategory('all')">-->
+<!--          <i class="fas fa-th-large tw:mr-2"></i>-->
+<!--          {{ t('all assessments') }}-->
+<!--        </button>-->
+<!--      </div>-->
 
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
@@ -77,7 +90,9 @@
     <!-- Selected Category Title -->
     <div class="tw:mb-6">
       <h2 class="tw:text-2xl tw:font-semibold">
-        {{selectedCategory === 'all' ? 'All Assessments' : selectedCategory}}
+        {{selectedCategory === 'all' ? t('all assessments') :
+        selectedCategory === 'favorites' ? t('favorites') :
+          selectedCategory}}
       </h2>
       <span class="tw:text-sm tw:text-gray-600">{{getFilteredItems().length}} items</span>
     </div>
@@ -105,25 +120,48 @@
             {{c.title}}
           </h6>
         </div>
-
         <!-- Card Footer -->
         <div class="card-footer"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
              style="text-align:right;">
-
+          <button *ngIf="c.isFavorite && c.gallery_Item_Guid!=hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+          <button *ngIf="c.isFavorite && c.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.remove favorite')"
+                  class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
+          <button *ngIf="!c.isFavorite && c.gallery_Item_Guid==hoverIndex"
+                  [matTooltip]="t('tooltip.add favorite')"
+                  class="btn btn-outline-light btn-circle gallery-btn-favorite"
+                  (click)="toggleFavorite($event, c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
           <button [matTooltip]="t('tooltip.view detail')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info"
+                  class="btn btn-outline-light btn-circle gallery-btn-info"
                   (click)="openDialog(c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-circle-info"></i>
+            <i class="fa-solid fa-info tw:scale-125 tw:inline-block"
+               style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-
           <button [matTooltip]="t('tooltip.create assessment')"
                   [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                  class="btn btn-light btn-circle btn-sm gallery-btn-play"
+                  class="btn btn-outline-light btn-circle gallery-btn-play"
+                  style="margin-right:5px;"
                   (click)="navSvc.beginNewAssessmentGallery(c)">
-            <i class="fa-solid fa-play"></i>
+            <i class="fa-solid fa-play tw:inline-block"></i>
           </button>
         </div>
       </div>

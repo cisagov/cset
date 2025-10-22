@@ -29,10 +29,10 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
-@use 'swiper/scss';
-@use 'swiper/scss/navigation';
-@use 'swiper/scss/pagination';
 @use '@angular/material' as mat;
+// @use 'swiper/swiper.css';
+// @use 'swiper/css/navigation';
+// @use 'swiper/css/pagination';
 
 
 
@@ -603,6 +603,10 @@ table.cset-table {
   color: $primary-color;
 }
 
+table.cset-table ul {
+  list-style: unset !important;
+}
+
 table.cset-table tr:nth-child(even) {
   background: $gray-100;
 }
@@ -776,8 +780,8 @@ table.td-align-top td {
 
 /* override a few bootstrap classes */
 .form-container {
-  border: 1px solid #dee2e6; 
-  border-radius: .375rem; 
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
   padding: .375rem 2.25rem .375rem .75rem;
 }
 
@@ -1421,6 +1425,13 @@ div.spinner-size-50 {
 div.spinner-size-20 {
   max-width: 20px;
   max-height: 20px;
+}
+
+.center-item {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Safari */
@@ -3186,6 +3197,10 @@ hr.ranked-questions {
   width: 20% !important;
 }
 
+.w-fit {
+  width: fit-content !important;
+}
+
 .va-neg-17rem {
   vertical-align: -0.17rem !important;
 }
@@ -3291,7 +3306,7 @@ table.td-text-start td {
 }
 
 .b-none {
-  border: none;
+  border: none !important;
 }
 
 .b-primary {
@@ -3994,7 +4009,7 @@ h6.dropdown-header {
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding: 1rem 1rem 0 1rem !important;
+  padding: .3rem .3rem 0 .3rem !important;
 }
 
 .gallery-card-body-buttons {
@@ -4080,7 +4095,7 @@ h6.dropdown-header {
 }
 
 .gallery-card:hover {
-  border: 1px solid #ffc107;
+  border: 1px solid #015288;
 }
 
 .img-cropped-calc {
@@ -4097,7 +4112,7 @@ h6.dropdown-header {
 }
 
 .gallery-card-footer {
-  background-color: #ffc107 !important;
+  background-color: #015288 !important;
 
 }
 
@@ -4109,12 +4124,12 @@ h6.dropdown-header {
   padding: .5rem .75rem;
 }
 
-.gallery-btn-play {
-  color: #ffc107 !important;
+.gallery-btn-play:hover{
+  color: #015288 !important;
 }
 
 .gallery-btn-info:hover {
-  color: #ffc107 !important;
+  color:#015288 !important;
 }
 
 .newinstaller {

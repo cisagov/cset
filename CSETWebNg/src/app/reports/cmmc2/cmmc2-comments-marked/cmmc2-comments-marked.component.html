@@ -28,21 +28,7 @@
     </div>
   </div>
 
-  <div class="row mt-3">
-    <div class="col">
-      <h1 class="text-capitalize report-title">CMMC 2.0</h1>
-      <h1 class="text-capitalize report-title">COMMENTS AND MARKED FOR REVIEW</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <img src="assets/images/ExecutiveFiles/image002.jpg" style="width: 500; height: 600;">
-    </div>
-  </div>
-  <div class="row justify-content-between">
-    <app-logo-for-reports />
-    <app-info-block [response]="model?.reportData"></app-info-block>
-  </div>
+  <app-cover-page [response]="response" [title]="'CMMC 2.0 COMMENTS AND MARKED FOR REVIEW'" />
 
   <div class="page-break"></div>
 

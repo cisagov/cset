@@ -96,8 +96,22 @@ namespace CSETWeb_ApiCore
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .WithExposedHeaders("Content-Disposition");
+                            .WithExposedHeaders("content-disposition");
                     });
+
+                o.AddPolicy(
+                    name: "DynamicOrigins",
+                    builder =>
+                {
+                    var allowedOrigins = Configuration
+                        .GetSection("Cors:AllowedOrigins")
+                        .Get<string[]>();
+
+                    builder.WithOrigins(allowedOrigins)
+                          .AllowAnyMethod()
+                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid", "pwd")
+                          .WithExposedHeaders("content-disposition");
+                });
             });
 
             services.AddAuthentication(options =>
@@ -175,6 +189,10 @@ namespace CSETWeb_ApiCore
                     provider.GetRequiredService<IContactBusiness>(),
                     provider.GetRequiredService<IReportsDataBusiness>(),
                     provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<IAssessmentUtil>(),
+                    provider.GetRequiredService<IQuestionRequirementManager>(),
+                    provider.GetRequiredService<ITokenManager>(),
+                    provider.GetRequiredService<ICisDemographicBusiness>(),
                     provider.GetRequiredService<CSETContext>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
@@ -260,7 +278,7 @@ namespace CSETWeb_ApiCore
             });
             app.ConfigureExceptionHandler();
             app.UseRouting();
-            app.UseCors("AllowAll");
+            app.UseCors("DynamicOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -41,8 +41,7 @@
                id="encryption"
                [checked]="encryption"
                (change)="updateEncryptPreference()"
-               class="tw:toggle"
-               [attr.style]="'--color-base-100: ' + (encryption ? '#015288' : '#e5e7eb') + '; background-color: ' + (encryption ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+               class="tw:toggle">
 <!--        <span class="tw:ml-3">{{ encryption ? t('menu.user.on') : t('menu.user.off') }}</span>-->
       </div>
       <div class="pl-3 m-2">
@@ -70,8 +69,7 @@
                  id="cisa-workflow"
                  [checked]="cisaWorkflowEnabled"
                  (change)="toggleCisaAssessorWorkflow()"
-                 class="tw:toggle"
-                 [attr.style]="'--color-base-100: ' + (cisaWorkflowEnabled ? '#015288' : '#e5e7eb') + '; background-color: ' + (cisaWorkflowEnabled ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+                 class="tw:toggle">
         </div>
         <div>
           {{ t('assessor workflow.cisa assessor explanation')}}

@@ -22,11 +22,7 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <div class="flex-container">
-        <app-cover-sheet-a [title]="'DEFICIENCY REPORT'" [assessmentName]="assessmentName"
-            [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-            [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
-    </div>
+    <app-cover-page [response]="info" [title]="'DEFICIENCY REPORT'" />
     <div class="page-break">
 
         <div class="disclaimer-blurb mt-4">

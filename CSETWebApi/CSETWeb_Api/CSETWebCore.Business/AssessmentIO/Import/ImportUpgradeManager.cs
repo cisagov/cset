@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -26,17 +27,15 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         static ImportUpgradeManager()
         {
             upgraders.Add("9.0.0.0", new CSET_09_0_0_to_09_0_1_Upgrade());
-            upgraders.Add("9.0.1.0", new CSET_09_0_1_to_09_2_Upgrade());
-            upgraders.Add("9.0.4.0", new CSET_09_0_1_to_09_2_Upgrade());
-            upgraders.Add("9.2.0.0", new CSET_09_2_0_to_09_2_1_Upgrade());
-            upgraders.Add("9.2.1.0", new CSET_09_2_1_to_09_2_2_Upgrade());
-            upgraders.Add("9.2.2.0", new CSET_09_2_2_to_09_2_3_Upgrade());
-            upgraders.Add("9.2.3.0", new CSET_09_2_3_to_10_0_0_Upgrade());
-            upgraders.Add("10.0.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
-            upgraders.Add("10.0.1.0", new CSET_10_0_1_to_10_1_0_Upgrade());
-            upgraders.Add("10.1.0.0", new CSET_10_1_0_to_10_1_1_Upgrade());
+            upgraders.Add("9.0.1.0", new CSET_09_0_1_to_09_2_0_Upgrade());
+            upgraders.Add("9.0.4.0", new CSET_09_0_1_to_09_2_0_Upgrade());
+            upgraders.Add("10.1.0.0", new CSET_09_2_0_to_10_1_1_Upgrade());
             upgraders.Add("10.1.1.0", new CSET_10_1_1_to_10_2_0_Upgrade());
-            upgraders.Add("10.2.0.0", null);
+            upgraders.Add("10.2.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());  
+            upgraders.Add("10.3.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());
+            upgraders.Add("12.4.0.3", new CSET_10_2_0_to_12_4_0_4_Upgrade());
+            upgraders.Add("12.4.0.4", new CSET_12_4_0_4_to_12_4_0_5_Upgrade());
+            upgraders.Add("12.4.0.5", null); 
         }
 
 
@@ -101,17 +100,44 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             }
 
 
-            while (version < latestVersion)
+            while (version <= latestVersion)
             {
-                ICSETJSONFileUpgrade fileUpgrade = upgraders[version.ToString()];
-                if (fileUpgrade != null)
+                // Try to find an upgrader for the current version
+                if (upgraders.ContainsKey(version.ToString()))
                 {
-                    json = fileUpgrade.ExecuteUpgrade(json);
-                    version = NormalizeVersion(fileUpgrade.GetVersion());
+                    ICSETJSONFileUpgrade fileUpgrade = upgraders[version.ToString()];
+                    if (fileUpgrade != null)
+                    {
+                        json = fileUpgrade.ExecuteUpgrade(json);
+                        version = NormalizeVersion(fileUpgrade.GetVersion());
+                    }
+                    else
+                    {
+                        // Reached terminal version
+                        break;
+                    }
+                }
+                else
+                {
+                    // No upgrader found for this version, try to find the next available upgrader
+                    var nextVersion = FindNextAvailableVersion(version, knownVersions);
+                    if (nextVersion == null || nextVersion <= version)
+                    {
+                        // No higher version found, can't upgrade further
+                        break;
+                    }
+                    version = nextVersion;
                 }
             }
+            
 
             return json;
+        }
+        
+        private System.Version FindNextAvailableVersion(System.Version currentVersion, List<System.Version> knownVersions)
+        {
+            var higherVersions = knownVersions.Where(v => v > currentVersion).OrderBy(v => v);
+            return higherVersions.FirstOrDefault();
         }
 
 

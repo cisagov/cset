@@ -32,12 +32,13 @@ import { QuestionsService } from '../../services/questions.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'physical-summary',
-    templateUrl: './physical-summary.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'physical-summary',
+  templateUrl: './physical-summary.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
@@ -49,6 +50,7 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
   networkDiagramImage: SafeHtml;
 
   pageInitialized = false;
+  info: AssessmentDetail;
 
 
   constructor(
@@ -59,7 +61,8 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     private sanitizer: DomSanitizer,
     private maturitySvc: MaturityService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
@@ -72,6 +75,11 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
         this.response = r;
       },
       error => console.error('Physical Summary report load Error: ' + (<Error>error).message)
+    );
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
     );
   }
 

@@ -38,11 +38,13 @@ const headers = {
 @Injectable()
 export class ReportService {
   private initialized = false;
-  private apiUrl: string;
 
   confidentialityLevels: any[];
   confidentiality = '';
 
+  private get apiUrl(): string {
+    return this.configSvc.apiUrl;
+  }
 
   /**
    *
@@ -55,7 +57,6 @@ export class ReportService {
     private fileExportSvc: FileExportService
   ) {
     if (!this.initialized) {
-      this.apiUrl = this.configSvc.apiUrl;
       this.initialized = true;
     }
 

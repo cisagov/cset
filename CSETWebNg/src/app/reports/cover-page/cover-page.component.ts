@@ -21,15 +21,25 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
-    selector: 'report-test',
-    templateUrl: './report-test.component.html',
-    preserveWhitespaces: true,
-    standalone: false
+  selector: 'app-cover-page',
+  templateUrl: './cover-page.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
+export class CoverPageComponent implements OnInit {
 
-export class ReportTestComponent {
+  @Input() title: string;
+  @Input() response: string;
+  constructor(
+    public configSvc: ConfigService
 
+  ) { }
+
+  ngOnInit() {
+
+  }
 }

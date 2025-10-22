@@ -38,7 +38,6 @@ namespace CSETWebCore.Interfaces.Reports
 
         List<BasicReportData.RequirementControl> GetControls(string applicationMode);
         List<List<DiagramZones>> GetDiagramZones();
-        List<usp_getFinancialQuestions_Result> GetFinancialQuestions();
         List<StandardQuestions> GetQuestionsForEachStandard();
         List<ComponentQuestion> GetComponentQuestions();
         List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories();
