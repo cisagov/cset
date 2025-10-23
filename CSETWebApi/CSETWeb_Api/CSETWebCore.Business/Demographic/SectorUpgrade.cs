@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Demographic
             var dbSector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR");
             
             // do nothing if the sector is not a candidate for upgrading
-            if (dbSector == null || !HSPD7ToPPD21SectorIds.ContainsKey((int)dbSector?.IntValue))
+            if (dbSector == null || dbSector.IntValue == null || !HSPD7ToPPD21SectorIds.ContainsKey((int)dbSector.IntValue))
             {
                 return null;
             }
