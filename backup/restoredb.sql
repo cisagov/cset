@@ -9,4 +9,3 @@ WITH REPLACE,
 MOVE 'CSETWebTest' TO '/var/opt/mssql/data/CSETWebTest.mdf',
 MOVE 'CSETWebTest_Log' TO '/var/opt/mssql/data/CSETWebTest_Log.ldf'
 GO
-
