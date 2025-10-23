@@ -276,7 +276,7 @@ export class MyAssessmentsComponent implements OnInit {
               </i>
             </button>
 
-            <span class="cursor-pointer cset-icons-flag-dark tw:text-lg p-1 ${flagClass}"
+            <span class="cursor-pointer cset-icons-flag-dark tw:text-md p-1 pt-2 ${flagClass}"
                   title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
             </span>
              ${progressBarHtml}
