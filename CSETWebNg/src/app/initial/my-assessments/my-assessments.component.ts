@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { FileUploadClientService } from '../../services/file-client.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ import { Title } from '@angular/platform-browser';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, of, Subscription } from 'rxjs';
 import { concatMap, map, tap, catchError } from 'rxjs/operators';
 import { NavTreeService } from '../../services/navigation/nav-tree.service';
 import { LayoutService } from '../../services/layout.service';
@@ -87,7 +87,7 @@ interface UserAssessment {
   host: { class: 'd-flex flex-column flex-11a' },
   standalone: false
 })
-export class MyAssessmentsComponent implements OnInit {
+export class MyAssessmentsComponent implements OnInit, OnDestroy {
   comparer: Comparer = new Comparer();
   sortedAssessments: UserAssessment[] = [];
   unsupportedImportFile: boolean = false;
@@ -116,6 +116,8 @@ export class MyAssessmentsComponent implements OnInit {
   };
   dynamicGridHeight: number = 600;
   private readonly minGridHeight = 300;
+  private langChangeSubscription!: Subscription;
+  private cisaWorkflowSubscription!: Subscription;
 
   constructor(
     public configSvc: ConfigService,
@@ -153,21 +155,29 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
+    this.cisaWorkflowSubscription=this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
       this.configSvc.userIsCisaAssessor = resp
       this.initializeColumnDefs()
-      if (this.gridApi) {
+      if (this.gridApi && !this.gridApi.isDestroyed()) {
         this.gridApi.setGridOption('columnDefs', this.columnDefs);
       }
     });
-    this.tSvc.langChanges$.subscribe((lang: string) => {
+    this.langChangeSubscription =  this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
   }
-
+  ngOnDestroy(): void {
+    // Clean up subscriptions to prevent memory leaks
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
+    if (this.cisaWorkflowSubscription) {
+      this.cisaWorkflowSubscription.unsubscribe();
+    }
+  }
   updateGridTranslations(): void {
     this.initializeColumnDefs();
-    if (this.gridApi) {
+    if (this.gridApi && !this.gridApi.isDestroyed()) {
       this.gridApi.setGridOption('columnDefs', this.columnDefs);
     }
   }
@@ -247,8 +257,8 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: (params: any) => {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
-          const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-          const favoriteClass = assessment.favorite ? 'tw:text-[#015288]' : 'star-inactive';
+          const favoriteIconClass = assessment.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star';
+          const favoriteClass = assessment.favorite ? 'star-favorite' : 'star-inactive';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
@@ -271,9 +281,7 @@ export class MyAssessmentsComponent implements OnInit {
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-               <i class="fa-solid fa-star ${favoriteClass}">
-                ${favoriteIcon}
-              </i>
+              <i class="${favoriteIconClass} ${favoriteClass}"></i>
             </button>
 
             <span class="cursor-pointer cset-icons-flag-dark tw:text-md p-1 pt-2 ${flagClass}"
@@ -450,7 +458,7 @@ export class MyAssessmentsComponent implements OnInit {
                   this.sortedAssessments.splice(index, 1);
                 }
 
-                if (this.gridApi) {
+                if (this.gridApi && !this.gridApi.isDestroyed() ) {
                   this.gridApi.setGridOption('rowData', this.filteredAssessments);
                 }
               }),
@@ -652,7 +660,7 @@ export class MyAssessmentsComponent implements OnInit {
    */
   setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
     this.currentFilter = filter;
-    if (this.gridApi) {
+    if (this.gridApi && !this.gridApi.isDestroyed()) {
       this.gridApi.setGridOption('rowData', this.filteredAssessments);
     }
   }
@@ -798,7 +806,7 @@ export class MyAssessmentsComponent implements OnInit {
       this.assessSvc.setAssessmentFavorite(newFavoriteStatus).subscribe({
         next: () => {
           assessment.favorite = newFavoriteStatus;
-          if (this.gridApi) {
+          if (this.gridApi && !this.gridApi.isDestroyed()) {
             try {
               this.gridApi.setGridOption('rowData', this.filteredAssessments);
             } catch (error) {
@@ -835,7 +843,7 @@ export class MyAssessmentsComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.calculateGridHeight();
-    if (this.gridApi) {
+    if (this.gridApi && !this.gridApi.isDestroyed()) {
       // Refresh grid layout after height change
       setTimeout(() => {
         this.gridApi.sizeColumnsToFit();
@@ -862,7 +870,7 @@ export class MyAssessmentsComponent implements OnInit {
     // Wait for grid to fully initialize
     setTimeout(() => {
       const savedPage = sessionStorage.getItem('cset-assessments-page');
-      if (savedPage && this.gridApi) {
+      if (savedPage && this.gridApi && !this.gridApi.isDestroyed()) {
         const pageNumber = parseInt(savedPage);
         const totalPages = this.gridApi.paginationGetTotalPages();
         if (pageNumber >= 0 && pageNumber < totalPages) {
