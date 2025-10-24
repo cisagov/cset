@@ -28,7 +28,8 @@ import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
-
+import { AuthenticationService } from '../../services/authentication.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -50,17 +51,25 @@ import { TranslocoService } from '@jsverse/transloco';
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
   selectedCategory = 'favorites';
+  private langChangeSubscription: Subscription;
 
   constructor(
     public dialog: MatDialog,
     public gallerySvc: GalleryService,
     public navSvc: NavigationService,
     public tSvc: TranslocoService,
+    private authSvc: AuthenticationService,
   ) {
   }
 
   ngOnInit(): void {
     this.gallerySvc.refreshCards();
+    this.langChangeSubscription = this.tSvc.langChanges$.subscribe((lang: string) => {
+      // Wait for the language to be saved to backend, THEN refresh
+      this.authSvc.setUserLang(lang).subscribe(() => {
+        this.gallerySvc.refreshCards();
+      });
+    });
   }
 
   ngAfterViewInit() {
