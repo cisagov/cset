@@ -128,9 +128,6 @@
   .star-inactive {
     color: #9ca3af !important;
   }
-
-
-
   /* restore list formatting that Tailwind got rid of */
   app-question-block ol, app-question-block-maturity ol {
     list-style-type: revert;
@@ -162,3 +159,23 @@
     list-style-type: decimal !important;
   }
 }
+
+
+/* restore default list styling that tailwind removed */
+ol,
+ul {
+  list-style: revert;
+}
+
+ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+ol[type="i"] {
+  list-style-type: lower-roman;
+}
+
+ol[type="1"] {
+  list-style-type: decimal;
+}
+
