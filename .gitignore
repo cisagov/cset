@@ -18,6 +18,10 @@ WARP.md
 ## Mac OS ##
 .DS_Store
 
+## PostgreSQL ##
+backup/*.sql
+*.dump
+
 ## VS Code ##
 .vscode
 

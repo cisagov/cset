@@ -46,7 +46,7 @@ export class ImportAssessmentService {
     private configSvc: ConfigService) {
   }
 
-  public upload(files: Set<File>, isNormalLoad: boolean, password): { [key: string]: Observable<number> } {
+  public upload(files: Set<File>, isNormalLoad: boolean, password: string): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 

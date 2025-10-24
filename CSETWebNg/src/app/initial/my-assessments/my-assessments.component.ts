@@ -95,15 +95,15 @@ export class MyAssessmentsComponent implements OnInit {
   browserIsIE: boolean = false;
 
   // contains CSET or ACET; used for tooltips, etc
-  appName: string;
-  appTitle: string;
+  appName!: string;
+  appTitle!: string;
 
 
-  exportExtension: string;
+  exportExtension!: string;
   importExtensions: string = '.csetw';
   exportAllInProgress: boolean = false;
 
-  timer = ms => new Promise(res => setTimeout(res, ms));
+  timer = (ms: number) => new Promise(res => setTimeout(res, ms));
   currentFilter: 'all' | 'done' | 'pending' | 'favorite' = 'all';
   private gridApi!: GridApi;
 
