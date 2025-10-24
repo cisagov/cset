@@ -1,0 +1,9 @@
+﻿{
+  "Purpose": "Provides a translatable resource of field names",
+  "Fields": [
+    {
+      "key": "numberemployeesunit",
+      "value":  "Number of Employees in the Unit Baby"
+    }
+  ]
+}
