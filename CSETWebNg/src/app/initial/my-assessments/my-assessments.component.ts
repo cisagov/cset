@@ -248,7 +248,7 @@ export class MyAssessmentsComponent implements OnInit {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
           const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-          const favoriteClass = assessment.favorite ? 'tw:text-amber-500' : 'tw:text-gray-400';
+          const favoriteClass = assessment.favorite ? 'star-favorite' : 'star-inactive';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
