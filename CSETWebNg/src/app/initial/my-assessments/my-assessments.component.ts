@@ -800,9 +800,7 @@ export class MyAssessmentsComponent implements OnInit {
           assessment.favorite = newFavoriteStatus;
           if (this.gridApi) {
             try {
-              this.gridApi.refreshCells({
-                force: true
-              });
+              this.gridApi.setGridOption('rowData', this.filteredAssessments);
             } catch (error) {
               console.error('Error refreshing grid cells:', error);
             }
