@@ -148,17 +148,24 @@
 
   app-question-block ol[type="a"], app-question-block-maturity ol[type="a"] {
     list-style-type: lower-alpha !important;
+}
+
+/* restore default list styling that tailwind removed */
+@layer base {
+  ol,
+  ul {
+    list-style: revert;
   }
 
-  app-question-block ol[type="i"], app-question-block-maturity ol[type="i"] {
-    list-style-type: lower-roman !important;
+  ol[type="a"] {
+    list-style-type: lower-alpha;
   }
 
-  app-question-block ol[type="I"], app-question-block-maturity ol[type="I"] {
-    list-style-type: upper-roman !important;
+  ol[type="i"] {
+    list-style-type: lower-roman;
   }
 
-  app-question-block ol[type="1"], app-question-block-maturity ol[type="1"] {
-    list-style-type: decimal !important;
+  ol[type="1"] {
+    list-style-type: decimal;
   }
 }
