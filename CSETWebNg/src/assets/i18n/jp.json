@@ -442,7 +442,9 @@
           "analytics": "この評価の分析を表示。",
           "merged checked exams": "チェックされた試験をマージ",
           "export all": "すべての評価のコピーを別の場所にエクスポート。",
-          "nav collapse": "ナビゲーションを展開/折りたたむ"
+          "nav collapse": "ナビゲーションを展開/折りたたむ",
+          "add favorite": "お気に入りに追加",
+          "remove favorite":"お気に入りから削除"
      },
      "welcome page": {
           "internet explorer": "現在のブラウザとしてInternet Explorerが検出されました。\nInternet Explorerはサポートされていません。\nChrome、Firefox、Edgeなどの他のブラウザの使用を強くお勧めします。",
@@ -502,4 +504,5 @@
   "categories": "カテゴリ",
   "all assessments": "すべての評価",
   "favorites": "お気に入り"
+
 }
