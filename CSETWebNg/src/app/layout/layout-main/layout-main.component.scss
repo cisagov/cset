@@ -4131,7 +4131,9 @@ h6.dropdown-header {
 .gallery-btn-info:hover {
   color:#015288 !important;
 }
-
+.gallery-btn-favorite:hover i.fa-star {
+  color: #005288 !important;
+}
 .newinstaller {
   position: relative;
   top: -15 !important;

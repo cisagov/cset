@@ -129,7 +129,7 @@
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block star-favorite"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <button *ngIf="c.isFavorite && c.gallery_Item_Guid==hoverIndex"
@@ -137,15 +137,15 @@
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block star-favorite"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <button *ngIf="!c.isFavorite && c.gallery_Item_Guid==hoverIndex"
                   [matTooltip]="t('tooltip.add favorite')"
-                  class="btn btn-outline-light btn-circle gallery-btn-favorite"
+                  class="btn btn-outline-light btn-circle gallery-btn-info"
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <button [matTooltip]="t('tooltip.view detail')"
