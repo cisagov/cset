@@ -4,18 +4,21 @@
 // 
 // 
 //////////////////////////////// 
-
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+
 
 namespace CSETWebCore.Business.Demographic
 {
+   /// <summary>
+   /// 
+   /// </summary>
     public class CisaAssessorWorkflowFieldValidator
     {
         private Demographics _demographics;
@@ -23,12 +26,17 @@ namespace CSETWebCore.Business.Demographic
         private CisServiceDemographics _cisServiceDemographics;
         private CisServiceComposition _cisServiceComposition;
 
+        private readonly TranslationOverlay _overlay;
+
+
         public CisaAssessorWorkflowFieldValidator(Demographics demographics, DemographicExt demographicExt, CisServiceDemographics cisServiceDemographics, CisServiceComposition cisServiceComposition)
         {
             _demographics = demographics;
             _demographicExt = demographicExt;
             _cisServiceDemographics = cisServiceDemographics;
             _cisServiceComposition = cisServiceComposition;
+
+            _overlay = new TranslationOverlay();
         }
 
         /// <summary>
@@ -57,78 +65,131 @@ namespace CSETWebCore.Business.Demographic
             //--------------------------------
             List<PropertyInfo> demoExtProperties = typeof(DemographicExt).GetProperties().ToList();
 
-            // remove Org Point of Contact - currently stored as DemographicExt but not required
+            // remove fields stored as Demographics but not required for CSA Report permission
             demoExtProperties.RemoveAll(x => x.Name == "OrgPointOfContact");
             demoExtProperties.RemoveAll(x => x.Name == "SectorDirective");
             demoExtProperties.RemoveAll(x => x.Name == "Acknowledgement");
+            demoExtProperties.RemoveAll(x => x.Name.StartsWith("List"));
+            demoExtProperties.RemoveAll(x => x.Name.Equals("Reg1Other") || x.Name.Equals("Reg2Other"));
+            demoExtProperties.RemoveAll(x => x.Name.StartsWith("Share"));
+            if (!_demographicExt.UsesStandard)
+            {
+                demoExtProperties.RemoveAll(x => x.Name.StartsWith("Standard"));
+            }
+            if (!_demographicExt.RequiredToComply)
+            {
+                demoExtProperties.RemoveAll(x => x.Name.StartsWith("RegulationType"));
+            }
+
+            var lang = "en";
 
 
             foreach (PropertyInfo property in demoExtProperties)
             {
                 var displayName = GetDisplayName(_demographicExt, property.Name);
 
-                if (property.Name.StartsWith("List"))
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("Standard") && !_demographicExt.UsesStandard)
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("RegulationType") && !_demographicExt.RequiredToComply)
-                {
-                    continue;
-                }
-
-
-                if (property.Name.Equals("Reg1Other") || property.Name.Equals("Reg2Other"))
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("Share"))
-                {
-                    continue;
-                }
-
-
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_demographicExt)))
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                    continue;
+
+                    ///
+                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        invalidFields.Add(itemOverlay.Value<string>("value"));
+                        continue;
+                    }
+                    else
+                    {
+                        invalidFields.Add(displayName);
+                    }
+                    ///
+
+
+
+
+
+
+
+                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    //continue;
                 }
 
                 if (property.GetValue(_demographicExt) == null)
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                   // invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+
+
+                    ///
+                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        invalidFields.Add(itemOverlay.Value<string>("value"));
+                    }
+                    else
+                    {
+                        invalidFields.Add(displayName);
+                    }
+                    ///
                 }
             }
+
 
             //--------------------------------
             // _cisServiceDemographics validation
             //--------------------------------
             List<PropertyInfo> cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties().ToList();
+
+            if (!_cisServiceDemographics.MultiSite)
+            {
+            cisServiceDemoProperties.RemoveAll(x => x.Name.StartsWith("MultiSiteDescription"));
+            }
+
             foreach (PropertyInfo property in cisServiceDemoProperties)
             {
                 var displayName = GetDisplayName(_cisServiceDemographics, property.Name);
 
-                if (property.Name.StartsWith("MultiSiteDescription") && !_cisServiceDemographics.MultiSite)
-                {
-                    continue;
-                }
+               
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceDemographics)))
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+
+                    ///
+                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        invalidFields.Add(itemOverlay.Value<string>("value"));
+                    }
+                    else
+                    {
+                        invalidFields.Add(displayName);
+                    }
+                    ///
+
                     continue;
                 }
 
+
                 if (property.GetValue(_cisServiceDemographics) == null)
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+
+                    ///
+                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        invalidFields.Add(itemOverlay.Value<string>("value"));
+                    }
+                    else
+                    {
+                        invalidFields.Add(displayName);
+                    }
+                    ///
                 }
             }
 
@@ -136,6 +197,7 @@ namespace CSETWebCore.Business.Demographic
             // _cisServiceComposition validation
             //--------------------------------
             List<PropertyInfo> cisServiceCompProperties = typeof(CisServiceComposition).GetProperties().ToList();
+
             foreach (PropertyInfo property in cisServiceCompProperties)
             {
                 var displayName = GetDisplayName(_cisServiceComposition, property.Name);
