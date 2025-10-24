@@ -48,33 +48,20 @@
 
     <!-- Category List -->
     <div>
-      <!-- All Categories -->
-<!--      <div class="tw:mb-2">-->
-<!--        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"-->
-<!--                [ngClass]="{-->
-<!--          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',-->
-<!--          'tw:text-gray-800': selectedCategory !== 'all'-->
-<!--        }"-->
-<!--                (click)="selectCategory('all')">-->
-<!--          <i class="fas fa-th-large tw:mr-2"></i>-->
-<!--          {{ t('all assessments') }}-->
-<!--        </button>-->
-<!--      </div>-->
-
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
         <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
                 [ngClass]="{
-          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === row.group_Title,
-          'tw:text-gray-800': selectedCategory !== row.group_Title
+          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black':  selectedCategoryId === row.group_Id,
+          'tw:text-gray-800': selectedCategoryId !== row.group_Id
         }"
                 (click)="selectCategory(row.group_Title)">
           <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
           {{row.group_Title}}
           <span class="tw:float-right tw:bg-gray-400 tw:px-2 tw:py-1 tw:rounded tw:text-xs"
                 [ngClass]="{
-          'tw:bg-gray-400': selectedCategory === row.group_Title,
-          'tw:bg-gray-300': selectedCategory !== row.group_Title
+          'tw:bg-gray-400': selectedCategoryId === row.group_Id,
+          'tw:bg-gray-300': selectedCategoryId !== row.group_Id
         }"
           >{{row.galleryItems.length}}</span>
         </button>
@@ -90,9 +77,10 @@
     <!-- Selected Category Title -->
     <div class="tw:mb-6">
       <h2 class="tw:text-xl tw:font-bold tw:mb-4">
-        {{selectedCategory === 'all' ? t('all assessments') :
-        selectedCategory === 'favorites' ? t('favorites') :
-          selectedCategory}}
+        {{getSelectedCategoryTitle()}}
+<!--        {{selectedCategory === 'all' ? t('all assessments') :-->
+<!--        selectedCategory === 'favorites' ? t('favorites') :-->
+<!--          selectedCategory}}-->
       </h2>
       <span class="tw:text-sm tw:text-gray-600">{{getFilteredItems().length}} items</span>
     </div>

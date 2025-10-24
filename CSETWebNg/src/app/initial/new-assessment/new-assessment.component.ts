@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from '../../services/gallery.service';
@@ -48,10 +48,12 @@ import { Subscription } from 'rxjs';
     ]),
   ],
 })
-export class NewAssessmentComponent implements OnInit, AfterViewInit {
+export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy{
   hoverIndex = -1;
   selectedCategory = 'favorites';
+  selectedCategoryId:number |null = null;
   private langChangeSubscription: Subscription;
+
 
   constructor(
     public dialog: MatDialog,
@@ -75,7 +77,11 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
-
+  ngOnDestroy(): void {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
+  }
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
@@ -118,7 +124,17 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   selectCategory(category: string): void {
-    this.selectedCategory = category;
+    if(category==='favorites') {
+      this.selectedCategory = 'favorites';
+      this.selectedCategoryId = null;
+    }
+   else{
+      const selectedRow = this.gallerySvc.rows?.find(row => row.group_Title === category);
+      if (selectedRow) {
+        this.selectedCategoryId = selectedRow.group_Id;
+        this.selectedCategory = null;
+      }
+    }
   }
   getFavoritesCount(): number {
     return this.getUniqueFavorites().length;
@@ -127,20 +143,28 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
       return [];
     }
-
-    if (this.selectedCategory === 'all') {
-      return this.gallerySvc.rows.reduce((acc, row) => {
-        return acc.concat(row.galleryItems || []);
-      }, []);
-    } if (this.selectedCategory === 'favorites') {
+    if (this.selectedCategory === 'favorites') {
       return this.getUniqueFavorites();
     }
-    else {
-      const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
+    //  not lost the categories when language changes
+    if (this.selectedCategoryId !== null) {
+      const selectedRow = this.gallerySvc.rows.find(row => row.group_Id === this.selectedCategoryId);
       return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
     }
+    return [];
   }
+  getSelectedCategoryTitle(): string {
+    if (this.selectedCategory === 'favorites') {
+      return this.tSvc.translate('favorites');
+    }
 
+    if (this.selectedCategoryId !== null) {
+      const selectedRow = this.gallerySvc.rows?.find(row => row.group_Id === this.selectedCategoryId);
+      return selectedRow ? selectedRow.group_Title : '';
+    }
+
+    return this.tSvc.translate('all assessments');
+  }
   getCategoryIcon(categoryTitle: string): string {
     const iconMap: { [key: string]: string } = {
       'Most Popular': 'fas fa-star',
