@@ -121,37 +121,24 @@
     --input-color: #ffffff !important;
     border-color: #015288 !important;
   }
+}
 
-
-
-  /* restore list formatting that Tailwind got rid of */
-  app-question-block ol, app-question-block-maturity ol {
-    list-style-type: revert;
+/* restore default list styling that tailwind removed */
+@layer base {
+  ol,
+  ul {
+    list-style: revert;
   }
 
-  app-question-block ul, app-question-block-maturity ul {
-    list-style-type: revert;
-  }
-  
-  
-  /* Support type attribute on lists */
-  app-question-block ol[type="A"], app-question-block-maturity ol[type="A"] {
-    list-style-type: upper-alpha !important;
+  ol[type="a"] {
+    list-style-type: lower-alpha;
   }
 
-  app-question-block ol[type="a"], app-question-block-maturity ol[type="a"] {
-    list-style-type: lower-alpha !important;
+  ol[type="i"] {
+    list-style-type: lower-roman;
   }
 
-  app-question-block ol[type="i"], app-question-block-maturity ol[type="i"] {
-    list-style-type: lower-roman !important;
-  }
-
-  app-question-block ol[type="I"], app-question-block-maturity ol[type="I"] {
-    list-style-type: upper-roman !important;
-  }
-
-  app-question-block ol[type="1"], app-question-block-maturity ol[type="1"] {
-    list-style-type: decimal !important;
+  ol[type="1"] {
+    list-style-type: decimal;
   }
 }
