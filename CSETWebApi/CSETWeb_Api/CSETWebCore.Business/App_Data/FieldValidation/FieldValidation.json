@@ -1,0 +1,141 @@
+﻿[
+
+
+
+  {
+    "key": "organizationname",
+    "value": "Organization Name"
+  },
+  {
+    "key": "organizationtype",
+    "value": "Organization Type"
+  },
+  {
+    "key": "businessunit",
+    "value": "Business Unit"
+  },
+  {
+    "key": "sector",
+    "value": "Sector"
+  },
+  {
+    "key": "subsector",
+    "value": "Subsector"
+  },
+  {
+    "key": "numberemployeestotal",
+    "value": "Number of Employees Total!"
+  },
+  {
+    "key": "numberemployeesunit",
+    "value": "Number of Employees in the Unit!"
+  },
+  {
+    "key": "annualrevenue",
+    "value": "Annual Revenue"
+  },
+  {
+    "key": "usesstandard",
+    "value": "Uses Standard"
+  },
+  {
+    "key": "standard1",
+    "value": "Standard 1"
+  },
+  {
+    "key": "standard2",
+    "value": "Standard 2"
+  },
+
+
+
+
+
+
+
+
+
+
+  {
+    "key": "assessmentdate",
+    "value": "Assessment Date"
+  },
+  {
+    "key": "barrier1",
+    "value": "Barrier 1"
+  },
+  {
+    "key": "barrier2",
+    "value": "Barrier 2"
+  },
+  {
+    "key": "budgetbasis",
+    "value": "What is the basis of the cybersecurity budget for this Critical Service?"
+  },
+
+  {
+    "key": "cisaregions",
+    "value": "CISA Regions"
+  },
+  {
+    "key": "cisaregion",
+    "value": "CISA Region!"
+  },
+  {
+    "key": "criticaldependencyincidentresponsesupport",
+    "value": "Critical Dependency Incident Response Support"
+  },
+  {
+    "key": "CriticalServiceRevenuePercent",
+    "value": "Critical Service Revenue Percent"
+  },
+  {
+    "key": "DisruptedSector1",
+    "value": "Disrupted Sector 1"
+  },
+  {
+    "key": "DisruptedSector2",
+    "value": "Disrupted Sector 2"
+  },
+  {
+    "key": "numberpeopleservedbycritsvc",
+    "value": "Number of People Served by the Critical Service"
+  },
+  {
+    "key": "regulationtype1",
+    "value": "Regulation Type 1"
+  },
+  {
+    "key": "regulationtype2",
+    "value": "Regulation Type 2"
+  },
+  {
+    "key": "requiredtocomply",
+    "value": "Required To Comply"
+  },
+
+  {
+    "key": "ssgsectors",
+    "value": "SSG Sectors"
+  },
+
+
+
+
+
+
+
+
+  {
+    "key": "CriticalServiceName",
+    "value": "Critical Service Name"
+  },
+  {
+    "key": "ItIcsStaffCount",
+    "value": "Total # of IT/ICS management and staff (i.e., technologists) assigned and/or dedicated to the Critical Service"
+  },
+  {
+    "key": "authorizedOrganizationalUserCount",
+    "value": "How many authorized, organizational users access and interact (i.e., operate, perform data entry, etc., as end users) with the Critical Service?"
+  }
+]
