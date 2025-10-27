@@ -281,7 +281,7 @@
                    class="btn btn-secondary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center">
               <span class="mr-2 cset-icons-import"></span>
               {{ t('welcome page.import assessment') }}
-              <input type="file" class="hidden" accept="{{ importExtensions }}"
+              <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
                      (change)="importAssessmentFile($event)">
             </label>
           </div>
@@ -308,7 +308,7 @@
                  class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="hidden" accept="{{ importExtensions }},.cset"
+            <input type="file" class="tw:hidden" accept="{{ importExtensions }},.cset"
                    (change)="importAssessmentFile($event)">
           </label>
 
@@ -317,7 +317,7 @@
                  class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="hidden" accept="{{ importExtensions }}"
+            <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
                    (change)="importAssessmentFile($event)">
           </label>
         </div>
