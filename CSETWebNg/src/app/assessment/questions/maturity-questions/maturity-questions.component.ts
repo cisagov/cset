@@ -60,8 +60,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
   groupingsAreMil = false;
 
   pageTitle: string = '';
-  moduleBehavior: ModuleBehavior;
-  modelId: number;
+  moduleBehavior?: ModuleBehavior;
+  modelId?: number;
   modelName: string = '';
   groupingTitle: string = '';
   questionsAlias: string = '';

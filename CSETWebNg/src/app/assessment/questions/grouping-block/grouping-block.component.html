@@ -20,63 +20,44 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *ngIf="isGroupingNameVisible()">
+<ng-container *ngIf="grouping.showTitleAsHeading">
     <div class="domain-group-heading">
         {{grouping.title}}
     </div>
     <div *ngIf="grouping.description?.length > 0" class="mb-4" [innerHTML]="grouping.description">
     </div>
-
 </ng-container>
 
 
-<!-- (applies to ACET only) indicates when all maturity filters turned off for this domain -->
-<div *ngIf="allDomainMaturityLevelsHidden()"
-    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-        All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
-    </span>
-</div>
+<ng-container *ngIf="grouping.visible">
 
-<ng-container *ngIf="!allDomainMaturityLevelsHidden()">
+    <div class="capability-group-heading"
+        *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
+        {{grouping.title}}
+    </div>
 
-    <ng-container *ngIf="grouping.visible">
+    <div class="assessment-factor-group-heading"
+        *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Assessment Factor'">
+        {{grouping.title}}
+    </div>
 
-        <div class="capability-group-heading"
-            *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
-            {{grouping.title}}
-        </div>
+    <div *ngFor="let sg of grouping.subGroupings">
+        <app-grouping-block [grouping]="sg"></app-grouping-block>
+    </div>
+    <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('VADR')">
+        <app-question-block-vadr #questionBlock [myGrouping]="grouping">
+        </app-question-block-vadr>
+    </div>
+    <div *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR')">
+        <app-question-block-maturity #questionBlock [myGrouping]="grouping">
+        </app-question-block-maturity>
+    </div>
 
-        <div class="assessment-factor-group-heading"
-            *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Assessment Factor'">
-            {{grouping.title}}
-        </div>
-
-        <div *ngFor="let sg of grouping.subGroupings">
-            <app-grouping-block [grouping]="sg"></app-grouping-block>
-        </div>
-        <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('VADR')">
-            <app-question-block-vadr #questionBlock [myGrouping]="grouping">
-            </app-question-block-vadr>
-        </div>
-        <div
-            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR')">
-            <app-question-block-maturity #questionBlock [myGrouping]="grouping">
-            </app-question-block-maturity>
-        </div>
-
-        <div *ngIf="isDomain() && (assessSvc.usesMaturityModel('EDM') || assessSvc.usesMaturityModel('CRR'))"
-            class="mt-4">
-            <h5 for="DomainRemarks">Remarks - {{grouping.title}}</h5>
-            <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
-                appAutoSize (blur)="submitTextComment(grouping)">
+    <div *ngIf="isDomain && showDomainRemarks" class="mt-4">
+        <h5 for="DomainRemarks">Remarks - {{grouping.title}}</h5>
+        <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
+            appAutoSize (blur)="submitTextComment(grouping)">
             </textarea>
-        </div>
-
-    </ng-container>
-
+    </div>
 
 </ng-container>
-
-<div *ngIf="isDomain() && isGroupingNameVisible() && grouping.visible" class="mb-5"></div>

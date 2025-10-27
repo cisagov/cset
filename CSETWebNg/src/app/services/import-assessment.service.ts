@@ -46,7 +46,7 @@ export class ImportAssessmentService {
     private configSvc: ConfigService) {
   }
 
-  public upload(files: Set<File>, isNormalLoad: boolean, password): { [key: string]: Observable<number> } {
+  public upload(files: Set<File>, isNormalLoad: boolean, password: string): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 
@@ -143,6 +143,11 @@ export class ImportAssessmentService {
    */
   extractAssessmentHint(message: string) {
     let hint = "";
+
+    if (typeof message !== 'string') {
+      return;
+    }
+
 
     // We could use regex here, but this works.
     let firstSplit = message.split("- ");

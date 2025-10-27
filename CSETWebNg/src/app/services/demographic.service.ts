@@ -39,10 +39,13 @@ const headers = {
 
 @Injectable()
 export class DemographicService {
-  apiUrl: string;
   id: number;
 
   public demographicUpdateCompleted$ = new Subject<void>();
+
+  private get apiUrl(): string {
+    return this.configSvc.apiUrl + 'Demographics/';
+  }
 
   constructor(
     private http: HttpClient,
@@ -52,7 +55,6 @@ export class DemographicService {
     public assessSvc: AssessmentService,
     private c: ConstantsService
   ) {
-    this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
 
   // calls to retrieve static data

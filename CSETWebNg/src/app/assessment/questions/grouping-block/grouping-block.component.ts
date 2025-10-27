@@ -44,6 +44,9 @@ export class GroupingBlockComponent implements OnInit {
 
   HIDEABLE_LEVELS = [0, 1];
 
+  isDomain = false;
+  showDomainRemarks = false;
+
   /**
    *
    */
@@ -61,6 +64,11 @@ export class GroupingBlockComponent implements OnInit {
   ngOnInit(): void {
     this.modelId = this.maturityFilteringService.assesmentSvc.assessment.maturityModel?.modelId;
     this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
+
+    this.grouping.showTitleAsHeading = this.isGroupingNameVisible();
+
+    this.isDomain = this.grouping.groupingType === 'Domain';
+    this.showDomainRemarks = this.assessSvc.usesMaturityModel('EDM') || this.assessSvc.usesMaturityModel('CRR');
   }
 
   /**
@@ -78,21 +86,20 @@ export class GroupingBlockComponent implements OnInit {
   }
 
   /**
-   * Indicates if the grouping is a domain
-   */
-  isDomain(): boolean {
-    return this.grouping.groupingType === 'Domain';
-  }
-
-  /**
    * Indicates if the grouping name header should be shown.
    * Invisible domains stay invisible.
    */
   isGroupingNameVisible(): boolean {
+    // this prevents a group title from being displayed as a header and in the blue expandable box
+    if (this.grouping.subGroupings.length == 0) {
+      return false;
+    }
+
+
     // look for a behavior to suppress the grouping name by its type
     if (this.moduleBehavior?.hasOwnProperty('hideTopLevelGroupingName')) {
-      if ((this.moduleBehavior.hideTopLevelGroupingName ?? false) 
-          && this.HIDEABLE_LEVELS.includes(this.grouping.groupingLevel)) {
+      if ((this.moduleBehavior.hideTopLevelGroupingName ?? false)
+        && this.HIDEABLE_LEVELS.includes(this.grouping.groupingLevel)) {
         return false;
       }
     }
@@ -108,12 +115,5 @@ export class GroupingBlockComponent implements OnInit {
     }
 
     return true;
-  }
-
-  /**
-   * Indicates if all domain maturity filters have been turned off for the domain
-   */
-  allDomainMaturityLevelsHidden(): boolean {
-    return false;
   }
 }

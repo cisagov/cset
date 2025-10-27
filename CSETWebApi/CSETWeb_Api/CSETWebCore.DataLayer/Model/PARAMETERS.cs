@@ -20,6 +20,10 @@ public partial class PARAMETERS
     [StringLength(500)]
     public string Parameter_Name { get; set; }
 
+    [Required]
+    [StringLength(10)]
+    public string Lang { get; set; }
+
     [InverseProperty("Parameter")]
     public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; } = new List<PARAMETER_ASSESSMENT>();
 

@@ -24,13 +24,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, DOCUMENT } from '@angular/core';
 
-import { concat, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, concat, firstValueFrom } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { merge } from 'lodash';
 import { ModuleBehavior } from '../models/module-config.model';
 
 @Injectable()
 export class ConfigService {
+  /**
+   * Observable that emits true when the config is fully loaded and apiUrl is available.
+   * Services should subscribe to this before making API calls.
+   */
+  public configReady$ = new BehaviorSubject<boolean>(false);
+
   /**
    * The full URL of the API
    */
@@ -136,6 +142,8 @@ export class ConfigService {
             .then(() => {
               this.setConfigPropertiesForLocalService();
               this.switchConfigsForMode(this.config.installationMode || 'CSET');
+              // Signal that config is ready
+              this.configReady$.next(true);
             });
         })
         .catch(() => {
