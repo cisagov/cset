@@ -94,7 +94,11 @@ export class AssessmentContactsComponent implements OnInit {
   }
 
   changeOccurred() {
-    this.triggerChange.next("Initialized");
+    // emitting this when impliedSave is true will cause 
+    // the observation to save twice and make a duplicate
+    if (!this.impliedSave) {
+      this.triggerChange.next("Initialized");
+    }
   }
 
   private sortContactsWithCreatorFirst(): void {
