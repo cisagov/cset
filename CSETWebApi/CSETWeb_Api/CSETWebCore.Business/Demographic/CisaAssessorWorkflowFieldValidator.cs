@@ -8,6 +8,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,9 +17,9 @@ using System.Reflection;
 
 namespace CSETWebCore.Business.Demographic
 {
-   /// <summary>
-   /// 
-   /// </summary>
+    /// <summary>
+    /// 
+    /// </summary>
     public class CisaAssessorWorkflowFieldValidator
     {
         private Demographics _demographics;
@@ -81,58 +82,26 @@ namespace CSETWebCore.Business.Demographic
                 demoExtProperties.RemoveAll(x => x.Name.StartsWith("RegulationType"));
             }
 
-            var lang = "en";
+
+            var fv = new FieldValidation();
+
 
 
             foreach (PropertyInfo property in demoExtProperties)
             {
-                var displayName = GetDisplayName(_demographicExt, property.Name);
+                var label = fv.GetValidatedFieldLabels(property.Name.ToLower());
 
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_demographicExt)))
                 {
-
-                    ///
-                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
-
-                    if (itemOverlay != null)
-                    {
-                        invalidFields.Add(itemOverlay.Value<string>("value"));
-                        continue;
-                    }
-                    else
-                    {
-                        invalidFields.Add(displayName);
-                    }
-                    ///
-
-
-
-
-
-
-
-                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                    //continue;
+                    invalidFields.Add(label?.Value ?? property.Name);
+                    continue;
                 }
+
 
                 if (property.GetValue(_demographicExt) == null)
                 {
-                   // invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-
-
-                    ///
-                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
-
-                    if (itemOverlay != null)
-                    {
-                        invalidFields.Add(itemOverlay.Value<string>("value"));
-                    }
-                    else
-                    {
-                        invalidFields.Add(displayName);
-                    }
-                    ///
+                    invalidFields.Add(label?.Value ?? property.Name);
                 }
             }
 
@@ -144,54 +113,27 @@ namespace CSETWebCore.Business.Demographic
 
             if (!_cisServiceDemographics.MultiSite)
             {
-            cisServiceDemoProperties.RemoveAll(x => x.Name.StartsWith("MultiSiteDescription"));
+                cisServiceDemoProperties.RemoveAll(x => x.Name.StartsWith("MultiSiteDescription"));
             }
 
             foreach (PropertyInfo property in cisServiceDemoProperties)
             {
-                var displayName = GetDisplayName(_cisServiceDemographics, property.Name);
+                var label = fv.GetValidatedFieldLabels(property.Name.ToLower());
 
-               
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceDemographics)))
                 {
-                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-
-                    ///
-                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
-
-                    if (itemOverlay != null)
-                    {
-                        invalidFields.Add(itemOverlay.Value<string>("value"));
-                    }
-                    else
-                    {
-                        invalidFields.Add(displayName);
-                    }
-                    ///
-
+                    invalidFields.Add(label?.Value ?? property.Name);
                     continue;
                 }
 
 
                 if (property.GetValue(_cisServiceDemographics) == null)
                 {
-                    //invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-
-                    ///
-                    var itemOverlay = _overlay.GetJObject("FieldValidation", "key", displayName.ToLower(), lang);
-
-                    if (itemOverlay != null)
-                    {
-                        invalidFields.Add(itemOverlay.Value<string>("value"));
-                    }
-                    else
-                    {
-                        invalidFields.Add(displayName);
-                    }
-                    ///
+                    invalidFields.Add(label?.Value ?? property.Name);
                 }
             }
+
 
             //--------------------------------
             // _cisServiceComposition validation
@@ -200,7 +142,7 @@ namespace CSETWebCore.Business.Demographic
 
             foreach (PropertyInfo property in cisServiceCompProperties)
             {
-                var displayName = GetDisplayName(_cisServiceComposition, property.Name);
+                var label = fv.GetValidatedFieldLabels(property.Name.ToLower());
 
                 if (property.Name.StartsWith("OtherDefiningSystemDescription") && (_cisServiceComposition.PrimaryDefiningSystem != 10
                     && !_cisServiceComposition.SecondaryDefiningSystems.Contains(10)))
@@ -210,13 +152,13 @@ namespace CSETWebCore.Business.Demographic
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceComposition)))
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(label?.Value ?? property.Name);
                     continue;
                 }
 
                 if (property.GetValue(_cisServiceComposition) == null)
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(label?.Value ?? property.Name);
                 }
             }
 
