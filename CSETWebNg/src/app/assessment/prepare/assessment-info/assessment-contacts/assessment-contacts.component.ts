@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, OnInit, Output, ViewChildren } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { TranslocoService } from "@jsverse/transloco";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
@@ -46,6 +46,7 @@ import { ContactItemComponent } from "./contact-item/contact-item.component";
 })
 export class AssessmentContactsComponent implements OnInit {
   @Output() triggerChange = new EventEmitter();
+  @Input() impliedSave: boolean = false;
 
   contacts: EditableUser[] = [];
   emailDialog: MatDialogRef<EmailComponent>;
@@ -93,7 +94,11 @@ export class AssessmentContactsComponent implements OnInit {
   }
 
   changeOccurred() {
-    this.triggerChange.next("Initialized");
+    // emitting this when impliedSave is true will cause 
+    // the observation to save twice and make a duplicate
+    if (!this.impliedSave) {
+      this.triggerChange.next("Initialized");
+    }
   }
 
   private sortContactsWithCreatorFirst(): void {
