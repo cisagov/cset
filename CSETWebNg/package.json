@@ -20,7 +20,7 @@
     "@angular-eslint/schematics": "^20.3.0",
     "@angular-slider/ngx-slider": "^20.0.0",
     "@angular/animations": "^20.3.3",
-    "@angular/cdk": "^20.2.7",
+    "@angular/cdk": "^20.2.10",
     "@angular/cli": "^20.3.4",
     "@angular/common": "^20.3.3",
     "@angular/compiler": "^20.3.3",
