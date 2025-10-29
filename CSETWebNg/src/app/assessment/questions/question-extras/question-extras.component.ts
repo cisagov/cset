@@ -477,7 +477,7 @@ export class QuestionExtrasComponent implements OnInit {
       citations: "",
       auto_Generated: 0,
       supp_Guidance: "",
-      answerLevel: true
+      answerLevel: false
     };
 
     return obs;

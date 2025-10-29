@@ -22,21 +22,29 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { ObservationsService } from '../../../services/observations.service';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
-  selector: 'app-cisa-vadr-report',
+  selector: 'app-cisa-vadr-observations',
   standalone: false,
-  templateUrl: './cisa-vadr-report.component.html',
-  styleUrls: ['../../reports.scss']
+  templateUrl: './cisa-vadr-observations.component.html',
+  styleUrls: ['../../reports.scss', './cisa-vadr-observations.component.scss']
 })
-export class CisaVadrReportComponent implements OnInit {
-
+export class CisaVadrObservationsComponent implements OnInit {
   model: any;
-  response?: AssessmentDetail;
+  observationList?: any[];
+
+  assessmentName!: string;
+  assessmentDate!: string;
+  assessorName!: string;
+  facilityName!: string;
+  selfAssessment!: boolean;
 
   /**
    * 
@@ -44,22 +52,34 @@ export class CisaVadrReportComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public observationSvc: ObservationsService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (r: AssessmentDetail) => {
-        this.response = r;
-      }
-    );
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
+      this.assessmentName = assessmentDetail.assessmentName;
+      this.assessmentDate = assessmentDetail.assessmentDate;
+      this.assessorName = assessmentDetail.facilitatorName;
+      this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
+
+      this.assessSvc.assessment = assessmentDetail;
+    });
+
+    forkJoin({
+      assessmentLevel: this.observationSvc.getAssessmentLevelObservations(),
+      answerLevel: this.observationSvc.getAnswerLevelObservations()
+    }).subscribe(({ assessmentLevel, answerLevel }) => {
+      // merge and sort by importance 
+      this.observationList = [...assessmentLevel, ...answerLevel].sort((a, b) => b.importance_Id - a.importance_Id);
+    });
 
     this.reportSvc.getModelContent('CISA VADR').subscribe((resp: any) => {
       this.model = resp;
     });
   }
-
 }

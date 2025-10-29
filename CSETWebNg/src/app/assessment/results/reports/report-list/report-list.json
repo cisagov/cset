@@ -108,6 +108,9 @@
     "reportList": [
       {
         "linkUrl": "cisaVadrReport"
+      },
+      {
+        "linkUrl": "cisaVadrObservations"
       }
     ]
   },
