@@ -28,6 +28,12 @@ backup/*.sql
 ## .NET ##
 CSETWeb_Api.sln.DotSettings.user
 
+# StyleCop Cache
+StyleCopCache.cache
+
+# Analyzer results
+*.sarif
+
 
 ## Web ##
 /CSETWebApi/CSETWeb_Api/.DS_Store

@@ -1,4 +1,4 @@
-.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
+.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump lint lint-fix lint-check lint-analyzers lint-style lint-whitespace lint-all pre-migration-prep
 include .env
 export
 
@@ -92,3 +92,60 @@ mssql-to-postgres:
 # target: load-postgres-dump - Load backup/CSETWeb.pg17.dump into Postgres (dev defaults)
 load-postgres-dump:
 	bash DatabaseScripts/Migration/load-postgres-dump.sh
+
+##
+## Backend Linting Commands
+##
+
+# target: lint - Check code formatting without making changes (for CI/CD)
+lint:
+	@echo "🔍 Checking C# code formatting..."
+	@dotnet format CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --verify-no-changes --severity warn || \
+		(echo "❌ Code formatting issues found. Run 'make lint-fix' to auto-fix." && exit 1)
+	@echo "✅ Code formatting check passed!"
+
+# target: lint-fix - Automatically fix code formatting issues
+lint-fix:
+	@echo "🔧 Fixing C# code formatting..."
+	@dotnet format CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --severity info
+	@echo "✅ Code formatting applied!"
+
+# target: lint-check - Detailed formatting check with diagnostic output
+lint-check:
+	@echo "🔍 Running detailed code formatting check..."
+	@dotnet format CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --verify-no-changes --severity info --verbosity diagnostic
+
+# target: lint-analyzers - Run only analyzer rules
+lint-analyzers:
+	@echo "🔍 Running Roslyn analyzers..."
+	@dotnet format analyzers CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --verify-no-changes --severity warn
+
+# target: lint-style - Run only style rules
+lint-style:
+	@echo "🔍 Running style checks..."
+	@dotnet format style CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --verify-no-changes --severity warn
+
+# target: lint-whitespace - Run only whitespace formatting
+lint-whitespace:
+	@echo "🔍 Checking whitespace formatting..."
+	@dotnet format whitespace CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln --verify-no-changes
+
+# target: lint-all - Complete linting workflow (check all)
+lint-all: lint-whitespace lint-style lint-analyzers
+	@echo "✅ All linting checks passed!"
+
+# target: pre-migration-prep - Pre-migration preparation workflow
+pre-migration-prep:
+	@echo "🚀 Preparing codebase for database migration..."
+	@echo ""
+	@echo "Step 1: Auto-fixing formatting issues..."
+	@$(MAKE) lint-fix
+	@echo ""
+	@echo "Step 2: Running all linting checks..."
+	@$(MAKE) lint-all
+	@echo ""
+	@echo "Step 3: Building solution..."
+	@dotnet build CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln
+	@echo ""
+	@echo "✅ Pre-migration preparation complete!"
+	@echo "   Review changes and commit with: git add -A && git commit -m 'chore: code formatting baseline before PostgreSQL migration'"
