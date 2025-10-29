@@ -43,6 +43,7 @@ import { OpenEndedQuestionsComponent } from '../../reports/vadr/open-ended-quest
 import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+import { CisaVadrObservationsComponent } from '../../reports/cisa-vadr/cisa-vadr-observations/cisa-vadr-observations.component';
 import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 import { Cmmc2DeficiencyComponent } from '../../reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2ScorecardReportComponent } from '../../reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
@@ -79,6 +80,7 @@ const routes: Routes = [
     { path: 'cisRankedDeficiencyReport', component: CisRankedDeficiencyComponent },
     { path: 'vadrReport', component: VadrReportComponent },
     { path: 'cisaVadrReport', component: CisaVadrReportComponent },
+    { path: 'cisaVadrObservations', component: CisaVadrObservationsComponent },
     { path: 'mvraReport', component: MvraReportComponent },
     { path: 'cpgReport', component: CpgReportComponent },
     { path: 'cpgDeficiency', component: CpgDeficiencyComponent },

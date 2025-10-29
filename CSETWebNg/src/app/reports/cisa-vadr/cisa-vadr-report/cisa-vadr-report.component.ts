@@ -36,7 +36,7 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
 export class CisaVadrReportComponent implements OnInit {
 
   model: any;
-  response: AssessmentDetail;
+  response?: AssessmentDetail;
 
   /**
    * 

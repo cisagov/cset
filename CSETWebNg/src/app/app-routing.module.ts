@@ -182,7 +182,6 @@ import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-score
 import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
 import { CoverPageComponent } from './reports/cover-page/cover-page.component';
