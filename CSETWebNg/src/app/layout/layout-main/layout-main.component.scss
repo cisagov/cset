@@ -552,6 +552,10 @@ label[required]::after {
   color: $gray-800;
 }
 
+.white-bg-transp {
+  background-color: rgba($gray-50, 0.8);
+}
+
 .quick-info-container {
   border-radius: 4px;
   background-color: $primary-800;
@@ -673,8 +677,8 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
-.table.table-td-small th,
-.table.table-td-small td {
+table.table-td-small th,
+table.table-td-small td {
   font-size: .875em;
 }
 
