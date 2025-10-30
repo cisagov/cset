@@ -25,16 +25,17 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SetDetail } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
+import { switchMap, map } from 'rxjs/operators';
 
 export interface DialogData {
   setName: string;
 }
 
 @Component({
-    selector: 'app-module-add-clone',
-    templateUrl: './module-add-clone.component.html',
-    styleUrls: ['./module-add-clone.component.scss'],
-    standalone: false
+  selector: 'app-module-add-clone',
+  templateUrl: './module-add-clone.component.html',
+  styleUrls: ['./module-add-clone.component.scss'],
+  standalone: false
 })
 export class ModuleAddCloneComponent implements OnInit {
   warning: boolean = false;
@@ -46,30 +47,33 @@ export class ModuleAddCloneComponent implements OnInit {
 
   }
 
-  selectedSets: SetDetail[] = [];
   setNames: SetDetail[] = [];
+  selectedSets: SetDetail[] = [];
 
   /**
    *
    */
   ngOnInit(): void {
-    const isName = (element) => element
     this.warning = false;
-    this.setSvc.getBaseSetsList(this.data.setName).subscribe((selectedList: string[]) => {
-      this.setSvc.getNonCustomSets(this.data.setName).subscribe((response: SetDetail[]) => {
+    this.setSvc.getBaseSetsList(this.data.setName).pipe(
+      switchMap((selectedList: string[]) =>
+        this.setSvc.getNonCustomSets(this.data.setName).pipe(
+          map((response: SetDetail[]) => ({ selectedList, response }))
+        )
+      )
+    ).subscribe({
+      next: ({ selectedList, response }) => {
         this.setNames = response;
         selectedList.forEach(x => {
-          let index = this.setNames.findIndex((element: SetDetail) => { return element.setName == x; });
-          if (index > -1)
+          const index = this.setNames.findIndex((element: SetDetail) => element.setName === x);
+          if (index > -1) {
             this.selectedSets.push(this.setNames[index]);
+          }
         });
-
       },
-        error =>
-          console.error(
-            "Unable to get Custom Standards: " +
-            (<Error>error).message
-          ));
+      error: (error) => {
+        console.error("Unable to get Custom Standards: " + (<Error>error).message);
+      }
     });
   }
 
@@ -77,14 +81,30 @@ export class ModuleAddCloneComponent implements OnInit {
    *
    */
   addSets() {
-    this.setSvc.saveSets(this.data.setName, this.selectedSets).subscribe(() => {
-      this.warning = false;
-      this.dialogRef.close(true);
-    },
-      error => {
+    this.setSvc.saveSets(this.data.setName, this.selectedSets).subscribe({
+      next: () => {
+        this.warning = false;
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
         console.error("Unable to get Custom Standards: " + (<Error>error).message);
         this.warning = true;
-      });
+      }
+    });
+  }
+
+  /**
+   * 
+   */
+  changeSelection(s: SetDetail, evt: any) {
+    if (evt.target.checked) {
+      this.selectedSets.push(s);
+    } else {
+      const index = this.selectedSets.findIndex(item => item.setName === s.setName);
+      if (index > -1) {
+        this.selectedSets.splice(index, 1);
+      }
+    }
   }
 
   /**

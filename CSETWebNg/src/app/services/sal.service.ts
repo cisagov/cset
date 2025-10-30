@@ -90,7 +90,7 @@ export class SalService {
             });
 
           } else {
-            console.log('No completedCount in response');
+            console.error('No completedCount in response');
           }
         })
       );
