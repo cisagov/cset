@@ -353,7 +353,7 @@
      "comments desc": "Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
      "comments placeholder": "Please provide general comments, if any, to include in the reports.",
      "cisa workflow required msg": {
-          "1": "Please answer all organization demographic, assessment configuration, and critical service fields to access reports and assessment export.",
+          "1": "Please answer all organization demographic, assessment configuration, and critical service fields to access reports.",
           "2": "The following fields are incomplete",
           "3": "All demographics information on the Assessment Information page must be provided in order to view reports."
      },
