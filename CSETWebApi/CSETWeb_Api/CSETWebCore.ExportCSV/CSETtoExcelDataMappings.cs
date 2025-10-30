@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 
@@ -48,7 +49,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public void ProcessTables(MemoryStream stream)
+        public async Task ProcessTables(MemoryStream stream)
         {
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
 
@@ -57,7 +58,7 @@ namespace CSETWebCore.ExportCSV
 
             if (assessment.UseStandard)
             {
-                CreateWorksheetPageStandardAnswers(ref doc);
+                await CreateWorksheetPageStandardAnswers(doc);
             }
 
             if (assessment.UseMaturity)
@@ -67,7 +68,7 @@ namespace CSETWebCore.ExportCSV
 
             if (assessment.UseDiagram)
             {
-                CreateWorksheetPageDiagramAnswers(ref doc);
+                await CreateWorksheetPageDiagramAnswers(doc);
             }
 
 
@@ -94,7 +95,7 @@ namespace CSETWebCore.ExportCSV
         /// Get Standards answers for the assessment.
         /// </summary>
         /// <param name="doc"></param>
-        private void CreateWorksheetPageStandardAnswers(ref CSETtoExcelDocument doc)
+        private async Task CreateWorksheetPageStandardAnswers(CSETtoExcelDocument doc)
         {
             var lang = _tokenManager.GetCurrentLanguage();
             IEnumerable<QuestionExport> list;
@@ -108,7 +109,8 @@ namespace CSETWebCore.ExportCSV
             // Questions worksheet
             if (applicationMode.ToLower().Contains("questions"))
             {
-                var questionIds = _context.InScopeQuestions(_assessmentId);
+                var questionIdsResult = await _context.InScopeQuestions(_assessmentId);
+                var questionIds = questionIdsResult.ToList();
                 var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Question" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
                 list = from a in answers
@@ -145,7 +147,8 @@ namespace CSETWebCore.ExportCSV
             // Requirements worksheet
             if (applicationMode.ToLower().Contains("requirements"))
             {
-                var questionIds = _context.InScopeRequirements(_assessmentId);
+                var questionIdsResult = await _context.InScopeRequirements(_assessmentId);
+                var questionIds = questionIdsResult.ToList();
                 var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Requirement" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
                 list = from a in answers
@@ -276,7 +279,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="doc"></param>
-        private void CreateWorksheetPageDiagramAnswers(ref CSETtoExcelDocument doc)
+        private async Task CreateWorksheetPageDiagramAnswers(CSETtoExcelDocument doc)
         {
             IEnumerable<QuestionExport> list;
 
@@ -285,7 +288,8 @@ namespace CSETWebCore.ExportCSV
 
             // Components worksheet
 
-            var answers = _context.usp_Answer_Components_Default(_assessmentId);
+            var answersResult = await _context.usp_Answer_Components_Default(_assessmentId);
+            var answers = answersResult.ToList();
 
             // var answer2 = _context.Answer_Components_Exploded
 

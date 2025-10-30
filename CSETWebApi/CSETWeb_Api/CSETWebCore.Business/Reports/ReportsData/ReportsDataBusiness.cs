@@ -636,11 +636,12 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
+        public async Task<List<usp_GetOverallRankedCategoriesPage_Result>> GetTop5Categories()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var categories = _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+            var result = await _context.usp_GetOverallRankedCategoriesPage(_assessmentId);
+            var categories = result.Take(5).ToList();
 
             for (var i = 0; i < categories.Count; i++)
             {
@@ -652,9 +653,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<RankedQuestions> GetTop5Questions()
+        public async Task<List<RankedQuestions>> GetTop5Questions()
         {
-            return GetRankedQuestions().Take(5).ToList();
+            var rankedQuestions = await GetRankedQuestions();
+            return rankedQuestions.Take(5).ToList();
         }
 
 
@@ -906,14 +908,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<RankedQuestions> GetRankedQuestions()
+        public async Task<List<RankedQuestions>> GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            var result = await _context.usp_GetRankedQuestions(_assessmentId);
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = result.ToList();
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
                 if (q.RequirementId != null)
@@ -943,14 +946,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<PhysicalQuestions> GetQuestionsWithSupplementals()
+        public async Task<List<PhysicalQuestions>> GetQuestionsWithSupplementals()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<PhysicalQuestions> list = new List<PhysicalQuestions>();
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            var result = await _context.usp_GetRankedQuestions(_assessmentId);
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = result.ToList();
 
 
             var supplementalLookups = (from a in _context.NEW_REQUIREMENT

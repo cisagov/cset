@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Business.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Aggregation;
@@ -221,7 +222,7 @@ namespace CSETWebCore.Business.Aggregation
         /// The list is in ascending order of assessment date.
         /// </summary>
         /// <param name="aggregationId"></param>
-        public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
+        public async Task<AssessmentListResponse> GetAssessmentsForAggregation(int aggregationId)
         {
 
             var ai = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -274,8 +275,8 @@ namespace CSETWebCore.Business.Aggregation
 
             IncludeStandards(ref resp);
 
-            resp.Aggregation.QuestionsCompatibility = CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
-            resp.Aggregation.RequirementsCompatibility = CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
+            resp.Aggregation.QuestionsCompatibility = await CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
+            resp.Aggregation.RequirementsCompatibility = await CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
 
             return resp;
         }
@@ -312,7 +313,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="aggregationId"></param>
         /// <param name="assessmentId"></param>
         /// <param name="selected"></param>
-        public CSETWebCore.Model.Aggregation.Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
+        public async Task<CSETWebCore.Model.Aggregation.Aggregation> SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
         {
             var aa = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
 
@@ -352,8 +353,8 @@ namespace CSETWebCore.Business.Aggregation
                 Mode = agg.Aggregation_Mode
             };
 
-            resp.QuestionsCompatibility = CalcCompatibility("Q", assessmentIDs);
-            resp.RequirementsCompatibility = CalcCompatibility("R", assessmentIDs);
+            resp.QuestionsCompatibility = await CalcCompatibility("Q", assessmentIDs);
+            resp.RequirementsCompatibility = await CalcCompatibility("R", assessmentIDs);
             return resp;
         }
 
@@ -455,7 +456,7 @@ namespace CSETWebCore.Business.Aggregation
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public float CalcCompatibility(string mode, List<int> assessmentIds)
+        public async Task<float> CalcCompatibility(string mode, List<int> assessmentIds)
         {
             var l = new List<List<int>>();
 
@@ -466,14 +467,16 @@ namespace CSETWebCore.Business.Aggregation
             {
                 if (mode == "Q")
                 {
-                    var listQuestionID = (List<int>)_context.InScopeQuestions(id);
+                    var result = await _context.InScopeQuestions(id);
+                    var listQuestionID = result.ToList();
                     l.Add(listQuestionID);
                     m.UnionWith(listQuestionID);
                 }
 
                 if (mode == "R")
                 {
-                    var listRequirementID = (List<int>)_context.InScopeRequirements(id);
+                    var result = await _context.InScopeRequirements(id);
+                    var listRequirementID = result.ToList();
                     l.Add(listRequirementID);
                     m.UnionWith(listRequirementID);
                 }

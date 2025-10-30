@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,31 +39,36 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
         public void BulkInsert(DataTable dt)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
-                // make sure to enable triggers
-                // more on triggers in next post
-                SqlBulkCopy bulkCopy =
-                    new SqlBulkCopy
-                    (
-                    connection,
-                    SqlBulkCopyOptions.TableLock |
-                    SqlBulkCopyOptions.FireTriggers |
-                    SqlBulkCopyOptions.UseInternalTransaction,
-                    null
-                    );
-                //bulkCopy.ColumnMappings.Clear();
-                foreach (DataColumn col in dt.Columns)
-                {
-                    //if (!col.ColumnName.Equals("Answer_Id"))
-                    bulkCopy.ColumnMappings.Add(col.ColumnName, col.ColumnName);
-                }
-                // set the destination table name
-                bulkCopy.DestinationTableName = TableName;
                 connection.Open();
 
-                // write the data in the "dataTable"
-                bulkCopy.WriteToServer(dt);
+                // Build column list from DataTable
+                var columns = new List<string>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    columns.Add($"\"{col.ColumnName}\"");
+                }
+                var columnList = string.Join(", ", columns);
+
+                // Use PostgreSQL COPY command for bulk insert
+                // Note: PostgreSQL doesn't have equivalent to SqlBulkCopyOptions.FireTriggers
+                // Triggers will fire by default on COPY in PostgreSQL
+                var copyCommand = $"COPY {TableName} ({columnList}) FROM STDIN (FORMAT BINARY)";
+
+                using (var writer = connection.BeginBinaryImport(copyCommand))
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        writer.StartRow();
+                        foreach (var item in row.ItemArray)
+                        {
+                            writer.Write(item ?? DBNull.Value);
+                        }
+                    }
+                    writer.Complete();
+                }
+
                 connection.Close();
             }
         }

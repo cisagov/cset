@@ -7,7 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;
+using Npgsql;
+using NpgsqlTypes;
 using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
@@ -39,17 +40,17 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter())
+                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter())
                 {
-                    adapter.SelectCommand = new SqlCommand(sql, conn);
+                    adapter.SelectCommand = new NpgsqlCommand(sql, conn);
 
                     if (parms != null)
                     {
                         foreach (var parm in parms)
                         {
-                            adapter.SelectCommand.Parameters.Add(new SqlParameter
+                            adapter.SelectCommand.Parameters.Add(new NpgsqlParameter
                             {
                                 ParameterName = parm.Key,
                                 Value = parm.Value
@@ -69,18 +70,38 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection connection = new SqlConnection(connStr))
+            using (NpgsqlConnection connection = new NpgsqlConnection(connStr))
             {
-                var transaction = connection.BeginTransaction();
-                SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.TableLock | SqlBulkCopyOptions.FireTriggers | SqlBulkCopyOptions.UseInternalTransaction
-                    , transaction);
-
-                // set the destination table name
-                bulkCopy.DestinationTableName = tableName;
                 connection.Open();
-                // write the data in the "dataTable"
-                bulkCopy.WriteToServer(dataTable);
-                connection.Close();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    // Build column list from DataTable
+                    var columns = new List<string>();
+                    foreach (DataColumn col in dataTable.Columns)
+                    {
+                        columns.Add($"\"{col.ColumnName}\"");
+                    }
+                    var columnList = string.Join(", ", columns);
+
+                    // Use PostgreSQL COPY command for bulk insert
+                    var copyCommand = $"COPY {tableName} ({columnList}) FROM STDIN (FORMAT BINARY)";
+
+                    using (var writer = connection.BeginBinaryImport(copyCommand))
+                    {
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            writer.StartRow();
+                            foreach (var item in row.ItemArray)
+                            {
+                                writer.Write(item ?? DBNull.Value);
+                            }
+                        }
+                        writer.Complete();
+                    }
+
+                    transaction.Commit();
+                }
             }
         }
 
@@ -97,13 +118,16 @@ namespace CSETWebCore.Helpers
 
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = conn.CreateCommand();
+                NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.CommandText += "; select SCOPE_IDENTITY();";
+
+                // PostgreSQL: Use LASTVAL() instead of SCOPE_IDENTITY()
+                // Note: This only works if the INSERT affected a sequence-based column
+                cmd.CommandText += "; SELECT CAST(LASTVAL() AS INTEGER);";
 
                 cmd.Transaction = conn.BeginTransaction();
 
@@ -111,26 +135,26 @@ namespace CSETWebCore.Helpers
                 {
                     foreach (KeyValuePair<string, ObjectTypePair> pair in parms)
                     {
-                        SqlParameter parm = null;
+                        NpgsqlParameter parm = null;
                         switch (pair.Value.Type)
                         {
                             case 1: //normal type
-                                parm = new SqlParameter(pair.Key, pair.Value.ParmValue);
+                                parm = new NpgsqlParameter(pair.Key, pair.Value.ParmValue);
                                 if (pair.Value.ParmValue == null)
                                 {
                                     parm.Value = DBNull.Value;
                                 }
                                 break;
-                            case 2: //varbinary
+                            case 2: //bytea (binary data)
                                 if ((pair.Value.ParmValue) == DBNull.Value)
                                 {
-                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, -1);
+                                    parm = new NpgsqlParameter(pair.Key, NpgsqlDbType.Bytea);
                                     parm.Value = DBNull.Value;
                                 }
                                 else
                                 {
                                     byte[] bytes = (byte[])pair.Value.ParmValue;
-                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, bytes.Length);
+                                    parm = new NpgsqlParameter(pair.Key, NpgsqlDbType.Bytea);
                                     parm.Value = bytes;
                                 }
                                 break;
@@ -140,7 +164,7 @@ namespace CSETWebCore.Helpers
                     }
 
                     object identityResponse = cmd.ExecuteScalar();
-                    if (identityResponse != DBNull.Value)
+                    if (identityResponse != DBNull.Value && identityResponse != null)
                     {
                         modified = Convert.ToInt32(identityResponse);
                     }
@@ -175,13 +199,16 @@ namespace CSETWebCore.Helpers
 
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = conn.CreateCommand();
+                NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.CommandText += "; select SCOPE_IDENTITY();";
+
+                // PostgreSQL: Use LASTVAL() instead of SCOPE_IDENTITY()
+                // Note: This only works if the INSERT affected a sequence-based column
+                cmd.CommandText += "; SELECT CAST(LASTVAL() AS INTEGER);";
 
                 cmd.Transaction = conn.BeginTransaction();
 
@@ -189,7 +216,7 @@ namespace CSETWebCore.Helpers
                 {
                     foreach (var key in parms.Keys)
                     {
-                        SqlParameter parm = new SqlParameter(key, parms[key]);
+                        NpgsqlParameter parm = new NpgsqlParameter(key, parms[key]);
 
                         if (parm.Value == null)
                         {
@@ -200,7 +227,7 @@ namespace CSETWebCore.Helpers
                     }
 
                     object identityResponse = cmd.ExecuteScalar();
-                    if (identityResponse != DBNull.Value)
+                    if (identityResponse != DBNull.Value && identityResponse != null)
                     {
                         modified = Convert.ToInt32(identityResponse);
                     }
@@ -231,7 +258,7 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
                 DataTable metaDataTable = conn.GetSchema("Columns");
@@ -249,11 +276,12 @@ namespace CSETWebCore.Helpers
         {
             var dict = new Dictionary<string, string>();
 
+            // PostgreSQL: Find identity columns (GENERATED ... AS IDENTITY) and serial columns
             const string sql =
-                 "select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS "
-               + "where TABLE_SCHEMA = 'dbo' and COLUMNPROPERTY(object_id(TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1 "
-               + "order by TABLE_NAME";
-
+                 "SELECT table_schema, table_name, column_name FROM information_schema.columns "
+               + "WHERE table_schema = 'public' "
+               + "AND (is_identity = 'YES' OR column_default LIKE 'nextval%') "
+               + "ORDER BY table_name";
 
             DataTable schema = Select(sql, null);
             foreach (DataRow row in schema.Rows)

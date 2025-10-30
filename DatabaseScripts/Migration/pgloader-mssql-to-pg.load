@@ -1,6 +1,6 @@
 LOAD DATABASE
      FROM mssql://sa:Password123@host.docker.internal:1433/CSETWebTest
-     INTO postgresql://cset:password@host.docker.internal:55432/csetweb_stage
+     INTO postgresql://cset:password@host.docker.internal:5432/csetweb_stage
 
 WITH
      workers = 4,
