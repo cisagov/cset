@@ -1,141 +1,150 @@
 ﻿[
-
-
-
   {
-    "key": "organizationname",
-    "value": "Organization Name"
-  },
-  {
-    "key": "organizationtype",
+    "key": "OrganizationType",
     "value": "Organization Type"
   },
   {
-    "key": "businessunit",
+    "key": "OrganizationName",
+    "value": "Organization Name"
+  },
+  {
+    "key": "BusinessUnit",
     "value": "Business Unit"
   },
   {
-    "key": "sector",
+    "key": "Sector",
     "value": "Sector"
   },
   {
-    "key": "subsector",
+    "key": "Subsector",
     "value": "Subsector"
   },
   {
-    "key": "numberemployeestotal",
-    "value": "Number of Employees Total!"
+    "key": "NumberEmployeesTotal",
+    "value": "Number of employees in the agency/business"
   },
   {
-    "key": "numberemployeesunit",
-    "value": "Number of Employees in the Unit!"
+    "key": "NumberEmployeesUnit",
+    "value": "Number of employees in the department/unit"
   },
   {
-    "key": "annualrevenue",
-    "value": "Annual Revenue"
+    "key": "AnnualRevenue",
+    "value": "Annual revenue/funding"
   },
   {
-    "key": "usesstandard",
-    "value": "Uses Standard"
+    "key": "Standard1",
+    "value": "Most important standard/body of practice"
   },
   {
-    "key": "standard1",
-    "value": "Standard 1"
+    "key": "Standard2",
+    "value": "Second most important standard/body of practice"
   },
   {
-    "key": "standard2",
-    "value": "Standard 2"
-  },
-
-
-
-
-
-
-
-
-
-
-  {
-    "key": "assessmentdate",
-    "value": "Assessment Date"
-  },
-  {
-    "key": "barrier1",
-    "value": "Barrier 1"
-  },
-  {
-    "key": "barrier2",
-    "value": "Barrier 2"
-  },
-  {
-    "key": "budgetbasis",
-    "value": "What is the basis of the cybersecurity budget for this Critical Service?"
-  },
-
-  {
-    "key": "cisaregions",
-    "value": "CISA Regions"
-  },
-  {
-    "key": "cisaregion",
-    "value": "CISA Region!"
-  },
-  {
-    "key": "criticaldependencyincidentresponsesupport",
-    "value": "Critical Dependency Incident Response Support"
-  },
-  {
-    "key": "CriticalServiceRevenuePercent",
-    "value": "Critical Service Revenue Percent"
-  },
-  {
-    "key": "DisruptedSector1",
-    "value": "Disrupted Sector 1"
-  },
-  {
-    "key": "DisruptedSector2",
-    "value": "Disrupted Sector 2"
-  },
-  {
-    "key": "numberpeopleservedbycritsvc",
-    "value": "Number of People Served by the Critical Service"
-  },
-  {
-    "key": "regulationtype1",
+    "key": "RegulationType1",
     "value": "Regulation Type 1"
   },
   {
-    "key": "regulationtype2",
+    "key": "RegulationType2",
     "value": "Regulation Type 2"
   },
   {
-    "key": "requiredtocomply",
-    "value": "Required To Comply"
+    "key": "Barrier1",
+    "value": "Most significant information sharing barrier"
   },
+  {
+    "key": "Barrier2",
+    "value": "Second most significant information sharing barrier"
+  },
+
+
+
+
+  /////// ASSESSMENT CONFIGURATION PAGE STARTS HERE
 
   {
-    "key": "ssgsectors",
-    "value": "SSG Sectors"
+    "key": "cisaregion",
+    "value": "CISA Region"
   },
-
-
-
-
-
-
-
-
   {
     "key": "CriticalServiceName",
     "value": "Critical Service Name"
   },
   {
-    "key": "ItIcsStaffCount",
-    "value": "Total # of IT/ICS management and staff (i.e., technologists) assigned and/or dedicated to the Critical Service"
+    "key": "CriticalDependencyIncidentResponseSupport",
+    "value": "Critical Dependency for Incident Response Support"
   },
   {
-    "key": "authorizedOrganizationalUserCount",
-    "value": "How many authorized, organizational users access and interact (i.e., operate, perform data entry, etc., as end users) with the Critical Service?"
+    "key": "CriticalServiceRevenuePercent",
+    "value": "Percent of annual revenue dependent on the Critical Service"
+  },
+  {
+    "key": "NumberPeopleServedByCritSvc",
+    "value": "Number of people served annually by the Critical Service"
+  },
+  {
+    "key": "DisruptedSector1",
+    "value": "Most important disrupted sector"
+  },
+  {
+    "key": "DisruptedSector2",
+    "value": "Second most important disrupted sector"
+  },
+
+
+
+
+  /////////////////////////    CRITICAL SERVCIE PAGE STARTS HERE
+
+  {
+    "key": "CriticalServiceDescription",
+    "value": "Critical Service Description"
+  },
+  {
+    "key": "ItIcsName",
+    "value": "Critical Service - IT/ICS System"
+  },
+  {
+    "key": "BudgetBasis",
+    "value": "Critical Service - Cybersecurity Budget Basis"
+  },
+  {
+    "key": "ItIcsStaffCount",
+    "value": "Critical Service - IT/ICS management and staff count"
+  },
+  {
+    "key": "CybersecurityItIcsStaffCount",
+    "value": "Critical Service - IT/ICS cybersecurity management and staff count"
+  },
+  {
+    "key": "AuthorizedOrganizationalUserCount",
+    "value": "Critical Service - Organizational user count"
+  },
+  {
+    "key": "AuthorizedNonOrganizationalUserCount",
+    "value": "Critical Service - Non-organizational user count"
+  },
+  {
+    "key": "CustomersCount",
+    "value": "Critical Service - Customer count"
+  },
+  {
+    "key": "NetworksDescription",
+    "value": "Critical Service - Networks description"
+  },
+  {
+    "key": "ServicesDescription",
+    "value": "Critical Service - Services description"
+  },
+  {
+    "key": "ApplicationsDescription",
+    "value": "Critical Service - Applications description"
+  },
+  {
+    "key": "ConnectionsDescription",
+    "value": "Critical Service - Connections description"
+  },
+  {
+    "key": "PersonnelDescription",
+    "value": "Critical Service - Individuals Description"
   }
 ]

@@ -9,7 +9,7 @@ namespace CSETWebCore.Business.Demographic
 {
     public class FieldValidation
     {
-        private List<KeyValueOverlay> _pairs;
+        public List<KeyValueOverlay> Fields;
 
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace CSETWebCore.Business.Demographic
             string path = @"App_Data\FieldValidation\FieldValidation.json";
 
             string json = rh.GetEmbeddedResource(path);
-            _pairs = JsonConvert.DeserializeObject<List<KeyValueOverlay>>(json);
+            Fields = JsonConvert.DeserializeObject<List<KeyValueOverlay>>(json);
         }
 
 
@@ -31,7 +31,7 @@ namespace CSETWebCore.Business.Demographic
         /// </summary>
         public KeyValueOverlay GetValidatedFieldLabels(string key)
         {
-            var label = _pairs.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
+            var label = Fields.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
 
             return label;
         }
