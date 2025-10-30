@@ -25,6 +25,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -114,14 +115,14 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public IActionResult GetComponentQuestionsList([FromQuery] string skin, string group)
+        public async Task<IActionResult> GetComponentQuestionsList([FromQuery] string skin, string group)
         {
             if (skin == "RENEW")
             {
                 new MalcolmBusiness(_context).VerificationAndValidation(_token.AssessmentForUser());
             }
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = manager.GetResponse();
+            QuestionResponse resp = await manager.GetResponse();
 
             return Ok(resp);
         }
@@ -148,10 +149,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetChildAnswers")]
-        public IList<GetChildrenAnswersResult> GetChildAnswers([FromQuery] int parentId)
+        public async Task<IList<GetChildrenAnswersResult>> GetChildAnswers([FromQuery] int parentId)
         {
             int assessmentId = _token.AssessmentForUser();
-            return _context.Get_Children_Answers(parentId, assessmentId);
+            return await _context.Get_Children_Answers(parentId, assessmentId);
         }
 
 

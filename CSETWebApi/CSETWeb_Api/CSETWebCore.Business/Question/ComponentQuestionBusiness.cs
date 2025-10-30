@@ -14,6 +14,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Business.Question
@@ -56,7 +57,7 @@ namespace CSETWebCore.Business.Question
         /// Gathers applicable questions for the assessment's network components as defined the by Diagram.
         /// </summary>
         /// <param name="resp"></param>        
-        public QuestionResponse GetResponse()
+        public async Task<QuestionResponse> GetResponse()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -68,7 +69,8 @@ namespace CSETWebCore.Business.Question
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
 
-            var list1 = _context.usp_Answer_Components_Default(assessmentId).ToList();
+            var result = await _context.usp_Answer_Components_Default(assessmentId);
+            var list1 = result.ToList();
             var list2 = new List<Answer_Components_Base>();
             foreach (var component1 in list1)
             {

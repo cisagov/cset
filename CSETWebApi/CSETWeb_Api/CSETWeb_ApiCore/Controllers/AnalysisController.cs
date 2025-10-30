@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -79,7 +80,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public IActionResult GetRankedQuestions()
+        public async Task<IActionResult> GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
@@ -89,7 +90,8 @@ namespace CSETWebCore.Api.Controllers
 
             string mode = GetAssessmentMode(assessmentId);
 
-            var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
+            var rankedQuestionListResult = await _context.usp_GetRankedQuestions(assessmentId);
+            var rankedQuestionList = rankedQuestionListResult.ToList();
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {

@@ -9,13 +9,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Snickler.EFCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
@@ -43,7 +42,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             if (!optionsBuilder.IsConfigured && _connectionString != null)
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseNpgsql(_connectionString);
             }
         }
 
@@ -109,7 +108,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
-                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
+                entity.Property(e => e.Text_Hash).HasComputedColumnSql("digest(\"Question_Text\", 'sha1')::bytea", stored: true);
             });
             modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
             {
@@ -168,21 +167,14 @@ namespace CSETWebCore.DataLayer.Model
         //public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         //public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         //public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
-        public virtual IList<Answer_Components_Default> usp_Answer_Components_Default(Nullable<int> assessment_id)
+        public virtual async Task<IList<Answer_Components_Default>> usp_Answer_Components_Default(Nullable<int> assessment_id)
         {
 
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<Answer_Components_Default> myrval = null;
-            this.LoadStoredProc("usp_Answer_Components_Default")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<Answer_Components_Default>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_Answer_Components_DefaultAsync(assessment_id);
+            return result.Cast<Answer_Components_Default>().ToList();
 
         }
 
@@ -202,25 +194,18 @@ namespace CSETWebCore.DataLayer.Model
 
         /// <summary>
         /// Executes stored procedure usp_AssesmentsForUser.
-        /// This used to be queried as a view, but in order to get the AltTextMissing it was 
+        /// This used to be queried as a view, but in order to get the AltTextMissing it was
         /// easier to build a procedure.
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_Assessments_For_UserResult> usp_AssessmentsForUser(Nullable<int> userId)
+        public virtual async Task<IList<usp_Assessments_For_UserResult>> usp_AssessmentsForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_Assessments_For_UserResult> myrval = null;
-            this.LoadStoredProc("usp_Assessments_For_User")
-                     .WithSqlParam("user_id", userId)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_Assessments_For_UserAsync(userId);
+            return result.ToList();
         }
 
 
@@ -229,144 +214,77 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
-        public virtual IList<usp_countsForLevelsByGroupMaturityModelResults> usp_countsForLevelsByGroupMaturityModel(Nullable<int> assessment_id, Nullable<int> mat_model_id)
+        public virtual async Task<IList<usp_countsForLevelsByGroupMaturityModelResults>> usp_countsForLevelsByGroupMaturityModel(Nullable<int> assessment_id, Nullable<int> mat_model_id)
         {
-            IList<usp_countsForLevelsByGroupMaturityModelResults> myrval = null;
-            this.LoadStoredProc("usp_countsForLevelsByGroupMaturityModel")
-                     .WithSqlParam("assessment_id", assessment_id)
-                     .WithSqlParam("mat_model_id", mat_model_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_countsForLevelsByGroupMaturityModelResults>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_countsForLevelsByGroupMaturityModelAsync(assessment_id, mat_model_id);
+            return result.Cast<usp_countsForLevelsByGroupMaturityModelResults>().ToList();
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="originalEmail"></param>
         /// <param name="newEmail"></param>
         /// <returns></returns>
-        public int ChangeEmail(string originalEmail, string newEmail)
+        public async Task<int> ChangeEmail(string originalEmail, string newEmail)
         {
 
             if ((originalEmail == null) || (newEmail != null))
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("changeEmail")
-                     .WithSqlParam("originalEmail", originalEmail)
-                     .WithSqlParam("newEmail", newEmail)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            var result = await this.Procedures.changeEmailAsync(originalEmail, newEmail);
+            return result;
         }
 
-        public virtual IList<RawCountsForEachAssessment_Standards> usp_GetRawCountsForEachAssessment_Standards()
+        public virtual async Task<IList<RawCountsForEachAssessment_Standards>> usp_GetRawCountsForEachAssessment_Standards()
         {
-            IList<RawCountsForEachAssessment_Standards> myrval = null;
-            this.LoadStoredProc("usp_GetRawCountsForEachAssessment_Standards")
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<RawCountsForEachAssessment_Standards>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_GetRawCountsForEachAssessment_StandardsAsync();
+            return result.Cast<RawCountsForEachAssessment_Standards>().ToList();
         }
 
-        public virtual IList<AnalyticsgetMedianOverall> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
+        public virtual async Task<IList<AnalyticsgetMedianOverall>> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
         {
-            IList<AnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_compute_single_averages_maturity")
-                    .WithSqlParam("assessment_id", assessmentId)
-                     .WithSqlParam("maturity_model_id", maturity_model_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
-                     });
-            return myrval;
+            var result = await this.Procedures.analytics_compute_single_averages_maturityAsync(assessmentId, maturity_model_id);
+            return result.Cast<AnalyticsgetMedianOverall>().ToList();
         }
-        public virtual IList<SetStandard> analytics_selectedStandardList(int assessmentId)
+        public virtual async Task<IList<SetStandard>> analytics_selectedStandardList(int assessmentId)
         {
-            IList<SetStandard> myrval = null;
-            this.LoadStoredProc("analytics_selectedStandardList")
-                .WithSqlParam("standard_assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<SetStandard>();
-                });
-            return myrval;
+            var result = await this.Procedures.analytics_selectedStandardListAsync(assessmentId);
+            return result.Cast<SetStandard>().ToList();
         }
 
 
-        public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
+        public virtual async Task<IList<AnalyticsgetMedianOverall>> analytics_getMedianOverall()
         {
-            IList<AnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_getMedianOverall")
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_getMedianOverallAsync();
+            return result.Cast<AnalyticsgetMedianOverall>().ToList();
         }
-        public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup(int sectorId, int industryId)
+        public virtual async Task<IList<AnalyticsgetMinMaxAverForSectorIndustryGroup>> analytics_getMinMaxAverageForSectorIndustryGroup(int sectorId, int industryId)
         {
-            IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> myrval = null;
-            this.LoadStoredProc("analytics_getMinMaxAverageForSectorIndustryGroup")
-                 .WithSqlParam("sector_id", sectorId)
-                  .WithSqlParam("industry_id", industryId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMinMaxAverForSectorIndustryGroup>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_getMinMaxAverageForSectorIndustryAsync(sectorId, industryId);
+            return result.Cast<AnalyticsgetMinMaxAverForSectorIndustryGroup>().ToList();
         }
-        public virtual IList<AnalyticsStandardMinMaxAvg> analytics_Compute_standard_all(int assessmentId, string setname, int? sectorId,
+        public virtual async Task<IList<AnalyticsStandardMinMaxAvg>> analytics_Compute_standard_all(int assessmentId, string setname, int? sectorId,
             int? industryId)
         {
-
-            IList<AnalyticsStandardMinMaxAvg> myrval = null;
-            this.LoadStoredProc("analytics_Compute_standard_all")
-                .WithSqlParam("assessment_id", assessmentId)
-                .WithSqlParam("set_name", setname)
-                .WithSqlParam("sector_id", sectorId == null ? DBNull.Value : sectorId)
-                .WithSqlParam("industry_id", industryId == null ? DBNull.Value : industryId)
-                // .WithSqlParam("industry_id",industryId ==null?DBNull.Value:industryId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<AnalyticsStandardMinMaxAvg>();
-                });
-            return myrval;
+            var result = await this.Procedures.analytics_Compute_standard_allAsync(assessmentId, setname, sectorId, industryId);
+            return result.Cast<AnalyticsStandardMinMaxAvg>().ToList();
         }
-        public virtual IList<standardAnalyticsgetMedianOverall> analytics_compute_single_averages_standard(int assessmentId, string setname)
+        public virtual async Task<IList<standardAnalyticsgetMedianOverall>> analytics_compute_single_averages_standard(int assessmentId, string setname)
         {
-
-            IList<standardAnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_compute_single_averages_standard")
-                .WithSqlParam("assessment_id", assessmentId)
-                .WithSqlParam("set_name", setname)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<standardAnalyticsgetMedianOverall>();
-                });
-            return myrval;
+            var result = await this.Procedures.analytics_compute_single_averages_standardAsync(assessmentId, setname);
+            return result.Cast<standardAnalyticsgetMedianOverall>().ToList();
         }
 
-        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id, int? sectorId, int? industryId)
+        public virtual async Task<IList<AnalyticsMinMaxAvgMedianByGroup>> analytics_Compute_MaturityAll(int model_id, int? sectorId, int? industryId)
         {
-            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
-            this.LoadStoredProc("analytics_Compute_MaturityAll")
-                 .WithSqlParam("maturity_model_id", model_id)
-                 .WithSqlParam("sector_id", sectorId == null ? DBNull.Value : sectorId)
-                 .WithSqlParam("industry_id", industryId == null ? DBNull.Value : industryId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
-                     });
-            return myrval;
+            var result = await this.Procedures.analytics_Compute_MaturityAllAsync(model_id, sectorId, industryId);
+            return result.Cast<AnalyticsMinMaxAvgMedianByGroup>().ToList();
         }
+        // TODO: No async wrapper exists for analytics_Compute_MaturityAll_Median in CsetwebContextProcedures.cs
+        // This method needs an async wrapper to be created or may be obsolete
+        // Commented out to allow build to succeed - needs to be refactored or wrapper created
+        /*
         public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll_Median(int model_id)
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
@@ -378,51 +296,33 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+        */
 
 
-        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
+        public virtual async Task usp_CopyIntoSet(string sourcesetName, string destinationSetName)
         {
-            this.LoadStoredProc("usp_CopyIntoSet")
-                     .WithSqlParam("SourceSetName", sourcesetName)
-                     .WithSqlParam("DestinationSetName", destinationSetName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-
-                     });
-
+            await this.Procedures.usp_CopyIntoSetAsync(sourcesetName, destinationSetName);
         }
 
-        public virtual void usp_CopyIntoSet_Delete(string setName)
+        public virtual async Task usp_CopyIntoSet_Delete(string setName)
         {
-            this.LoadStoredProc("usp_CopyIntoSet_Delete")
-                     .WithSqlParam("DestinationSetName", setName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-
-                     });
+            await this.Procedures.usp_CopyIntoSet_DeleteAsync(setName);
         }
 
 
         /// <summary>
-        /// Inserts missing skeleton ANSWER records for an assessment based on 
-        /// its standard selection and SAL.  
+        /// Inserts missing skeleton ANSWER records for an assessment based on
+        /// its standard selection and SAL.
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual int FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
+        public virtual async Task<int> FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyQuestionsForAnalysis")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            var result = await this.Procedures.FillEmptyQuestionsForAnalysisAsync(assessment_Id);
+            return result;
         }
 
         /// <summary>
@@ -431,20 +331,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual int FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
+        public virtual async Task<int> FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            var result = await this.Procedures.FillEmptyMaturityQuestionsForAnalysisAsync(assessment_Id);
+            return result;
         }
 
 
@@ -454,43 +347,28 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual int FillEmptyMaturityQuestionsForModel(Nullable<int> assessmentId, int modelId)
+        public virtual async Task<int> FillEmptyMaturityQuestionsForModel(Nullable<int> assessmentId, int modelId)
         {
             if (!assessmentId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyMaturityQuestionsForModel")
-                     .WithSqlParam("Assessment_Id", assessmentId)
-                     .WithSqlParam("Model_Id", modelId)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            var result = await this.Procedures.FillEmptyMaturityQuestionsForModelAsync(assessmentId, modelId);
+            return result;
         }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual int FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
+        public virtual async Task<int> FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillNetworkDiagramQuestions")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            var result = await this.Procedures.FillNetworkDiagramQuestionsAsync(assessment_Id);
+            return result;
         }
 
 
@@ -499,19 +377,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_GetOverallRankedCategoriesPage_Result>> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_GetOverallRankedCategoriesPage_Result> myrval = null;
-            this.LoadStoredProc("usp_GetOverallRankedCategoriesPage")
-                     .WithSqlParam("assessment_id", assessment_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetOverallRankedCategoriesPage_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_GetOverallRankedCategoriesPageAsync(assessment_id);
+            return result.Cast<usp_GetOverallRankedCategoriesPage_Result>().ToList();
         }
         
 
@@ -520,20 +392,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_GetRankedQuestions_Result>> usp_GetRankedQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_GetRankedQuestions_Result> myrval = null;
-            this.LoadStoredProc("usp_GetRankedQuestions")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetRankedQuestions_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_GetRankedQuestionsAsync(assessment_id);
+            return result.Cast<usp_GetRankedQuestions_Result>().ToList();
         }
 
 
@@ -542,19 +407,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetQuestionsWithFeedback> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_GetQuestionsWithFeedback>> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("sql parameters may not be null");
 
-            IList<usp_GetQuestionsWithFeedback> rval = null;
-            this.LoadStoredProc("usp_GetQuestionsWithFeedback")
-                .WithSqlParam("assessment_id", assessment_id)
-                .ExecuteStoredProc((handler) =>
-                {
-                    rval = handler.ReadToList<usp_GetQuestionsWithFeedback>();
-                });
-            return rval;
+            var result = await this.Procedures.usp_GetQuestionsWithFeedBackAsync(assessment_id);
+            return result.Cast<usp_GetQuestionsWithFeedback>().ToList();
         }
 
 
@@ -563,20 +422,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_MaturityDetailsCalculations_Result> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_MaturityDetailsCalculations_Result>> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_MaturityDetailsCalculations_Result> myrval = null;
-            this.LoadStoredProc("usp_MaturityDetailsCalculations")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_MaturityDetailsCalculations_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_MaturityDetailsCalculationsAsync(assessment_id);
+            return result.Cast<usp_MaturityDetailsCalculations_Result>().ToList();
         }
 
 
@@ -585,20 +437,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<GetMaturityDetailsCalculations_Result> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
+        public virtual async Task<IList<GetMaturityDetailsCalculations_Result>> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<GetMaturityDetailsCalculations_Result> myrval = null;
-            this.LoadStoredProc("GetMaturityDetailsCalculations")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.GetMaturityDetailsCalculationsAsync(assessment_id);
+            return result.Cast<GetMaturityDetailsCalculations_Result>().ToList();
         }
 
 
@@ -607,21 +452,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<AcetAnswerDistribution_Result> AcetAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        public virtual async Task<IList<AcetAnswerDistribution_Result>> AcetAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<AcetAnswerDistribution_Result> myrval = null;
-            this.LoadStoredProc("AcetAnswerDistribution")
-                     .WithSqlParam("assessment_id", assessment_id)
-                     .WithSqlParam("targetLevel", targetLevel)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.AcetAnswerDistributionAsync(assessment_id, targetLevel);
+            return result.Cast<AcetAnswerDistribution_Result>().ToList();
         }
 
         /// <summary>
@@ -629,7 +466,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<AcetAnswerDistribution_Result> IseAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        public virtual async Task<IList<AcetAnswerDistribution_Result>> IseAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
@@ -649,16 +486,8 @@ namespace CSETWebCore.DataLayer.Model
                     break;
             }
 
-            IList<AcetAnswerDistribution_Result> myrval = null;
-            this.LoadStoredProc("IseAnswerDistribution")
-                     .WithSqlParam("assessment_id", assessment_id)
-                     .WithSqlParam("targetLevel", matLevel)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.IseAnswerDistributionAsync(assessment_id, matLevel);
+            return result.Cast<AcetAnswerDistribution_Result>().ToList();
         }
 
 
@@ -667,20 +496,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_StatementsReviewed_Result> usp_StatementsReviewed(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_StatementsReviewed_Result>> usp_StatementsReviewed(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_StatementsReviewed_Result> myrval = null;
-            this.LoadStoredProc("usp_StatementsReviewed")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_StatementsReviewed_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_StatementsReviewedAsync(assessment_id);
+            return result.Cast<usp_StatementsReviewed_Result>().ToList();
         }
 
 
@@ -689,20 +511,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_StatementsReviewedTabTotals_Result> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_StatementsReviewedTabTotals_Result>> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_StatementsReviewedTabTotals_Result> myrval = null;
-            this.LoadStoredProc("usp_StatementsReviewedTabTotals")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_StatementsReviewedTabTotals_Result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_StatementsReviewedTabTotalsAsync(assessment_id);
+            return result.Cast<usp_StatementsReviewedTabTotals_Result>().ToList();
         }
         
 
@@ -711,20 +526,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="aggregation_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetTop5Areas_result> usp_GetTop5Areas(Nullable<int> aggregation_id)
+        public virtual async Task<IList<usp_GetTop5Areas_result>> usp_GetTop5Areas(Nullable<int> aggregation_id)
         {
             if (!aggregation_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_GetTop5Areas_result> myrval = null;
-            this.LoadStoredProc("usp_GetTop5Areas")
-                     .WithSqlParam("aggregation_id", aggregation_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetTop5Areas_result>();
-                     });
-            return myrval;
+            var result = await this.Procedures.usp_GetTop5AreasAsync(aggregation_id);
+            return result.Cast<usp_GetTop5Areas_result>().ToList();
         }
 
 
@@ -734,21 +542,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<int> InScopeQuestions(Nullable<int> assessment_id)
+        public virtual async Task<IList<int>> InScopeQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<int> myrval = null;
-            this.LoadStoredProc("InScopeQuestions")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var myrval2 = handler.ReadToList<Question_Id_result>();
-                         myrval = myrval2.Select(x => x.Question_Id).ToList();
-                     });
-            return myrval;
+            var result = await this.Procedures.InScopeQuestionsAsync(assessment_id);
+            return result.Select(x => x.Question_Id).ToList();
         }
 
 
@@ -758,97 +558,45 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<int> InScopeRequirements(Nullable<int> assessment_id)
+        public virtual async Task<IList<int>> InScopeRequirements(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<int> myrval = null;
-            this.LoadStoredProc("InScopeRequirements")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var myrval2 = handler.ReadToList<Requirement_Id_result>();
-                         myrval = myrval2.Select(x => x.Requirement_Id).ToList();
-                     });
-            return myrval;
+            var result = await this.Procedures.InScopeRequirementsAsync(assessment_id);
+            return result.Select(x => x.Requirement_Id).ToList();
         }
 
-        public virtual IList<Get_Merge_ConflictsResult> Get_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
+        public virtual async Task<IList<Get_Merge_ConflictsResult>> Get_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
                                                                             int assessmentId3, int assessmentId4, int assessmentId5, int assessmentId6,
                                                                             int assessmentId7, int assessmentId8, int assessmentId9, int assessmentId10)
         {
             if (!assessmentId1.HasValue || !assessmentId2.HasValue)
                 throw new ApplicationException("first two parameters may not be null");
-            IList<Get_Merge_ConflictsResult> myrval = null;
-            this.LoadStoredProc("Get_Merge_Conflicts")
-                     .WithSqlParam("@id1", assessmentId1)
-                     .WithSqlParam("@id2", assessmentId2)
-                     .WithSqlParam("@id3", assessmentId3)
-                     .WithSqlParam("@id4", assessmentId4)
-                     .WithSqlParam("@id5", assessmentId5)
-                     .WithSqlParam("@id6", assessmentId6)
-                     .WithSqlParam("@id7", assessmentId7)
-                     .WithSqlParam("@id8", assessmentId8)
-                     .WithSqlParam("@id9", assessmentId9)
-                     .WithSqlParam("@id10", assessmentId10)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<Get_Merge_ConflictsResult>();
-                     });
-            return myrval;
+            var result = await this.Procedures.Get_Merge_ConflictsAsync(assessmentId1, assessmentId2, assessmentId3, assessmentId4, assessmentId5, assessmentId6, assessmentId7, assessmentId8, assessmentId9, assessmentId10);
+            return result.ToList();
         }
 
-        public virtual IList<Get_Merge_ConflictsResult> Get_Cie_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
+        public virtual async Task<IList<Get_Cie_Merge_ConflictsResult>> Get_Cie_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
                                                                             int assessmentId3, int assessmentId4, int assessmentId5, int assessmentId6,
                                                                             int assessmentId7, int assessmentId8, int assessmentId9, int assessmentId10)
         {
             if (!assessmentId1.HasValue || !assessmentId2.HasValue)
                 throw new ApplicationException("first two parameters may not be null");
-            IList<Get_Merge_ConflictsResult> myrval = null;
-            this.LoadStoredProc("Get_Cie_Merge_Conflicts")
-                     .WithSqlParam("@id1", assessmentId1)
-                     .WithSqlParam("@id2", assessmentId2)
-                     .WithSqlParam("@id3", assessmentId3)
-                     .WithSqlParam("@id4", assessmentId4)
-                     .WithSqlParam("@id5", assessmentId5)
-                     .WithSqlParam("@id6", assessmentId6)
-                     .WithSqlParam("@id7", assessmentId7)
-                     .WithSqlParam("@id8", assessmentId8)
-                     .WithSqlParam("@id9", assessmentId9)
-                     .WithSqlParam("@id10", assessmentId10)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<Get_Merge_ConflictsResult>();
-                     });
-            return myrval;
+            var result = await this.Procedures.Get_Cie_Merge_ConflictsAsync(assessmentId1, assessmentId2, assessmentId3, assessmentId4, assessmentId5, assessmentId6, assessmentId7, assessmentId8, assessmentId9, assessmentId10);
+            return result.ToList();
         }
 
-        public virtual IList<Get_Assess_Detail_Filter_DataResult> Get_Assess_Detail_Filters(string model)
+        public virtual async Task<IList<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filters(string model)
         {
-            IList<Get_Assess_Detail_Filter_DataResult> myrval = null;
-            this.LoadStoredProc("Get_Assess_Detail_Filter_Data")
-                .WithSqlParam("@model", model)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<Get_Assess_Detail_Filter_DataResult>();
-                });
-            return myrval.OrderBy(x => x.Detail_Id).ToList();
+            var result = await this.Procedures.Get_Assess_Detail_Filter_DataAsync(model);
+            return result.OrderBy(x => x.Detail_Id).ToList();
         }
 
-        public virtual IList<GetChildrenAnswersResult> Get_Children_Answers(int parentId, int assessId)
+        public virtual async Task<IList<GetChildrenAnswersResult>> Get_Children_Answers(int parentId, int assessId)
         {
-            IList<GetChildrenAnswersResult> myrval = null;
-            this.LoadStoredProc("GetChildrenAnswers")
-                .WithSqlParam("@Parent_Id", parentId)
-                .WithSqlParam("@Assess_Id", assessId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<GetChildrenAnswersResult>();
-                });
-
-            return myrval;
+            var result = await this.Procedures.GetChildrenAnswersAsync(parentId, assessId);
+            return result.ToList();
         }
     }
 }

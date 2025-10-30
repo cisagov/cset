@@ -29,7 +29,7 @@
 #  PG_USER=cset
 #  PG_PASSWORD=password
 #  PG_HOST=localhost
-#  PG_HOST_PORT=55432            # host port mapped to container 5432
+#  PG_HOST_PORT=5432            # host port mapped to container 5432
 #  PG_DUMP_OUT=backup/csetweb.pg17.dump  # custom format (.dump)
 #  PG_PLAIN_OUT=backup/CSETWeb.pg17.sql  # plain SQL (optional)
 #
@@ -50,7 +50,7 @@ PG_DB="${PG_DB:-csetweb}"
 PG_USER="${PG_USER:-cset}"
 PG_PASSWORD="${PG_PASSWORD:-password}"
 PG_HOST="${PG_HOST:-localhost}"
-PG_HOST_PORT="${PG_HOST_PORT:-55432}"
+PG_HOST_PORT="${PG_HOST_PORT:-5432}"
 PG_DUMP_OUT="${PG_DUMP_OUT:-backup/csetweb-from-mssql.sql}"
 PG_PLAIN_OUT="${PG_PLAIN_OUT:-}"  # empty disables plain SQL dump by default
 

@@ -111,7 +111,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executive")]
-        public IActionResult GetExecutive()
+        public async Task<IActionResult> GetExecutive()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -124,8 +124,8 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
 
-            data.top5Categories = _report.GetTop5Categories();
-            data.top5Questions = _report.GetTop5Questions();
+            data.top5Categories = await _report.GetTop5Categories();
+            data.top5Questions = await _report.GetTop5Questions();
             return Ok(data);
         }
 
@@ -576,7 +576,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
-        public IActionResult GetSiteSummary()
+        public async Task<IActionResult> GetSiteSummary()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -590,7 +590,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistSalTable = _report.GetNistSals();
 
             data.DocumentLibraryEntries = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -598,15 +598,15 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/reports/physicalsummary")]
-        public IActionResult GetPhysicalSummary()
+        public async Task<IActionResult> GetPhysicalSummary()
         {
             int assessmentId = _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
-            data.QuestionsWithSupplementals = _report.GetQuestionsWithSupplementals();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.QuestionsWithSupplementals = await _report.GetQuestionsWithSupplementals();
+            data.RankedQuestionsTable = await _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -616,7 +616,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/detail")]
-        public IActionResult GetDetail()
+        public async Task<IActionResult> GetDetail()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -630,7 +630,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistSalTable = _report.GetNistSals();
 
             data.DocumentLibraryEntries = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -641,18 +641,18 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns data needed for the Trend report.  
+        /// Returns data needed for the Trend report.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trend-report")]
-        public IActionResult GetTrendReport(int aggregationID)
+        public async Task<IActionResult> GetTrendReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
-            var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
+            var assessmentList = await _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
             var aggregation = _aggregation.GetAggregation((int)aggregationID);
 
@@ -701,19 +701,19 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// Returns data needed for the Compare report.  
+        /// Returns data needed for the Compare report.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/compare-report")]
-        public IActionResult GetCompareReport(int aggregationID)
+        public async Task<IActionResult> GetCompareReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
 
-            var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
+            var assessmentList = await _aggregation.GetAssessmentsForAggregation((int)aggregationID);
             Aggregation ag = _aggregation.GetAggregation((int)aggregationID);
             response.AggregationName = assessmentList.Aggregation.AggregationName;
 

@@ -18,6 +18,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 
@@ -194,11 +195,12 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
-        public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
+        public async Task<List<GroupScores>> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
         {
-            var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+            var result = await _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+            var list = result.ToList();
 
-            //while the answer text is not null 
+            //while the answer text is not null
             // increment the achieved level
             // must achieve level 1 before we can achieve level 2 ....
             //

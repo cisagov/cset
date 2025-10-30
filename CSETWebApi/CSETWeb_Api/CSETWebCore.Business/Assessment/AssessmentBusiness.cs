@@ -30,6 +30,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Business.Assessment
@@ -202,10 +203,11 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId)
+        public async Task<IEnumerable<usp_Assessments_For_UserResult>> GetAssessmentsForUser(int userId)
         {
             List<usp_Assessments_For_UserResult> list = new List<usp_Assessments_For_UserResult>();
-            list = _context.usp_AssessmentsForUser(userId).ToList();
+            var result = await _context.usp_AssessmentsForUser(userId);
+            list = result.ToList();
 
             // convert dates from UTC to local 
             list.ForEach(x =>

@@ -52,6 +52,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -138,7 +139,7 @@ namespace CSETWeb_ApiCore
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("CSET_DB")));
+                options => options.UseNpgsql(Configuration.GetConnectionString("CSET_DB")));
 
             //Services
             services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
