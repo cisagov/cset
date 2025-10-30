@@ -26,7 +26,6 @@
     <span>Select Modules</span>
   </div>
 
-
   <mat-dialog-content>
     <div class="my-3">
       Select one or more modules to clone from. <strong>NOTE: Your module will be
@@ -34,12 +33,18 @@
         from modules selected below.</strong>
     </div>
 
-    <div style="height: 30vh">
-      <mat-selection-list #sets dense [(ngModel)]="selectedSets">
-        <mat-list-option *ngFor="let set of setNames" [value]="set">
-          {{set.shortName}}
-        </mat-list-option>
-      </mat-selection-list>
+    <div style="height: 30vh; overflow-y: scroll">
+      <table class="w-100">
+        <tr *ngFor="let s of setNames">
+          <td class="py-1">
+            <label class="checkbox-custom-label" [for]="s.setName">{{ s.shortName }}</label>
+          </td>
+          <td>
+            <input type="checkbox" class="checkbox-custom" [id]="s.setName" (change)="changeSelection(s, $event)">
+            <label class="checkbox-custom-label" [for]="s.setName"></label>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <div class="alert alert-warning" role="alert" [hidden]="!warning">

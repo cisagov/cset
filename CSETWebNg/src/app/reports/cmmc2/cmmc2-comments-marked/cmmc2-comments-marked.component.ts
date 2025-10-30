@@ -60,7 +60,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
-        console.log(this.response)
       }
     );
 
