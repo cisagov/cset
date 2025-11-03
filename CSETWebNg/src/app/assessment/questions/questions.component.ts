@@ -92,8 +92,6 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
         });
     }
 
-    this.getQuestionCounts();
-
     // handle any scroll events originating from the nav servicd
     this.navSvc.scrollToQuestion
       .asObservable()
@@ -236,53 +234,48 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
   }
 
   /**
-   *
+   * @param data 
    */
-  getQuestionCounts() {
-    this.questionsSvc.getQuestionsList().subscribe(
-      (data: QuestionResponse) => {
-        this.assessSvc.applicationMode = data.applicationMode;
-        this.setHasRequirements = (data.requirementCount > 0);
-        this.setHasQuestions = (data.questionCount > 0);
+  getQuestionCounts(data: QuestionResponse) {
+    
+    this.assessSvc.applicationMode = data.applicationMode;
+    this.setHasRequirements = (data.requirementCount > 0);
+    this.setHasQuestions = (data.questionCount > 0);
 
-        let modified = false;
-        // Using nested ifs because '&&' statements would allow the next else if to run
-        if (this.assessSvc.applicationMode == 'Q') {
-          if (!this.setHasQuestions) {
-            this.assessSvc.applicationMode = 'R';
-            modified = true;
-          }
-        }
-        else if (this.assessSvc.applicationMode == 'R') {
-          // Accounts for !this.setHasQuestions && !this.setHasRequirements as well.
-          if (!this.setHasRequirements) {
-            this.assessSvc.applicationMode = 'Q';
-            modified = true;
-          }
-        }
-        else {
-          this.assessSvc.applicationMode = 'Q';
-          modified = true;
-        }
+    let modified = false;
+    // Using nested ifs because '&&' statements would allow the next else if to run
+    if (this.assessSvc.applicationMode == 'Q') {
+      if (!this.setHasQuestions) {
+        this.assessSvc.applicationMode = 'R';
+        modified = true;
+      }
+    }
+    else if (this.assessSvc.applicationMode == 'R') {
+      // Accounts for !this.setHasQuestions && !this.setHasRequirements as well.
+      if (!this.setHasRequirements) {
+        this.assessSvc.applicationMode = 'Q';
+        modified = true;
+      }
+    }
+    else {
+      this.assessSvc.applicationMode = 'Q';
+      modified = true;
+    }
 
-        // set toggle visibility
-        this.showQuestionsToggle = this.setHasQuestions;
-        this.showRequirementsToggle = this.setHasRequirements;
-        if (data.onlyMode) {
-          this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
-          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
-        }
+    // set toggle visibility
+    this.showQuestionsToggle = this.setHasQuestions;
+    this.showRequirementsToggle = this.setHasRequirements;
+    if (data.onlyMode) {
+      this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
+      this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
+    }
 
-        // Clean filters back to defaults
-        this.filterSvc.forceRefresh();
+    // Clean filters back to defaults
+    this.filterSvc.forceRefresh();
 
-        if (modified) {
-          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-        }
-        else {
-          this.loadQuestions();
-        }
-      });
+    if (modified) {
+      this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe();
+    }
   }
 
 
@@ -304,6 +297,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
+        this.getQuestionCounts(response);
         this.assessSvc.applicationMode = response.applicationMode;
         this.setHasRequirements = (response.requirementCount > 0);
         this.setHasQuestions = (response.questionCount > 0);
