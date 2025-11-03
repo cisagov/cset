@@ -112,6 +112,14 @@
         <div class="card-footer"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
              style="text-align:right;">
+          <button [matTooltip]="t('tooltip.view detail')"
+                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                  class="btn btn-outline-light btn-circle gallery-btn-info"
+                  (click)="openDialog(c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-info tw:scale-125 tw:inline-block"
+               style="text-shadow: 0 0 3px currentColor"></i>
+          </button>
           <button *ngIf="c.isFavorite && c.gallery_Item_Guid!=hoverIndex"
                   [matTooltip]="t('tooltip.remove favorite')"
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
@@ -134,22 +142,7 @@
                   (click)="toggleFavorite($event, c)"
                   style="margin-right:5px;">
             <i class="fa-solid fa-star tw:scale-125 tw:inline-block"
-               style="text-shadow: 0 0 3px currentColor"></i>
-          </button>
-          <button [matTooltip]="t('tooltip.view detail')"
-                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                  class="btn btn-outline-light btn-circle gallery-btn-info"
-                  (click)="openDialog(c)"
-                  style="margin-right:5px;">
-            <i class="fa-solid fa-info tw:scale-125 tw:inline-block"
-               style="text-shadow: 0 0 3px currentColor"></i>
-          </button>
-          <button [matTooltip]="t('tooltip.create assessment')"
-                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                  class="btn btn-outline-light btn-circle gallery-btn-play"
-                  style="margin-right:5px;"
-                  (click)="navSvc.beginNewAssessmentGallery(c)">
-            <i class="fa-solid fa-play tw:inline-block"></i>
+               style="text-shadow: 0 0 1px currentColor"></i>
           </button>
         </div>
       </div>
