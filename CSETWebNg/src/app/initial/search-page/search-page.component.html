@@ -47,38 +47,35 @@
 
         <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
           style="text-align:right;">
+          <button class="btn btn-outline-light btn-circle gallery-btn-info" (click)="openDialog(c.item)"
+                  [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
+            class="fa-solid fa-info tw:scale-125 tw:inline-block">
+          </i>
+          </button>
           <button *ngIf="c.item.isFavorite && c.item.gallery_Item_Guid!=hoverIndex"
                   [matTooltip]="t('tooltip.remove favorite')"
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-gray-300 hover:tw:bg-gray-100 gallery-btn-favorite"
-                  (click)="toggleFavorite($event, c)"
+                  (click)="toggleFavorite($event, c.item)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block star-favorite"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <button *ngIf="c.item.isFavorite && c.item.gallery_Item_Guid==hoverIndex"
                   [matTooltip]="t('tooltip.remove favorite')"
                   class="btn btn-circle tw:bg-white tw:border-2 tw:border-white gallery-btn-favorite"
-                  (click)="toggleFavorite($event, c)"
+                  (click)="toggleFavorite($event, c.item)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block star-favorite"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
           <button *ngIf="!c.item.isFavorite && c.item.gallery_Item_Guid==hoverIndex"
                   [matTooltip]="t('tooltip.add favorite')"
-                  class="btn btn-outline-light btn-circle gallery-btn-favorite"
+                  class="btn btn-outline-light btn-circle gallery-btn-info"
                   (click)="toggleFavorite($event, c.item)"
                   style="margin-right:5px;">
-            <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-amber-500"
+            <i class="fa-solid fa-star tw:scale-125 tw:inline-block"
                style="text-shadow: 0 0 3px currentColor"></i>
           </button>
-          <button class="btn btn-outline-light btn-circle gallery-btn-info" (click)="openDialog(c.item)"
-            [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
-              class="fa-solid fa-info tw:scale-125 tw:inline-block">
-          </i>
-          </button>
-          <button class="btn btn-outline-light btn-circle gallery-btn-play"
-            (click)="navSvc.beginNewAssessmentGallery(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"><i
-              class="fa-solid fa-play tw:inline-block"></i></button>
         </div>
       </div>
     </div>
