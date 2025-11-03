@@ -42,6 +42,30 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
             { "2 weeks", 5 },
             { "More than 2 weeks", 6 }
         };
+    
+    // HSPD-7 to PPD-21 sector mapping
+    private static readonly Dictionary<int, int> HSPD7ToPPD21SectorIds = new Dictionary<int, int>
+    {
+        { 17, 10 },
+        { 18, 9 },
+        { 19, 1 },
+        { 20, 2 },
+        { 21, 3 },
+        { 22, 5 },
+        { 23, 6 },
+        { 24, 7 },
+        { 25, 8 },
+        { 26, 11 },
+        { 27, 12 },
+        { 28, 13 },
+        { 29, 4 },
+        { 30, 11 },
+        { 31, 14 },
+        { 32, 15 },
+        { 33, 15 },
+        { 34, 16 }
+    };
+
 
     public string ExecuteUpgrade(string json)
     {
@@ -61,8 +85,24 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ORG-NAME", demo["OrganizationName"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "BUSINESS-UNIT", demo["Agency"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ORG-TYPE", demo["OrganizationType"]);
-                AddDetailsDemographic(newDetailsDemographics, assessmentId, "SECTOR", demo["SectorId"]);
-                AddDetailsDemographic(newDetailsDemographics, assessmentId, "SUBSECTOR", demo["IndustryId"]);
+                
+                // Check for sector upgrade
+                var sectorId = demo["SectorId"]?.Value<int?>();
+                if (sectorId.HasValue && HSPD7ToPPD21SectorIds.ContainsKey(sectorId.Value))
+                {
+                    var upgradedSectorId = GetPpd21SectorId(sectorId);
+                    AddDetailsDemographic(newDetailsDemographics, assessmentId, "SECTOR", new JValue(upgradedSectorId.Value));
+                    // Add sector upgrade acknowledgement 
+                    AddDetailsDemographic(newDetailsDemographics, assessmentId, "ACK_SECTOR_UPDATED_PPD21", true);
+
+                    // Don't add subsector - it's being cleared as part of the upgrade due to sector/subsector changes 
+                }
+                else
+                {
+                    AddDetailsDemographic(newDetailsDemographics, assessmentId, "SECTOR", demo["SectorId"]);
+                    AddDetailsDemographic(newDetailsDemographics, assessmentId, "SUBSECTOR", demo["IndustryId"]);
+                }
+                
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "POC", demo["PointOfContact"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "SCOPED", demo["IsScoped"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ASSET-VALUE", demo["AssetValue"],
@@ -99,6 +139,28 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
         j.Remove("jFINANCIAL_DOMAINS");
         j.Remove("jFINANCIAL_MATURITY");
         return j.ToString();
+    }
+    
+    /// <summary>
+    /// Returns the PPD-21 equivalent of a specified
+    /// HSPD-7 sector ID. If the specified sector ID
+    /// is not HSPD-7, the supplied sector ID is returned.
+    /// </summary>
+    /// <param name="sectorId"></param>
+    /// <returns></returns>
+    public static int? GetPpd21SectorId(int? sectorId)
+    {
+        if (sectorId == null)
+        {
+            return null;
+        }
+
+        if (HSPD7ToPPD21SectorIds.ContainsKey((int)sectorId))
+        {
+            return HSPD7ToPPD21SectorIds[(int)sectorId];
+        }
+
+        return sectorId;
     }
 
     private void AddDetailsDemographic(JArray array, int assessmentId, string dataItemName, JToken value,

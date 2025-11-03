@@ -22,6 +22,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <summary>
         /// The list of versions for which incremental updates are supported.
         /// </summary>
+        /// TODO: The static internal classes for individual upgrade files limits the ability to reuse code from the business layer. Possible refactor that would make the business layer accessible to these files. 
         static Dictionary<string, ICSETJSONFileUpgrade> upgraders = new Dictionary<string, ICSETJSONFileUpgrade>();
 
         static ImportUpgradeManager()
