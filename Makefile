@@ -1,4 +1,4 @@
-.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
+.PHONY: help build-backend launch-backend test-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
 include .env
 export
 
@@ -41,6 +41,10 @@ format-backend:
 # target: check-backend - Verify backend code formatting without making changes
 check-backend:
 	cd CSETWebApi/CSETWeb_Api && dotnet format --verify-no-changes
+
+# target: test-backend - Run all backend unit tests
+test-backend:
+	cd CSETWebApi/CSETWeb_Api && dotnet test
 
 # target: launch-backend - Launch the backend server
 launch-backend:
