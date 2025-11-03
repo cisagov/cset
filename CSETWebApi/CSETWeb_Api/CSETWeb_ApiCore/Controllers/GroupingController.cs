@@ -67,7 +67,8 @@ namespace CSETWebCore.Api.Controllers
             var stats = _hooks.HookGroupingSelectionChanged(assessmentId);
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
                     TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,

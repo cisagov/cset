@@ -7,8 +7,6 @@
 using CSETWebCore.Business.Reports;
 using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Linq;
 
 namespace CSETWebCore.Reports.Models
 {

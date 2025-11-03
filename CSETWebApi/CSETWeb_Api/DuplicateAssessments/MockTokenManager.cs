@@ -2,17 +2,11 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DuplicateAssessments
 {
@@ -31,8 +25,8 @@ namespace DuplicateAssessments
 
         private const string _bearerToken = "Bearer ";
         private JwtSecurityToken? _token = null;
-        
-        
+
+
         private readonly ILocalInstallationHelper _localInstallationHelper;
 
         private CSETContext _context;
@@ -116,7 +110,7 @@ namespace DuplicateAssessments
             if (_token == null)
             {
                 return null;
-            }   
+            }
 
             var val = ReadTokenPayload(_token, claim);
 
@@ -131,7 +125,7 @@ namespace DuplicateAssessments
         }
 
 
-        
+
 
         /// <summary>
         /// Creates a JWT with payload claims.  
@@ -164,7 +158,7 @@ namespace DuplicateAssessments
 
             // Determine the expiration (server time) of the token
             int jwtExpiryMinutes = 60;
-            
+
             int secondsUntilExpiry = (jwtExpiryMinutes * 60);
 
             // If a non-zero expSeconds was provided, override the expiration 

@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Demographic.Import

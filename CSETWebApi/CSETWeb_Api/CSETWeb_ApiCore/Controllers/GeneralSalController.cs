@@ -8,18 +8,17 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using CSETWebCore.Business;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Sal;
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     [ApiController]
     public class GeneralSalController : ControllerBase
     {

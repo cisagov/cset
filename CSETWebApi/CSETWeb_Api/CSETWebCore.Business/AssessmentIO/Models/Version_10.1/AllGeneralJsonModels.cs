@@ -7,10 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
@@ -25,7 +21,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
 
 
-  
+
 
     public class jACCESS_KEY_ASSESSMENT
     {
@@ -795,7 +791,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public String PrimaryEmail { get; set; }
 
         [MaxLength(150)]
-        public String SecondaryEmail { get; set; }        
+        public String SecondaryEmail { get; set; }
 
     }
 

@@ -6,7 +6,7 @@ namespace DuplicateAssessments
     internal class MockLocalInstallationHelper : ILocalInstallationHelper
     {
         public void determineIfUpgradedNeededAndDoSo(int newuserID, CSETContext tmpContext)
-        {   
+        {
         }
 
         public bool IsLocalInstallation()

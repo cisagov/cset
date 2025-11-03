@@ -4,10 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Text.Json;
-
 namespace CSETWebCore.Api.Error
 {
     public class MalcolmUploadError

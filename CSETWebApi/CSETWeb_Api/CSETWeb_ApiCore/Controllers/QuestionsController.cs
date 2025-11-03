@@ -169,7 +169,8 @@ namespace CSETWebCore.Api.Controllers
             CompletionCounts stats = _hooks.HookQuestionsModeChanged(assessmentId);
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
                     TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
@@ -410,10 +411,11 @@ namespace CSETWebCore.Api.Controllers
             qm.StoreSubcategoryAnswers(subCatAnswers);
 
             _hooks.HookQuestionAnswered(subCatAnswers.Answers[0]);
-           CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+            CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
                     TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,

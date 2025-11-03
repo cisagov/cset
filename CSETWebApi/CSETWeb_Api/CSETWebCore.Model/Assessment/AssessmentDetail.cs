@@ -73,7 +73,7 @@ namespace CSETWebCore.Model.Assessment
         /// Created to be flexible to able to 'flag' an assessment for a special behavior
         /// </summary>
         public string Origin { get; set; }
-        
+
         public bool AssessorMode { get; set; }
 
         public bool? Done { get; set; }

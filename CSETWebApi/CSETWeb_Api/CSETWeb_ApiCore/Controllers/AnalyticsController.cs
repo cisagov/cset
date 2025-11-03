@@ -16,7 +16,6 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Model.Analytics;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Business.Question;
@@ -86,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(agg);
         }
-        
+
 
         [HttpGet]
         [Route("api/analytics/maturity/bars")]
@@ -274,7 +273,7 @@ namespace CSETWebCore.Api.Controllers
         }
     }
 
-        public class NewResponse
+    public class NewResponse
     {
         public List<Category> Categories { get; set; } = [];
         public int SampleSize { get; set; } = 0;

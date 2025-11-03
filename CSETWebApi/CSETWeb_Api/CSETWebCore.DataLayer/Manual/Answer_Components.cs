@@ -9,7 +9,6 @@
 namespace CSETWebCore.DataLayer.Model
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public partial class Answer_ComponentsXXX

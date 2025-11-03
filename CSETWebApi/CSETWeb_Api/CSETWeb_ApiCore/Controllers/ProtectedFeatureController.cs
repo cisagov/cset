@@ -12,7 +12,6 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {

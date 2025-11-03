@@ -30,7 +30,7 @@ namespace CSETWebCore.Business.Diagram
         private Hooks _hooks;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        
+
         public DiagramManager(CSETContext context, Hooks hooks)
         {
             _context = context;
@@ -1292,7 +1292,7 @@ namespace CSETWebCore.Business.Diagram
             if (symbol == null)
             {
                 symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Abbreviation == node.Role).FirstOrDefault();
-                if (symbol != null) 
+                if (symbol != null)
                 {
                     label = symbol.Abbreviation;
                 }
@@ -1540,7 +1540,7 @@ namespace CSETWebCore.Business.Diagram
                     return parent;
             }
         }
-        
+
         public class YCoords
         {
             public int upperY = 0, lowerY = 0;

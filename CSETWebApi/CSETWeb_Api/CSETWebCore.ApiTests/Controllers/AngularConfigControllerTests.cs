@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.Api.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +24,16 @@ namespace CSETWebCore.Api.Controllers.Tests
         public override HttpContext HttpContext => throw new NotImplementedException();
 
         public override string Method { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string Scheme { get{ return "http"; } set => throw new NotImplementedException(); }
+        public override string Scheme { get { return "http"; } set => throw new NotImplementedException(); }
         public override bool IsHttps { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override HostString Host { get {
-                return new HostString("http://localhost"); } set => throw new NotImplementedException(); }
+        public override HostString Host
+        {
+            get
+            {
+                return new HostString("http://localhost");
+            }
+            set => throw new NotImplementedException();
+        }
         public override PathString PathBase { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override PathString Path { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override QueryString QueryString { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers.Tests
         public IFileProvider WebRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ContentRootPath { get {return @"C:\src\repos\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\WebApp\"; } set => throw new NotImplementedException(); }
+        public string ContentRootPath { get { return @"C:\src\repos\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\WebApp\"; } set => throw new NotImplementedException(); }
         public string EnvironmentName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

@@ -93,7 +93,7 @@ namespace CSETWebCore.Business.Sal
             // Integrity
             cnvalu = GetOrCreateNew("integrity", id, dbValues, context);
             cnvalu.Justification = this.Integrity_Special_Factor == null ? String.Empty : this.Integrity_Special_Factor;
-            cnvalu.DropDownValueLevel = this.Integrity_Value.SALName; 
+            cnvalu.DropDownValueLevel = this.Integrity_Value.SALName;
 
             context.SaveChanges();
             assessmentUtils.TouchAssessment(id);

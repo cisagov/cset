@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
@@ -15,7 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     public class MaturityC2M2Controller : ControllerBase
     {
         private readonly ITokenManager _tokenManager;
