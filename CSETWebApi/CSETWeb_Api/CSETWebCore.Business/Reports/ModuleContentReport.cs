@@ -8,12 +8,8 @@ using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Set;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Business.Reports

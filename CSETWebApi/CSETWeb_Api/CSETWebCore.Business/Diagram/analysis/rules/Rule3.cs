@@ -7,8 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;

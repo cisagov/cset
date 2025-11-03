@@ -13,7 +13,8 @@ namespace CSETWebCore.AutoResponder
     internal class Program
     {
 
-        static Program(){
+        static Program()
+        {
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace CSETWebCore.AutoResponder
         static void Main(string[] args)
         {
             bool test = false;
-            if(args.Length > 1)
+            if (args.Length > 1)
             {
                 test = true;
             }
@@ -33,14 +34,14 @@ namespace CSETWebCore.AutoResponder
             // Invoke Worker
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
-            if(DayOfWeek.Monday == DateTime.Now.DayOfWeek || test)
+            if (DayOfWeek.Monday == DateTime.Now.DayOfWeek || test)
             {
                 var workerInstance = provider.GetRequiredService<WeeklyStatusWorker>();
                 workerInstance.ProcessEmails();
             }
             var dailyInstance = provider.GetRequiredService<DailyEmailProcessWorker>();
             dailyInstance.ProcessEmails();
-            
+
         }
 
         static IHostBuilder CreateDefaultBuilder()
@@ -57,7 +58,7 @@ namespace CSETWebCore.AutoResponder
                     services.AddSingleton<DailyEmailProcessWorker>();
                     services.AddDbContext<CSETContext>(
                         options => options.UseSqlServer("name=ConnectionStrings:CSETWeb"));
-                    services.AddTransient<IResourceHelper, ResourceHelper>();                    
+                    services.AddTransient<IResourceHelper, ResourceHelper>();
                     services.AddTransient<IEmailHelper, EmailHelper>();
 
                 });
@@ -85,7 +86,7 @@ namespace CSETWebCore.AutoResponder
 #pragma warning disable CS8604 // Possible null reference argument.
             string path = excel.BuildSheet(_context, configuration.GetValue<string>("ExcelWorkBookPassword"));
 
-            foreach(var email in configuration.GetSection("Notifications:Weekly").GetChildren())
+            foreach (var email in configuration.GetSection("Notifications:Weekly").GetChildren())
             {
 
                 _emailHelper.SendWeekly(path,
@@ -94,10 +95,10 @@ namespace CSETWebCore.AutoResponder
                     email.GetValue<string>("LastName"));
 #pragma warning restore CS8604 // Possible null reference argument.
             }
-                
 
 
-            
+
+
         }
         /**
          * I need this to fire up on weekly basis 
@@ -110,7 +111,7 @@ namespace CSETWebCore.AutoResponder
          * mark the database for each recipient so that we do not send again. 
          */
 
-      
+
     }
 
 

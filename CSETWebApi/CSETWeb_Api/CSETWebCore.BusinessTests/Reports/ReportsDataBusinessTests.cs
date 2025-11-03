@@ -5,13 +5,6 @@
 // 
 //////////////////////////////// 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.Business.Reports;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Merit;
 
 //namespace CSETWebCore.Business.Reports.Tests
 namespace CSETWebCore.Business.Merit.Tests

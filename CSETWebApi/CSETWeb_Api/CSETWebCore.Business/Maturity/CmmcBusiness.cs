@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Maturity
         private List<MATURITY_EXTRA> _maturityExtra;
 
         // Answers that don't count against the score
-        private readonly List<string> _goodAnswerOptions = new List<string>() {"Y", "NA"};
+        private readonly List<string> _goodAnswerOptions = new List<string>() { "Y", "NA" };
 
         // The questions that allow an "incomplete" answer selection
         private readonly List<int> _questionsThatAllowIncomplete = new List<int>() { 5330, 5382 };
@@ -160,7 +160,8 @@ namespace CSETWebCore.Business.Maturity
 
             var biz = new MaturityBusiness(_context, _assessmentUtil);
 
-            var options = new StructureOptions() {
+            var options = new StructureOptions()
+            {
                 IncludeQuestionText = true,
                 IncludeSupplemental = false
             };
@@ -206,7 +207,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 var d = new CmmcDomain();
                 d.DomainName = goal.Attribute("title").Value;
-                
+
 
                 foreach (var question in goal.Descendants("Question"))
                 {

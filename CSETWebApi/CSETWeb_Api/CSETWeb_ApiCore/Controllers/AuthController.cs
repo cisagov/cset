@@ -77,7 +77,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     // Note: We can't use await inside lock, but this should be fast
                 }
-                
+
                 LoginResponse resp = await _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                 if (resp != null)
                 {

@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 
-using System;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Business.Demographic.DemographicIO.Models
@@ -29,7 +28,7 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
             this.jORG_DETAILS = new List<jORG_DETAILS>();
         }
     }
- }
-    
+}
+
 
 

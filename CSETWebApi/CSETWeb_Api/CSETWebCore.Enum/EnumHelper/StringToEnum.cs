@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 namespace CSETWebCore.Enum.EnumHelper
 {
     public static class StringToEnum

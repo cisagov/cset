@@ -14,7 +14,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
 
-        private List<string> unansweredColors = [ "red", "lightgray" ];
+        private List<string> unansweredColors = ["red", "lightgray"];
 
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace CSETWebCore.Business.Maturity
                     heatmapNode.Color = "green";
                 }
             }
-            
+
             return heatmapNode;
         }
 

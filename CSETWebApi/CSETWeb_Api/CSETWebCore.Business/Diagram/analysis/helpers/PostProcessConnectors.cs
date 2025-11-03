@@ -7,8 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Diagram.analysis.helpers
 {
@@ -72,9 +70,9 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
                 }
                 //at this point all connections have been created
                 //and we can safely remove the connectors
-                this.nodes.Remove(nc.ID);                                
-                nc.Connections.RemoveAll(x => x.IsLinkConnector);                    
-                
+                this.nodes.Remove(nc.ID);
+                nc.Connections.RemoveAll(x => x.IsLinkConnector);
+
             }
         }
     }

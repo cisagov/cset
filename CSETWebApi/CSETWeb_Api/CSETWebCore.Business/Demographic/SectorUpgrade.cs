@@ -1,10 +1,6 @@
 ﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Demographic;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -60,7 +56,7 @@ namespace CSETWebCore.Business.Demographic
         public SectorUpdateResult UpgradeSector(int assessmentId)
         {
             var dbSector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR");
-            
+
             // do nothing if the sector is not a candidate for upgrading
             if (dbSector == null || dbSector.IntValue == null || !HSPD7ToPPD21SectorIds.ContainsKey((int)dbSector.IntValue))
             {
@@ -94,7 +90,7 @@ namespace CSETWebCore.Business.Demographic
 
                 resp.Changed = true;
             }
-            
+
 
             var dbSubsector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SUBSECTOR");
             _context.Remove(dbSubsector);
@@ -130,7 +126,7 @@ namespace CSETWebCore.Business.Demographic
 
 
     public class SectorUpdateResult
-    { 
+    {
         public int SectorId { get; set; }
         public bool Changed { get; set; } = false;
     }

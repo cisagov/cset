@@ -16,7 +16,7 @@ namespace CSETWebCore.Model.Sal
         /// <summary>
         /// User-overridden level
         /// </summary>
-        public bool SelectedSALOverride { get; set; }       
+        public bool SelectedSALOverride { get; set; }
 
         /// <summary>
         /// Methodology

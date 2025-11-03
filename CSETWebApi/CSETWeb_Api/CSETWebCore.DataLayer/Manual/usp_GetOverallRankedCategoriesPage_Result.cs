@@ -7,8 +7,6 @@
 
 namespace CSETWebCore.DataLayer.Model
 {
-    using System;
-
     public partial class usp_GetOverallRankedCategoriesPage_Result
     {
         public string Question_Group_Heading { get; set; }

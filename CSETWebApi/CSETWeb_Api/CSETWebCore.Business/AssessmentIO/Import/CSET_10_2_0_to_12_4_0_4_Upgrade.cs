@@ -6,7 +6,6 @@
 //////////////////////////////// 
 
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import;

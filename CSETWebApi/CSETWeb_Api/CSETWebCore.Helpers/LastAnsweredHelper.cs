@@ -19,7 +19,7 @@ namespace CSETWebCore.Helpers
         private readonly CSETContext _context;
 
 
-        public LastAnsweredHelper(CSETContext context) 
+        public LastAnsweredHelper(CSETContext context)
         {
             _context = context;
         }

@@ -4,13 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 
 namespace CSETWebCore.Business.Question
@@ -127,7 +125,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="assessmentId"></param>
         public CompletionCounts HookGroupingSelectionChanged(int assessmentId)
         {
-           return new CompletionCounter(_context).Count(assessmentId);
+            return new CompletionCounter(_context).Count(assessmentId);
         }
 
 

@@ -148,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
                     return Ok(response);
                 }
 
-                
+
 
                 // does this new password follow the complexity rules?
                 PasswordResponse respComplex = resetter.ComplexityRulesMet(changePass);
