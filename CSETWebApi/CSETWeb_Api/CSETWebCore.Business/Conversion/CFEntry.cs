@@ -10,6 +10,6 @@ namespace CSETWebCore.Business.Contact
     {
         public bool IsEntry { get; set; } = false;
         public int AssessmentId { get; set; }
-        
+
     }
 }

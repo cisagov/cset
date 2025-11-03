@@ -66,7 +66,7 @@ namespace CSETWebCore.Api.Controllers
                 // without an assessment ID for the module content report
             }
 
-         
+
 
             var biz2 = new HeatmapGenerator(_context, _assessmentUtil);
             var heatmap = biz2.GetHeatmap(assessmentId, modelId);

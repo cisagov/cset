@@ -53,8 +53,8 @@ namespace CSETWebCore.Api.Controllers
 
 
         public DiagramController(IDiagramManager diagram, ITokenManager token,
-            IAssessmentBusiness assessment, IDataHandling dataHandling, 
-            IMaturityBusiness maturity, IHttpContextAccessor http, 
+            IAssessmentBusiness assessment, IDataHandling dataHandling,
+            IMaturityBusiness maturity, IHttpContextAccessor http,
             IWebHostEnvironment webHost, CSETContext context, Hooks hooks)
         {
             _diagram = diagram;
@@ -79,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var stats = (CompletionCounts)null;
             DecodeDiagram(req);
-            
+
             lock (_object)
             {
                 try
@@ -97,14 +97,15 @@ namespace CSETWebCore.Api.Controllers
                 {
                     NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 }
-                finally 
-                { 
-                    stats= _hooks.HookDiagramChanged((int)assessmentId);
+                finally
+                {
+                    stats = _hooks.HookDiagramChanged((int)assessmentId);
                 }
             }
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
                 });
@@ -123,12 +124,13 @@ namespace CSETWebCore.Api.Controllers
             _diagram.SaveComponent(component, (int)assessmentId);
 
             // _hooks.HookDiagramChanged((int)assessmentId);
-            
+
             var stats = _hooks.HookDiagramChanged((int)assessmentId);
-    
+
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
                 });
@@ -331,11 +333,11 @@ namespace CSETWebCore.Api.Controllers
                 {
                     return null;
                 }
-                
+
                 RootDiagramContainer diagramContainer = new RootDiagramContainer();
                 diagramContainer.diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 String contentReader = diagramXml.ReadToEnd();
-                diagramContainer.vertices = _diagram.ProcessDiagramVertices(new StringReader(contentReader), assessmentId ?? 0);                
+                diagramContainer.vertices = _diagram.ProcessDiagramVertices(new StringReader(contentReader), assessmentId ?? 0);
                 diagramContainer.zones = _diagram.GetDiagramZones(diagramContainer.vertices);
                 diagramContainer.components = _diagram.GetDiagramComponents(diagramContainer.vertices);
                 diagramContainer.edges = _diagram.ProcessDiagramEdges(new StringReader(contentReader), assessmentId ?? 0);

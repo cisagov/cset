@@ -7,8 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Model.Edm;
@@ -32,7 +30,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="context"></param>
         /// <param name="modelId"></param>
-        public ModelScoring(CSETContext context, int modelId) 
+        public ModelScoring(CSETContext context, int modelId)
         {
             _context = context;
             ModelId = modelId;
@@ -188,7 +186,7 @@ namespace CSETWebCore.Business.Maturity
                 //else red                
                 if (this.Title_Id == "MIL1")
                 {
-                   // this.ColorStatus = BasicScore(scores);
+                    // this.ColorStatus = BasicScore(scores);
                 }
                 else
                 {

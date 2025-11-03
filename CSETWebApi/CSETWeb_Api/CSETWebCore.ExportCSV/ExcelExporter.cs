@@ -55,7 +55,7 @@ namespace CSETWebCore.ExportCSV
             {
                 return stream;
             }
-            CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling,_token);
+            CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling, _token);
             export.ProcessTables(stream);
             return stream;
         }

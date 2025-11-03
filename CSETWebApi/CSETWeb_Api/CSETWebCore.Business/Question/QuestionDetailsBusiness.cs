@@ -98,17 +98,17 @@ namespace CSETWebCore.Business.Question
                     a.Question_Or_Requirement_Id == questionId
                     && a.Assessment_Id == assessmentId
                     && a.Question_Type == questionType).ToList();
-                
+
                 if (answer.Count() > 1)
                 {
-                    response.overRide = true; 
+                    response.overRide = true;
                 }
                 else
                 {
                     response.overRide = false;
                 }
                 ANSWER newAnswer = answer.FirstOrDefault();
-                
+
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()

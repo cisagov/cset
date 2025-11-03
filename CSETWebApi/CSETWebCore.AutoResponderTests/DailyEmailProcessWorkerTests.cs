@@ -35,10 +35,10 @@ namespace CSETWebCore.AutoResponder.Tests
 
         [TestMethod()]
         public void ProcessEmailsTest()
-        { 
-            var host = CreateDefaultBuilder().Build();          
+        {
+            var host = CreateDefaultBuilder().Build();
             using IServiceScope serviceScope = host.Services.CreateScope();
-            IServiceProvider provider = serviceScope.ServiceProvider;            
+            IServiceProvider provider = serviceScope.ServiceProvider;
             //do a simple daily first
             //then do the next day and see that the emails do not go out
             //then bring forward the date a week and see that they do go out a second time
@@ -47,7 +47,7 @@ namespace CSETWebCore.AutoResponder.Tests
             //then bring forward one more week and see it go out
             //finally last bring forward one more week and see that they don't go out. 
             var dailyInstance = provider.GetRequiredService<DailyEmailProcessWorker>();
-            
+
             dailyInstance.NowDate = DateTime.Now;
             dailyInstance.ProcessEmails();
 
@@ -75,10 +75,10 @@ namespace CSETWebCore.AutoResponder.Tests
             dailyInstance.NowDate = DateTime.Now.AddDays(28);
             dailyInstance.ProcessEmails();
 
-            dailyInstance.NowDate = DateTime.Now.AddDays(7*6);
+            dailyInstance.NowDate = DateTime.Now.AddDays(7 * 6);
             dailyInstance.ProcessEmails();
-            
-            dailyInstance.NowDate = DateTime.Now.AddDays((7 * 6)+1);
+
+            dailyInstance.NowDate = DateTime.Now.AddDays((7 * 6) + 1);
             dailyInstance.ProcessEmails();
 
             dailyInstance.NowDate = DateTime.Now.AddDays((7 * 10));

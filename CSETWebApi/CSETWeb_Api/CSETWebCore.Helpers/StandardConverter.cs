@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 
 
 namespace CSETWebCore.Helpers
@@ -46,7 +45,7 @@ namespace CSETWebCore.Helpers
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.name, @"\W", "_");
-            
+
             try
             {
                 var documentImporter = new DocumentImporter(_context);

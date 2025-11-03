@@ -34,6 +34,14 @@ stop-dev:
 build-backend:
 	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet build
 
+# target: format-backend - Format the backend code using dotnet format
+format-backend:
+	cd CSETWebApi/CSETWeb_Api && dotnet format
+
+# target: check-backend - Verify backend code formatting without making changes
+check-backend:
+	cd CSETWebApi/CSETWeb_Api && dotnet format --verify-no-changes
+
 # target: launch-backend - Launch the backend server
 launch-backend:
 	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet watch

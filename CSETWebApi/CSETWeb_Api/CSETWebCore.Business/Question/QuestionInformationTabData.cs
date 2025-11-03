@@ -190,7 +190,7 @@ namespace CSETWebCore.Business.Question
                 // parameters here -- we are in Questions mode, so just format the
                 // parameter tokens for display
                 var parmSub = new ParameterSubstitution(_context, _tokenManager);
-                requirement.Requirement_Text = 
+                requirement.Requirement_Text =
                     parmSub.ResolveParameters(requirement.Requirement_Id, 0, requirement.Requirement_Text);
 
 
@@ -460,7 +460,7 @@ namespace CSETWebCore.Business.Question
 
                     ShowSALLevel = true;
 
-                    var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
+                    var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
                     refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<ReferenceDocLink> sourceDocList, out List<ReferenceDocLink> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
@@ -507,7 +507,7 @@ namespace CSETWebCore.Business.Question
                 var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
+                var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
                 refBuilder.BuildReferenceDocuments(reqid,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -593,7 +593,7 @@ namespace CSETWebCore.Business.Question
                 RequirementsData = tabData;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
+                var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
                 refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -605,7 +605,7 @@ namespace CSETWebCore.Business.Question
 
                 // Translation of Quesiton Reference Text
                 var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
-                for (int i  = 0; i < ReferenceTextList.Count; i++)
+                for (int i = 0; i < ReferenceTextList.Count; i++)
                 {
                     if (translatedGroup?.ReferenceText != null)
                     {

@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using System;
 using Microsoft.Data.SqlClient;
-using System.IO;
 namespace UpgradeLibrary.Upgrade
 {
     internal class ConvertDatabase12262 : ConvertSqlDatabase

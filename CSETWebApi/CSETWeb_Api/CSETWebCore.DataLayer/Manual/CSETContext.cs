@@ -7,11 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
 using CSETWebCore.DataLayer.Manual;
-using CSETWebCore.DataLayer.Model;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -513,7 +510,7 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-        
+
 
         /// <summary>
         /// Executes stored procedure usp_GetRankedQuestions.
@@ -704,7 +701,7 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-        
+
 
         /// <summary>
         /// Executes stored procedure usp_GetTop5Areas.

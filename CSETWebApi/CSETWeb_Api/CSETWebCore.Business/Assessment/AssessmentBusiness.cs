@@ -45,7 +45,7 @@ namespace CSETWebCore.Business.Assessment
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
         private readonly TranslationOverlay _overlay;
-        
+
 
 
         private CSETContext _context;
@@ -418,8 +418,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
                 assessment.AssessorMode = result.aa.AssessorMode;
-                assessment.Done = result.aa.Done ;
-                
+                assessment.Done = result.aa.Done;
+
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -715,7 +715,7 @@ namespace CSETWebCore.Business.Assessment
 
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-           
+
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
             {
@@ -742,7 +742,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;
             dbInformation.Ise_Submitted = assessment.IseSubmitted;
-            
+
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
 
@@ -1179,19 +1179,19 @@ namespace CSETWebCore.Business.Assessment
                         ComponentGuid = original_record.Component_Guid,
                         Reviewed = original_record.Reviewed,
                         QuestionType = original_record.Question_Type,
-                        Is_Maturity = original_record.Is_Maturity ?? true, 
+                        Is_Maturity = original_record.Is_Maturity ?? true,
                         Comment = original_record.Comment
                     };
-                  
+
 
                     var mb = new MaturityBusiness(_context, _assessmentUtil);
                     mb.StoreAnswer(assessment_id, answer);
-                    
+
                     var newAnswer = _context.ANSWER
                         .Where(x => x.Assessment_Id == assessment_id &&
                                     x.Question_Or_Requirement_Id == newQuestionId)
                         .FirstOrDefault();
-                    
+
                     ConvertFindings(original_record.Answer_Id, newAnswer.Answer_Id, assessment_id);
                     ConvertDocuments(original_record.Answer_Id, newAnswer.Answer_Id);
                 }
@@ -1205,7 +1205,7 @@ namespace CSETWebCore.Business.Assessment
         public void ConvertFindings(int originalAnswerId, int answerId, int assessmentId)
         {
             var originalObservationList = _context.FINDING.Where(x => x.Answer_Id == originalAnswerId).ToList();
-          
+
             foreach (var finding in originalObservationList)
             {
                 var newFinding = new FINDING()
@@ -1229,7 +1229,7 @@ namespace CSETWebCore.Business.Assessment
                 _context.FINDING.Add(newFinding);
                 _context.SaveChanges();
 
-                var findingId = newFinding.Finding_Id; 
+                var findingId = newFinding.Finding_Id;
                 ConvertFindingContacts(finding.Finding_Id, findingId, assessmentId);
             }
         }
@@ -1237,7 +1237,7 @@ namespace CSETWebCore.Business.Assessment
         public void ConvertFindingContacts(int originalFindingId, int newFindingId, int assessmentId)
         {
             var originalObservationContacts = _context.FINDING_CONTACT.Where(x => x.Finding_Id == originalFindingId).ToList();
-            
+
             if (originalObservationContacts.Any())
             {
                 foreach (var findingContact in originalObservationContacts)
@@ -1246,7 +1246,7 @@ namespace CSETWebCore.Business.Assessment
                     var newAssessmentContact = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == assessmentContact.UserId && x.Assessment_Id == assessmentId).FirstOrDefault();
                     _context.FINDING_CONTACT.Add(new FINDING_CONTACT()
                     {
-                        Finding_Id = newFindingId, 
+                        Finding_Id = newFindingId,
                         Assessment_Contact_Id = newAssessmentContact.Assessment_Contact_Id
                     });
                 }
@@ -1301,8 +1301,8 @@ namespace CSETWebCore.Business.Assessment
                 }
             }
         }
-        
-        
+
+
         public void SetAssessorMode(int assessmentId, string mode)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -1313,21 +1313,21 @@ namespace CSETWebCore.Business.Assessment
         public void SetAssessmentDone(int assessmentId, bool isDone)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-             assessment.Done = isDone;
+            assessment.Done = isDone;
             _context.SaveChanges();
         }
         public void SetAssessmentFavorite(int assessmentId, bool isFavorite)
         {
             int currentUserId = _tokenManager.GetUserId() ?? throw new UnauthorizedAccessException("User ID not found in token");
-    
+
             var userAssessment = _context.ASSESSMENT_CONTACTS
                 .FirstOrDefault(ac => ac.Assessment_Id == assessmentId && ac.UserId == currentUserId);
-    
+
             if (userAssessment == null)
             {
                 throw new ArgumentException($"User {currentUserId} is not associated with assessment {assessmentId}");
             }
-    
+
             userAssessment.Favorite = isFavorite ? true : false;
             _context.SaveChanges();
         }

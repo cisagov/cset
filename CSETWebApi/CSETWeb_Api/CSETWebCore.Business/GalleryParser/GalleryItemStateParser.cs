@@ -9,13 +9,9 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Sal;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Nelibur.ObjectMapper;
 using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.GalleryParser
@@ -68,7 +64,7 @@ namespace CSETWebCore.Business.GalleryParser
                 .Where(x => x.UserId == userId && x.IsFavorite)
                 .Select(x => x.Gallery_Item_Guid)
                 .ToList();
-            
+
             var rvalue = new GalleryBoardData();
 
             var lang = _token.GetCurrentLanguage();
@@ -155,9 +151,9 @@ namespace CSETWebCore.Business.GalleryParser
         public void ToggleFavorite(int userId, Guid galleryItemGuid, bool isFavorite)
         {
             var existing = _context.GALLERY_ITEM_USER
-                .FirstOrDefault(x => x.UserId == userId 
+                .FirstOrDefault(x => x.UserId == userId
                                      && x.Gallery_Item_Guid == galleryItemGuid);
-    
+
             if (existing != null)
             {
                 // Update existing record
@@ -173,7 +169,7 @@ namespace CSETWebCore.Business.GalleryParser
                     IsFavorite = true
                 });
             }
-    
+
             _context.SaveChanges();
         }
     }

@@ -13,7 +13,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
-using Lucene.Net.Analysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Aggregation

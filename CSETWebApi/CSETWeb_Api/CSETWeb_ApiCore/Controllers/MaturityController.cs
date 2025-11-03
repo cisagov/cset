@@ -17,9 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
-using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Question;
-using Azure;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -125,7 +123,8 @@ namespace CSETWebCore.Api.Controllers
 
             if (stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
                 });

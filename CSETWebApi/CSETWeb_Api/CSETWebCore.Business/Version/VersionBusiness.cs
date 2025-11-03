@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Version;

@@ -249,7 +249,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }
-                 catch (Exception exc)
+                catch (Exception exc)
                 {
                     NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 

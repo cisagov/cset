@@ -5,24 +5,14 @@
 // 
 //////////////////////////////// 
 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
-using CSETWebCore.Model.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using CSETWebCore.Business.Diagram.Analysis;
 using System.Xml;
-using Lucene.Net.Util;
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules;
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
-using CSETWebCore.Business.Diagram.analysis.rules;
-using System.Text;
-using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Model.Assessment;
 using Newtonsoft.Json;
 using System.Threading.Tasks;

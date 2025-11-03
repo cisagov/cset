@@ -19,8 +19,6 @@ using CSETWebCore.Model.Question;
 using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using DocumentFormat.OpenXml.Spreadsheet;
-using CSETWebCore.Model.Standards;
 using CSETWebCore.Business.Results;
 
 
@@ -856,7 +854,7 @@ namespace CSETWebCore.Api.Controllers
 
             ResultsAnalysisBusiness resultsBusiness = new ResultsAnalysisBusiness(_context, _overlay, lang, _tokenManager);
             var results = resultsBusiness.ResultsByCategory(assessmentId);
-            
+
             return Ok(results);
         }
 

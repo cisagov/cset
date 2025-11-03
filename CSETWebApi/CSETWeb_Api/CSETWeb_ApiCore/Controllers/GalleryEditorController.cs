@@ -7,15 +7,13 @@
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
-{   [Obsolete("No longer in use")]
+{
+    [Obsolete("No longer in use")]
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {

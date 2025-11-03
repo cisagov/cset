@@ -285,8 +285,8 @@ namespace CSETWebCore.Helpers
 
             foreach (var item in questions)
             {
-                item.SecurityQuestion = _overlay.GetValue("SECURITY_QUESTION", item.SecurityQuestionId.ToString(), lang)?.Value 
-                    ?? item.SecurityQuestion;  
+                item.SecurityQuestion = _overlay.GetValue("SECURITY_QUESTION", item.SecurityQuestionId.ToString(), lang)?.Value
+                    ?? item.SecurityQuestion;
             }
 
             return questions;

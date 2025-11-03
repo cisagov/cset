@@ -11,9 +11,9 @@ namespace CSETWebCore.AutoResponder
 
         internal string BuildSheet(CSETContext _context, string password)
         {
-            
-            string path = CreateACopyOfTheFile();            
-            BuildContactsSheet(path, GetData(_context),password);
+
+            string path = CreateACopyOfTheFile();
+            BuildContactsSheet(path, GetData(_context), password);
             return path;
         }
 
@@ -49,11 +49,11 @@ namespace CSETWebCore.AutoResponder
         {
             string excelFile = @"Survey contacts.xlsx";
             DateTime today = DateTime.Today;
-            string fileName = "Survey Contacts"+ today.ToString("dd-MM-yyyy") + ".xlsx";
+            string fileName = "Survey Contacts" + today.ToString("dd-MM-yyyy") + ".xlsx";
             string newFilePath = Path.Combine(Path.GetTempPath(), fileName);
-            File.Copy(excelFile, newFilePath,true);
+            File.Copy(excelFile, newFilePath, true);
             //copy to a new 
-            return newFilePath; 
+            return newFilePath;
         }
 
 
@@ -69,7 +69,7 @@ namespace CSETWebCore.AutoResponder
                 workbook = excel.Workbooks.Open(excelFile);
                 worksheet = (Excel.Worksheet)workbook.Worksheets[1];
 
-                foreach(var contact in data)
+                foreach (var contact in data)
                 {
                     int newRow = worksheet.Range["A" + worksheet.Rows.Count, Type.Missing]
                                       .End[Excel.XlDirection.xlUp].Row + 1;

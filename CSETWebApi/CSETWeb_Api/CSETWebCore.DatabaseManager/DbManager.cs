@@ -78,13 +78,13 @@ namespace CSETWebCore.DatabaseManager
                     InitialDbInfo localDb2019Info = null;
                     InitialDbInfo localDb2012Info = null;
 
-                    if (LocalDb2019Installed) 
-                    { 
+                    if (LocalDb2019Installed)
+                    {
                         localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
                     }
 
-                    if (LocalDb2012Installed) 
-                    { 
+                    if (LocalDb2012Installed)
+                    {
                         localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
                     }
 

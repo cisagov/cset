@@ -5,9 +5,6 @@
 // 
 //////////////////////////////// 
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using CSETWebCore.Interfaces;
 using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers

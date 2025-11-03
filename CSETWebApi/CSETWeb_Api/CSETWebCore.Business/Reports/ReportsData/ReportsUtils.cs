@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Reports;
@@ -68,7 +67,7 @@ namespace CSETWebCore.Business.Reports
         public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
             var lang = _tokenManager.GetCurrentLanguage();
- 
+
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             _questionRequirement.InitializeManager(_assessmentId);

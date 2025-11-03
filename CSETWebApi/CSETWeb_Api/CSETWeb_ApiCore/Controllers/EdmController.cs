@@ -5,17 +5,11 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Dashboard;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Dashboard;
-using CSETWebCore.Model.Dashboard.BarCharts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace CSETWebCore.Api.Controllers

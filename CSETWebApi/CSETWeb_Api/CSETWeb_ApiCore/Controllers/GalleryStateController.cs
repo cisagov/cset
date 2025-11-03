@@ -5,14 +5,8 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.GalleryParser;
-using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Interfaces.Standards;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;

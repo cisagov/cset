@@ -141,7 +141,7 @@ namespace CSETWebCore.Business.Standards
                 return list;
             }
 
-           
+
             var assetValue = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE" && x.Option_Id == demographics.AssetValue).FirstOrDefault();
             var assetSize = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "SIZE" && x.Option_Id == demographics.Size).FirstOrDefault();
 

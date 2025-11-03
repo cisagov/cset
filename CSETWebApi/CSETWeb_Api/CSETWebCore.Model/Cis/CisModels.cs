@@ -4,11 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 
@@ -76,7 +72,7 @@ namespace CSETWebCore.Model.Nested
 
 
         // CPG element
-        public string SecurityPractice {  get; set; }
+        public string SecurityPractice { get; set; }
         public string Outcome { get; set; }
         public string Scope { get; set; }
         public string RecommendedAction { get; set; }

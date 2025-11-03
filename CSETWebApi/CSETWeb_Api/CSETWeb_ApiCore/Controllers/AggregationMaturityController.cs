@@ -12,7 +12,8 @@ using CSETWebCore.Interfaces.Helpers;
 
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     public class AggregationMaturityController : Controller
     {
         private CSETContext _context;
@@ -41,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/aggregation/analysis/maturity/compliance")]
         public IActionResult GetComplianceByModelAndDomain()
-        {   
+        {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
             {
