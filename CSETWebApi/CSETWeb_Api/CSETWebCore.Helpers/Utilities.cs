@@ -5,13 +5,10 @@
 // 
 //////////////////////////////// 
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
-using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Helpers
 {

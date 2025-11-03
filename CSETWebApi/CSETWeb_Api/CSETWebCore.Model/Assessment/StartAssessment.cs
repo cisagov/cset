@@ -4,8 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System.Collections.Generic;
-
 namespace CSETWebCore.Model.Assessment
 {
     public class StartAssessment

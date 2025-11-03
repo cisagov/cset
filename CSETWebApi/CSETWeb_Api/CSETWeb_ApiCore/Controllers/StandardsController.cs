@@ -14,7 +14,8 @@ using System.Collections.Generic;
 using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     public class StandardsController : ControllerBase
     {
         private readonly ITokenManager _tokenManager;

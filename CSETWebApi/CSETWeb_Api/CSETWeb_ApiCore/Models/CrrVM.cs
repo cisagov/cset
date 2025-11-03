@@ -11,7 +11,6 @@ using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Reports.Models;
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace CSETWebCore.Api.Models
 {

@@ -163,7 +163,7 @@ namespace CSETWebCore.Business.Question
                 string targetString = "Requirements Based";
                 //var targetString = (mode == "Q") ? "Questions Based" : ((mode == "R") ? "Requirements Based" : 
                 //    ((mode == "P") ? "Principle Scope" : ((mode == "Principle-Phase Scope"));
-                switch (mode) 
+                switch (mode)
                 {
                     case "Q":
                         targetString = "Questions Based";

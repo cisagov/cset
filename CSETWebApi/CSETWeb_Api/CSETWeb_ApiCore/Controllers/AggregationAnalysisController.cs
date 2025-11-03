@@ -20,7 +20,8 @@ using CSETWebCore.Business.Authorization;
 
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
@@ -279,7 +280,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 return Ok();
             }
-           
+
             var response = new HorizBarChart();
             response.ReportTitle = "Overall Average Summary";
 

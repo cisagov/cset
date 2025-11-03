@@ -10,7 +10,6 @@ using System.Linq;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -122,7 +121,7 @@ namespace CSETWebCore.Helpers
             // get the 'base' parameter values (parameter_name) for the requirement
             var qBaseLevel = from p in _context.PARAMETERS
                              join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                             where requirementIds.Contains(r.Requirement_Id) 
+                             where requirementIds.Contains(r.Requirement_Id)
                                 && p.Lang == lang
                              select new { p, r };
 
@@ -135,7 +134,7 @@ namespace CSETWebCore.Helpers
             var qAssessLevel = from pa in _context.PARAMETER_ASSESSMENT
                                join p in _context.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
                                join pr in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals pr.Parameter_Id
-                               where pa.Assessment_ID == _assessmentId 
+                               where pa.Assessment_ID == _assessmentId
                                 && p.Lang == lang
                                 && requirementIds.Contains(pr.Requirement_Id)
                                select new { p, pa, pr };
@@ -159,7 +158,7 @@ namespace CSETWebCore.Helpers
         /// <param name="answerId"></param>
         /// <param name="newText"></param>
         /// <returns></returns>
-        public ParameterToken SaveAnswerParameter(IQuestionRequirementManager qr, 
+        public ParameterToken SaveAnswerParameter(IQuestionRequirementManager qr,
             int requirementId, int parameterId, int answerId, string newText)
         {
             var assessmentUtil = new AssessmentUtil(_context);
@@ -223,7 +222,8 @@ namespace CSETWebCore.Helpers
 
 
             // Return a ParameterToken with the value that was just updated
-            var pt = new ParameterToken() { 
+            var pt = new ParameterToken()
+            {
                 Substitution = dbParameterValues.Parameter_Value,
                 RequirementId = requirementId,
                 AnswerId = dbParameterValues.Answer_Id,

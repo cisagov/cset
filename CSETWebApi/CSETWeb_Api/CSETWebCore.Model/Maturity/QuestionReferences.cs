@@ -4,19 +4,14 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Model.Maturity
 {
     public class QuestionReferences
     {
         public List<RefDocument> SourceDocuments { get; set; } = new List<RefDocument>();
-        public List<RefDocument>  v { get; set; } = new List<RefDocument>();
+        public List<RefDocument> v { get; set; } = new List<RefDocument>();
     }
 
     public class RefDocument

@@ -25,7 +25,7 @@ namespace CSETWebCore.Interfaces.User
         string CreateTempPassword();
 
         string InsertRandom(string s, string choices, int number);
-        
+
         string GetRole(int? userId);
 
         void UpdateRole(int roleId, int? userId);

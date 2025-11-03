@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;

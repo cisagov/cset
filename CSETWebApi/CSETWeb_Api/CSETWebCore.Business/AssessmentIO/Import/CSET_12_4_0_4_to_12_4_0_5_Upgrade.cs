@@ -42,7 +42,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
             { "2 weeks", 5 },
             { "More than 2 weeks", 6 }
         };
-    
+
     // HSPD-7 to PPD-21 sector mapping
     private static readonly Dictionary<int, int> HSPD7ToPPD21SectorIds = new Dictionary<int, int>
     {
@@ -69,7 +69,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
 
     public string ExecuteUpgrade(string json)
     {
-        
+
         var j = JObject.Parse(json);
         // Update to DETAILS_DEMOGRAPHICS from DEMOGRAPHICS
         var demographics = j["jDEMOGRAPHICS"];
@@ -85,7 +85,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ORG-NAME", demo["OrganizationName"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "BUSINESS-UNIT", demo["Agency"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ORG-TYPE", demo["OrganizationType"]);
-                
+
                 // Check for sector upgrade
                 var sectorId = demo["SectorId"]?.Value<int?>();
                 if (sectorId.HasValue && HSPD7ToPPD21SectorIds.ContainsKey(sectorId.Value))
@@ -102,7 +102,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
                     AddDetailsDemographic(newDetailsDemographics, assessmentId, "SECTOR", demo["SectorId"]);
                     AddDetailsDemographic(newDetailsDemographics, assessmentId, "SUBSECTOR", demo["IndustryId"]);
                 }
-                
+
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "POC", demo["PointOfContact"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "SCOPED", demo["IsScoped"]);
                 AddDetailsDemographic(newDetailsDemographics, assessmentId, "ASSET-VALUE", demo["AssetValue"],
@@ -140,7 +140,7 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
         j.Remove("jFINANCIAL_MATURITY");
         return j.ToString();
     }
-    
+
     /// <summary>
     /// Returns the PPD-21 equivalent of a specified
     /// HSPD-7 sector ID. If the specified sector ID
@@ -218,10 +218,9 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
 
         array.Add(entry);
     }
-    
+
     public System.Version GetVersion()
     {
         return ImportUpgradeManager.ParseVersion(versionString);
     }
 }
-    

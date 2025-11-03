@@ -12,14 +12,8 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 using CSETWebCore.Business.Demographic.Export;
 using CSETWebCore.Business.Demographic.DemographicIO;
-using CSETWebCore.Helpers;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using CSETWebCore.Business.Demographic.Import;
-using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Business.Question;
 
 
@@ -90,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-      
+
         [HttpGet]
         [Route("api/demographics/export")]
         public IActionResult ExportDemographic()

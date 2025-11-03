@@ -61,7 +61,7 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = true,
                 IsActive = true
             };
-            
+
             // default the new user to NOT active if CSET Online is running in beta mode
             if (new CSETGlobalProperties(_context).GetBoolProperty("IsCsetOnlineBeta") ?? false)
             {
@@ -69,7 +69,7 @@ namespace CSETWebCore.Business.User
             }
 
             tmpContext.USERS.Add(u);
-            
+
             try
             {
                 tmpContext.SaveChanges();
@@ -100,17 +100,17 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt
             };
-            
-            var roles = _context.ROLES.FirstOrDefault(x=>x.RoleName == "USER");
+
+            var roles = _context.ROLES.FirstOrDefault(x => x.RoleName == "USER");
             var userRole = new USER_ROLES()
             {
                 UserId = u.UserId,
                 RoleId = roles.RoleId
             };
-            
+
             _context.PASSWORD_HISTORY.Add(history);
             _context.USER_ROLES.Add(userRole);
-            
+
             UserCreateResponse resp = new UserCreateResponse
             {
                 UserId = u.UserId == 0 ? 1 : u.UserId,
@@ -354,7 +354,7 @@ namespace CSETWebCore.Business.User
         {
             return $"{u.FirstName} {u.LastName}".Trim();
         }
-        
+
         /// <summary>
         /// Returns a role for specific user.
         /// </summary>
@@ -368,7 +368,7 @@ namespace CSETWebCore.Business.User
                 .FirstOrDefault();
             return role.RoleName;
         }
-        
+
         /// <summary>
         /// Returns all users in the database.
         /// </summary>
@@ -376,18 +376,18 @@ namespace CSETWebCore.Business.User
         public List<UserRole> GetUsers()
         {
             var resp = (from u in _context.USERS
-                join ur in _context.USER_ROLES on u.UserId equals ur.UserId
-                join r in _context.ROLES on ur.RoleId equals r.RoleId
-                select new UserRole
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    PrimaryEmail = u.PrimaryEmail,
-                    RoleName = r.RoleName,
-                    RoleId = r.RoleId,
-                    UserId = u.UserId
-                }).ToList();
-            
+                        join ur in _context.USER_ROLES on u.UserId equals ur.UserId
+                        join r in _context.ROLES on ur.RoleId equals r.RoleId
+                        select new UserRole
+                        {
+                            FirstName = u.FirstName,
+                            LastName = u.LastName,
+                            PrimaryEmail = u.PrimaryEmail,
+                            RoleName = r.RoleName,
+                            RoleId = r.RoleId,
+                            UserId = u.UserId
+                        }).ToList();
+
             return resp;
         }
 
@@ -397,14 +397,14 @@ namespace CSETWebCore.Business.User
         /// <returns></returns>
         public List<ROLES> GetAvailableRoles()
         {
-            var roles = _context.ROLES.Select(x => new ROLES 
-            { 
-                RoleName = x.RoleName, 
-                RoleId = x.RoleId 
+            var roles = _context.ROLES.Select(x => new ROLES
+            {
+                RoleName = x.RoleName,
+                RoleId = x.RoleId
             }).ToList();
             return roles;
         }
-    
+
         /// <summary>
         /// Updates role for specific user.
         /// </summary>

@@ -6,7 +6,6 @@
 //////////////////////////////// 
 
 using System;
-using System.Collections.Generic;
 
 namespace CSETWebCore.Business.GalleryParser
 {

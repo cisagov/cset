@@ -9,7 +9,8 @@
         /// CTOR
         /// </summary>
         /// <param name="m"></param>
-        public ResponseMessage(int c, string m) { 
+        public ResponseMessage(int c, string m)
+        {
             this.Code = c;
             this.Message = m;
         }

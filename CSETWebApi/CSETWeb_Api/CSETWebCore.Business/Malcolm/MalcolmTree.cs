@@ -1,27 +1,25 @@
 ﻿using CSETWebCore.Model.Malcolm;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace CSETWebCore.Business.Malcolm
 {
     public class MalcolmTree
     {
-        
+
         private HashSet<string> alreadySeenList = new HashSet<string>();
 
-        
+
 
         public MalcolmTree()
         {
-            
+
         }
 
         private Dictionary<string, TempNode> listOfAll = new Dictionary<string, TempNode>();
 
-        public List<TempNode> StartTheTreeWalk(Dictionary<string, TempNode> childrenDict) 
-        { 
+        public List<TempNode> StartTheTreeWalk(Dictionary<string, TempNode> childrenDict)
+        {
             List<TempNode> RootNodes = new List<TempNode>();
             foreach (TempNode t in childrenDict.Values)
             {
@@ -32,15 +30,15 @@ namespace CSETWebCore.Business.Malcolm
                     listOfAll.Add(root.Key, root);
                     RootNodes.Add(root);
                     HashSet<string> seen = new HashSet<string>() { root.Key };
-                    WalkTree(root,t,seen);                    
+                    WalkTree(root, t, seen);
                 }
-                    
+
             }
             return RootNodes;
         }
 
         private void WalkTree(TempNode parent, TempNode graphNode, HashSet<string> alreadySeen)
-        {   
+        {
             //trying to do breadth first
             //add all the children to the parent
             //then recurse down the children
@@ -56,7 +54,7 @@ namespace CSETWebCore.Business.Malcolm
                 TempNode cnode;
                 if (listOfAll.TryGetValue(c.Key, out cnode))
                 {
-                    if (graphNode.AlreadyWalked(cnode,visited))
+                    if (graphNode.AlreadyWalked(cnode, visited))
                     {
                         children.TryAdd(c, false);
                     }
@@ -66,7 +64,7 @@ namespace CSETWebCore.Business.Malcolm
                         AddNode(parent, cnode);
                         children.TryAdd(c, true);
                     }
-                    
+
                 }
                 else
                 {
@@ -85,25 +83,25 @@ namespace CSETWebCore.Business.Malcolm
                     }
                 }
             }
-            List<TempNode> childrenToWalk = children.Where(x => x.Value).Select(x=> x.Key).ToList();
+            List<TempNode> childrenToWalk = children.Where(x => x.Value).Select(x => x.Key).ToList();
             foreach (var c in childrenToWalk)
             {
                 TempNode cnode;
                 if (listOfAll.TryGetValue(c.Key, out cnode))
                 {
-                    WalkTree(cnode,  c,visited);
+                    WalkTree(cnode, c, visited);
                     //Trace.WriteLine("rf:" + parent.Key + "-" + graphNode.Key);
                 }
                 else
                 {
-                    var newT= new TempNode(c.Key);
+                    var newT = new TempNode(c.Key);
                     newT.Role = c.Role;
                     listOfAll.Add(c.Key, newT);
                     WalkTree(newT, c, visited);
                     //Trace.WriteLine("rn:" + parent.Key + "-" + graphNode.Key);
                 }
             }
-            
+
         }
 
 
@@ -115,8 +113,8 @@ namespace CSETWebCore.Business.Malcolm
         /// <param name="graph"></param>
         /// <returns>true if needs processed false if not</returns>
         private bool AddNode(TempNode parent, TempNode treeNode)
-        {   
-            if(alreadySeenList.Contains(treeNode.Key) && alreadySeenList.Contains(parent.Key))
+        {
+            if (alreadySeenList.Contains(treeNode.Key) && alreadySeenList.Contains(parent.Key))
             {
                 return true;
             }
@@ -125,7 +123,7 @@ namespace CSETWebCore.Business.Malcolm
             alreadySeenList.Add(treeNode.Key);
             alreadySeenList.Add(parent.Key);
             return true;
-            
+
 
         }
     }

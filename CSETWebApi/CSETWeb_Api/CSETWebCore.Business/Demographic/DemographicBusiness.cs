@@ -9,7 +9,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Demographic;
 using System.Linq;
 
 

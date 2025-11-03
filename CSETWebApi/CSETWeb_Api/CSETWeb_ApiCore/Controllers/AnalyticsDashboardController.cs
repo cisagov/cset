@@ -6,11 +6,8 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Manual;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Dashboard;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

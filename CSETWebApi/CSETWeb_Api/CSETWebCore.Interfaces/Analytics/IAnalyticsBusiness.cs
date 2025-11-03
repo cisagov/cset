@@ -5,9 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Manual;
-using CSETWebCore.Model.Dashboard;
 using System.Collections.Generic;
-using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Interfaces.Analytics
 {

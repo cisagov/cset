@@ -102,7 +102,7 @@ namespace CSETWebCore.Business.Sal
                 j.Type_Id = t.n2.Type_Id;
 
                 list.Add(j);
-            }         
+            }
 
 
             // overlay question text for language
@@ -140,7 +140,7 @@ namespace CSETWebCore.Business.Sal
             var dbInfoDefault = _context.NIST_SAL_INFO_TYPES_DEFAULTS.Where(x => x.Type_Id == updateValue.Type_Id).FirstOrDefault();
             if (dbInfoDefault != null)
             {
-                var dbInfoType = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId 
+                var dbInfoType = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId
                     && x.Type_Value == dbInfoDefault.Type_Value).FirstOrDefault();
 
                 TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, dbInfoType);
@@ -185,7 +185,7 @@ namespace CSETWebCore.Business.Sal
                         where b.Assessment_Id == assessmentId
                         orderby a.Question_Number
                         select new NistQuestionsAnswers() { Assessment_Id = b.Assessment_Id, Question_Id = b.Question_Id, Question_Answer = b.Question_Answer, Question_Number = a.Question_Number, Question_Text = a.Question_Text };
-            
+
             var list = qList.ToList();
 
 

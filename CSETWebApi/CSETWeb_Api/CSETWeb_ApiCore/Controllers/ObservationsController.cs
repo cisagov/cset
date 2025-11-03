@@ -10,7 +10,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
 using System.Collections.Generic;
@@ -89,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(obsList);
         }
 
-       
+
         /// <summary>
         /// Gets an observation using the observation ID.
         /// </summary>

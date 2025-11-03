@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using System.Data;
-using UpgradeLibrary.Upgrade;
 using CSETWeb_Api.Versioning;
 
 namespace UpgradeLibrary.Upgrade
@@ -224,7 +222,7 @@ namespace UpgradeLibrary.Upgrade
         /// </summary>
         /// <param name="conn">I expect this to be open before I get it</param>
         /// <returns></returns>
-        public string GetHighestPossibleSqlServerCompatibilityLevel(SqlConnection conn) 
+        public string GetHighestPossibleSqlServerCompatibilityLevel(SqlConnection conn)
         {
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"select

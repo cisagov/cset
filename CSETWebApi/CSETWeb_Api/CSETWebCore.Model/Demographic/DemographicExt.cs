@@ -98,7 +98,7 @@ namespace CSETWebCore.Model.Demographic
         //  Following are the collections to support dropdown lists,
         //  checkbox and radio button lists
         // ================================================================
-        
+
 
         public List<ListItem2> ListOrgTypes { get; set; } = new List<ListItem2>();
 

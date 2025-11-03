@@ -10,7 +10,6 @@ using CSETWebCore.Model.Observations;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using NLog.Fluent;
 using NLog;
 
 namespace CSETWebCore.Business.Observations

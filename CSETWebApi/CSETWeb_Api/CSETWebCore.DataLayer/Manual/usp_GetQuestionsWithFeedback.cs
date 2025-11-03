@@ -1,5 +1,5 @@
 ﻿namespace CSETWebCore.DataLayer.Model
-{ 
+{
     public partial class usp_GetQuestionsWithFeedback
     {
         public string Feedback { get; set; }
@@ -11,7 +11,7 @@
 
     public partial class FeedbackDisplayContainer
     {
-        public string FeedbackBody  { get; set; }
+        public string FeedbackBody { get; set; }
         public string FeedbackHeader { get; set; }
         public string FeedbackEmailTo { get; set; }
         public string FeedbackEmailSubject { get; set; }

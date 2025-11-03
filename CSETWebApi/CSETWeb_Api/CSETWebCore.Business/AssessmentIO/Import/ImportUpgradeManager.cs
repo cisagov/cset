@@ -32,11 +32,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             upgraders.Add("9.0.4.0", new CSET_09_0_1_to_09_2_0_Upgrade());
             upgraders.Add("10.1.0.0", new CSET_09_2_0_to_10_1_1_Upgrade());
             upgraders.Add("10.1.1.0", new CSET_10_1_1_to_10_2_0_Upgrade());
-            upgraders.Add("10.2.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());  
+            upgraders.Add("10.2.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());
             upgraders.Add("10.3.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());
             upgraders.Add("12.4.0.3", new CSET_10_2_0_to_12_4_0_4_Upgrade());
             upgraders.Add("12.4.0.4", new CSET_12_4_0_4_to_12_4_0_5_Upgrade());
-            upgraders.Add("12.4.0.5", null); 
+            upgraders.Add("12.4.0.5", null);
         }
 
 
@@ -130,11 +130,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     version = nextVersion;
                 }
             }
-            
+
 
             return json;
         }
-        
+
         private System.Version FindNextAvailableVersion(System.Version currentVersion, List<System.Version> knownVersions)
         {
             var higherVersions = knownVersions.Where(v => v > currentVersion).OrderBy(v => v);

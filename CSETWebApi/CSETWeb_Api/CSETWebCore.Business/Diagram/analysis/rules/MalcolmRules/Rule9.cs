@@ -6,16 +6,10 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
-using CSETWebCore.Model.Diagram;
-using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
