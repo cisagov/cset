@@ -35,7 +35,7 @@ import { TranslocoService } from '@jsverse/transloco';
 export class SalSectionComponent implements OnInit {
 
   @Input()
-  response: any;
+  reportGeneralInfo?: any;
 
   // FIPS SAL answers
   nistSalC = '';
@@ -56,28 +56,28 @@ export class SalSectionComponent implements OnInit {
    */
   ngOnInit(): void {
     // Break out any CIA special factors now - can't do a find in the template
-    let v: any = this.response.nistTypes.find(x => x.ciA_Type === 'Confidentiality');
+    let v: any = this.reportGeneralInfo.nistTypes.find(x => x.ciA_Type === 'Confidentiality');
     if (!!v) {
       this.nistSalC = v.justification;
     }
-    v = this.response.nistTypes.find(x => x.ciA_Type === 'Integrity');
+    v = this.reportGeneralInfo.nistTypes.find(x => x.ciA_Type === 'Integrity');
     if (!!v) {
       this.nistSalI = v.justification;
     }
-    v = this.response.nistTypes.find(x => x.ciA_Type === 'Availability');
+    v = this.reportGeneralInfo.nistTypes.find(x => x.ciA_Type === 'Availability');
     if (!!v) {
       this.nistSalA = v.justification;
     }
-    if (this.response.genSalTable) {
+    if (this.reportGeneralInfo.genSalTable) {
       this.translateSALValues()
     }
   }
 
   // Translate Gen Sal values 
   translateSALValues() {
-    for (let salValue in this.response.genSalTable) {
-      if (this.response.genSalTable[salValue] === 'None') {
-        this.response.genSalTable[salValue] = this.tSvc.translate('titles.sal.gen sal.none')
+    for (let salValue in this.reportGeneralInfo.genSalTable) {
+      if (this.reportGeneralInfo.genSalTable[salValue] === 'None') {
+        this.reportGeneralInfo.genSalTable[salValue] = this.tSvc.translate('titles.sal.gen sal.none')
       }
     }
   }

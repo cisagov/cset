@@ -134,6 +134,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.configSvc.installationMode === 'IOD' && this.assessSvc.assessment?.assessorMode) {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
+
+        this.checkDevOverride(this.cisaAssessorWorkflowFieldValidation);
+
         if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
           this.disableEntirePage = true;
         }
@@ -297,7 +300,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.currentSectionId = null; // No assessment
     }
   }
+
+  checkDevOverride(x: CisaWorkflowFieldValidationResponse) {
+    if (this.configSvc.config.debug?.ignoreIodFieldValidation ?? false) {
+      x.isValid = true;
+    }
+  }
 }
+
 
 @Component({
   selector: 'snack-bar-component-example-snack',
