@@ -24,36 +24,36 @@
 <table *transloco="let t" class="table-site-info">
     <tr>
         <td>{{ t('assessment name') }}</td>
-        <td>{{response?.information.assessment_Name}}</td>
+        <td>{{assessDetail?.information.assessment_Name}}</td>
     </tr>
     <tr>
         <td>{{ t('assessment date') }}</td>
-        <td>{{response?.information.assessment_Date | localizeDate}}</td>
+        <td>{{assessDetail?.information.assessment_Date | localizeDate}}</td>
     </tr>
     <tr>
         <td>{{ t('facility name') }}</td>
-        <td>{{response?.information.facility_Name}}</td>
+        <td>{{assessDetail?.information.facility_Name}}</td>
     </tr>
     <tr>
         <td>{{ t('city or site name') }}</td>
-        <td>{{response?.information.city_Or_Site_Name}}</td>
+        <td>{{assessDetail?.information.city_Or_Site_Name}}</td>
     </tr>
     <tr>
         <td>{{ t('state, province, or region') }}</td>
-        <td>{{response?.information.state_Province_Or_Region}}</td>
+        <td>{{assessDetail?.information.state_Province_Or_Region}}</td>
     </tr>
     <tr>
         <td>{{ t('reports.principal assessor name') }}</td>
-        <td>{{response?.information.assessor_Name}}</td>
+        <td>{{assessDetail?.information.assessor_Name}}</td>
     </tr>
     <tr>
         <td>{{ t('reports.additional notes and comments') }}</td>
-        <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
+        <td [innerHTML]="reportSvc.formatLinebreaks(assessDetail?.information.additional_Notes_And_Comments)"></td>
     </tr>
     <tr>
         <td>{{ t('contact.contacts') }}</td>
         <td>
-            <div *ngFor="let c of response?.information.additional_Contacts">
+            <div *ngFor="let c of assessDetail?.information.additional_Contacts">
                 {{c}}
             </div>
         </td>

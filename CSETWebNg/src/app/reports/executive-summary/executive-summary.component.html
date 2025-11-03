@@ -21,24 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
-
-  <!-- <div class="flex-container">
-    <div class="column mt-3">
-
-      <p class="report-title">
-        {{t('reports.core.executive summary.report title') | uppercase}}
-      </p>
-    </div>
-    <div class="column d-flex justify-content-center">
-      <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
-    </div>
-
-    <div class="cover-page-bottom">
-      <app-logo-for-reports></app-logo-for-reports>
-      <app-info-block [response]="response" />
-    </div>
-  </div> -->
-  <app-cover-page [response]="info" [title]="t('reports.core.executive summary.report title') | uppercase" />
+  <app-cover-page [assessDetail]="info" [title]="t('reports.core.executive summary.report title') | uppercase" />
 
   <div class="page-break">
 
@@ -71,7 +54,7 @@
     </h1>
 
     <!-- SAL -->
-    <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
+    <app-sal-section *ngIf="response" [reportGeneralInfo]="response"></app-sal-section>
   </div>
 
 
