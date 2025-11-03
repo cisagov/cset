@@ -26,12 +26,12 @@ export class ReportListComponent implements OnInit {
   confidentiality: any;
 
   @Input()
-  sectionId: string;
+  sectionId?: string;
 
-  sectionTitle: string;
+  sectionTitle?: string;
 
   @Input()
-  list: any[];
+  list?: any[];
 
 
   /**
@@ -57,7 +57,7 @@ export class ReportListComponent implements OnInit {
   /**
    * 
    */
-  onSelectSecurity(val) {
+  onSelectSecurity(val: string) {
     this.confidentiality = val;
     this.reportSvc.confidentiality = val;
   }

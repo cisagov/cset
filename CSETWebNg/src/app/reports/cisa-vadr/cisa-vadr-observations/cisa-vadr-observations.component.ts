@@ -28,6 +28,7 @@ import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { forkJoin } from 'rxjs';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 
 @Component({
@@ -37,14 +38,9 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['../../reports.scss', './cisa-vadr-observations.component.scss']
 })
 export class CisaVadrObservationsComponent implements OnInit {
+  response?: AssessmentDetail;
   model: any;
   observationList?: any[];
-
-  assessmentName!: string;
-  assessmentDate!: string;
-  assessorName!: string;
-  facilityName!: string;
-  selfAssessment!: boolean;
 
   /**
    * 
@@ -60,15 +56,12 @@ export class CisaVadrObservationsComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
-
-      this.assessSvc.assessment = assessmentDetail;
-    });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.response = r;
+        this.assessSvc.assessment = r;
+      }
+    );
 
     forkJoin({
       assessmentLevel: this.observationSvc.getAssessmentLevelObservations(),
