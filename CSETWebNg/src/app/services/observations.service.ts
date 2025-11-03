@@ -37,6 +37,7 @@ const headers = {
   providedIn: 'root'
 })
 export class ObservationsService {
+  impliedSave: boolean = false;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
@@ -60,10 +61,17 @@ export class ObservationsService {
   }
 
   /**
-   * Retrieves all assessment-level Observations
+   * Retrieves all assessment-level Observations for an assessment
    */
   getAssessmentLevelObservations() {
-    return this.http.get<Observation[]>(this.configSvc.apiUrl + 'assessment/observations');
+    return this.http.get<Observation[]>(this.configSvc.apiUrl + 'observations/assessment-level');
+  }
+
+  /**
+   * Retrieves all answer-level Observations for an assessment
+   */
+  getAnswerLevelObservations() {
+    return this.http.get<Observation[]>(this.configSvc.apiUrl + 'observations/answer-level');
   }
 
   /**
@@ -92,7 +100,7 @@ export class ObservationsService {
     if (merge == null) {
       merge = false;
     }
-    return this.http.post(this.configSvc.apiUrl + 'AnswerSaveObservation?cancel=' + cancel + '&merge=' + merge, observation, headers);
+    return this.http.post(this.configSvc.apiUrl + 'observation/save?cancel=' + cancel + '&merge=' + merge, observation, headers);
   }
 
   /**

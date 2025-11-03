@@ -42,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/assessment/observations")]
+        [Route("api/observations/assessment-level")]
         public IActionResult GetAssessmentLevelObservations()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -55,8 +55,25 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Returns observations stored on the assessment's answers.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/observations/answer-level")]
+        public IActionResult GetAnswerLevelObservations()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var obsMgr = new ObservationsManager(_context, assessmentId);
+            var obsList = obsMgr.GetAnswerLevelObservations(assessmentId);
+
+            return Ok(obsList);
+        }
+
+
+        /// <summary>
         /// Note that this only populates the summary/title and finding id. 
-        /// the rest is populated in a seperate call. 
+        /// the rest is populated in a separate call. 
         /// </summary>
         /// <param name="Answer_Id"></param>
         /// <returns></returns>
@@ -67,12 +84,12 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var obsMgr = new ObservationsManager(_context, assessmentId);
-            var obsList = obsMgr.GetAnswerObservations(answerId);
+            var obsList = obsMgr.GetObservationsForAnswer(answerId);
 
             return Ok(obsList);
         }
 
-
+       
         /// <summary>
         /// Gets an observation using the observation ID.
         /// </summary>
@@ -87,7 +104,6 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(obs);
         }
-
 
 
         /// <summary>
@@ -131,7 +147,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="obs"></param>
         [HttpPost]
-        [Route("api/AnswerSaveObservation")]
+        [Route("api/observation/save")]
         public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
         {
             int assessmentId = _token.AssessmentForUser();
@@ -210,8 +226,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-
-      
 
         /// <summary>
         ///

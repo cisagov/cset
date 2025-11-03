@@ -22,21 +22,25 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ObservationsService } from '../../../services/observations.service';
+import { forkJoin } from 'rxjs';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 
-@Component({
-  selector: 'app-cisa-vadr-report',
-  standalone: false,
-  templateUrl: './cisa-vadr-report.component.html',
-  styleUrls: ['../../reports.scss']
-})
-export class CisaVadrReportComponent implements OnInit {
 
-  model: any;
+@Component({
+  selector: 'app-cisa-vadr-observations',
+  standalone: false,
+  templateUrl: './cisa-vadr-observations.component.html',
+  styleUrls: ['../../reports.scss', './cisa-vadr-observations.component.scss']
+})
+export class CisaVadrObservationsComponent implements OnInit {
   response?: AssessmentDetail;
+  model: any;
+  observationList?: any[];
 
   /**
    * 
@@ -44,7 +48,8 @@ export class CisaVadrReportComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public observationSvc: ObservationsService
   ) { }
 
   /**
@@ -54,12 +59,20 @@ export class CisaVadrReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        this.assessSvc.assessment = r;
       }
     );
+
+    forkJoin({
+      assessmentLevel: this.observationSvc.getAssessmentLevelObservations(),
+      answerLevel: this.observationSvc.getAnswerLevelObservations()
+    }).subscribe(({ assessmentLevel, answerLevel }) => {
+      // merge and sort by importance 
+      this.observationList = [...assessmentLevel, ...answerLevel].sort((a, b) => b.importance_Id - a.importance_Id);
+    });
 
     this.reportSvc.getModelContent('CISA VADR').subscribe((resp: any) => {
       this.model = resp;
     });
   }
-
 }
