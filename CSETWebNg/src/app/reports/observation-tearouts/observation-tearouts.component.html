@@ -22,14 +22,14 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <app-cover-page [response]="info"
+    <app-cover-page [assessDetail]="info"
         [title]="'reports.observations tear-out sheets.report title' | transloco | uppercase" />
 
 
     <div class="page-break">
         <div style="margin-bottom: 3em;">
             <h1>{{ 'reports.site information' | transloco }}</h1>
-            <app-site-information [response]="response"></app-site-information>
+            <app-site-information [assessDetail]="response"></app-site-information>
         </div>
 
         <div *ngIf="response?.individuals.length === 0" style="font-style: italic; font-weight: bold;">
