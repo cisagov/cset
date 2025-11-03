@@ -3,25 +3,27 @@
 //   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
-//////////////////////////////// 
-
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using CSETWebCore.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
 
 namespace CSETWebCore.Business.Demographic
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CisaAssessorWorkflowFieldValidator
     {
         private Demographics _demographics;
         private DemographicExt _demographicExt;
         private CisServiceDemographics _cisServiceDemographics;
         private CisServiceComposition _cisServiceComposition;
+
+
 
         public CisaAssessorWorkflowFieldValidator(Demographics demographics, DemographicExt demographicExt, CisServiceDemographics cisServiceDemographics, CisServiceComposition cisServiceComposition)
         {
@@ -31,9 +33,9 @@ namespace CSETWebCore.Business.Demographic
             _cisServiceComposition = cisServiceComposition;
         }
 
+
         /// <summary>
-        /// I don't like manually validating these fields, but using data annotations was not sufficient
-        /// for the complexity of the validation and allowing for null values
+        /// Use the FieldValidation.json file as a list of fields to validate.
         /// </summary>
         /// <returns></returns>
         public CisaWorkflowFieldValidationResponse ValidateFields()
@@ -41,120 +43,56 @@ namespace CSETWebCore.Business.Demographic
             List<string> invalidFields = new List<string>();
             bool isValid = true;
 
-            //--------------------------------
-            // _demographics validation
-            //--------------------------------
-            List<PropertyInfo> demoProperties = typeof(Demographics).GetProperties().ToList();
-            // We only need to make sure that the critical service is not null in base demographics object
-            var criticalService = demoProperties.Where(p => p.Name.Equals("CriticalService")).FirstOrDefault();
-            if (string.IsNullOrWhiteSpace((string)criticalService.GetValue(_demographics)))
-            {
-                invalidFields.Add("Critical Service");
-            }
 
-            //--------------------------------
-            // _demographicsExt validation
-            //--------------------------------
+            // create composite list of properties for all three pages
             List<PropertyInfo> demoExtProperties = typeof(DemographicExt).GetProperties().ToList();
-
-            // remove Org Point of Contact - currently stored as DemographicExt but not required
-            demoExtProperties.RemoveAll(x => x.Name == "OrgPointOfContact");
-            demoExtProperties.RemoveAll(x => x.Name == "SectorDirective");
-            demoExtProperties.RemoveAll(x => x.Name == "Acknowledgement");
-
-
-            foreach (PropertyInfo property in demoExtProperties)
-            {
-                var displayName = GetDisplayName(_demographicExt, property.Name);
-
-                if (property.Name.StartsWith("List"))
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("Standard") && !_demographicExt.UsesStandard)
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("RegulationType") && !_demographicExt.RequiredToComply)
-                {
-                    continue;
-                }
-
-
-                if (property.Name.Equals("Reg1Other") || property.Name.Equals("Reg2Other"))
-                {
-                    continue;
-                }
-
-                if (property.Name.StartsWith("Share"))
-                {
-                    continue;
-                }
-
-
-
-                if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_demographicExt)))
-                {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                    continue;
-                }
-
-                if (property.GetValue(_demographicExt) == null)
-                {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                }
-            }
-
-            //--------------------------------
-            // _cisServiceDemographics validation
-            //--------------------------------
             List<PropertyInfo> cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties().ToList();
-            foreach (PropertyInfo property in cisServiceDemoProperties)
+            List<PropertyInfo> cisServiceCompProperties = typeof(CisServiceComposition).GetProperties().ToList();
+            var allProperties = demoExtProperties.Concat(cisServiceDemoProperties).Concat(cisServiceCompProperties).ToList();
+
+
+            // exclude some things from validation if not applicable
+            if (!_demographicExt.UsesStandard)
             {
-                var displayName = GetDisplayName(_cisServiceDemographics, property.Name);
-
-                if (property.Name.StartsWith("MultiSiteDescription") && !_cisServiceDemographics.MultiSite)
-                {
-                    continue;
-                }
-
-                if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceDemographics)))
-                {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                    continue;
-                }
-
-                if (property.GetValue(_cisServiceDemographics) == null)
-                {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
-                }
+                allProperties.RemoveAll(x => x.Name.StartsWith("Standard"));
+            }
+            if (!_demographicExt.RequiredToComply)
+            {
+                allProperties.RemoveAll(x => x.Name.StartsWith("RegulationType"));
             }
 
-            //--------------------------------
-            // _cisServiceComposition validation
-            //--------------------------------
-            List<PropertyInfo> cisServiceCompProperties = typeof(CisServiceComposition).GetProperties().ToList();
-            foreach (PropertyInfo property in cisServiceCompProperties)
+
+            var fv = new FieldValidation();
+            foreach (var field in fv.Fields)
             {
-                var displayName = GetDisplayName(_cisServiceComposition, property.Name);
+                var property = allProperties.FirstOrDefault(x => x.Name.Equals(field.Key, System.StringComparison.OrdinalIgnoreCase));
 
-                if (property.Name.StartsWith("OtherDefiningSystemDescription") && (_cisServiceComposition.PrimaryDefiningSystem != 10
-                    && !_cisServiceComposition.SecondaryDefiningSystems.Contains(10)))
+                if (property == null)
                 {
                     continue;
                 }
 
-                if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceComposition)))
+
+                // look for the property value in the 3 target objects
+                var v1 = _demographicExt?.GetType().GetProperty(property.Name)?.GetValue(_demographicExt);
+                var v2 = _cisServiceDemographics?.GetType().GetProperty(property.Name)?.GetValue(_cisServiceDemographics);
+                var v3 = _cisServiceComposition?.GetType().GetProperty(property.Name)?.GetValue(_cisServiceComposition);
+
+                var propertyValue = v1 ?? v2 ?? v3;
+
+
+                var isString = property.PropertyType == typeof(string);
+
+                if (isString && string.IsNullOrWhiteSpace((string)propertyValue))
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(field?.Value ?? property.Name);
                     continue;
                 }
 
-                if (property.GetValue(_cisServiceComposition) == null)
+
+                if (propertyValue == null)
                 {
-                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(field?.Value ?? property.Name);
                 }
             }
 
@@ -164,29 +102,6 @@ namespace CSETWebCore.Business.Demographic
             }
 
             return new CisaWorkflowFieldValidationResponse(invalidFields, isValid);
-        }
-
-
-        /// <summary>
-        /// Tries to find a DIsplayName custom attribute for the property. 
-        /// </summary>
-        public static string GetDisplayName(object obj, string propertyName)
-        {
-            var type = obj.GetType();
-            var propertyInfo = type.GetProperty(propertyName);
-            if (propertyInfo == null)
-            {
-                return null;
-            }
-
-            var attributes = propertyInfo.GetCustomAttributes(typeof(DisplayNameAttribute));
-            if (attributes.Count() > 0)
-            {
-                var displayNameAttribute = (DisplayNameAttribute)attributes.ToList()[0];
-                return displayNameAttribute.DisplayName;
-            }
-
-            return null;
         }
     }
 }

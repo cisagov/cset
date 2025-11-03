@@ -528,15 +528,16 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Returns Observations sorted by asignee for populating the Tear-Out Sheets.
         /// </summary>
         [HttpGet]
-        [Route("api/reports/observations")]
+        [Route("api/reports/observations/tearout")]
         public IActionResult GetObservations()
         {
             int assessmentId = _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
+
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
             data.Individuals = _report.GetObservationIndividuals();

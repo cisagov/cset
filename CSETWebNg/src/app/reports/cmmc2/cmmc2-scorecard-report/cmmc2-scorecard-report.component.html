@@ -22,7 +22,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-     <app-cover-page [response]="response" [title]="'CMMC 2.0 SCORECARD REPORT'" />
+     <app-cover-page [assessDetail]="response" [title]="'CMMC 2.0 SCORECARD REPORT'" />
 
 
      <div class="page-break text-start">
@@ -33,19 +33,19 @@
 
           <div>
                <h4>Level 1</h4>
-               <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard>
+               <app-level-scorecard [scorecard]="scorecardForLevel(1)"></app-level-scorecard>
           </div>
 
 
           <div *ngIf="targetLevel >= 2">
                <h4>Level 2</h4>
-               <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard>
+               <app-level-scorecard [scorecard]="scorecardForLevel(2)"></app-level-scorecard>
           </div>
 
 
           <div *ngIf="targetLevel >= 3">
                <h4>Level 3</h4>
-               <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard>
+               <app-level-scorecard [scorecard]="scorecardForLevel(3)"></app-level-scorecard>
           </div>
      </div>
 

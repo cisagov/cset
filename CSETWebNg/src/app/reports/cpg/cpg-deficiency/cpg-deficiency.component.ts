@@ -87,7 +87,6 @@ export class CpgDeficiencyComponent implements OnInit {
 
       this.assessSvc.assessment = assessmentDetail;
       this.info = assessmentDetail;
-      console.log(this.info)
 
       // get the deficient answers for the CPG model
       const assessment = this.assessSvc.assessment;

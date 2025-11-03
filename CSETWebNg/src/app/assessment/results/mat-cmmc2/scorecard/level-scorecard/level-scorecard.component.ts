@@ -10,7 +10,7 @@ import { LayoutService } from '../../../../../services/layout.service';
 export class LevelScorecardComponent {
 
   @Input()
-  response: any;
+  scorecard: any;
 
 
   /**
