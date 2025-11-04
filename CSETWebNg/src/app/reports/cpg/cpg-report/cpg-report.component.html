@@ -33,10 +33,10 @@
 
         <!-- CPG 1.1 chart/table -->
         <ng-container *ngIf="modelId == 11">
-            <app-cpg-domain-summary [distrib]="answerDistribByDomain"></app-cpg-domain-summary>
+            <app-cpg-domain-summary [distrib]="answerDistribByDomain?.distrib"></app-cpg-domain-summary>
 
             <p>{{t('reports.core.cpg.report.p.2')}}</p>
-            <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
+            <app-cpg-domain-summary-table [data]="answerDistribByDomain?.distrib"></app-cpg-domain-summary-table>
         </ng-container>
 
 
