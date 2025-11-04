@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CSETWebCore.Model.Question
 {
     /// <summary>
@@ -56,8 +50,8 @@ namespace CSETWebCore.Model.Question
         public string SupplementalInfo { get; set; }
         public string ExaminationApproach { get; set; }
         public string ReferenceText { get; set; }
-        public string SecurityPractice {  get; set; }
-        public string Outcome {  get; set; }
+        public string SecurityPractice { get; set; }
+        public string Outcome { get; set; }
         public string Scope { get; set; }
         public string RecommendAction { get; set; }
         public string RiskAddressed { get; set; }

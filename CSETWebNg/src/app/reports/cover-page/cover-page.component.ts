@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cover-page',
@@ -32,11 +33,11 @@ import { ConfigService } from '../../services/config.service';
 })
 export class CoverPageComponent implements OnInit {
 
-  @Input() title: string;
-  @Input() response: string;
+  @Input() title?: string;
+  @Input() assessDetail?: AssessmentDetail;
+
   constructor(
     public configSvc: ConfigService
-
   ) { }
 
   ngOnInit() {

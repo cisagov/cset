@@ -21,7 +21,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     [ApiController]
     public class SalController : ControllerBase
     {
@@ -146,12 +147,13 @@ namespace CSETWebCore.Api.Controllers
                     tmpsal.Selected_Sal_Level = sr.Selected_Sal_Level;
                     lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
                 }
-                
+
                 var stats = _hooks.HookSalChanged(assessmentId);
 
                 if (stats != null)
                 {
-                    return Ok(new {
+                    return Ok(new
+                    {
                         Selected_Sal_Level = tmpsal.Selected_Sal_Level,
                         SelectedSALOverride = tmpsal.SelectedSALOverride,
                         Methodology = tmpsal.Methodology,

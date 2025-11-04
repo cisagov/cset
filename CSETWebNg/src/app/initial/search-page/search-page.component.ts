@@ -111,7 +111,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             // create a plainText property for the elipsis display in case a description has HTML markup
             dom.innerHTML = item.description;
             item.plainText = dom.innerText;
-
             this.galleryItems.push(item);
             this.galleryItemsTmp.push(item);
           })
@@ -139,7 +138,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   private initializeSwipers(): void {
-  
+
   }
 
   shuffleCards(i: number) {
@@ -233,5 +232,28 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       panelClass: 'new-assessment-dialog-responsive',
       data: data
     });
+  }
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation();
+    const newFavoriteStatus = !card.isFavorite;
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        card.isFavorite = newFavoriteStatus;
+
+        this.galleryItems.forEach((item: any) => {
+          if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+            item.isFavorite = card.isFavorite;
+          }
+        });
+        this.galleryItemsTmp.forEach((tmpItem: any) => {
+          if (tmpItem.item.gallery_Item_Guid == card.gallery_Item_Guid) {
+            tmpItem.item.isFavorite = card.isFavorite;
+          }
+        });
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+      }
+    );
   }
 }

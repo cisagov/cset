@@ -79,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/aggregation/update")] 
+        [Route("api/aggregation/update")]
         public IActionResult UpdateAggregation([FromBody] Aggregation aggregation)
         {
             var aggregationID = _token.PayloadInt("aggreg");

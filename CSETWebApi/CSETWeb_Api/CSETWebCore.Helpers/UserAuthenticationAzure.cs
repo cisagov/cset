@@ -1,11 +1,6 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Authentication;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 
@@ -21,7 +16,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="context"></param>
         public UserAuthenticationAzure(
-            CSETContext context) 
+            CSETContext context)
         {
             _context = context;
         }

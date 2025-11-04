@@ -21,14 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
-
+import { AuthenticationService } from '../../services/authentication.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -47,26 +48,40 @@ import { TranslocoService } from '@jsverse/transloco';
     ]),
   ],
 })
-export class NewAssessmentComponent implements OnInit, AfterViewInit {
+export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy{
   hoverIndex = -1;
-  selectedCategory = 'all';
+  selectedCategory = 'favorites';
+  selectedCategoryId:number |null = null;
+  private langChangeSubscription: Subscription;
+
 
   constructor(
     public dialog: MatDialog,
     public gallerySvc: GalleryService,
     public navSvc: NavigationService,
     public tSvc: TranslocoService,
+    private authSvc: AuthenticationService,
   ) {
   }
 
   ngOnInit(): void {
     this.gallerySvc.refreshCards();
+    this.langChangeSubscription = this.tSvc.langChanges$.subscribe((lang: string) => {
+      // Wait for the language to be saved to backend, THEN refresh
+      this.authSvc.setUserLang(lang).subscribe(() => {
+        this.gallerySvc.refreshCards();
+      });
+    });
   }
 
   ngAfterViewInit() {
-    
-  }
 
+  }
+  ngOnDestroy(): void {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
+  }
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
@@ -109,38 +124,47 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   selectCategory(category: string): void {
-    this.selectedCategory = category;
+    if(category==='favorites') {
+      this.selectedCategory = 'favorites';
+      this.selectedCategoryId = null;
+    }
+   else{
+      const selectedRow = this.gallerySvc.rows?.find(row => row.group_Title === category);
+      if (selectedRow) {
+        this.selectedCategoryId = selectedRow.group_Id;
+        this.selectedCategory = null;
+      }
+    }
   }
-
-  // Add this method to get filtered items based on selected category
-  // getFilteredItems(): any[] {
-  //   if (this.selectedCategory === 'all') {
-  //     // Return all items from all categories
-  //     return this.gallerySvc.rows.reduce((acc, row) => {
-  //       return acc.concat(row.galleryItems);
-  //     }, []);
-  //   } else {
-  //     // Return items from selected category only
-  //     const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
-  //     return selectedRow ? selectedRow.galleryItems : [];
-  //   }
-  //
-  // }
+  getFavoritesCount(): number {
+    return this.getUniqueFavorites().length;
+  }
   getFilteredItems(): any[] {
     if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
       return [];
     }
-
-    if (this.selectedCategory === 'all') {
-      return this.gallerySvc.rows.reduce((acc, row) => {
-        return acc.concat(row.galleryItems || []);
-      }, []);
-    } else {
-      const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
+    if (this.selectedCategory === 'favorites') {
+      return this.getUniqueFavorites();
+    }
+    //  not lost the categories when language changes
+    if (this.selectedCategoryId !== null) {
+      const selectedRow = this.gallerySvc.rows.find(row => row.group_Id === this.selectedCategoryId);
       return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
     }
+    return [];
   }
+  getSelectedCategoryTitle(): string {
+    if (this.selectedCategory === 'favorites') {
+      return this.tSvc.translate('favorites');
+    }
 
+    if (this.selectedCategoryId !== null) {
+      const selectedRow = this.gallerySvc.rows?.find(row => row.group_Id === this.selectedCategoryId);
+      return selectedRow ? selectedRow.group_Title : '';
+    }
+
+    return this.tSvc.translate('all assessments');
+  }
   getCategoryIcon(categoryTitle: string): string {
     const iconMap: { [key: string]: string } = {
       'Most Popular': 'fas fa-star',
@@ -158,4 +182,43 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     return iconMap[categoryTitle] || 'fas fa-folder';
   }
 
+  /**
+   * Toggle favorite status
+   */
+  toggleFavorite(event: Event, card: any): void {
+    event.stopPropagation(); // Prevent card click or other events
+    const newFavoriteStatus = !card.isFavorite;
+    this.gallerySvc.toggleFavorite(card.gallery_Item_Guid, newFavoriteStatus).subscribe(
+      () => {
+        // Update local state immediately
+        card.isFavorite = newFavoriteStatus;
+        this.gallerySvc.galleryData.rows.forEach((row: any) => {
+          row.galleryItems.forEach((item: any) => {
+            if (item.gallery_Item_Guid == card.gallery_Item_Guid) {
+              item.isFavorite = card.isFavorite;
+            }
+          });
+        });
+      },
+      (error) => {
+        console.error('Error toggling favorite:', error);
+        alert('Failed to update favorite. Please try again.');
+      }
+    );
+  }
+  private getUniqueFavorites():any[]{
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return [];
+    }
+    const allFavorites = this.gallerySvc.rows.reduce((acc, row) => {
+      const favoriteItems = row.galleryItems?.filter(item => item.isFavorite) || [];
+      return acc.concat(favoriteItems);
+    }, []);
+    const uniqueFavorite = new Map();
+    allFavorites.forEach(fav => {
+      uniqueFavorite.set(fav.gallery_Item_Guid, fav);
+    });
+
+    return Array.from(uniqueFavorite.values());
+  }
 }

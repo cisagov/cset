@@ -1,5 +1,4 @@
-﻿using System;
-using CSETWebCore.DataLayer.Model;
+﻿using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Interfaces.Version
 {

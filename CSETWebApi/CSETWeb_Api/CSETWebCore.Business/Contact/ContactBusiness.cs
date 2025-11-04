@@ -273,7 +273,8 @@ namespace CSETWebCore.Business.Contact
             {
                 // See if the Contact already exists
                 existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
-            } else
+            }
+            else
             {
                 // If this is a merge, we need to check for existing contacts via different values
                 existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Id == newContact.AssessmentId && x.PrimaryEmail == newContact.PrimaryEmail && x.FirstName == newContact.FirstName);
@@ -458,7 +459,7 @@ namespace CSETWebCore.Business.Contact
 
 
             // Null out any related Facilitator or Point of Contact references
-            var demoList1 =  _context.DETAILS_DEMOGRAPHICS
+            var demoList1 = _context.DETAILS_DEMOGRAPHICS
                     .Where(x => x.DataItemName == "FACILITATOR" && x.IntValue == ac.Assessment_Contact_Id)
                .ToList();
 

@@ -12,7 +12,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
         public void GetMalcolmJsonDataTest()
         {
             string dir = Directory.GetCurrentDirectory();
-            string[] files = Directory.GetFiles(Path.Combine(dir,"MalcolmJson"), "source_to_destination_ip.json");
+            string[] files = Directory.GetFiles(Path.Combine(dir, "MalcolmJson"), "source_to_destination_ip.json");
             string[] assertFile = File.ReadAllLines(Path.Combine(dir, "MalcolmJson", "TestHarness.txt"));
             List<MalcolmData> datalist = new List<MalcolmData>();
             foreach (string file in files)
@@ -25,7 +25,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             List<MalcolmData> list = tst.GetMalcolmJsonData(datalist);
             Dictionary<string, TempNode> nodesList = list[0].Graphs;
-            foreach(TempNode node in nodesList.Values)
+            foreach (TempNode node in nodesList.Values)
             {
                 Trace.WriteLine("");
                 Trace.WriteLine("node");
@@ -34,11 +34,11 @@ namespace CSETWebCore.Business.Malcolm.Tests
             }
 
             Dictionary<string, bool> AllNodes = new Dictionary<string, bool>();
-            foreach(String line in assertFile)
+            foreach (String line in assertFile)
             {
                 AllNodes.TryAdd(line.Trim(), false);
             }
-            foreach(var ip in AllNodes.Keys)
+            foreach (var ip in AllNodes.Keys)
             {
                 if (!nodesList.ContainsKey(ip))
                 {
@@ -47,7 +47,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             }
             Assert.IsTrue(AllNodes.Count == nodesList.Count);
             TempNode? parent = null;
-            foreach (String item  in assertFile)
+            foreach (String item in assertFile)
             {
                 /**
                  * look to see that the node list contains the parent. 
@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 }
                 else
                 {
-                    Assert.IsTrue(nodesList.ContainsKey(item.Trim()),"couldn't find"+item);
+                    Assert.IsTrue(nodesList.ContainsKey(item.Trim()), "couldn't find" + item);
                     parent = nodesList[item.Trim()];
                 }
             }
@@ -83,7 +83,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 datalist.Add(malcolmData ?? new MalcolmData());
             }
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
-            
+
             datalist = tst.GetMalcolmJsonData(datalist);
             MalcolmTree tree = new MalcolmTree();
             Assert.IsTrue(datalist[0].Graphs.ContainsKey("10.10.10.10"));
@@ -111,36 +111,36 @@ namespace CSETWebCore.Business.Malcolm.Tests
 
 
             MalcolmTree tree = new MalcolmTree();
-            
-            Dictionary<string,TempNode> graph = new Dictionary<string, TempNode>();
+
+            Dictionary<string, TempNode> graph = new Dictionary<string, TempNode>();
             graph.Add(node3.Key, node3);
             graph.Add(node6.Key, node6);
             graph.Add(node8.Key, node8);
             graph.Add(node255.Key, node255);
 
-            foreach(TempNode node in tree.StartTheTreeWalk(graph))
-                printTree(node,0);
+            foreach (TempNode node in tree.StartTheTreeWalk(graph))
+                printTree(node, 0);
 
         }
 
         private void printTree(TempNode node, int indent)
         {
-            string tkey = node.Key; 
-            if(indent > 0)
+            string tkey = node.Key;
+            if (indent > 0)
             {
                 tkey = "->" + tkey;
             }
-            
-            Trace.WriteLine(tkey.PadLeft(tkey.Length+ (2*indent)));
+
+            Trace.WriteLine(tkey.PadLeft(tkey.Length + (2 * indent)));
             indent = ++indent;
             foreach (var c in node.Children)
-            {                
-                printTree(c,indent);                
+            {
+                printTree(c, indent);
             }
         }
 
-        
+
     }
 
-   
+
 }

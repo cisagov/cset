@@ -15,6 +15,7 @@
     <None Remove="App_Data\EmailFooter_ACET.html" />
     <None Remove="App_Data\EmailFooter_CF.html" />
     <None Remove="App_Data\EmailFooter_TSA.html" />
+    <None Remove="App_Data\FieldValidation\FieldValidation.json" />
     <None Remove="App_Data\inlineStylesheet.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_ACET.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_CF.html" />
@@ -152,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\EmailTemplates\passwordResetTemplate_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\FieldValidation\FieldValidation.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\ModelProperties\ModelProperties.json" />
     <EmbeddedResource Include="AssessmentIO\Import\ColumnImportRules.xml" />

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.DataLayer.Model
 {
@@ -12,7 +8,7 @@ namespace CSETWebCore.DataLayer.Model
         public int UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
-        public int Question_Id { get; set; }    
+        public int Question_Id { get; set; }
         public string Question_Type { get; set; }
         [StringLength(50)]
         public string Answer_Text { get; set; }
@@ -24,10 +20,10 @@ namespace CSETWebCore.DataLayer.Model
         public string Free_Response_Answer { get; set; }
         public int? Question_Number { get; set; }
         [StringLength(7338)]
-        public string QuestionText { get; set; }        
+        public string QuestionText { get; set; }
         [StringLength(250)]
         public string Question_Group_Heading { get; set; }
-        public int GroupHeadingId { get; set; }        
+        public int GroupHeadingId { get; set; }
         [StringLength(100)]
         public string Universal_Sub_Category { get; set; }
         public int SubCategoryId { get; set; }
@@ -48,7 +44,7 @@ namespace CSETWebCore.DataLayer.Model
         public string ComponentName { get; set; }
         public string Symbol_Name { get; set; }
         public int Component_Symbol_Id { get; set; }
-        
+
 
         //,[Layer_Id]
         //,[LayerName]

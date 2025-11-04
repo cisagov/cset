@@ -151,7 +151,7 @@ namespace CSETWebCore.Business.Question
             {
                 AssessmentId = assessment.Assessment_Id,
                 CompletedCount = assessment.CompletedQuestionCount,
-        
+
                 TotalMaturityQuestionsCount = assessment.UseMaturity ? assessment.TotalQuestionCount : null,
                 TotalStandardQuestionsCount = assessment.UseStandard ? assessment.TotalQuestionCount : null,
                 TotalDiagramQuestionsCount = assessment.UseDiagram ? assessment.TotalQuestionCount : null

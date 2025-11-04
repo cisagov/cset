@@ -365,7 +365,7 @@ table.cset-table td,
 table.cset-table-4 th,
 table.cset-table-4 td {
   padding: 10px;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   vertical-align: top;
 }
 
@@ -560,8 +560,8 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
-.table.table-td-small th,
-.table.table-td-small td {
+table.table-td-small th,
+table.table-td-small td {
   font-size: .875em !important;
 }
 

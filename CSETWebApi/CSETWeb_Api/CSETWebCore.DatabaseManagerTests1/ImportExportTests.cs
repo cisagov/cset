@@ -5,29 +5,12 @@
 // 
 //////////////////////////////// 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.DatabaseManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using CSETWebCore.DataLayer.Model;
-using System.Net;
-using Microsoft.Data.SqlClient;
 using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Diagnostics;
-using UpgradeLibrary.Upgrade;
-using CSETWebCore.Api.Controllers;
-using CSETWebCore.Business.AssessmentIO.Export;
 using Microsoft.AspNetCore.Http;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Authentication;
 using CSETWebCore.Helpers;
-using CSETWebCore.Business.Maturity;
-using DocumentFormat.OpenXml.InkML;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

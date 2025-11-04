@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer.Model;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Aggregation

@@ -1,11 +1,6 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using DocumentFormat.OpenXml.Bibliography;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -50,8 +45,8 @@ namespace CSETWebCore.Business.Assessment
         private void ClearSectorChangedFlag()
         {
             string dataItem = Constants.Constants.ACK_SECTOR_UPDATED_PPD21;
-            var dd = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => 
-                x.Assessment_Id == _assessmentId 
+            var dd = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
+                x.Assessment_Id == _assessmentId
                 && x.DataItemName == dataItem);
 
             if (dd == null)

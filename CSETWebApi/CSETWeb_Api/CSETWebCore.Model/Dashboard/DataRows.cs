@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 namespace CSETWebCore.Model.Dashboard
 {
     public class ScatterPlot

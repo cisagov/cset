@@ -1,9 +1,5 @@
 ﻿using CSETWebCore.DataLayer.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Model.Observations
 {
@@ -11,7 +7,7 @@ namespace CSETWebCore.Model.Observations
     {
         public MergeObservation() { }
 
-        public MergeObservation(int assessmentId, List<FINDING> observations) 
+        public MergeObservation(int assessmentId, List<FINDING> observations)
         {
             this.assessmentId = assessmentId;
             this.observations = observations;

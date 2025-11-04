@@ -85,6 +85,9 @@ export interface QuestionGrouping {
 
     // in CRE+, groups can be 'selected' in order to be displayed in list
     selected: boolean;
+
+    // a flag to allow titles to be hidden in some cases for a cleaner layout
+    showTitleAsHeading: boolean;
 }
 
 export interface ACETDomain {

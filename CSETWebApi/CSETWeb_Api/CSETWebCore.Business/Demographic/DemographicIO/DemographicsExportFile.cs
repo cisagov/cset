@@ -3,10 +3,10 @@ using System.IO;
 
 namespace CSETWebCore.Business.Demographic.DemographicIO
 {
-	public class DemographicsExportFile
-	{
-		public DemographicsExportFile(string fileName, Stream fileContents)
-		{
+    public class DemographicsExportFile
+    {
+        public DemographicsExportFile(string fileName, Stream fileContents)
+        {
             FileName = fileName;
             FileContents = fileContents;
         }

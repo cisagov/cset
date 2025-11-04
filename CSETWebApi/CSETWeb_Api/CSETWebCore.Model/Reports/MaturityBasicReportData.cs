@@ -7,7 +7,6 @@
 using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Reports
 {
@@ -18,7 +17,7 @@ namespace CSETWebCore.Business.Reports
         /// the model to partial view _MatAnswersList, since we can only pass one model 
         /// and no additional parameters.
         /// </summary>
-        
+
         public int ModelId { get; set; }
 
         public string TargetList { get; set; }

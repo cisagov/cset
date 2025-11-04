@@ -54,14 +54,14 @@ namespace CSETWebCore.Business.ModuleIO
             {
                 throw new InvalidOperationException($"Module '{setname}' already exists. If this is a new version, please change the ShortName field to reflect this.");
             }
-            
+
             category = _context.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
             if (category == null)
             {
                 throw new ArgumentException($"Module Category '{externalStandard.category}' is invalid. Please check the spelling and try again.");
             }
-            
+
             var existingSetsInCategory = category.SETS?.Where(s => s.Order_In_Category.HasValue).ToList();
             if (existingSetsInCategory != null && existingSetsInCategory.Any())
             {
@@ -454,7 +454,7 @@ namespace CSETWebCore.Business.ModuleIO
                         newQuestion.Original_Set_Name = setName;
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.weight;
-                        
+
                         if (questionGroupHeading != null)
                         {
                             newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
@@ -473,7 +473,7 @@ namespace CSETWebCore.Business.ModuleIO
                                 throw new InvalidOperationException("No question groups available in the database. Please contact the system administrator.");
                             }
                         }
-                        
+
                         newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.securityAssuranceLevels);
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));

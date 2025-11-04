@@ -22,7 +22,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-page [response]="info" [title]="'VULNERABILITIES AND OPTIONS FOR CONSIDERATION'" />
+    <app-cover-page [assessDetail]="info" [title]="'VULNERABILITIES AND OPTIONS FOR CONSIDERATION'" />
 
     <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <p>
@@ -50,7 +50,7 @@
 
     <div class="page-break">
         <h1>{{t('reports.site information')}}</h1>
-        <app-site-information [response]="response"></app-site-information>
+        <app-site-information [assessDetail]="response"></app-site-information>
     </div>
 
     <div class="page-break" *ngIf="response?.information.useStandard">

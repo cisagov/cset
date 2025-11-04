@@ -552,6 +552,10 @@ label[required]::after {
   color: $gray-800;
 }
 
+.white-bg-transp {
+  background-color: rgba($gray-50, 0.8);
+}
+
 .quick-info-container {
   border-radius: 4px;
   background-color: $primary-800;
@@ -673,8 +677,8 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
-.table.table-td-small th,
-.table.table-td-small td {
+table.table-td-small th,
+table.table-td-small td {
   font-size: .875em;
 }
 
@@ -780,8 +784,8 @@ table.td-align-top td {
 
 /* override a few bootstrap classes */
 .form-container {
-  border: 1px solid #dee2e6; 
-  border-radius: .375rem; 
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
   padding: .375rem 2.25rem .375rem .75rem;
 }
 
@@ -1428,9 +1432,9 @@ div.spinner-size-20 {
 }
 
 .center-item {
-  position: fixed; 
-  top: 50%; 
-  left: 50%; 
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -2256,10 +2260,6 @@ input[type="checkbox"]+label {
   align-items: flex-start;
   border-bottom: 1px solid $gray-250;
   padding: 3px 0;
-}
-
-.question-row ul {
-  list-style: unset;
 }
 
 .no-bottom-border {
@@ -4099,7 +4099,7 @@ h6.dropdown-header {
 }
 
 .gallery-card:hover {
-  border: 1px solid #ffc107;
+  border: 1px solid #015288;
 }
 
 .img-cropped-calc {
@@ -4116,7 +4116,7 @@ h6.dropdown-header {
 }
 
 .gallery-card-footer {
-  background-color: #ffc107 !important;
+  background-color: #015288 !important;
 
 }
 
@@ -4128,14 +4128,16 @@ h6.dropdown-header {
   padding: .5rem .75rem;
 }
 
-.gallery-btn-play {
-  color: #ffc107 !important;
+.gallery-btn-play:hover{
+  color: #015288 !important;
 }
 
 .gallery-btn-info:hover {
-  color: #ffc107 !important;
+  color:#015288 !important;
 }
-
+.gallery-btn-favorite:hover i.fa-star {
+  color: #005288 !important;
+}
 .newinstaller {
   position: relative;
   top: -15 !important;

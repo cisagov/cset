@@ -414,7 +414,6 @@ import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.componen
 import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
 import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
 import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
-import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
@@ -458,6 +457,10 @@ import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-m
 import { CreGeneralReportComponent } from './reports/crePlus/cre-general-report/cre-general-report.component';
 import { CreBarPieStackedComponent } from './reports/crePlus/cre-bar-pie-stacked/cre-bar-pie-stacked.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+import { CisaVadrObservationsComponent } from './reports/cisa-vadr/cisa-vadr-observations/cisa-vadr-observations.component';
+import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CreMilYesNoComponent } from './reports/crePlus/cre-mil-yes-no/cre-mil-yes-no.component';
 import { CreMilPctImplementedComponent } from './reports/crePlus/cre-mil-pct-implemented/cre-mil-pct-implemented.component';
 import { CreMilExplanationsComponent } from './reports/crePlus/cre-mil-explanations/cre-mil-explanations.component';
@@ -609,9 +612,6 @@ import { ImportComponent } from './import/import.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 import { AdminSettingsComponent } from './initial/admin-settings/admin-settings.component';
 import { UserService } from './services/user.service';
-import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
-import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
-import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
@@ -888,13 +888,13 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         CisaVadrInfoComponent,
         CisaVadrLevelsComponent,
         CisaVadrReportComponent,
+        CisaVadrObservationsComponent,
         VadrGroupingBlockComponent,
         OpenEndedQuestionsComponent,
         CisSurveyComponent,
         GroupingBlockNestedReportComponent,
         QuestionBlockNestedReportComponent,
         OptionBlockNestedReportComponent,
-        CoverSheetAComponent,
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
         CisRankedDeficiencyComponent,

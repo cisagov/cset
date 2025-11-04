@@ -1,9 +1,5 @@
 ﻿using CSETWebCore.Model.Question;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Model.Maturity.CPG
 {
@@ -37,19 +33,19 @@ namespace CSETWebCore.Model.Maturity.CPG
     public class Question
     {
         public int QuestionId { get; set; }
-		public int? ParentQuestionId { get; set; }
-		public int Sequence { get; set; }
+        public int? ParentQuestionId { get; set; }
+        public int Sequence { get; set; }
         public string DisplayNumber { get; set; }
         public string Answer { get; set; }
         public string Comment { get; set; }
         public bool IsParentQuestion { get; set; }
         public string QuestionText { get; set; }
-		public string Supplemental { get; set; }
-		public string Scope { get; set; }
-		public string RecommendedAction { get; set; }
+        public string Supplemental { get; set; }
+        public string Scope { get; set; }
+        public string RecommendedAction { get; set; }
         public string RiskAddressed { get; set; }
-		public string Services { get; set; }
-		public string ReferenceText { get; set; }
+        public string Services { get; set; }
+        public string ReferenceText { get; set; }
         public string SecurityPractice { get; set; }
         public string Outcome { get; set; }
         public string ImplementationGuides { get; set; }

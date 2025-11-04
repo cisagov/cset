@@ -1,7 +1,7 @@
 namespace CSETWebCore.DataLayer.Model
 {
     using System;
-    
+
     public partial class usp_GetRankedQuestions_Result
     {
         public string Standard { get; set; }

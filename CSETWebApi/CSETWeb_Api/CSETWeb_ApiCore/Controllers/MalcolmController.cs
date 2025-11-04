@@ -4,29 +4,18 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Api.Error;
-using CSETWebCore.Business.Diagram;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Constraints;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Drawing;
 using CSETWebCore.Interfaces;
 using System.Threading.Tasks;
-using System.Net;
-using NPOI.HPSF;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Api.Controllers
 {

@@ -137,7 +137,7 @@ namespace CSETWebCore.Helpers
             if (File.Exists(path))
             {
                 var fs = File.OpenRead(path);
-                
+
                 byte[] byteArray = new byte[fs.Length];
                 fs.Read(byteArray, 0, (int)fs.Length);
                 return byteArray;

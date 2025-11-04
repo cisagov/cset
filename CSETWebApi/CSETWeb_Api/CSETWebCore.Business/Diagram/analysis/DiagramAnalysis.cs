@@ -6,19 +6,14 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Xml;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
-using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer.Model;
-using Lucene.Net.Util;
-using Newtonsoft.Json;
 
 namespace CSETWebCore.Business.Diagram.Analysis
 {

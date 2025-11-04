@@ -4,8 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-
 namespace CSETWebCore.Business.Diagram.Analysis
 {
     public class NetworkLink : NetworkNode

@@ -11,14 +11,11 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Reports;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
+{
+    [CsetAuthorize]
     [ApiController]
     public class ReportsCmmcController : ControllerBase
     {

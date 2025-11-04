@@ -30,6 +30,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 
 @Component({
@@ -40,13 +41,9 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreDetailReportComponent implements OnInit {
 
-  title: string;
+  title!: string;
 
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  assessDetail?: AssessmentDetail;
 
   // chart models
   domainList22: any[];
@@ -89,11 +86,7 @@ export class CreDetailReportComponent implements OnInit {
     });
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+      this.assessDetail = assessmentDetail
     });
 
     this.domainList22 = await this.getFullModel(22);

@@ -252,7 +252,7 @@ namespace CSETWebCore.Business.Aggregation
                 var deficientAnswers = new List<string>() { "N", "U" };
 
                 resp.BadAnswers.AddRange(deficientAnswers);
-                
+
                 // get the model configuration for the true deficient answers
                 var modelProperties = new ModelProfile().GetModelProperties(model.model_id);
                 if (modelProperties != null)
@@ -299,9 +299,9 @@ namespace CSETWebCore.Business.Aggregation
 
 
             var query = from mq in _context.MATURITY_QUESTIONS
-                         where intersectionQ.Contains(mq.Mat_Question_Id)
-                         orderby mq.Sequence
-                         select new { mq };
+                        where intersectionQ.Contains(mq.Mat_Question_Id)
+                        orderby mq.Sequence
+                        select new { mq };
 
             foreach (var q in query.ToList())
             {

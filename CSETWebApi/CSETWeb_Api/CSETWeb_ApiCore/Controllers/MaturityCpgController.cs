@@ -14,8 +14,9 @@ using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Api.Controllers
-{   [CsetAuthorize]
-    
+{
+    [CsetAuthorize]
+
     /// <summary>
     /// 
     /// </summary>

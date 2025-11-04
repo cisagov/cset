@@ -9,13 +9,9 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Sal;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Nelibur.ObjectMapper;
 using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.GalleryParser
@@ -56,6 +52,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// <returns></returns>
         public GalleryBoardData GetGalleryBoard(string layout_name)
         {
+            var userId = _token.GetUserId();
             var data = from r in _context.GALLERY_ROWS
                        join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
                        join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
@@ -63,6 +60,11 @@ namespace CSETWebCore.Business.GalleryParser
                        where r.Layout_Name == layout_name
                        orderby r.Row_Index, d.Column_Index
                        select new { r, g, d, i };
+            var userFavorites = _context.GALLERY_ITEM_USER
+                .Where(x => x.UserId == userId && x.IsFavorite)
+                .Select(x => x.Gallery_Item_Guid)
+                .ToList();
+
             var rvalue = new GalleryBoardData();
 
             var lang = _token.GetCurrentLanguage();
@@ -89,6 +91,8 @@ namespace CSETWebCore.Business.GalleryParser
                 if ((bool)item.i.Is_Visible)
                 {
                     var galleryItem = new GalleryItem(item.i, galleryGroup.Group_Id);
+                    galleryItem.IsFavorite = userFavorites.Contains(item.i.Gallery_Item_Guid);
+
 
                     if (lang != "en")
                     {
@@ -143,6 +147,30 @@ namespace CSETWebCore.Business.GalleryParser
                     customGroup.GalleryItems.Add(customSet);
                 }
             }
+        }
+        public void ToggleFavorite(int userId, Guid galleryItemGuid, bool isFavorite)
+        {
+            var existing = _context.GALLERY_ITEM_USER
+                .FirstOrDefault(x => x.UserId == userId
+                                     && x.Gallery_Item_Guid == galleryItemGuid);
+
+            if (existing != null)
+            {
+                // Update existing record
+                existing.IsFavorite = isFavorite;
+            }
+            else if (isFavorite)
+            {
+                // Create new record only if favoriting (not unfavoriting)
+                _context.GALLERY_ITEM_USER.Add(new GALLERY_ITEM_USER
+                {
+                    UserId = userId,
+                    Gallery_Item_Guid = galleryItemGuid,
+                    IsFavorite = true
+                });
+            }
+
+            _context.SaveChanges();
         }
     }
 }

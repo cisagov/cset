@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWebCore.Business.GalleryParser;
@@ -17,7 +16,6 @@ using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
-using DocumentFormat.OpenXml.Drawing.Charts;
 using J2N.Text;
 using Microsoft.EntityFrameworkCore;
 
@@ -1519,7 +1517,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
-                    Language=reff.Gen_File.Language,
+                    Language = reff.Gen_File.Language,
                 });
             }
 
@@ -1544,8 +1542,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
-                    Language=reff.Gen_File.Language,
-                    
+                    Language = reff.Gen_File.Language,
+
                 });
             }
 
@@ -1804,7 +1802,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                         {
                             Gen_File_Id = docId,
                             Requirement_Id = requirementId,
-                            Section_Ref = bookmark.TrimStart('#'), 
+                            Section_Ref = bookmark.TrimStart('#'),
                             Source = true
                         };
                         _context.REQUIREMENT_REFERENCES.Add(reqref);

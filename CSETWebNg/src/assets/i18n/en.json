@@ -511,7 +511,9 @@
     "analytics": "View the analytics for this assessment.",
     "merged checked exams": "Merge checked examinations",
     "export all": "Export a copy of all assessments to another location.",
-    "nav collapse": "Expand/collapse navigation"
+    "nav collapse": "Expand/collapse navigation",
+    "add favorite": "Add Favorites",
+    "remove favorite":"Remove Favorite"
   },
   "level": {
     "low": "Low",
@@ -1120,5 +1122,7 @@
     "done": "Done",
     "favorites": "Favorites"
   },
-  "categories": "Categories"
+  "categories": "Categories",
+  "all assessments": "All Assessments",
+  "favorites": "Favorites"
 }

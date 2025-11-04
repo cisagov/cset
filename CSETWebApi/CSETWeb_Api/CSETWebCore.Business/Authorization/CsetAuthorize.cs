@@ -12,7 +12,6 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Business.Authorization
@@ -20,7 +19,7 @@ namespace CSETWebCore.Business.Authorization
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CsetAuthorize : Attribute, IAuthorizationFilter
     {
-        public string[] Roles { get; set; } = new string[]{"User"};
+        public string[] Roles { get; set; } = new string[] { "User" };
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {

@@ -19,7 +19,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWebCore.Business.AssessmentIO.Models;
-using CSETWebCore.Interfaces.Helpers;
 
 
 namespace CSETWebCore.Business.AssessmentIO.Export

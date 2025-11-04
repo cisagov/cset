@@ -406,9 +406,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             payload.Assessment.OrganizationInfo.OrganizationName = null;
 
             // Remove PCII fields from CIS demographics
-            payload.CisDemographics.ServiceComposition = null;
-            payload.CisDemographics.ServiceDemographics = null;
-            payload.CisDemographics.OrganizationDemographics = null;
+            if (payload.CisDemographics != null)
+            {
+                payload.CisDemographics.ServiceComposition = null;
+                payload.CisDemographics.ServiceDemographics = null;
+                payload.CisDemographics.OrganizationDemographics = null;
+            }
         }
 
 

@@ -7,9 +7,9 @@ namespace CSETWebCore.Api.Models
 
         public string PrimaryEmail { get; set; }
         public string RoleName { get; set; }
-        
+
         public int RoleId { get; set; }
-        
+
         public int UserId { get; set; }
 
     }
