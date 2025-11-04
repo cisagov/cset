@@ -24,7 +24,7 @@
   <div *ngIf="contacts">
     <h4>{{ t('contacts') }}</h4>
     <div class="list-group">
-      <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
+      <app-contact-item [contact]="contact" [contactsList]="contacts" [impliedSave]="impliedSave" *ngFor="let contact of contacts; let i = index"
         (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)"
         (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)" (rolesChangedEvent)="refreshContacts()">
       </app-contact-item>

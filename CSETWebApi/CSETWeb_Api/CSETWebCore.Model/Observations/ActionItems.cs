@@ -4,10 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace CSETWebCore.Model.Observations
 {
     public class ActionItems

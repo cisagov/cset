@@ -18,7 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         public int AlternateCount { get; set; }
         public int UnansweredCount { get; set; }
         public int Total { get; set; }
-        public double percentage { get; set; }        
+        public double percentage { get; set; }
         public string TopBottomType { get; set; }
         public double pdifference { get; set; }
         public DateTime Assessment_Date { get; set; }

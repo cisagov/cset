@@ -1,5 +1,4 @@
-﻿using System;
-namespace CSETWebCore.DataLayer.Model
+﻿namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// 

@@ -13,7 +13,7 @@ namespace CSETWebCore.DataLayer.Model
         public string? Model_Title { get; set; }
         public string? Model_Description { get; set; }
         public bool? Is_Included { get; set; }
-       
-      
+
+
     }
 }

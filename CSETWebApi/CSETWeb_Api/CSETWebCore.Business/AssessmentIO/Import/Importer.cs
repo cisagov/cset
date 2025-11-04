@@ -63,8 +63,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             _mb = new Maturity.MaturityBusiness(_context, null);
             _cb = new Contact.ContactBusiness(_context, _assessmentUtil, _token, null, null, null);
             _assessmentBiz = new AssessmentBusiness(null, _token, _utilities, _cb, null, _mb, _assessmentUtil, null, null, _context, _hooks);
-           
-        
+
+
 
 
             //ignore the emass document we are not using it anyway.
@@ -105,7 +105,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             {
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey, assessmentGuid);
             }
-            else if (!overwriteAssessment) 
+            else if (!overwriteAssessment)
             {
                 // At this point we know the assessment with provided GUID already exists.
                 // If we are not overwriting an assessment, create a new assessment for import with new GUID.
@@ -117,7 +117,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             if (overwriteAssessment)
             {
-               SyncOverwrite(assessmentId);
+                SyncOverwrite(assessmentId);
             }
 
             Dictionary<string, int> oldUserNewUser = _context.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
@@ -185,15 +185,15 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
-                
+
                 //Skip contact if it already exists within the assessment 
                 var contactExists = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == item.PrimaryEmail && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (contactExists != null)
                 {
-                    continue; 
+                    continue;
                 }
-                
-                
+
+
 
                 if (a?.PrimaryEmail != null
                     && oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
@@ -286,10 +286,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 currentAnswer.Question_Number = answer.Question_Number;
                 currentAnswer.Answer_Text = answer.Answer_Text;
                 currentAnswer.Mat_Option_Id = answer.Mat_Option_Id;
-                currentAnswer.Alternate_Justification = answer.Alternate_Justification; 
+                currentAnswer.Alternate_Justification = answer.Alternate_Justification;
                 currentAnswer.Free_Response_Answer = answer.Free_Response_Answer;
                 currentAnswer.Comment = answer.Comment;
-                currentAnswer.FeedBack = answer.FeedBack; 
+                currentAnswer.FeedBack = answer.FeedBack;
                 currentAnswer.Mark_For_Review = answer.Mark_For_Review ?? false;
                 currentAnswer.Component_Guid = answer.Component_Guid;
                 currentAnswer.Reviewed = answer.Reviewed;

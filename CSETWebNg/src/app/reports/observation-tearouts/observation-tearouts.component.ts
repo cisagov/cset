@@ -54,7 +54,7 @@ export class ObservationTearoutsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.reportSvc.getReport('observations').subscribe(
+    this.reportSvc.getReport('observations/tearout').subscribe(
       (r: any) => {
         this.response = r;
 

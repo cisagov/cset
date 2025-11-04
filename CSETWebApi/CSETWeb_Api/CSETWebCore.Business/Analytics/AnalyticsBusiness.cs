@@ -68,61 +68,61 @@ namespace CSETWebCore.Business.Analytics
         public object GetAggregationAssessment(int assessmentId)
         {
             AggregationAssessment aggregationAssessment = new AggregationAssessment();
-            
+
             var assessment = (from a in _context.ASSESSMENTS
-                where a.Assessment_Id == assessmentId
-                select new AgAssessment
-                {
-                    AssessmentId = a.Assessment_Id,
-                    AssessmentGuid = a.Assessment_GUID,
-                    AssessmentCreatedDate = a.AssessmentCreatedDate,
-                    LastModifiedDate = a.LastModifiedDate,
-                    Alias = a.Alias,
-                    AssessmentDate = a.Assessment_Date,
-                    CreditUnionName = a.CreditUnionName,
-                    Charter = a.Charter,
-                    Assets = a.Assets,
-                    IrptotalOverride = a.IRPTotalOverride,
-                    IrptotalOverrideReason = a.IRPTotalOverrideReason,
-                    MatDetailTargetBandOnly = a.MatDetail_targetBandOnly,
-                    DiagramMarkup = a.Diagram_Markup,
-                    LastUsedComponentNumber = a.LastUsedComponentNumber,
-                    DiagramImage = a.Diagram_Image,
-                    AnalyzeDiagram = a.AnalyzeDiagram,
-                    UseDiagram = a.UseDiagram,
-                    UseStandard = a.UseStandard,
-                    UseMaturity = a.UseStandard,
-                    AssessmentEffectiveDate = a.AssessmentEffectiveDate,
-                    GalleryItemGuid = a.GalleryItemGuid,
-                    IseStateLed = a.ISE_StateLed,
-                    PciiNumber = a.PCII_Number,
-                    IsPcii = a.Is_PCII
-                }).FirstOrDefault();
+                              where a.Assessment_Id == assessmentId
+                              select new AgAssessment
+                              {
+                                  AssessmentId = a.Assessment_Id,
+                                  AssessmentGuid = a.Assessment_GUID,
+                                  AssessmentCreatedDate = a.AssessmentCreatedDate,
+                                  LastModifiedDate = a.LastModifiedDate,
+                                  Alias = a.Alias,
+                                  AssessmentDate = a.Assessment_Date,
+                                  CreditUnionName = a.CreditUnionName,
+                                  Charter = a.Charter,
+                                  Assets = a.Assets,
+                                  IrptotalOverride = a.IRPTotalOverride,
+                                  IrptotalOverrideReason = a.IRPTotalOverrideReason,
+                                  MatDetailTargetBandOnly = a.MatDetail_targetBandOnly,
+                                  DiagramMarkup = a.Diagram_Markup,
+                                  LastUsedComponentNumber = a.LastUsedComponentNumber,
+                                  DiagramImage = a.Diagram_Image,
+                                  AnalyzeDiagram = a.AnalyzeDiagram,
+                                  UseDiagram = a.UseDiagram,
+                                  UseStandard = a.UseStandard,
+                                  UseMaturity = a.UseStandard,
+                                  AssessmentEffectiveDate = a.AssessmentEffectiveDate,
+                                  GalleryItemGuid = a.GalleryItemGuid,
+                                  IseStateLed = a.ISE_StateLed,
+                                  PciiNumber = a.PCII_Number,
+                                  IsPcii = a.Is_PCII
+                              }).FirstOrDefault();
             var answers = (from a in _context.ANSWER
-                where a.Assessment_Id == assessmentId
-                select new AgAnswer
-                {
-                    AnswerId = a.Answer_Id,
-                    QuestionOrRequirementId = a.Question_Or_Requirement_Id,
-                    MarkForReview = a.Mark_For_Review,
-                    Comment = a.Comment,
-                    AlternateJustification = a.Alternate_Justification,  
-                    QuestionNumber = a.Question_Number,
-                    AnswerText = a.Answer_Text,
-                    ComponentGuid = a.Component_Guid,
-                    CustomQuestionGuid = a.Custom_Question_Guid,
-                    OldAnswerId = a.Old_Answer_Id,
-                    Reviewed = a.Reviewed,
-                    FeedBack = a.FeedBack,
-                    QuestionType = a.Question_Type,
-                    IsRequirement  = a.Is_Requirement,
-                    IsComponent = a.Is_Component,
-                    IsFramework = a.Is_Framework,
-                    IsMaturity = a.Is_Maturity,
-                    FreeResponseAnswer = a.Free_Response_Answer,
-                    MatOptionId = a.Mat_Option_Id,
-                    AssessmentId = a.Assessment_Id
-                }).ToList();
+                           where a.Assessment_Id == assessmentId
+                           select new AgAnswer
+                           {
+                               AnswerId = a.Answer_Id,
+                               QuestionOrRequirementId = a.Question_Or_Requirement_Id,
+                               MarkForReview = a.Mark_For_Review,
+                               Comment = a.Comment,
+                               AlternateJustification = a.Alternate_Justification,
+                               QuestionNumber = a.Question_Number,
+                               AnswerText = a.Answer_Text,
+                               ComponentGuid = a.Component_Guid,
+                               CustomQuestionGuid = a.Custom_Question_Guid,
+                               OldAnswerId = a.Old_Answer_Id,
+                               Reviewed = a.Reviewed,
+                               FeedBack = a.FeedBack,
+                               QuestionType = a.Question_Type,
+                               IsRequirement = a.Is_Requirement,
+                               IsComponent = a.Is_Component,
+                               IsFramework = a.Is_Framework,
+                               IsMaturity = a.Is_Maturity,
+                               FreeResponseAnswer = a.Free_Response_Answer,
+                               MatOptionId = a.Mat_Option_Id,
+                               AssessmentId = a.Assessment_Id
+                           }).ToList();
             var demographics = new AgDemographics();
             var extBiz = new DemographicExtBusiness(_context);
             demographics.AssessmentId = assessmentId;
@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.Analytics
             demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
-            
+
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
             if (assetId != null)
             {
@@ -152,48 +152,48 @@ namespace CSETWebCore.Business.Analytics
                     .FirstOrDefault(opt => opt.DataItemName == "ASSET-VALUE" && opt.OptionValue == assetId);
                 demographics.AssetValue = assetValue.OptionText;
             }
-            
+
             var documents = (from d in _context.DOCUMENT_FILE
-                where d.Assessment_Id == assessmentId
-                select new AgDocuments
-                {
-                    DocumentId = d.Document_Id,
-                    Path = d.Path,
-                    Title = d.Title,
-                    FileMd5 = d.FileMd5,
-                    ContentType = d.ContentType,
-                    CreatedTimeStamp = d.CreatedTimestamp,
-                    UpdatedTimeStamp = d.UpdatedTimestamp,
-                    Name = d.Name,
-                    Data = d.Data,
-                    AssessmentId = d.Assessment_Id
-                }).ToList();
+                             where d.Assessment_Id == assessmentId
+                             select new AgDocuments
+                             {
+                                 DocumentId = d.Document_Id,
+                                 Path = d.Path,
+                                 Title = d.Title,
+                                 FileMd5 = d.FileMd5,
+                                 ContentType = d.ContentType,
+                                 CreatedTimeStamp = d.CreatedTimestamp,
+                                 UpdatedTimeStamp = d.UpdatedTimestamp,
+                                 Name = d.Name,
+                                 Data = d.Data,
+                                 AssessmentId = d.Assessment_Id
+                             }).ToList();
             List<AgFinding> findings = new List<AgFinding>();
             foreach (var a in answers)
             {
                 var tempFindings = (from f in _context.FINDING
-                    where f.Answer_Id == a.AnswerId
-                    select new AgFinding
-                    {
-                        AnswerId  = (int)f.Answer_Id,
-                        FindingId = f.Finding_Id,
-                        Summary = f.Summary,
-                        Issue = f.Issue,
-                        Impact = f.Impact,
-                        Recommendations = f.Recommendations,
-                        Vulnerabilities = f.Vulnerabilities,
-                        ResolutionDate = f.Resolution_Date, 
-                        ImportanceId = f.Importance_Id,
-                        Title = f.Title,
-                        Type = f.Type,
-                        Description = f.Description,
-                        AutoGenerated = f.Auto_Generated,
-                        Citations = f.Citations,
-                        RiskArea = f.Risk_Area,
-                        SubRisk = f.Sub_Risk,
-                        ActionItems = f.ActionItems,
-                        SuppGuidance = f.Supp_Guidance
-                    }).ToList();
+                                    where f.Answer_Id == a.AnswerId
+                                    select new AgFinding
+                                    {
+                                        AnswerId = (int)f.Answer_Id,
+                                        FindingId = f.Finding_Id,
+                                        Summary = f.Summary,
+                                        Issue = f.Issue,
+                                        Impact = f.Impact,
+                                        Recommendations = f.Recommendations,
+                                        Vulnerabilities = f.Vulnerabilities,
+                                        ResolutionDate = f.Resolution_Date,
+                                        ImportanceId = f.Importance_Id,
+                                        Title = f.Title,
+                                        Type = f.Type,
+                                        Description = f.Description,
+                                        AutoGenerated = f.Auto_Generated,
+                                        Citations = f.Citations,
+                                        RiskArea = f.Risk_Area,
+                                        SubRisk = f.Sub_Risk,
+                                        ActionItems = f.ActionItems,
+                                        SuppGuidance = f.Supp_Guidance
+                                    }).ToList();
                 findings.AddRange(tempFindings);
             }
 
@@ -207,6 +207,6 @@ namespace CSETWebCore.Business.Analytics
             };
         }
 
-       
+
     }
 }

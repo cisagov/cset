@@ -25,10 +25,10 @@ namespace CSETWebCore.Helpers
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ReferencesBuilder(CSETContext context, ITokenManager tokenManager=null)
+        public ReferencesBuilder(CSETContext context, ITokenManager tokenManager = null)
         {
             _context = context;
-            _lang = tokenManager !=null ? tokenManager.GetCurrentLanguage() : "en";
+            _lang = tokenManager != null ? tokenManager.GetCurrentLanguage() : "en";
         }
 
 
@@ -109,16 +109,16 @@ namespace CSETWebCore.Helpers
             {
                 finalSourceDocs = fallbackNullDocs;
             }
-            
+
             sourceDocList = SortList(finalSourceDocs.AsQueryable());
-          
+
 
             // Additional Resource Documents
             var q2 = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId && !s.Source)
                 .OrderBy(s => s.Sequence)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence,Language = s.Gen_File.Language });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence, Language = s.Gen_File.Language });
 
             additionalDocList = SortList(q2);
         }

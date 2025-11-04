@@ -1,15 +1,9 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Business.Aggregation;
-using static Lucene.Net.Util.Fst.Util;
 using CSETWebCore.Interfaces.Reports;
 
 namespace CSETWebCore.Business.Reports

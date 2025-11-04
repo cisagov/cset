@@ -8,10 +8,8 @@ using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using ICSharpCode.SharpZipLib.Zip;
 using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.Business.Demographic.DemographicIO;
 
@@ -91,7 +89,7 @@ namespace CSETWebCore.Business.Demographic.Export
         /// </summary>
         private Stream ArchiveStream(int assessmentId)
         {
-            var model = CopyForExport(assessmentId);            
+            var model = CopyForExport(assessmentId);
             var json = JsonConvert.SerializeObject(model, Formatting.Indented);
 
             // Write the JSON content to the MemoryStream

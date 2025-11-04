@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 
-using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,11 +72,12 @@ namespace CSETWebCore.Api.Controllers
         {
             demographics.AssessmentId = _token.AssessmentForUser();
             var assessmentId = _demographic.SaveDemographics(demographics);
-           var stats= _hooks.HookDemographicsChanged(demographics.AssessmentId);
+            var stats = _hooks.HookDemographicsChanged(demographics.AssessmentId);
             var userId = _token.GetCurrentUserId();
-            if (userId != null && stats!= null)
+            if (userId != null && stats != null)
             {
-                return Ok(new {
+                return Ok(new
+                {
                     AssessmentId = assessmentId,
                     CompletedCount = stats.CompletedCount,
                     TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
@@ -85,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
                     TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
                 });
             }
-            
+
             return Ok(assessmentId);
         }
 
@@ -152,7 +152,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
-        
+
         /// <summary>
         /// 
         /// </summary>

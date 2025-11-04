@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 namespace CSETWebCore.Model.Aggregation
 {
     public class analytics_getMinMaxAverageForSectorIndustryGroup

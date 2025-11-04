@@ -4,8 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using Org.BouncyCastle.Bcpg.OpenPgp;
-
 namespace CSETWebCore.Model.Question
 {
     /// <summary>
@@ -52,7 +50,7 @@ namespace CSETWebCore.Model.Question
         public string Title { get; set; }
         public string Url { get; set; }
         public string SectionRef { get; set; }
-        public string DestinationString { get; set;}
+        public string DestinationString { get; set; }
         public string Language { get; set; }
     }
 }

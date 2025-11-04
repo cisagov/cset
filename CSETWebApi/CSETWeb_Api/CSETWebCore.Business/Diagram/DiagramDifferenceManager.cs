@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml;
 using CSETWebCore.Business.Diagram.layers;
-using CSETWebCore.Constants;
 
 namespace CSETWebCore.Business.Diagram
 {

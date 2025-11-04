@@ -4,8 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-
 namespace CSETWebCore.Model.Framework
 {
     public class FrameworkTier

@@ -68,6 +68,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// This is populated for custom set cards built on the fly 
         /// </summary>
         public string Custom_Set_Name { get; set; }
+        public bool IsFavorite { get; set; }
     }
 
 }

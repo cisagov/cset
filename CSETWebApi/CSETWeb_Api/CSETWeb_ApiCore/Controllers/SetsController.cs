@@ -8,13 +8,11 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.ModuleIO;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
-using CSETWebCore.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Business.GalleryParser;
 using Microsoft.Extensions.Logging;
@@ -60,9 +58,9 @@ namespace CSETWebCore.Api.Controllers
                 // Validate input model
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarning("Module import failed due to validation errors: {ValidationErrors}", 
+                    _logger.LogWarning("Module import failed due to validation errors: {ValidationErrors}",
                         string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
-                    
+
                     return ValidationProblem(ModelState);
                 }
 
@@ -74,7 +72,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         ModelState.AddModelError(error.Key, error.Value);
                     }
-                    
+
                     return ValidationProblem(ModelState);
                 }
 
@@ -99,7 +97,7 @@ namespace CSETWebCore.Api.Controllers
             catch (InvalidOperationException ex)
             {
                 _logger.LogError(ex, "Invalid operation during module import: {ModuleName}", externalStandard?.shortName);
-                
+
                 return BadRequest(ProblemDetailsFactory.CreateProblemDetails(HttpContext,
                     statusCode: 400,
                     title: "Invalid Import Operation",
@@ -109,17 +107,17 @@ namespace CSETWebCore.Api.Controllers
             catch (ArgumentException ex)
             {
                 _logger.LogError(ex, "Invalid argument during module import: {ModuleName}", externalStandard?.shortName);
-                
+
                 return BadRequest(ProblemDetailsFactory.CreateProblemDetails(HttpContext,
                     statusCode: 400,
-                    title: "Invalid Import Data", 
+                    title: "Invalid Import Data",
                     detail: ex.Message,
                     instance: HttpContext.Request.Path));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unexpected error during module import: {ModuleName}", externalStandard?.shortName);
-                
+
                 return Problem(
                     statusCode: 500,
                     title: "Import Failed",
@@ -135,7 +133,7 @@ namespace CSETWebCore.Api.Controllers
             // Validate category exists
             var category = _context.SETS_CATEGORY
                 .FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
-            
+
             if (category == null)
             {
                 errors.Add("category", $"Category '{externalStandard.category}' does not exist. Please use a valid category name.");
@@ -144,7 +142,7 @@ namespace CSETWebCore.Api.Controllers
             // Validate Custom gallery group exists
             var customGalleryGroup = _context.GALLERY_GROUP
                 .FirstOrDefault(x => x.Group_Title.Equals("Custom"));
-            
+
             if (customGalleryGroup == null)
             {
                 errors.Add("galleryGroup", "Required 'Custom' gallery group is missing from the database. Please contact the system administrator.");
@@ -160,7 +158,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         var questionGroupHeading = _context.QUESTION_GROUP_HEADING
                             .FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == req.heading.Trim().ToLower());
-                        
+
                         if (questionGroupHeading == null && !invalidHeadings.Contains(req.heading))
                         {
                             invalidHeadings.Add(req.heading);
@@ -170,7 +168,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (invalidHeadings.Any())
                 {
-                    errors.Add("requirements.headings", 
+                    errors.Add("requirements.headings",
                         $"Invalid question group headings found: {string.Join(", ", invalidHeadings)}. Please use valid headings or contact the system administrator.");
                 }
             }

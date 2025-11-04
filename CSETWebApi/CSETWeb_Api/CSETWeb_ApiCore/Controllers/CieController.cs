@@ -1,12 +1,8 @@
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Document;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Model.Document;
-using CSETWebCore.Model.Question;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Model.Map;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Api.Controllers

@@ -98,17 +98,17 @@ namespace CSETWebCore.Business.Question
                     a.Question_Or_Requirement_Id == questionId
                     && a.Assessment_Id == assessmentId
                     && a.Question_Type == questionType).ToList();
-                
+
                 if (answer.Count() > 1)
                 {
-                    response.overRide = true; 
+                    response.overRide = true;
                 }
                 else
                 {
                     response.overRide = false;
                 }
                 ANSWER newAnswer = answer.FirstOrDefault();
-                
+
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
@@ -158,7 +158,7 @@ namespace CSETWebCore.Business.Question
 
                 // Get any observations for the question
                 ObservationsManager obsMan = new(_context, assessmentId);
-                response.Observations = obsMan.GetAnswerObservations(newAnswer.Answer_Id);
+                response.Observations = obsMan.GetObservationsForAnswer(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);

@@ -12,10 +12,6 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
-using LogicExtensions;
-using CSETWebCore.Model.Question;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Business.Document
 {
@@ -72,7 +68,7 @@ namespace CSETWebCore.Business.Document
                 {
                     Document_Id = file.Document_Id,
                     Title = file.Title,
-                    FileName = file.Name, 
+                    FileName = file.Name,
                     IsGlobal = file.IsGlobal
                 };
 
@@ -318,8 +314,8 @@ namespace CSETWebCore.Business.Document
         {
             var list = new List<Model.Document.Document>();
             var files = from df in _context.DOCUMENT_FILE
-                where df.IsGlobal == true
-                select df;
+                        where df.IsGlobal == true
+                        select df;
 
             if (files == null || files.Count() == 0)
             {
@@ -345,7 +341,7 @@ namespace CSETWebCore.Business.Document
             }
 
             return list;
-            
+
         }
 
 
@@ -380,7 +376,7 @@ namespace CSETWebCore.Business.Document
 
                 if (newDoc != null && assessId != 0)
                 {
-                   docsToAdd.Add(newDoc);
+                    docsToAdd.Add(newDoc);
                 }
 
             }

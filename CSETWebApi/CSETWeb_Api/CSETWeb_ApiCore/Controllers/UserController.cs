@@ -38,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
             _tokenManager = tokenManager;
-            
+
         }
 
 
@@ -49,7 +49,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/users")]
         public IActionResult GetUsers([FromQuery] bool? onlyInactive, [FromQuery] string apiKey)
-        {           
+        {
             if (!IsApiKeyValid(apiKey))
             {
                 return Unauthorized();
@@ -63,12 +63,13 @@ namespace CSETWebCore.Api.Controllers
             // the consumer can limit the response to inactive users only
             if (onlyInactive ?? false)
             {
-                query =  _context.USERS.Where(x => !x.IsActive);
+                query = _context.USERS.Where(x => !x.IsActive);
             }
 
-            query.ToList().ForEach(u => 
+            query.ToList().ForEach(u =>
             {
-                var user = new UserAdmin() {
+                var user = new UserAdmin()
+                {
                     UserId = u.UserId,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
@@ -153,7 +154,7 @@ namespace CSETWebCore.Api.Controllers
             var secret = gp.GetProperty("UserApprovalApiKey");
             return (apiKey == secret);
         }
-        
+
         /// <summary>
         /// Checks for current user role.
         /// </summary>
@@ -173,9 +174,9 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return Ok(); 
+            return Ok();
         }
-        
+
         /// <summary>
         /// Grabs all users from the database.
         /// </summary>
@@ -183,7 +184,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/getusers")]
         public IActionResult GetAllUsers()
-        {           
+        {
             try
             {
                 var users = _userBusiness.GetUsers();
@@ -196,7 +197,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
         /// Updates user role.
         /// </summary>
@@ -216,9 +217,9 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return Ok(); 
+            return Ok();
         }
-        
+
         /// <summary>
         /// Grabs all current roles from the database.
         /// </summary>
@@ -236,7 +237,7 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return Ok(); 
+            return Ok();
         }
     }
 }

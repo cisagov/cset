@@ -9,7 +9,6 @@ using System;
 using CSETWebCore.Interfaces.Notification;
 using NLog;
 using CSETWebCore.DataLayer.Model;
-using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {

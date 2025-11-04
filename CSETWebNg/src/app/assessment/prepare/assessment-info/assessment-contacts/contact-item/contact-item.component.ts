@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
 import { EmailComponent } from "../../../../../dialogs/email/email.component";
@@ -43,13 +43,15 @@ import { DemographicIodService } from "../../../../../services/demographic-iod.s
   host: { class: 'd-flex flex-column flex-11a' },
   standalone: false
 })
-export class ContactItemComponent implements OnInit {
+export class ContactItemComponent implements OnInit, OnChanges {
   @Input()
   contact: EditableUser;
   @Input()
   enableMyControls: boolean = true;
   @Input()
   contactsList: EditableUser[];
+  @Input()
+  impliedSave: boolean = false;
   @Output()
   add = new EventEmitter<EditableUser>();
   @Output()
@@ -106,7 +108,17 @@ export class ContactItemComponent implements OnInit {
     if (this.contact.evaluateCanEdit) {
       this.editMode = this.contact.evaluateCanEdit();
     }
-    this.assessmentCreator()
+    this.assessmentCreator();
+  }
+
+  // if parent closes, this will detect the 'true' change 
+  // on the 'impliedSave' property
+  ngOnChanges(changes: SimpleChanges) {
+
+    let impliedSave = changes['impliedSave'];
+    if (impliedSave != null && impliedSave.currentValue && !this.editMode) {
+      this.finishEdit();
+    }
   }
 
   isEmailValid() {

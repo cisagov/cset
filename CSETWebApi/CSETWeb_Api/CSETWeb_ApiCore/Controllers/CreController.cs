@@ -5,12 +5,9 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Dashboard;
 using CSETWebCore.Business.Grouping;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSETWebCore.Api.Controllers
