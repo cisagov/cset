@@ -547,6 +547,23 @@ label[required]::after {
   }
 }
 
+// Dark mode for white-panel
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+  .white-panel {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+}
+
 .white-dialog {
   background-color: $white;
   color: $gray-800;
