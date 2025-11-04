@@ -227,10 +227,6 @@ namespace CSETWebCore.Business.Document
                 {
                     _context.DOCUMENT_ANSWERS.Add(temp);
                 }
-                else
-                {
-                    _context.DOCUMENT_ANSWERS.Update(temp);
-                }
 
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(doc.Assessment_Id);
@@ -289,13 +285,18 @@ namespace CSETWebCore.Business.Document
                 return list;
             }
 
-            foreach (var file in files)
+
+            var sortedFiles = files.Where(x => x.Assessment_Id == assessmentId).ToList();
+            sortedFiles.AddRange(files.Where(x => x.Assessment_Id != assessmentId).ToList());
+
+            foreach (var file in sortedFiles)
             {
                 Model.Document.Document doc = new Model.Document.Document()
                 {
                     Document_Id = file.Document_Id,
                     Title = file.Title,
-                    FileName = file.Name
+                    FileName = file.Name,
+                    IsGlobal = file.IsGlobal
                 };
 
                 // Don't display "click to edit title" in this context because they won't be able to click it
@@ -328,7 +329,8 @@ namespace CSETWebCore.Business.Document
                 {
                     Document_Id = file.Document_Id,
                     Title = file.Title,
-                    FileName = file.Name
+                    FileName = file.Name,
+                    IsGlobal = file.IsGlobal
                 };
 
                 // Don't display "click to edit title" in this context because they won't be able to click it

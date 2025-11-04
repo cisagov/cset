@@ -560,6 +560,7 @@ export class QuestionExtrasComponent implements OnInit {
     document.isGlobal = !document.isGlobal;
     this.questionsSvc.changeGlobal(document.document_Id, document.isGlobal).subscribe();
   }
+  
   getIsGlobalColor(doc) {
     if (doc.isGlobal)
       return "#198754"
