@@ -3,9 +3,9 @@ import daisyui from "daisyui";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,ts}"],
-  prefix: 'tw-',
+  prefix: 'tw:',
   important: true,
-  darkMode: ['class', '[data-theme="dark"]'], // Enable class-based dark mode with DaisyUI support
+  darkMode: ['class', '.dark-theme'], // Enable class-based dark mode with DaisyUI support
   theme: {
     extend: {
       colors: {
