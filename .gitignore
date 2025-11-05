@@ -9,6 +9,7 @@ WARP.md
 .claude/
 .serena/
 *.md
+.idea/
 
 /CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.agent.xml
 /CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.ask.xml
