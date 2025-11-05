@@ -79,16 +79,16 @@
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
           <input type="checkbox" id="SAL-L-{{r?.requirementID}}" name="SAL-L-{{r?.requirementID}}"
-            [checked]="hasSAL(r, 'L')" (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
+            [checked]="hasSAL(r, 'L')" (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" style="display: none" />Low</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'M')">
           <input type="checkbox" id="SAL-M-{{r?.requirementID}}" name="SAL-M-{{r?.requirementID}}"
-            [checked]="hasSAL(r, 'M')" (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
+            [checked]="hasSAL(r, 'M')" (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" style="display: none" />Moderate</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'H')">
           <input type="checkbox" id="SAL-H-{{r?.requirementID}}" name="SAL-H-{{r?.requirementID}}"
-            [checked]="hasSAL(r, 'H')" (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
+            [checked]="hasSAL(r, 'H')" (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" style="display: none" />High</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'VH')">
           <input type="checkbox" id="SAL-VH-{{r?.requirementID}}" name="SAL-VH-{{r?.requirementID}}"
-            [checked]="hasSAL(r, 'VH')" (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
+            [checked]="hasSAL(r, 'VH')" (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" style="display: none" />Very High</label>
       </div>
       <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
     </div>
