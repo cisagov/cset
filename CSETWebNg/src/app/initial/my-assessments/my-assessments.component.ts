@@ -260,7 +260,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
           const favoriteIconClass = assessment.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star';
           const favoriteClass = assessment.favorite ? 'star-favorite' : 'star-inactive';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
-          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-text-primary';
+          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
           const isCIS = assessment?.selectedMaturityModel === 'CIS';
 
