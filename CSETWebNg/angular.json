@@ -52,8 +52,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "./node_modules/@kolkov/angular-editor/assets/",
-                "output": "./assets/fonts/"
+                "input": "./node_modules/@kolkov/angular-editor/assets/icons",
+                "output": "./assets/ae-icons/"
               },
               "src/assets",
               "src/favicon_cset.ico",
