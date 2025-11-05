@@ -42,6 +42,10 @@ format-backend:
 check-backend:
 	cd CSETWebApi/CSETWeb_Api && dotnet format --verify-no-changes
 
+# target: test-backend - Run all backend unit tests
+test-backend:
+	cd CSETWebApi/CSETWeb_Api && dotnet test
+
 # target: launch-backend - Launch the backend server
 launch-backend:
 	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet watch
