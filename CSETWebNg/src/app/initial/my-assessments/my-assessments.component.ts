@@ -192,7 +192,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         flex: 2,
         cellRenderer: (params: any) => {
           return `
-    <button class="btn btn-link tw:text-left tw:justify-start tw:h-full tw:w-full"
+    <button class="btn btn-link tw:text-left tw:justify-start tw:h-full tw:w-full tw:text-text-primary"
             data-action="navigate"
             data-assessment-id="${params.data.assessmentId}"
             style="text-align: left; justify-content: flex-start;"
@@ -208,7 +208,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         sortable: true,
         filter: true,
         flex: 1,
-        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${params.value}</div>`
+        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm tw:text-text-primary">${params.value}</div>`
       },
       {
         field: 'lastModifiedDate',
@@ -239,7 +239,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         cellRenderer: (params: any) => {
           // Use the formatted value, not the raw value
           const formattedDate = params.valueFormatted || params.value;
-          return `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${formattedDate}</div>`;
+          return `<div class="tw:flex tw:items-center tw:h-full tw:text-sm tw:text-text-primary">${formattedDate}</div>`;
         }
       },
       {
@@ -249,7 +249,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         flex: 1,
         hide: !this.showColumn('primary-assessor'),
         valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim(),
-        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${params.value}</div>`
+        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm tw:text-text-primary">${params.value}</div>`
       },
       {
         headerName: this.tSvc.translate('status'),
@@ -260,7 +260,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
           const favoriteIconClass = assessment.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star';
           const favoriteClass = assessment.favorite ? 'star-favorite' : 'star-inactive';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
-          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
+          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-text-primary';
           const tooltipText = this.getProgressTooltip(assessment);
           const isCIS = assessment?.selectedMaturityModel === 'CIS';
 
@@ -271,7 +271,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
                   max="100"
                   title="${tooltipText}"></progress>
       </div>
-      <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
+      <span class="tw:text-sm tw:text-text-secondary tw:min-w-fit tw:font-medium">
         ${percentage}%
       </span>
     `;
