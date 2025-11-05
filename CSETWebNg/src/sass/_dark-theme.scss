@@ -20,6 +20,9 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
   --cset-primary: #015288;
   --cset-primary-hover: #013a5f;
+  --badge-active: #9ca3af;
+  --badge-inactive: #d1d5db;
+  --text-disabled: rgba(0, 0, 0, 0.38);
 }
 
 // Dark theme colors
@@ -27,13 +30,16 @@
   --bg-primary: #1d232a;
   --bg-secondary: #191e24;
   --bg-tertiary: #15191e;
-  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-primary:rgba(255, 255, 255, 0.70);
   --text-secondary: rgba(255, 255, 255, 0.6);
   --text-disabled: rgba(255, 255, 255, 0.38);
-  --border-color: #374151;
+  --border-color: #6b7280;
   --shadow-color: rgba(0, 0, 0, 0.3);
   --cset-primary: #0c7dc4;
   --cset-primary-hover: #0a68a3;
+  --badge-active: #9ca3af;
+  --badge-inactive: #4b5563;
+  --text-disabled: rgba(255, 255, 255, 0.38);
 }
 
 /* ===================================
