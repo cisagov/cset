@@ -4,7 +4,7 @@
 */
 
 @use '@angular/material' as mat;
-
+@use "sass:map";
 // Include the common styles for Angular Material (only once in your app)
 @include mat.core();
 
@@ -58,6 +58,46 @@ $cset-accent-palette: (
     900: white,
   )
 );
+
+$grayscale: (
+  50: #FAFAFA,
+  100: #F2F2F2,
+  150: #e6e6e6,
+  200: #d9d9d9,
+  250: #cccccc,
+  300: #bfbfbf,
+  350: #b3b3b3,
+  400: #a6a6a6,
+  450: #999999,
+  500: #8c8c8c,
+  550: #808080,
+  600: #737373,
+  650: #666666,
+  700: #595959,
+  750: #4d4d4d,
+  800: #404040,
+  850: #333333,
+  900: #262626,
+  950: #1a1a1a
+);
+$gray-50: map.get($grayscale, 50);
+$gray-100: map.get($grayscale, 100);
+$gray-150: map.get($grayscale, 150);
+$gray-200: map.get($grayscale, 200);
+$gray-250: map.get($grayscale, 250);
+$gray-300: map.get($grayscale, 300);
+$gray-350: map.get($grayscale, 350);
+$gray-400: map.get($grayscale, 400);
+$gray-450: map.get($grayscale, 450);
+$gray-500: map.get($grayscale, 500);
+$gray-550: map.get($grayscale, 550);
+$gray-600: map.get($grayscale, 600);
+$gray-650: map.get($grayscale, 650);
+$gray-700: map.get($grayscale, 700);
+$gray-750: map.get($grayscale, 750);
+$gray-800: map.get($grayscale, 800);
+$gray-850: map.get($grayscale, 850);
+$gray-900: map.get($grayscale, 900);
 
 // Light theme configuration
 $cset-light-theme: mat.define-theme((

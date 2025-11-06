@@ -547,8 +547,18 @@ label[required]::after {
   }
 }
 
-// Dark mode for white-panel
+// Dark mode 
 .dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+  .assessment-header{
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  ::ng-deep .mat-drawer-container{
+    background-color: var(--bg-primary) !important;
+  }
+
   .white-panel {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
@@ -564,11 +574,13 @@ label[required]::after {
   }
 }
 
+
+
 .white-dialog {
   background-color: $white;
   color: $gray-800;
 }
-
+ 
 .white-bg-transp {
   background-color: rgba($gray-50, 0.8);
 }
@@ -2514,10 +2526,14 @@ ul.related-questions li {
   font-size: 2rem;
 }
 
-// Assessment Cpmponent
+// Assessment Component
 ///////////////////////////////////////////////////////////////////////
 
-.mat-drawer,
+.mat-drawer{
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
 .mat-drawer-container {
   background-color: var(--bg-primary);
 }

@@ -27,8 +27,8 @@
 
 // Dark theme colors
 .dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
-  --bg-primary: #1d232a;
-  --bg-secondary: #191e24;
+  --bg-primary: #031925;
+  --bg-secondary: #002236;
   --bg-tertiary: #15191e;
   --text-primary:rgba(255, 255, 255, 0.70);
   --text-secondary: rgba(255, 255, 255, 0.6);
@@ -67,6 +67,10 @@
     color: var(--text-primary);
   }
 
+  .landing-page{
+     background-color: var(--bg-primary) !important;
+  }
+
   // ===================================
   // Material Components Dark Mode
   // ===================================
@@ -78,7 +82,10 @@
     &:hover {
       background-color: rgba(255, 255, 255, 0.08) !important;
     }
+
+   
   }
+  
 
   .mat-raised-button {
     background-color: #2a323c !important;
@@ -361,9 +368,9 @@
   // ===================================
 
   .ag-theme-alpine {
-    --ag-background-color: var(--bg-primary);
+    --ag-background-color: var(--bg-secondary);
     --ag-foreground-color: var(--text-primary);
-    --ag-header-background-color: var(--bg-secondary);
+    --ag-header-background-color: var(--cset-primary);
     --ag-odd-row-background-color: rgba(255, 255, 255, 0.02);
     --ag-row-hover-color: rgba(255, 255, 255, 0.04);
     --ag-border-color: var(--border-color);
@@ -388,6 +395,16 @@
     &:hover {
       color: var(--cset-primary-hover);
     }
+  }
+
+  // Labels
+  label,
+  .label,
+  .form-label,
+  .control-label,
+  .mat-form-field-label,
+  .mat-input-element + label {
+    color: var(--text-primary) !important;
   }
 
   // Borders and dividers

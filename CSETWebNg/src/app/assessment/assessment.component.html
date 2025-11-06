@@ -117,10 +117,10 @@
 
       <mat-sidenav-content class="bg-gray-50 d-flex flex-column flex-11a oy-auto ">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
-          <div class="tw:flex tw:justify-between tw:items-center tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3 tw:border tw:border-gray-200">
+          <div class="assessment-header tw:flex tw:justify-between tw:items-center  tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3 ">
             <!-- Assessment Name -->
             <div class="tw:flex-1 tw:min-w-0">
-              <h6 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate tw:text-gray-500">
+              <h6 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate ">
                 {{this.assessment?.assessmentName || 'Loading ...'}}
               </h6>
             </div>
@@ -130,22 +130,22 @@
               <div class="tw:flex tw:items-center tw:gap-3" *ngIf="assessment?.maturityModel?.modelName !== 'CIS'">
                 <div class="tw:relative" >
                   <progress
-                    class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
-                    style="background-color: #e5e7eb;"
+                    class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none tw:bg-gray-300 tw:dark:bg-gray-600"
+                    
                     [value]="getCompletionPercentage()"
                     [matTooltip]="getProgressTooltip()"
                     max="100">
                   </progress>
                 </div>
-                <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
+                <span class="tw:text-sm tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
 
               </div>
 
               <!-- Divider -->
-              <div class="tw:w-px tw:h-8 tw:bg-gray-300"></div>
+              <div class="tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
               <div class="tw:flex tw:items-center tw:gap-3">
-                <span class="tw:text-sm tw:font-medium tw:text-gray-900 tw:whitespace-nowrap">Mark Assessment Done</span>
+                <span class="tw:text-sm tw:font-medium tw:whitespace-nowrap">Mark Assessment Done</span>
                 <input
                   type="checkbox"
                   class="tw:toggle"

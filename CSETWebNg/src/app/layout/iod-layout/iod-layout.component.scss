@@ -2488,6 +2488,11 @@ ul.related-questions li {
 // Assessment Cpmponent
 ///////////////////////////////////////////////////////////////////////
 
+.mat-drawer{
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
 .mat-drawer,
 .mat-drawer-container {
   background-color: $secondary-color;
