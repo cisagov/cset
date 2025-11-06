@@ -191,10 +191,10 @@ namespace CSETWebCore.Business.Tests.AssessmentIO.Import
         }
 
         [Theory]
-        [InlineData("9.21.0.0", "9.2.1.0")]
-        [InlineData("9.23.0.0", "9.2.3.0")]
-        [InlineData("101.0.0.0", "10.1.0.0")]
-        [InlineData("10.11.0.0", "10.1.1.0")]
+        [InlineData("9.21.0.0")]
+        [InlineData("9.23.0.0")]
+        [InlineData("101.0.0.0")]
+        [InlineData("10.11.0.0")]
         public void Upgrade_AmbiguousVersions_NormalizesCorrectly(string inputVersion)
         {
             // Arrange
