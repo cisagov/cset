@@ -495,7 +495,7 @@ export class QuestionsService {
   applyTokensToText(q: Question) {
     let text = q.questionText;
 
-    text = this.linebreakPipe.transform(text);
+    //text = this.linebreakPipe.transform(text);
 
     if (!q.parmSubs) {
       return text;
