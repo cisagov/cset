@@ -61,22 +61,22 @@
       </ng-container>
       <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4">
         <div class="tw:flex tw:w-full sm:tw:w-auto">
-          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-bg-secondary  tw:rounded-lg tw:p-1 tw:border tw:border-border tw:shadow-sm">
+          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-transparent tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'all' ? 'tw:bg-cset-primary tw:text-white' : 'tw:text-text-secondary hover:tw:text-text-primary'"
+                    [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('all')">
               {{ t('filters.view all') || 'View all' }}
             </button>
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'done' ?'tw:bg-cset-primary tw:text-white' : 'tw:text-text-secondary hover:tw:text-text-primary'"
+                    [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('done')">
               {{ t('filters.done') || 'Done' }}
             </button>
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'favorite' ? 'tw:bg-cset-primary tw:text-white' : 'tw:text-text-secondary hover:tw:text-text-primary'"
+                    [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('favorite')">
               {{ t('filters.favorites') || 'Favorites' }}
             </button>
@@ -225,7 +225,7 @@
           </tr>
         </table>
         <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
-          <div class="overflow-x-auto rounded-lg border tw:border-border">
+          <div class="overflow-x-auto rounded-lg border border-gray-200" style="border-radius:10px;">
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
