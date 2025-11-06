@@ -46,21 +46,21 @@ import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 })
 export class QuestionBlockComponent implements OnInit {
 
-  @Input() mySubCategory: SubCategory;
+  @Input() mySubCategory?: SubCategory;
 
-  @ViewChild('extrasComponent') extrasComponent;
+  @ViewChild('extrasComponent') extrasComponent: any;
 
   percentAnswered = 0;
   answerOptions = [];
 
   @Output() changeComponents = new EventEmitter();
 
-  dialogRef: MatDialogRef<InlineParameterComponent>;
-  answer: Answer;
+  dialogRef?: MatDialogRef<InlineParameterComponent>;
+  answer?: Answer;
   malcolmInfo: any;
 
   matLevelMap = new Map<string, string>();
-  private _timeoutId: NodeJS.Timeout;
+  //private _timeoutId: NodeJS.Timeout;
 
   altTextPlaceholder = "alt cset";
 
