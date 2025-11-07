@@ -133,8 +133,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.Assets = a.Assets;
                     item.Charter = a.Charter;
                     item.CreditUnionName = a.CreditUnionName;
-                    item.IRPTotalOverride = a.IRPTotalOverride;
-                    item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
                     item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly;
 
                     _context.SaveChanges();

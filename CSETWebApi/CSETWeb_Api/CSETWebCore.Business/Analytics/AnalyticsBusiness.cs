@@ -82,8 +82,6 @@ namespace CSETWebCore.Business.Analytics
                                   CreditUnionName = a.CreditUnionName,
                                   Charter = a.Charter,
                                   Assets = a.Assets,
-                                  IrptotalOverride = a.IRPTotalOverride,
-                                  IrptotalOverrideReason = a.IRPTotalOverrideReason,
                                   MatDetailTargetBandOnly = a.MatDetail_targetBandOnly,
                                   DiagramMarkup = a.Diagram_Markup,
                                   LastUsedComponentNumber = a.LastUsedComponentNumber,

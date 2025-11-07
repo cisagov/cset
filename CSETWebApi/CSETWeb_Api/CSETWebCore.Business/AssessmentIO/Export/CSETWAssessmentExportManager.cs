@@ -59,8 +59,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<ANSWER_PROFILE, jANSWER_PROFILE>();
             TinyMapper.Bind<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>();
             TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
-            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
-            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
             TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
             TinyMapper.Bind<ASSESSMENTS, jASSESSMENTS>();
             TinyMapper.Bind<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>();
@@ -349,16 +347,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.ASSESSMENTS_REQUIRED_DOCUMENTATION.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENTS_REQUIRED_DOCUMENTATION.Add(TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>(item));
-            }
-
-            foreach (var item in _context.ASSESSMENT_IRP_HEADER.Where(x => x.ASSESSMENT_ID == assessmentId))
-            {
-                model.jASSESSMENT_IRP_HEADER.Add(TinyMapper.Map<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>(item));
-            }
-
-            foreach (var item in _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jASSESSMENT_IRP.Add(TinyMapper.Map<ASSESSMENT_IRP, jASSESSMENT_IRP>(item));
             }
 
             foreach (var item in _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId))

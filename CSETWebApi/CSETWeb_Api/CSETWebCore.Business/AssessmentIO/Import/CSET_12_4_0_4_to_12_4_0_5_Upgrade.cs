@@ -138,6 +138,16 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
         j.Remove("jFINANCIAL_COMPONENTS");
         j.Remove("jFINANCIAL_DOMAINS");
         j.Remove("jFINANCIAL_MATURITY");
+        //More removed tables
+        j.Remove("EXTRA_ACET_MAPPING");
+        j.Remove("ASSESSMENT_IRP");
+        j.Remove("ASSESSMENT_IRP_HEADER");
+        j.Remove("IRP"); 
+        j.Remove("IRP_HEADER");
+        j.Remove("LEVEL_BACKUP_ACET");
+        j.Remove("LEVEL_BACKUP_ACET_QUESTIONS");
+        //need to remove assessment IRP columns 
+        
         return j.ToString();
     }
 
