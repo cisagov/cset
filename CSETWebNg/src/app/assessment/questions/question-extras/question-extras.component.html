@@ -369,8 +369,8 @@
                                 display: inline-flex; align-items: center; justify-content: center;" tabindex="0">
                             </button>
                             <!-- Global/Local Toggle Button -->
-                            <button (click)="changeGlobal(doc)" class="btn"
-                                [matTooltip]="doc.isGlobal ? t('tooltip.local document') : t('tooltip.global document')"
+                            <button (click)="changeSharedStatus(doc)" class="btn"
+                                [matTooltip]="doc.isGlobal ? t('tooltip.local document') : t('tooltip.shared document')"
                                 matTooltipPosition="above" style="width: 46px; height: 46px; padding: 0;
                                     margin-left: 1rem;
                                     display: inline-flex; align-items: center; justify-content: center;">

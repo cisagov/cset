@@ -557,9 +557,8 @@ export class AssessmentService {
   /**
    *
    */
-  getAssessmentDocuments(globalOnly: boolean) {
-    const q = globalOnly ? '?globalOnly=true' : '';
-    return this.http.get(this.apiUrl + 'assessmentdocuments' + q);
+  getAssessmentDocuments(level: string) {
+    return this.http.get(this.apiUrl + 'assessmentdocuments?level=' + level);
   }
 
   /**

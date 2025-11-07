@@ -517,7 +517,7 @@ namespace CSETWebCore.Helpers
             return AssessmentForUser();
         }
 
-        public bool IsUserAuthorizedForAssessment()
+        public bool DoesTokenContainAssessment()
         {
             try
             {
