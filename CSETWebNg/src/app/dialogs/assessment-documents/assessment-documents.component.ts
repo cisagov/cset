@@ -38,7 +38,9 @@ import { FileExportService } from '../../services/file-export.service';
 })
 export class AssessmentDocumentsComponent implements OnInit {
 
-  documents: any[] = null;
+  documents: any[] | null = null;
+
+  inAssessment: boolean = false;
 
   constructor(private dialog: MatDialogRef<AssessmentDocumentsComponent>,
     public configSvc: ConfigService,
@@ -48,7 +50,10 @@ export class AssessmentDocumentsComponent implements OnInit {
     public fileSvc: FileUploadClientService) { }
 
   ngOnInit() {
-    this.assessSvc.getAssessmentDocuments().subscribe((response: any) => {
+    this.inAssessment = !!this.assessSvc.assessment;
+    const globalOnly = !this.inAssessment;
+
+    this.assessSvc.getAssessmentDocuments(globalOnly).subscribe((response: any) => {
       this.documents = response;
     });
   }
