@@ -23,7 +23,8 @@
 <div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-books-stack-1 fs-base-6 me-3"></span>
-    <span>{{t('menu.tools.assessment documents')}}</span>
+    <span *ngIf="level == 'assessment'">{{t('menu.tools.assessment documents')}}</span>
+    <span *ngIf="level == 'shared'">{{t('menu.tools.shared documents')}}</span>
   </div>
 
   <mat-dialog-content class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
@@ -37,12 +38,15 @@
       </div>
 
       <div *ngIf="documents?.length > 0" class="pe-3">
-        <p *ngIf="!inAssessment">
-          {{t('menu.tools.assessment documents global only')}}
-        </p>
-        <p *ngIf="inAssessment">
-          {{t('menu.tools.assessment documents mixed')}}
-        </p>
+        <div class="mx-2 mt-3 mb-4">
+          <p *ngIf="level == 'shared'">
+            {{t('menu.tools.assessment documents shared')}}
+          </p>
+          <p *ngIf="level == 'assessment'">
+            {{t('menu.tools.assessment documents local')}}
+          </p>
+        </div>
+
         <table class="table">
           <thead>
             <tr>
@@ -66,7 +70,7 @@
                   class="fs-base-6 cset-icons-export-up c-primary cursor-pointer bg-transparent me-2"
                   [matTooltip]="t('tooltip.copy document')"></button>
 
-                <svg *ngIf="doc.isGlobal" matTooltip="document is globally available" width="24" height="24"
+                <svg *ngIf="doc.isGlobal && level == 'assessment'" [matTooltip]="t('tooltip.shared document icon')" width="24" height="24"
                   viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#285464" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10" />
