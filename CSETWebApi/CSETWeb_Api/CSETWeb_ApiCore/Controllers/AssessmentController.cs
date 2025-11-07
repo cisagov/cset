@@ -304,8 +304,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdocuments")]
-        public IActionResult GetDocumentsForAssessment()
+        public IActionResult GetDocumentsForAssessment([FromQuery] bool globalOnly)
         {
+            if (globalOnly)
+            {
+                return Ok(_documentBusiness.GetGlobalDocuments());
+            }
+
             var IsAssessment = _tokenManager.IsUserAuthorizedForAssessment();
             if (IsAssessment)
             {
@@ -314,7 +319,8 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
             }
-            return Ok(_documentBusiness.GetGlobalDocuments());
+
+            return Ok(new List<Model.Document.Document>());
         }
 
 
