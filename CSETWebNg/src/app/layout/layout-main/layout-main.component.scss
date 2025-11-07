@@ -550,7 +550,7 @@ label[required]::after {
 .white-panel-controls {
   background-color: $gray-50;
   margin: 1em 1em 0em 1em;
-  padding: 2em 2em 0em 2em;
+  padding: 1.5em 2em .5em 2em;
   overflow-y: auto;
   overflow-x: hidden;
   border-top-left-radius: 8px;
@@ -4177,16 +4177,18 @@ h6.dropdown-header {
   padding: .5rem .75rem;
 }
 
-.gallery-btn-play:hover{
+.gallery-btn-play:hover {
   color: #015288 !important;
 }
 
 .gallery-btn-info:hover {
-  color:#015288 !important;
+  color: #015288 !important;
 }
+
 .gallery-btn-favorite:hover i.fa-star {
   color: #005288 !important;
 }
+
 .newinstaller {
   position: relative;
   top: -15 !important;
