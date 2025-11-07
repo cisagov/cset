@@ -36,10 +36,11 @@
   },
   "debug": {
     "showBuildTime": false,
-    "showQuestionAndRequirementIDs": false,
+    "showQuestionAndRequirementIDs": true,
     "canDeleteCustomModules": true,
     "showExportAllButton": false,
-    "showAssessmentUpgrade": false
+    "showAssessmentUpgrade": false,
+    "ignoreIodFieldValidation": true
   },
   "galleryLayout": "CSET",
   "installationMode": "CSET",
