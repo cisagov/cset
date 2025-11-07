@@ -542,6 +542,55 @@ label[required]::after {
   }
 }
 
+.white-panel-controls {
+  background-color: $gray-50;
+  margin: 1em 1em 0em 1em;
+  padding: 1.5em 2em .5em 2em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  // max-height: calc(100cqh - 310px);
+  // min-height: calc(100cqh - 310px);
+
+  color: $gray-800;
+  clip-path: margin-box;
+  //clip-path: inset(0 round 8px);
+}
+
+.white-panel-body {
+  background-color: $gray-50;
+  margin: 0em 1em .5em 1em;
+  padding: 2em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  max-height: calc(100cqh - 420px);
+  min-height: calc(100cqh - 420px);
+
+  color: $gray-800;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  clip-path: margin-box;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+}
+
 .white-dialog {
   background-color: $white;
   color: $gray-800;
@@ -4147,9 +4196,11 @@ h6.dropdown-header {
   padding: 0 1rem 1rem 1rem;
   margin-top: 1rem;
 }
+
 .gallery-btn-favorite:hover i.fa-star {
   color: #005288 !important;
 }
+
 .star-favorite {
   color: #005288 !important;
 }
