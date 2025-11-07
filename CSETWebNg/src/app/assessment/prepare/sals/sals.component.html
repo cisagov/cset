@@ -34,12 +34,12 @@
       </div>
 
       <h4>{{t('titles.sal.current level')}}</h4>
-      <div class="d-flex flex-wrap flex-00a sticky-sal mb-4" style="top: -2rem;" *ngIf="!!this.salsSvc.selectedSAL">
+      <div class="d-flex flex-wrap flex-00a sticky-sal mb-4 tw:dark:bg-bg-secondary" style="top: -2rem;" *ngIf="!!this.salsSvc.selectedSAL">
         <div class="d-flex flex-11a">
           <div class="mb-2 p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
               {{t('titles.sal.overall')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center align-items-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center align-items-center flex-11a tw:dark:bg-transparent tw:dark:rounded-lg tw:p-1 tw:dark:border  tw:dark:shadow-sm">
               {{ salsSvc.selectedSAL?.selected_Sal_Level != null ? t('titles.sal.level.' +
               salsSvc.selectedSAL?.selected_Sal_Level.toLowerCase()) : '' }}
             </div>
@@ -51,14 +51,14 @@
             class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
               {{t('titles.sal.confidentiality')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a tw:dark:bg-transparent tw:dark:rounded-lg tw:p-1 tw:dark:border  tw:dark:shadow-sm">
               {{ salsSvc.selectedSAL?.cLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.cLevel.toLowerCase())
               : '' }}</div>
           </div>
 
           <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.integrity')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a tw:dark:bg-transparent tw:dark:rounded-lg tw:p-1 tw:dark:border  tw:dark:shadow-sm">
               {{ salsSvc.selectedSAL?.iLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.iLevel.toLowerCase())
               : '' }}</div>
           </div>
@@ -66,7 +66,7 @@
           <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.availability')}}
             </div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a tw:dark:bg-transparent tw:dark:rounded-lg tw:p-1 tw:dark:border  tw:dark:shadow-sm">
               {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.aLevel.toLowerCase())
               : '' }}</div>
           </div>
@@ -77,8 +77,10 @@
         <h4>{{t('titles.sal.overall sal')}}</h4>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-            <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level primary btn-rounded"
+            <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level primary btn-rounded tw:dark:text-text-primary tw:dark:border tw:dark:border-border"
               [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+              [class.tw:dark:!bg-cset-primary]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+              [class.tw:dark:!text-white]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
               (click)="salsSvc.saveSalLevels(level.value, 'std')">
               <input class="btn-check primary" tabindex="0" type="radio" autocomplete="off" name="sal_main"
                 [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
@@ -124,7 +126,7 @@
         </div>
       </div>
 
-      
+
 
     </div>
   </div>

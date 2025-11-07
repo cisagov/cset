@@ -23,6 +23,9 @@
   --badge-active: #9ca3af;
   --badge-inactive: #d1d5db;
   --text-disabled: rgba(0, 0, 0, 0.38);
+  --bg-highlight: #dbeafe;
+  --border-highlight: #93c5fd;
+  --border-light: #e5e7eb;
 }
 
 // Dark theme colors
@@ -40,6 +43,10 @@
   --badge-active: #9ca3af;
   --badge-inactive: #4b5563;
   --text-disabled: rgba(255, 255, 255, 0.38);
+  --bg-highlight: #015288;
+  --border-highlight: #0c7dc4;
+  --border-light: #374151;
+
 }
 
 /* ===================================
@@ -83,9 +90,9 @@
       background-color: rgba(255, 255, 255, 0.08) !important;
     }
 
-   
+
   }
-  
+
 
   .mat-raised-button {
     background-color: #2a323c !important;
