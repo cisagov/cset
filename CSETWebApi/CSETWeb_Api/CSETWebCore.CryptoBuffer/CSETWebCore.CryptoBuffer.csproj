@@ -4,8 +4,4 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Npoi.Mapper" Version="6.2.2" />
-  </ItemGroup>
-
 </Project>
