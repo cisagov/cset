@@ -99,7 +99,7 @@
 
 
     <div class="ms-auto">
-        
+
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
@@ -161,28 +161,28 @@
             </span>
         </button>
         <mat-menu #usermenu="matMenu" class="menu-panel">
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-profile fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.user profile') }}</span>
             </button>
-            <button mat-menu-item (click)="goHome()">
+            <button mat-menu-item (click)="goHome()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.my assessments') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-key fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.change password') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()">
+            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.settings')}}</span>
             </button>
-            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')">
+            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.admin')}}</span>
             </button>
             <app-theme-toggle></app-theme-toggle>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-logout fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.logout')}}</span>
             </button>

@@ -547,7 +547,7 @@ label[required]::after {
   }
 }
 
-// Dark mode 
+// Dark mode
 .dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
 
   .assessment-header{
@@ -629,7 +629,7 @@ label[required]::after {
   background-color: $white;
   color: $gray-800;
 }
- 
+
 .white-bg-transp {
   background-color: rgba($gray-50, 0.8);
 }
@@ -4254,4 +4254,30 @@ h6.dropdown-header {
   --mat-snack-bar-button-color: #000 !important;
   --mat-snackbar-container-color: #ffc107 !important;
   --mat-snackbar-supporting-text-color: #000 !important;
+}
+
+.dark-theme .btn-app-mode,
+[data-theme="dark"] .btn-app-mode,
+[data-bs-theme="dark"] .btn-app-mode {
+  background-color: var(--bg-secondary);
+  border-color: var(--cset-primary);
+  color: var(--text-primary);
+}
+.dark-theme .btn-app-mode:hover,
+[data-theme="dark"] .btn-app-mode:hover,
+[data-bs-theme="dark"] .btn-app-mode:hover {
+  background-color: var(--bg-tertiary);
+}
+// Active state (both modes)
+.btn-app-mode.active {
+  background-color: #005288;
+  color: #fff;
+  border-color: #005288;
+}
+.dark-theme .btn-app-mode.active,
+[data-theme="dark"] .btn-app-mode.active,
+[data-bs-theme="dark"] .btn-app-mode.active {
+  background-color: var(--cset-primary) !important;
+  color: white !important;
+  border-color: var(--cset-primary) !important;
 }
