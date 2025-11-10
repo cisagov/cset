@@ -17,7 +17,7 @@ CSETFile.prototype.getMode = function () {
 };
 
 CSETFile.prototype.getTitle = function () {
-    return this.title;
+    return this.title;   
 };
 
 CSETFile.prototype.isRenamable = function () {
