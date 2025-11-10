@@ -21,7 +21,7 @@ namespace CSETWebCore.Interfaces.Document
         List<int> GetQuestionsForDocument(int id);
         void AddDocument(string title, int answerId, FileUploadStreamResult result);
         List<Model.Document.Document> GetDocumentsForAssessment(int assessmentId);
-        List<Model.Document.Document> GetGlobalDocuments();
+        List<Model.Document.Document> GetSharedDocuments();
         void CopyFilesForMerge(List<DocumentWithAnswerId> documents);
     }
 }
