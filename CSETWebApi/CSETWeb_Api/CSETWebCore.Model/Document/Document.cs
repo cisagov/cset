@@ -26,6 +26,13 @@ namespace CSETWebCore.Model.Document
         /// </summary>
         public string FileName { get; set; }
 
-        public Boolean IsGlobal { get; set; }
+        /// <summary>
+        /// Indicates a document that has been marked as shared,
+        /// so it can be seen outside of an assessment and eventually
+        /// easily attached to other assessments.
+        /// 
+        /// This maps to the IsGlobal column of the DOCUMENT_FILE database table.
+        /// </summary>
+        public Boolean IsShared { get; set; }
     }
 }
