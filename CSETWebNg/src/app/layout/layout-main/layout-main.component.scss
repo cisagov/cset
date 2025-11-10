@@ -4268,7 +4268,6 @@ h6.dropdown-header {
 [data-bs-theme="dark"] .btn-app-mode:hover {
   background-color: var(--bg-tertiary);
 }
-// Active state (both modes)
 .btn-app-mode.active {
   background-color: #005288;
   color: #fff;
@@ -4280,4 +4279,58 @@ h6.dropdown-header {
   background-color: var(--cset-primary) !important;
   color: white !important;
   border-color: var(--cset-primary) !important;
+}
+//the yest . no and NA buttons on the question style dark mode only
+// Dark mode - transparent background for answer buttons
+.dark-theme .btn-yes,
+.dark-theme .btn-no,
+.dark-theme .btn-na,
+[data-theme="dark"] .btn-yes,
+[data-theme="dark"] .btn-no,
+[data-theme="dark"] .btn-na,
+[data-bs-theme="dark"] .btn-yes,
+[data-bs-theme="dark"] .btn-no,
+[data-bs-theme="dark"] .btn-na {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+.dark-theme .answer-group .btn-yes:hover,
+[data-theme="dark"] .answer-group .btn-yes:hover,
+[data-bs-theme="dark"] .answer-group .btn-yes:hover {
+  background-color: #006000;
+  color: white;
+}
+
+.dark-theme .answer-group .btn-no:hover,
+[data-theme="dark"] .answer-group .btn-no:hover,
+[data-bs-theme="dark"] .answer-group .btn-no:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.dark-theme .answer-group .btn-na:hover,
+[data-theme="dark"] .answer-group .btn-na:hover,
+[data-bs-theme="dark"] .answer-group .btn-na:hover {
+  background-color: #367190;
+  color: white;
+}
+.dark-theme .answer-group .btn-yes.answer-selected,
+[data-theme="dark"] .answer-group .btn-yes.answer-selected,
+[data-bs-theme="dark"] .answer-group .btn-yes.answer-selected {
+  background-color: #006000;
+  color: white;
+}
+
+.dark-theme .answer-group .btn-no.answer-selected,
+[data-theme="dark"] .answer-group .btn-no.answer-selected,
+[data-bs-theme="dark"] .answer-group .btn-no.answer-selected {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.dark-theme .answer-group .btn-na.answer-selected,
+[data-theme="dark"] .answer-group .btn-na.answer-selected,
+[data-bs-theme="dark"] .answer-group .btn-na.answer-selected {
+  background-color: #367190;
+  color: white;
 }
