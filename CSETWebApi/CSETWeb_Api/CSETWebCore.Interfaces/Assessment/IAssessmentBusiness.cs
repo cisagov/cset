@@ -32,7 +32,6 @@ namespace CSETWebCore.Interfaces.Assessment
 
         List<DetailsDemographicsOptionsDTO> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
-        ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);
         IEnumerable<CompletionCounts> GetAssessmentsCompletionForUser(int userId);
         IEnumerable<CompletionCounts> GetAssessmentsCompletionForAccessKey(string accessKey);

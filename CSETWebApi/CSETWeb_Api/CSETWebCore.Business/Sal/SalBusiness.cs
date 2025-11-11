@@ -125,7 +125,7 @@ namespace CSETWebCore.Business.Sal
         public void SetDefault(int assessmentId, string level = "Low")
         {
             TextInfo ti = new CultureInfo("en-US", false).TextInfo;
-            level = ti.ToTitleCase(level);
+            level = ti.ToTitleCase(level.ToLower());
 
             TinyMapper.Bind<STANDARD_SELECTION, Sals>();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
