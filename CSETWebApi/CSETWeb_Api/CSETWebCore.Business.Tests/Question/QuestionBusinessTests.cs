@@ -261,7 +261,7 @@ namespace CSETWebCore.Business.Tests.Question
         public void StoreSubcategoryAnswers_DoesNothing_WhenAnswerBlockIsNull()
         {
             // Arrange
-            SubCategoryAnswers nullBlock = null;
+            SubCategoryAnswers? nullBlock = null;
 
             // Act
             _questionBusiness.StoreSubcategoryAnswers(nullBlock);

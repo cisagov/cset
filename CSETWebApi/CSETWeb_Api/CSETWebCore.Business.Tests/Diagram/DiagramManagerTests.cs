@@ -332,7 +332,7 @@ namespace CSETWebCore.Business.Tests.Diagram
             // Arrange
             var assessmentId = 1;
             var componentGuid = Guid.NewGuid();
-            string newLabel = null;
+            string? newLabel = null;
 
             var assessmentDiagramComponent = new ASSESSMENT_DIAGRAM_COMPONENTS
             {

@@ -895,7 +895,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var answers = new List<ANSWER>();
             var mockAnswerSet = CreateMockDbSet(answers);
-            ANSWER capturedAnswer = null;
+            ANSWER? capturedAnswer = null;
 
             mockAnswerSet.Setup(m => m.Add(It.IsAny<ANSWER>()))
                 .Callback<ANSWER>(a =>
