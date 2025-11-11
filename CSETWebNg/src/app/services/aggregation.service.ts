@@ -221,7 +221,7 @@ export class AggregationService {
   }
 
   getAggregationCompliance() {
-    return this.http.get(this.apiUrl + 'analysis/maturity/compliance', null);
+    return this.http.get(this.apiUrl + 'analysis/maturity/compliance');
   }
 
 
