@@ -140,7 +140,7 @@ namespace CSETWebCore.Business.Tests.Demographic
             // Arrange
             var assessmentId = 1;
             var key = "NULL-VALUE-KEY";
-            string value = null;
+            string? value = null;
             var dataType = "string";
 
             var demographics = new List<DETAILS_DEMOGRAPHICS>();

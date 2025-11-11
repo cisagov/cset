@@ -251,7 +251,7 @@ namespace CSETWebCore.Business.Tests.Question
             _mockAssessmentUtil.Setup(a => a.TouchAssessment(It.IsAny<int>()));
 
             // Mock Find to return null (new parameter)
-            _mockContext.Setup(c => c.PARAMETER_ASSESSMENT.Find(It.IsAny<object[]>())).Returns((PARAMETER_ASSESSMENT)null);
+            _mockContext.Setup(c => c.PARAMETER_ASSESSMENT.Find(It.IsAny<object[]>())).Returns((PARAMETER_ASSESSMENT?)null);
 
             // Act
             var result = _requirementBusiness.SaveAssessmentParameter(parameterId, newText);

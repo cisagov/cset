@@ -391,7 +391,7 @@ namespace CSETWebCore.Business.Tests.Demographic
             // Arrange
             var assessmentId = 1;
             var recName = "NULL-FIELD";
-            object value = null;
+            object? value = null;
 
             var demographics = new List<DETAILS_DEMOGRAPHICS>();
             var mockDemographicsSet = CreateMockDbSet(demographics);
