@@ -920,19 +920,5 @@ namespace CSETWebCore.Api.Controllers
             var scoring = maturity.GetMvraScoring(model);
             return Ok(scoring);
         }
-
-        [HttpGet]
-        [Route("api/maturity/mvra/mvraTree")]
-        [Obsolete("No longer in use")]
-        public IActionResult GetMvraTree([FromQuery] int id)
-        {
-            //int assessemntId = _tokenManager.AssessmentForUser();
-            //var maturity = new MaturityBusiness(_context, _assessmentUtil);
-
-            var maturity = new MaturityBusiness(_context, _assessmentUtil);
-            var model = maturity.GetMaturityStructureForModel(9, id);
-            //var scoring = maturity.GetMvraScoring(model);
-            return Ok(model);
-        }
     }
 }

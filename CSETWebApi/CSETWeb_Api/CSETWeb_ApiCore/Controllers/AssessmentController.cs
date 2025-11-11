@@ -255,16 +255,6 @@ namespace CSETWebCore.Api.Controllers
             return BadRequest();
         }
 
-
-        [HttpGet]
-        [Route("api/getAssessmentById")]
-        [Obsolete("Method no longer in use.")]
-        public IActionResult GetAssessmentById(int assessmentId)
-        {
-            var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);
-            return Ok(assessment);
-        }
-
         /// <summary>
         /// Returns the AssessmentDetail for current Assessment defined in the security token.
         /// </summary>
