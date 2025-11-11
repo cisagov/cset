@@ -810,16 +810,6 @@ namespace CSETWebCore.Business.Assessment
         }
 
         /// <summary>
-        /// Get assessment from given assessment Id
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public ASSESSMENTS GetAssessmentById(int assessmentId)
-        {
-            return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-        }
-
-        /// <summary>
         /// Sets the assessment type title and description.
         /// </summary>
         /// <param name="assessment"></param>
