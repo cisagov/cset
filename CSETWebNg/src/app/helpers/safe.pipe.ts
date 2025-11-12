@@ -40,24 +40,5 @@ export class SafePipe implements PipeTransform {
   transform(value: any) {
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
-
-  /**
-   * A parameterized version of the transform() function.  It is not currently
-   * in use because it causes Angular to add warnings to the display text:
-   *   Safe value must use [property]=binding
-   *   https://angular.io/guide/security#xss
-   * @param value
-   * @param type
-   */
-  transform_I_have_been_renamed(value: any, type: string): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
-    switch (type) {
-      case 'html': return this.sanitizer.bypassSecurityTrustHtml(value);
-      case 'style': return this.sanitizer.bypassSecurityTrustStyle(value);
-      case 'script': return this.sanitizer.bypassSecurityTrustScript(value);
-      case 'url': return this.sanitizer.bypassSecurityTrustUrl(value);
-      case 'resourceUrl': return this.sanitizer.bypassSecurityTrustResourceUrl(value);
-      default: throw new Error(`Invalid safe type specified: ${type}`);
-    }
-  }
 }
 
