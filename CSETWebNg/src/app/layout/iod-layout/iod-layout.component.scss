@@ -4328,3 +4328,36 @@ h6.dropdown-header {
 .star-favorite {
   color: #005288 !important;
 }
+.dark-theme .btn-app-mode,
+[data-theme="dark"] .btn-app-mode,
+[data-bs-theme="dark"] .btn-app-mode {
+  background-color: var(--bg-secondary);
+  border-color: var(--cset-primary);
+  color: var(--text-primary);
+}
+.dark-theme .btn-app-mode:hover,
+[data-theme="dark"] .btn-app-mode:hover,
+[data-bs-theme="dark"] .btn-app-mode:hover {
+  background-color: var(--bg-tertiary);
+}
+.dark-theme .btn-app-mode.active,
+[data-theme="dark"] .btn-app-mode.active,
+[data-bs-theme="dark"] .btn-app-mode.active {
+  background-color: var(--cset-primary) !important;
+  color: white !important;
+  border-color: var(--cset-primary) !important;
+}
+
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+
+  // Default state - transparent background
+  .btn-yes, .btn-no, .btn-na,
+  .answer-group .btn-alt,
+  .answer-group .btn-u,
+  .answer-group .btn-mfr {
+    background-color: transparent;
+    color: var(--text-primary);
+  }
+}
