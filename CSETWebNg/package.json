@@ -7,6 +7,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:fast": "ng serve --configuration ultra-fast",
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
@@ -74,11 +75,12 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^20.0.0",
+    "@angular/build": "^20.3.9",
     "@electron/packager": "^19.0.1",
     "@tailwindcss/postcss": "^4.1.16",
     "autoprefixer": "^10.4.21",
     "electron": "^38.5.0",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.3",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.16",
     "webpack": "^5.102.1",
