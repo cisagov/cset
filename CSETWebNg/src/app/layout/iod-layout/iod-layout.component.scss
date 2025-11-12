@@ -26,12 +26,10 @@ SOFTWARE.
 @use "sass:map";
 @use "../../../sass/mixins";
 @use "../../../sass/sal";
-@use "@angular/material/prebuilt-themes/indigo-pink.css";
+@use "../../../sass/theme-variables" as theme;
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
-// @use 'swiper/swiper.css';
-// @use 'swiper/css/navigation';
-// @use 'swiper/css/pagination';
+@use '@angular/material' as mat;
 
 
 $white: #ffffff;
@@ -511,6 +509,82 @@ label[required]::after {
 
 .page-title {
   margin: 1em 0 .5em 2em;
+}
+
+ // Dark mode
+  .dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+    .assessment-header{
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    ::ng-deep .mat-drawer-container{
+      background-color: var(--bg-primary) !important;
+    }
+
+    .white-panel {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.4);
+        }
+      }
+    }
+  }
+
+.white-panel-controls {
+  background-color: $gray-50;
+  margin: 1em 1em 0em 1em;
+  padding: 2em 2em 0em 2em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  // max-height: calc(100cqh - 310px);
+  // min-height: calc(100cqh - 310px);
+
+  color: $gray-800;
+  clip-path: margin-box;
+  //clip-path: inset(0 round 8px);
+}
+
+.white-panel-body {
+  background-color: $gray-50;
+  margin: 0em 1em .5em 1em;
+  padding: 2em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  max-height: calc(100cqh - 420px);
+  min-height: calc(100cqh - 420px);
+
+  color: $gray-800;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  clip-path: margin-box;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
 }
 
 .white-panel {
@@ -2137,7 +2211,7 @@ input[type="checkbox"]+label {
 
 .mat-drawer-content.mat-sidenav-content {
   overflow: hidden;
-  background-color: $gray-150;
+  background-color: var(--bg-primary);
 }
 
 // Import Modules
@@ -4157,4 +4231,38 @@ h6.dropdown-header {
 }
 .star-favorite {
   color: #005288 !important;
+}
+
+.dark-theme .btn-app-mode,
+[data-theme="dark"] .btn-app-mode,
+[data-bs-theme="dark"] .btn-app-mode {
+  background-color: var(--bg-secondary);
+  border-color: var(--cset-primary);
+  color: var(--text-primary);
+}
+.dark-theme .btn-app-mode:hover,
+[data-theme="dark"] .btn-app-mode:hover,
+[data-bs-theme="dark"] .btn-app-mode:hover {
+  background-color: var(--bg-tertiary);
+}
+.dark-theme .btn-app-mode.active,
+[data-theme="dark"] .btn-app-mode.active,
+[data-bs-theme="dark"] .btn-app-mode.active {
+  background-color: var(--cset-primary) !important;
+  color: white !important;
+  border-color: var(--cset-primary) !important;
+}
+
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+
+  // Default state - transparent background
+  .btn-yes, .btn-no, .btn-na,
+  .answer-group .btn-alt,
+  .answer-group .btn-u,
+  .answer-group .btn-mfr {
+    background-color: transparent;
+    color: var(--text-primary);
+  }
 }
