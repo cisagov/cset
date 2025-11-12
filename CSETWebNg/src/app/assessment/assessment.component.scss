@@ -21,6 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+
+@use "../../sass/theme-variables" as theme;
+
 li.active {
     position: relative;
     bottom: 6px !important;
@@ -35,12 +38,12 @@ li.active {
 }
 
 ul.nav-tabs li.active{
-    background-color: #e6e6e6 !important;
+    background-color: var(--bg-primary) !important;
 }
 
 ul.nav-tabs li.active button {
     font-size: 1rem !important;
-    background-color: #e6e6e6 !important;
+    background-color: var(--bg-primary) !important;
 }
 
 ul.nav-tabs li {
