@@ -24,11 +24,6 @@
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
 
-      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
-        *ngIf="auth.isLocal && devMode">
-        <span class="col-sm-12">Local Installation</span>
-      </div>
-
       <div class="no-gutters pcii-header mt-0 ps-3 d-flex flex-00a" *ngIf="assessSvc.isPcii()">
         <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
           Information <a
