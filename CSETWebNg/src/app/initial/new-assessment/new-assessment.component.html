@@ -22,24 +22,24 @@
 -------------------------->
 <div *transloco="let t" class="tw:flex tw:flex-col tw:md:flex-row tw:min-h-screen tw:m-4 tw:p-6 tw:mt-0 tw:rounded-lg">
   <!-- Left Sidebar -->
-  <div class="tw:w-full tw:md:w-1/4 tw:bg-gray-200 tw:p-4 tw:pt-6 tw:rounded-l-lg">
-    <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('categories') }}</h2>
+  <div class="tw:w-full tw:md:w-1/4 tw:p-4 tw:pt-6 tw:rounded-l-lg ">
+    <h2 class="tw:text-xl tw:font-bold tw:mb-4 tw:text-text-primary">{{ t('categories') }}</h2>
 
     <div class="tw:pb-4 ">
-      <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
+      <button class="tw:w-full tw:text-left tw:py-3 tw:px-3   tw:border-b tw:border-border  tw:rounded-lg"
               [ngClass]="{
-            'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'favorites',
-            'tw:text-gray-800': selectedCategory !== 'favorites'
+            'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black': selectedCategory === 'favorites',
+            'tw:text-text-primary': selectedCategory !== 'favorites'
           }"
               (click)="selectCategory('favorites')">
         <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-[#15288] tw:mr-2"
            style="text-shadow: 0 0 3px currentColor"></i>
         {{ t('favorites') }}
 
-        <span class="tw:float-right tw:bg-gray-400 tw:px-2 tw:py-1 tw:rounded tw:text-xs"
+        <span class="tw:float-right tw:text-text-primary tw:px-2 tw:py-1 tw:rounded tw:text-xs"
               [ngClass]="{
-            'tw:bg-gray-400': selectedCategory === 'favorites',
-            'tw:bg-gray-300': selectedCategory !== 'favorites'
+            'tw:bg-badge-active': selectedCategory === 'favorites',
+            'tw:bg-badge-inactive': selectedCategory !== 'favorites'
           }">
       {{getFavoritesCount()}}
     </span>
@@ -50,18 +50,18 @@
     <div>
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
-        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3  tw:border-b tw:border-border  tw:rounded-lg"
                 [ngClass]="{
-          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black':  selectedCategoryId === row.group_Id,
-          'tw:text-gray-800': selectedCategoryId !== row.group_Id
+          'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black':  selectedCategoryId === row.group_Id,
+          'tw:text-text-primary': selectedCategoryId !== row.group_Id
         }"
                 (click)="selectCategory(row.group_Title)">
           <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
           {{row.group_Title}}
-          <span class="tw:float-right tw:bg-gray-400 tw:px-2 tw:py-1 tw:rounded tw:text-xs"
+          <span class="tw:float-right tw:text-text-primary tw:px-2 tw:py-1 tw:rounded tw:text-xs"
                 [ngClass]="{
-          'tw:bg-gray-400': selectedCategoryId === row.group_Id,
-          'tw:bg-gray-300': selectedCategoryId !== row.group_Id
+          'tw:bg-badge-active': selectedCategoryId === row.group_Id,
+          'tw:bg-badge-inactive': selectedCategoryId !== row.group_Id
         }"
           >{{row.galleryItems.length}}</span>
         </button>
@@ -70,19 +70,19 @@
   </div>
 
   <!-- Main Content Area -->
-  <div class="tw:flex-1 tw:bg-white tw:p-6">
+  <div class="tw:flex-1  tw:p-6 tw:bg-bg-primary tw:rounded-t-lg">
     <!-- Page Title -->
-    <div  [innerHTML]="pageTitle"></div>
+    <div  [innerHTML]="pageTitle" class="tw:text-text-primary"></div>
 
     <!-- Selected Category Title -->
     <div class="tw:mb-6">
-      <h2 class="tw:text-xl tw:font-bold tw:mb-4">
+      <h2 class="tw:text-xl tw:font-bold tw:mb-4 tw:text-text-primary">
         {{getSelectedCategoryTitle()}}
 <!--        {{selectedCategory === 'all' ? t('all assessments') :-->
 <!--        selectedCategory === 'favorites' ? t('favorites') :-->
 <!--          selectedCategory}}-->
       </h2>
-      <span class="tw:text-sm tw:text-gray-600">{{getFilteredItems().length}} items</span>
+      <span class="tw:text-sm tw:text-text-secondary">{{getFilteredItems().length}} items</span>
     </div>
 
     <!-- Assessment Cards Grid -->
@@ -104,12 +104,12 @@
           </div>
 
           <!-- Title -->
-          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm">
+          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm tw:text-text-primary">
             {{c.title}}
           </h6>
         </div>
         <!-- Card Footer -->
-        <div class="card-footer"
+        <div class="card-footer tw:dark:bg-gray-700"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
              style="text-align:right;">
           <button [matTooltip]="t('tooltip.view detail')"

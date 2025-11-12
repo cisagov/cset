@@ -9,14 +9,14 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
             "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["src/polyfills.ts"],
             "allowedCommonJsDependencies": [
               "jquery",
               "lodash",
@@ -67,7 +67,6 @@
             ],
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.scss",
@@ -83,29 +82,38 @@
           },
           "configurations": {
             "development": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true,
-                  "inlineCritical": false
-                },
-                "fonts": true
-              },
+              "optimization": false,
               "sourceMap": true,
               "namedChunks": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": true,
+              "extractLicenses": false,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "70mb"
+                  "maximumWarning": "150mb",
+                  "maximumError": "200mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "256kb",
-                  "maximumError": "512kb"
+                  "maximumWarning": "512kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            },
+            "ultra-fast": {
+              "optimization": false,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "150mb",
+                  "maximumError": "200mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "512kb",
+                  "maximumError": "1mb"
                 }
               ]
             },
@@ -130,8 +138,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -160,8 +166,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -173,7 +177,7 @@
           "defaultConfiguration": "development"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "buildTarget": "csetweb-ng:build"
           },
@@ -183,6 +187,9 @@
             },
             "development": {
               "buildTarget": "csetweb-ng:build:development"
+            },
+            "ultra-fast": {
+              "buildTarget": "csetweb-ng:build:ultra-fast"
             }
           },
           "defaultConfiguration": "development"
@@ -194,7 +201,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
@@ -207,7 +214,6 @@
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/sass/styles.scss",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -280,7 +286,7 @@
       "@angular-eslint/schematics"
     ],
     "cache": {
-      "enabled": false
+      "enabled": true
     }
   }
 }

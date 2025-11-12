@@ -1,0 +1,78 @@
+/*
+  Theme Toggle Component Styles
+  Copyright 2025 Battelle Energy Alliance, LLC
+*/
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: var(--cset-primary, #015288);
+  }
+
+  &:focus {
+    outline: 2px solid var(--cset-primary, #015288);
+    outline-offset: 2px;
+  }
+
+  .theme-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+  }
+
+  .theme-toggle-text {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+// Dark theme overrides
+.dark-theme .theme-toggle-btn,
+[data-theme="dark"] .theme-toggle-btn {
+  border-color: var(--border-color, #374151);
+  color: var(--text-primary, rgba(255, 255, 255, 0.87));
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--cset-primary, #0c7dc4);
+  }
+
+  .theme-icon {
+    color: #fff;
+  }
+}
+
+// Compact version (icon only)
+.theme-toggle-btn.compact {
+  padding: 8px;
+  min-width: 40px;
+  justify-content: center;
+
+  .theme-toggle-text {
+    display: none;
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    padding: 6px 12px;
+
+    .theme-toggle-text {
+      font-size: 12px;
+    }
+  }
+}

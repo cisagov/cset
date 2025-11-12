@@ -23,10 +23,12 @@ SOFTWARE.
 */
 @use './sass/_variables.scss';
 @use './sass/_mixins.scss';
+@use './sass/_material-theme.scss';
 //@use "~@ng-select/ng-select/themes/material.theme.css";
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @import './styles.css';
+@import './sass/_dark-theme.scss';
 
 .ag-theme-alpine{
   --ag-font-family: inherit;

@@ -1,0 +1,130 @@
+/*
+  Angular Material Theme Configuration
+  Copyright 2025 Battelle Energy Alliance, LLC
+*/
+
+@use '@angular/material' as mat;
+@use "sass:map";
+// Include the common styles for Angular Material (only once in your app)
+@include mat.core();
+
+// Define your custom color palettes
+$cset-primary-palette: (
+  50: #e0f0f7,
+  100: #b3d9ec,
+  200: #80c0e0,
+  300: #4da7d4,
+  400: #2694ca,
+  500: #015288,  // CSET primary color
+  600: #014b7d,
+  700: #014170,
+  800: #013863,
+  900: #002848,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$cset-accent-palette: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$grayscale: (
+  50: #FAFAFA,
+  100: #F2F2F2,
+  150: #e6e6e6,
+  200: #d9d9d9,
+  250: #cccccc,
+  300: #bfbfbf,
+  350: #b3b3b3,
+  400: #a6a6a6,
+  450: #999999,
+  500: #8c8c8c,
+  550: #808080,
+  600: #737373,
+  650: #666666,
+  700: #595959,
+  750: #4d4d4d,
+  800: #404040,
+  850: #333333,
+  900: #262626,
+  950: #1a1a1a
+);
+$gray-50: map.get($grayscale, 50);
+$gray-100: map.get($grayscale, 100);
+$gray-150: map.get($grayscale, 150);
+$gray-200: map.get($grayscale, 200);
+$gray-250: map.get($grayscale, 250);
+$gray-300: map.get($grayscale, 300);
+$gray-350: map.get($grayscale, 350);
+$gray-400: map.get($grayscale, 400);
+$gray-450: map.get($grayscale, 450);
+$gray-500: map.get($grayscale, 500);
+$gray-550: map.get($grayscale, 550);
+$gray-600: map.get($grayscale, 600);
+$gray-650: map.get($grayscale, 650);
+$gray-700: map.get($grayscale, 700);
+$gray-750: map.get($grayscale, 750);
+$gray-800: map.get($grayscale, 800);
+$gray-850: map.get($grayscale, 850);
+$gray-900: map.get($grayscale, 900);
+
+// Light theme configuration
+$cset-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+// Dark theme configuration
+$cset-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+// Apply the light theme by default
+:root {
+  @include mat.all-component-themes($cset-light-theme);
+}
+
+// Apply dark theme when dark mode is active
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+  @include mat.all-component-colors($cset-dark-theme);
+}
