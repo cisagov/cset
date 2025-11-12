@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
@@ -30,30 +30,31 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { FileExportService } from '../../services/file-export.service';
 
 @Component({
-    selector: 'app-assessment-documents',
-    templateUrl: './assessment-documents.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-assessment-documents',
+  templateUrl: './assessment-documents.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AssessmentDocumentsComponent implements OnInit {
 
   documents: any[] | null = null;
 
-  inAssessment: boolean = false;
+  level!: string;
+
 
   constructor(private dialog: MatDialogRef<AssessmentDocumentsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
     public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService) { }
 
-  ngOnInit() {
-    this.inAssessment = !!this.assessSvc.assessment;
-    const globalOnly = !this.inAssessment;
 
-    this.assessSvc.getAssessmentDocuments(globalOnly).subscribe((response: any) => {
+  ngOnInit() {
+    this.level = this.data?.level.toLowerCase();
+    this.assessSvc.getAssessmentDocuments(this.level).subscribe((response: any) => {
       this.documents = response;
     });
   }

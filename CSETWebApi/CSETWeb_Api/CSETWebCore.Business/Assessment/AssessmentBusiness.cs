@@ -21,7 +21,6 @@ using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Question;
-using LogicExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -811,16 +810,6 @@ namespace CSETWebCore.Business.Assessment
         }
 
         /// <summary>
-        /// Get assessment from given assessment Id
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public ASSESSMENTS GetAssessmentById(int assessmentId)
-        {
-            return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-        }
-
-        /// <summary>
         /// Sets the assessment type title and description.
         /// </summary>
         /// <param name="assessment"></param>
@@ -1153,8 +1142,8 @@ namespace CSETWebCore.Business.Assessment
 
                 foreach (var row in questionIds)
                 {
-                    var originalQuestionId = row.SelectToken("original").ToString().ToInt32();
-                    var newQuestionId = row.SelectToken("new").ToString().ToInt32();
+                    var originalQuestionId = Convert.ToInt32(row.SelectToken("original").ToString());
+                    var newQuestionId = Convert.ToInt32(row.SelectToken("new").ToString());
 
                     var original_record = _context.ANSWER
                         .Where(x => x.Assessment_Id == original_id &&
@@ -1306,7 +1295,7 @@ namespace CSETWebCore.Business.Assessment
         public void SetAssessorMode(int assessmentId, string mode)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            assessment.AssessorMode = mode.ToBool();
+            assessment.AssessorMode = Convert.ToBoolean(mode);
             _context.SaveChanges();
         }
 

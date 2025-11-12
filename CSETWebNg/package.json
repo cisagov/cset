@@ -50,6 +50,7 @@
     "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
     "daisyui": "^5.4.2",
+    "dompurify": "^3.2.4",
     "electron-find-on-page": "^1.0.1",
     "electron-log": "^5.4.3",
     "file-saver": "^2.0.5",
@@ -86,5 +87,8 @@
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
+  },
+  "overrides": {
+    "tar": "^7.5.2"
   }
 }
