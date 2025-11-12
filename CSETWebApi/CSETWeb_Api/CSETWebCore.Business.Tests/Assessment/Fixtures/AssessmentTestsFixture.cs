@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Tests.Assessment.Fixtures
             TokenManagerMock.Setup(t => t.GetUserId()).Returns(userId);
             TokenManagerMock.Setup(t => t.AssessmentForUser()).Returns(assessmentId);
             TokenManagerMock.Setup(t => t.GetCurrentLanguage()).Returns("en");
-            TokenManagerMock.Setup(t => t.GetAccessKey()).Returns((string)null);
+            TokenManagerMock.Setup(t => t.GetAccessKey()).Returns((string)null!);
             TokenManagerMock.Setup(t => t.Payload(It.IsAny<string>())).Returns("");
 
             // Setup HTTP Context with claims

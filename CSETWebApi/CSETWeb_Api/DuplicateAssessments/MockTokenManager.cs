@@ -325,7 +325,7 @@ namespace DuplicateAssessments
             return true;
         }
 
-        public bool IsUserAuthorizedForAssessment()
+        public bool DoesTokenContainAssessment()
         {
             return true;
         }

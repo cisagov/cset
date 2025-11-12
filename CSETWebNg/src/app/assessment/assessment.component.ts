@@ -39,9 +39,10 @@ import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
-import { Subscription } from 'rxjs'
+import { merge, Subscription } from 'rxjs';
 import { CompletionService } from '../services/completion.service';
 import { DemographicService } from '../services/demographic.service';
+import { DemographicIodService } from '../services/demographic-iod.service';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -116,7 +117,7 @@ export class AssessmentComponent implements OnInit {
   private wheelListener: (() => void) | undefined;
 
   /**
-   * 
+   *
    */
   constructor(
     private router: Router,
@@ -130,6 +131,7 @@ export class AssessmentComponent implements OnInit {
     private appRef: ApplicationRef,
     private completionSvc: CompletionService,
     private demoSvc: DemographicService,
+    private demoIodSvc: DemographicIodService,
     private renderer: Renderer2,
     private el: ElementRef
   ) {
@@ -173,7 +175,10 @@ export class AssessmentComponent implements OnInit {
             Math.round((this.completedQuestions / this.totalQuestions) * 100) : 0;
         }
       });
-      this.demoSvc.demographicUpdateCompleted$.subscribe(() => {
+      merge(
+        this.demoSvc.demographicUpdateCompleted$,
+        this.demoIodSvc.demographicUpdateCompleted$
+      ).subscribe(() => {
         this.loadCompletionData();
       });
     }

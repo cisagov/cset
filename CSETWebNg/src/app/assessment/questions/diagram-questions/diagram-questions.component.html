@@ -21,28 +21,31 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t">
-<div class="white-panel">
+  <div class="white-panel-controls">
 
-  <div id="top"></div>
-  <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
-    
-    <div class="d-flex sticky-sal p-1 justify-content-end align-items-start flex-11a" style="float: right; background-color: #ffffffcc;">
+    <div id="top"></div>
+    <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
       
-      <div class="me-3 answered-count" *ngIf="!!categories" matTooltip="{{t('tooltip.answered count')}}">
-        {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
-      </div>
-      <div>
-        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-          matTooltip="Collapse All" aria-label="Collapse All"><i class="fas fa-compress-alt"></i></button>
-        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
-          aria-label="Expand All">
-          <i class="fas fa-expand-alt"></i>
-        </button>
-        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
-          <i class="cset-icons-filter" matTooltip="Filter" aria-label="Filter"></i>
-        </button>
+      <div class="d-flex sticky-sal p-1 justify-content-end align-items-start flex-11a" style="float: right; background-color: #ffffffcc;">
+        
+        <div class="me-3 answered-count" *ngIf="!!categories" matTooltip="{{t('tooltip.answered count')}}">
+          {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
+        </div>
+        <div>
+          <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
+            matTooltip="Collapse All" aria-label="Collapse All"><i class="fas fa-compress-alt"></i></button>
+          <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
+            aria-label="Expand All">
+            <i class="fas fa-expand-alt"></i>
+          </button>
+          <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
+            <i class="cset-icons-filter" matTooltip="Filter" aria-label="Filter"></i>
+          </button>
+        </div>
       </div>
     </div>
+  </div>
+  <div class="white-panel-body-long">
     <div class="d-block mb-2">
       <h3>
         {{t('titles.diagram component questions')}}
@@ -59,17 +62,16 @@
     <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">
       <app-category-block [myCategory]="c"></app-category-block>
     </div>
-  </div>
 
-  <div *ngIf="categories?.length === 0"
-    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-      There are no applicable questions to display. This may be caused by a network diagram
-      that contains no network components.
-    </span>
+    <div *ngIf="categories?.length === 0"
+      class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        There are no applicable questions to display. This may be caused by a network diagram
+        that contains no network components.
+      </span>
+    </div>
   </div>
-</div>
   <app-nav-back-next [page]="'diagram-questions'"></app-nav-back-next>
 
 </div>
