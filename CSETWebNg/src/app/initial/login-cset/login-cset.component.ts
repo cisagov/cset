@@ -32,6 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 import { JwtParser } from '../../helpers/jwt-parser';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
     selector: 'app-login-cset',
@@ -49,6 +50,8 @@ export class LoginCsetComponent implements OnInit {
   assessmentId: number;
   model: any = {};
 
+  theme: string;
+
   loading = false;
   incorrect = false;
   showPassword = false;
@@ -64,10 +67,13 @@ export class LoginCsetComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themeSvc: ThemeService
   ) { }
 
   ngOnInit() {
+    this.theme = this.themeSvc.getTheme();
+
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.isRunningInElectron = this.configSvc.isRunningInElectron;
     if (this.authenticationService.isLocal) {

@@ -30,7 +30,6 @@ SOFTWARE.
     color: gray;
     position: absolute;
     width: 20px;
-    background-color: #fff;
     text-align: center;
     top: 15px;
     right: 10px;
@@ -46,4 +45,10 @@ SOFTWARE.
 .input-icon:hover,
 .input-icon:focus {
     color: black;
+}
+
+:host-context(.dark-theme) {
+  .input-icon:hover, .input-icon:focus {
+    color: white;
+  }
 }
