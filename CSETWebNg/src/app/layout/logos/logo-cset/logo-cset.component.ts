@@ -51,11 +51,11 @@ export class LogoCsetComponent implements OnInit {
     this.logoWidth = this.logoHeight * 4.28;
 
     if (this.mode == 'white') {
-      this.color1 = 'fill-primary';
+      this.color1 = 'cset-logo-fill-color';
       this.color2 = 'fill-white';
     } else {
       this.color1 = 'fill-white';
-      this.color2 = 'fill-primary';
+      this.color2 = 'cset-logo-fill-color';
     }
   }
 
