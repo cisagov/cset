@@ -4371,7 +4371,7 @@ h6.dropdown-header {
 }
 
 .star-favorite {
-  color: #005288 !important;
+  color:var(--cset-primary);
 }
 
 .dark-theme .btn-app-mode,
