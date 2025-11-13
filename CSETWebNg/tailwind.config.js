@@ -10,7 +10,7 @@ export default {
     extend: {
       colors: {
         // Custom CSET brand colors that work in both modes
-        'cset-primary': '#015288',
+        'cset-primary': 'var(--cset-primary)',
         'cset-primary-dark': '#013a5f',
         'bg-primary': 'var(--bg-primary)',
         'bg-secondary': 'var(--bg-secondary)',
