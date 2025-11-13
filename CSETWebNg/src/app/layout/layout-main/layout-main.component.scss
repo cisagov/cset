@@ -135,6 +135,7 @@ $validation-color: red;
 // Oranges
 $local-install-background-color: #ffc107;
 $bg-debug-highlight: #fbe1c2;
+$bg-debug-highlight-dark: #835825;
 $bc-filters-engaged: #f9ce15;
 
 // Answer Options
@@ -542,14 +543,16 @@ label[required]::after {
 }
 
 // Dark mode
-.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
 
-  .assessment-header{
+  .assessment-header {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
   }
 
-  ::ng-deep .mat-drawer-container{
+  ::ng-deep .mat-drawer-container {
     background-color: var(--bg-primary) !important;
   }
 
@@ -1295,6 +1298,12 @@ table.td-align-top td {
   color: $white;
 }
 
+.dark-theme {
+  .btn-level {
+    background-color: $gray-700;
+  }
+}
+
 .btn-geo {
   background-color: $gray-150;
   color: $primary-850;
@@ -1490,6 +1499,10 @@ ul.mat-tree-node {
   padding: 3px 4px;
   border-radius: 0.3rem;
   margin-left: .5rem;
+}
+
+.dark-theme .debug-highlight {
+  background-color: $bg-debug-highlight-dark;
 }
 
 /* --- spinner styles -- */
@@ -2487,17 +2500,43 @@ tooltip.glossary-definition.tooltip-left::after {
 }
 
 .extras-button.active {
-  background-color: $gray-50;
+  background-color: var(--bg-secondary);
   border: 3px solid $primary-450;
 }
 
 .extras-button:focus {
-  background-color: $gray-50;
+  background-color: var(--bg-secondary);
   border: 3px solid $primary-250;
 }
 
 .extras-button.empty {
   display: none;
+}
+
+.icon-color {
+  color: $primary-800;
+  --icon-accent: var(--bg-secondary)
+}
+
+.red-dot {
+  stroke: var(--bg-secondary);
+  stroke-width: 1;
+  fill: #cc0000;
+}
+
+
+.dark-theme {
+
+  .extras-button.active {
+    background-color: var(--bg-secondary);
+    border: 3px solid $primary-450;
+  }
+
+  .icon-color {
+    color: $gray-450;
+    --icon-accent: var(--bg-secondary)
+  }
+
 }
 
 .reqlabel {
@@ -2600,7 +2639,7 @@ ul.related-questions li {
 // Assessment Component
 ///////////////////////////////////////////////////////////////////////
 
-.mat-drawer{
+.mat-drawer {
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
@@ -4287,16 +4326,19 @@ h6.dropdown-header {
   border-color: var(--cset-primary);
   color: var(--text-primary);
 }
+
 .dark-theme .btn-app-mode:hover,
 [data-theme="dark"] .btn-app-mode:hover,
 [data-bs-theme="dark"] .btn-app-mode:hover {
   background-color: var(--bg-tertiary);
 }
+
 .btn-app-mode.active {
   background-color: #005288;
   color: #fff;
   border-color: #005288;
 }
+
 .dark-theme .btn-app-mode.active,
 [data-theme="dark"] .btn-app-mode.active,
 [data-bs-theme="dark"] .btn-app-mode.active {
@@ -4310,7 +4352,9 @@ h6.dropdown-header {
 [data-bs-theme="dark"] {
 
   // Default state - transparent background
-  .btn-yes, .btn-no, .btn-na,
+  .btn-yes,
+  .btn-no,
+  .btn-na,
   .answer-group .btn-alt,
   .answer-group .btn-u,
   .answer-group .btn-mfr {
@@ -4320,17 +4364,21 @@ h6.dropdown-header {
 
   // Hover and selected states
   .answer-group {
-    .btn-yes:hover, .btn-yes.answer-selected {
+
+    .btn-yes:hover,
+    .btn-yes.answer-selected {
       background-color: #006000;
       color: white;
     }
 
-    .btn-no:hover, .btn-no.answer-selected {
+    .btn-no:hover,
+    .btn-no.answer-selected {
       background-color: #d32f2f;
       color: white;
     }
 
-    .btn-na:hover, .btn-na.answer-selected {
+    .btn-na:hover,
+    .btn-na.answer-selected {
       background-color: #367190;
       color: white;
     }
@@ -4348,7 +4396,8 @@ h6.dropdown-header {
     .btn-mfr {
       border-color: var(--border-color);
 
-      &:hover, &.answer-selected {
+      &:hover,
+      &.answer-selected {
         background-color: #2c5c6d;
         color: white;
       }
