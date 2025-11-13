@@ -128,17 +128,13 @@
             <div class="tw:flex tw:items-center tw:gap-4">
               <!-- Progress Section -->
               <div class="tw:flex tw:items-center tw:gap-3" *ngIf="assessment?.maturityModel?.modelName !== 'CIS'">
-                <div class="tw:relative" >
-                  <progress
-                    class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none tw:bg-gray-300 tw:dark:bg-gray-600"
-                    
-                    [value]="getCompletionPercentage()"
-                    [matTooltip]="getProgressTooltip()"
-                    max="100">
-                  </progress>
-                </div>
+                <progress
+                  class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
+                  [value]="getCompletionPercentage()"
+                  [matTooltip]="getProgressTooltip()"
+                  max="100">
+                </progress>
                 <span class="tw:text-sm tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
-
               </div>
 
               <!-- Divider -->
