@@ -368,8 +368,8 @@
                                 display: inline-flex; align-items: center; justify-content: center;" tabindex="0">
                             </button>
                             <!-- Global/Local Toggle Button -->
-                            <button (click)="changeSharedStatus(doc)" class="btn"
-                                [matTooltip]="doc.isGlobal ? t('tooltip.local document') : t('tooltip.shared document')"
+                            <button (click)="toggleShared(doc)" class="btn"
+                                [matTooltip]="doc.isShared ? t('tooltip.local document') : t('tooltip.shared document')"
                                 matTooltipPosition="above" style="width: 46px; height: 46px; padding: 0;
                                     margin-left: 1rem;
                                     display: inline-flex; align-items: center; justify-content: center;">
@@ -380,7 +380,7 @@
                                     <path
                                         d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                                     <path d="M2 12h20" />
-                                    <g *ngIf="doc.isGlobal" transform="scale(0.5) translate(23, 23)">
+                                    <g *ngIf="doc.isShared" transform="scale(0.5) translate(23, 23)">
                                         <circle cx="12" cy="12" r="12" fill="currentColor" />
                                         <path d="M6 12l4 4 8-8" stroke="white" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round" />

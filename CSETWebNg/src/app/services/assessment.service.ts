@@ -679,7 +679,7 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
-  hasGlobalDocuments() {
+  hasSharedDocuments() {
     return this.http.get(this.apiUrl + 'hasGlobalDocuments');
   }
 

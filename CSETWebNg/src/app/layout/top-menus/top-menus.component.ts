@@ -564,8 +564,8 @@ export class TopMenusComponent implements OnInit {
   }
 
   checkHasGlobalDocuments(): void {
-    let isGlobal = false;
-    this.assessSvc.hasGlobalDocuments().subscribe(
+    let isShared = false;
+    this.assessSvc.hasSharedDocuments().subscribe(
       (response: any) => {
         this.globalDocuments = response;
       }
