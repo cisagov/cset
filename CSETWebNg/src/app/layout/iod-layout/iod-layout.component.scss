@@ -535,7 +535,7 @@ label[required]::after {
           background: rgba(255, 255, 255, 0.4);
         }
       }
-     
+
     }
      .white-panel-body-long{
         background-color: var(--bg-secondary);
@@ -4326,7 +4326,7 @@ h6.dropdown-header {
 }
 
 .star-favorite {
-  color: #005288 !important;
+  color:var(--cset-primary);
 }
 .dark-theme .btn-app-mode,
 [data-theme="dark"] .btn-app-mode,
