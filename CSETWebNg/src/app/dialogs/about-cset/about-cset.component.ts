@@ -25,6 +25,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
     selector: 'app-about-cset',
@@ -34,16 +35,21 @@ import { VersionService } from '../../services/version.service';
     standalone: false
 })
 export class AboutCsetComponent implements OnInit {
+  theme: string;
+
   version: any;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
   linkerTime: string = null;
 
-  constructor(private dialog: MatDialogRef<AboutCsetComponent>,
+  constructor(
+    private dialog: MatDialogRef<AboutCsetComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    public themeSvc: ThemeService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.versionSvc.localVersionObservable$.subscribe(localVersion => {
       this.version = localVersion;
     });
@@ -53,6 +59,7 @@ export class AboutCsetComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.theme = this.themeSvc.getTheme();
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }

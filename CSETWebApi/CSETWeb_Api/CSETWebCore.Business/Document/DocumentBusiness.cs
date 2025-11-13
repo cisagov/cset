@@ -106,7 +106,7 @@ namespace CSETWebCore.Business.Document
         /// </summary>
         /// <param name="id"></param>
         /// <param name="isGlobal"></param>
-        public void ChangeGlobal(int id, Boolean isGlobal)
+        public void ToggleShared(int id, Boolean isShared)
         {
             var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
 
@@ -116,7 +116,7 @@ namespace CSETWebCore.Business.Document
                 return;
             }
 
-            doc.IsGlobal = isGlobal;
+            doc.IsGlobal = isShared;
             doc.UpdatedTimestamp = DateTime.Now;
 
             _context.DOCUMENT_FILE.Update(doc);

@@ -50,7 +50,7 @@ export interface QuestionDocument {
   document_Id: number;
   title: string;
   fileName: string;
-  isGlobal: boolean;
+  isShared: boolean;
 }
 
 export interface QuestionDetailsContentViewModel {

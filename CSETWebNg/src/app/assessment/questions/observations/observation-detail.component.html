@@ -27,53 +27,52 @@
   </div>
 
 
-  <mat-dialog-content class="py-3" *ngIf="observation">
-    <div class="item bigitem">
-      <p>{{ t('observation.observation description') }}</p>
+  <mat-dialog-content class="p-3" *ngIf="observation">
 
-      <div class="form-group">
-        <label for="title" class="form-label">{{ t('observation.title') }}</label>
-        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize
-          [(ngModel)]="observation.summary"></textarea>
-      </div>
+    <p>{{ t('observation.observation description') }}</p>
 
-      <div class="form-group">
-        <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
-        <select id="importance" name="importance" class="form-select" [(ngModel)]="observation.importance_Id"
-          (change)="updateImportance($event.target.value)">
-          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('observation.importance ' +
-            import?.value.toLowerCase()) }}</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label for="title" class="form-label">{{ t('observation.title') }}</label>
+      <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize
+        [(ngModel)]="observation.summary"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label for="date" class="form-label">{{ t('observation.resolution date') }}</label>
-        <input matInput MatDatepickerInput class="form-control" id="date" name="date"
-          [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()"
-          (click)="picker.open()" (change)="update()">
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
+    <div class="form-group">
+      <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
+      <select id="importance" name="importance" class="form-select" [(ngModel)]="observation.importance_Id"
+        (change)="updateImportance($event.target.value)">
+        <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('observation.importance ' +
+          import?.value.toLowerCase()) }}</option>
+      </select>
+    </div>
 
-      <div class="form-group">
-        <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
-        <textarea id="issue" autocomplete="off" class="form-control" type="text" appAutoSize
-          [(ngModel)]="observation.issue"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
-        <textarea id="impact" autocomplete="off" class="form-control" type="text" appAutoSize
-          [(ngModel)]="observation.impact"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
-        <textarea id="recommendations" autocomplete="off" class="form-control" type="text" appAutoSize
-          [(ngModel)]="observation.recommendations"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="vulnerabilities" class="form-label">{{ t('observation.vulnerabilities') }}</label>
-        <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text" appAutoSize
-          [(ngModel)]="observation.vulnerabilities"></textarea>
-      </div>
+    <div class="form-group">
+      <label for="date" class="form-label">{{ t('observation.resolution date') }}</label>
+      <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+        [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()"
+        (click)="picker.open()" (change)="update()">
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+
+    <div class="form-group">
+      <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
+      <textarea id="issue" autocomplete="off" class="form-control" type="text" appAutoSize
+        [(ngModel)]="observation.issue"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
+      <textarea id="impact" autocomplete="off" class="form-control" type="text" appAutoSize
+        [(ngModel)]="observation.impact"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
+      <textarea id="recommendations" autocomplete="off" class="form-control" type="text" appAutoSize
+        [(ngModel)]="observation.recommendations"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="vulnerabilities" class="form-label">{{ t('observation.vulnerabilities') }}</label>
+      <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text" appAutoSize
+        [(ngModel)]="observation.vulnerabilities"></textarea>
     </div>
 
 
@@ -97,7 +96,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+  <mat-dialog-actions class="p-3 mb-0 mt-3 d-flex justify-content-between flex-00a">
     <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
     <button class="btn btn-primary" (click)="save()">{{ t('buttons.save') }}</button>
   </mat-dialog-actions>

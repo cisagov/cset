@@ -752,7 +752,7 @@
             "css style": "CSS Style",
             "data tables": "Data Tables",
             "all interactive elements": "All Interactive Elements",
-            "does not apply": "The following accessibility features does not apply to our software"
+            "does not apply": "The following accessibility features do not apply to our software"
           },
           "p": {
             "1": "In consideration of Section 508 of the U.S. Rehabilitation Act (29 U.S.C. 794d), the features and functions in this application have been developed to support users with accessibility requirements. Industry best practices and standards have guided our design and development processes to incorporate accessibility features built into the Windows operating system and the .NET architecture, as well as the Chrome, Firefox, and Edge browsers. The software development team is committed to integrating accessible design thinking throughout the entire product development cycle. More information on Section 508 and the technical standards can be found at <a href=\"https://www.section508.gov\">www.section508.gov</a>.",
