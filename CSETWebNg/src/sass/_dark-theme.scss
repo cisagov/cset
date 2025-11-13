@@ -26,6 +26,7 @@
   --bg-highlight: #dbeafe;
   --border-highlight: #93c5fd;
   --border-light: #e5e7eb;
+  --progress-bg: #d1d5db;
 }
 
 // Dark theme colors
@@ -46,6 +47,7 @@
   --bg-highlight: #015288;
   --border-highlight: #0c7dc4;
   --border-light: #374151;
+  --progress-bg: #4b5563;
 
 }
 
@@ -426,7 +428,7 @@
   // Custom progress bars
   progress {
     &::-webkit-progress-bar {
-      background-color: var(--bg-tertiary);
+      background-color: var(--progress-bg);
     }
 
     &::-webkit-progress-value {
