@@ -560,9 +560,9 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe();
   }
 
-  changeSharedStatus(document: QuestionDocument) {
-    document.isGlobal = !document.isGlobal;
-    this.questionsSvc.changeSharedStatus(document.document_Id, document.isGlobal).subscribe();
+  toggleShared(document: QuestionDocument) {
+    document.isShared = !document.isShared;
+    this.questionsSvc.toggleShared(document.document_Id, document.isShared).subscribe();
   }
 
   isNullOrWhiteSpace(str: string) {
