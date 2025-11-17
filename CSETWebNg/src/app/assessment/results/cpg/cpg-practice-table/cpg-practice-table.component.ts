@@ -47,6 +47,32 @@ export class CpgPracticeTableComponent implements OnInit {
 
   model: any;
 
+  groupIdToClass: Record<number, string> = {
+    // CSF 2.0
+    567: 'csf2-func-gv',
+    568: 'csf2-func-id',
+    569: 'csf2-func-pr',
+    570: 'csf2-func-de',
+    571: 'csf2-func-rs',
+    572: 'csf2-func-rc',
+
+    // CPG 1.0 (CSF1 colors)
+    200: 'csf1-func-id',
+    560: 'csf1-func-id',
+    201: 'csf1-func-pr',
+    561: 'csf1-func-pr',
+    202: 'csf1-func-de',
+    562: 'csf1-func-de',
+    203: 'csf1-func-rs',
+    563: 'csf1-func-rs',
+    204: 'csf1-func-rc',
+    564: 'csf1-func-rc',
+
+    // SSG - IT
+    565: 'ssg-it-software-dev',
+    566: 'ssg-it-product-design'
+  };
+
   /**
    * 
    */
@@ -59,7 +85,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-   // let modelId: number | null = null;
+    // let modelId: number | null = null;
 
     if (!!this.ssgModelId) {
       this.modelId = this.ssgModelId;
@@ -89,74 +115,5 @@ export class CpgPracticeTableComponent implements OnInit {
     }
 
     return null;
-  }
-
-  /**
-   * Returns the color for the CSF function of the group.
-   * This is specific to CPG grouping IDs.
-   * 
-   * The colors were slightly modified in CSF 2.0.
-   * 
-   * As SSG models are added to CSET the new grouping codes will be
-   * added to this logic.
-   */
-  backgroundColor(groupId: number): string {
-
-    // CPG 2.0
-    switch (groupId) {
-      case 567:
-        // govern
-        return this.colorSvc.nistCsfFuncColor('GV-2');
-      case 568:
-        // identify
-        return this.colorSvc.nistCsfFuncColor('ID-2');
-      case 569:
-        // protect
-        return this.colorSvc.nistCsfFuncColor('PR-2');
-      case 570:
-        return this.colorSvc.nistCsfFuncColor('DE-2');
-      case 571:
-        // respond
-        return this.colorSvc.nistCsfFuncColor('RS-2');
-      case 572:
-        // recover
-        return this.colorSvc.nistCsfFuncColor('RC-2');
-
-
-      // CPG 1.0
-      case 200:
-      case 560:
-        // identify
-        return this.colorSvc.nistCsfFuncColor('ID');
-      case 201:
-      case 561:
-        // protect
-        return this.colorSvc.nistCsfFuncColor('PR');
-      case 202:
-      case 562:
-        // detect
-        return this.colorSvc.nistCsfFuncColor('DE');
-      case 203:
-      case 563:
-        // respond
-        return this.colorSvc.nistCsfFuncColor('RS');
-      case 204:
-      case 564:
-        // recover
-        return this.colorSvc.nistCsfFuncColor('RC');
-
-
-      // SSG - IT
-      case 565:
-        // SSG - IT Software Development
-        return '#305496';
-      case 566:
-        // SSG - IT Product Design
-        return '#548235';
-
-
-      default:
-        return '#6BA443';
-    }
   }
 }
