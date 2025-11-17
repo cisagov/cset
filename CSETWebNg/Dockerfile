@@ -17,11 +17,9 @@ RUN apt-get update
 RUN npm i -g @angular/cli \
     && npm i
 
-# Increase Node's memory limit for the Angular build step
 RUN ng build \
     --configuration=production \
     --source-map=false \
-    --vendor-chunk=true \
     --optimization=true
 
 FROM nginx:alpine
