@@ -44,7 +44,7 @@
       </div>
 
       <div *ngIf="defaults != null && defaults.length === 0"
-        class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+        class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
         <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
           {{t('parameters.none')}}
@@ -70,6 +70,6 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0">
-    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+    <button class="btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>
