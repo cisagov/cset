@@ -1498,7 +1498,7 @@ ul.mat-tree-node {
 .side-nav-container .current-node>button {
   border: none;
   border-radius: .3rem !important;
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   color: $primary-600;
 }
 
