@@ -28,12 +28,23 @@ div {
 
 .green-dollars {
     font-size: 1.2rem;
-    color: #5e8144;
+    color: #426825;
 }
 
 .gray-dollars {
     font-size: 1.2rem;
-    color: #c6cdb6;
+    color: #99999994;
+}
+
+:host-context(.dark-theme) {
+
+    .green-dollars {
+        color: #02ed31a0;
+    }
+
+    .gray-dollars {
+        color: #ffffff42;
+    }
 }
 
 .lmh {

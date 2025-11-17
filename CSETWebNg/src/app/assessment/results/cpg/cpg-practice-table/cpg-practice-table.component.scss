@@ -22,8 +22,12 @@ SOFTWARE.
 
 */
 
+$near-white: #ffffffdd;
+$near-black: #000000d5;
+
+
 .cpg-domain-bar {
-    color: white;
+    color: $near-white;
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
@@ -33,27 +37,27 @@ SOFTWARE.
     border-top: none !important;
 }
 
-.cpg-table {
+table.cpg-table {
     width: 100%;
     margin-bottom: 2rem;
 }
 
-.cpg-table th {
-    color: white;
+table.cpg-table th {
+    color: var(--text-primary);
     padding: 1rem .5rem;
     border-right: 1px solid white;
     font-size: .8rem;
 }
 
-.cpg-table th:first-child {
+table.cpg-table th:first-child {
     border-left: 1px solid #ccc;
 }
 
-.cpg-table th:last-child {
+table.cpg-table th:last-child {
     border-right: 1px solid #ccc;
 }
 
-.cpg-table td {
+table.cpg-table td {
     border: 1px solid #ccc;
     padding: 1rem .5rem;
     font-size: .8rem;
@@ -64,4 +68,146 @@ SOFTWARE.
     font-weight: bold;
     font-size: 1.05rem;
     margin-bottom: .3rem;
+}
+
+
+// FUNCION COLORS
+
+// CPG 1 (CSF 1) - light mode
+.csf1-func-id {
+    background-color: #355C9B;
+    border-color: #355C9B;
+    color: $near-white !important;
+}
+
+.csf1-func-pr {
+    background-color: #784390;
+    border-color: #784390;
+    color: $near-white !important;
+}
+
+.csf1-func-de {
+    background-color: #F7E24E;
+    border-color: #F7E24E;
+}
+
+.csf1-func-rs {
+    background-color: #D93A34;
+    border-color: #D93A34;
+}
+
+.csf1-func-rc {
+    background-color: #4CA056;
+    border-color: #4CA056;
+}
+
+
+
+// CPG 2 (CSF 2) - light mode
+.csf2-func-gv {
+    background-color: #f9f39b;
+    border-color: #f9f39b;
+    color: $near-black;
+}
+
+.csf2-func-id {
+    background-color: #4cb3e0;
+    border-color: #4cb3e0;
+    color: $near-black;
+}
+
+.csf2-func-pr {
+    background-color: #918cea;
+    border-color: #918cea;
+    color: $near-black;
+}
+
+.csf2-func-de {
+    background-color: #fab647;
+    border-color: #fab647;
+    color: $near-black;
+}
+
+.csf2-func-rs {
+    background-color: #e47677;
+    border-color: #e47677;
+    color: $near-black;
+}
+
+.csf2-func-rc {
+    background-color: #7ef49e;
+    border-color: #7ef49e;
+    color: $near-black;
+}
+
+
+.ssg-it-product-design {
+    background-color: #548235;
+    color: $near-white !important;
+}
+
+.ssg-it-software-dev {
+    background-color: #305496;
+    color: $near-white !important;
+}
+
+
+
+:host-context(.dark-theme) {
+
+    // CSF1
+    .csf1-func-id {
+        background-color: #2563EB;
+    }
+
+    .csf1-func-pr {
+        background-color: #7e22ce;
+    }
+
+
+    // CSF2
+    .csf2-func-gv {
+        background-color: #875d04;
+        border-color: #875d04;
+        color: $near-white;
+    }
+
+    .csf2-func-id {
+        background-color: #005479;
+        border-color: #005479;
+        color: $near-white;
+    }
+
+    .csf2-func-pr {
+        background-color: #47438f;
+        border-color: #47438f;
+        color: $near-white;
+    }
+
+    .csf2-func-de {
+        background-color: #d97706;
+        border-color: #d97706;
+        color: $near-white;
+    }
+
+    .csf2-func-rs {
+        background-color: #EF4444;
+        border-color: #EF4444;
+        color: $near-white;
+    }
+
+    .csf2-func-rc {
+        background-color: #059669;
+        border-color: #059669;
+        color: $near-white;
+    }
+
+
+    .ssg-it-product-design {
+        background-color: #548235;
+    }
+
+    .ssg-it-software-dev {
+        background-color: #305496;
+    }
 }
