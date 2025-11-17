@@ -2915,11 +2915,6 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 
 // About
-.about article {
-  //width: 33.33%;
-  margin-right: $spacer * 3;
-}
-
 .about article:nth-child(3) {
   margin-right: 0rem;
 }
@@ -2947,9 +2942,6 @@ mat-sidenav.mat-sidenav {
   font-size: 30px;
 }
 
-.about article {
-  max-width: 300px;
-}
 
 // Component Override
 .component-override article {

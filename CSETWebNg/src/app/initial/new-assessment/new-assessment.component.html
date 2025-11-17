@@ -25,8 +25,8 @@
   <div class="tw:w-full tw:md:w-1/4 tw:p-4 tw:pt-6 tw:rounded-l-lg ">
     <h2 class="tw:text-xl tw:font-bold tw:mb-4 tw:text-text-primary">{{ t('categories') }}</h2>
 
-    <div class="tw:pb-4 ">
-      <button class="tw:w-full tw:text-left tw:py-3 tw:px-3   tw:border-b tw:border-border  tw:rounded-lg"
+    <div class="tw:pb-4">
+      <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:rounded-lg"
               [ngClass]="{
             'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black': selectedCategory === 'favorites',
             'tw:text-text-primary': selectedCategory !== 'favorites'
@@ -50,7 +50,7 @@
     <div>
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
-        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3  tw:border-b tw:border-border  tw:rounded-lg"
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:rounded-lg"
                 [ngClass]="{
           'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black':  selectedCategoryId === row.group_Id,
           'tw:text-text-primary': selectedCategoryId !== row.group_Id
