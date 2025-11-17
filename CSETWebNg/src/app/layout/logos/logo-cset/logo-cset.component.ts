@@ -40,6 +40,10 @@ export class LogoCsetComponent implements OnInit {
   @Input()
   logoHeight = 28;
 
+  @Input()
+  includeLock: boolean = true;
+  
+
   logoWidth: number;
 
   color1: string;

@@ -486,13 +486,13 @@ namespace CSETWebCore.Api.Controllers
         /// Changes if document is Globally accessible
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="isGlobal"></param>
+        /// <param name="isShared"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/ChangeGlobal")]
-        public IActionResult ChangeGlobal([FromQuery] int id, [FromQuery] Boolean isGlobal)
+        [Route("api/doc/toggleshared")]
+        public IActionResult ToggleShared([FromQuery] int id, [FromQuery] Boolean isShared)
         {
-            _document.ChangeGlobal(id, isGlobal);
+            _document.ToggleShared(id, isShared);
             return Ok();
         }
 
