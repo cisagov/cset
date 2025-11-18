@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.DataLayer.Model;
@@ -958,8 +957,6 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
             // Then, include a multi-part LIKE search with the supplied words (search terms)
-            StringBuilder sbWhereClause = new StringBuilder();
-
             List<string> searchTerms = new List<string>();
 
             // pull out any quoted literals as a single term
@@ -974,18 +971,19 @@ namespace CSETWebCore.Business.ModuleBuilder
             searchParms.SearchTerms = Regex.Replace(searchParms.SearchTerms, pattern, "");
 
             searchTerms.AddRange(new List<string>(searchParms.SearchTerms.Split(' ')));
+
+            // Start with all questions and apply LIKE filter for each search term using LINQ
+            var questions = _context.NEW_QUESTION.AsQueryable();
             foreach (string term in searchTerms)
             {
-                if (term != "")
+                if (!string.IsNullOrEmpty(term))
                 {
-                    sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%').Replace("\'", "''"));
+                    string searchTerm = term.Replace('*', '%');
+                    questions = questions.Where(q => EF.Functions.Like(q.Simple_Question, $"%{searchTerm}%"));
                 }
             }
 
-            string whereClause = sbWhereClause.ToString();
-            whereClause = whereClause.Substring(0, whereClause.Length - 5);
-
-            var hits2 = _context.NEW_QUESTION.FromSqlRaw("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
+            var hits2 = questions.ToList();
 
             var hits3 = from q in hits2
                         join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
