@@ -2003,6 +2003,16 @@ ol.alpha-bracket li::before {
 }
 
 
+/// For report classes used in the rest of the app 
+/// where dark mode may be turned on ///////////////////////
+:host-context(.dark-theme) {
+
+    .sub-header-1 {
+        color: #ffffffcc;
+    }
+
+}
+
 
 ///   CIE Styles ////////////////////////////////////////////////
 .cie-questions-header-collapse-button-radius {
