@@ -93,7 +93,7 @@ namespace CSETWebCore.Helpers
             using (Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
             {
                 byte[] content = new byte[resourceStream.Length];
-                resourceStream.Read(content, 0, content.Length);
+                resourceStream.ReadExactly(content, 0, content.Length);
 
                 return content;
             }
@@ -139,7 +139,7 @@ namespace CSETWebCore.Helpers
                 var fs = File.OpenRead(path);
 
                 byte[] byteArray = new byte[fs.Length];
-                fs.Read(byteArray, 0, (int)fs.Length);
+                fs.ReadExactly(byteArray, 0, (int)fs.Length);
                 return byteArray;
             }
 

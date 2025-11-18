@@ -85,7 +85,7 @@ namespace CSETWebCore.Business.Tests.AssessmentIO
 
             using var entryStream = zipFile.GetInputStream(entry);
             var actualContent = new byte[content.Length];
-            entryStream.Read(actualContent, 0, actualContent.Length);
+            entryStream.ReadExactly(actualContent);
             Assert.Equal(content, actualContent);
         }
 
@@ -181,7 +181,7 @@ namespace CSETWebCore.Business.Tests.AssessmentIO
             {
                 using var entryStream = zipFile.GetInputStream(entry);
                 var buffer = new byte[1024];
-                entryStream.Read(buffer, 0, buffer.Length);
+                entryStream.ReadExactly(buffer);
             });
         }
 
