@@ -170,7 +170,8 @@ namespace CSETWebCore.Business.Maturity
                         ActionData = actionData
                     }
                 );
-            };
+            }
+            ;
 
             return actionQuestions;
         }
