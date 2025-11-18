@@ -81,7 +81,11 @@
             [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
-              class="btn btn-link no-underline ta-left">
+              class="btn btn-link no-underline ta-left tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:text-left tw:dark:text-text-primary tw:border tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors"
+                    [ngClass]="{
+               'tw:dark:bg-cset-primary tw:dark:text-white tw:dark:hover:bg-cset-primary-hover': node?.isCurrent,
+                'tw:opacity-50 tw:cursor-not-allowed': !(node?.enabled)
+              }">
               <span class="menu-link ws-normal">
                 {{node?.label}}
               </span>
@@ -89,18 +93,18 @@
           </mat-tree-node>
 
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
-            <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle tabindex="0">
+            <button class="btn btn-trans btn-link no-underline tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:dark:text-text-primary tw:border  tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors" matTreeNodeToggle tabindex="0">
               <div class="menu-link d-flex">
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
-                <div class="text-wrap text-start u-hover">
+                <div class="text-wrap text-start u-hover tw:ml-2">
                   {{node?.label}}
                 </div>
               </div>
             </button>
 
-            <ul class="mat-tree-node" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
+            <ul class="mat-tree-node tw:ml-4 tw:pl-2 tw:border-l tw:border-[#6b7280]" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
               <ng-container matTreeNodeOutlet></ng-container>
             </ul>
           </mat-nested-tree-node>
