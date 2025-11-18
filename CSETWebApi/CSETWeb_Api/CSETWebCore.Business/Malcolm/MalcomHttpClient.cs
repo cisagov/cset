@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ namespace CSETWebCore.Business.Malcolm
 
         public void GetHttpClient(string ipAddress, int timeoutInSeconds)
         {
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyError) => true;
             var EndPoint = "https://" + ipAddress + "/api";
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
