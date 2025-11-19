@@ -80,7 +80,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
         this.loadQuestions();
       }
     });
-    this.assessSvc.currentTab = 'questions';
+    this.assessSvc.setCurrentTab('questions');
   }
 
   /**

@@ -58,7 +58,7 @@ export class FeedbackComponent implements OnInit {
     private analysisSvc: AnalysisService,
     public navSvc: NavigationService,
     private configSvc: ConfigService
-  ) { this.assessSvc.currentTab = 'results'; }
+  ) { this.assessSvc.setCurrentTab('results'); }
 
   ngOnInit() {
     this.docUrl = this.configSvc.docUrl;

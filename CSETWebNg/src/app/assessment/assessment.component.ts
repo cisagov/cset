@@ -29,7 +29,8 @@ import {
   Output, HostListener,
   ApplicationRef,
   Renderer2,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -39,7 +40,7 @@ import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
-import { merge, Subscription } from 'rxjs';
+import { merge, Subject, Subscription, takeUntil } from 'rxjs';
 import { CompletionService } from '../services/completion.service';
 import { DemographicService } from '../services/demographic.service';
 import { DemographicIodService } from '../services/demographic-iod.service';
@@ -79,6 +80,9 @@ interface UserAssessment {
   standalone: false
 })
 export class AssessmentComponent implements OnInit {
+  private destroy$ = new Subject<void>();
+  currentTab: string = 'prepare';
+
   innerWidth: number;
   innerHeight: number;
   completionPercentage: number = 0;
@@ -101,10 +105,7 @@ export class AssessmentComponent implements OnInit {
   scrollTop = 0;
 
   assessmentAlias = this.tSvc.translate('titles.assessment');
-  assessment: AssessmentDetail = {
-
-
-  };
+  assessment: AssessmentDetail = {};
 
   @Output() navSelected = new EventEmitter<string>();
   isSet: boolean;
@@ -132,6 +133,7 @@ export class AssessmentComponent implements OnInit {
     private completionSvc: CompletionService,
     private demoSvc: DemographicService,
     private demoIodSvc: DemographicIodService,
+    private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
   ) {
@@ -147,6 +149,14 @@ export class AssessmentComponent implements OnInit {
       this.isSet = true;
       this.appRef.tick();
     }
+
+    // Subscribe to tab changes from the service
+    this.assessSvc.currentTab$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tab => {
+        this.currentTab = tab;
+        this.cdr.detectChanges();
+      });
 
     this.wheelListener = this.renderer.listen(
       this.el.nativeElement,
@@ -182,24 +192,27 @@ export class AssessmentComponent implements OnInit {
         this.loadCompletionData();
       });
     }
-
   }
+
+  ngAfterViewInit() {
+    // Detect changes after initial view check
+    this.cdr.detectChanges();
+  }
+
   getAssessmentDetail() {
     this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
       this.assessment = data;
       this.assessSvc.assessment = data;
     });
   }
+
   setAssessmentDone() {
     this.assessment.done = !this.assessment.done;
     this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
   }
-  setTab(tab) {
-    this.assessSvc.currentTab = tab;
-  }
 
-  checkActive(tab) {
-    return this.assessSvc.currentTab === tab;
+  setTab(tab: string) {
+    this.assessSvc.setCurrentTab(tab);
   }
 
   /**
@@ -320,6 +333,9 @@ export class AssessmentComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+
     this.completionSubscription?.unsubscribe();
 
     if (this.wheelListener) {

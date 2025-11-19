@@ -104,7 +104,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
         }
       );
     localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R' ? "Requirement" : "Question");
-    this.assessSvc.currentTab = 'questions';
+    this.assessSvc.setCurrentTab('questions');
 
     // refresh the page in case of language change
     this.tSvc.langChanges$.subscribe((event) => {

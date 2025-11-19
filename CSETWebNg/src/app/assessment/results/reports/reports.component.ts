@@ -97,7 +97,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     } else {
       this.isMobile = false;
     }
-    this.assessSvc.currentTab = 'results';
+    this.assessSvc.setCurrentTab('results');
   }
 
   arraysEqual(a, b) {

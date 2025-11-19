@@ -49,14 +49,27 @@ const headers = {
 @Injectable()
 export class AssessmentService {
 
+  private currentTabSubject = new BehaviorSubject<string>('prepare');
+  public currentTab$: Observable<string> = this.currentTabSubject.asObservable();
+
+  get currentTab(): string {
+    return this.currentTabSubject.value;
+  }
+
+  setCurrentTab(tab: string): void {
+    this.currentTabSubject.next(tab);
+  }
+
+
   userRoleId: number;
   roles: Role[];
-  currentTab: string;
+
   private initialized = false;
 
   private get apiUrl(): string {
     return this.configSvc.apiUrl;
   }
+
   public applicationMode: string;
   public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
   public completionRefreshRequested$ = new Subject<any>();
@@ -148,7 +161,7 @@ export class AssessmentService {
    */
   dropAssessment() {
     this.userRoleId = undefined;
-    this.currentTab = undefined;
+    this.setCurrentTab('');
     this.applicationMode = undefined;
     this.assessment = undefined;
     localStorage.removeItem('assessmentId');
@@ -332,7 +345,7 @@ export class AssessmentService {
     return this.http.post(this.apiUrl + 'remarks', JSON.stringify(remarks), headers);
   }
 
-  saveAcknowledgement(){
+  saveAcknowledgement() {
     return this.http.post(this.apiUrl + 'acknowledge', null, headers);
   }
 
@@ -708,10 +721,10 @@ export class AssessmentService {
     this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
   }
- setAssesmentDone(done:boolean){
-    this.assessment.done=done;
-    return this.http.post(this.apiUrl + 'setAssessmentDone', done,headers)
- }
+  setAssesmentDone(done: boolean) {
+    this.assessment.done = done;
+    return this.http.post(this.apiUrl + 'setAssessmentDone', done, headers)
+  }
   setAssessmentFavorite(isFavorite: boolean) {
     return this.http.post(this.apiUrl + 'setAssessmentFavorite', isFavorite, headers);
   }

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
@@ -37,7 +37,9 @@ export class CrrMilByDomainComponent implements AfterViewChecked {
 
   averageMil: number;
 
-  constructor() { }
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) { }
 
   /**
    * 
@@ -52,6 +54,7 @@ export class CrrMilByDomainComponent implements AfterViewChecked {
   calculateAvg() {
     if (!this.model) {
       this.averageMil = 0;
+      this.cdr.detectChanges();
       return;
     }
 
@@ -61,5 +64,6 @@ export class CrrMilByDomainComponent implements AfterViewChecked {
     });
 
     this.averageMil = sum / this.model.cmuResultsData.cmuDomains.length;
+    this.cdr.detectChanges();
   }
 }

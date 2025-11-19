@@ -145,7 +145,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
 
     localStorage.setItem("questionSet", "Maturity");
-    this.assessSvc.currentTab = 'questions';
+    this.assessSvc.setCurrentTab('questions');
   }
 
 
