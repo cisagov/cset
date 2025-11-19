@@ -80,7 +80,7 @@
     "@electron/packager": "^19.0.1",
     "@tailwindcss/postcss": "^4.1.16",
     "autoprefixer": "^10.4.21",
-    "electron": "^38.5.0",
+    "electron": "^39.2.2",
     "postcss": "^8.5.3",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.16",
