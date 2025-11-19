@@ -48,7 +48,7 @@ export class DiagramComponent implements OnInit {
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService
-    ) { this.assessSvc.currentTab = 'prepare'; }
+    ) { this.assessSvc.setCurrentTab('prepare'); }
 
     /**
      *
@@ -61,7 +61,7 @@ export class DiagramComponent implements OnInit {
             this.assessSvc.getAssessmentDetail().subscribe(
                 (data: AssessmentDetail) => {
                     this.assessSvc.assessment = data;
-                    this.assessSvc.currentTab = 'prepare';
+                    this.assessSvc.setCurrentTab('prepare');
                     this.navSvc.setCurrentPage('diagram');
                     this.navSvc.buildTree();
                 });

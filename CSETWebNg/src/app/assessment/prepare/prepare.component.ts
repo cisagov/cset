@@ -52,7 +52,7 @@ export class PrepareComponent implements OnInit {
           this.assessSvc.assessment = data;
         });
     }
-    this.assessSvc.currentTab = 'prepare';
+    this.assessSvc.setCurrentTab('prepare');
   }
 
   /**

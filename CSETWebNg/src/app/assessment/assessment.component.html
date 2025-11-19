@@ -36,7 +36,7 @@
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'"
           (click)="setTab('prepare')">
 
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
@@ -45,7 +45,7 @@
             <span class="nav-tab-text ms-2">{{t('titles.prepare')}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'"
           (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
@@ -53,7 +53,7 @@
             <span class="nav-tab-text ms-2">{{assessmentAlias}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'"
           (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
@@ -77,7 +77,8 @@
 
         <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
 
-          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ms-1"
+          <!-- leaf nodes -->
+          <mat-nested-tree-node *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild" [hidden]="!node.visible" class="ms-1"
             [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
@@ -90,8 +91,9 @@
                 {{node?.label}}
               </span>
             </button>
-          </mat-tree-node>
+          </mat-nested-tree-node>
 
+          <!-- branch nodes -->
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
             <button class="btn btn-trans btn-link no-underline tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:dark:text-text-primary tw:border  tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors" matTreeNodeToggle tabindex="0">
               <div class="menu-link d-flex">

@@ -39,7 +39,7 @@ export class AnalysisComponent implements OnInit {
     private navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute
-  ) { this.assessSvc.currentTab = 'results'; }
+  ) { this.assessSvc.setCurrentTab('results'); }
 
   ngOnInit() {
     this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {

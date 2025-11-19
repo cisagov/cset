@@ -63,7 +63,7 @@ export class ResultsComponent implements OnInit {
         }
       }
     });
-    this.assessSvc.currentTab = 'results';
+    this.assessSvc.setCurrentTab('results');
   }
 
 
