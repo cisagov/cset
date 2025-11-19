@@ -511,6 +511,8 @@ label[required]::after {
   margin: 1em 0 .5em 2em;
 }
 
+
+
 .white-panel {
   background-color: $gray-50;
   margin: 1em 1em .5em 1em;
@@ -541,37 +543,6 @@ label[required]::after {
     border-radius: 8px;
   }
 }
-
-// Dark mode
-.dark-theme,
-[data-theme="dark"],
-[data-bs-theme="dark"] {
-
-  .assessment-header {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-  }
-
-  ::ng-deep .mat-drawer-container {
-    background-color: var(--bg-primary) !important;
-  }
-
-  .white-panel {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-    }
-  }
-}
-
-
 
 .white-panel-controls {
   background-color: $gray-50;
@@ -650,6 +621,73 @@ label[required]::after {
   }
 }
 
+
+// Dark mode ---------------------------------------------------
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+
+  .assessment-header {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  ::ng-deep .mat-drawer-container {
+    background-color: var(--bg-primary) !important;
+  }
+
+  .white-panel {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  .white-panel-controls {
+    background-color: var(--bg-secondary);
+  }
+
+  .white-panel-body {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  .white-panel-body-long {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+}
+
+// end dark mode -----------------------------------------------------------------
+
+
+
 .white-dialog {
   background-color: $white;
   color: $gray-800;
@@ -707,7 +745,7 @@ input[type="number"] {
 //       Basic table layout
 table.cset-table {
   width: 100%;
-  color: $primary-color;
+  color: var(--text-primary);
 }
 
 table.cset-table ul {
@@ -715,11 +753,11 @@ table.cset-table ul {
 }
 
 table.cset-table tr:nth-child(even) {
-  background: $gray-100;
+  background: rgb(var(--bg-primary) / 0.5);
 }
 
 table.cset-table tr:nth-child(odd) {
-  background: $gray-50;
+  background: rgb(var(--bg-primary) / 1.0);
 }
 
 table.cset-table td,
@@ -728,8 +766,8 @@ table.cset-table th {
 }
 
 table.cset-table th {
-  background-color: $secondary-color;
-  color: $gray-50;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -743,16 +781,16 @@ table.cset-table tr.total-row {
 
 table.assessment-summary {
   width: 100%;
-  color: $primary-color;
+  color: var(--text-primary);
 }
 
 // hide some columns in phone mode
 table.assessment-summary tr:nth-child(even) {
-  background: $gray-100;
+  background: rgb(var(--bg-primary) / 0.5);
 }
 
 table.assessment-summary tr:nth-child(odd) {
-  background: $gray-50;
+  background: rgb(var(--bg-primary) / 1.0);
 }
 
 table.assessment-summary th:nth-child(1) {
@@ -764,8 +802,8 @@ table.assessment-summary td {
 }
 
 table.assessment-summary th {
-  background-color: $secondary-color;
-  color: $gray-50;
+  background-color: var(--cset-primary);
+  color: $gray-100 !important;
   font-weight: 500;
   padding: .5rem;
 }
@@ -793,6 +831,10 @@ table.table-td-small td {
 // force transparent
 .table>:not(caption)>*>* {
   background-color: transparent !important;
+}
+
+.table.table td {
+  color: var(--text-primary);
 }
 
 /*
