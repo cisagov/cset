@@ -237,8 +237,8 @@ export class NavigationService implements OnDestroy, OnInit {
     });
   }
 
-  beginNewAssessmentGallery(item: any) {
-    this.assessSvc.newAssessmentGallery(item).then(() => {
+  beginNewAssessmentGallery(item: any): Promise<void>  {
+    return this.assessSvc.newAssessmentGallery(item).then(() => {
       this.navDirect('phase-prepare');
     });
   }
@@ -330,7 +330,7 @@ export class NavigationService implements OnDestroy, OnInit {
 
   /**
    * Enables or disables the next button
-   * @param enableNext 
+   * @param enableNext
    */
   setNextEnabled(enableNext: boolean) {
     this.disableNext.emit(enableNext);
@@ -522,7 +522,7 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   /**
-   * 
+   *
    */
   clearNoMatterWhat() {
     this.navTreeSvc.clearNoMatterWhat();

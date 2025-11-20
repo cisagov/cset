@@ -42,7 +42,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   @Input() searchQuery: string;
 
   hoverIndex = -1;
-
+  loadingCardId:number |null = null;
   show: boolean = false;
   fuse: any;
   fuseResults: any[];
@@ -255,5 +255,13 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         console.error('Error toggling favorite:', error);
       }
     );
+  }
+  onCardClick(card: any): void {
+    this.loadingCardId = card.gallery_Item_Guid;
+    this.navSvc.beginNewAssessmentGallery(card)
+      .catch((error) => {
+        console.error('Navigation failed:', error);
+        this.loadingCardId = null;
+      });
   }
 }
