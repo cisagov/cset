@@ -38,11 +38,18 @@
         (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
 
         <div class="card-body gallery-card-body tw:cursor-pointer"
-          style="min-height:150px; max-height:150px;" (click)="navSvc.beginNewAssessmentGallery(c.item)">
+          style="min-height:150px; max-height:150px;"
+             (click)="onCardClick(c.item)">
           <div class="img-container">
             <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
           </div>
           <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm tw:text-text-primary">{{c.item.title}}</h6>
+        </div>
+        <div *ngIf="loadingCardId === c.item.gallery_Item_Guid"
+             class="tw:absolute tw:inset-0 tw:flex tw:items-center tw:justify-center tw:z-10 tw:backdrop-blur-[2px] tw:rounded">
+          <div class="spinner-border text-cset-primary" role="status" style="width: 3rem; height: 3rem; border-width: 4px;">
+            <span class="visually-hidden"></span>
+          </div>
         </div>
 
         <div class="card-footer tw:dark:bg-gray-700" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
