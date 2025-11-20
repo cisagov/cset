@@ -21,7 +21,10 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" id="white-panel"
-  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary">
+  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary" style="position: relative;">
+  <div style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">
+    <app-theme-toggle [showText]="false"></app-theme-toggle>
+  </div>
   <div class="p-4 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
 
     <!-- CSET Logo and Name -->
