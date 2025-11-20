@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <div class="card-footer tw:dark:bg-gray-700" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
+        <div class="card-footer tw:dark:bg-gray-700 tw:bg-cset-primary" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
           style="text-align:right;">
           <button class="btn btn-outline-light btn-circle gallery-btn-info" (click)="openDialog(c.item)"
                   [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
