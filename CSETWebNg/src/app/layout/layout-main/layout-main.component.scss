@@ -2781,12 +2781,12 @@ mat-sidenav.mat-sidenav {
 }
 
 .progress-value {
-  stroke: $primary-750;
+  stroke: var(--cset-primary);
   transition: all;
 }
 
 .progress-complete {
-  fill: $primary-750;
+  fill: var(--cset-primary);
 }
 
 // Upload Export
