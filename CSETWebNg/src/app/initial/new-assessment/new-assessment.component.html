@@ -96,7 +96,7 @@
         <!-- Card Body -->
         <div class="card-body gallery-card-body tw:cursor-pointer"
              style="min-height:150px; max-height:150px;"
-             (click)="navSvc.beginNewAssessmentGallery(c)">
+             (click)="onCardClick(c)">
 
           <!-- Image Container -->
           <div class="img-container">
@@ -108,8 +108,14 @@
             {{c.title}}
           </h6>
         </div>
+        <div *ngIf="loadingCardId === c.gallery_Item_Guid"
+             class="tw:absolute tw:inset-0 tw:flex tw:items-center tw:justify-center tw:z-10 tw:backdrop-blur-[2px] tw:rounded">
+          <div class="spinner-border text-cset-primary" role="status" style="width: 3rem; height: 3rem; border-width: 4px;">
+            <span class="visually-hidden"></span>
+          </div>
+        </div>
         <!-- Card Footer -->
-        <div class="card-footer tw:dark:bg-gray-700"
+        <div class="card-footer tw:dark:bg-gray-700 tw:bg-cset-primary"
              [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
              style="text-align:right;">
           <button [matTooltip]="t('tooltip.view detail')"
