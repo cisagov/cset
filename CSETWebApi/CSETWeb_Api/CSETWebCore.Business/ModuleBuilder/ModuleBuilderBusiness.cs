@@ -216,10 +216,12 @@ namespace CSETWebCore.Business.ModuleBuilder
 
         }
 
+
         public void DeleteCopyToSet(string setName)
         {
             _context.usp_CopyIntoSet_Delete(setName);
         }
+
 
         /// <summary>
         /// Copies the structure of an existing set into a new one.  

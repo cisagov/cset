@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,8 @@ using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
 using CSETWebCore.Helpers;
+using CSETWebCore.DataLayer.Model;
+//using Microsoft.AspNetCore.Components;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -22,10 +24,12 @@ namespace CSETWebCore.Api.Controllers
     public class ModuleBuilderController : ControllerBase
     {
         private readonly IModuleBuilderBusiness _module;
+        private readonly CSETContext _context;
 
-        public ModuleBuilderController(IModuleBuilderBusiness module)
+        public ModuleBuilderController(IModuleBuilderBusiness module, CSETContext context)
         {
             _module = module;
+            _context = context;
         }
 
         /// <summary>
@@ -121,6 +125,17 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_module.CloneSet(setName));
         }
+
+
+        [HttpGet]
+        [Route("api/builder/cloneset/2")]
+        public IActionResult CloneBaseSet([FromQuery] string setName, [FromQuery]string newSetName)
+        {
+            ModuleCloner cloner = new ModuleCloner(_context);
+            SETS clonedSet = cloner.CloneModule(setName, newSetName);
+            return Ok();
+        }
+
 
         /// <summary>
         /// 

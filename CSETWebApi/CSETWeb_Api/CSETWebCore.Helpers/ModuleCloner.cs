@@ -4,20 +4,36 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
 {
+    /// <summary>
+    /// Set the seed IDs for the various tables in a config file or something
+    /// 
+    /// How to determine gaps big enough
+    /// 
+    /// 
+    /// </summary>
     public class ModuleCloner
     {
-        private string origSetName;
+        private string sourceSetName;
         private string newSetName;
 
         CSETContext _context;
 
+        private bool _isCustom = true;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="custom"></param>
         public ModuleCloner(CSETContext context)
         {
             this._context = context;
@@ -27,17 +43,88 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sourceSetName"></param>
+        public void PrepSeeds(string sourceSetName)
+        {
+
+            // get the number of requirements in the source set
+            var results = from rs in _context.REQUIREMENT_SETS
+                          join nr in _context.NEW_REQUIREMENT
+                              on rs.Requirement_Id equals nr.Requirement_Id into nrGroup
+                          from nr in nrGroup.DefaultIfEmpty()
+                          where rs.Set_Name == sourceSetName
+                          select new
+                          {
+                              RequirementSet = rs,
+                              NewRequirement = nr
+                          };
+
+            var sourceRequirementCount = results.Count();
+
+
+            //var tableIdentities =
+            //{
+            //    {"NEW_REQUIREMENT", "Requirement_Id" }
+            //};
+
+            //var gapList = FindGaps("NEW_REQUIREMENT", "Requirement_Id");
+
+            //var query = $"DBCC CHECKIDENT ('{tableName}', RESEED, {tableSeeds[tableName]})";
+            //_context.Database.ExecuteQuery(query);
+
+            
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="identityColumnName"></param>
+        /// <returns></returns>
+        private List<GapResult> FindGaps(string tableName, string identityColumnName)
+        {
+            var sql = "SELECT " +
+                "{identityColumnName} + 1 AS GapStart, " +
+                    "next_id - 1 AS GapEnd, " +
+                    "next_id - {identityColumnName} - 1 AS GapSize " +
+                "FROM ( " +
+                    "SELECT " +
+                    "{identityColumnName}, " +
+                    "LEAD({identityColumnName}) OVER (ORDER BY {identityColumnName}) AS next_id " +
+                    $"FROM {tableName} " +
+                ") subquery " +
+                "WHERE next_id - {identityColumnName} > 1 " +
+                "ORDER BY gap_start;";
+
+            return _context.Set<GapResult>().FromSqlRaw(sql).ToList();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="setName"></param>
         /// <param name="newSetName"></param>
         /// <returns></returns>
-        public SETS CloneModule(string setName, string newSetName)
+        public SETS CloneModule(string setName, string newSetName, bool isCustom = true)
         {
-            this.origSetName = setName;
+            this.sourceSetName = setName;
             this.newSetName = newSetName;
+            this._isCustom = isCustom;
+
+
+
+            if (!isCustom)
+            {
+                PrepSeeds(this.sourceSetName);
+            }
+
+
 
 
             // clone the SETS record
-            var origSet = _context.SETS.Where(x => x.Set_Name == this.origSetName).FirstOrDefault();
+            var origSet = _context.SETS.Where(x => x.Set_Name == this.sourceSetName).FirstOrDefault();
             if (origSet == null)
             {
                 return null;
@@ -49,7 +136,7 @@ namespace CSETWebCore.Helpers
             copySet.Full_Name = origSet.Full_Name
                 .Substring(0, Math.Min(origSet.Full_Name.Length, 240))
                 + " (copy)";
-            copySet.Is_Custom = true;
+            copySet.Is_Custom = this._isCustom;
 
             _context.SETS.Add(copySet);
             _context.SaveChanges();
@@ -75,7 +162,7 @@ namespace CSETWebCore.Helpers
 
             var queryReq = from r in _context.NEW_REQUIREMENT
                            from rs in _context.REQUIREMENT_SETS.Where(x => x.Requirement_Id == r.Requirement_Id
-                              && x.Set_Name == this.origSetName)
+                              && x.Set_Name == this.sourceSetName)
                            select new { r, rs };
 
             var originalRequirements = queryReq.ToList();
@@ -119,7 +206,7 @@ namespace CSETWebCore.Helpers
 
 
             // Clone REQUIREMENT_QUESTIONS_SETS
-            var dbRQS = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == origSetName).ToList();
+            var dbRQS = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == sourceSetName).ToList();
             foreach (REQUIREMENT_QUESTIONS_SETS origRQS in dbRQS)
             {
                 var copyRQS = (REQUIREMENT_QUESTIONS_SETS)_context.Entry(origRQS).CurrentValues.ToObject();
@@ -131,7 +218,7 @@ namespace CSETWebCore.Helpers
 
 
             // Clone NEW_QUESTIONS_SETS
-            var dbQS = _context.NEW_QUESTION_SETS.Where(x => x.Set_Name == origSetName).ToList();
+            var dbQS = _context.NEW_QUESTION_SETS.Where(x => x.Set_Name == sourceSetName).ToList();
             foreach (NEW_QUESTION_SETS origQS in dbQS)
             {
                 var copyQS = (NEW_QUESTION_SETS)_context.Entry(origQS).CurrentValues.ToObject();
@@ -148,7 +235,7 @@ namespace CSETWebCore.Helpers
             // Clone NEW_QUESTION_LEVELS for the new NEW_QUESTIONS_SETS just created
             var dbQL = from nql in _context.NEW_QUESTION_LEVELS
                        join nqs in _context.NEW_QUESTION_SETS on nql.New_Question_Set_Id equals nqs.New_Question_Set_Id
-                       where nqs.Set_Name == this.origSetName
+                       where nqs.Set_Name == this.sourceSetName
                        select nql;
 
             var listQL = dbQL.ToList();
@@ -170,7 +257,7 @@ namespace CSETWebCore.Helpers
             // Clone REQUIREMENT_REFERENCES
             var queryRSF = from rsf in _context.REQUIREMENT_REFERENCES
                            join rs in _context.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
-                           where rs.Set_Name == this.origSetName && rsf.Source
+                           where rs.Set_Name == this.sourceSetName && rsf.Source
                            select rsf;
 
             var listRSF = queryRSF.ToList();
@@ -185,7 +272,7 @@ namespace CSETWebCore.Helpers
             // Clone REQUIREMENT_REFERENCES
             var queryRR = from rr in _context.REQUIREMENT_REFERENCES
                           join rs in _context.REQUIREMENT_SETS on rr.Requirement_Id equals rs.Requirement_Id
-                          where rs.Set_Name == this.origSetName
+                          where rs.Set_Name == this.sourceSetName
                           select rr;
 
             var listRR = queryRR.ToList();
@@ -200,7 +287,7 @@ namespace CSETWebCore.Helpers
             // Clone REQUIREMENT_REFERENCE_TEXT
             var queryRRT = from rrt in _context.REQUIREMENT_REFERENCE_TEXT
                            join rs in _context.REQUIREMENT_SETS on rrt.Requirement_Id equals rs.Requirement_Id
-                           where rs.Set_Name == this.origSetName
+                           where rs.Set_Name == this.sourceSetName
                            select rrt;
 
             var listRRT = queryRRT.ToList();
@@ -215,5 +302,12 @@ namespace CSETWebCore.Helpers
             _context.SaveChanges();
 
         }
+    }
+
+    public class GapResult
+    {
+        public int GapStart { get; set; }
+        public int GapEnd { get; set; }
+        public int GapSize { get; set; }
     }
 }
