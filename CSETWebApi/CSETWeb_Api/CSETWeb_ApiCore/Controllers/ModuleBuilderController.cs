@@ -132,7 +132,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult CloneBaseSet([FromQuery] string setName, [FromQuery]string newSetName)
         {
             ModuleCloner cloner = new ModuleCloner(_context);
-            SETS clonedSet = cloner.CloneModule(setName, newSetName);
+            SETS clonedSet = cloner.CloneModule(setName, newSetName, false);
             return Ok();
         }
 
