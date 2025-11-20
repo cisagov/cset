@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ThemeService, Theme } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
   standalone: false
 })
 export class ThemeToggleComponent implements OnInit, OnDestroy {
+  @Input() showText: boolean = true;
   isDarkMode: boolean = false;
   private themeSubscription?: Subscription;
 
