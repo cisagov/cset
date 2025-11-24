@@ -1441,43 +1441,44 @@ h1.pageHeader {
 
 
 ////// EDM Report Styles ////////@at-root
-.red-score {
+.red-score, .red-score div {
   background-color: #DC3545;
   border: 1px solid #DC3545;
   color: #fff;
 }
 
-.yellow-score {
+.yellow-score, .yellow-score div {
   background-color: #FFC107;
   border: 1px solid #FFC107;
   color: #000;
 }
 
-.gold-score {
+.gold-score, .gold-score div {
   background-color: #b17300;
   border: 1px solid #b17300;
   color: #fff;
 }
 
-.green-score {
+.green-score, .green-score div {
   background-color: #28A745;
   border: 1px solid #28A745;
   color: #fff;
 }
 
-.blue-score {
+.blue-score, .blue-score div {
   background-color: #367190;
   border: 1px solid #367190;
   color: #fff;
 }
 
-.light-gray-score, .unanswered-score {
+.light-gray-score, .light-gray-score div, 
+.unanswered-score, .unanswered-score div {
   background-color: #d3d3d3;
   border: 1px solid #d3d3d3;
   color: #000;
 }
 
-.default-score {
+.default-score, .default-score div {
   background-color: #6C757D;
   border: 1px solid #6C757D;
   color: #fff;
