@@ -2777,7 +2777,7 @@ mat-sidenav.mat-sidenav {
 }
 
 .progress-meter {
-  stroke: $gray-250;
+  stroke: rgba($primary-750, 0.2);
 }
 
 .progress-value {
@@ -4401,6 +4401,7 @@ h6.dropdown-header {
   .btn-yes,
   .btn-no,
   .btn-na,
+  .btn-inc,
   .answer-group .btn-alt,
   .answer-group .btn-u,
   .answer-group .btn-mfr {
@@ -4435,6 +4436,12 @@ h6.dropdown-header {
       color: white;
     }
 
+    .btn-inc:hover,
+    .btn-inc.answer-selected {
+      background-color: #ff9800 !important;
+      color: white;
+    }
+
     .btn-u.answer-selected {
       background-color: #9e9e9e !important;
       color: white;
@@ -4449,5 +4456,11 @@ h6.dropdown-header {
         color: white;
       }
     }
+  }
+
+  /// Tutorial dark styles
+  div.tutorial h5,
+  div.tutorial h6 {
+    color: var(--text-secondary) !important;
   }
 }
