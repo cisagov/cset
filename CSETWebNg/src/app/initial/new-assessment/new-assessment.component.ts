@@ -52,6 +52,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy
   hoverIndex = -1;
   selectedCategory = 'favorites';
   selectedCategoryId:number |null = null;
+  loadingCardId:number |null = null;
   private langChangeSubscription: Subscription;
 
 
@@ -78,6 +79,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy
 
   }
   ngOnDestroy(): void {
+    this.loadingCardId = null;
     if (this.langChangeSubscription) {
       this.langChangeSubscription.unsubscribe();
     }
@@ -220,5 +222,13 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy
     });
 
     return Array.from(uniqueFavorite.values());
+  }
+  onCardClick(card: any): void {
+    this.loadingCardId = card.gallery_Item_Guid;
+    this.navSvc.beginNewAssessmentGallery(card)
+      .catch((error) => {
+        console.error('Navigation failed:', error);
+        this.loadingCardId = null;
+      });
   }
 }
