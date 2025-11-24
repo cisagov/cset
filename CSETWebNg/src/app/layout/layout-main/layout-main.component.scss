@@ -2777,7 +2777,7 @@ mat-sidenav.mat-sidenav {
 }
 
 .progress-meter {
-  stroke: $gray-250;
+  stroke: rgba($primary-750, 0.2);
 }
 
 .progress-value {
@@ -4401,6 +4401,7 @@ h6.dropdown-header {
   .btn-yes,
   .btn-no,
   .btn-na,
+  .btn-inc,
   .answer-group .btn-alt,
   .answer-group .btn-u,
   .answer-group .btn-mfr {
@@ -4431,6 +4432,12 @@ h6.dropdown-header {
 
     .btn-alt:hover,
     .btn-alt.answer-selected {
+      background-color: #ff9800 !important;
+      color: white;
+    }
+
+    .btn-inc:hover,
+    .btn-inc.answer-selected {
       background-color: #ff9800 !important;
       color: white;
     }
