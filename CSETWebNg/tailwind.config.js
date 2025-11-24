@@ -11,6 +11,7 @@ export default {
       colors: {
         // Custom CSET brand colors that work in both modes
         'cset-primary': 'var(--cset-primary)',
+        'cset-primary-hover': 'var(--cset-primary-hover)',
         'cset-primary-dark': '#013a5f',
         'bg-primary': 'var(--bg-primary)',
         'bg-secondary': 'var(--bg-secondary)',
