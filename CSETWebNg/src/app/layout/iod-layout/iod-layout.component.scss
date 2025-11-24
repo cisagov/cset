@@ -4379,4 +4379,10 @@ h6.dropdown-header {
     background-color: transparent;
     color: var(--text-primary);
   }
+
+  /// Tutorial dark styles
+  div.tutorial h5,
+  div.tutorial h6 {
+    color: var(--text-secondary) !important;
+  }
 }

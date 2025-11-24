@@ -10,21 +10,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace CSETWebCore.Helpers
 {
     /// <summary>
-    /// Set the seed IDs for the various tables in a config file or something
-    /// 
-    /// How to determine gaps big enough
-    /// 
-    /// 
+    /// Clones a SET.  If called as "non custom", the IDs
+    /// for the new requirements are below the 1000000 mark.
     /// </summary>
     public class ModuleCloner
     {
+        private readonly CSETContext _context;
+
         private string _sourceSetName;
         private string _newSetName;
-
-        CSETContext _context;
 
         private bool _isCustom = true;
 
@@ -38,9 +36,6 @@ namespace CSETWebCore.Helpers
         {
             _context = context;
         }
-
-
-       
 
 
         /// <summary>
@@ -59,7 +54,7 @@ namespace CSETWebCore.Helpers
             // Clones to a "custom" set will have 
             if (!_isCustom)
             {
-                PrepSeeds(_sourceSetName);
+                //PrepSeeds(_sourceSetName);
             }
 
 
@@ -78,8 +73,15 @@ namespace CSETWebCore.Helpers
                 + " (copy)";
             copySet.Is_Custom = _isCustom;
 
-            _context.SETS.Add(copySet);
-            _context.SaveChanges();
+            try
+            {
+                _context.SETS.Add(copySet);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ModuleCloner threw an exception", ex);
+            }
 
 
             CloneRequirements(copySet);
@@ -99,7 +101,6 @@ namespace CSETWebCore.Helpers
             Dictionary<int, int> questionSetIdMap = new Dictionary<int, int>();
 
 
-
             var queryReq = from r in _context.NEW_REQUIREMENT
                            from rs in _context.REQUIREMENT_SETS.Where(x => x.Requirement_Id == r.Requirement_Id
                               && x.Set_Name == _sourceSetName)
@@ -108,175 +109,205 @@ namespace CSETWebCore.Helpers
             var originalRequirements = queryReq.ToList();
 
 
+            // Set seed for N_R records
+            var seedNR = FindSeed("NEW_REQUIREMENT", "Requirement_Id", originalRequirements.Count());
+            SetSeed("NEW_REQUIREMENT", "Requirement_Id", seedNR);
 
-            // Clone NEW_REQUIREMENT and REQUIREMENT_SETS
-            foreach (var origRequirement in originalRequirements)
+
+            try
             {
-                var newReq = (NEW_REQUIREMENT)_context.Entry(origRequirement.r).CurrentValues.ToObject();
-                newReq.Requirement_Id = 0;
-                _context.NEW_REQUIREMENT.Add(newReq);
-                _context.SaveChanges();
-
-                requirementIdMap.Add(origRequirement.r.Requirement_Id, newReq.Requirement_Id);
-
-
-                var copyReqSet = (REQUIREMENT_SETS)_context.Entry(origRequirement.rs).CurrentValues.ToObject();
-                copyReqSet.Requirement_Id = newReq.Requirement_Id;
-                copyReqSet.Set_Name = copySet.Set_Name;
-
-                _context.REQUIREMENT_SETS.Add(copyReqSet);
-
-
-                // Clone SAL levels for requirement
-                var dbRL = _context.REQUIREMENT_LEVELS
-                    .Where(x => x.Requirement_Id == origRequirement.r.Requirement_Id).ToList();
-                foreach (REQUIREMENT_LEVELS origLevel in dbRL)
+                // Clone NEW_REQUIREMENT and REQUIREMENT_SETS
+                foreach (var origRequirement in originalRequirements)
                 {
-                    var copyLevel = new REQUIREMENT_LEVELS
+                    var newReq = (NEW_REQUIREMENT)_context.Entry(origRequirement.r).CurrentValues.ToObject();
+                    newReq.Requirement_Id = 0;
+                    newReq.Original_Set_Name = copySet.Set_Name;
+
+                    _context.NEW_REQUIREMENT.Add(newReq);
+
+
+                    _context.SaveChanges();
+
+
+                    requirementIdMap.Add(origRequirement.r.Requirement_Id, newReq.Requirement_Id);
+
+
+                    var copyReqSet = (REQUIREMENT_SETS)_context.Entry(origRequirement.rs).CurrentValues.ToObject();
+                    copyReqSet.Requirement_Id = newReq.Requirement_Id;
+                    copyReqSet.Set_Name = copySet.Set_Name;
+
+                    _context.REQUIREMENT_SETS.Add(copyReqSet);
+
+
+                    // Clone SAL levels for requirement
+                    var dbRL = _context.REQUIREMENT_LEVELS
+                        .Where(x => x.Requirement_Id == origRequirement.r.Requirement_Id).ToList();
+                    foreach (REQUIREMENT_LEVELS origLevel in dbRL)
                     {
-                        Requirement_Id = newReq.Requirement_Id,
-                        Standard_Level = origLevel.Standard_Level,
-                        Level_Type = origLevel.Level_Type,
-                        Id = origLevel.Id
-                    };
+                        var copyLevel = new REQUIREMENT_LEVELS
+                        {
+                            Requirement_Id = newReq.Requirement_Id,
+                            Standard_Level = origLevel.Standard_Level,
+                            Level_Type = origLevel.Level_Type,
+                            Id = origLevel.Id
+                        };
 
-                    _context.REQUIREMENT_LEVELS.Add(copyLevel);
+                        _context.REQUIREMENT_LEVELS.Add(copyLevel);
+                    }
+
+
+                    // Clone PARAMETER_REQUIREMENTS
+                    var dbPR = _context.PARAMETER_REQUIREMENTS.Where(x => x.Requirement_Id == origRequirement.r.Requirement_Id).ToList();
+
+                    foreach (PARAMETER_REQUIREMENTS origPR in dbPR)
+                    {
+                        var copyPR = new PARAMETER_REQUIREMENTS
+                        {
+                            Requirement_Id = newReq.Requirement_Id,
+                            Parameter_Id = origPR.Parameter_Id
+                        };
+
+                        _context.PARAMETER_REQUIREMENTS.Add(copyPR);
+                    }
                 }
-            }
 
 
-            // Clone REQUIREMENT_QUESTIONS_SETS
-            var dbRQS = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == _sourceSetName).ToList();
-            foreach (REQUIREMENT_QUESTIONS_SETS origRQS in dbRQS)
-            {
-                var copyRQS = (REQUIREMENT_QUESTIONS_SETS)_context.Entry(origRQS).CurrentValues.ToObject();
-                copyRQS.Set_Name = copySet.Set_Name;
-                copyRQS.Requirement_Id = requirementIdMap[copyRQS.Requirement_Id];
+                // Clone REQUIREMENT_QUESTIONS_SETS
+                var dbRQS = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == _sourceSetName).ToList();
+                foreach (REQUIREMENT_QUESTIONS_SETS origRQS in dbRQS)
+                {
+                    var copyRQS = (REQUIREMENT_QUESTIONS_SETS)_context.Entry(origRQS).CurrentValues.ToObject();
+                    copyRQS.Set_Name = copySet.Set_Name;
+                    copyRQS.Requirement_Id = requirementIdMap[copyRQS.Requirement_Id];
 
-                _context.REQUIREMENT_QUESTIONS_SETS.Add(copyRQS);
-            }
+                    _context.REQUIREMENT_QUESTIONS_SETS.Add(copyRQS);
+                }
 
 
-            // Clone NEW_QUESTIONS_SETS
-            var dbQS = _context.NEW_QUESTION_SETS.Where(x => x.Set_Name == _sourceSetName).ToList();
-            foreach (NEW_QUESTION_SETS origQS in dbQS)
-            {
-                var copyQS = (NEW_QUESTION_SETS)_context.Entry(origQS).CurrentValues.ToObject();
-                copyQS.Set_Name = copySet.Set_Name;
-                // default the identity PK
-                copyQS.New_Question_Set_Id = 0;
+                // Clone NEW_QUESTIONS_SETS
+                var dbQS = _context.NEW_QUESTION_SETS.Where(x => x.Set_Name == _sourceSetName).ToList();
 
-                _context.NEW_QUESTION_SETS.Add(copyQS);
+
+                // Set seed for N_Q_S records
+                var seedNQS = FindSeed("NEW_QUESTION_SETS", "New_Question_Set_Id", dbQS.Count());
+                SetSeed("NEW_QUESTION_SETS", "New_Question_Set_Id", seedNQS);
+
+
+                foreach (NEW_QUESTION_SETS origQS in dbQS)
+                {
+                    var copyQS = (NEW_QUESTION_SETS)_context.Entry(origQS).CurrentValues.ToObject();
+                    copyQS.Set_Name = copySet.Set_Name;
+                    // default the identity PK
+                    copyQS.New_Question_Set_Id = 0;
+
+                    _context.NEW_QUESTION_SETS.Add(copyQS);
+                    _context.SaveChanges();
+
+                    questionSetIdMap.Add(origQS.New_Question_Set_Id, copyQS.New_Question_Set_Id);
+                }
+
+                // Clone NEW_QUESTION_LEVELS for the new NEW_QUESTIONS_SETS just created
+                var dbQL = from nql in _context.NEW_QUESTION_LEVELS
+                           join nqs in _context.NEW_QUESTION_SETS on nql.New_Question_Set_Id equals nqs.New_Question_Set_Id
+                           where nqs.Set_Name == _sourceSetName
+                           select nql;
+
+                var listQL = dbQL.ToList();
+                foreach (NEW_QUESTION_LEVELS origQL in listQL)
+                {
+                    var copyQL = (NEW_QUESTION_LEVELS)_context.Entry(origQL).CurrentValues.ToObject();
+                    copyQL.New_Question_Set_Id = questionSetIdMap[origQL.New_Question_Set_Id];
+
+                    _context.NEW_QUESTION_LEVELS.Add(copyQL);
+                }
+
+
+                // There is no need to clone UNIVERSAL_SUB_CATEGORY_HEADINGS
+                // because the classification of a Question with a Question Header and a Subcategory
+                // only exists once.  The Set it is tied to is the Set where the original
+                // classification was made.  
+
+
+                // Clone REQUIREMENT_REFERENCES
+                var queryRSF = from rsf in _context.REQUIREMENT_REFERENCES
+                               join rs in _context.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
+                               where rs.Set_Name == _sourceSetName
+                               select rsf;
+
+                var listRSF = queryRSF.ToList();
+                foreach (var rsf in listRSF)
+                {
+                    var newRSF = (REQUIREMENT_REFERENCES)_context.Entry(rsf).CurrentValues.ToObject();
+                    newRSF.Requirement_Id = requirementIdMap[newRSF.Requirement_Id];
+                    _context.REQUIREMENT_REFERENCES.Add(newRSF);
+                }
+
+
+                // Clone REQUIREMENT_REFERENCE_TEXT
+                var queryRRT = from rrt in _context.REQUIREMENT_REFERENCE_TEXT
+                               join rs in _context.REQUIREMENT_SETS on rrt.Requirement_Id equals rs.Requirement_Id
+                               where rs.Set_Name == _sourceSetName
+                               select rrt;
+
+                var listRRT = queryRRT.ToList();
+                foreach (var rrt in listRRT)
+                {
+                    var newRRT = (REQUIREMENT_REFERENCE_TEXT)_context.Entry(rrt).CurrentValues.ToObject();
+                    newRRT.Requirement_Id = requirementIdMap[newRRT.Requirement_Id];
+                    _context.REQUIREMENT_REFERENCE_TEXT.Add(newRRT);
+                }
+
+
                 _context.SaveChanges();
-
-                questionSetIdMap.Add(origQS.New_Question_Set_Id, copyQS.New_Question_Set_Id);
             }
-
-            // Clone NEW_QUESTION_LEVELS for the new NEW_QUESTIONS_SETS just created
-            var dbQL = from nql in _context.NEW_QUESTION_LEVELS
-                       join nqs in _context.NEW_QUESTION_SETS on nql.New_Question_Set_Id equals nqs.New_Question_Set_Id
-                       where nqs.Set_Name == _sourceSetName
-                       select nql;
-
-            var listQL = dbQL.ToList();
-            foreach (NEW_QUESTION_LEVELS origQL in listQL)
+            catch (Exception ex)
             {
-                var copyQL = (NEW_QUESTION_LEVELS)_context.Entry(origQL).CurrentValues.ToObject();
-                copyQL.New_Question_Set_Id = questionSetIdMap[origQL.New_Question_Set_Id];
-
-                _context.NEW_QUESTION_LEVELS.Add(copyQL);
+                var stop = 1;
             }
-
-
-            // There is no need to clone UNIVERSAL_SUB_CATEGORY_HEADINGS
-            // because the classification of a Question with a Question Header and a Subcategory
-            // only exists once.  The Set it is tied to is the Set where the original
-            // classification was made.  
-
-
-            // Clone REQUIREMENT_REFERENCES
-            var queryRSF = from rsf in _context.REQUIREMENT_REFERENCES
-                           join rs in _context.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
-                           where rs.Set_Name == _sourceSetName && rsf.Source
-                           select rsf;
-
-            var listRSF = queryRSF.ToList();
-            foreach (var rsf in listRSF)
-            {
-                var newRSF = (REQUIREMENT_REFERENCES)_context.Entry(rsf).CurrentValues.ToObject();
-                newRSF.Requirement_Id = requirementIdMap[newRSF.Requirement_Id];
-                _context.REQUIREMENT_REFERENCES.Add(newRSF);
-            }
-
-
-            // Clone REQUIREMENT_REFERENCES
-            var queryRR = from rr in _context.REQUIREMENT_REFERENCES
-                          join rs in _context.REQUIREMENT_SETS on rr.Requirement_Id equals rs.Requirement_Id
-                          where rs.Set_Name == _sourceSetName
-                          select rr;
-
-            var listRR = queryRR.ToList();
-            foreach (var rr in listRR)
-            {
-                var newRR = (REQUIREMENT_REFERENCES)_context.Entry(rr).CurrentValues.ToObject();
-                newRR.Requirement_Id = requirementIdMap[newRR.Requirement_Id];
-                _context.REQUIREMENT_REFERENCES.Add(newRR);
-            }
-
-
-            // Clone REQUIREMENT_REFERENCE_TEXT
-            var queryRRT = from rrt in _context.REQUIREMENT_REFERENCE_TEXT
-                           join rs in _context.REQUIREMENT_SETS on rrt.Requirement_Id equals rs.Requirement_Id
-                           where rs.Set_Name == _sourceSetName
-                           select rrt;
-
-            var listRRT = queryRRT.ToList();
-            foreach (var rrt in listRRT)
-            {
-                var newRRT = (REQUIREMENT_REFERENCE_TEXT)_context.Entry(rrt).CurrentValues.ToObject();
-                newRRT.Requirement_Id = requirementIdMap[newRRT.Requirement_Id];
-                _context.REQUIREMENT_REFERENCE_TEXT.Add(newRRT);
-            }
-
-
-            _context.SaveChanges();
-
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sourceSetName"></param>
-        public void PrepSeeds(string sourceSetName)
+        /// <param name="tableName"></param>
+        /// <param name="identityColumnName"></param>
+        /// <returns></returns>
+        private int FindSeed(string tableName, string identityColumnName, int recordsNeeded)
         {
+            var gaps = FindGaps(tableName, identityColumnName)
+                    .Where(x => x.GapStart < 1000000 && x.GapSize >= recordsNeeded).OrderBy(x => x.GapSize).ToList();
+            var newSeed = gaps.FirstOrDefault().GapSize;
 
-            // get the number of requirements in the source set
-            var query = from rs in _context.REQUIREMENT_SETS
-                        join nr in _context.NEW_REQUIREMENT
-                            on rs.Requirement_Id equals nr.Requirement_Id into nrGroup
-                        from nr in nrGroup.DefaultIfEmpty()
-                        where rs.Set_Name == sourceSetName
-                        select new
-                        {
-                            RequirementSet = rs,
-                            NewRequirement = nr
-                        };
+            NLog.LogManager.GetCurrentClassLogger().Info($"Calculated new seed value of {newSeed} for table {tableName}");
+
+            return newSeed;
+        }
 
 
-            var sourceRequirementCount = query.Count();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="identityColumnName"></param>
+        /// <param name="newSeed"></param>
+        private void SetSeed(string tableName, string identityColumnName, int seedValue)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tableName, @"^[a-zA-Z0-9_]+$"))
+            {
+                throw new ArgumentException("Invalid table name", nameof(tableName));
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(identityColumnName, @"^[a-zA-Z0-9_]+$"))
+            {
+                throw new ArgumentException("Invalid column name", nameof(identityColumnName));
+            }
 
+            // Reseed multiple times for stubborn cases
+            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
+            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
+            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
 
-
-
-            var gapList = FindGaps("NEW_REQUIREMENT", "Requirement_Id");
-
-
-            var sorted = gapList.Where(x => x.GapStart < 1000000 && x.GapSize > sourceRequirementCount).OrderBy(x => x.GapSize).ToList();
-            var newSeed = sorted.FirstOrDefault().GapStart;
-
-            var reseedQuery = $"DBCC CHECKIDENT ('NEW_REQUIREMENT', RESEED, {0})";
-            _context.Database.ExecuteSqlRaw(reseedQuery, newSeed);
+            NLog.LogManager.GetCurrentClassLogger().Info($"Attempted to reseed table {tableName} to identity {seedValue}");
         }
 
 
