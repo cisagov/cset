@@ -1828,7 +1828,12 @@ ul.nav-tabs li.active button:hover {
   color: $primary-color;
   text-decoration: none;
 }
-
+ul.nav-tabs.questions-tab-border li.active button span:hover,
+ul.nav-tabs.questions-tab-border li.active button:focus,
+ul.nav-tabs.questions-tab-border li.active button:hover {
+  color: var(--cset-primary-hover);
+  text-decoration: none;
+}
 ul.nav-tabs li button {
   color: $gray-100;
   font-weight: 500;
@@ -4408,7 +4413,7 @@ h6.dropdown-header {
       color: white;
     }
 
-    
+
     .btn-inc:hover,
     .btn-inc.answer-selected {
       background-color: #ff9800 !important;
