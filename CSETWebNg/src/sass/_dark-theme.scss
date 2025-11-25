@@ -478,3 +478,45 @@
     }
   }
 }
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+  // All text in ngx-charts (axis labels, tick labels)
+  .ngx-charts text,
+  ngx-charts-bar-horizontal text,
+  .tick text {
+    fill: var(--text-primary) !important;
+  }
+
+  // Also style the gridlines for better visibility
+  .gridline-path {
+    stroke: var(--border-color) !important;
+  }
+}
+/* Score Ranges Component - Dark Mode Text */
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+  // SVG text in score ranges (the percentages at bottom)
+  app-score-ranges svg text {
+    fill: var(--text-primary);
+  }
+
+  // Table labels on the left (Robust Data Backup, etc.)
+  app-score-ranges table td {
+    color: var(--text-primary);
+  }
+
+  // Legend text at the top
+  app-score-ranges .mt-2 span {
+    color: var(--text-primary);
+  }
+
+  // The border around the legend box
+  app-score-ranges .mt-2.mb-4 {
+    border-color: var(--border-color);
+  }
+
+  // The horizontal lines in the SVG
+  app-score-ranges svg line {
+    stroke: var(--border-color);
+  }
+}
