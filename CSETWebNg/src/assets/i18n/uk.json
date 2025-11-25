@@ -823,13 +823,25 @@
   },
   "modules": {
     "cpg": {
-      "display-name": "Cyber Performance Goals (CPG)"
+      "display-name": "Цілі кіберпродуктивності (CPG)",
+      "model short title": "CPG"
     },
     "cmmc2f": {
-      "display-name": "Cybersecurity Maturity Model Certification (CMMC) 2.0"
+      "display-name": "Сертифікація моделі зрілості кібербезпеки (CMMC) 2.0",
+      "model short title": "CMMC2"
     },
     "rra": {
-      "display-name": "Ransomware Readiness Assessment (RRA)"
+      "display-name": "Оцінка готовності до програм-вимагачів (RRA)",
+      "model short title": "RRA"
+    },
+    "c2m2": {
+      "model short title": "C2M2"
+    },
+    "cmmc": {
+      "model short title": "CMMC"
+    },
+    "edm": {
+      "model short title": "EDM"
     }
   },
   "aggregation": {
