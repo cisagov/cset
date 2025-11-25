@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
@@ -173,7 +173,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   /**
    * Opens a new browser window/tab for the specified report.
-   * 
+   *
    * This will become deprecated once all report links are moved off of this page
    * and into their own sub-components.
    */
@@ -198,7 +198,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   clickExport(jsonOnly: boolean = false) {
     let ext = '.csetw';
