@@ -882,15 +882,27 @@
     },
     "modules": {
         "cpg": {
-            "display-name": "Cyber Performance Goals (CPG)"
+          "display-name": "Metas de Rendimiento Cibernético (CPG)",
+          "model short title": "CPG"
         },
-        "cmmc2f": {
-            "display-name": "Cybersecurity Maturity Model Certification (CMMC) 2.0"
-        },
-        "rra": {
-            "display-name": "Ransomware Readiness Assessment (RRA)"
-        }
+    "cmmc2f": {
+        "display-name": "Certificación del Modelo de Madurez en Ciberseguridad (CMMC) 2.0",
+        "model short title": "CMMC2"
     },
+    "rra": {
+        "display-name": "Evaluación de Preparación contra Ransomware (RRA)",
+        "model short title": "RRA"
+    },
+    "c2m2": {
+        "model short title": "C2M2"
+    },
+    "cmmc": {
+        "model short title": "CMMC"
+    },
+    "edm": {
+        "model short title": "EDM"
+    }
+  },
     "aggregation": {
         "assessment alias": "Alias de evaluación",
         "total": "Total",

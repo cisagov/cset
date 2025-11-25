@@ -1027,8 +1027,18 @@
       "model short title": "CMMC 2.0"
     },
     "rra": {
-      "display-name": "Ransomware Readiness Assessment (RRA)"
+      "display-name": "Ransomware Readiness Assessment (RRA)",
+      "model short title": "RRA"
     },
+    "c2m2": {
+      "model short title": "C2M2"
+    },
+    "cmmc": {
+      "model short title": "CMMC"
+    },
+    "edm": {
+      "model short title": "EDM"
+  },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
       "model short title": "CISA VADR",
