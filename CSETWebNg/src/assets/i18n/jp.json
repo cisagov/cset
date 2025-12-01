@@ -525,6 +525,9 @@
     },
     "edm": {
       "model short title": "EDM"
+    },
+    "cis": {
+      "model short title": "CIS"
     }
   }
 }
