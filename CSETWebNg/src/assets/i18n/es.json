@@ -901,8 +901,11 @@
     },
     "edm": {
         "model short title": "EDM"
-    }
-  },
+    },
+      "cis": {
+        "model short title": "CIS"
+      }
+    },
     "aggregation": {
         "assessment alias": "Alias de evaluación",
         "total": "Total",
