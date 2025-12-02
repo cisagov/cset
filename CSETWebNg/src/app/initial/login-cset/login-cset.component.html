@@ -29,11 +29,11 @@
 
     <!-- CSET Logo and Name -->
     <div *ngIf="!configSvc.isRunningAnonymous" class="my-4 d-flex justify-content-start flex-00a">
-      <app-logo-cset logoHeight="50" [mode]="theme == 'light' ? 'fill-white' : 'white'"></app-logo-cset>
+      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
     </div>
 
     <div *ngIf="configSvc.isRunningAnonymous" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
-      <app-logo-cset logoHeight="50" [mode]="theme == 'light' ? 'fill-white' : 'white'"></app-logo-cset>
+      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
       <span class="align-bottom ms-3 fst-italic"
         style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>
