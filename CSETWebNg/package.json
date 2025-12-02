@@ -24,7 +24,7 @@
     "@angular/cdk": "^20.2.14",
     "@angular/cli": "^20.3.12",
     "@angular/common": "^20.3.13",
-    "@angular/compiler": "^20.3.13",
+    "@angular/compiler": "^20.3.15",
     "@angular/compiler-cli": "^20.3.13",
     "@angular/core": "^20.3.13",
     "@angular/elements": "^20.3.13",
