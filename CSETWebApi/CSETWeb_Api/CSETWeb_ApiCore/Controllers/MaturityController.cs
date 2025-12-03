@@ -305,52 +305,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(biz.MyModel);
         }
-
-
-        /// <summary>
-        /// Returns the questions in a HYDRO section.
-        /// </summary>
-        /// <param name="subCatIds"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/maturity/hydro/getBulkSubCatIds")]
-        public IActionResult GetBulkSubCatIds([FromQuery] string[] subCatIds)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            List<NestedQuestions> bizList = new List<NestedQuestions>();
-
-            subCatIds = subCatIds[0].Split(',');
-
-            foreach (string id in subCatIds)
-            {
-                var biz = new NestedStructure(assessmentId, int.Parse(id), _context);
-                bizList.Add(biz.MyModel);
-            }
-
-            return Ok(bizList);
-        }
-
-
-        [HttpGet]
-        [Route("api/maturity/hydro/getResultsData")]
-        public IActionResult GetResultsData()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetResultsData(assessmentId));
-        }
-
-
-        [HttpGet]
-        [Route("api/maturity/hydro/getProgressText")]
-        public IActionResult getProgressText()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetHydroProgress());
-        }
-
+        
 
         /// <summary>
         /// Returns a single grouping's worth of questions.  This is done by 

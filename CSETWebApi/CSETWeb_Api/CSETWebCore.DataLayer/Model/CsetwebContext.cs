@@ -219,12 +219,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<GROUPING_SELECTION> GROUPING_SELECTION { get; set; }
 
-    public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
-
-    public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
-
-    public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
-
     public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
 
     public virtual DbSet<INFORMATION> INFORMATION { get; set; }
@@ -1448,46 +1442,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Assessment).WithMany(p => p.GROUPING_SELECTION).HasConstraintName("FK_GROUP_SELECT_ASSESSMENTS");
 
             entity.HasOne(d => d.Grouping).WithMany(p => p.GROUPING_SELECTION).HasConstraintName("FK_GROUP_SELECT_GROUP");
-        });
-
-        modelBuilder.Entity<HYDRO_DATA>(entity =>
-        {
-            entity.HasKey(e => e.Mat_Option_Id).IsClustered(false);
-
-            entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
-                .IsUnique()
-                .IsClustered();
-
-            entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
-            entity.Property(e => e.Action_Items).IsFixedLength();
-
-            entity.HasOne(d => d.Mat_Option).WithOne(p => p.HYDRO_DATA)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.HYDRO_DATA)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
-        });
-
-        modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
-        {
-            entity.HasKey(e => e.Answer_Id).HasName("PK__HYDRO_DA__36918F3818A6E56C");
-
-            entity.Property(e => e.Answer_Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Answer).WithOne(p => p.HYDRO_DATA_ACTIONS).HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
-
-            entity.HasOne(d => d.Progress).WithMany(p => p.HYDRO_DATA_ACTIONS)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
-        });
-
-        modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
-        {
-            entity.HasKey(e => e.Progress_Id).HasName("PK__HYDRO_PR__D558797A8254CF40");
-
-            entity.Property(e => e.Progress_Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<IMPORTANCE>(entity =>

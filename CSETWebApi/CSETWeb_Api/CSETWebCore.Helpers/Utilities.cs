@@ -114,37 +114,6 @@ namespace CSETWebCore.Helpers
 
             return input;
         }
-
-
-        /// <summary>
-        /// One-time use function that moves Hydro-specific action items 
-        /// out of the ISE_ACTIONS table and into the HYDRO_DATA table
-        /// </summary>
-        /// <returns></returns>
-        public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
-        {
-            /*
-            var actionsToMove = context.ISE_ACTIONS.Where(x => x.Mat_Option_Id != null).ToList();
-            var hydroActions = context.HYDRO_DATA.ToList();
-
-            foreach ( var iseAction in actionsToMove )
-            {
-                if ( iseAction != null )
-                {
-                    var hydroRow = hydroActions.Where(x => x.Mat_Option_Id == iseAction.Mat_Option_Id).FirstOrDefault();
-                    if ( hydroRow != null )
-                    {
-                        hydroRow.Action_Item_Description = iseAction.Description;
-                        hydroRow.Action_Items = iseAction.Action_Items;
-                        hydroRow.Severity = iseAction.Severity;
-                        hydroRow.Sequence = iseAction.Sequence;
-
-                        context.SaveChanges();
-                    }
-                }
-            }
-            */
-
-        }
+        
     }
 }

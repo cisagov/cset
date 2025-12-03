@@ -80,9 +80,6 @@ public partial class MATURITY_QUESTIONS
     public virtual MATURITY_GROUPINGS Grouping { get; set; }
 
     [InverseProperty("Mat_Question")]
-    public virtual ICollection<HYDRO_DATA> HYDRO_DATA { get; set; } = new List<HYDRO_DATA>();
-
-    [InverseProperty("Mat_Question")]
     public virtual ICollection<ISE_ACTIONS> ISE_ACTIONS { get; set; } = new List<ISE_ACTIONS>();
 
     [InverseProperty("Parent_Question")]
