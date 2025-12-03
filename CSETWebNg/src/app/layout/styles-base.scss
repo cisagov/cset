@@ -411,7 +411,7 @@ label[required]::after {
   background-color: $gray-50;
   margin: 1rem;
   padding: 2em;
-  overflow-y:scroll;
+  overflow-y: scroll;
   border-radius: 8px;
   max-height: calc(100cqh - 20rem);
   min-height: calc(100cqh - 20rem);
@@ -2279,7 +2279,7 @@ mat-sidenav.mat-sidenav {
 }
 
 .progress-meter {
-  stroke: $gray-250;
+  stroke: rgba($primary-750, 0.2);
 }
 
 .progress-value {
@@ -3083,7 +3083,7 @@ table.td-text-start td {
   color: $warn-color;
 }
 
-.fill-primary {
+.cset-logo-fill-color {
   fill: $primary-color;
 }
 

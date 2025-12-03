@@ -29,58 +29,64 @@
         </button>
 
         <mat-menu #tools="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="enableProtectedFeature()" *ngIf="showMenuItem('enable protected features')">
+            <button mat-menu-item (click)="enableProtectedFeature()" class="tw:dark:hover:bg-bg-tertiary" *ngIf="showMenuItem('enable protected features')">
                 <span class="cset-icons-key-shield fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.enable protected features') }}</span>
             </button>
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments"
-                *ngIf="showItemForCurrentSkin('assessment documents')"
-                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}"
-                (click)="showAssessDocs()">
+            <button mat-menu-item 
+                (click)="showSharedDocs()" class="tw:dark:hover:bg-bg-tertiary">
+                <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
+                <span>{{ t('menu.tools.shared documents') }}</span>
+            </button>
+
+            <button mat-menu-item [disabled]="isNullOrEmptyAssessment()"
+                [ngClass]="{'disabled-menu-item' : !inAssessment()}"
+                (click)="showAssessDocs()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.assessment documents') }}</span>
             </button>
+
             <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showMenuItem('parameter editor')"
-                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="editParameters()">
+                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="editParameters()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-puzzle fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.parameter editor') }}</span>
             </button>
             <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
-                (click)="showExcelExportDialog()">
+                (click)="showExcelExportDialog()"class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.export assessment to excel') }}</span>
             </button>
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [routerLink]="['/importModule']" *ngIf="showMenuItem('import modules')">
+            <button mat-menu-item [routerLink]="['/importModule']" class="tw:dark:hover:bg-bg-tertiary" *ngIf="showMenuItem('import modules')">
                 <span class="cset-icons-module fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.import modules') }}</span>
             </button>
-            <button mat-menu-item [routerLink]="['/set-list']" *ngIf="showMenuItem('module builder')">
+            <button mat-menu-item [routerLink]="['/set-list']" class="tw:dark:hover:bg-bg-tertiary" *ngIf="showMenuItem('module builder')">
                 <span class="cset-icons-module fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.module builder') }}</span>
             </button>
             <button mat-menu-item [routerLink]="['/module-content-launch']"
-                *ngIf="showMenuItem('module content report')">
+                *ngIf="showMenuItem('module content report')" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-module fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.module content report') }}</span>
             </button>
-            <button mat-menu-item (click)="navigateTrend()" *ngIf="showMenuItem('trend')">
+            <button mat-menu-item (click)="navigateTrend()" *ngIf="showMenuItem('trend')" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset2-icons-trend fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.trend') }}</span>
             </button>
-            <button mat-menu-item (click)="navigateCompare()" *ngIf="showMenuItem('compare')">
+            <button mat-menu-item (click)="navigateCompare()" *ngIf="showMenuItem('compare')" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset2-icons-compare fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.compare') }}</span>
             </button>
 
             <ng-container *ngIf="showMenuItem('resume')">
                 <hr class="menu-divider" />
-                <button mat-menu-item (click)="navSvc.resumeQuestions()">
+                <button mat-menu-item (click)="navSvc.resumeQuestions()" class="tw:dark:hover:bg-bg-tertiary">
                     <span class="fa fa-bolt fs-base me-2 align-middle"></span>
                     <span>{{ t('menu.tools.resume questions') }}</span>
                 </button>
@@ -99,6 +105,7 @@
 
 
     <div class="ms-auto">
+
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
@@ -106,23 +113,23 @@
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
-            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
+            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.cset user guide') }}</span>
             </a>
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item (click)="about()">
+            <button mat-menu-item (click)="about()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-cset-lock fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.about') }}</span>
             </button>
-            <button mat-menu-item (click)="showKeyboardShortcuts()" *ngIf="!configSvc.isMobile()">
+            <button mat-menu-item (click)="showKeyboardShortcuts()" class="tw:dark:hover:bg-bg-tertiary" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-keyboard-shortcuts-key fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.keyboard shortcuts') }}</span>
             </button>
 
-            <button mat-menu-item [matMenuTriggerFor]="legal">
+            <button mat-menu-item [matMenuTriggerFor]="legal" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="fas fa-balance-scale fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.legal.legal') }}</span>
             </button>
@@ -131,16 +138,16 @@
 
 
         <mat-menu #legal="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="accessibilityDocument()">
+            <button mat-menu-item (click)="accessibilityDocument()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-accessibility-doc fs-base me-2 align-middle"></span>
                 <span>{{ 'menu.help.legal.accessibility statement.accessibility statement' | transloco }}</span>
             </button>
-            <button mat-menu-item (click)="advisory()">
+            <button mat-menu-item (click)="advisory()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-advisory fs-base me-2 align-middle"></span>
                 <span>{{ 'advisory.title' | transloco }}</span>
             </button>
 
-            <button mat-menu-item (click)="termsOfUse()">
+            <button mat-menu-item (click)="termsOfUse()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-handshake fs-base me-2 align-middle"></span>
                 <span>{{ 'menu.help.legal.terms of use.terms of use' | transloco }}</span>
             </button>
@@ -160,27 +167,28 @@
             </span>
         </button>
         <mat-menu #usermenu="matMenu" class="menu-panel">
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-profile fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.user profile') }}</span>
             </button>
-            <button mat-menu-item (click)="goHome()">
+            <button mat-menu-item (click)="goHome()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.my assessments') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-key fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.change password') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()">
+            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.settings')}}</span>
             </button>
-            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')">
+            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.admin')}}</span>
             </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
+            <app-theme-toggle></app-theme-toggle>
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()" class="tw:dark:hover:bg-bg-tertiary">
                 <span class="cset-icons-logout fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.logout')}}</span>
             </button>

@@ -65,7 +65,7 @@ export class PrincipleSummaryComponent implements OnInit {
         this.grabQuestions();
       }
     });
-    this.assessSvc.currentTab = 'questions';
+    this.assessSvc.setCurrentTab('questions');
   }
 
   

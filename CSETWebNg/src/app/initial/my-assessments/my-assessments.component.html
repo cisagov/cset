@@ -61,22 +61,22 @@
       </ng-container>
       <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4">
         <div class="tw:flex tw:w-full sm:tw:w-auto">
-          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-white tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
+          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-transparent tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('all')">
               {{ t('filters.view all') || 'View all' }}
             </button>
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('done')">
               {{ t('filters.done') || 'Done' }}
             </button>
             <button type="button"
                     class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
                     (click)="setFilter('favorite')">
               {{ t('filters.favorites') || 'Favorites' }}
             </button>
@@ -101,7 +101,7 @@
 
           <!-- Import Button (Non-Local) -->
           <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-gray-200"
+                 class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
             <span class="tw:text-sm tw:font-medium ">{{ t('buttons.import') }}</span>
@@ -225,7 +225,7 @@
           </tr>
         </table>
         <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
-          <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <div class="overflow-x-auto rounded-lg border border-gray-200" style="border-radius:10px;">
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
@@ -249,15 +249,15 @@
     </div>
     <!-- Desktop/Tablet: Empty state when no assessments -->
     <div *ngIf="sortedAssessments?.length === 0 && !layoutSvc.hp" class="mt-4 mb-4 flex flex-col flex-1">
-      <div class="tw:bg-white tw:rounded-lg tw:border tw:border-gray-200 tw:p-8 tw:text-center">
+      <div class="tw:bg-bg-primary tw:rounded-lg tw:border tw:border-border tw:p-8 tw:text-center">
         <div class="flex flex-col items-center justify-center tw:py-12">
           <div class="mb-4">
-            <span class="cset-icons-cset-lock tw:text-6xl tw:text-gray-300"></span>
+            <span class="cset-icons-cset-lock tw:text-6xl tw:text-text-disabled"></span>
           </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+          <h3 class="text-xl font-semibold tw:text-text-primary mb-2">
             {{ t('welcome page.welcome to', { appTitle: appTitle }) }}
           </h3>
-          <p class="text-gray-600 mb-6 max-w-md">
+          <p class="tw:text-text-secondary mb-6 max-w-md">
             {{ t('welcome page.to get started') }}
           </p>
           <div class="tw:flex tw:gap-3">
@@ -291,11 +291,11 @@
 
     <!-- Mobile: Empty state when no assessments -->
     <div *ngIf="sortedAssessments?.length === 0 && layoutSvc.hp" class="mt-4">
-      <div class="tw:bg-white tw:rounded-lg tw:border tw:border-gray-200 tw:p-6 tw:text-center">
+      <div class="tw:bg-bg-primary tw:rounded-lg tw:border tw:border-border tw:p-6 tw:text-center">
         <h2 class="mt-0 text-lg font-semibold mb-2">
           {{ t('welcome page.welcome to', { appTitle: appTitle }) }}
         </h2>
-        <p class="text-gray-600 mb-4">{{ t('welcome page.to get started') }}</p>
+        <p class="tw:text-text-secondary mb-4">{{ t('welcome page.to get started') }}</p>
         <div class="flex flex-col gap-3">
           <button class="btn btn-primary w-full tw:justify-center tw:items-center"
                   (click)="clickNewAssessmentButton()">

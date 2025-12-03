@@ -36,7 +36,7 @@
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'"
           (click)="setTab('prepare')">
 
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
@@ -45,7 +45,7 @@
             <span class="nav-tab-text ms-2">{{t('titles.prepare')}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'"
           (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
@@ -53,7 +53,7 @@
             <span class="nav-tab-text ms-2">{{assessmentAlias}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'"
           (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
@@ -75,32 +75,38 @@
           <i class="fas fa-home"></i>
         </button>
 
-        <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
+        <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" style="padding-right:10px" class="mb-5">
 
-          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ms-1"
+          <!-- leaf nodes -->
+          <mat-nested-tree-node *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild" [hidden]="!node.visible" class="ms-1"
             [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
-              class="btn btn-link no-underline ta-left">
+              class="btn btn-link no-underline ta-left tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:text-left tw:dark:text-text-primary tw:border tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors"
+                    [ngClass]="{
+               'tw:dark:bg-cset-primary tw:dark:text-white tw:dark:hover:bg-cset-primary-hover': node?.isCurrent,
+                'tw:opacity-50 tw:cursor-not-allowed': !(node?.enabled)
+              }">
               <span class="menu-link ws-normal">
                 {{node?.label}}
               </span>
             </button>
-          </mat-tree-node>
+          </mat-nested-tree-node>
 
+          <!-- branch nodes -->
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
-            <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle tabindex="0">
+            <button class="btn btn-trans btn-link no-underline tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:dark:text-text-primary tw:border  tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors" matTreeNodeToggle tabindex="0">
               <div class="menu-link d-flex">
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
-                <div class="text-wrap text-start u-hover">
+                <div class="text-wrap text-start u-hover tw:ml-2">
                   {{node?.label}}
                 </div>
               </div>
             </button>
 
-            <ul class="mat-tree-node" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
+            <ul class="mat-tree-node tw:ml-4 tw:pl-2 tw:border-l tw:border-[#6b7280]" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
               <ng-container matTreeNodeOutlet></ng-container>
             </ul>
           </mat-nested-tree-node>
@@ -115,12 +121,12 @@
 
       </mat-sidenav>
 
-      <mat-sidenav-content class="bg-gray-50 d-flex flex-column flex-11a oy-auto ">
+      <mat-sidenav-content class="d-flex flex-column flex-11a oy-auto ">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
-          <div class="tw:flex tw:justify-between tw:items-center tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3 tw:border tw:border-gray-200">
+          <div class="assessment-header tw:flex tw:justify-between tw:items-center  tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3 ">
             <!-- Assessment Name -->
             <div class="tw:flex-1 tw:min-w-0">
-              <h6 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate tw:text-gray-500">
+              <h6 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate ">
                 {{this.assessment?.assessmentName || 'Loading ...'}}
               </h6>
             </div>
@@ -128,24 +134,20 @@
             <div class="tw:flex tw:items-center tw:gap-4">
               <!-- Progress Section -->
               <div class="tw:flex tw:items-center tw:gap-3" *ngIf="assessment?.maturityModel?.modelName !== 'CIS'">
-                <div class="tw:relative" >
-                  <progress
-                    class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
-                    style="background-color: #e5e7eb;"
-                    [value]="getCompletionPercentage()"
-                    [matTooltip]="getProgressTooltip()"
-                    max="100">
-                  </progress>
-                </div>
-                <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
-
+                <progress
+                  class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
+                  [value]="getCompletionPercentage()"
+                  [matTooltip]="getProgressTooltip()"
+                  max="100">
+                </progress>
+                <span class="tw:text-sm tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
               </div>
 
               <!-- Divider -->
-              <div class="tw:w-px tw:h-8 tw:bg-gray-300"></div>
+              <div class="tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
               <div class="tw:flex tw:items-center tw:gap-3">
-                <span class="tw:text-sm tw:font-medium tw:text-gray-900 tw:whitespace-nowrap">Mark Assessment Done</span>
+                <span class="tw:text-sm tw:font-medium tw:whitespace-nowrap">Mark Assessment Done</span>
                 <input
                   type="checkbox"
                   class="tw:toggle"

@@ -38,7 +38,7 @@ export class PlaceholderQuestionsComponent implements OnInit {
     private navSvc: NavigationService,
     private assessSvc: AssessmentService,
     public configSvc: ConfigService
-  ) { this.assessSvc.currentTab = 'questions'; }
+  ) { this.assessSvc.setCurrentTab('questions'); }
 
   ngOnInit(): void { }
 

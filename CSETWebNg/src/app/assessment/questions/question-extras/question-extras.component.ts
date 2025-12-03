@@ -26,7 +26,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // eslint-disable-next-line max-len
-import { ReferenceDocLink, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
+import { ReferenceDocLink, QuestionDetailsContentViewModel, QuestionInformationTabData, QuestionDocument } from '../../../models/question-extras.model';
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
@@ -55,21 +55,21 @@ import { ResourceLibraryService } from './../../../services/resource-library.ser
 })
 export class QuestionExtrasComponent implements OnInit {
 
-  @Input() myQuestion: Question;
+  @Input() myQuestion!: Question;
   @Output() changeExtras = new EventEmitter();
   @Output() changeComponents = new EventEmitter();
-  @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
+  @ViewChild('questionExtras') questionExtrasDiv?: ElementRef;
 
   @Input() myOptions: any;
   @Input() iconsToDisplay: string[] = [];
 
-  extras: QuestionDetailsContentViewModel;
-  tab: QuestionInformationTabData;
+  extras?: QuestionDetailsContentViewModel;
+  tab?: QuestionInformationTabData;
   expanded = false;
-  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
-  answer: Answer;
-  modelName: string;
-  dialogRef: MatDialogRef<OkayComponent>;
+  mode?: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
+  answer?: Answer;
+  modelName?: string;
+  dialogRef?: MatDialogRef<OkayComponent>;
 
   msgNoSupplemental: string;
 
@@ -82,7 +82,7 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
    */
-  origTitle: string;
+  origTitle?: string;
 
   constructor(
     public questionsSvc: QuestionsService,
@@ -164,8 +164,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   scrollToExtras() {
     setTimeout(() => {
-      if (this.questionExtrasDiv.nativeElement.getBoundingClientRect().bottom > window.innerHeight) {
-        this.questionExtrasDiv.nativeElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      if (this.questionExtrasDiv?.nativeElement.getBoundingClientRect().bottom > window.innerHeight) {
+        this.questionExtrasDiv?.nativeElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
       }
     })
   }
@@ -199,7 +199,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.extras.questionId = this.myQuestion.questionId;
 
     // populate my details with the first "non-null" tab
-    this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
+    this.tab = this.extras?.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras?.listTabs[0];
 
     // add questionIDs to related questions for debug if configured to do so
     if (this.showQuestionIds) {
@@ -213,7 +213,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
       }
     }
-    if (this.extras.is_Component) {
+    if (this.extras?.is_Component) {
       this.myQuestion.is_Component = true;
       this.toggleComponent = true;
       this.mode = 'COMPONENT'
@@ -304,6 +304,10 @@ export class QuestionExtrasComponent implements OnInit {
   saveAnswer() {
     this.defaultEmptyAnswer();
 
+    if (!this.answer) {
+      return;
+    }
+
     this.answer.questionId = this.myQuestion.questionId;
     this.answer.answerText = this.myQuestion.answer;
     this.answer.altAnswerText = this.myQuestion.altAnswerText;
@@ -334,7 +338,7 @@ export class QuestionExtrasComponent implements OnInit {
    * on the answer.
    * @param mode
    */
-  has(mode) {
+  has(mode: string) {
     switch (mode) {
       case 'CMNT':
         return (this.myQuestion.comment && this.myQuestion.comment.length > 0) ? 'inline' : 'none';
@@ -363,7 +367,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Deletes an empty observation.
    * @param observationToDelete
    */
-  deleteEmptyObservation(observationToDelete) {
+  deleteEmptyObservation(observationToDelete: Observation) {
     this.obsSvc.deleteObservation(observationToDelete.observation_Id).subscribe();
     let deleteIndex = -1;
 
@@ -379,7 +383,7 @@ export class QuestionExtrasComponent implements OnInit {
   /**
      * 
      */
-  async editObservation(observationId) {
+  async editObservation(observationId: number) {
     let obs = await firstValueFrom(this.obsSvc.getObservation(-1, observationId, -1, ''));
 
     if (!obs) {
@@ -420,7 +424,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Deletes an Observation.
    * @param obsToDelete
    */
-  deleteObservation(obsToDelete) {
+  deleteObservation(obsToDelete: Observation) {
     // Build a message whether the observation has a title or not
     let msg = this.tSvc.translate('observation.delete observation confirm');
     msg = msg.replace('{title}', obsToDelete.summary);
@@ -488,7 +492,7 @@ export class QuestionExtrasComponent implements OnInit {
      * of contacts assigned to the assessment
      */
     async getContactsForEmptyObservation(): Promise<ObservationContact[]> {
-      let observationContacts = [];
+      let observationContacts: ObservationContact[] = [];
       let userContacts = (await this.assessSvc.getAssessmentContacts()).contactList;
       userContacts.forEach(user => {
         observationContacts.push({
@@ -539,7 +543,7 @@ export class QuestionExtrasComponent implements OnInit {
    * and flips into edit mode.
    * @param document
    */
-  startEdit(document) {
+  startEdit(document: QuestionDocument) {
     document.isEdit = true;
     this.origTitle = document.title;
   }
@@ -547,7 +551,7 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    * Changes the title of a stored document.
    */
-  renameDocument(document) {
+  renameDocument(document: QuestionDocument) {
     document.isEdit = false;
     if (this.isNullOrWhiteSpace(document.title)) {
       document.title = "click to edit";
@@ -556,18 +560,12 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe();
   }
 
-  changeGlobal(document) {
-    document.isGlobal = !document.isGlobal;
-    this.questionsSvc.changeGlobal(document.document_Id, document.isGlobal).subscribe();
-  }
-  
-  getIsGlobalColor(doc) {
-    if (doc.isGlobal)
-      return "#198754"
-    return "#dc3545"
+  toggleShared(document: QuestionDocument) {
+    document.isShared = !document.isShared;
+    this.questionsSvc.toggleShared(document.document_Id, document.isShared).subscribe();
   }
 
-  isNullOrWhiteSpace(str) {
+  isNullOrWhiteSpace(str: string) {
     return str === null || str.match(/^[\t ]*$/) !== null;
   }
 
@@ -575,8 +573,11 @@ export class QuestionExtrasComponent implements OnInit {
    * Reverts any changes to the title and gets out of edit mode.
    * @param document
    */
-  abandonEdit(document) {
-    document.title = this.origTitle;
+  abandonEdit(document: QuestionDocument) {
+    if (!document) {
+      return;
+    }
+    document.title = this.origTitle ?? '';
     document.isEdit = false;
   }
 
@@ -584,7 +585,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Deletes a document.
    * @param document
    */
-  deleteDocument(document) {
+  deleteDocument(document: QuestionDocument) {
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
       "Are you sure you want to delete file '"
@@ -611,11 +612,11 @@ export class QuestionExtrasComponent implements OnInit {
    * Displays a dialog with questions that have this document attached.
    * @param document
    */
-  showRelatedQuestions(document) {
+  showRelatedQuestions(document: QuestionDocument) {
     // call the API to get the list of questions
     this.questionsSvc.getQuestionsForDocument(document.document_Id)
       .subscribe((qlist: number[]) => {
-        const array = [];
+        const array: string[] = [];
 
         // Traverse the local model to get the "display" question numbers
         if (this.questionsSvc.questions) {
@@ -701,7 +702,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Encapsulates logic that determines whether an icon should be displayed.
    * Use "moduleBehaviors" configuration for the current module/model.
    */
-  displayIcon(mode) {
+  displayIcon(mode: string) {
     const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
 
     if (mode == 'DETAIL') {

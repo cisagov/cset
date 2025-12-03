@@ -503,5 +503,31 @@
   },
   "categories": "カテゴリ",
   "all assessments": "すべての評価",
-  "favorites": "お気に入り"
+  "favorites": "お気に入り",
+  "modules": {
+    "cpg": {
+      "display-name": "サイバー性能目標 (CPG)",
+      "model short title": "CPG"
+    },
+    "cmmc2f": {
+      "display-name": "サイバーセキュリティ成熟度モデル認証 (CMMC) 2.0",
+      "model short title": "CMMC2"
+    },
+    "rra": {
+      "display-name": "ランサムウェア対応準備評価 (RRA)",
+      "model short title": "RRA"
+    },
+    "c2m2": {
+      "model short title": "C2M2"
+    },
+    "cmmc": {
+      "model short title": "CMMC"
+    },
+    "edm": {
+      "model short title": "EDM"
+    },
+    "cis": {
+      "model short title": "CIS"
+    }
+  }
 }
