@@ -21,47 +21,38 @@
   SOFTWARE.
 -------------------------->
 <div>
-<div class="white-panel">
-  <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="white-panel">
+    <div id="top"></div>
+    <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-    <div *ngIf="hydroSvc.isHydroLevel(modelName); else defaultHeader" class="pt-3 pb-2 bgc-gray-50"
-      style="margin-left: -1rem; padding-left: 1rem;">
-      <div class="d-block mb-2">
-        <h3>Hydropower Cybersecurity Assessment</h3>
+      <ng-template class="d-block mb-2">
+        <h3>{{modelName}} Questions</h3>
+      </ng-template>
+
+      <div *ngIf="!section" class="w-100">
+        <div class="spinner-container center-item" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
       </div>
-      <div class="alert alert-dark" style="background-color: rgb(240,240,240); width: 80%" role="alert">
-        The original Hydropower cybersecurity content was produced by the National Renewable Energy Laboratory (NREL).
-        We recognize their efforts in this arena.
+
+      <!-- This extra blank div hides the text that shows up while scrolling in the small gap between the tabs bar and the chart. -->
+      <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
+        class="w-100 sticky-sal tw:dark:bg-bg-secondary"></div>
+
+      <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
+        class="w-100 text-center mb-3 mt-3 sticky-sal tw:dark:bg-bg-primary tw:dark:border-border"
+        style="border: 1px solid #ccc; border-radius: .3rem; top: -2rem;">
+        <h6 class="tw:dark:text-text-primary"><strong>{{title}}</strong></h6>
+        <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
       </div>
-    </div>
 
-    <ng-template #defaultHeader class="d-block mb-2">
-      <h3>{{modelName}} Questions</h3>
-    </ng-template>
 
-    <div *ngIf="!section" class="w-100">
-      <div class="spinner-container center-item" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+
+      <div *ngIf="!!section" class="w-100">
+        <app-grouping-block-nested [grouping]="section"></app-grouping-block-nested>
       </div>
+
     </div>
-
-    <!-- This extra blank div hides the text that shows up while scrolling in the small gap between the tabs bar and the chart. -->
-    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal tw:dark:bg-bg-secondary"></div>
-
-    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
-      class="w-100 text-center mb-3 mt-3 sticky-sal tw:dark:bg-bg-primary tw:dark:border-border" style="border: 1px solid #ccc; border-radius: .3rem; top: -2rem;">
-      <h6 class="tw:dark:text-text-primary"><strong>{{title}}</strong></h6>
-      <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
-    </div>
-
-
-
-    <div *ngIf="!!section" class="w-100">
-      <app-grouping-block-nested [grouping]="section"></app-grouping-block-nested>
-    </div>
-
   </div>
-</div>
   <app-nav-back-next [page]="'maturity-questions-nested-' + sectionId"></app-nav-back-next>
 </div>

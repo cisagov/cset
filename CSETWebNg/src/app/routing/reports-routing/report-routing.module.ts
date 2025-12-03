@@ -23,8 +23,6 @@ import { CrrReportComponent } from '../../reports/crr/crr-report/crr-report.comp
 import { EdmCommentsmarkedComponent } from '../../reports/edm-commentsmarked/edm-commentsmarked.component';
 import { ExecutiveSummaryComponent } from '../../reports/executive-summary/executive-summary.component';
 import { GeneralDeficiencyComponent } from '../../reports/general-deficiency/general-deficiency.component';
-import { HydroActionItemsReportComponent } from '../../reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
-import { HydroReportComponent } from '../../reports/hydro/hydro-report/hydro-report.component';
 import { ImrReportComponent } from '../../reports/imr/imr-report/imr-report.component';
 import { ModuleContentComponent } from '../../reports/module-content/module-content/module-content.component';
 import { MvraReportComponent } from '../../reports/mvra/mvra-report.component';
@@ -92,8 +90,6 @@ const routes: Routes = [
     { path: 'commentsmfr', component: CommentsMfrComponent },
     { path: 'module-content', component: ModuleContentComponent },
     { path: 'c2m2Report', component: C2m2ReportComponent },
-    { path: 'hydroReport', component: HydroReportComponent },
-    { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
     { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
     { path: 'key-report', component: KeyReportComponent },
     { path: 'sd-deficiency', component: TsaSdComponent },

@@ -30,13 +30,12 @@ import { ConfigService } from '../../../../../services/config.service';
 import { LayoutService } from '../../../../../services/layout.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
-import { HydroService } from '../../../../../services/hydro.service';
 import { MalcolmService } from '../../../../../services/malcolm.service';
 
 @Component({
-    selector: 'app-option-block-nested',
-    templateUrl: './option-block-nested.component.html',
-    standalone: false
+  selector: 'app-option-block-nested',
+  templateUrl: './option-block-nested.component.html',
+  standalone: false
 })
 export class OptionBlockNestedComponent implements OnInit {
 
@@ -62,7 +61,6 @@ export class OptionBlockNestedComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
-    public hydroSvc: HydroService,
     public malcolmSvc: MalcolmService,
     private utilSvc: Utilities,
     private configSvc: ConfigService,
@@ -78,14 +76,9 @@ export class OptionBlockNestedComponent implements OnInit {
   ngOnInit(): void {
     this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
-    if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName)) {
 
-      // hides 'None' answers for Hydro answers for now
-      this.optRadio = this.opts?.filter(x => x.optionType == 'radio' && x.optionText != 'None');
-      this.selectedOptions = this.optRadio?.filter(x => x.selected == true);
-    } else {
-      this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
-    }
+    this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
+
     this.optCheckbox = this.opts?.filter(x => x.optionType == 'checkbox');
     this.optOther = this.opts?.filter(x => x.optionType != 'radio' && x.optionType != 'checkbox');
 
@@ -114,25 +107,19 @@ export class OptionBlockNestedComponent implements OnInit {
 
     var answers = [];
 
-    if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName) && o.selected == true) {
-      o.selected = false;
-      this.selectedOptions = [];
-      answers.push(this.makeAnswer(o));
 
-      siblingOptions = this.q.options;
-    }
-    else {
-      o.selected = event.target.checked;
-      if (o.selected) {
-        if (!this.selectedOptions) {
-          this.selectedOptions = [];
-        }
-        this.selectedOptions.push(o);
+
+    o.selected = event.target.checked;
+    if (o.selected) {
+      if (!this.selectedOptions) {
+        this.selectedOptions = [];
       }
-      answers.push(this.makeAnswer(o));
-
-      siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+      this.selectedOptions.push(o);
     }
+    answers.push(this.makeAnswer(o));
+
+    siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+
 
     this.selectedOptions.forEach(option => {
       if (o.optionId == option.optionId && !o.selected) {
