@@ -71,10 +71,6 @@ import { RelationshipManagementComponent } from '../../assessment/results/edm/re
 import { ServiceProtectionComponent } from '../../assessment/results/edm/service-protection/service-protection.component';
 import { SummaryResultsComponent } from '../../assessment/results/edm/summary-results/summary-results.component';
 import { FeedbackComponent } from '../../assessment/results/feedback/feedback.component';
-import { HydroActionsComponent } from '../../assessment/results/hydro/hydro-actions/hydro-actions.component';
-import { HydroDeficiencyComponent } from '../../assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
-import { HydroFeasibilityComponent } from '../../assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
-import { HydroImpactComponent } from '../../assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { CmmcComplianceComponent } from '../../assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from '../../assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CmmcLevelDrilldownComponent } from '../../assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
@@ -204,10 +200,6 @@ const routes: Routes = [
             { path: 'analytics', component: AnalyticsComponent },
             { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
             { path: '', component: DashboardComponent },
-            { path: 'hydro-deficiency', component: HydroDeficiencyComponent },
-            { path: 'hydro-impact', component: HydroImpactComponent },
-            { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
-            { path: 'hydro-actions', component: HydroActionsComponent },
             { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
         ]
     },
