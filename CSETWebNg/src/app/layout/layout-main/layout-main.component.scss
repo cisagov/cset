@@ -592,6 +592,10 @@ label[required]::after {
   max-height: calc(100cqh - var(--offset, 0px));
 }
 
+mat-dialog-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
 
 // Dark mode ---------------------------------------------------
 .dark-theme,
@@ -637,6 +641,10 @@ label[required]::after {
         background: rgba(255, 255, 255, 0.4);
       }
     }
+  }
+
+  mat-dialog-content {
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
 }
@@ -1792,12 +1800,14 @@ ul.nav-tabs li.active button:hover {
   color: $primary-color;
   text-decoration: none;
 }
+
 ul.nav-tabs.questions-tab-border li.active button span:hover,
 ul.nav-tabs.questions-tab-border li.active button:focus,
 ul.nav-tabs.questions-tab-border li.active button:hover {
   color: var(--cset-primary-hover);
   text-decoration: none;
 }
+
 ul.nav-tabs li button {
   color: $gray-100;
   font-weight: 500;
