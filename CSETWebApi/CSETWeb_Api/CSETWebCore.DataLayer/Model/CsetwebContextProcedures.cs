@@ -307,67 +307,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> changeEmailAsync(string originalEmail, string newEmail, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "originalEmail",
-                    Size = 400,
-                    Value = originalEmail ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "newEmail",
-                    Size = 400,
-                    Value = newEmail ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[changeEmail] @originalEmail = @originalEmail, @newEmail = @newEmail", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<CheckHeadingResult>> CheckHeadingAsync(string heading, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "Heading",
-                    Size = 500,
-                    Value = heading ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<CheckHeadingResult>("EXEC @returnValue = [dbo].[CheckHeading] @Heading = @Heading", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<clean_out_requirements_modeResult>> clean_out_requirements_modeAsync(string standard_name, string standard_name_with_mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

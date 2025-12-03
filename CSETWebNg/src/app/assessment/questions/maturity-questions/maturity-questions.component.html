@@ -21,12 +21,12 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t">
-  <div class="white-panel">
+  <div class="white-panel-controls">
     <div id="top"></div>
     <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-      <div class="d-flex sticky-sal p-1 justify-content-end align-items-start flex-11a"
-        style="width: max-content; float: right; background-color: #ffffffcc;">
+      <div class="d-flex p-1 justify-content-end align-items-start flex-11a"
+        style="width: max-content; float: right;">
         <div class="me-3 answered-count" *ngIf="!!groupings" matTooltip="{{t('tooltip.answered count')}}">
           {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
         </div>
@@ -43,6 +43,11 @@
         </div>
 
       </div>
+    </div>
+  </div>
+  <div class="white-panel-body avail-h-minus tw:dark:bg-bg-secondary" style="--offset: 400px">
+    <div id="top"></div>
+    <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
       <div class="d-block mb-2">
         <h3>{{ pageTitle }}</h3>

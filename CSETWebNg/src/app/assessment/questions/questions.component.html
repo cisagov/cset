@@ -23,7 +23,7 @@
 
 <div *transloco="let t">
   <div class="white-panel-controls">
-    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a p-1"
+    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a p-1 tw:dark:bg-bg-secondary"
       style="pointer-events: none;">
       <div class="btn-group btn-group-toggle" data-toggle="buttons" style="pointer-events: auto;">
         <label *ngIf="showQuestionsToggle" class="btn btn-app-mode form-check-label"
@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <div class="white-panel-body">
+  <div class="white-panel-body avail-h-minus tw:dark:bg-bg-secondary" style="--offset: 431px">
     <div id="top"></div>
 
     <div *ngIf="!!categories && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only

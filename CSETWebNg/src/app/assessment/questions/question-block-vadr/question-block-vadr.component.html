@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-    <div class="question-group mb-3">
+    <div class="question-group mb-3 tw:dark:bg-bg-primary">
 
-        <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
+        <div class="subcat-header tw:dark:bg-bg-primary tw:dark:border-b-0" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
             (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
             [attr.aria-expanded]="myGrouping.expanded">
             <div class="sub-head-1" tabindex="0">

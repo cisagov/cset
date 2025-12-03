@@ -480,8 +480,9 @@
     "related questions": "Related questions",
     "delete document": "Delete document",
     "copy document": "Copy this document to another location",
-    "global document": "Make this document globally accessible",
-    "local document": "Keep this document local",
+    "shared document": "Click to mark this document as shared",
+    "shared document icon": "Document is shared",
+    "local document": "Click to remove this document from the shared list",
     "references": "References",
     "observations": "Observations",
     "observations with content": "Observations with content",
@@ -706,9 +707,10 @@
     "tools": {
       "tools": "Tools",
       "enable protected features": "Enable Protected Features",
+      "shared documents": "Shared Documents",
       "assessment documents": "Assessment Documents",
-      "assessment documents global only": "Documents marked as global on all assessments",
-      "assessment documents mixed": "Documents attached to questions in this assessment. Global documents are also included, and denoted with the globe icon.",
+      "assessment documents shared": "Documents shared from all assessments.",
+      "assessment documents local": "Documents attached to questions in this assessment.",
       "has no documents": "This assessment has no attached documents.",
       "parameter editor": "Parameter Editor",
       "export assessment to excel": "Export Assessment to Excel",
@@ -750,7 +752,7 @@
             "css style": "CSS Style",
             "data tables": "Data Tables",
             "all interactive elements": "All Interactive Elements",
-            "does not apply": "The following accessibility features does not apply to our software"
+            "does not apply": "The following accessibility features do not apply to our software"
           },
           "p": {
             "1": "In consideration of Section 508 of the U.S. Rehabilitation Act (29 U.S.C. 794d), the features and functions in this application have been developed to support users with accessibility requirements. Industry best practices and standards have guided our design and development processes to incorporate accessibility features built into the Windows operating system and the .NET architecture, as well as the Chrome, Firefox, and Edge browsers. The software development team is committed to integrating accessible design thinking throughout the entire product development cycle. More information on Section 508 and the technical standards can be found at <a href=\"https://www.section508.gov\">www.section508.gov</a>.",
@@ -1025,7 +1027,20 @@
       "model short title": "CMMC 2.0"
     },
     "rra": {
-      "display-name": "Ransomware Readiness Assessment (RRA)"
+      "display-name": "Ransomware Readiness Assessment (RRA)",
+      "model short title": "RRA"
+    },
+    "c2m2": {
+      "model short title": "C2M2"
+    },
+    "cmmc": {
+      "model short title": "CMMC"
+    },
+    "edm": {
+      "model short title": "EDM"
+  },
+    "cis": {
+      "model short title": "CIS"
     },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",

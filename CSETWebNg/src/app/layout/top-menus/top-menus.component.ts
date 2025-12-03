@@ -133,7 +133,7 @@ export class TopMenusComponent implements OnInit {
     // Resource Library
     this._hotkeysService.add(
       new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-        const url = "index.html?returnPath=resource-library";
+        const url = 'index.html?returnPath=resource-library';
         window.open(url, '_blank');
         return false; // Prevent bubbling
       })
@@ -559,25 +559,40 @@ export class TopMenusComponent implements OnInit {
 
   isNullOrEmptyAssessment() {
     let str = localStorage.getItem('assessmentId');
-    let hasNoVal = str === null || str === undefined || str === "";
+    let hasNoVal = str === null || str === undefined || str === '';
     return hasNoVal;
   }
 
   checkHasGlobalDocuments(): void {
-    let isGlobal = false;
-    this.assessSvc.hasGlobalDocuments().subscribe(
+    let isShared = false;
+    this.assessSvc.hasSharedDocuments().subscribe(
       (response: any) => {
         this.globalDocuments = response;
       }
     );
   }
 
+  showSharedDocs() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(AssessmentDocumentsComponent, {
+      data: {
+        'level': 'shared'
+      }
+    });
+    this.dialogRef.afterClosed().subscribe();
+  }
+
   showAssessDocs() {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    // , {width: '800px', height: "500px"}
-    this.dialogRef = this.dialog.open(AssessmentDocumentsComponent);
+    this.dialogRef = this.dialog.open(AssessmentDocumentsComponent, {
+      data: {
+        'level': 'assessment'
+      }
+    });
     this.dialogRef.afterClosed().subscribe();
   }
 

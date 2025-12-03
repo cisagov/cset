@@ -25,11 +25,11 @@
   <div class="tw:w-full tw:mx-auto tw:px-4 tw:md:px-12 tw:lg:px-16 tw:xl:px-20">
     <div class="tw:mb-6">
       <h2 class="tw:text-2xl tw:font-semibold">{{t('titles.search results')}}</h2>
-      <span class="tw:text-sm tw:text-gray-600">{{galleryItemsTmp.length}} items</span>
+      <span class="tw:text-sm tw:text-text-secondary">{{galleryItemsTmp.length}} items</span>
     </div>
     <div *ngIf="galleryItemsTmp.length === 0" class="tw:text-center tw:py-12">
-      <i class="fas fa-search tw:text-6xl tw:text-gray-300 tw:mb-4"></i>
-      <p class="tw:text-gray-500"> {{t('no search results')}}</p>
+      <i class="fas fa-search tw:text-6xl tw:text-text-disabled tw:mb-4"></i>
+      <p class="tw:text-text-secondary"> {{t('no search results')}}</p>
     </div>
 
     <div class="tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:xl:grid-cols-4 tw:2xl:grid-cols-5 tw:gap-6">
@@ -38,14 +38,21 @@
         (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
 
         <div class="card-body gallery-card-body tw:cursor-pointer"
-          style="min-height:150px; max-height:150px;" (click)="navSvc.beginNewAssessmentGallery(c.item)">
+          style="min-height:150px; max-height:150px;"
+             (click)="onCardClick(c.item)">
           <div class="img-container">
             <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
           </div>
-          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm">{{c.item.title}}</h6>
+          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm tw:text-text-primary">{{c.item.title}}</h6>
+        </div>
+        <div *ngIf="loadingCardId === c.item.gallery_Item_Guid"
+             class="tw:absolute tw:inset-0 tw:flex tw:items-center tw:justify-center tw:z-10 tw:backdrop-blur-[2px] tw:rounded">
+          <div class="spinner-border text-cset-primary" role="status" style="width: 3rem; height: 3rem; border-width: 4px;">
+            <span class="visually-hidden"></span>
+          </div>
         </div>
 
-        <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
+        <div class="card-footer tw:dark:bg-gray-700 tw:bg-cset-primary" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
           style="text-align:right;">
           <button class="btn btn-outline-light btn-circle gallery-btn-info" (click)="openDialog(c.item)"
                   [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i

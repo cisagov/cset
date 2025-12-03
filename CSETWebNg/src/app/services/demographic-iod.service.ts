@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { DemographicsIod } from '../models/demographics-iod.model';
+import { Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -38,11 +39,12 @@ const headers = {
 export class DemographicIodService {
 
   apiUrl: string;
+  public demographicUpdateCompleted$ = new Subject<void>();
 
   /**
-   * 
-   * @param http 
-   * @param configSvc 
+   *
+   * @param http
+   * @param configSvc
    */
   constructor(
     private http: HttpClient,
@@ -53,17 +55,17 @@ export class DemographicIodService {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getDemographics() {
     return this.http.get(this.apiUrl);
   }
 
   /**
-   * 
-   * @param sectorId 
-   * @returns 
+   *
+   * @param sectorId
+   * @returns
    */
   getSubsectors(sectorId) {
     return this.http.get(this.apiUrl + `/subsectors/${sectorId}`);
@@ -80,6 +82,7 @@ export class DemographicIodService {
         if (this.configSvc.userIsCisaAssessor) {
           this.assessSvc.updateAssessmentName();
         }
+        this.demographicUpdateCompleted$.next();
       });
   }
 }

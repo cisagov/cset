@@ -80,7 +80,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
         this.loadQuestions();
       }
     });
-    this.assessSvc.currentTab = 'questions';
+    this.assessSvc.setCurrentTab('questions');
   }
 
   /**
@@ -133,7 +133,6 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
           this.scoreObject = response.groupingScore;
           this.sectionScore = +response.groupingScore.groupingScore;
           this.baselineScore = null;
-          this.baselineScore = null;
           if (!!response.baselineGroupingScore) {
             this.baselineScore = +response.baselineGroupingScore.groupingScore;
           }
@@ -145,7 +144,6 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
         }
 
         this.loaded = true;
-
         if (this.maturitySvc.showChartOnNestedQPage()) {
           this.initializeChart();
         }
@@ -194,30 +192,6 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
     let x = {
       labels: [''],
       datasets: [
-        //{
-        //  type: 'scatter',
-        //  label: 'Comparison High',
-        //  pointStyle: 'triangle',
-        //  data: [{ x: this.scoreObject?.high, y: 40 }],
-        //  radius: 10,
-        //  backgroundColor: '#66fa55'
-        //},
-        //{
-        //  type: 'scatter',
-        //  label: 'Comparison Median',
-        //  radius: 8,
-        //  data: [{ x: this.scoreObject?.median, y: 50 }],
-        //  backgroundColor: '#fefd54'
-        //},
-        //{
-        //  type: 'scatter',
-        // label: 'Comparison Low',
-        //  data: [{ x: this.scoreObject?.low, y: 60 }],
-        //  pointStyle: 'triangle',
-        //  rotation: 180,
-        //  radius: 10,
-        //  backgroundColor: '#e33e23'
-        //},
         {
           type: 'bar',
           label: 'Your Score',
@@ -228,30 +202,43 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
           type: 'bar',
           label: 'Baseline Score',
           data: [this.baselineScore],
-          backgroundColor: ['#cccccc']
+          backgroundColor: ['#9ca3af']
         }]
     };
 
-
-    // Remove the baseline bar if there's no baseline score
     if (this.baselineScore == null) {
       x.datasets = x.datasets.filter(x => x.label != 'Baseline Score');
     }
 
     let opts = {
-      scales: { y: { display: false } },
+      scales: {
+        x: {
+          border: {
+            color: '#6b7280'
+          },
+          ticks: {
+            color: '#9ca3af'
+          },
+          grid: {
+            color: '#6b7280'
+          }
+        },
+        y: { display: false }
+      },
       plugins: {
-        legend: { position: 'right' }
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#9ca3af'
+          }
+        }
       }
     };
-
 
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
     }, 800);
-
   }
-
   updateChart() {
     if (!this.chartScore) {
       return;

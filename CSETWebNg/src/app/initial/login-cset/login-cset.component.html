@@ -21,16 +21,19 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" id="white-panel"
-  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary" style="position: relative;">
+  <div style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">
+    <app-theme-toggle [showText]="false"></app-theme-toggle>
+  </div>
   <div class="p-4 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
 
     <!-- CSET Logo and Name -->
     <div *ngIf="!configSvc.isRunningAnonymous" class="my-4 d-flex justify-content-start flex-00a">
-      <app-logo-cset logoHeight="50"></app-logo-cset>
+      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
     </div>
 
     <div *ngIf="configSvc.isRunningAnonymous" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
-      <app-logo-cset logoHeight="50"></app-logo-cset>
+      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
       <span class="align-bottom ms-3 fst-italic"
         style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>

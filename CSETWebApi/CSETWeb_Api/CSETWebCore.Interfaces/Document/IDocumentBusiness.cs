@@ -16,12 +16,12 @@ namespace CSETWebCore.Interfaces.Document
         void SetUserAssessmentId(int assessmentId);
         List<Model.Document.Document> GetDocumentsForAnswer(int answerId);
         void RenameDocument(int id, string title);
-        void ChangeGlobal(int id, Boolean isGlobal);
+        void ToggleShared(int id, Boolean isShared);
         void DeleteDocument(int id, int questionId, int assessId);
         List<int> GetQuestionsForDocument(int id);
         void AddDocument(string title, int answerId, FileUploadStreamResult result);
         List<Model.Document.Document> GetDocumentsForAssessment(int assessmentId);
-        List<Model.Document.Document> GetGlobalDocuments();
+        List<Model.Document.Document> GetSharedDocuments();
         void CopyFilesForMerge(List<DocumentWithAnswerId> documents);
     }
 }

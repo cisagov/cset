@@ -57,9 +57,7 @@ namespace CSETWebCore.Helpers
 
         public byte[] GetPbkdf2Bytes(string password, byte[] salt, int iterations, int outputBytes)
         {
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA512);
-            pbkdf2.IterationCount = iterations;
-            return pbkdf2.GetBytes(outputBytes);
+            return Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, HashAlgorithmName.SHA512, outputBytes);
         }
 
         public byte[] ConvertFromBase64String(string input)

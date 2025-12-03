@@ -255,16 +255,6 @@ namespace CSETWebCore.Api.Controllers
             return BadRequest();
         }
 
-
-        [HttpGet]
-        [Route("api/getAssessmentById")]
-        [Obsolete("Method no longer in use.")]
-        public IActionResult GetAssessmentById(int assessmentId)
-        {
-            var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);
-            return Ok(assessment);
-        }
-
         /// <summary>
         /// Returns the AssessmentDetail for current Assessment defined in the security token.
         /// </summary>
@@ -299,19 +289,24 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// Returns a collection of all documents attached to any question in the Assessment.
+        /// Returns a collection of documents.  
+        ///  - If the 'level' query parameter is 'shared',
+        ///    all documents marked as 'shared' are returned.  
+        ///  - If the query parameter is 'assessment', all attached documents for the
+        ///    current Assessment are returned.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdocuments")]
-        public IActionResult GetDocumentsForAssessment([FromQuery] bool globalOnly)
+        public IActionResult GetAttachedDocuments([FromQuery] string level)
         {
-            if (globalOnly)
+            // shared documents - all assessments
+            if (level == "shared")
             {
-                return Ok(_documentBusiness.GetGlobalDocuments());
+                return Ok(_documentBusiness.GetSharedDocuments());
             }
 
-            var IsAssessment = _tokenManager.IsUserAuthorizedForAssessment();
+            // local documents - current assessment
+            var IsAssessment = _tokenManager.DoesTokenContainAssessment();
             if (IsAssessment)
             {
                 int assessmentId = _tokenManager.AssessmentForUser();

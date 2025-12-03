@@ -47,11 +47,11 @@
     </div>
 
     <!-- This extra blank div hides the text that shows up while scrolling in the small gap between the tabs bar and the chart. -->
-    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal"></div>
+    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal tw:dark:bg-bg-secondary"></div>
 
     <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
-      class="w-100 text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: -2rem;">
-      <h6><strong>{{title}}</strong></h6>
+      class="w-100 text-center mb-3 mt-3 sticky-sal tw:dark:bg-bg-primary tw:dark:border-border" style="border: 1px solid #ccc; border-radius: .3rem; top: -2rem;">
+      <h6 class="tw:dark:text-text-primary"><strong>{{title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>
 

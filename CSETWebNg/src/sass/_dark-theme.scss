@@ -1,0 +1,522 @@
+/*
+  Dark Theme Styles for CSET
+  Integrates DaisyUI, Material, and Bootstrap dark modes
+  Copyright 2025 Battelle Energy Alliance, LLC
+*/
+
+/* ===================================
+   CSS Variables for Dark Theme
+   =================================== */
+
+:root {
+  // Light theme colors (default)
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #e5e7eb;
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --text-disabled: rgba(0, 0, 0, 0.38);
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --cset-primary: #015288;
+  --cset-primary-hover: #013a5f;
+  --badge-active: #9ca3af;
+  --badge-inactive: #d1d5db;
+  --text-disabled: rgba(0, 0, 0, 0.38);
+  --bg-highlight: #dbeafe;
+  --border-highlight: #93c5fd;
+  --border-light: #e5e7eb;
+  --progress-bg: #d1d5db;
+}
+
+// Dark theme colors
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+  --bg-primary: #031925;
+  --bg-secondary: #002236;
+  --bg-tertiary: #15191e;
+  --text-primary:rgba(255, 255, 255, 0.70);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --text-disabled: rgba(255, 255, 255, 0.38);
+  --border-color: #6b7280;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --cset-primary: #0c7dc4;
+  --cset-primary-hover: #0a68a3;
+  --badge-active: #9ca3af;
+  --badge-inactive: #4b5563;
+  --text-disabled: rgba(255, 255, 255, 0.38);
+  --bg-highlight: #015288;
+  --border-highlight: #0c7dc4;
+  --border-light: #374151;
+  --progress-bg: #4b5563;
+
+}
+
+/* ===================================
+   Theme Transition Animation
+   =================================== */
+
+.theme-transition,
+.theme-transition *,
+.theme-transition *:before,
+.theme-transition *:after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* ===================================
+   Dark Theme Base Styles
+   =================================== */
+
+.dark-theme, [data-theme="dark"] {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  // Body and main containers
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  .landing-page{
+     background-color: var(--bg-primary) !important;
+  }
+
+  // ===================================
+  // Material Components Dark Mode
+  // ===================================
+
+  // Material buttons in dark mode
+  .mat-button, .mat-icon-button {
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+
+  }
+
+
+  .mat-raised-button {
+    background-color: #2a323c !important;
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background-color: #374151 !important;
+    }
+  }
+
+  .mat-flat-button.mat-primary {
+    background-color: var(--cset-primary) !important;
+    color: white !important;
+  }
+
+  // Material toolbar
+  .mat-toolbar {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // Material cards
+  .mat-card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // Material dialogs
+  .mat-dialog-container {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // Material form fields
+  .mat-form-field {
+    color: var(--text-primary) !important;
+
+    .mat-input-element {
+      color: var(--text-primary) !important;
+    }
+
+    .mat-form-field-label {
+      color: var(--text-secondary) !important;
+    }
+
+    .mat-form-field-underline {
+      background-color: var(--border-color) !important;
+    }
+  }
+
+  // Material select
+  .mat-select {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-select-panel {
+    background-color: var(--bg-secondary) !important;
+  }
+
+  .mat-option {
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+  }
+
+  // Material tables
+  .mat-table {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .mat-header-row {
+    background-color: var(--bg-secondary) !important;
+  }
+
+  .mat-row:hover {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+  }
+
+  // Material menus
+  .mat-menu-panel {
+    background-color: var(--bg-secondary) !important;
+  }
+
+  .mat-menu-item {
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+  }
+
+  // Material checkboxes and radio buttons
+  .mat-checkbox-frame {
+    border-color: var(--text-secondary) !important;
+  }
+
+  .mat-radio-outer-circle {
+    border-color: var(--text-secondary) !important;
+  }
+
+  // Material tabs
+  .mat-tab-label {
+    color: var(--text-secondary) !important;
+
+    &.mat-tab-label-active {
+      color: var(--text-primary) !important;
+    }
+  }
+
+  // Material icons
+  .mat-icon {
+    color: var(--text-primary) !important;
+  }
+
+  // ===================================
+  // Bootstrap Components Dark Mode
+  // ===================================
+
+  // Bootstrap cards
+  .card {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .card-header {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // Bootstrap forms
+  .form-control,
+  .form-select {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+
+    &:focus {
+      background-color: var(--bg-tertiary) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--cset-primary) !important;
+    }
+
+    &::placeholder {
+      color: var(--text-disabled) !important;
+    }
+  }
+
+  // Bootstrap buttons
+  .btn-primary {
+    background-color: var(--cset-primary) !important;
+    border-color: var(--cset-primary) !important;
+
+    &:hover {
+      background-color: var(--cset-primary-hover) !important;
+    }
+  }
+
+  .btn-secondary {
+    background-color: #374151 !important;
+    border-color: #374151 !important;
+    color: var(--text-primary) !important;
+  }
+
+  .btn-light {
+    background-color: #374151 !important;
+    border-color: #374151 !important;
+    color: var(--text-primary) !important;
+  }
+
+  .btn-outline-primary {
+    color: var(--cset-primary) !important;
+    border-color: var(--cset-primary) !important;
+
+    &:hover {
+      background-color: var(--cset-primary) !important;
+      color: white !important;
+    }
+  }
+
+  // Bootstrap tables
+  .table {
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+
+    thead th {
+      background-color: var(--bg-secondary) !important;
+      border-color: var(--border-color) !important;
+      color: var(--text-primary) !important;
+    }
+
+    tbody tr {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.04) !important;
+      }
+    }
+
+    td, th {
+      border-color: var(--border-color) !important;
+    }
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+  }
+
+  // Bootstrap modals
+  .modal-content {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .modal-header {
+    border-color: var(--border-color) !important;
+  }
+
+  .modal-footer {
+    border-color: var(--border-color) !important;
+  }
+
+  // Bootstrap nav tabs
+  .nav-tabs {
+    border-color: var(--border-color) !important;
+
+    .nav-link {
+      color: var(--text-secondary) !important;
+
+      &:hover {
+        border-color: var(--border-color) !important;
+      }
+
+      &.active {
+        background-color: var(--bg-primary) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-color) var(--border-color) var(--bg-primary) !important;
+      }
+    }
+  }
+
+  // Bootstrap alerts
+  .alert-info {
+    background-color: #1e3a5f !important;
+    border-color: #2563eb !important;
+    color: #93c5fd !important;
+  }
+
+  .alert-success {
+    background-color: #064e3b !important;
+    border-color: #10b981 !important;
+    color: #6ee7b7 !important;
+  }
+
+  .alert-warning {
+    background-color: #5b2c11 !important;
+    border-color: #f59e0b !important;
+    color: #ffd447d4 !important;
+  }
+
+  .alert-danger {
+    background-color: #250808 !important;
+    border-color: #912828 !important;
+    color: #fca5a5 !important;
+  }
+
+  // Bootstrap badges
+  .badge {
+    &.bg-light {
+      background-color: #374151 !important;
+      color: var(--text-primary) !important;
+    }
+  }
+
+  // ===================================
+  // AG-Grid Dark Mode
+  // ===================================
+
+  .ag-theme-alpine {
+    --ag-background-color: var(--bg-secondary);
+    --ag-foreground-color: var(--text-primary);
+    --ag-header-background-color: var(--cset-primary);
+    --ag-control-panel-background-color: var(--bg-secondary);
+    --ag-odd-row-background-color: rgba(255, 255, 255, 0.02);
+    --ag-row-hover-color: rgba(255, 255, 255, 0.04);
+    --ag-border-color: var(--border-color);
+  }
+
+  // ===================================
+  // Custom Application Styles
+  // ===================================
+
+  // Text colors
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary) !important;
+  }
+
+  p, span, div {
+    color: var(--text-primary);
+  }
+
+  a {
+    color: var(--cset-primary);
+
+    &:hover {
+      color: var(--cset-primary-hover);
+    }
+  }
+
+  // Labels
+  label,
+  .label,
+  .form-label,
+  .control-label,
+  .mat-form-field-label,
+  .mat-input-element + label {
+    color: var(--text-primary) !important;
+  }
+
+  // Borders and dividers
+  hr {
+    border-color: var(--border-color) !important;
+  }
+
+  .border {
+    border-color: var(--border-color) !important;
+  }
+
+  // Custom progress bars
+  progress {
+    &::-webkit-progress-bar {
+      background-color: var(--progress-bg);
+    }
+
+    &::-webkit-progress-value {
+      background-color: var(--cset-primary) !important;
+    }
+
+    &::-moz-progress-bar {
+      background-color: var(--cset-primary) !important;
+    }
+  }
+
+  // Scrollbars (webkit)
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 6px;
+
+    &:hover {
+      background: #6b7280;
+    }
+  }
+
+  // Code blocks
+  pre, code {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  // Inputs and textareas
+  input, textarea {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+
+    &::placeholder {
+      color: var(--text-disabled) !important;
+    }
+  }
+}
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+  // All text in ngx-charts (axis labels, tick labels)
+  .ngx-charts text,
+  ngx-charts-bar-horizontal text,
+  .tick text {
+    fill: var(--text-primary) !important;
+  }
+
+  // Also style the gridlines for better visibility
+  .gridline-path {
+    stroke: var(--border-color) !important;
+  }
+}
+/* Score Ranges Component - Dark Mode Text */
+.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+  // SVG text in score ranges (the percentages at bottom)
+  app-score-ranges svg text {
+    fill: var(--text-primary);
+  }
+
+  // Table labels on the left (Robust Data Backup, etc.)
+  app-score-ranges table td {
+    color: var(--text-primary);
+  }
+
+  // Legend text at the top
+  app-score-ranges .mt-2 span {
+    color: var(--text-primary);
+  }
+
+  // The border around the legend box
+  app-score-ranges .mt-2.mb-4 {
+    border-color: var(--border-color);
+  }
+
+  // The horizontal lines in the SVG
+  app-score-ranges svg line {
+    stroke: var(--border-color);
+  }
+}

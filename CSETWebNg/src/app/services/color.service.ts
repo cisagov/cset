@@ -90,50 +90,6 @@ export class ColorService {
   }
 
   /**
-   * Returns a standard HTML color string for the 
-   * specified function.  This will promote consistency
-   * anywhere CSF colors are displayed in CSET.
-   */
-  nistCsfFuncColor(func: string) {
-
-    // CSF 2.0 colors
-    if (func.endsWith('-2')) {
-      switch (func) {
-        case 'GV-2':
-          return '#f9f39b';
-        case 'ID-2':
-          return '#4cb3e0';
-        case 'PR-2':
-          return '#918cea';
-        case 'DE-2':
-          return '#fab647';
-        case 'RS-2':
-          return '#e47677';
-        case 'RC-2':
-          return '#7ef49e';
-        default:
-          return '#FFFFFF';
-      }
-    }
-
-    // CSF 1.0 colors
-    switch (func) {
-      case 'ID':
-        return '#355C9B';
-      case 'PR':
-        return '#784390';
-      case 'DE':
-        return '#F7E24E';
-      case 'RS':
-        return '#D93A34';
-      case 'RC':
-        return '#4CA056';
-      default:
-        return '#FFFFFF';
-    }
-  }
-
-  /**
    * Returns a hex color code of black or white,
    * depending on the specified background color.
    */

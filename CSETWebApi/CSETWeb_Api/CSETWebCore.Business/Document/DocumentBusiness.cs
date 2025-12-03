@@ -69,7 +69,7 @@ namespace CSETWebCore.Business.Document
                     Document_Id = file.Document_Id,
                     Title = file.Title,
                     FileName = file.Name,
-                    IsGlobal = file.IsGlobal
+                    IsShared = file.IsGlobal
                 };
 
                 list.Add(doc);
@@ -106,7 +106,7 @@ namespace CSETWebCore.Business.Document
         /// </summary>
         /// <param name="id"></param>
         /// <param name="isGlobal"></param>
-        public void ChangeGlobal(int id, Boolean isGlobal)
+        public void ToggleShared(int id, Boolean isShared)
         {
             var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
 
@@ -116,7 +116,7 @@ namespace CSETWebCore.Business.Document
                 return;
             }
 
-            doc.IsGlobal = isGlobal;
+            doc.IsGlobal = isShared;
             doc.UpdatedTimestamp = DateTime.Now;
 
             _context.DOCUMENT_FILE.Update(doc);
@@ -277,7 +277,6 @@ namespace CSETWebCore.Business.Document
 
             var files = from df in _context.DOCUMENT_FILE
                         where docIDs.Contains(df.Document_Id)
-                        || df.IsGlobal == true
                         select df;
 
             if (files == null || files.Count() == 0)
@@ -296,7 +295,7 @@ namespace CSETWebCore.Business.Document
                     Document_Id = file.Document_Id,
                     Title = file.Title,
                     FileName = file.Name,
-                    IsGlobal = file.IsGlobal
+                    IsShared = file.IsGlobal
                 };
 
                 // Don't display "click to edit title" in this context because they won't be able to click it
@@ -311,11 +310,17 @@ namespace CSETWebCore.Business.Document
             return list;
         }
 
-        public List<Model.Document.Document> GetGlobalDocuments()
+
+        /// <summary>
+        /// Returns all documents attached to any assessment 
+        /// and marked as shared (global.)
+        /// </summary>
+        /// <returns></returns>
+        public List<Model.Document.Document> GetSharedDocuments()
         {
             var list = new List<Model.Document.Document>();
             var files = from df in _context.DOCUMENT_FILE
-                        where df.IsGlobal == true
+                        where df.IsGlobal
                         select df;
 
             if (files == null || files.Count() == 0)
@@ -330,7 +335,7 @@ namespace CSETWebCore.Business.Document
                     Document_Id = file.Document_Id,
                     Title = file.Title,
                     FileName = file.Name,
-                    IsGlobal = file.IsGlobal
+                    IsShared = file.IsGlobal
                 };
 
                 // Don't display "click to edit title" in this context because they won't be able to click it

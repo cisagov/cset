@@ -21,8 +21,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<analytics_Compute_standard_allResult>> analytics_Compute_standard_allAsync(int? assessment_id, string set_name, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<analytics_selectedStandardListResult>> analytics_selectedStandardListAsync(int? standard_assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> analytics_setup_maturity_groupingsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<int> changeEmailAsync(string originalEmail, string newEmail, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<CheckHeadingResult>> CheckHeadingAsync(string heading, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<clean_out_requirements_modeResult>> clean_out_requirements_modeAsync(string standard_name, string standard_name_with_mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> DeleteAssessmentAsync(int? assessmentid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<DeleteUserResult>> DeleteUserAsync(string userid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

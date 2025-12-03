@@ -30,6 +30,11 @@ namespace CSETWebCore.Business.Sal
         {
             get
             {
+                if (Question_Answer == null)
+                {
+                    return false;
+                }
+
                 if ((Question_Answer == Constants.Constants.YES) || (Question_Answer.Equals(Constants.Constants.YESFull, StringComparison.CurrentCultureIgnoreCase)))
                 {
                     return true;

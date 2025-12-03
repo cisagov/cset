@@ -26,15 +26,16 @@
     <span>{{ t('dialogs.please confirm') }}</span>
   </div>
 
-  <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pe-3 d-flex flex-column flex-11a" [innerHtml]="confirmMessage | safe">
+  <div class="p-3 pb-0 pe-0 my-3 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-0 pe-3 d-flex flex-column flex-11a tw:text-text-primary"
+      [innerHtml]="confirmMessage | safe">
     </mat-dialog-content>
   </div>
 
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-    <button class=" btn btn-primary m-0 me-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.yes')
-      }}</button>
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
     <button class="btn btn-secondary" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.no')
+      }}</button>
+    <button class=" btn btn-primary m-0 me-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.yes')
       }}</button>
   </mat-dialog-actions>
 </div>

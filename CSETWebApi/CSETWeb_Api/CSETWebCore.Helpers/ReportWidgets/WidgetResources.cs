@@ -76,7 +76,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     c.Add(col / 12.92f);
                 }
                 c.Add((float)Math.Pow((double)((col + 0.055) / 1.055d), 2.4d));
-            };
+            }
+            ;
 
             var luminance = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
             return (luminance > threshold) ? "#000000" : "#FFFFFF";

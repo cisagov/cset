@@ -21,7 +21,7 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using LogicExtensions;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -703,7 +703,7 @@ namespace CSETWebCore.Api.Controllers
                 if (group != null)
                 {
                     group = group.Replace("MG:", "");
-                    int groupInt = group.ToInt32();
+                    int groupInt = Convert.ToInt32(group);
                     int? parentGroupId = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == groupInt).Select(x => x.Parent_Id).FirstOrDefault();
                     if (parentGroupId != null)
                     {

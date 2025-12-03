@@ -45,6 +45,7 @@ import { LocalStoreManager } from './services/storage.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { FooterService } from './services/footer.service';
 import { translate } from '@jsverse/transloco';
+import { ThemeService } from './services/theme.service';
 
 
 declare var $: any;
@@ -76,9 +77,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private footerSvc: FooterService,
+    private themeService: ThemeService,
     storageManager: LocalStoreManager
   ) {
     storageManager.initialiseStorageSyncListener();
+    // Initialize theme service and watch for system theme changes
+    this.themeService.watchSystemTheme();
   }
 
 
