@@ -60,8 +60,8 @@
     </mat-dialog-content>
   </form>
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
     <button type="button" class="m-0 btn btn-primary" (click)="send()"
       [disabled]="recipientList.length === 0">Send</button>
-    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
   </mat-dialog-actions>
 </div>
