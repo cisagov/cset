@@ -20,20 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a"
-  style="max-width: 50vw; min-width: 50vw" *transloco="let t">
+<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a" style="max-width: 50vw;"
+  *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <i class="far fa-check-square me-3 fs-base-6"></i>
     <span>Select Assessments</span>
   </div>
 
-  <div class="p-3 pe-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
+  <div class="p-3 pe-0 oy-auto d-flex flex-column flex-11a tw:bg-bg-secondary">
     <app-trend-compare-compatibility #refreshComponent> </app-trend-compare-compatibility>
   </div>
 
-  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pe-0 d-flex flex-column flex-11a scrolly">
     <form name="form" #userForm="ngForm">
-      <div class="mt-0 me-3 ml=3 mb-3">
+      <div class="mt-0 me-3 ml-3 mb-3">
         <table>
           <tr *ngFor="let a of assessments">
             <td class="align-top">
@@ -48,10 +48,11 @@
             </td>
           </tr>
         </table>
-
-        <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-          <button class="m-0 btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
-        </mat-dialog-actions>
       </div>
     </form>
   </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-11a">
+    <button class="m-0 btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
+  </mat-dialog-actions>
+</div>
