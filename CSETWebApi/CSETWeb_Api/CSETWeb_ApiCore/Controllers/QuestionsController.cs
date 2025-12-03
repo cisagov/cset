@@ -594,21 +594,7 @@ namespace CSETWebCore.Api.Controllers
 
             return counts;
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/AllSubGroupingQuestionCount")]
-        public IActionResult AllSubGroupingQuestionCount([FromQuery] int modelId, [FromQuery] int groupLevel)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-
-            return Ok(qb.AllQuestionsInSubGroup(modelId, groupLevel, assessmentId));
-        }
+        
 
         [HttpGet]
         [Route("api/getRegulatoryCitations")]
@@ -620,20 +606,6 @@ namespace CSETWebCore.Api.Controllers
             var resp = qb.GetRegulatoryCitations(questionId);
             return Ok(resp);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        [HttpPost]
-        [Route("api/saveHydroComment")]
-        public IActionResult SaveHydroComment([FromBody] HYDRO_DATA_ACTIONS hda)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-
-
-            return Ok(qb.SaveHydroComment(hda.Answer, hda.Answer_Id, hda.Progress_Id, hda.Comment));
-        }
+        
     }
 }

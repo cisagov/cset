@@ -96,19 +96,19 @@ export class QuestionsService {
   setMode(mode: string) {
     return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers)
       .pipe(
-      tap((response: any) => {
-        if (response?.completedCount !== undefined) {
-          const totalCount =
-            (response.totalMaturityQuestionsCount || 0) +
-            (response.totalDiagramQuestionsCount || 0) +
-            (response.totalStandardQuestionsCount || 0);
-           this.assessSvc.completionRefreshRequested$.next({
-            completedCount: response.completedCount,
-            totalCount: totalCount
-          });
-        }
-      })
-    );
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
   /**
    * Retrieves the list of questions.
@@ -291,14 +291,6 @@ export class QuestionsService {
   getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
       subGroups + '&modelId=' + modelId, headers);
-  }
-
-  /**
-   *
-   */
-  getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
-    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
-      '&groupLevel=' + groupLevel, headers);
   }
 
   /**

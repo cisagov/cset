@@ -15,11 +15,6 @@ namespace DuplicateAssessments
             throw new NotImplementedException();
         }
 
-        public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
-        {
-            throw new NotImplementedException();
-        }
-
         public int UnixTime()
         {
             throw new NotImplementedException();

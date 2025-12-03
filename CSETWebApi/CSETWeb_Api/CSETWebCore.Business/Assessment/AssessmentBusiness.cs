@@ -1015,12 +1015,7 @@ namespace CSETWebCore.Business.Assessment
                 _context.SaveChanges();
             }
         }
-
-        public void MoveHydroActionsOutOfIseActions()
-        {
-            _utilities.MoveActionItemsFrom_IseActions_To_HydroData(_context);
-        }
-
+        
         public IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
             int?[] myArray = new int?[]
