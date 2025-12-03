@@ -29,7 +29,7 @@
     <div class="pe-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex justify-content-between flex-00a">
-    <button class="btn btn-secondary" (click)="dialogRef.close(true)">{{t('buttons.ok')}}</button>
+  <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex justify-content-end flex-00a">
+    <button class="btn btn-primary" (click)="dialogRef.close(true)">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>
