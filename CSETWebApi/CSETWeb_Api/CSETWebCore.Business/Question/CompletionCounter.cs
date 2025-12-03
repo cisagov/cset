@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
@@ -308,6 +309,13 @@ namespace CSETWebCore.Business.Question
             var inScopeQuestions = q.ToList();
 
 
+            // CPG2 has IT- and OT-specific versions of each question - see if some are not applicable
+            if (inScopeModels.Contains(Constants.Constants.Model_CPG2))
+            {
+                inScopeQuestions = FilterCpg2(assessmentId, inScopeQuestions);
+            }
+
+
             // CRE+ has special conditions for OD and MIL to apply
             if (inScopeModels.Contains(Constants.Constants.Model_CRE))
             {
@@ -435,6 +443,26 @@ namespace CSETWebCore.Business.Question
             response.UnionWith(ssgModelIds);
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Based on the Technology Domain, remove non-applicable questions 
+        /// from consideration.
+        /// </summary>
+        private List<AnswerBasic> FilterCpg2(int assessmentId, List<AnswerBasic> list)
+        {
+            // see which technology domains are selected
+            var techDomain = new DemographicExtBusiness(_context)
+                .GetX(assessmentId, "TECH-DOMAIN")?.ToString();
+
+            var qsa = new QuestionScopeAnalyzer(assessmentId, _context, techDomain);
+            var outOfRangeQuestionIds = qsa.DetermineScopeForTechnologyDomain(techDomain);
+
+            // remove all questions from 'the list' that are assigned to the out-of-scope levels
+            list.RemoveAll(x => outOfRangeQuestionIds.Contains(x.MatQuestionId));
+
+            return list;
         }
 
 
