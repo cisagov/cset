@@ -307,67 +307,7 @@ namespace CSETWebCore.Business.Observations
                 _context.SaveChanges();
             }
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<ActionItems> GetActionItems(int parentId, int observation_id)
-        {
-            var actionItems = new List<ActionItems>();
-
-            var table = from questions in _context.MATURITY_QUESTIONS
-                        join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
-                        join o in _context.ISE_ACTIONS_FINDINGS on new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = observation_id }
-                            equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id }
-                           into overrides
-                        from o in overrides.DefaultIfEmpty()
-                        orderby questions.Mat_Question_Id ascending
-                        where questions.Parent_Question_Id == parentId
-                        select new { actions = actions, overrides = o };
-            foreach (var row in table.ToList())
-            {
-                actionItems.Add(
-                    new ActionItems()
-                    {
-                        Question_Id = row.actions.Mat_Question_Id,
-                        Description = row.actions.Description,
-                        Action_Items = row.overrides == null
-                        ? row.actions.Action_Items : row.overrides.Action_Items_Override,
-                        Regulatory_Citation = row.actions.Regulatory_Citation
-                    }
-                );
-            }
-            return actionItems;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void UpdateIssues(ActionItemTextUpdate items)
-        {
-            foreach (var item in items.actionTextItems)
-            {
-                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.observation_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
-                if (save == null)
-                {
-                    _context.ISE_ACTIONS_FINDINGS.Add(new ISE_ACTIONS_FINDINGS()
-                    {
-                        Mat_Question_Id = item.Mat_Question_Id,
-                        Finding_Id = items.observation_Id,
-                        Action_Items_Override = item.ActionItemOverrideText
-                    });
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    save.Action_Items_Override = item.ActionItemOverrideText;
-                    _context.SaveChanges();
-                }
-            }
-        }
-
+        
 
         /// <summary>
         /// Creates an Observation based on maturity question properties.

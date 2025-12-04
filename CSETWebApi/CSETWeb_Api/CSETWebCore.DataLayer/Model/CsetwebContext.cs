@@ -224,10 +224,6 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<INFORMATION> INFORMATION { get; set; }
 
     public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
-    
-    public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
-
-    public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
 
     public virtual DbSet<JWT> JWT { get; set; }
 
@@ -1487,11 +1483,7 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of INSTALLATION records"));
         });
-
-        modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
-        {
-            entity.HasOne(d => d.Finding).WithMany(p => p.ISE_ACTIONS_FINDINGS).HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
-        });
+        
 
         modelBuilder.Entity<JWT>(entity =>
         {

@@ -595,17 +595,6 @@ namespace CSETWebCore.Api.Controllers
             return counts;
         }
         
-
-        [HttpGet]
-        [Route("api/getRegulatoryCitations")]
-        public IActionResult GetRegulatoryCitations([FromQuery] int questionId)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-
-            var resp = qb.GetRegulatoryCitations(questionId);
-            return Ok(resp);
-        }
         
     }
 }

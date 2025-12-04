@@ -543,12 +543,6 @@ namespace CSETWebCore.Business.Question
             return _context.MATURITY_QUESTIONS.Where(x => x.Sub_Category == subGroup && x.Maturity_Model_Id == modelId).Count();
         }
         
-
-        public ISE_ACTIONS GetRegulatoryCitations(int questionId)
-        {
-            var result = _context.ISE_ACTIONS.Where(x => x.Parent_Id == questionId).FirstOrDefault();
-            return result;
-        }
         
     }
 }

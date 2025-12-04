@@ -149,7 +149,8 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
         j.Remove("HYDRO_DATA");
         j.Remove("HYDRO_DATA_ACTIONS");
         j.Remove("HYDRO_PROGRESS");
-        //need to remove assessment IRP columns 
+        j.Remove("ISE_ACTIONS");
+        j.Remove("ISE_ACTIONS_FINDINGS");
         
         return j.ToString();
     }
