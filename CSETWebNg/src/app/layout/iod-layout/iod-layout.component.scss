@@ -1955,6 +1955,11 @@ ul.nav-tabs li.active button .tab-icon {
   letter-spacing: normal !important;
 }
 
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+  color: var(--text-primary);
+}
+
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
   padding-left: 20px;
