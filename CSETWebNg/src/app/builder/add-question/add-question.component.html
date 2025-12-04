@@ -40,22 +40,24 @@
     <div class="mb-3 p-3 b-primary-200 br-standard">
 
       <h5>Write New Question</h5>
-      <p>
-        If you wish to add a custom question to the set, enter it here.
-      </p>
+      <div class="mb-5">
+        <p>
+          If you wish to add a custom question to the set, enter it here.
+        </p>
 
-      <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
-        type="text"></textarea>
-      <div *ngIf="isCustomQuestionEmpty">
-        <div class="alert alert-danger">Question text is required</div>
-      </div>
-      <div *ngIf="isDupeQuestion">
-        <div class="alert alert-danger">The question text duplicates an existing question. Search for and use the
-          existing question.</div>
+        <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
+          type="text"></textarea>
+        <div *ngIf="isCustomQuestionEmpty">
+          <div class="alert alert-danger">Question text is required</div>
+        </div>
+        <div *ngIf="isDupeQuestion">
+          <div class="alert alert-danger">The question text duplicates an existing question. Search for and use the
+            existing question.</div>
+        </div>
       </div>
 
       <h5>Categorization</h5>
-      <div class="d-flex flex-row">
+      <div class="d-flex flex-row mb-5">
         <div class="form-group me-2">
           <label>Question Group Heading
             <select class="form-select" id="category" name="category" [(ngModel)]="selectedGHId">
@@ -77,6 +79,7 @@
           </label>
         </div>
       </div>
+
       <div *ngIf="isCatOrSubcatEmpty">
         <div class="alert alert-danger">Question Group Heading and Subcategory are required</div>
       </div>
@@ -85,16 +88,16 @@
         <p>Select all applicable levels.</p>
         <div class="btn-group btn-group-toggle">
           <label class="btn btn-level btn-rounded" [class.active]="customSalL">
-            <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
+            <input class="btn-check" type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
               (click)="customSalL = !customSalL" data-toggle="toggle" />Low</label>
           <label class="btn btn-level btn-rounded" [class.active]="customSalM">
-            <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
+            <input class="btn-check" type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
               (click)="customSalM = !customSalM" data-toggle="toggle" />Moderate</label>
           <label class="btn btn-level btn-rounded" [class.active]="customSalH">
-            <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
+            <input class="btn-check" type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
               (click)="customSalH = !customSalH" data-toggle="toggle" />High</label>
           <label class="btn btn-level btn-rounded" [class.active]="customSalVH">
-            <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
+            <input class="btn-check" type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
               (click)="customSalVH = !customSalVH" data-toggle="toggle" />Very High</label>
         </div>
         <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
