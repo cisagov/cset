@@ -29,10 +29,10 @@ import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-    selector: 'app-issues',
-    templateUrl: './issues.component.html',
-    styleUrls: ['./issues.component.scss'],
-    standalone: false
+  selector: 'app-issues',
+  templateUrl: './issues.component.html',
+  styleUrls: ['./issues.component.scss'],
+  standalone: false
 })
 
 export class IssuesComponent implements OnInit {
@@ -100,38 +100,7 @@ export class IssuesComponent implements OnInit {
 
         this.observation = response;
         this.observation.title = this.issueTitle; // using the temp name we set earlier so it's not "overriden" for the user
-
-        this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
-          (data: any) => {
-            this.actionItems = data;
-
-            this.observation.risk_Area = this.risk;
-            this.observation.sub_Risk = this.subRisk;
-
-            if (this.autoGen === 1) {
-              this.observation.auto_Generated = 1;
-            } else if (this.autoGen === 0 && this.observation.auto_Generated !== 1) {
-              this.observation.auto_Generated = 0;
-            }
-
-            if (this.observation.title === null) {
-              this.observation.title = this.issueTitle;
-            }
-
-            if (this.observation.auto_Generated === 1 && this.observation.description === '') {
-              this.observation.description = this.actionItems[0]?.description;
-            }
-
-            if (this.observation.supp_Guidance === null) {
-              this.observation.supp_Guidance = this.suppGuidance;
-            }
-
-            this.answerID = this.observation.answer_Id;
-            this.questionID = this.observation.question_Id;
-
-            this.loading = false;
-          });
-        });
+      });
     });
   }
 
@@ -168,7 +137,7 @@ export class IssuesComponent implements OnInit {
       text = text.replace(/&nbsp;/g, '');
       text = text.replace('/\s/g', ' ');
     }
-    
+
     return (text);
   }
 
@@ -188,9 +157,6 @@ export class IssuesComponent implements OnInit {
   update() {
     this.observation.answer_Id = this.answerID;
     this.observation.question_Id = this.questionID;
-
-    let mapToArray = Array.from(this.ActionItemList.values());
-    this.observationSvc.saveIssueText(mapToArray, this.observation.observation_Id).subscribe();
 
     if (this.observation.type !== null) {
       this.observationSvc.saveObservation(this.observation).subscribe(() => {

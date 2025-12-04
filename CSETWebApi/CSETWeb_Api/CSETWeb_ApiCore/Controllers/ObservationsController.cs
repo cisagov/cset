@@ -210,34 +210,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(id);
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        [HttpPost]
-        [Route("api/SaveIssueOverrideText")]
-        public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var obsMgr = new ObservationsManager(_context, assessmentId);
-            obsMgr.UpdateIssues(item);
-            return Ok();
-        }
-
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery] int finding_id)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            ObservationsManager fm = new ObservationsManager(_context, assessmentId);
-            return fm.GetActionItems(parentId, finding_id);
-        }
+        
     }
 
 

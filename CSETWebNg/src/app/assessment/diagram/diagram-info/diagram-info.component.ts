@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { HydroService } from '../../../services/hydro.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
 import { ConfigService } from '../../../services/config.service';
@@ -56,7 +55,6 @@ export class DiagramInfoComponent implements OnInit {
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
-        public hydroSvc: HydroService,
         public malcolmSvc: MalcolmService,
         private dialog: MatDialog,
         public diagramSvc: DiagramService
@@ -127,7 +125,7 @@ export class DiagramInfoComponent implements OnInit {
         this.malcolmFiles = event.target.files;
 
         if (this.malcolmFiles) {
-            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
+            this.malcolmSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
                 (result) => {
                     if (result != null) {
                         this.openUploadErrorDialog(result);

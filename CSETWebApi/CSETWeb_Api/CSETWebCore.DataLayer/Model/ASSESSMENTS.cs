@@ -38,11 +38,6 @@ public partial class ASSESSMENTS
     [StringLength(100)]
     public string Assets { get; set; }
 
-    public int? IRPTotalOverride { get; set; }
-
-    [StringLength(150)]
-    public string IRPTotalOverrideReason { get; set; }
-
     public bool MatDetail_targetBandOnly { get; set; }
 
     [Column(TypeName = "xml")]
@@ -101,12 +96,6 @@ public partial class ASSESSMENTS
 
     [InverseProperty("Assessment")]
     public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; } = new List<ASSESSMENT_DIAGRAM_COMPONENTS>();
-
-    [InverseProperty("Assessment")]
-    public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; } = new List<ASSESSMENT_IRP>();
-
-    [InverseProperty("ASSESSMENT")]
-    public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; } = new List<ASSESSMENT_IRP_HEADER>();
 
     [InverseProperty("Assessment")]
     public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; } = new List<AVAILABLE_MATURITY_MODELS>();

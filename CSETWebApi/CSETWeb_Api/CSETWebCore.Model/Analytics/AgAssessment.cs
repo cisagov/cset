@@ -13,8 +13,6 @@ public class AgAssessment
     public string CreditUnionName { get; set; }
     public string Charter { get; set; }
     public string Assets { get; set; }
-    public int? IrptotalOverride { get; set; }
-    public string IrptotalOverrideReason { get; set; }
     public bool MatDetailTargetBandOnly { get; set; }
     public string DiagramMarkup { get; set; }
     public int LastUsedComponentNumber { get; set; }

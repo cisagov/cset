@@ -51,7 +51,7 @@ export class ReportService {
    */
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService, 
+    private configSvc: ConfigService,
     private tSvc: TranslocoService,
     private authSvc: AuthenticationService,
     private fileExportSvc: FileExportService
@@ -124,15 +124,8 @@ export class ReportService {
    *
    */
   getCRRSummary(): any {
-    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => {});
+    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => { });
     return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
-  }
-
-  /**
-   *
-   */
-  getHydroActionItemsReport() {
-    return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItemsReport', headers);
   }
 
   /**
@@ -148,7 +141,7 @@ export class ReportService {
   getModelContent(modelId: string): any {
     return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
   }
- 
+
   /**
    * Gets the score structure to build a heatmap for a model
    */
