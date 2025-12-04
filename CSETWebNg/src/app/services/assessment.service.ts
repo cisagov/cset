@@ -250,10 +250,6 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'json' });
   }
 
-  moveActionItemsFrom_IseActions_To_HydroData() {
-    return this.http.get(this.apiUrl + 'moveHydroActionsOutOfIseActions');
-  }
-
   /**
    *
    */

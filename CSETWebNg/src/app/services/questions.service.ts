@@ -96,19 +96,19 @@ export class QuestionsService {
   setMode(mode: string) {
     return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers)
       .pipe(
-      tap((response: any) => {
-        if (response?.completedCount !== undefined) {
-          const totalCount =
-            (response.totalMaturityQuestionsCount || 0) +
-            (response.totalDiagramQuestionsCount || 0) +
-            (response.totalStandardQuestionsCount || 0);
-           this.assessSvc.completionRefreshRequested$.next({
-            completedCount: response.completedCount,
-            totalCount: totalCount
-          });
-        }
-      })
-    );
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
   /**
    * Retrieves the list of questions.
@@ -138,15 +138,6 @@ export class QuestionsService {
   getChildAnswers(parentId: number) {
     headers.params = headers.params.set('parentId', parentId);
     return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
-  }
-
-  /**
-   * Grab all the child question's answers for a specific parent question.
-   * Currently set up for use in an ISE assessment.
-  */
-  getActionItems(parentId: number, observation_id: number) {
-    headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + observation_id, headers);
   }
 
   /**
@@ -291,14 +282,6 @@ export class QuestionsService {
   getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
       subGroups + '&modelId=' + modelId, headers);
-  }
-
-  /**
-   *
-   */
-  getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
-    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
-      '&groupLevel=' + groupLevel, headers);
   }
 
   /**
@@ -468,13 +451,6 @@ export class QuestionsService {
       buttonLabelKey: "X",
       buttonCss: "btn-yes"
     };
-  }
-
-  /**
-   *
-   */
-  getRegulatoryCitations(questionId: number) {
-    return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
   }
 
 

@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { HydroService } from '../../../services/hydro.service';
 import { MalcolmUploadErrorComponent } from '../malcolm-upload-error.component';
 import { MalcolmService } from '../../../services/malcolm.service';
 import { DiagramService } from '../../../services/diagram.service';
@@ -23,7 +22,6 @@ export class MalcolmInstructionsComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<MalcolmInstructionsComponent>,
-        private hydroSvc: HydroService,
         private malcolmSvc: MalcolmService,
         private diagramSvc: DiagramService,
         private dialog: MatDialog
@@ -37,7 +35,7 @@ export class MalcolmInstructionsComponent {
         this.malcolmFiles = event.target.files;
 
         if (this.malcolmFiles) {
-            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
+            this.malcolmSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
                 async (result) => {
                     if (result != null) {
                         this.openUploadErrorDialog(result, true);

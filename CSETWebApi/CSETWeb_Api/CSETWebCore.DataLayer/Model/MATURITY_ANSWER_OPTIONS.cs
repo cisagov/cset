@@ -49,9 +49,6 @@ public partial class MATURITY_ANSWER_OPTIONS
     [InverseProperty("Mat_Option")]
     public virtual ICollection<ANSWER> ANSWER { get; set; } = new List<ANSWER>();
 
-    [InverseProperty("Mat_Option")]
-    public virtual HYDRO_DATA HYDRO_DATA { get; set; }
-
     [InverseProperty("Mat_Option_Id_1Navigation")]
     public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation { get; set; } = new List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
 

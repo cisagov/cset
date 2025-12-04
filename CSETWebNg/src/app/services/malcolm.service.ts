@@ -19,10 +19,10 @@ export class MalcolmService {
   ) { }
 
   getMalcolmAnswers() {
-    return this.http.get(this.configSvc.apiUrl + 'getMalcolmAnswers');    
+    return this.http.get(this.configSvc.apiUrl + 'getMalcolmAnswers');
   }
 
-  findMalcolmAnswerForQuestion (questionId: number, list: any) {
+  findMalcolmAnswerForQuestion(questionId: number, list: any) {
     if (list != null && list.length > 0) {
       for (let i = 0; i < list.length; i++) {
         if (list[i].question_Or_Requirement_Id == questionId) {
@@ -32,7 +32,7 @@ export class MalcolmService {
     }
   }
 
-  findMalcolmOptionId (questionId: number, list: any, optionId: number) {
+  findMalcolmOptionId(questionId: number, list: any, optionId: number) {
     if (list != null && list.length > 0) {
       for (let i = 0; i < list.length; i++) {
         if (list[i].question_Or_Requirement_Id == questionId && list[i].mat_Option_Id == optionId) {
@@ -44,6 +44,16 @@ export class MalcolmService {
 
   attemptToImportFromMalcolm(ipAddress: string) {
     return this.http.get(this.configSvc.apiUrl + 'malcolm?IPAddress=' + ipAddress);
+  }
+
+  uploadMalcolmFiles(files: File[]) {
+    let formData: FormData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i]);
+    }
+
+    return this.http.post(this.configSvc.apiUrl + 'malcolm?', formData);
   }
 
 }
