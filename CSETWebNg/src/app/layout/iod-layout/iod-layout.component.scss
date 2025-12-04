@@ -24,7 +24,7 @@ SOFTWARE.
 @charset "UTF-8";
 @use "sass:color";
 @use "sass:map";
-@use "../../../sass/mixins";
+@use "../../../sass/mixins" as *;
 @use "../../../sass/sal";
 @use "../../../sass/theme-variables" as theme;
 @use "../../../sass/cset-font-styles.css";
@@ -2140,6 +2140,17 @@ ul.mat-tree-node {
 
 .icon-openbookicon:hover {
   background-image: icon(openbookicon, $primary-color);
+}
+
+.dark-theme {
+  .icon-openbookicon {
+    transform: scale(1);
+    background-image: icon(openbookicon, rgba($white, .7));
+  }
+
+  .icon-openbookicon:hover {
+    background-image: icon(openbookicon, rgba($white, .9));
+  }
 }
 
 a.special-factors-link,
