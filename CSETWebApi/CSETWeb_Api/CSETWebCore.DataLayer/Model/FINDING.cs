@@ -64,10 +64,7 @@ public partial class FINDING
 
     [InverseProperty("Finding")]
     public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; } = new List<FINDING_CONTACT>();
-
-    [InverseProperty("Finding")]
-    public virtual ICollection<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; } = new List<ISE_ACTIONS_FINDINGS>();
-
+    
     [ForeignKey("Importance_Id")]
     [InverseProperty("FINDING")]
     public virtual IMPORTANCE Importance { get; set; }
