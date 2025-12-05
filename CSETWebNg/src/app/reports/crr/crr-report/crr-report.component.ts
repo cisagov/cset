@@ -33,7 +33,13 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
     selector: 'app-crr-report',
     templateUrl: './crr-report.component.html',
     styleUrls: ['./crr-report.component.scss'],
-    standalone: false
+    standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class CrrReportComponent implements OnInit {
   cmuModel: CmuReportModel;

@@ -28,7 +28,13 @@ import { ReportService } from '../../../services/report.service';
     selector: 'app-c2m2-report',
     templateUrl: './c2m2-report.component.html',
     styleUrls: ['./c2m2-report.component.scss', '../../reports.scss'],
-    standalone: false
+    standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class C2m2ReportComponent implements OnInit {
   donutData: any[] = [];

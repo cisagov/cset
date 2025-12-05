@@ -43,7 +43,7 @@ table.cpg-table {
 }
 
 table.cpg-table th {
-    color: var(--text-primary);
+    color: #ffffffdd; // near-white for light mode
     padding: 1rem .5rem;
     border-right: 1px solid white;
     font-size: .8rem;
@@ -209,5 +209,92 @@ table.cpg-table td {
 
     .ssg-it-software-dev {
         background-color: #305496;
+    }
+}
+
+// Force light mode colors when inside report containers
+:host-context(.force-light-mode),
+:host-context(.light-mode-wrapper) {
+    table.cpg-table th {
+        color: $near-black !important;
+    }
+
+    // CPG 1 (CSF 1) - light mode backgrounds
+    .csf1-func-id {
+        background-color: #355C9B !important;
+        border-color: #355C9B !important;
+        color: $near-black !important;
+    }
+
+    .csf1-func-pr {
+        background-color: #784390 !important;
+        border-color: #784390 !important;
+        color: $near-black !important;
+    }
+
+    .csf1-func-de {
+        background-color: #F7E24E !important;
+        border-color: #F7E24E !important;
+        color: $near-black !important;
+    }
+
+    .csf1-func-rs {
+        background-color: #D93A34 !important;
+        border-color: #D93A34 !important;
+        color: $near-black !important;
+    }
+
+    .csf1-func-rc {
+        background-color: #4CA056 !important;
+        border-color: #4CA056 !important;
+        color: $near-black !important;
+    }
+
+    // CPG 2 (CSF 2) - light mode backgrounds
+    .csf2-func-gv {
+        background-color: #f9f39b !important;
+        border-color: #f9f39b !important;
+        color: $near-black !important;
+    }
+
+    .csf2-func-id {
+        background-color: #4cb3e0 !important;
+        border-color: #4cb3e0 !important;
+        color: $near-black !important;
+    }
+
+    .csf2-func-pr {
+        background-color: #918cea !important;
+        border-color: #918cea !important;
+        color: $near-black !important;
+    }
+
+    .csf2-func-de {
+        background-color: #fab647 !important;
+        border-color: #fab647 !important;
+        color: $near-black !important;
+    }
+
+    .csf2-func-rs {
+        background-color: #e47677 !important;
+        border-color: #e47677 !important;
+        color: $near-black !important;
+    }
+
+    .csf2-func-rc {
+        background-color: #7ef49e !important;
+        border-color: #7ef49e !important;
+        color: $near-black !important;
+    }
+
+    // SSG headers
+    .ssg-it-product-design {
+        background-color: #548235 !important;
+        color: $near-black !important;
+    }
+
+    .ssg-it-software-dev {
+        background-color: #305496 !important;
+        color: $near-black !important;
     }
 }
