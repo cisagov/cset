@@ -38,7 +38,13 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   selector: 'compare-report',
   templateUrl: './compare-report.component.html',
   styleUrls: ['../reports.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {

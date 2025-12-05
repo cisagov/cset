@@ -33,7 +33,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'app-crr-deficiency',
   templateUrl: './crr-deficiency.component.html',
   styleUrls: ['./../crr-report/crr-report.component.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class CrrDeficiencyComponent implements OnInit {
   crrModel: CmuReportModel;
