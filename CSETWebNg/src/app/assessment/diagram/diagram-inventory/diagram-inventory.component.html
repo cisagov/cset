@@ -38,7 +38,7 @@
 
     <div class="row stretch mb-3">
       <div class="col-12">
-        <mat-tab-group class="mb-3 scrollable-tabs">
+        <mat-tab-group class="mb-3">
           <mat-tab *ngIf="showVulnerabilitiesTab()" label="Vulnerabilities">
             <app-diagram-vulnerabilities (componentsChange)="onChange($event)"></app-diagram-vulnerabilities>
           </mat-tab>
