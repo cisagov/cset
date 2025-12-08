@@ -4,11 +4,12 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Text.RegularExpressions;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace CSETWebCore.Helpers
 {
@@ -115,5 +116,28 @@ namespace CSETWebCore.Helpers
             return input;
         }
         
+
+        /// <summary>
+        /// Remove any shady characters that might be used to traverse file paths
+        /// </summary>
+        public static string SanitizeAgainstPathTraversal(string input)
+        {
+            var sanitized = Path.GetFullPath(input);
+
+            // Remove invalid characters using regex
+            sanitized = Regex.Replace(sanitized, @"[^a-zA-Z0-9_ ]", string.Empty);
+
+            return sanitized;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string SanitizeAlphanumbericUnderscore(string input)
+        {
+            // Remove any characters that are not alphanumeric or allowed in XPath
+            return Regex.Replace(input, @"[^a-zA-Z0-9_]", string.Empty);
+        }
     }
 }

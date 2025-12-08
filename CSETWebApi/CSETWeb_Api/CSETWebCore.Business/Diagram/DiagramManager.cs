@@ -8,6 +8,7 @@ using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Malcolm;
@@ -19,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Xml.XPath;
 using static CSETWebCore.Model.Diagram.CommonSecurityAdvisoryFrameworkObject;
 
 
@@ -878,6 +880,8 @@ namespace CSETWebCore.Business.Diagram
         /// <param name="type"></param>
         public void ChangeShapeToComponent(int assessmentId, string type, string id, string label)
         {
+            id = Utilities.SanitizeAlphanumbericUnderscore(id);
+
             var componentGuid = Guid.NewGuid();
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
