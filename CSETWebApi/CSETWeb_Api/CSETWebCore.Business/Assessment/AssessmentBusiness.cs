@@ -28,7 +28,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace CSETWebCore.Business.Assessment
@@ -1110,6 +1112,8 @@ namespace CSETWebCore.Business.Assessment
         /// <param name="targetAssessment">The model name being converted to</param>
         public void ConvertAssessment(int assessment_id, int original_id, string targetAssessment)
         {
+            targetAssessment = Utilities.SanitizeAgainstPathTraversal(targetAssessment);
+
             try
             {
                 var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == original_id).FirstOrDefault();

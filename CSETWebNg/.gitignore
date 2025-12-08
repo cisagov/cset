@@ -51,3 +51,6 @@ Thumbs.db
 
 
 S_62443-4-1.pdf
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md

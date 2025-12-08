@@ -298,7 +298,6 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { ScoreRangeComponent } from './assessment/results/score-range/score-range.component';
 import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ranges.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
-import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
@@ -761,7 +760,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
-        TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,
         TutorialCrrComponent,
