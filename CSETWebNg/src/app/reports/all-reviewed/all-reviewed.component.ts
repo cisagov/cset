@@ -34,7 +34,13 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   selector: 'app-all-reviewed',
   templateUrl: './all-reviewed.component.html',
   styleUrls: ['../reports.scss', './all-reviewed.component.scss'],
-  standalone: false
+  standalone: false,
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class AllReviewedComponent {
   response: any;
