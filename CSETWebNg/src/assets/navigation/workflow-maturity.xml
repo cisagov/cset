@@ -10,7 +10,6 @@
 
 
         <!-- maturity model tutorials -->
-        <node displaytext="CMMC Tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" visible="MATURITY:CMMC" />
         <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(CMMC,CMMC2)" />
 
         <node displaytext="CMMC Tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" visible="MATURITY:CMMC2" />

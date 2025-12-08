@@ -96,7 +96,6 @@ import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
 
 
-import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 
@@ -296,7 +295,6 @@ const appRoutes: Routes = [
               { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
               { path: 'info-config-iod', component: AssessmentConfigIodComponent },
               { path: 'model-select', component: ModelSelectComponent },
-              { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },

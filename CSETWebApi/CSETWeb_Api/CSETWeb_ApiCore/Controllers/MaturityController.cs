@@ -524,6 +524,10 @@ namespace CSETWebCore.Api.Controllers
                     {
                         modelId = value;
                     }
+                    else
+                    {
+                        modelId = _context.MATURITY_MODELS.Where(x => x.Model_Name == model).FirstOrDefault()?.Maturity_Model_Id;
+                    }
                 }
 
 
