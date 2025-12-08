@@ -34,7 +34,13 @@ import { AssessmentService } from '../../services/assessment.service';
   selector: 'app-all-answeredquestions',
   templateUrl: './all-answeredquestions.component.html',
   styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
-  standalone: false
+  standalone: false,
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
