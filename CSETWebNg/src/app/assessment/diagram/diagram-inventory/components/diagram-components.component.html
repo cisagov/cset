@@ -42,10 +42,9 @@
         </option>
       </select>
     </td>
-    <td style="padding-left: 20px">
-      <input type="checkbox" name="{{ component.label }}" id="{{ component.label }}" class="checkbox-custom mt-1"
-        [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions">
-      <label for="{{ component.label }}" class="checkbox-custom-label" style="justify-content: space-around;"></label>
+    <td class="text-center">
+      <i *ngIf="!component.hasUniqueQuestions" class="far fa-square fa-lg"></i>
+      <i *ngIf="component.hasUniqueQuestions" class="far fa-square-check fa-lg"></i>
     </td>
     <td>{{component.sal}}</td>
     <td>{{component.criticality}}</td>
