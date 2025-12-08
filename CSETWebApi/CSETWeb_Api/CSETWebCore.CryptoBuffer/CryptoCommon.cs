@@ -28,15 +28,16 @@ namespace CSETWebCore.CryptoBuffer
                     symmetricAlg = Aes.Create();
                     symmetricAlg.BlockSize = int.Parse(parts[3]); // Rijndael is the only one that can set a different block size
                     break;
-                case "RC2":
-                    symmetricAlg = RC2.Create();
-                    break;
-                case "DES":
-                    symmetricAlg = DES.Create();
-                    break;
-                case "TripleDES":
-                    symmetricAlg = TripleDES.Create();
-                    break;
+                // Removing RC2, DES and TripleDES as supported options because they are insecure
+                //case "RC2":
+                //    symmetricAlg = RC2.Create();
+                //    break;
+                //case "DES":
+                //    symmetricAlg = DES.Create();
+                //    break;
+                //case "TripleDES":
+                //    symmetricAlg = TripleDES.Create();
+                //    break;
                 default:
                     throw new Exception("Invalid SymmetricAlgorithm");
             }
