@@ -73,20 +73,25 @@ The current recommended method to run CSET would be via Docker. Follow the steps
 
 - Clone this repository
 - Install [Docker Desktop](https://docs.docker.com/desktop/)
-  - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 10 GB of memory
+  - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 5 GB of memory
 - Copy over environment variables from the distribution file:
-    - `cp env.dist .env`
+    - `cp .env.example .env`
 - Run CSET
   - `docker compose up -d`
-- Load Database
-  - `make create-bak && make load-bak`
+- (Optional) Override default host ports by setting environment variables before running compose (or updating `.env`):
+  - `WEB_PORT` (defaults to `4200` for the Angular UI)
+  - `WEB_TLS_PORT` (defaults to `443` for HTTPS on the UI container)
+  - `API_PORT` (defaults to `5000` for the ASP.NET API)
+  - Example: `WEB_PORT=4300 API_PORT=5100 docker compose up -d`
+- Load Database using bak files
+  - `make load-bak`
 
 For an editable development environment with live reload of both the API
 and Angular UI, you can use the `compose.dev.yml` file:
 
-```
-docker compose -f compose.dev.yml up
-```
+`docker compose -f compose.dev.yml up`
+or
+`make up-dev`
 
 ### System Requirements for Enterprise Installation
 
@@ -112,7 +117,3 @@ If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov.
 For additional information about CISA, see https://www.cisa.gov/.
 
 To ask questions or request help, propose a feature or module, or report a bug, security vulnerability or unexpected behavior, add a new issue here: https://github.com/cisagov/cset/issues
-
-
-
-
