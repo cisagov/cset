@@ -123,7 +123,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
     //clear out the navigation overrides
     //then call the get overrides questions api
-    //and refressh overrides navigation
+    //and refresh overrides navigation
     this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
       this.refreshQuestionVisibility();
     });

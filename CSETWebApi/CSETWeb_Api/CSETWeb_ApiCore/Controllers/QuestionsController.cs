@@ -116,10 +116,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ComponentQuestionList")]
         public IActionResult GetComponentQuestionsList([FromQuery] string skin, string group)
         {
-            if (skin == "RENEW")
-            {
-                new MalcolmBusiness(_context).VerificationAndValidation(_token.AssessmentForUser());
-            }
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();
 
