@@ -64,11 +64,11 @@ launch-db:
 
 # target: split-bak - Split the database backup file into smaller chunks
 split-bak:
-	split -b 50M backup/CSETWeb.bak backup/bak-files/CSETWeb.bak.part_
+	split -b 50M backup/CSET.bak backup/bak-files/CSET.bak.part_
 
 # target: create-bak - Create a database backup file
 create-bak:
-	cat backup/bak-files/CSETWeb.bak.part_* > backup/CSETWeb.bak
+	cat backup/bak-files/CSET.bak.part_* > backup/CSET.bak
 
 # target: load-bak = Load the database backup file
 load-bak:
