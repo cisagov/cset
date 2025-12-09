@@ -138,6 +138,7 @@ $local-install-background-color: #ffc107;
 $bg-debug-highlight: #fbe1c2;
 $bg-debug-highlight-dark: #835825;
 $bc-filters-engaged: #f9ce15;
+$bc-filters-engaged-dark: #685500;
 
 // Answer Options
 $yes-color: #006000;
@@ -1613,6 +1614,7 @@ ul.mat-tree-node mat-tree-node {
 
 .filters-engaged {
   background-color: $bc-filters-engaged;
+  color: $primary-color;
   margin-top: 0.2rem;
   margin-bottom: 1rem;
   padding: 0.6em;
@@ -1621,7 +1623,10 @@ ul.mat-tree-node mat-tree-node {
   font-size: 1.4em;
   font-weight: bold;
   text-align: center;
-  color: $primary-color;
+}
+
+.dark-theme .filters-engaged {
+  background-color: $bc-filters-engaged-dark;
 }
 
 .default-mat-filter {

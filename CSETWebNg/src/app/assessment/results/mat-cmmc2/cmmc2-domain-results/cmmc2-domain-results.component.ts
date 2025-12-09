@@ -21,11 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 import { ChartService } from '../../../../services/chart.service';
+import { ThemeService } from '../../../../services/theme.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -35,7 +37,7 @@ import { ChartService } from '../../../../services/chart.service';
     host: { class: 'd-flex flex-column flex-11a' },
     standalone: false
 })
-export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
+export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit, OnDestroy {
 
   loading = true;
   dataError = false;
@@ -43,13 +45,15 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
   targetLevel = '[unknown]';
   chart: any;
   response: any;
+  private themeSubscription: Subscription;
 
 
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     public cmmcStyleSvc: CmmcStyleService,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    private themeSvc: ThemeService
   ) { }
 
 
@@ -62,34 +66,55 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
         this.targetLevel = r.toString();
       }
     });
+
+    // Subscribe to theme changes to refresh charts
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      if (this.response) {
+        // Delay to ensure DOM is updated
+        setTimeout(() => this.refreshChart(), 100);
+      }
+    });
   }
 
   ngAfterContentInit(): void {
     this.maturitySvc.getComplianceByDomain().subscribe((r: any) => {
       this.response = r;
-
-      // build the object to populate the chart
-      var x: any = {};
-      x.labels = [];
-      x.datasets = [];
-      var ds = {
-        label: '',
-        backgroundColor: '#245075',
-        data: []
-      };
-      x.datasets.push(ds);
-
-      this.response.forEach(element => {
-        x.labels.push(element.domainName);
-        ds.data.push(this.sumCompliantPercentages(element.answerDistribution));
-      });
-
-
-      setTimeout(() => {
-        this.chart = this.chartSvc.buildHorizBarChart('domainResults', x, false, true);
-        this.loading = false;
-      }, 10);
+      this.refreshChart();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+
+  refreshChart(): void {
+    // build the object to populate the chart
+    var x: any = {};
+    x.labels = [];
+    x.datasets = [];
+
+    // Use brighter color in dark mode
+    const barColor = this.themeSvc.isDarkMode() ? '#4A9BD1' : '#245075';
+
+    var ds = {
+      label: '',
+      backgroundColor: barColor,
+      data: []
+    };
+    x.datasets.push(ds);
+
+    this.response.forEach(element => {
+      x.labels.push(element.domainName);
+      ds.data.push(this.sumCompliantPercentages(element.answerDistribution));
+    });
+
+
+    setTimeout(() => {
+      this.chart = this.chartSvc.buildHorizBarChart('domainResults', x, false, true);
+      this.loading = false;
+    }, 10);
   }
 
   /**
