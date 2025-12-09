@@ -1,0 +1,4 @@
+// Override Chart.js canvas text color for dark mode
+canvas {
+    color: var(--text-primary);
+}
