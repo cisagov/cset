@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import { Utilities } from './utilities.service';
 import Chart from 'chart.js/auto';
 import { QuestionsService } from './questions.service';
+import { ThemeService } from './theme.service';
 
 
 /**
@@ -41,7 +42,8 @@ export class ChartService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private questionsSvc: QuestionsService
+    private questionsSvc: QuestionsService,
+    private themeSvc: ThemeService
   ) { }
 
   /**
@@ -147,12 +149,22 @@ export class ChartService {
     }
     let percent = isPercent ? '%' : ' ';
 
+    // Get theme-aware colors
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffff' : '#666666';
+
     var myOptions: any = {
       indexAxis: 'y',
       maintainAspectRatio: maintainAspectRatio,
       responsive: true,
       plugins: {
-        legend: { display: showLegend, position: 'top' },
+        legend: {
+          display: showLegend,
+          position: 'top',
+          labels: {
+            color: textColor
+          }
+        },
         tooltip: {
           callbacks: {
             label: ((context) =>
@@ -161,6 +173,24 @@ export class ChartService {
           }
         },
 
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColor
+          },
+          grid: {
+            color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+          }
+        },
+        y: {
+          ticks: {
+            color: textColor
+          },
+          grid: {
+            color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+          }
+        }
       }
     };
 
@@ -208,6 +238,9 @@ export class ChartService {
       segmentLabels = x.labels;
     }
 
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffff' : '#000000';
 
     return new Chart(canvasId, {
       type: 'doughnut',
@@ -241,6 +274,7 @@ export class ChartService {
             display: true,
             position: 'bottom',
             labels: {
+              color: textColor,
               //@ts-ignore
               generateLabels: function (chart) { // Add values to legend labels
                 var data = chart.data;
@@ -264,7 +298,8 @@ export class ChartService {
                       strokeStyle: stroke,
                       lineWidth: bw,
                       hidden: isNaN(<number>ds.data[i]) || meta.hidden,
-                      index: i
+                      index: i,
+                      fontColor: textColor
                     };
                   });
                 } else {
