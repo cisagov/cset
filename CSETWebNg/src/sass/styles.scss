@@ -1006,6 +1006,7 @@ ul.mat-tree-node mat-tree-node {
 
 .filters-engaged {
   background-color: $bc-filters-engaged;
+  color: $primary-color;
   margin-top: 0.2rem;
   margin-bottom: 1rem;
   padding: 0.6em;
@@ -1014,7 +1015,6 @@ ul.mat-tree-node mat-tree-node {
   font-size: 1.4em;
   font-weight: bold;
   text-align: center;
-  color: $primary-color;
 }
 
 .default-mat-filter {
