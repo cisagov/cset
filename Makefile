@@ -1,4 +1,4 @@
-.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
+.PHONY: help build build-dev up up-dev stop stop-dev build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
 include .env
 export
 
