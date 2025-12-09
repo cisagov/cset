@@ -1,11 +1,6 @@
-ALTER DATABASE CSETWebTest
-SET SINGLE_USER
-WITH ROLLBACK IMMEDIATE
-GO
-
-RESTORE DATABASE CSETWebTest
-FROM DISK = '/var/opt/mssql/backup/CSETWebTest.bak'
+RESTORE DATABASE CSET
+FROM DISK = '/var/opt/mssql/backup/CSETWeb.bak'
 WITH REPLACE,
-MOVE 'CSETWebTest' TO '/var/opt/mssql/data/CSETWebTest.mdf',
-MOVE 'CSETWebTest_Log' TO '/var/opt/mssql/data/CSETWebTest_Log.ldf'
+MOVE 'CSETWeb' TO '/var/opt/mssql/data/CSET.mdf',
+MOVE 'CSETWeb_Log' TO '/var/opt/mssql/data/CSET_Log.ldf'
 GO
