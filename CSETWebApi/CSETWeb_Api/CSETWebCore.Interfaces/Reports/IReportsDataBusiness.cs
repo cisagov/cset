@@ -25,7 +25,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatRelevantAnswers> GetCommentsList(int? modelId = null);
         List<MatRelevantAnswers> GetMarkedForReviewList(int? modelId = null);
         List<MatRelevantAnswers> GetAlternatesList();
-        List<MatRelevantAnswers> GetQuestionsList(int? modelId = null);
+        List<MatRelevantAnswers> GetQuestionsList(int? modelId = null, bool includeUnanswerable = false);
 
         string GetCsetVersion();
         string GetAssessmentGuid(int assessmentId);

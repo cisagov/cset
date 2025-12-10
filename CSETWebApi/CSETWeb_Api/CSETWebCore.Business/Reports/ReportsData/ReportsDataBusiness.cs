@@ -78,7 +78,7 @@ namespace CSETWebCore.Business.Reports
         /// supplied, the default model's questions are retrieved.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null)
+        public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null, bool includeUnanswerable = false)
         {
             int targetModelId = 0;
 
@@ -139,7 +139,10 @@ namespace CSETWebCore.Business.Reports
 
 
             // Do not include unanswerable questions
-            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+            if (!includeUnanswerable)
+            {
+                responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+            }
 
 
             // Determine if the model has out-of-scope questions
@@ -321,7 +324,7 @@ namespace CSETWebCore.Business.Reports
                 targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
             }
 
-            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id, true).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }
