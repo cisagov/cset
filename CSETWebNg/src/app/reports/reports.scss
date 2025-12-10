@@ -23,7 +23,7 @@ SOFTWARE.
 */
 @use "sass:color";
 @use '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import '../../sass/force-light-mode';
+@use '../../sass/force-light-mode';
 /* ---- Report styles ---- */
 
 $primary-color: #052637;
