@@ -76,9 +76,12 @@ export class FileExportService {
     a.href = url;
 
     const contentDisposition = response.headers.get('Content-Disposition');
-    const filename = this.getFilenameFromContentDisposition(contentDisposition);
+    let filename = this.getFilenameFromContentDisposition(contentDisposition);
+
 
     a.download = filename;
+    a.style.display = 'none';
+
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -88,11 +91,35 @@ export class FileExportService {
    * Parses the filename from the Content-Disposition header contents.
    * If it can't find a filename, the file is named "downloaded_file" with no extension.
    */
-  private getFilenameFromContentDisposition(contentDisposition: string | null): string {
+  private getFilenameFromContentDispositionAAAAAA(contentDisposition: string | null): string {
     if (!contentDisposition) {
       return 'downloaded_file';
     }
     const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
     return (matches != null && matches[1]) ? matches[1].replace(/['"]/g, '') : 'downloaded_file';
+  }
+
+  /**
+   * 
+   */
+  private getFilenameFromContentDisposition(contentDisposition: string | null): string {
+    if (!contentDisposition) {
+      return 'downloaded_file';
+    }
+
+    const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
+    let filename = (matches != null && matches[1]) ? matches[1].replace(/['"]/g, '') : 'downloaded_file';
+
+    // Decode URL-encoded filenames
+    try {
+      filename = decodeURIComponent(filename);
+    } catch (e) {
+      // If decoding fails, use the original filename
+    }
+
+    // Sanitize the filename
+    filename = filename.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+
+    return filename;
   }
 }
