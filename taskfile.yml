@@ -14,7 +14,7 @@ tasks:
     cmds:
       - docker compose build --no-cache
 
-  build-dev:
+  build:dev:
     desc: Build development containers
     cmds:
       - docker compose -f compose.dev.yml build --no-cache
@@ -24,7 +24,7 @@ tasks:
     cmds:
       - docker compose up -d
 
-  up-dev:
+  up:dev:
     desc: Start development environment
     cmds:
       - docker compose -f compose.dev.yml up -d
@@ -34,60 +34,76 @@ tasks:
     cmds:
       - docker compose stop
 
-  stop-dev:
+  stop:dev:
     desc: Stop development containers
     cmds:
       - docker compose -f compose.dev.yml stop
 
+  down:
+    desc: Remove production containers and their data
+    cmds:
+      - docker compose down -v
+
+  down:dev:
+    desc: Remove development containers and their data
+    cmds:
+      - docker compose -f compose.dev.yml down -v
+
   # Backend (.NET Core)
-  build-backend:
+  build:backend:
     desc: Build the backend
     dir: CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore
     cmds:
       - dotnet build
 
-  format-backend:
+  lint:backend:
     desc: Format backend code using dotnet format
     dir: CSETWebApi/CSETWeb_Api
     cmds:
       - dotnet format
 
-  check-backend:
+  check:backend:
     desc: Verify backend code formatting without making changes
     dir: CSETWebApi/CSETWeb_Api
     cmds:
       - dotnet format --verify-no-changes
 
-  test-backend:
+  test:backend:
     desc: Run all backend unit tests
     dir: CSETWebApi/CSETWeb_Api
     cmds:
       - dotnet test
 
-  launch-backend:
+  launch:backend:
     desc: Launch the backend server with hot reload
     dir: CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore
     cmds:
       - dotnet watch
 
   # Frontend (Angular)
-  build-frontend:
+  build:frontend:
     desc: Install frontend dependencies
     dir: CSETWebNg
     cmds:
       - npm install
 
-  launch-frontend:
+  launch:frontend:
     desc: Launch the frontend dev server
     dir: CSETWebNg
     cmds:
       - ng serve
 
   # Database - SQL Server
-  launch-db:
+  launch:db:
     desc: Launch the SQL Server database
     cmds:
       - docker compose up -d sqlserver
+
+  # Database - PostgreSQL
+  launch:pgdb:
+    desc: Launch the PostgreSQL database
+    cmds:
+      - docker compose -f compose.postgres.yml up -d db
 
   split-bak:
     desc: Split the database backup file into smaller chunks
@@ -104,17 +120,17 @@ tasks:
     cmds:
       - docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
 
-  load-bak-dev:
+  load-bak:dev:
     desc: Load the database backup file (dev container)
     cmds:
       - docker exec -i cset-mssql-dev /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
 
-  stop-db:
+  stop:db:
     desc: Stop the SQL Server database
     cmds:
       - docker compose stop sqlserver
 
-  remove-db:
+  down:db:
     desc: Remove the database container and its data
     cmds:
       - docker compose down -v sqlserver
@@ -124,17 +140,6 @@ tasks:
     interactive: true
     cmds:
       - docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123"
-
-  # Database - PostgreSQL
-  launch-pgdb:
-    desc: Launch the PostgreSQL database
-    cmds:
-      - docker compose -f compose.dev.yml up -d db
-
-  launch-dbs:
-    desc: Launch both MSSQL and PostgreSQL databases
-    cmds:
-      - docker compose -f compose.dev.yml up -d
 
   mssql-to-postgres:
     desc: Convert MSSQL .bak to PostgreSQL 17 backup
