@@ -151,7 +151,7 @@ export class ChartService {
 
     // Get theme-aware colors
     const isDark = this.themeSvc.isDarkMode();
-    const textColor = isDark ? '#ffffff' : '#666666';
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
 
     var myOptions: any = {
       indexAxis: 'y',
@@ -240,7 +240,7 @@ export class ChartService {
 
     // Get the current theme colors for dark mode support
     const isDark = this.themeSvc.isDarkMode();
-    const textColor = isDark ? '#ffffff' : '#000000';
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
 
     return new Chart(canvasId, {
       type: 'doughnut',
