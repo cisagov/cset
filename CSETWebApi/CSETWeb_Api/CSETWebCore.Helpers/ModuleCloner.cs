@@ -303,9 +303,14 @@ namespace CSETWebCore.Helpers
             }
 
             // Reseed multiple times for stubborn cases
-            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
-            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
-            _context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('{tableName}', RESEED, {{0}})", seedValue);
+            // Table name is validated above with regex, so it's safe to use in the SQL string.
+            // The seedValue is passed as a parameter to prevent SQL injection.
+            var sql = string.Format("DBCC CHECKIDENT ('{0}', RESEED, {{0}})", tableName);
+#pragma warning disable EF1002 // Table name validated with regex above
+            _context.Database.ExecuteSqlRaw(sql, seedValue);
+            _context.Database.ExecuteSqlRaw(sql, seedValue);
+            _context.Database.ExecuteSqlRaw(sql, seedValue);
+#pragma warning restore EF1002
 
             NLog.LogManager.GetCurrentClassLogger().Info($"Attempted to reseed table {tableName} to identity {seedValue}");
         }
