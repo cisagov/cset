@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { NavigationService } from './navigation/navigation.service';
 import { AuthenticationService } from './authentication.service';
+import DOMPurify from 'dompurify';
 
 const headers = {
   headers: new HttpHeaders()
@@ -72,11 +73,13 @@ export class GalleryService {
         this.rows = this.galleryData.rows;
         this.testRow = this.rows[1];
 
-        // create a plainText property for the elipsis display in case a description has HTML markup
         const dom = document.createElement("div");
         this.rows.forEach(row => {
           row.galleryItems.forEach(item => {
-            dom.innerHTML = item.description;
+            const cleanDesc = DOMPurify.sanitize(item.description);
+            dom.innerHTML = cleanDesc;
+            
+            // create a plainText property for the elipsis display in case a description has HTML markup
             item.plainText = dom.innerText;
           });
         });

@@ -29,6 +29,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
     selector: 'app-standards-summary',
@@ -51,6 +52,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public layoutSvc: LayoutService,
+    public themeSvc: ThemeService,
     public tSvc: TranslocoService
   ) { }
 
@@ -74,6 +76,14 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
     if (this.dataSets.length > 1) {
       this.chart = new Chart('canvasStandardSummary', {
         type: 'bar',
