@@ -67,11 +67,15 @@ It is recommended that users meet the minimum system hardware and software requi
 • Microsoft ASP.NET Core 7 Runtime (included in CSET installation)
 • Microsoft SQL Server 2022 LocalDB (included in CSET installation)
 
-#### For Mac and Linux Users
+### Running CSET with Docker
 
-The current recommended method to run CSET would be via Docker. Follow the steps below
+For Mac, Linux, or Windows users who prefer Docker, follow the steps below:
 
 - Clone this repository
+- (Recommended) Install [Task](https://taskfile.dev/):
+  - **Mac**: `brew install go-task`
+  - **Windows**: `choco install go-task` or `winget install Task.Task`
+  - **Linux**: `sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin`
 - Install [Docker Desktop](https://docs.docker.com/desktop/)
   - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 5 GB of memory
 - Copy over environment variables from the distribution file:
@@ -84,14 +88,14 @@ The current recommended method to run CSET would be via Docker. Follow the steps
   - `API_PORT` (defaults to `5000` for the ASP.NET API)
   - Example: `WEB_PORT=4300 API_PORT=5100 docker compose up -d`
 - Load Database using bak files
-  - `make load-bak`
+  - `task load-bak`
 
 For an editable development environment with live reload of both the API
 and Angular UI, you can use the `compose.dev.yml` file:
 
 `docker compose -f compose.dev.yml up`
 or
-`make up-dev`
+`task up-dev`
 
 ### System Requirements for Enterprise Installation
 
