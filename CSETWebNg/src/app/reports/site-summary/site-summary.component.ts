@@ -33,6 +33,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 import Chart from 'chart.js/auto';
 import { AssessmentDetail } from '../../models/assessment-info.model';
+import DOMPurify from 'dompurify';
 
 @Component({
   selector: 'site-summary',
@@ -130,7 +131,8 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
+      console.log('x.diagram = ', x.diagram);
+      this.networkDiagramImage = DOMPurify.sanitize(x.diagram);
     });
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {

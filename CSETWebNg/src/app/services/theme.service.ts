@@ -141,4 +141,45 @@ export class ThemeService {
       });
     }
   }
+
+  /**
+   * Returns a hex HTML color code with a new alpha (opacity) value applied.
+   * The input color code can be hex or rgba.
+   * @param color 
+   * @param newAlpha 
+   * @returns 
+   */
+  updateAlpha(color: string, newAlpha: number): string {
+    // Ensure the alpha value is between 0 and 1
+    newAlpha = Math.max(0, Math.min(1, newAlpha));
+
+    // Check if the color is in rgba format
+    const rgbaMatch = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d\.]*)\)$/);
+
+    if (rgbaMatch) {
+      const [, r, g, b] = rgbaMatch;
+      return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
+    }
+
+    // Check if the color is in hex format
+    const hexMatch = color.match(/^#([0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3})$/i);
+
+    if (hexMatch) {
+      let hexValue = hexMatch[1];
+
+      if (hexValue.length === 3) {
+        hexValue = hexValue.split('').map(char => char + char).join('');
+      }
+
+      if (hexValue.length === 6) {
+        hexValue += Math.round(newAlpha * 255).toString(16).padStart(2, '0');
+      } else if (hexValue.length === 8) {
+        hexValue = hexValue.slice(0, 6) + Math.round(newAlpha * 255).toString(16).padStart(2, '0');
+      }
+
+      return `#${hexValue}`;
+    }
+
+    throw new Error('Invalid color format');
+  }
 }
