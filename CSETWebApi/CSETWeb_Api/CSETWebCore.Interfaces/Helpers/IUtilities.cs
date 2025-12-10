@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer.Model;
 using System;
 
 namespace CSETWebCore.Interfaces.Helpers

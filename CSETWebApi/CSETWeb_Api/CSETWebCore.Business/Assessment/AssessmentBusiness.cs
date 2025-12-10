@@ -28,9 +28,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 
 namespace CSETWebCore.Business.Assessment
@@ -1006,7 +1004,7 @@ namespace CSETWebCore.Business.Assessment
                 _context.SaveChanges();
             }
         }
-        
+
         public IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
             int?[] myArray = new int?[]

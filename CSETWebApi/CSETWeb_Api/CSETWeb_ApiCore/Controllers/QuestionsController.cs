@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
@@ -590,7 +589,7 @@ namespace CSETWebCore.Api.Controllers
 
             return counts;
         }
-        
-        
+
+
     }
 }

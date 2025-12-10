@@ -223,7 +223,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<FINDING_CONTACT, jFINDING_CONTACT>(fc));
                     }
-                    
+
                 }
             }
 

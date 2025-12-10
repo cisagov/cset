@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -115,7 +114,7 @@ namespace CSETWebCore.Helpers
 
             return input;
         }
-        
+
 
         /// <summary>
         /// Remove any shady characters that might be used to traverse file paths
