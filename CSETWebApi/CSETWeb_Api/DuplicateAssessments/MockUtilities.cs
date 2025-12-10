@@ -1,5 +1,4 @@
-﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
+﻿using CSETWebCore.Interfaces.Helpers;
 
 namespace DuplicateAssessments
 {

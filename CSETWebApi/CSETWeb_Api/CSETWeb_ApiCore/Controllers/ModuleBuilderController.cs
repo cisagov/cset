@@ -129,7 +129,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/cloneset/2")]
-        public IActionResult CloneBaseSet([FromQuery] string setName, [FromQuery]string newSetName)
+        public IActionResult CloneBaseSet([FromQuery] string setName, [FromQuery] string newSetName)
         {
             ModuleCloner cloner = new ModuleCloner(_context);
             SETS clonedSet = cloner.CloneModule(setName, newSetName, false);

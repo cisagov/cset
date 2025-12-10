@@ -307,7 +307,7 @@ namespace CSETWebCore.Business.Observations
                 _context.SaveChanges();
             }
         }
-        
+
 
         /// <summary>
         /// Creates an Observation based on maturity question properties.

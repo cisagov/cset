@@ -260,9 +260,9 @@ namespace CSETWebCore.Helpers
 
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var stop = 1;
+                throw;
             }
         }
 
@@ -355,9 +355,9 @@ namespace CSETWebCore.Helpers
                 }
 
             }
-            catch (Exception exc)
+            catch
             {
-                throw exc;
+                throw;
             }
 
             return results;
