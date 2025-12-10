@@ -16,56 +16,19 @@ CSET provides the following:
 
 View the [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0) and [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU) to learn more about CSET and how to use the software.
 
-## Download
-[CSET Releases](https://github.com/cisagov/cset/releases/)
-
 Local installers ("standalone") are available as well as binaries for creating enterprise installations.
 
 ## How to Install and Run CSET/Enterprise
+
+**CSET Enterprise only runs on Windows.** The standalone installer and enterprise deployment both require Windows operating systems (Windows 10 or higher for local installations, Windows Server 2016 or higher for enterprise deployments).
+
+**For Mac and Linux users**, Docker is the recommended approach. See the [Running CSET with Docker](#running-cset-with-docker) section below for instructions.
 
 CSET operates on Windows laptops or desktop computers and can also be configured for a client-server architecture.
 
 For more information, see the [CSET Installation Options](install-and-troubleshooting-guides/README.md).
 
-## License
-
-MIT License, Apache License 2.0
-
-Copyright 2018 Battelle Energy Alliance, LLC
-
-See [License.txt](License.txt), and [NOTICE.txt](NOTICE.txt)
-
-Contact information of authors: cset_PMO@cisa.dhs.gov
-
-Idaho National Laboratory:
-P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
-
-CISA - NGL Stop 0630
-Cybersecurity and Infrastructure Security Agency:
-
-1110 N. Glebe Road
-Arlington, VA 20598-0630
-
-[CISAgov Youtube channel](https://www.youtube.com/@CISAgov)
-
-Includes software licensed under LGPL
-
-LGPL dependencies are required to build CSET. You will be required to acquire them via nuGet 
-in order to build this software. They are not distributed with this source.
-
 ## System Requirements
-
-### System Requirements for Local Installation
-
-It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
-
-• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
-• 6 GB free disk space
-• 4 GB of RAM
-• Microsoft Windows 10 or higher
-• Microsoft .NET 7 Runtime (included in CSET installation)
-• Microsoft ASP.NET Core 7 Runtime (included in CSET installation)
-• Microsoft SQL Server 2022 LocalDB (included in CSET installation)
 
 ### Running CSET with Docker
 
@@ -95,7 +58,7 @@ and Angular UI, you can use the `compose.dev.yml` file:
 
 `docker compose -f compose.dev.yml up`
 or
-`task up-dev`
+`task up:dev`
 
 ### System Requirements for Enterprise Installation
 
@@ -105,7 +68,7 @@ It is recommended that users meet the minimum system hardware and software requi
 • 8 GB free disk space
 • 4 GB of RAM
 • Microsoft Windows Server 2016 Edition or higher recommended
-• Microsoft .NET 7 Runtime
+• Microsoft .NET 10 Runtime
 • Microsoft ASP.NET Core 7 Runtime
 • Microsoft SQL Server 2022 or higher recommended
 • Internet Information Server (IIS) or Kestrel
@@ -114,6 +77,9 @@ Other Items of Note:
 • For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates 
 available from the Windows Update web site to ensure the best compatibility and security.
 
+#### Download
+[CSET Releases](https://github.com/cisagov/cset/releases/)
+
 ## Questions and Feedback
 
 If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov. 
@@ -121,3 +87,29 @@ If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov.
 For additional information about CISA, see https://www.cisa.gov/.
 
 To ask questions or request help, propose a feature or module, or report a bug, security vulnerability or unexpected behavior, add a new issue here: https://github.com/cisagov/cset/issues
+
+## License
+
+MIT License, Apache License 2.0
+
+Copyright 2018 Battelle Energy Alliance, LLC
+
+See [License.txt](License.txt), and [NOTICE.txt](NOTICE.txt)
+
+Contact information of authors: cset_PMO@cisa.dhs.gov
+
+Idaho National Laboratory:
+P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
+
+CISA - NGL Stop 0630
+Cybersecurity and Infrastructure Security Agency:
+
+1110 N. Glebe Road
+Arlington, VA 20598-0630
+
+[CISAgov Youtube channel](https://www.youtube.com/@CISAgov)
+
+Includes software licensed under LGPL
+
+LGPL dependencies are required to build CSET. You will be required to acquire them via nuGet 
+in order to build this software. They are not distributed with this source.
