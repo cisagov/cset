@@ -48,45 +48,45 @@ namespace CSETWebCore.CryptoBuffer
             _autoSaltPaddingMode = paddingMode;
         }
 
-        public DecryptionBuffer(Rfc2898DeriveBytes key, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
-        {
-            Initialize(key, cryptoAlgorithm, paddingMode);
-        }
-
         public DecryptionBuffer(byte[] password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 100, HashAlgorithmName.SHA256);
-            Initialize(key, cryptoAlgorithm, paddingMode);
+            Initialize(password, salt, cryptoAlgorithm, paddingMode);
         }
 
         public DecryptionBuffer(string password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 100, HashAlgorithmName.SHA256);
-            Initialize(key, cryptoAlgorithm, paddingMode);
+            Initialize(password, salt, cryptoAlgorithm, paddingMode);
         }
 
         public DecryptionBuffer(string password, string salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
             byte[] saltValueBytes = CryptoCommon.GetBytes(salt);
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 100, HashAlgorithmName.SHA256);
-            Initialize(key, cryptoAlgorithm, paddingMode);
+            Initialize(password, saltValueBytes, cryptoAlgorithm, paddingMode);
         }
 
-        private void Initialize(Rfc2898DeriveBytes key, SymmetricCryptoAlgorithm cryptoAlgorithm, PaddingMode paddingMode)
+        private void Initialize(string password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm, PaddingMode paddingMode)
+        {
+            Initialize(CryptoCommon.GetBytes(password), salt, cryptoAlgorithm, paddingMode);
+        }
+
+        private void Initialize(byte[] password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm, PaddingMode paddingMode)
         {
             _gotAllData = false;
 
             SymmetricAlgorithm symmetricAlg = CryptoCommon.GetSymmetricAlgorithm(cryptoAlgorithm);
             symmetricAlg.Padding = CryptoCommon.GetPaddingMode(paddingMode);
 
-            byte[] ivBytes;
-            byte[] keyBytes;
-            lock (key) // Make key threadsafe from itself if you reuse the same one ove and over
-            {
-                key.Reset();
-                ivBytes = key.GetBytes(symmetricAlg.BlockSize / 8);
-                keyBytes = key.GetBytes(symmetricAlg.KeySize / 8);
-            }
+            int ivSize = symmetricAlg.BlockSize / 8;
+            int keySize = symmetricAlg.KeySize / 8;
+
+            // Derive combined IV + key bytes using static Pbkdf2 method
+            byte[] derivedBytes = Rfc2898DeriveBytes.Pbkdf2(password, salt, 100, HashAlgorithmName.SHA256, ivSize + keySize);
+
+            byte[] ivBytes = new byte[ivSize];
+            byte[] keyBytes = new byte[keySize];
+            Buffer.BlockCopy(derivedBytes, 0, ivBytes, 0, ivSize);
+            Buffer.BlockCopy(derivedBytes, ivSize, keyBytes, 0, keySize);
+
             _keySize = symmetricAlg.KeySize;
             _ic = symmetricAlg.CreateDecryptor(keyBytes, ivBytes);
         }
@@ -97,23 +97,29 @@ namespace CSETWebCore.CryptoBuffer
             symmetricAlg.Padding = CryptoCommon.GetPaddingMode(_autoSaltPaddingMode);
 
             byte[] salt = _restBuffer.GetBytes(_autoSaltLength);
-            if (_autoSaltLength == 4) // If salt length is 4, then add it twice because Rfc2898DeriveBytes supports only 8 byte salts 
+            if (_autoSaltLength == 4) // If salt length is 4, then add it twice because Rfc2898DeriveBytes supports only 8 byte salts
             {
                 ByteBuffer newSalt = new ByteBuffer();
                 newSalt.AddBytes(salt);
                 newSalt.AddBytes(salt);
                 salt = newSalt.GetAllBytes();
             }
-            Rfc2898DeriveBytes key;
-            if (_keyBytes != null)
-                key = new Rfc2898DeriveBytes(_keyBytes, salt, 100, HashAlgorithmName.SHA256);
-            else
-                key = new Rfc2898DeriveBytes(_keyStr, salt, 100, HashAlgorithmName.SHA256);
+
+            byte[] password = _keyBytes ?? CryptoCommon.GetBytes(_keyStr);
             _keyStr = null;
             _keyBytes = null;
 
-            byte[] ivBytes = key.GetBytes(symmetricAlg.BlockSize / 8);
-            byte[] keyBytes = key.GetBytes(symmetricAlg.KeySize / 8);
+            int ivSize = symmetricAlg.BlockSize / 8;
+            int keySize = symmetricAlg.KeySize / 8;
+
+            // Derive combined IV + key bytes using static Pbkdf2 method
+            byte[] derivedBytes = Rfc2898DeriveBytes.Pbkdf2(password, salt, 100, HashAlgorithmName.SHA256, ivSize + keySize);
+
+            byte[] ivBytes = new byte[ivSize];
+            byte[] keyBytes = new byte[keySize];
+            Buffer.BlockCopy(derivedBytes, 0, ivBytes, 0, ivSize);
+            Buffer.BlockCopy(derivedBytes, ivSize, keyBytes, 0, keySize);
+
             _keySize = symmetricAlg.KeySize;
             _ic = symmetricAlg.CreateDecryptor(keyBytes, ivBytes);
             _autosizeSaltInitialized = true;

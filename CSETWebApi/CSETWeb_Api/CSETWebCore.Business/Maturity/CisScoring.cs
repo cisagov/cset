@@ -130,7 +130,7 @@ namespace CSETWebCore.Business.Maturity
                     var sumPossibleWeights = (decimal)possibleWeights.Sum(x => x.Weight);
 
                     decimal total = sumPossibleWeights != 0 ? sumAchievedWeights / sumPossibleWeights : 0;
-                    
+
 
                     return new Score
                     {
@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.Maturity
 
             return new Score();
         }
-        
+
 
 
         /// <summary>
