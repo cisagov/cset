@@ -20,7 +20,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Xml.XPath;
 using static CSETWebCore.Model.Diagram.CommonSecurityAdvisoryFrameworkObject;
 
 
