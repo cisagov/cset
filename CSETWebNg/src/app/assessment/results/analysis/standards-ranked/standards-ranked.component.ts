@@ -28,13 +28,14 @@ import { AnalysisService } from '../../../../services/analysis.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
-    selector: 'app-standards-ranked',
-    templateUrl: './standards-ranked.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-standards-ranked',
+  templateUrl: './standards-ranked.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class StandardsRankedComponent implements OnInit {
   chartIsVisible = false;
@@ -47,7 +48,8 @@ export class StandardsRankedComponent implements OnInit {
     private tSvc: TranslocoService,
     public navSvc: NavigationService,
     private router: Router,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public themeSvc: ThemeService
   ) { }
 
   ngOnInit() {
@@ -61,6 +63,14 @@ export class StandardsRankedComponent implements OnInit {
     if (this.chart) {
       this.chart.destroy();
     }
+
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataRows.map(r => {

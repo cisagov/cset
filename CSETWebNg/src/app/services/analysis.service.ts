@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import Chart from 'chart.js/auto';
 import { ChartService } from './chart.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ThemeService } from './theme.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class AnalysisService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private chartSvc: ChartService,
+    public themeSvc: ThemeService,
     private tSvc: TranslocoService
   ) {
   }
@@ -331,6 +333,14 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
     return new Chart(canvasId, {
       type: 'bar',
       data: {
@@ -382,6 +392,14 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
     return new Chart(canvasId, {
       type: 'bar',
       data: {
