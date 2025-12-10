@@ -34,7 +34,7 @@
         <div class="ms-3 me-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
                 <h1 class="page-title">Practices Marked for Review</h1>
-                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="marked-flag"
                         src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
@@ -49,7 +49,7 @@
                                 {{questionsSvc.answerDisplayLabel(3, s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png">
                         </td>
                     </tr>
@@ -78,7 +78,7 @@
         <div class="ms-3 me-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
                 <h1 class="page-title">Practice Comments</h1>
-                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="marked-flag"
                         src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
@@ -93,7 +93,7 @@
                                 {{questionsSvc.answerDisplayLabel(3, s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png"></td>
                     </tr>
                     <div *ngIf="s.answer.comment;then sc_comments_given"></div>
