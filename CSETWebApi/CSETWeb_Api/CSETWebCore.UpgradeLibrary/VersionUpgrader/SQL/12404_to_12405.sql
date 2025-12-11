@@ -1,0 +1,224 @@
+/*
+    Remove unused stored procedures from the database.
+    These procedures are no longer referenced in the C# codebase.
+*/
+
+-- Acet_GetActionItemsForReport
+IF OBJECT_ID('dbo.Acet_GetActionItemsForReport', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.Acet_GetActionItemsForReport;
+GO
+
+-- CheckHeading (replaced with LINQ equivalent in CsetwebContextExtensions.cs)
+IF OBJECT_ID('dbo.CheckHeading', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.CheckHeading;
+GO
+
+-- DeleteAssessment
+IF OBJECT_ID('dbo.DeleteAssessment', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.DeleteAssessment;
+GO
+
+-- DeleteUser
+IF OBJECT_ID('dbo.DeleteUser', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.DeleteUser;
+GO
+
+-- Get_Recommendations
+IF OBJECT_ID('dbo.Get_Recommendations', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.Get_Recommendations;
+GO
+
+-- GetAnswerDistribGroupings
+IF OBJECT_ID('dbo.GetAnswerDistribGroupings', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetAnswerDistribGroupings;
+GO
+
+-- GetAnswerDistribMaturity
+IF OBJECT_ID('dbo.GetAnswerDistribMaturity', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetAnswerDistribMaturity;
+GO
+
+-- GetAreasData
+IF OBJECT_ID('dbo.GetAreasData', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetAreasData;
+GO
+
+-- GetAreasOverall
+IF OBJECT_ID('dbo.GetAreasOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetAreasOverall;
+GO
+
+-- GetComparisonAreasFile
+IF OBJECT_ID('dbo.GetComparisonAreasFile', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetComparisonAreasFile;
+GO
+
+-- GetComparisonFileOveralls
+IF OBJECT_ID('dbo.GetComparisonFileOveralls', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetComparisonFileOveralls;
+GO
+
+-- GetComparisonFilePercentage
+IF OBJECT_ID('dbo.GetComparisonFilePercentage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetComparisonFilePercentage;
+GO
+
+-- GetComparisonFileSummary
+IF OBJECT_ID('dbo.GetComparisonFileSummary', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetComparisonFileSummary;
+GO
+
+-- GetCompatibilityCounts
+IF OBJECT_ID('dbo.GetCompatibilityCounts', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetCompatibilityCounts;
+GO
+
+-- GetMaturityComparisonBestToWorst
+IF OBJECT_ID('dbo.GetMaturityComparisonBestToWorst', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetMaturityComparisonBestToWorst;
+GO
+
+-- GetMaturityGroupings
+IF OBJECT_ID('dbo.GetMaturityGroupings', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetMaturityGroupings;
+GO
+
+-- GetPercentageOverall
+IF OBJECT_ID('dbo.GetPercentageOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetPercentageOverall;
+GO
+
+-- usp_AggregationCustomQuestionnaireLoad
+IF OBJECT_ID('dbo.usp_AggregationCustomQuestionnaireLoad', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_AggregationCustomQuestionnaireLoad;
+GO
+
+-- usp_Assessments_Completion_For_Access_Key
+IF OBJECT_ID('dbo.usp_Assessments_Completion_For_Access_Key', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Assessments_Completion_For_Access_Key;
+GO
+
+-- usp_Assessments_Completion_For_User
+IF OBJECT_ID('dbo.usp_Assessments_Completion_For_User', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Assessments_Completion_For_User;
+GO
+
+-- usp_CF_ConvertLegacyFull
+IF OBJECT_ID('dbo.usp_CF_ConvertLegacyFull', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CF_ConvertLegacyFull;
+GO
+
+-- usp_CF_Questions
+IF OBJECT_ID('dbo.usp_CF_Questions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CF_Questions;
+GO
+
+-- usp_CF_Score_Averages
+IF OBJECT_ID('dbo.usp_CF_Score_Averages', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CF_Score_Averages;
+GO
+
+-- usp_CF_Score_Overall
+IF OBJECT_ID('dbo.usp_CF_Score_Overall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CF_Score_Overall;
+GO
+
+-- usp_CyOTEQuestionsAnswers
+IF OBJECT_ID('dbo.usp_CyOTEQuestionsAnswers', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CyOTEQuestionsAnswers;
+GO
+
+-- usp_financial_attributes
+IF OBJECT_ID('dbo.usp_financial_attributes', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_financial_attributes;
+GO
+
+-- usp_GenerateSPRSScore
+IF OBJECT_ID('dbo.usp_GenerateSPRSScore', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GenerateSPRSScore;
+GO
+
+-- usp_GetAssessmentPie
+IF OBJECT_ID('dbo.usp_GetAssessmentPie', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetAssessmentPie;
+GO
+
+-- usp_GetComponentsRankedCategoriesPage
+IF OBJECT_ID('dbo.usp_GetComponentsRankedCategoriesPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetComponentsRankedCategoriesPage;
+GO
+
+-- usp_GetComponentsResultsByCategoryPage
+IF OBJECT_ID('dbo.usp_GetComponentsResultsByCategoryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetComponentsResultsByCategoryPage;
+GO
+
+-- usp_GetComponentsSummaryPage
+IF OBJECT_ID('dbo.usp_GetComponentsSummaryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetComponentsSummaryPage;
+GO
+
+-- usp_GetComponentTypesPage
+IF OBJECT_ID('dbo.usp_GetComponentTypesPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetComponentTypesPage;
+GO
+
+-- usp_getCSETQuestionsForCRRM
+IF OBJECT_ID('dbo.usp_getCSETQuestionsForCRRM', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getCSETQuestionsForCRRM;
+GO
+
+-- usp_getFinancialQuestions
+IF OBJECT_ID('dbo.usp_getFinancialQuestions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getFinancialQuestions;
+GO
+
+-- usp_getGenericModelSummaryByGoal
+IF OBJECT_ID('dbo.usp_getGenericModelSummaryByGoal', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getGenericModelSummaryByGoal;
+GO
+
+-- usp_getMaturitySummaryOverall
+IF OBJECT_ID('dbo.usp_getMaturitySummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getMaturitySummaryOverall;
+GO
+
+-- usp_getMedianOverall
+IF OBJECT_ID('dbo.usp_getMedianOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getMedianOverall;
+GO
+
+-- usp_getMinMaxAverageForSectorIndustry
+IF OBJECT_ID('dbo.usp_getMinMaxAverageForSectorIndustry', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getMinMaxAverageForSectorIndustry;
+GO
+
+-- usp_getRankedStandardCategories
+IF OBJECT_ID('dbo.usp_getRankedStandardCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRankedStandardCategories;
+GO
+
+-- usp_getRRASummaryPage
+IF OBJECT_ID('dbo.usp_getRRASummaryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummaryPage;
+GO
+
+-- usp_GetStandardsRankedCategoriesPage
+IF OBJECT_ID('dbo.usp_GetStandardsRankedCategoriesPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetStandardsRankedCategoriesPage;
+GO
+
+-- usp_GetStandardsResultsByCategoryPage
+IF OBJECT_ID('dbo.usp_GetStandardsResultsByCategoryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetStandardsResultsByCategoryPage;
+GO
+
+-- usp_GetStandardsSummaryPage
+IF OBJECT_ID('dbo.usp_GetStandardsSummaryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetStandardsSummaryPage;
+GO
+
+-- usp_getVADRSummaryPage
+IF OBJECT_ID('dbo.usp_getVADRSummaryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getVADRSummaryPage;
+GO
