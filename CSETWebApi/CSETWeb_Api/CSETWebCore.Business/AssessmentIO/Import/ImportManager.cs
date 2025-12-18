@@ -226,23 +226,26 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         var xDocDiagram = new XmlDocument();
                         xDocDiagram.LoadXml(assessment.Diagram_Markup);
                         diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq, false);
+                        
+                        //Fill diagram questions for percentage completion 
+                        string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
+                        
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+                        
+                            using (SqlCommand command = new SqlCommand("FillNetworkDiagramQuestions", connection))
+                            {
+                                command.CommandType = CommandType.StoredProcedure;
+                                // Add input parameter
+                                command.Parameters.Add(new SqlParameter("@assessment_id", newAssessmentId));
+                                command.ExecuteNonQuery();
+                            }
+                        }
                     }
 
                     import.Finalize(newAssessmentId);
-                    string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
-                    
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-            
-                        using (SqlCommand command = new SqlCommand("FillAll", connection))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            // Add input parameter
-                            command.Parameters.Add(new SqlParameter("@assessment_id", newAssessmentId));
-                            command.ExecuteNonQuery();
-                        }
-                    }
+                   
 
                     // Clean up any imported standards that are unselected
                     var unselectedStandards = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToList();
