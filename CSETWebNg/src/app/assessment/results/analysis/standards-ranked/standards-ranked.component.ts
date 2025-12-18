@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Router } from '../../../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
