@@ -132,8 +132,7 @@ namespace CSETWebCore.Business.Question
             {
                 return null;
             }
-
-            // Initialize to zero before accumulating
+            
             int totalCompleted = 0;
             int totalQuestions = 0;
 
