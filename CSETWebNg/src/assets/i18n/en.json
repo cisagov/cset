@@ -995,8 +995,8 @@
       "1": "Select any additional functions to include as Sector-Specific Goals",
       "2": "The following sectors include additional guidance not covered in CSET. For more information about these sector-specific performance goals, please visit CISA's Cross-Sector Cybersecurity Performance Goals page:",
       "descriptions": {
-        "sector-1": "organizations involved in the production, storage, or distribution of chemicals for industrial, agricultural, or consumer application",
-        "sector-19": "organizations involved in the production, storage, or distribution of chemicals for industrial, agricultural, or consumer application",
+        "sector-1": "organizations involved in the use, production, storage, or distribution of chemicals within one or more components of the Chemical Sector—including agricultural chemicals, basic chemicals, specialty chemicals, and consumer products",
+        "sector-19": "organizations involved in the use, production, storage, or distribution of chemicals within one or more components of the Chemical Sector—including agricultural chemicals, basic chemicals, specialty chemicals, and consumer products",
         "sector-13": "organizations that develop software for internal, commercial, or open source use",
         "sector-28": "organizations that develop software for internal, commercial, or open source use"
       }
