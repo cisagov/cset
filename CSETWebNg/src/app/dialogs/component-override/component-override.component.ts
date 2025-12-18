@@ -51,7 +51,8 @@ export class ComponentOverrideComponent {
     public questionsSvc: QuestionsService,
     public utilitiesSvc: Utilities,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    dialog.beforeClosed().subscribe(() => dialog.close(this.questionChanged));
+    dialog.beforeClosed().subscribe(() => this.broadcastQuestionOverride());
+
     this.questionsSvc.getOverrideQuestions(data.myQuestion.questionId,
       data.component_Symbol_Id).subscribe((x: any) => {
         this.questions = x;
@@ -117,14 +118,16 @@ export class ComponentOverrideComponent {
       });
 
     this.questionChanged = true;
-    this.questionsSvc.questionOverrideSubject.next(true);
   }
 
+  broadcastQuestionOverride() {
+    this.questionsSvc.questionOverrideSubject.next(true);
+  }
 
   close() {
     return this.dialog.close(this.questionChanged);
   }
-
+  
   applyHeight() {
     const styles = { 'max-height': window.screen.availHeight };
     return styles;

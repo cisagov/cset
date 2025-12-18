@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
@@ -77,7 +78,7 @@ namespace CSETWebCore.Business.Reports
         /// supplied, the default model's questions are retrieved.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null)
+        public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null, bool includeUnanswerable = false)
         {
             int targetModelId = 0;
 
@@ -138,7 +139,14 @@ namespace CSETWebCore.Business.Reports
 
 
             // Do not include unanswerable questions
-            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+            if (!includeUnanswerable)
+            {
+                responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+            }
+
+
+            // Determine if the model has out-of-scope questions
+            RemoveOutOfScope(ref responseList, targetModelId);
 
 
             // 
@@ -177,6 +185,41 @@ namespace CSETWebCore.Business.Reports
 
 
             return responseList;
+        }
+
+
+        /// <summary>
+        /// Remove any out-of-scope questions from the list
+        /// </summary>
+        /// <param name="modelId"></param>
+        public void RemoveOutOfScope(ref List<MatRelevantAnswers> list, int modelId)
+        {
+            List<int> outOfRangeQuestionIds = [];
+
+            if (modelId == Constants.Constants.Model_CPG2)
+            {
+                outOfRangeQuestionIds.AddRange(DetermineOutOfScopeCpg2(list));
+            }
+
+            // remove all questions from 'the list' that are not applicable
+            list.RemoveAll(x => outOfRangeQuestionIds.Contains(x.ANSWER.Question_Or_Requirement_Id));
+        }
+
+
+        /// <summary>
+        /// Removes any CPG2 questions that don't apply due to the 
+        /// assessment's Technology Domain
+        /// </summary>
+        public List<int> DetermineOutOfScopeCpg2(List<MatRelevantAnswers> list)
+        {
+            // see which technology domains are selected
+            var techDomain = new DemographicExtBusiness(_context)
+                .GetX(_assessmentId, "TECH-DOMAIN")?.ToString();
+
+            var qsa = new QuestionScopeAnalyzer(_assessmentId, _context, techDomain);
+            var outOfRangeQuestionIds = qsa.DetermineScopeForTechnologyDomain(techDomain);
+
+            return outOfRangeQuestionIds;
         }
 
 
@@ -281,7 +324,7 @@ namespace CSETWebCore.Business.Reports
                 targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
             }
 
-            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id, true).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }

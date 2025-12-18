@@ -882,41 +882,67 @@ DR_EXPLAIN.searchEngine = (function () {
 
     var loadedSearchFiles = []
 
+    function sanitizeUrl(url) {
+        // Create a temporary anchor element to parse the URL
+        var a = document.createElement('a');
+        a.href = url;
+
+        // Check the protocol to ensure it's HTTP or HTTPS
+        if (a.protocol !== 'http:' && a.protocol !== 'https:') {
+            throw new Error('Invalid protocol');
+        }
+
+        // Validate other parts of the URL as needed
+        // For example, you might want to ensure the path and query are safe
+
+        return a.href;
+    }
+
+
     function loadSearchFile(url, callback, resultExtractor) {
         // CSET SECURITY FIX: Only allow relative URLs (same-origin)
+        let validatedUrl;
         try {
             var urlObj = new URL(url, window.location.href);
+            console.log(urlObj.origin, window.location.origin);
             if (urlObj.origin !== window.location.origin) {
                 console.error('Blocked cross-origin script URL for security:', url);
                 callback(false);
                 return;
             }
+            console.log('before!', url);
+            var cleanUrl = sanitizeUrl(url);
+            console.log('after', cleanUrl);
+
+            // Assign to a new variable after validation
+            validatedUrl = cleanUrl;
         } catch (e) {
+            console.error(e);
             console.error('Invalid URL blocked:', url);
             callback(false);
             return;
         }
-        // --------------------------------------------------------
 
-
-        if (loadedSearchFiles.indexOf(url) !== -1) {
-            // Need to use timeout to avoid synchronous callback calls
-            // in case content has already been loaded in the past
+        // Use validatedUrl instead of url for checking
+        if (loadedSearchFiles.indexOf(validatedUrl) !== -1) {
             setTimeout(function () {
                 callback(resultExtractor());
             }, 0);
             return;
         }
+
         var script = document.createElement('script');
-        script.src = url;
+        script.src = validatedUrl; // Use the validated variable
+
         script.addEventListener('load', function () {
             try {
                 document.head.removeChild(script);
             } catch (e) {
             }
-            loadedSearchFiles.push(url);
+            loadedSearchFiles.push(validatedUrl); // Use validatedUrl here too
             callback(resultExtractor());
         });
+
         script.addEventListener('error', function () {
             try {
                 document.head.removeChild(script);
@@ -3776,6 +3802,11 @@ function onDocumentReady(app) {
     app.tabController.doSetScrollTopByUrlEncoder();
 
     var hash = window.location.hash;
+
+    // Allow only alphanumeric characters, dashes, underscores, and some other safe characters
+    const safePattern = /^[a-zA-Z0-9-_#]+$/;
+    hash = safePattern.test(hash) ? hash : "";
+
     if (hash != "" && hash != "#") {
         if (hash[0] != "#") // just in case
             hash = "#" + hash;

@@ -1004,7 +1004,7 @@ namespace CSETWebCore.Business.Assessment
                 _context.SaveChanges();
             }
         }
-        
+
         public IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
             int?[] myArray = new int?[]
@@ -1110,6 +1110,8 @@ namespace CSETWebCore.Business.Assessment
         /// <param name="targetAssessment">The model name being converted to</param>
         public void ConvertAssessment(int assessment_id, int original_id, string targetAssessment)
         {
+            targetAssessment = Utilities.SanitizeAgainstPathTraversal(targetAssessment);
+
             try
             {
                 var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == original_id).FirstOrDefault();

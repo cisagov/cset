@@ -20,6 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<div class="light-mode-wrapper" data-theme="light" data-bs-theme="light">
 <div class="report-body mb-5" *transloco="let t">
 
     <app-cover-page [assessDetail]="info" [title]="t('reports.core.rra.cmfr.report title') | uppercase" />
@@ -43,9 +44,8 @@
                 <tr *ngIf="response?.comments?.length > 0">
                     <th>{{questionAliasSingular}}</th>
                     <th colspan="3">
-                        <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review',
-                            {alias:
-                            aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
+                        <p style="color: #de761c" class="d-flex justify-content-end">{{t('reports.core.rra.cmfr.marked for review',
+                            {alias: aliasTranslated})}} <img class="marked-flag ps-1" src="assets/images/icons/MarkedFlag.png"
                                 alt="marked for review"> </p>
                     </th>
                 </tr>
@@ -59,7 +59,7 @@
                                 {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png">
                         </td>
                     </tr>
@@ -118,9 +118,8 @@
                 <tr *ngIf="response?.markedForReviewList?.length > 0">
                     <th>{{questionAliasSingular}}</th>
                     <th colspan="3">
-                        <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review',
-                            {alias:
-                            aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
+                        <p style="color: #de761c" class="d-flex justify-content-end">{{t('reports.core.rra.cmfr.marked for review',
+                            {alias: aliasTranslated})}} <img class="marked-flag ms-1" src="assets/images/icons/MarkedFlag.png"
                                 alt="marked for review"> </p>
                     </th>
                 </tr>
@@ -134,7 +133,7 @@
                                 {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png">
                         </td>
                     </tr>
@@ -172,4 +171,5 @@
         </div>
 
     </ng-template>
+</div>
 </div>

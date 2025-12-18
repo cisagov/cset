@@ -542,7 +542,7 @@ namespace CSETWebCore.Business.Question
         {
             return _context.MATURITY_QUESTIONS.Where(x => x.Sub_Category == subGroup && x.Maturity_Model_Id == modelId).Count();
         }
-        
-        
+
+
     }
 }

@@ -4,15 +4,6 @@ WORKDIR /var/www
 
 COPY . /var/www/
 
-# Configure INL certs and environment variables
-# ADD http://certstore.inl.gov/pki/CAINLROOT_B64.crt /usr/local/share/ca-certificates/
-# RUN /usr/sbin/update-ca-certificates
-# ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt \
-#     REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
-#     CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
-#     SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
-#     SSL_CERT_DIR=/etc/ssl/certs/
-
 RUN apt-get update
 RUN npm i -g @angular/cli \
     && npm i
@@ -24,7 +15,9 @@ RUN ng build \
 
 FROM nginx:alpine
 
-COPY --from=build /var/www/dist/ /usr/share/nginx/html
+# Angular's application builder outputs the browser bundle under dist/browser.
+# Copy that folder so index.html sits at Nginx's web root (otherwise Nginx serves its default page).
+COPY --from=build /var/www/dist/browser/ /usr/share/nginx/html
 COPY ./etc/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443

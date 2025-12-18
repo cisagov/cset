@@ -216,7 +216,9 @@ export class QuestionExtrasComponent implements OnInit {
     if (this.extras?.is_Component) {
       this.myQuestion.is_Component = true;
       this.toggleComponent = true;
-      this.mode = 'COMPONENT'
+      if (this.mode == 'DETAIL') {
+        this.mode = 'COMPONENT';
+      }
     }
   }
 

@@ -39,7 +39,13 @@ import { AnswerOptionConfig } from '../../../models/module-config.model';
   selector: 'app-cpg-report',
   templateUrl: './cpg-report.component.html',
   styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
-  standalone: false
+  standalone: false,
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class CpgReportComponent implements OnInit {
   loading = false;
@@ -85,9 +91,12 @@ export class CpgReportComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   async ngOnInit(): Promise<void> {
+    // Force body/html background to white for reports
+    this.forceLightModeBackground();
+
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
       this.info = assessmentDetail;
       this.assessSvc.assessment = assessmentDetail;
@@ -95,6 +104,20 @@ export class CpgReportComponent implements OnInit {
 
       this.initialize();
     });
+  }
+
+  /**
+   * Force light mode background on body/html elements
+   */
+  private forceLightModeBackground(): void {
+    if (typeof document !== 'undefined') {
+      const html = document.documentElement;
+      const body = document.body;
+
+      // Force white background
+      html.style.setProperty('background-color', '#ffffff', 'important');
+      body.style.setProperty('background-color', '#ffffff', 'important');
+    }
   }
 
   /**

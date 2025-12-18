@@ -275,6 +275,8 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public List<PotentialQuestions> GetSecurityQuestionList(string lang)
         {
+            lang = Utilities.SanitizeAgainstPathTraversal(lang);
+
             List<PotentialQuestions> questions =
                 (from a in _context.SECURITY_QUESTION
                  select new PotentialQuestions()

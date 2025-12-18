@@ -754,7 +754,7 @@
                "cmfr": {
                     "report title": "Comments & Marked for Review",
                     "comment": "Comment",
-                    "marked for review": "Questions Marked for Review",
+                    "marked for review": "Marked for Review",
                     "no marked for review": "There are no {{questionsAliasLower}} marked for review",
                     "with comments": "Questions with Comments",
                     "no comments": "There are no {{questionsAliasLower}} with comments",

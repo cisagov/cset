@@ -21,21 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ElementRef, AfterContentInit, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterContentInit, HostListener, OnDestroy } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';
 import { LayoutService } from '../../../../services/layout.service';
+import { ThemeService } from '../../../../services/theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-cmmc2-level-results',
     templateUrl: './cmmc2-level-results.component.html',
+    styleUrls: ['./cmmc2-level-results.component.scss'],
     // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' },
     standalone: false
 })
-export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
+export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit, OnDestroy {
 
 
   loading = false;
@@ -43,6 +46,7 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
   response: any;
   dataError: boolean;
   cmmcModel: any;
+  private themeSubscription: Subscription;
 
 
   @HostListener('window:resize', ['$event'])
@@ -56,15 +60,30 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
     private titleService: Title,
     private elementRef: ElementRef,
     public chartSvc: ChartService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private themeSvc: ThemeService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
+
+    // Subscribe to theme changes to refresh charts
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      if (this.response) {
+        // Delay to ensure DOM is updated
+        setTimeout(() => this.refreshChart(), 100);
+      }
+    });
   }
 
   ngAfterContentInit(): void {
     this.refreshChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
   evaluateWindowSize() {

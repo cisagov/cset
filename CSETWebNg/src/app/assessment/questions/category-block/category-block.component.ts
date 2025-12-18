@@ -24,25 +24,35 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../../../models/questions.model';
 import { NavTreeNode } from '../../../services/navigation/navigation.service';
+import { QuestionsService } from '../../../services/questions.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-category-block',
-    templateUrl: './category-block.component.html',
-    standalone: false
+  selector: 'app-category-block',
+  templateUrl: './category-block.component.html',
+  standalone: false
 })
 export class CategoryBlockComponent implements OnInit {
 
   @Input('myCategory') c: Category;
 
+  private componentOverrideSubscription: Subscription;
+
   /**
    * 
    */
-  constructor() { }
+  constructor(
+    public questionsSvc: QuestionsService
+  ) { }
 
   /**
    * 
    */
   ngOnInit() {
+    // listen for the override control's update event
+    this.componentOverrideSubscription = this.questionsSvc.componentOverrideEvent$.subscribe(() => {
+      this.updateComponentsOverride();
+    });
   }
 
   /**
@@ -81,7 +91,23 @@ export class CategoryBlockComponent implements OnInit {
         elementType: 'QUESTION-HEADING',
         children: []
       };
-      // componentname.children.push(heading);
     });
+  }
+
+  /**
+   * Broadcast the event
+   */
+  updateComponentsOverride() {
+    this.questionsSvc.emitComponentOverrideEvent(0);
+  }
+
+  /**
+   * 
+   */
+  ngOnDestroy() {
+    // Clean up the subscription
+    if (this.componentOverrideSubscription) {
+      this.componentOverrideSubscription.unsubscribe();
+    }
   }
 }

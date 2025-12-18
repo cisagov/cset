@@ -29,13 +29,20 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentDetail } from '../../models/assessment-info.model';
+import DOMPurify from 'dompurify';
 
 
 @Component({
   selector: 'securityplan',
   templateUrl: './securityplan.component.html',
   styleUrls: ['../reports.scss'],
-  standalone: false
+  standalone: false,
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class SecurityplanComponent implements OnInit {
   translationSub: any;
@@ -86,7 +93,7 @@ export class SecurityplanComponent implements OnInit {
 
       // Network Diagram
       this.reportSvc.getNetworkDiagramImage().subscribe(y => {
-        this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(y.diagram);
+        this.networkDiagramImage = DOMPurify.sanitize(y.diagram);
       });
     });
 

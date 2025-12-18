@@ -33,11 +33,12 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-diagram-questions',
-    templateUrl: './diagram-questions.component.html',
-    standalone: false
+  selector: 'app-diagram-questions',
+  templateUrl: './diagram-questions.component.html',
+  standalone: false
 })
 export class DiagramQuestionsComponent implements OnInit {
 
@@ -88,30 +89,27 @@ export class DiagramQuestionsComponent implements OnInit {
   /**
    * Retrieves the complete list of questions
    */
-  loadQuestions() {
-    const magic = this.navSvc.getMagic();
-    this.questionsSvc.getComponentQuestionsList().subscribe(
-      (response: QuestionResponse) => {
-        this.questionsSvc.questions = response;
-        this.categories = response.categories;
-        this.loaded = true;
+  async loadQuestions() {
+    try {
+      const response: QuestionResponse = await lastValueFrom(this.questionsSvc.getComponentQuestionsList());
 
-        this.completionSvc.structure = response;
-        this.completionSvc.setQuestionArray();
+      this.questionsSvc.questions = response;
+      this.categories = response.categories;
+      this.loaded = true;
 
-        this.refreshQuestionVisibility();
-      },
-      error => {
-        console.error(
-          'Error getting questions: ' +
-          (<Error>error).name +
-          (<Error>error).message
-        );
-        console.error('Error getting questions: ' + (<Error>error).stack);
-      }
-    );
+      this.completionSvc.structure = response;
+      this.completionSvc.setQuestionArray();
+
+      this.refreshQuestionVisibility();
+    } catch (error) {
+      console.error(
+        'Error getting questions: ' +
+        (<Error>error).name +
+        (<Error>error).message
+      );
+      console.error('Error getting questions: ' + (<Error>error).stack);
+    }
   }
-
 
   /**
    * Controls the mass expansion/collapse of all subcategories on the screen.
@@ -126,8 +124,8 @@ export class DiagramQuestionsComponent implements OnInit {
   }
 
   /**
- *
- */
+   *
+   */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
@@ -141,11 +139,11 @@ export class DiagramQuestionsComponent implements OnInit {
   }
 
   /**
-  * Re-evaluates the visibility of all questions/subcategories/categories
-  * based on the current filter settings.
-  * Also re-draws the sidenav category tree, skipping categories
-  * that are not currently visible.
-  */
+    * Re-evaluates the visibility of all questions/subcategories/categories
+    * based on the current filter settings.
+    * Also re-draws the sidenav category tree, skipping categories
+    * that are not currently visible.
+    */
   refreshQuestionVisibility() {
     this.filterSvc.evaluateFiltersForCategories(this.categories);
   }
