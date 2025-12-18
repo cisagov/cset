@@ -11,7 +11,9 @@ using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using Microsoft.Data.SqlClient;
 
 namespace CSETWebCore.Business.Question
 {
@@ -131,28 +133,43 @@ namespace CSETWebCore.Business.Question
                 return null;
             }
 
+            // Initialize to zero before accumulating
+            int totalCompleted = 0;
+            int totalQuestions = 0;
+
             if (assessment.UseMaturity)
             {
-                CountMaturity(assessmentId);
+                var counts = CountMaturity(assessmentId);
+                totalCompleted += counts.completed;
+                totalQuestions += counts.total;
             }
 
             if (assessment.UseStandard)
             {
-                CountStandardsBasedCompletion(assessmentId);
+                var counts = CountStandardsBasedCompletion(assessmentId);
+                totalCompleted += counts.completed;
+                totalQuestions += counts.total;
             }
 
             if (assessment.UseDiagram)
             {
-                CountComponent(assessmentId);
+                var counts = CountComponent(assessmentId);
+                totalCompleted += counts.completed;
+                totalQuestions += counts.total;
             }
-            // Get the assessment to get the updated counts 
+
+            // Save accumulated totals
+            assessment.CompletedQuestionCount = totalCompleted;
+            assessment.TotalQuestionCount = totalQuestions;
+            _context.SaveChanges();
+
+            // Re-fetch to get updated values
             assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
             return new CompletionCounts()
             {
                 AssessmentId = assessment.Assessment_Id,
                 CompletedCount = assessment.CompletedQuestionCount,
-
                 TotalMaturityQuestionsCount = assessment.UseMaturity ? assessment.TotalQuestionCount : null,
                 TotalStandardQuestionsCount = assessment.UseStandard ? assessment.TotalQuestionCount : null,
                 TotalDiagramQuestionsCount = assessment.UseDiagram ? assessment.TotalQuestionCount : null
@@ -167,19 +184,21 @@ namespace CSETWebCore.Business.Question
         /// Counts and persists question completion totals for a standards-based assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        private void CountStandardsBasedCompletion(int assessmentId)
+        private (int completed, int total) CountStandardsBasedCompletion(int assessmentId)
         {
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.Application_Mode;
-
+            
             if (mode == "Questions Based")
             {
-                CountQuestionsMode(assessmentId);
+                return CountQuestionsMode(assessmentId);
             }
 
             if (mode == "Requirements Based")
             {
-                CountRequirementsMode(assessmentId);
+                return CountRequirementsMode(assessmentId);
             }
+            
+            return (0, 0);
         }
 
 
@@ -187,7 +206,7 @@ namespace CSETWebCore.Business.Question
         /// Counts and persists question completion totals for a standards-based assessment in requirements mode.
         /// </summary>
         /// <param name="assessmentId"></param>
-        private void CountRequirementsMode(int assessmentId)
+        private (int completed, int total) CountRequirementsMode(int assessmentId)
         {
             var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
@@ -210,11 +229,7 @@ namespace CSETWebCore.Business.Question
             var totalCount = inScopeRequirementIds.Count();
             var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
 
-            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-
-            assessment.CompletedQuestionCount = completedCount;
-            assessment.TotalQuestionCount = totalCount;
-            _context.SaveChanges();
+            return (completedCount, totalCount);
         }
 
 
@@ -222,7 +237,7 @@ namespace CSETWebCore.Business.Question
         /// Counts and persists question completion totals for a standards-based assessment in questions mode.
         /// </summary>
         /// <param name="assessmentId"></param>
-        private void CountQuestionsMode(int assessmentId)
+        private (int completed, int total) CountQuestionsMode(int assessmentId)
         {
             var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
@@ -270,11 +285,7 @@ namespace CSETWebCore.Business.Question
             var totalCount = inScopeQuestionIds.Count();
             var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
 
-            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-
-            assessment.CompletedQuestionCount = completedCount;
-            assessment.TotalQuestionCount = totalCount;
-            _context.SaveChanges();
+            return (completedCount, totalCount);
         }
 
 
@@ -287,7 +298,7 @@ namespace CSETWebCore.Business.Question
         /// Counts the number of in-scope question/answers and stores
         /// the number that have a value as well as the total.  
         /// </summary>
-        private void CountMaturity(int assessmentId)
+        private (int completed, int total) CountMaturity(int assessmentId)
         {
             List<int> inScopeModels = DetermineInScopeModels(assessmentId).ToList();
 
@@ -330,12 +341,8 @@ namespace CSETWebCore.Business.Question
             // get totals
             var totalCount = inScopeQuestions.Count();
             var completedCount = inScopeQuestions.Where(ans => ans.AnswerText != "U" && ans.AnswerText != "" && ans.AnswerText != null).Count();
-
-            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-
-            assessment.CompletedQuestionCount = completedCount;
-            assessment.TotalQuestionCount = totalCount;
-            _context.SaveChanges();
+            
+            return (completedCount, totalCount);
         }
 
 
@@ -502,8 +509,9 @@ namespace CSETWebCore.Business.Question
         /// Counts the number of in-scope question/answers and stores
         /// the number that have a value as well as the total.  
         /// </summary>
-        private void CountComponent(int assessmentId)
+        private (int completed, int total) CountComponent(int assessmentId)
         {
+            
             var q = from adc in _context.ASSESSMENT_DIAGRAM_COMPONENTS
                     join cq in _context.COMPONENT_QUESTIONS on adc.Component_Symbol_Id equals cq.Component_Symbol_Id
                     join nq in _context.NEW_QUESTION on cq.Question_Id equals nq.Question_Id
@@ -520,11 +528,7 @@ namespace CSETWebCore.Business.Question
             var totalCount = inScopeAnswers.Count();
             var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
 
-            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-
-            assessment.CompletedQuestionCount = completedCount;
-            assessment.TotalQuestionCount = totalCount;
-            _context.SaveChanges();
+            return (completedCount, totalCount);
         }
 
 

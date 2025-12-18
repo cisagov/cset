@@ -14,6 +14,7 @@ using CSETWebCore.Model.Diagram;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using ICSharpCode.SharpZipLib.Zip;
 using CSETWebCore.Business.Question;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -34,19 +37,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         private IUtilities _utilities;
         private CSETContext _context;
         private readonly Hooks _hooks;
+        private IConfiguration _configuration;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context, Hooks hooks)
+        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context, Hooks hooks, IConfiguration configuration)
         {
             _token = token;
             _assessmentUtil = assessmentUtil;
             _utilities = utilities;
             _context = context;
             _hooks = hooks;
+            _configuration = configuration;
         }
 
 
@@ -224,7 +229,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     }
 
                     import.Finalize(newAssessmentId);
-
+                    string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
+                    
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+            
+                        using (SqlCommand command = new SqlCommand("FillAll", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            // Add input parameter
+                            command.Parameters.Add(new SqlParameter("@assessment_id", newAssessmentId));
+                            command.ExecuteNonQuery();
+                        }
+                    }
 
                     // Clean up any imported standards that are unselected
                     var unselectedStandards = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToList();
