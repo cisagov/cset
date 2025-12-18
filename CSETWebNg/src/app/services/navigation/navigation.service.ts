@@ -32,6 +32,7 @@ import { NavTreeService } from './nav-tree.service';
 import { QuestionsService } from '../questions.service';
 import { ConstantsService } from '../constants.service';
 import { BehaviorSubject } from 'rxjs';
+import DOMPurify from 'dompurify';
 
 
 export interface NavTreeNode {
@@ -412,8 +413,8 @@ export class NavigationService implements OnDestroy, OnInit {
 
     // determine the route path
     const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-    this.router.navigateByUrl(targetPath);
-  //  this.router.navigate([targetPath]);
+    const cleanPath = DOMPurify.sanitize(targetPath);
+    this.router.navigateByUrl(cleanPath);
   }
 
   /**

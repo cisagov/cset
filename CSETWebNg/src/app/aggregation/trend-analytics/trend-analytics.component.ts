@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { ChartService } from '../../services/chart.service';

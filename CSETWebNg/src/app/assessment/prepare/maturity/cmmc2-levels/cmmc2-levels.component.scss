@@ -13,53 +13,125 @@ $l3-color: #034b61;
 $l3-hover-color: #002236;
 $l3-text-color: #ffffff;
 
-.btn-l1 {
+.btn.btn-l1 {
      background-color: $white;
      border-color: $l1-color;
      color: $l1-color;
 }
 
-.btn-l1.answer-selected,
-.btn-l1:hover {
+:host-context(.dark-theme) .btn.btn-l1,
+:host-context([data-theme="dark"]) .btn.btn-l1,
+:host-context([data-bs-theme="dark"]) .btn.btn-l1 {
+     background-color: transparent !important;
+     border-color: $l1-color;
+     color: $l1-text-color;
+}
+
+.btn.btn-l1.answer-selected,
+.btn.btn-l1:hover {
      background-color: $l1-color;
      color: $l1-text-color;
 }
 
-.btn-l1.answer-selected:hover {
+:host-context(.dark-theme) .btn.btn-l1.answer-selected,
+:host-context([data-theme="dark"]) .btn.btn-l1.answer-selected,
+:host-context([data-bs-theme="dark"]) .btn.btn-l1.answer-selected,
+:host-context(.dark-theme) .btn.btn-l1:hover,
+:host-context([data-theme="dark"]) .btn.btn-l1:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l1:hover {
+     background-color: $l1-color !important;
+     color: $l1-text-color;
+}
+
+.btn.btn-l1.answer-selected:hover {
      background-color: $l1-hover-color;
 }
 
-.btn-l2 {
+:host-context(.dark-theme) .btn.btn-l1.answer-selected:hover,
+:host-context([data-theme="dark"]) .btn.btn-l1.answer-selected:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l1.answer-selected:hover {
+     background-color: $l1-hover-color !important;
+}
+
+.btn.btn-l2 {
      background-color: $white;
      border-color: $l2-color;
      color: $l2-color;
 }
 
-.btn-l2.answer-selected,
-.btn-l2:hover {
+:host-context(.dark-theme) .btn.btn-l2,
+:host-context([data-theme="dark"]) .btn.btn-l2,
+:host-context([data-bs-theme="dark"]) .btn.btn-l2 {
+     background-color: transparent !important;
+     border-color: $l2-color;
+     color: $l2-color;
+}
+
+.btn.btn-l2.answer-selected,
+.btn.btn-l2:hover {
      background-color: $l2-color;
      color: $l2-text-color;
 }
 
-.btn-l2.answer-selected:hover {
+:host-context(.dark-theme) .btn.btn-l2.answer-selected,
+:host-context([data-theme="dark"]) .btn.btn-l2.answer-selected,
+:host-context([data-bs-theme="dark"]) .btn.btn-l2.answer-selected,
+:host-context(.dark-theme) .btn.btn-l2:hover,
+:host-context([data-theme="dark"]) .btn.btn-l2:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l2:hover {
+     background-color: $l2-color !important;
+     color: $l2-text-color;
+}
+
+.btn.btn-l2.answer-selected:hover {
      background-color: $l2-hover-color;
 }
 
+:host-context(.dark-theme) .btn.btn-l2.answer-selected:hover,
+:host-context([data-theme="dark"]) .btn.btn-l2.answer-selected:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l2.answer-selected:hover {
+     background-color: $l2-hover-color !important;
+}
 
-.btn-l3 {
+
+.btn.btn-l3 {
      background-color: $white;
      border-color: $l3-color;
      color: $l3-color;
 }
 
-.btn-l3.answer-selected,
-.btn-l3:hover {
+:host-context(.dark-theme) .btn.btn-l3,
+:host-context([data-theme="dark"]) .btn.btn-l3,
+:host-context([data-bs-theme="dark"]) .btn.btn-l3 {
+     background-color: transparent !important;
+     border-color: $l3-color;
+     color: $l3-text-color;
+}
+
+.btn.btn-l3.answer-selected,
+.btn.btn-l3:hover {
      background-color: $l3-color;
      color: $l3-text-color;
 }
 
-.btn-l3.answer-selected:hover {
+:host-context(.dark-theme) .btn.btn-l3.answer-selected,
+:host-context([data-theme="dark"]) .btn.btn-l3.answer-selected,
+:host-context([data-bs-theme="dark"]) .btn.btn-l3.answer-selected,
+:host-context(.dark-theme) .btn.btn-l3:hover,
+:host-context([data-theme="dark"]) .btn.btn-l3:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l3:hover {
+     background-color: $l3-color !important;
+     color: $l3-text-color;
+}
+
+.btn.btn-l3.answer-selected:hover {
      background-color: $l3-hover-color;
+}
+
+:host-context(.dark-theme) .btn.btn-l3.answer-selected:hover,
+:host-context([data-theme="dark"]) .btn.btn-l3.answer-selected:hover,
+:host-context([data-bs-theme="dark"]) .btn.btn-l3.answer-selected:hover {
+     background-color: $l3-hover-color !important;
 }
 
 .outline {

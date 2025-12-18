@@ -1,0 +1,24 @@
+---
+services:
+  postgresql:
+    container_name: cset-postgres
+    hostname: postgres
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: csetweb
+      POSTGRES_USER: cset
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - cset-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  cset-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

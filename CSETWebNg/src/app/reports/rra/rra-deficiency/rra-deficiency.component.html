@@ -20,6 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<div class="light-mode-wrapper" data-theme="light" data-bs-theme="light">
 <div class="report-body mb-5" *transloco="let t">
 
   <app-cover-page [assessDetail]="info" [title]="t('reports.core.rra.deficiency.report title') | uppercase" />
@@ -58,7 +59,7 @@
 
         <h1 class="page-title">{{t('reports.core.rra.deficiency.deficiencies')}}</h1>
         <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.deficiency.marked for review')}} - <img
-            class="MarkedFlag" src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            class="marked-flag" src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
       </div>
       <hr class="page-line m-0">
       <table role="presentation">
@@ -76,7 +77,7 @@
                 {{questionsSvc.answerDisplayLabel(5, s.answer.answer_Text)}}
               </div>
             </td>
-            <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+            <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
                 src="assets/images/icons/MarkedFlag.png"></td>
           </tr>
           <tr *ngIf="s.answer.comment">
@@ -108,4 +109,5 @@
       </div>
     </ng-template>
   </div>
+</div>
 </div>

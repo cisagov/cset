@@ -33,7 +33,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'app-cmmc2-deficiency',
   templateUrl: './cmmc2-deficiency.component.html',
   styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class Cmmc2DeficiencyComponent implements OnInit {
 

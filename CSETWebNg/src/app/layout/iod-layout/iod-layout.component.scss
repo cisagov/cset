@@ -24,7 +24,7 @@ SOFTWARE.
 @charset "UTF-8";
 @use "sass:color";
 @use "sass:map";
-@use "../../../sass/mixins";
+@use "../../../sass/mixins" as *;
 @use "../../../sass/sal";
 @use "../../../sass/theme-variables" as theme;
 @use "../../../sass/cset-font-styles.css";
@@ -138,6 +138,7 @@ $local-install-background-color: #ffc107;
 $bg-debug-highlight: #fbe1c2;
 $bg-debug-highlight-dark: #835825;
 $bc-filters-engaged: #f9ce15;
+$bc-filters-engaged-dark: #685500;
 
 // Answer Options
 $yes-color: #006000;
@@ -489,7 +490,6 @@ label[required]::after {
 }
 
 .accordion-header {
-  padding-top: 0.2em;
   margin-bottom: 0;
   background-color: $primary-color;
 }
@@ -1613,6 +1613,7 @@ ul.mat-tree-node mat-tree-node {
 
 .filters-engaged {
   background-color: $bc-filters-engaged;
+  color: $primary-color;
   margin-top: 0.2rem;
   margin-bottom: 1rem;
   padding: 0.6em;
@@ -1621,7 +1622,10 @@ ul.mat-tree-node mat-tree-node {
   font-size: 1.4em;
   font-weight: bold;
   text-align: center;
-  color: $primary-color;
+}
+
+.dark-theme .filters-engaged {
+  background-color: $bc-filters-engaged-dark;
 }
 
 .default-mat-filter {
@@ -1955,6 +1959,11 @@ ul.nav-tabs li.active button .tab-icon {
   letter-spacing: normal !important;
 }
 
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+  color: var(--text-primary);
+}
+
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
   padding-left: 20px;
@@ -2140,6 +2149,17 @@ ul.mat-tree-node {
 
 .icon-openbookicon:hover {
   background-image: icon(openbookicon, $primary-color);
+}
+
+.dark-theme {
+  .icon-openbookicon {
+    transform: scale(1);
+    background-image: icon(openbookicon, rgba($white, .7));
+  }
+
+  .icon-openbookicon:hover {
+    background-image: icon(openbookicon, rgba($white, .9));
+  }
 }
 
 a.special-factors-link,

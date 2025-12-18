@@ -29,7 +29,12 @@ import { TranslocoService } from '@jsverse/transloco';
     selector: 'app-alt-justification-comments',
     templateUrl: './alt-justification-comments.component.html',
     styleUrls: ['../reports.scss'],
-    standalone: false
+    standalone: false,
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class AltJustificationCommentsComponent {
 

@@ -37,7 +37,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'rra-report',
   templateUrl: './rra-report.component.html',
   styleUrls: ['../../reports.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class RraReportComponent implements OnInit {
   response: any;

@@ -27,11 +27,9 @@ import { Injectable } from '@angular/core';
 import { Answer, DefaultParameter, ParameterForAnswer, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { QuestionFilterService } from './filtering/question-filter.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { LinebreakPipe } from '../helpers/linebreak.pipe';
-import { AnswerOptionConfig } from '../models/module-config.model';
 import { tap } from 'rxjs/operators';
 
 const headers = {
@@ -65,6 +63,12 @@ export class QuestionsService {
    */
   public autoLoadSuppCheckboxState = false;
 
+  /**
+   * Components override update subject
+   */
+  private componentOverrideEventSubject = new Subject<any>();
+  componentOverrideEvent$ = this.componentOverrideEventSubject.asObservable();
+
 
   /**
    *
@@ -73,8 +77,6 @@ export class QuestionsService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private tSvc: TranslocoService,
-    private assessmentSvc: AssessmentService,
-    private questionFilterSvc: QuestionFilterService,
     public linebreakPipe: LinebreakPipe,
     private assessSvc: AssessmentService
   ) { }
@@ -120,8 +122,8 @@ export class QuestionsService {
   /**
    *
    */
-  getComponentQuestionsList() {
-    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
+  getComponentQuestionsList(): Observable<QuestionResponse> {
+    return this.http.get<QuestionResponse>(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
   }
 
   /**
@@ -510,5 +512,9 @@ export class QuestionsService {
     searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
     return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
+  }
+
+  emitComponentOverrideEvent(data: any) {
+    this.componentOverrideEventSubject.next(data);
   }
 }

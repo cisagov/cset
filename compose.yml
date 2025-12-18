@@ -12,8 +12,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - 4200:80
-      - 443:443
+      # Override host ports via WEB_PORT / WEB_TLS_PORT without editing this file.
+      - ${WEB_PORT:-4200}:80
+      - ${WEB_TLS_PORT:-443}:443
   api:
     container_name: cset-api
     hostname: api
@@ -22,7 +23,8 @@ services:
       context: CSETWebApi
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      # Override host port via API_PORT without editing this file.
+      - "${API_PORT:-5000}:5000"
     env_file:
       - .env
     depends_on:

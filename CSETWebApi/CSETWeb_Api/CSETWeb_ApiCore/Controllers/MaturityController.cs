@@ -305,7 +305,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(biz.MyModel);
         }
-        
+
 
         /// <summary>
         /// Returns a single grouping's worth of questions.  This is done by 
@@ -523,6 +523,10 @@ namespace CSETWebCore.Api.Controllers
                     if (int.TryParse(model, out int value))
                     {
                         modelId = value;
+                    }
+                    else
+                    {
+                        modelId = _context.MATURITY_MODELS.Where(x => x.Model_Name == model).FirstOrDefault()?.Maturity_Model_Id;
                     }
                 }
 
