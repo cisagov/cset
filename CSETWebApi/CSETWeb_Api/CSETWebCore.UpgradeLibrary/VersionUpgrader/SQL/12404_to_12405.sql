@@ -213,11 +213,6 @@ IF OBJECT_ID('dbo.usp_GetStandardsResultsByCategoryPage', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_GetStandardsResultsByCategoryPage;
 GO
 
--- usp_GetStandardsSummaryPage
-IF OBJECT_ID('dbo.usp_GetStandardsSummaryPage', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.usp_GetStandardsSummaryPage;
-GO
-
 -- usp_getVADRSummaryPage
 IF OBJECT_ID('dbo.usp_getVADRSummaryPage', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getVADRSummaryPage;
