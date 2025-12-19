@@ -20,6 +20,11 @@ FROM nginx:alpine
 COPY --from=build /var/www/dist/browser/ /usr/share/nginx/html
 COPY ./etc/nginx/default.conf /etc/nginx/conf.d/default.conf
 
+# Copy entrypoint script for runtime config injection (API_PORT, API_HOST)
+COPY ./etc/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 EXPOSE 80 443
 
-CMD ["nginx", "-g", "daemon off;"]
+# Use entrypoint to inject env vars before starting nginx
+ENTRYPOINT ["/docker-entrypoint.sh"]
