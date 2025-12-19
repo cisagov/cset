@@ -227,3 +227,33 @@ GO
 IF OBJECT_ID('dbo.usp_getVADRSummaryPage', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getVADRSummaryPage;
 GO
+
+-- update_demographic_sectors
+IF OBJECT_ID('dbo.update_demographic_sectors', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.update_demographic_sectors;
+GO
+
+-- usp_GetQuestionsWithFeedBack
+IF OBJECT_ID('dbo.usp_GetQuestionsWithFeedBack', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetQuestionsWithFeedBack;
+GO
+
+-- usp_GetRawCountsForEachAssessment_Standards
+IF OBJECT_ID('dbo.usp_GetRawCountsForEachAssessment_Standards', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetRawCountsForEachAssessment_Standards;
+GO
+
+-- usp_MaturityDetailsCalculations
+IF OBJECT_ID('dbo.usp_MaturityDetailsCalculations', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_MaturityDetailsCalculations;
+GO
+
+-- usp_StatementsReviewed
+IF OBJECT_ID('dbo.usp_StatementsReviewed', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_StatementsReviewed;
+GO
+
+-- usp_StatementsReviewedTabTotals
+IF OBJECT_ID('dbo.usp_StatementsReviewedTabTotals', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_StatementsReviewedTabTotals;
+GO
