@@ -146,7 +146,17 @@ tasks:
     desc: Open SQL shell for database exploration
     interactive: true
     cmds:
-      - docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET
+      - docker exec -it cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C
+
+  sql:query:
+    desc: Execute a SQL query non-interactively (for coding agents)
+    cmds:
+      - docker exec cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" -Q "{{.CLI_ARGS}}"
+
+  sql:file:
+    desc: Execute SQL from a file non-interactively
+    cmds:
+      - docker exec -i cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" < {{.CLI_ARGS}}
 
   mssql-to-postgres:
     desc: Convert MSSQL .bak to PostgreSQL 17 backup
