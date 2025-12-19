@@ -392,6 +392,7 @@ export class QuestionExtrasComponent implements OnInit {
 
     obs.answerLevel = true;
 
+    console.log('before opening obs dialog, obs is:', obs)
     this.dialog.open(ObservationDetailComponent, {
       data: obs,
       disableClose: true,

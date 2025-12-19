@@ -60,7 +60,8 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  ngOnInit() {
+  async ngOnInit() {
+    console.log('data:', this.data)
     this.observationsSvc.getImportances().subscribe((result: Importance[]) => {
       this.importances = result;
     });
@@ -68,6 +69,12 @@ export class ObservationDetailComponent implements OnInit {
     this.dialog.backdropClick().subscribe(() => {
       this.save();
     });
+
+    // makes 'Individuals Responsible' show up initially
+    if (this.observation.observation_Contacts.length == 0)
+      this.observation.observation_Contacts = await this.observationsSvc.getContactsForEmptyObservation();
+    // else 
+    //   this.observation.observation_Contacts = await this.assessSvc.getAssessmentContacts();
   }
 
   /**
@@ -121,15 +128,20 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  refreshContacts(): void {
+  async refreshContacts(): Promise<void> {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
 
     this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      if (this.observation.observation_Id == 0 && resp.observationId)
+      if (this.observation.observation_Id == 0 && resp.observationId) {
         this.observation.observation_Id = resp.observationId;
-      if (this.observation.answer_Id == 0 && resp.answerId)
+        console.log('obsId:', this.observation.observation_Id)
+      }
+      if (this.observation.answer_Id == 0 && resp.answerId) {
         this.observation.answer_Id = resp.answerId;
+        console.log('ansId:', this.observation.answer_Id)
+
+      }
       
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
@@ -146,6 +158,7 @@ export class ObservationDetailComponent implements OnInit {
    */
   updateContact(contactid) {
     const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
+    console.log('contact:', c)
     if (!!c) {
       c.selected = contactid.selected;
     }
