@@ -1,6 +1,6 @@
-version: '3'
+version: "3"
 
-dotenv: ['.env']
+dotenv: [".env"]
 
 tasks:
   default:
@@ -62,11 +62,18 @@ tasks:
     cmds:
       - dotnet format
 
-  check:backend:
+  verify:backend:
     desc: Verify backend code formatting without making changes
     dir: CSETWebApi/CSETWeb_Api
     cmds:
       - dotnet format --verify-no-changes
+
+  check:backend:
+    desc: Run all backend checks in parallel (build, lint, test)
+    deps:
+      - build:backend
+      - lint:backend
+      - test:backend
 
   test:backend:
     desc: Run all backend unit tests
@@ -139,7 +146,7 @@ tasks:
     desc: Open SQL shell for database exploration
     interactive: true
     cmds:
-      - docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123"
+      - docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET
 
   mssql-to-postgres:
     desc: Convert MSSQL .bak to PostgreSQL 17 backup
