@@ -8,6 +8,11 @@ IF OBJECT_ID('dbo.Acet_GetActionItemsForReport', 'P') IS NOT NULL
     DROP PROCEDURE dbo.Acet_GetActionItemsForReport;
 GO
 
+-- AcetAnswerDistribution
+IF OBJECT_ID('dbo.AcetAnswerDistribution', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.AcetAnswerDistribution;
+GO
+
 -- CheckHeading (replaced with LINQ equivalent in CsetwebContextExtensions.cs)
 IF OBJECT_ID('dbo.CheckHeading', 'P') IS NOT NULL
     DROP PROCEDURE dbo.CheckHeading;
@@ -86,6 +91,11 @@ GO
 -- GetPercentageOverall
 IF OBJECT_ID('dbo.GetPercentageOverall', 'P') IS NOT NULL
     DROP PROCEDURE dbo.GetPercentageOverall;
+GO
+
+-- IseAnswerDistribution
+IF OBJECT_ID('dbo.IseAnswerDistribution', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.IseAnswerDistribution;
 GO
 
 -- usp_AggregationCustomQuestionnaireLoad
