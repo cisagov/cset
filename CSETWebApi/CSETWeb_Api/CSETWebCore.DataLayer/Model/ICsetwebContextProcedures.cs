@@ -62,11 +62,9 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_getOverallRankedCategoriesResult>> usp_getOverallRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetOverallRankedCategoriesPageResult>> usp_GetOverallRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetQuestionsResult>> usp_GetQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_GetQuestionsWithFeedBackResult>> usp_GetQuestionsWithFeedBackAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getRankedCategoriesResult>> usp_getRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetRankedCategoriesPageResult>> usp_GetRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetRankedQuestionsResult>> usp_GetRankedQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_GetRawCountsForEachAssessment_StandardsResult>> usp_GetRawCountsForEachAssessment_StandardsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getRRASummaryResult>> usp_getRRASummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getRRASummaryByGoalResult>> usp_getRRASummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getRRASummaryByGoalOverallResult>> usp_getRRASummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -80,9 +78,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_getVADRSummaryByGoalResult>> usp_getVADRSummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getVADRSummaryByGoalOverallResult>> usp_getVADRSummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getVADRSummaryOverallResult>> usp_getVADRSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_MaturityDetailsCalculationsResult>> usp_MaturityDetailsCalculationsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_setTrendOrderAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_StatementsReviewedResult>> usp_StatementsReviewedAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_StatementsReviewedTabTotalsResult>> usp_StatementsReviewedTabTotalsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
     }
 }
