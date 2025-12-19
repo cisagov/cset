@@ -43,38 +43,6 @@ namespace CSETWebCore.DataLayer.Model
             _context = context;
         }
 
-        public virtual async Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "Assessment_Id",
-                    Value = assessment_Id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "targetLevel",
-                    Value = targetLevel ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<AcetAnswerDistributionResult>("EXEC @returnValue = [dbo].[AcetAnswerDistribution] @Assessment_Id = @Assessment_Id, @targetLevel = @targetLevel", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<analytics_Compute_MaturityAllResult>> analytics_Compute_MaturityAllAsync(int? maturity_model_id, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
