@@ -1288,10 +1288,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_GetQuestionsWithFeedBack]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_getRankedCategories]",
          "ObjectType": 1
       },
@@ -1305,10 +1301,6 @@
       },
       {
          "Name": "[dbo].[usp_getRankedStandardCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRawCountsForEachAssessment_Standards]",
          "ObjectType": 1
       },
       {
@@ -1384,19 +1376,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_MaturityDetailsCalculations]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_setTrendOrder]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_StatementsReviewed]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
          "ObjectType": 1
       },
       {
