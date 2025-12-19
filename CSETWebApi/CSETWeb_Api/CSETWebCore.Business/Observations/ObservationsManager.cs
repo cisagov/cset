@@ -166,14 +166,39 @@ namespace CSETWebCore.Business.Observations
                     obs.Importance = TinyMapper.Map<IMPORTANCE, Importance>(o.Importance);
                 }
 
-                foreach (FINDING_CONTACT fc in o.FINDING_CONTACT)
-                {
-                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+                // grabs all contacts attached to this assessment to allow the user to assign new Individuals Responsible
+                int assessIdForContacts = (int)(assessmentId != null ? assessmentId : 
+                    _context.ANSWER.Where(x => x.Answer_Id == answerId).Select(x => x.Assessment_Id).FirstOrDefault());
 
-                    webFc.Observation_Id = fc.Finding_Id;
-                    webFc.Selected = (fc != null);
+                List<ASSESSMENT_CONTACTS> contactsInThisAssess = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessIdForContacts).ToList();
+
+                foreach (ASSESSMENT_CONTACTS ac in contactsInThisAssess)
+                {
+                    FINDING_CONTACT fc = o.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == ac.Assessment_Contact_Id).FirstOrDefault();
+                    if (fc == null)
+                    {
+                        fc = new FINDING_CONTACT();
+                    }
+
+                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+                    
+                    webFc.Observation_Id = o?.Finding_Id ?? 0;
+                    webFc.Selected = (fc.Finding_Id > 0);
+                    webFc.Name = $"{ac.PrimaryEmail} -- {ac.FirstName} {ac.LastName}".Trim();
                     obs.Observation_Contacts.Add(webFc);
                 }
+
+                //foreach (FINDING_CONTACT fc in o.FINDING_CONTACT)
+                //{
+                //    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+                //    ASSESSMENT_CONTACTS assessContacts = contactsInThisAssess.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
+
+                //    webFc.Observation_Id = fc.Finding_Id;
+                //    webFc.Selected = fc.;
+                //    webFc.Name = $"{assessContacts.PrimaryEmail} -- {assessContacts.FirstName} {assessContacts.LastName}".Trim();
+                //    obs.Observation_Contacts.Add(webFc);
+
+                //}
 
                 observations.Add(obs);
             }
