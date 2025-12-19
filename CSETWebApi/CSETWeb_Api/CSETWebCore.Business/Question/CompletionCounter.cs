@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.Data.SqlClient;
 
 namespace CSETWebCore.Business.Question
 {
@@ -132,7 +131,7 @@ namespace CSETWebCore.Business.Question
             {
                 return null;
             }
-            
+
             int totalCompleted = 0;
             int totalQuestions = 0;
 
@@ -186,7 +185,7 @@ namespace CSETWebCore.Business.Question
         private (int completed, int total) CountStandardsBasedCompletion(int assessmentId)
         {
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.Application_Mode;
-            
+
             if (mode == "Questions Based")
             {
                 return CountQuestionsMode(assessmentId);
@@ -196,7 +195,7 @@ namespace CSETWebCore.Business.Question
             {
                 return CountRequirementsMode(assessmentId);
             }
-            
+
             return (0, 0);
         }
 
@@ -340,7 +339,7 @@ namespace CSETWebCore.Business.Question
             // get totals
             var totalCount = inScopeQuestions.Count();
             var completedCount = inScopeQuestions.Where(ans => ans.AnswerText != "U" && ans.AnswerText != "" && ans.AnswerText != null).Count();
-            
+
             return (completedCount, totalCount);
         }
 
@@ -510,7 +509,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         private (int completed, int total) CountComponent(int assessmentId)
         {
-            
+
             var q = from adc in _context.ASSESSMENT_DIAGRAM_COMPONENTS
                     join cq in _context.COMPONENT_QUESTIONS on adc.Component_Symbol_Id equals cq.Component_Symbol_Id
                     join nq in _context.NEW_QUESTION on cq.Question_Id equals nq.Question_Id
