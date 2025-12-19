@@ -1,0 +1,258 @@
+/*
+  Force Light Mode Styles
+  Use this file to force components to always display in light mode
+  Copyright 2025 Battelle Energy Alliance, LLC
+*/
+
+// NUCLEAR OPTION: Force all dark theme elements to light when reports are active
+// Override body and html directly with highest specificity
+html.dark-theme,
+html[data-theme="dark"],
+html[data-bs-theme="dark"],
+body.dark-theme,
+body[data-theme="dark"],
+body[data-bs-theme="dark"] {
+  &:has(.force-light-mode) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+  }
+}
+
+// Additional brute force overrides
+html:has(.force-light-mode),
+html:has(.light-mode-wrapper) {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  min-height: 100%;
+
+  body {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+    min-height: 100%;
+  }
+}
+
+// Force layout-blank to have white background when containing reports
+layout-blank:has(.force-light-mode),
+layout-blank:has(.light-mode-wrapper),
+app-layout-blank:has(.force-light-mode),
+app-layout-blank:has(.light-mode-wrapper) {
+  display: block;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  min-height: 100vh;
+  width: 100%;
+}
+
+// Force styles on force-light-mode host itself
+.force-light-mode {
+  display: block;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1;
+
+  // Create a white backdrop that covers everything behind the content
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+// Force light mode - override all dark theme styles
+.light-mode-wrapper {
+  min-height: 100vh;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  z-index: 1;
+
+  // Create white backdrop that covers everything behind the content
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  // Override CSS variables to always use light theme values
+  --bg-primary: #ffffff !important;
+  --bg-secondary: #f9fafb !important;
+  --bg-tertiary: #e5e7eb !important;
+  --text-primary: rgba(0, 0, 0, 0.87) !important;
+  --text-secondary: rgba(0, 0, 0, 0.6) !important;
+  --text-disabled: rgba(0, 0, 0, 0.38) !important;
+  --border-color: #e5e7eb !important;
+  --shadow-color: rgba(0, 0, 0, 0.1) !important;
+  --cset-primary: #015288 !important;
+  --cset-primary-hover: #013a5f !important;
+  --badge-active: #9ca3af !important;
+  --badge-inactive: #d1d5db !important;
+  --bg-highlight: #dbeafe !important;
+  --border-highlight: #93c5fd !important;
+  --border-light: #e5e7eb !important;
+  --progress-bg: #d1d5db !important;
+
+  color-scheme: light !important;
+
+  // Only override backgrounds for specific elements that need it
+  // Do NOT override table headers, buttons, or other intentionally styled elements
+  > div:not([style*="background"]),
+  > p,
+  > span:not([class*="badge"]):not([class*="btn"]) {
+    background-color: transparent;
+  }
+}
+
+.light-mode-wrapper * {
+  color-scheme: light !important;
+}
+
+// More selective overrides - don't touch elements with explicit backgrounds
+.force-light-mode {
+  // Override CSS variables to always use light theme values
+  --bg-primary: #ffffff !important;
+  --bg-secondary: #f9fafb !important;
+  --bg-tertiary: #e5e7eb !important;
+  --text-primary: rgba(0, 0, 0, 0.87) !important;
+  --text-secondary: rgba(0, 0, 0, 0.6) !important;
+  --text-disabled: rgba(0, 0, 0, 0.38) !important;
+  --border-color: #e5e7eb !important;
+  --shadow-color: rgba(0, 0, 0, 0.1) !important;
+  --cset-primary: #015288 !important;
+  --cset-primary-hover: #013a5f !important;
+  --badge-active: #9ca3af !important;
+  --badge-inactive: #d1d5db !important;
+  --bg-highlight: #dbeafe !important;
+  --border-highlight: #93c5fd !important;
+  --border-light: #e5e7eb !important;
+  --progress-bg: #d1d5db !important;
+
+  color-scheme: light !important;
+
+  // Ensure table headers have appropriate text colors
+  // Bootstrap tables with no background should have dark text
+  .table th,
+  .table thead th,
+  table:not(.cset-table):not(.cset-table-4) th,
+  table:not(.cset-table):not(.cset-table-4) thead th {
+    color: rgba(0, 0, 0, 0.87) !important;
+    background-color: transparent !important;
+  }
+
+  // cset-table headers with dark backgrounds need white text
+  table.cset-table th,
+  table.cset-table-4 th {
+    color: #fff !important;
+  }
+}
+
+// Override table styles in light mode reports (works in both light and dark theme)
+.force-light-mode,
+.light-mode-wrapper {
+  .table th,
+  .table thead th {
+    color: rgba(0, 0, 0, 0.87) !important;
+    background-color: transparent !important;
+  }
+
+  table.cset-table th,
+  table.cset-table-4 th {
+    color: #fff !important;
+    background-color: #336699 !important;
+  }
+
+  // CPG practice table headers - need very high specificity to override component styles
+  // The first header column (Security Practice) needs white text
+  table.cpg-table th {
+    color: #ffffffdd !important; // near-white (default for most headers)
+  }
+
+  // CSF2 functions have lighter backgrounds and need dark text
+  table.cpg-table th.csf2-func-gv,
+  table.cpg-table th.csf2-func-id,
+  table.cpg-table th.csf2-func-pr,
+  table.cpg-table th.csf2-func-de,
+  table.cpg-table th.csf2-func-rs,
+  table.cpg-table th.csf2-func-rc {
+    color: #000000d5 !important; // near-black
+  }
+
+  // CSF1 functions with dark backgrounds need white text
+  table.cpg-table th.csf1-func-id,
+  table.cpg-table th.csf1-func-pr {
+    color: #ffffffdd !important; // near-white
+  }
+
+  // SSG headers need white text
+  table.cpg-table th.ssg-it-product-design,
+  table.cpg-table th.ssg-it-software-dev {
+    color: #ffffffdd !important; // near-white
+  }
+}
+
+// Additional override for dark theme to ensure it applies
+.dark-theme .force-light-mode,
+.dark-theme .light-mode-wrapper {
+  .table th,
+  .table thead th {
+    color: rgba(0, 0, 0, 0.87) !important;
+    background-color: transparent !important;
+  }
+
+  table.cset-table th,
+  table.cset-table-4 th {
+    color: #fff !important;
+    background-color: #336699 !important;
+  }
+
+  table.cpg-table th {
+    color: #ffffffdd !important;
+  }
+
+  table.cpg-table th.csf2-func-gv,
+  table.cpg-table th.csf2-func-id,
+  table.cpg-table th.csf2-func-pr,
+  table.cpg-table th.csf2-func-de,
+  table.cpg-table th.csf2-func-rs,
+  table.cpg-table th.csf2-func-rc {
+    color: #000000d5 !important;
+  }
+
+  table.cpg-table th.csf1-func-id,
+  table.cpg-table th.csf1-func-pr {
+    color: #ffffffdd !important;
+  }
+
+  table.cpg-table th.ssg-it-product-design,
+  table.cpg-table th.ssg-it-software-dev {
+    color: #ffffffdd !important;
+  }
+}

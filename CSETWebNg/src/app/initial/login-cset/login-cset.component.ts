@@ -51,7 +51,7 @@ export class LoginCsetComponent implements OnInit {
   model: any = {};
 
   theme: string;
-
+  theme$= this.themeSvc.theme$
   loading = false;
   incorrect = false;
   showPassword = false;

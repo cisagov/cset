@@ -24,19 +24,22 @@ SOFTWARE.
 @use './sass/_variables.scss';
 @use './sass/_mixins.scss';
 @use './sass/_material-theme.scss';
+@use './sass/_dark-theme.scss';
 //@use "~@ng-select/ng-select/themes/material.theme.css";
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @import './styles.css';
-@import './sass/_dark-theme.scss';
 
-.ag-theme-alpine{
+
+.ag-theme-alpine {
   --ag-font-family: inherit;
   --ag-font-size: 14px;
   --ag-header-background-color: #015288;
   --ag-odd-row-background-color: transparent;
 }
+
 .custom-progress {
+
   // Progress bar background (empty part)
   &::-webkit-progress-bar {
     background-color: #e5e7eb; // Light gray background
@@ -58,6 +61,7 @@ SOFTWARE.
   // Firefox background
   background-color: #e5e7eb;
 }
+
 /* Progress bar styling with your brand color */
 progress::-webkit-progress-value {
   background-color: #015288 !important;
@@ -73,6 +77,7 @@ progress::-webkit-progress-bar {
   background-color: #e5e7eb;
   border-radius: 6px;
 }
+
 .mat-button,
 .mat-raised-button,
 .mat-icon-button,
@@ -132,20 +137,22 @@ progress::-webkit-progress-bar {
 }
 
 /* Ensure Material buttons have proper visibility */
-.mat-button, .mat-icon-button {
+.mat-button,
+.mat-icon-button {
   background-color: transparent !important;
-  color: rgba(0,0,0,0.87) !important;
+  color: rgba(0, 0, 0, 0.87) !important;
 }
 
 .mat-raised-button {
   background-color: #fafafa !important;
-  color: rgba(0,0,0,0.87) !important;
+  color: rgba(0, 0, 0, 0.87) !important;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Fix Material button hover states */
-.mat-button:hover, .mat-icon-button:hover {
-  background-color: rgba(0,0,0,0.04) !important;
+.mat-button:hover,
+.mat-icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 .mat-raised-button:hover {

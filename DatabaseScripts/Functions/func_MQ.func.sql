@@ -38,7 +38,8 @@ RETURNS
 	[Services] [nvarchar](max) NULL,
 	[Outcome] nvarchar(max) null,
 	[Security_Practice] nvarchar(max) null,
-	[Implementation_Guides] nvarchar(max) null
+	[Implementation_Guides] nvarchar(max) null,
+	[Is_Answerable] [bit] NULL
 )
 AS
 BEGIN

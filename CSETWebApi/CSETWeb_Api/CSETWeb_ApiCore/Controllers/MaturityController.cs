@@ -308,51 +308,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns the questions in a HYDRO section.
-        /// </summary>
-        /// <param name="subCatIds"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/maturity/hydro/getBulkSubCatIds")]
-        public IActionResult GetBulkSubCatIds([FromQuery] string[] subCatIds)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            List<NestedQuestions> bizList = new List<NestedQuestions>();
-
-            subCatIds = subCatIds[0].Split(',');
-
-            foreach (string id in subCatIds)
-            {
-                var biz = new NestedStructure(assessmentId, int.Parse(id), _context);
-                bizList.Add(biz.MyModel);
-            }
-
-            return Ok(bizList);
-        }
-
-
-        [HttpGet]
-        [Route("api/maturity/hydro/getResultsData")]
-        public IActionResult GetResultsData()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetResultsData(assessmentId));
-        }
-
-
-        [HttpGet]
-        [Route("api/maturity/hydro/getProgressText")]
-        public IActionResult getProgressText()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetHydroProgress());
-        }
-
-
-        /// <summary>
         /// Returns a single grouping's worth of questions.  This is done by 
         /// instantiating a CisStructure for the grouping and then converting
         /// that object to a MaturityResponse, which is the packaging that
@@ -568,6 +523,10 @@ namespace CSETWebCore.Api.Controllers
                     if (int.TryParse(model, out int value))
                     {
                         modelId = value;
+                    }
+                    else
+                    {
+                        modelId = _context.MATURITY_MODELS.Where(x => x.Model_Name == model).FirstOrDefault()?.Maturity_Model_Id;
                     }
                 }
 

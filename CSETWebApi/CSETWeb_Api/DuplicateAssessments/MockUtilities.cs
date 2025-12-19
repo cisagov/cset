@@ -1,5 +1,4 @@
-﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
+﻿using CSETWebCore.Interfaces.Helpers;
 
 namespace DuplicateAssessments
 {
@@ -11,11 +10,6 @@ namespace DuplicateAssessments
         }
 
         public DateTime LocalToUtc(DateTime dt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
         {
             throw new NotImplementedException();
         }

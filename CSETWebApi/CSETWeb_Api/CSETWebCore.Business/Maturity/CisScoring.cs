@@ -132,13 +132,6 @@ namespace CSETWebCore.Business.Maturity
                     decimal total = sumPossibleWeights != 0 ? sumAchievedWeights / sumPossibleWeights : 0;
 
 
-                    // special scoring for HYDRO
-                    if (QuestionsModel.ModelId == Constants.Constants.Model_HYDRO)
-                    {
-                        return CalculateHydroScore(grouped, total);
-                    }
-
-
                     return new Score
                     {
                         GroupingScore = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero),
@@ -152,52 +145,6 @@ namespace CSETWebCore.Business.Maturity
             return new Score();
         }
 
-
-        /// <summary>
-        /// Special case for HYDRO, where the scores need to be grouped 
-        /// by impact severity and have a double for the score.
-        /// </summary>
-        private Score CalculateHydroScore(IEnumerable<GroupedOptions> grouped, decimal total)
-        {
-            var totalGroupHighThreatWeight = from g in grouped
-                                             select new RollupOptions()
-                                             {
-                                                 Type = g.OptionQuestions.FirstOrDefault().Type,
-                                                 Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                                     ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 3).Sum(x => x.Weight)
-                                                     : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 3)?.Weight
-                                             };
-
-            var totalGroupMediumThreatWeight = from g in grouped
-                                               select new RollupOptions()
-                                               {
-                                                   Type = g.OptionQuestions.FirstOrDefault().Type,
-                                                   Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                                       ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 2).Sum(x => x.Weight)
-                                                       : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 2)?.Weight
-                                               };
-
-            var totalGroupLowThreatWeight = from g in grouped
-                                            select new RollupOptions()
-                                            {
-                                                Type = g.OptionQuestions.FirstOrDefault().Type,
-                                                Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                                    ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 1).Sum(x => x.Weight)
-                                                    : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 1)?.Weight
-                                            };
-
-            var sumTotalHighThreatWeight = (double)totalGroupHighThreatWeight.Sum(x => x?.Weight);
-            var sumTotalMediumThreatWeight = (double)totalGroupMediumThreatWeight.Sum(x => x?.Weight);
-            var sumTotalLowThreatWeight = (double)totalGroupLowThreatWeight.Sum(x => x?.Weight);
-
-            return new Score
-            {
-                GroupingScoreDouble = (double)Math.Round(total * 100, 2, MidpointRounding.AwayFromZero),
-                LowDouble = sumTotalLowThreatWeight,
-                MediumDouble = sumTotalMediumThreatWeight,
-                HighDouble = sumTotalHighThreatWeight
-            };
-        }
 
 
         /// <summary>

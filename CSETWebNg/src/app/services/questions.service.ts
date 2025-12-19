@@ -27,11 +27,9 @@ import { Injectable } from '@angular/core';
 import { Answer, DefaultParameter, ParameterForAnswer, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { QuestionFilterService } from './filtering/question-filter.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { LinebreakPipe } from '../helpers/linebreak.pipe';
-import { AnswerOptionConfig } from '../models/module-config.model';
 import { tap } from 'rxjs/operators';
 
 const headers = {
@@ -65,6 +63,12 @@ export class QuestionsService {
    */
   public autoLoadSuppCheckboxState = false;
 
+  /**
+   * Components override update subject
+   */
+  private componentOverrideEventSubject = new Subject<any>();
+  componentOverrideEvent$ = this.componentOverrideEventSubject.asObservable();
+
 
   /**
    *
@@ -73,8 +77,6 @@ export class QuestionsService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private tSvc: TranslocoService,
-    private assessmentSvc: AssessmentService,
-    private questionFilterSvc: QuestionFilterService,
     public linebreakPipe: LinebreakPipe,
     private assessSvc: AssessmentService
   ) { }
@@ -96,19 +98,19 @@ export class QuestionsService {
   setMode(mode: string) {
     return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers)
       .pipe(
-      tap((response: any) => {
-        if (response?.completedCount !== undefined) {
-          const totalCount =
-            (response.totalMaturityQuestionsCount || 0) +
-            (response.totalDiagramQuestionsCount || 0) +
-            (response.totalStandardQuestionsCount || 0);
-           this.assessSvc.completionRefreshRequested$.next({
-            completedCount: response.completedCount,
-            totalCount: totalCount
-          });
-        }
-      })
-    );
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
   /**
    * Retrieves the list of questions.
@@ -120,8 +122,8 @@ export class QuestionsService {
   /**
    *
    */
-  getComponentQuestionsList() {
-    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
+  getComponentQuestionsList(): Observable<QuestionResponse> {
+    return this.http.get<QuestionResponse>(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
   }
 
   /**
@@ -138,15 +140,6 @@ export class QuestionsService {
   getChildAnswers(parentId: number) {
     headers.params = headers.params.set('parentId', parentId);
     return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
-  }
-
-  /**
-   * Grab all the child question's answers for a specific parent question.
-   * Currently set up for use in an ISE assessment.
-  */
-  getActionItems(parentId: number, observation_id: number) {
-    headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + observation_id, headers);
   }
 
   /**
@@ -291,14 +284,6 @@ export class QuestionsService {
   getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
       subGroups + '&modelId=' + modelId, headers);
-  }
-
-  /**
-   *
-   */
-  getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
-    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
-      '&groupLevel=' + groupLevel, headers);
   }
 
   /**
@@ -470,13 +455,6 @@ export class QuestionsService {
     };
   }
 
-  /**
-   *
-   */
-  getRegulatoryCitations(questionId: number) {
-    return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
-  }
-
 
   /**
    * If there are any parameters in the text defined by double curly braces
@@ -534,5 +512,9 @@ export class QuestionsService {
     searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
     return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
+  }
+
+  emitComponentOverrideEvent(data: any) {
+    this.componentOverrideEventSubject.next(data);
   }
 }

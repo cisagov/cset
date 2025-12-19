@@ -4,11 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Text.RegularExpressions;
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace CSETWebCore.Helpers
 {
@@ -117,34 +117,26 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// One-time use function that moves Hydro-specific action items 
-        /// out of the ISE_ACTIONS table and into the HYDRO_DATA table
+        /// Remove any shady characters that might be used to traverse file paths
         /// </summary>
-        /// <returns></returns>
-        public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
+        public static string SanitizeAgainstPathTraversal(string input)
         {
-            /*
-            var actionsToMove = context.ISE_ACTIONS.Where(x => x.Mat_Option_Id != null).ToList();
-            var hydroActions = context.HYDRO_DATA.ToList();
+            var sanitized = Path.GetFullPath(input);
 
-            foreach ( var iseAction in actionsToMove )
-            {
-                if ( iseAction != null )
-                {
-                    var hydroRow = hydroActions.Where(x => x.Mat_Option_Id == iseAction.Mat_Option_Id).FirstOrDefault();
-                    if ( hydroRow != null )
-                    {
-                        hydroRow.Action_Item_Description = iseAction.Description;
-                        hydroRow.Action_Items = iseAction.Action_Items;
-                        hydroRow.Severity = iseAction.Severity;
-                        hydroRow.Sequence = iseAction.Sequence;
+            // Remove invalid characters using regex
+            sanitized = Regex.Replace(sanitized, @"[^a-zA-Z0-9_ ]", string.Empty);
 
-                        context.SaveChanges();
-                    }
-                }
-            }
-            */
+            return sanitized;
+        }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string SanitizeAlphanumbericUnderscore(string input)
+        {
+            // Remove any characters that are not alphanumeric or allowed in XPath
+            return Regex.Replace(input, @"[^a-zA-Z0-9_]", string.Empty);
         }
     }
 }

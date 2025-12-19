@@ -23,19 +23,20 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Router } from '../../../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { StandardService } from '../../../../services/standard.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { LayoutService } from '../../../../services/layout.service';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
-    selector: 'app-standards-results',
-    templateUrl: './standards-results.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-standards-results',
+  templateUrl: './standards-results.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class StandardsResultsComponent implements OnInit {
 
@@ -51,6 +52,7 @@ export class StandardsResultsComponent implements OnInit {
     public navSvc: NavigationService,
     private stdSvc: StandardService,
     private router: Router,
+    public themeSvc: ThemeService,
     public layoutSvc: LayoutService) { }
 
   ngOnInit() {
@@ -67,6 +69,14 @@ export class StandardsResultsComponent implements OnInit {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get the current theme colors for dark mode support
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
     this.chart = new Chart('canvasStandardResult', {
       type: 'bar',
       data: {

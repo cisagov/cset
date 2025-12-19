@@ -40,7 +40,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   styleUrls: ['../../reports.scss']
   // styleUrls: ['./vadr-report.component.scss']
   ,
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class VadrReportComponent implements OnInit {
   mainResponse: any;

@@ -35,7 +35,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'app-cisa-vadr-observations',
   standalone: false,
   templateUrl: './cisa-vadr-observations.component.html',
-  styleUrls: ['../../reports.scss', './cisa-vadr-observations.component.scss']
+  styleUrls: ['../../reports.scss', './cisa-vadr-observations.component.scss'],
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class CisaVadrObservationsComponent implements OnInit {
   response?: AssessmentDetail;

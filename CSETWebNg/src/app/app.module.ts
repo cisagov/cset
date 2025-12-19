@@ -298,7 +298,6 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { ScoreRangeComponent } from './assessment/results/score-range/score-range.component';
 import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ranges.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
-import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
@@ -534,25 +533,6 @@ import { SiteInformationComponent } from './reports/site-information/site-inform
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 import { ExportAssessmentComponent } from './dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
-import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
-import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
-import { HydroBarChartComponent } from './assessment/results/hydro/hydro-bar-chart/hydro-bar-chart.component';
-import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
-import { HydroSideTocComponent } from './reports/hydro/hydro-report/hydro-side-toc/hydro-side-toc.component';
-import { HydroAcronymsComponent } from './reports/hydro/hydro-report/hydro-acronyms/hydro-acronyms.component';
-import { HydroExecutiveSummaryComponent } from './reports/hydro/hydro-report/hydro-executive-summary/hydro-executive-summary.component';
-import { HydroImportanceOfCybersecurityComponent } from './reports/hydro/hydro-report/hydro-importance-of-cybersecurity/hydro-importance-of-cybersecurity.component';
-import { HydroResultsSummaryComponent } from './reports/hydro/hydro-report/hydro-results-summary/hydro-results-summary.component';
-import { HydroConsequencesComponent } from './reports/hydro/hydro-report/hydro-consequences/hydro-consequences.component';
-import { HydroImpactCategoryComponent } from './reports/hydro/hydro-report/hydro-impact-category/hydro-impact-category.component';
-import { HydroFeasibilityReportComponent } from './reports/hydro/hydro-report/hydro-report-feasibility/hydro-report-feasibility.component';
-import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-vertical/hydro-bar-vertical.component';
-import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
-import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
-import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
-import { HydroActionItemComponent } from './assessment/results/hydro/hydro-actions/hydro-action-item/hydro-action-item.component';
-import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-actions/hydro-progress-totals/hydro-progress-totals.component';
-import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
@@ -780,7 +760,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
-        TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,
         TutorialCrrComponent,
@@ -1016,25 +995,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         LogoCyberShieldComponent,
         ExportAssessmentComponent,
         ImportPasswordComponent,
-        HydroDeficiencyComponent,
-        HydroDonutComponent,
-        HydroBarChartComponent,
-        HydroReportComponent,
-        HydroSideTocComponent,
-        HydroAcronymsComponent,
-        HydroExecutiveSummaryComponent,
-        HydroImportanceOfCybersecurityComponent,
-        HydroResultsSummaryComponent,
-        HydroConsequencesComponent,
-        HydroImpactCategoryComponent,
-        HydroFeasibilityReportComponent,
-        HydroBarVerticalComponent,
-        HydroImpactComponent,
-        HydroFeasibilityComponent,
-        HydroActionsComponent,
-        HydroActionItemComponent,
-        HydroProgressTotalsComponent,
-        HydroActionItemsReportComponent,
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
         KeyReportComponent,

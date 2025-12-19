@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 

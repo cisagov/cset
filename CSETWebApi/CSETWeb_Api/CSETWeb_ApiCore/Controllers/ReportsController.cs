@@ -418,62 +418,6 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-
-        //--------------------------------
-        // HYDRO Controllers
-        //--------------------------------
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/getHydroDonutData")]
-        public IActionResult GetHydroDonutData()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
-
-            return Ok(hmm.GetHydroDonutData(assessmentId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/getHydroActionItems")]
-        public IActionResult GetHydroActionItems()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
-
-            return Ok(hmm.GetHydroActions(assessmentId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/getHydroActionItemsReport")]
-        public IActionResult GetHydroActionItemsReport()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
-
-            return Ok(hmm.GetHydroActionsReport(assessmentId));
-        }
-
-
         //--------------------------------
         // MVRA Controllers
         //--------------------------------

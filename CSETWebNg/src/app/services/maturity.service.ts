@@ -421,10 +421,6 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring');
   }
 
-  getHydroResults() {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getResultsData');
-  }
-
   getMyCieAssessments() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cie/myCieAssessments');
   }

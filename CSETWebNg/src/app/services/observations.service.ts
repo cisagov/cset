@@ -86,13 +86,6 @@ export class ObservationsService {
     return this.http.get<Observation[]>(this.configSvc.apiUrl + qstring, headers);
   }
 
-  /**
-   * 
-   */
-  saveIssueText(actionItem: ActionItemText[], observation_Id: number) {
-    const tmp: ActionItemTextUpdate = { actionTextItems: actionItem, observation_Id: observation_Id };
-    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers);
-  }
 
   /**
    * saves the given observation
