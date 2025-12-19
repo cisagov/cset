@@ -1,23 +1,49 @@
 ---
 services:
-  postgresql:
-    container_name: cset-postgres
-    hostname: postgres
-    image: postgres:17-alpine
+  web:
+    container_name: cset-web-dev
+    hostname: web
+    build:
+      context: CSETWebNg
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: csetweb
-      POSTGRES_USER: cset
-      POSTGRES_PASSWORD: password
-      PGDATA: /var/lib/postgresql/data/pgdata
-    networks:
-      - cset-network
+      # Override host ports via WEB_PORT without editing this file.
+      - ${WEB_PORT:-4200}:4200
+      - ${WEB_TLS_PORT:-443}:443
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      # Mount source code for hot reload
+      - ./CSETWebNg:/var/www
+      # Exclude node_modules to prevent host override
+      - web_node_modules:/var/www/node_modules
+
+  api:
+    container_name: cset-api-dev
+    hostname: api
+    build:
+      context: CSETWebApi
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      # Override host port via API_PORT without editing this file.
+      - "${API_PORT:-5000}:5000"
+    env_file:
+      - .env
+    volumes:
+      # Mount source code for hot reload
+      - ./CSETWebApi:/app
+      # Exclude build artifacts to prevent conflicts
+      - /app/CSETWeb_Api/CSETWeb_ApiCore/bin
+      - /app/CSETWeb_Api/CSETWeb_ApiCore/obj
+    depends_on:
+      - sqlserver
 
   sqlserver:
-    container_name: cset-mssql
+    container_name: cset-mssql-dev
     hostname: mssql
     image: "mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04"
     restart: unless-stopped
@@ -25,17 +51,11 @@ services:
       - .env
     ports:
       - "1433:1433"
-    networks:
-      - cset-network
     volumes:
       - mssql_data:/var/opt/mssql
       - ./backup:/var/opt/mssql/backup
       - ./DatabaseScripts:/var/opt/mssql/scripts
 
-networks:
-  cset-network:
-    driver: bridge
-
 volumes:
-  postgres-data:
   mssql_data:
+  web_node_modules:

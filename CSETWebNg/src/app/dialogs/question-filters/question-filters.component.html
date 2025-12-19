@@ -26,8 +26,8 @@
     <span>{{ t(skin + '.dialog title') }}</span>
   </div>
 
-  <mat-dialog-content class="pt-3 ps-3 pe-0 oy-auto d-flex flex-column flex-11a">
-    <div class="question-filters pe-3 form-check">
+  <mat-dialog-content class="pt-3 oy-auto d-flex flex-column flex-11a">
+    <div class="question-filters pe-3 mb-3 form-check">
       <div>
         <input placeholder="{{ t('search') }}" class="form-control" [value]="filterSvc.filterSearchString"
           (keyup)="updateFilterString($event)" />
@@ -113,7 +113,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-11a">
-    <button class="btn btn-secondary" (click)="close()">{{'buttons.ok' | transloco}}</button>
+  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-end flex-11a">
+    <button class="btn btn-primary" (click)="close()">{{'buttons.ok' | transloco}}</button>
   </mat-dialog-actions>
 </div>

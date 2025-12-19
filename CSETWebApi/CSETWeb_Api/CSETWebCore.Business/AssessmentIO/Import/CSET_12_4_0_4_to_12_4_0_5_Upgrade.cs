@@ -138,6 +138,20 @@ internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
         j.Remove("jFINANCIAL_COMPONENTS");
         j.Remove("jFINANCIAL_DOMAINS");
         j.Remove("jFINANCIAL_MATURITY");
+        //More removed tables
+        j.Remove("jEXTRA_ACET_MAPPING");
+        j.Remove("jASSESSMENT_IRP");
+        j.Remove("jASSESSMENT_IRP_HEADER");
+        j.Remove("jIRP");
+        j.Remove("jIRP_HEADER");
+        j.Remove("jLEVEL_BACKUP_ACET");
+        j.Remove("jLEVEL_BACKUP_ACET_QUESTIONS");
+        j.Remove("jHYDRO_DATA");
+        j.Remove("jHYDRO_DATA_ACTIONS");
+        j.Remove("jHYDRO_PROGRESS");
+        j.Remove("jISE_ACTIONS");
+        j.Remove("jISE_ACTIONS_FINDINGS");
+
         return j.ToString();
     }
 

@@ -20,18 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a">
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
         <span class="me-3 fs-base-6 cset-icons-exclamation-triangle" aria-label="charter-warning"></span>
         <span>Examination Mismatch Warning</span>
     </div>
     <mat-dialog-content class="pt-3 ps-3 pe-3 d-flex flex-column flex-11a">
-        <div class="">
+        <div>
             <p>You are attempting to merge examinations that appear to be different.</p>
             <p>If you continue, the first exam's demographic details will be used.</p>
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-11a">
-        <button class="btn btn-secondary" (click)="confirmWarning()">OK</button>
+    <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-end flex-11a">
+        <button class="btn btn-primary" (click)="confirmWarning()">{{t('buttons.ok')}}</button>
     </mat-dialog-actions>
 </div>

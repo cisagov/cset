@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-logo-cset',
@@ -32,7 +32,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LogoCsetComponent implements OnInit {
 
   /**
-   * If "white" is provided, 
+   * If "white" is provided,
    */
   @Input()
   mode: string;
@@ -42,7 +42,7 @@ export class LogoCsetComponent implements OnInit {
 
   @Input()
   includeLock: boolean = true;
-  
+
 
   logoWidth: number;
 
@@ -53,14 +53,21 @@ export class LogoCsetComponent implements OnInit {
 
   ngOnInit(): void {
     this.logoWidth = this.logoHeight * 4.28;
+     this.updateColors();
 
-    if (this.mode == 'white') {
-      this.color1 = 'cset-logo-fill-color';
-      this.color2 = 'fill-white';
-    } else {
-      this.color1 = 'fill-white';
-      this.color2 = 'cset-logo-fill-color';
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['mode']){
+      this.updateColors()
     }
   }
-
+ private updateColors(): void {
+   if (this.mode == 'white') {
+     this.color1 = 'cset-logo-fill-color';
+     this.color2 = 'fill-white';
+   } else {
+     this.color1 = 'fill-white';
+     this.color2 = 'cset-logo-fill-color';
+   }
+ }
 }

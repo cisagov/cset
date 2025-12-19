@@ -155,14 +155,14 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     }
 
 
-    this.cisaWorkflowSubscription=this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
+    this.cisaWorkflowSubscription = this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
       this.configSvc.userIsCisaAssessor = resp
       this.initializeColumnDefs()
       if (this.gridApi && !this.gridApi.isDestroyed()) {
         this.gridApi.setGridOption('columnDefs', this.columnDefs);
       }
     });
-    this.langChangeSubscription =  this.tSvc.langChanges$.subscribe((lang: string) => {
+    this.langChangeSubscription = this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
   }
@@ -458,7 +458,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
                   this.sortedAssessments.splice(index, 1);
                 }
 
-                if (this.gridApi && !this.gridApi.isDestroyed() ) {
+                if (this.gridApi && !this.gridApi.isDestroyed()) {
                   this.gridApi.setGridOption('rowData', this.filteredAssessments);
                 }
               }),
@@ -631,12 +631,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.exportAllInProgress = false;
   }
 
-  /**
-   *
-   */
-  temp() {
-    this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
-  }
 
   /**
    *

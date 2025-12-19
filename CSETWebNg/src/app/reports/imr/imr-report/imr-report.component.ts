@@ -32,7 +32,13 @@ import { CmuService } from '../../../services/cmu.service';
     selector: 'app-imr-report',
     templateUrl: './imr-report.component.html',
     styleUrls: ['./imr-report.component.scss'],
-    standalone: false
+    standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class ImrReportComponent implements OnInit {
   model: CmuReportModel = {};

@@ -31,7 +31,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'app-sd-answer-summary-report',
   templateUrl: './sd-answer-summary-report.component.html',
   styleUrls: ['../../reports.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class SdAnswerSummaryReportComponent implements OnInit {
   domains: any[] = [];

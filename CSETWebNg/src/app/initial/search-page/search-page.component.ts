@@ -31,6 +31,7 @@ import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-search-page',
@@ -108,9 +109,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       (resp: any) => {
         resp.rows.forEach(element => {
           element.galleryItems.forEach(item => {
+            const cleanDesc = DOMPurify.sanitize(item.description);
+            dom.innerHTML = cleanDesc;
+
             // create a plainText property for the elipsis display in case a description has HTML markup
-            dom.innerHTML = item.description;
             item.plainText = dom.innerText;
+            
             this.galleryItems.push(item);
             this.galleryItemsTmp.push(item);
           })

@@ -16,16 +16,77 @@ CSET provides the following:
 
 View the [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0) and [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU) to learn more about CSET and how to use the software.
 
-## Download
-[CSET Releases](https://github.com/cisagov/cset/releases/)
-
 Local installers ("standalone") are available as well as binaries for creating enterprise installations.
 
 ## How to Install and Run CSET/Enterprise
 
+**CSET Enterprise only runs on Windows.** The standalone installer and enterprise deployment both require Windows operating systems (Windows 10 or higher for local installations, Windows Server 2016 or higher for enterprise deployments).
+
+**For Mac and Linux users**, Docker is the recommended approach. See the [Running CSET with Docker](#running-cset-with-docker) section below for instructions.
+
 CSET operates on Windows laptops or desktop computers and can also be configured for a client-server architecture.
 
 For more information, see the [CSET Installation Options](install-and-troubleshooting-guides/README.md).
+
+## System Requirements
+
+### Running CSET with Docker
+
+For Mac, Linux, or Windows users who prefer Docker, follow the steps below:
+
+- Clone this repository
+- (Recommended) Install [Task](https://taskfile.dev/):
+  - **Mac**: `brew install go-task`
+  - **Windows**: `choco install go-task` or `winget install Task.Task`
+  - **Linux**: `sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin`
+- Install [Docker Desktop](https://docs.docker.com/desktop/)
+  - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 5 GB of memory
+- Copy over environment variables from the distribution file:
+    - `cp .env.example .env`
+- Run CSET
+  - `docker compose up -d`
+- (Optional) Override default host ports by setting environment variables before running compose (or updating `.env`):
+  - `WEB_PORT` (defaults to `4200` for the Angular UI)
+  - `WEB_TLS_PORT` (defaults to `443` for HTTPS on the UI container)
+  - `API_PORT` (defaults to `5000` for the ASP.NET API)
+  - Example: `WEB_PORT=4300 API_PORT=5100 docker compose up -d`
+- Load Database using bak files
+  - `task load-bak`
+
+For an editable development environment with live reload of both the API
+and Angular UI, you can use the `compose.dev.yml` file:
+
+`docker compose -f compose.dev.yml up`
+or
+`task up:dev`
+
+### System Requirements for Enterprise Installation
+
+It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
+
+• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
+• 8 GB free disk space
+• 4 GB of RAM
+• Microsoft Windows Server 2016 Edition or higher recommended
+• Microsoft .NET 10 Runtime
+• Microsoft ASP.NET Core 7 Runtime
+• Microsoft SQL Server 2022 or higher recommended
+• Internet Information Server (IIS) or Kestrel
+
+Other Items of Note:
+• For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates 
+available from the Windows Update web site to ensure the best compatibility and security.
+
+#### Download
+[CSET Releases](https://github.com/cisagov/cset/releases/)
+
+## Questions and Feedback
+
+If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov. 
+
+For additional information about CISA, see https://www.cisa.gov/.
+
+To ask questions or request help, propose a feature or module, or report a bug, security vulnerability or unexpected behavior, add a new issue here: https://github.com/cisagov/cset/issues
 
 ## License
 
@@ -52,67 +113,3 @@ Includes software licensed under LGPL
 
 LGPL dependencies are required to build CSET. You will be required to acquire them via nuGet 
 in order to build this software. They are not distributed with this source.
-
-## System Requirements
-
-### System Requirements for Local Installation
-
-It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
-
-• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
-• 6 GB free disk space
-• 4 GB of RAM
-• Microsoft Windows 10 or higher
-• Microsoft .NET 7 Runtime (included in CSET installation)
-• Microsoft ASP.NET Core 7 Runtime (included in CSET installation)
-• Microsoft SQL Server 2022 LocalDB (included in CSET installation)
-
-#### For Mac and Linux Users
-
-The current recommended method to run CSET would be via Docker. Follow the steps below
-
-- Clone this repository
-- Install [Docker Desktop](https://docs.docker.com/desktop/)
-  - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 10 GB of memory
-- Copy over environment variables from the distribution file:
-    - `cp env.dist .env`
-- Run CSET
-  - `docker compose up -d`
-- Load Database
-  - `make create-bak && make load-bak`
-
-For an editable development environment with live reload of both the API
-and Angular UI, you can use the `compose.dev.yml` file:
-
-```
-docker compose -f compose.dev.yml up
-```
-
-### System Requirements for Enterprise Installation
-
-It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
-
-• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
-• 8 GB free disk space
-• 4 GB of RAM
-• Microsoft Windows Server 2016 Edition or higher recommended
-• Microsoft .NET 7 Runtime
-• Microsoft ASP.NET Core 7 Runtime
-• Microsoft SQL Server 2022 or higher recommended
-• Internet Information Server (IIS) or Kestrel
-
-Other Items of Note:
-• For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates 
-available from the Windows Update web site to ensure the best compatibility and security.
-
-## Questions and Feedback
-
-If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov. 
-
-For additional information about CISA, see https://www.cisa.gov/.
-
-To ask questions or request help, propose a feature or module, or report a bug, security vulnerability or unexpected behavior, add a new issue here: https://github.com/cisagov/cset/issues
-
-
-
-

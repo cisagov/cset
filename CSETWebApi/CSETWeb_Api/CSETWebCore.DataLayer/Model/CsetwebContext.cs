@@ -51,10 +51,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
 
-    public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
-
-    public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
-
     public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
 
     public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
@@ -168,9 +164,7 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
 
     public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-
-    public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
-
+    
     public virtual DbSet<EXT_SECTOR> EXT_SECTOR { get; set; }
 
     public virtual DbSet<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
@@ -225,31 +219,13 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<GROUPING_SELECTION> GROUPING_SELECTION { get; set; }
 
-    public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
-
-    public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
-
-    public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
-
     public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
 
     public virtual DbSet<INFORMATION> INFORMATION { get; set; }
 
     public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
 
-    public virtual DbSet<IRP> IRP { get; set; }
-
-    public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
-
-    public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
-
-    public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
-
     public virtual DbSet<JWT> JWT { get; set; }
-
-    public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
-
-    public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
 
@@ -713,30 +689,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Layer).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER");
 
             entity.HasOne(d => d.Zone).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSZone).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
-        });
-
-        modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
-        {
-            entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id }).HasName("PK_Assessment_IRP");
-
-            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_IRP records"));
-
-            entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
-
-            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_IRP).HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
-
-            entity.HasOne(d => d.IRP).WithMany(p => p.ASSESSMENT_IRP).HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
-        });
-
-        modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_IRP_HEADER records"));
-
-            entity.HasOne(d => d.ASSESSMENT).WithMany(p => p.ASSESSMENT_IRP_HEADER).HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
-
-            entity.HasOne(d => d.IRP_HEADER).WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
         });
 
         modelBuilder.Entity<ASSESSMENT_ROLES>(entity =>
@@ -1228,11 +1180,6 @@ public partial class CsetwebContext : DbContext
                 .HasConstraintName("FK_DOCUMENT_FILE_ASSESSMENTS");
         });
 
-        modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of EXTRA_ACET_MAPPING records"));
-        });
-
         modelBuilder.Entity<EXT_SECTOR>(entity =>
         {
             entity.HasKey(e => e.SectorId).HasName("PK_ExtendedSector");
@@ -1493,46 +1440,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Grouping).WithMany(p => p.GROUPING_SELECTION).HasConstraintName("FK_GROUP_SELECT_GROUP");
         });
 
-        modelBuilder.Entity<HYDRO_DATA>(entity =>
-        {
-            entity.HasKey(e => e.Mat_Option_Id).IsClustered(false);
-
-            entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
-                .IsUnique()
-                .IsClustered();
-
-            entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
-            entity.Property(e => e.Action_Items).IsFixedLength();
-
-            entity.HasOne(d => d.Mat_Option).WithOne(p => p.HYDRO_DATA)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.HYDRO_DATA)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
-        });
-
-        modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
-        {
-            entity.HasKey(e => e.Answer_Id).HasName("PK__HYDRO_DA__36918F3818A6E56C");
-
-            entity.Property(e => e.Answer_Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Answer).WithOne(p => p.HYDRO_DATA_ACTIONS).HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
-
-            entity.HasOne(d => d.Progress).WithMany(p => p.HYDRO_DATA_ACTIONS)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
-        });
-
-        modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
-        {
-            entity.HasKey(e => e.Progress_Id).HasName("PK__HYDRO_PR__D558797A8254CF40");
-
-            entity.Property(e => e.Progress_Id).ValueGeneratedNever();
-        });
-
         modelBuilder.Entity<IMPORTANCE>(entity =>
         {
             entity.HasKey(e => e.Importance_Id).HasName("PK_IMPORTANCE_1");
@@ -1576,57 +1483,11 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of INSTALLATION records"));
         });
-
-        modelBuilder.Entity<IRP>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of IRP records"));
-
-            entity.Property(e => e.IRP_ID).ValueGeneratedNever();
-            entity.Property(e => e.Risk_Type)
-                .HasDefaultValue("IRP")
-                .HasAnnotation("Relational:DefaultConstraintName", "df_Risk_Type");
-
-            entity.HasOne(d => d.Header).WithMany(p => p.IRP)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_IRP_IRP_HEADER");
-        });
-
-        modelBuilder.Entity<IRP_HEADER>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of IRP_HEADER records"));
-
-            entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
-        });
-
-        modelBuilder.Entity<ISE_ACTIONS>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("ISE specific fields for issues"));
-
-            entity.Property(e => e.Action_Item_Id).ValueGeneratedOnAdd();
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.ISE_ACTIONS)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
-        });
-
-        modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
-        {
-            entity.HasOne(d => d.Finding).WithMany(p => p.ISE_ACTIONS_FINDINGS).HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
-        });
+        
 
         modelBuilder.Entity<JWT>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of JWT records"));
-        });
-
-        modelBuilder.Entity<LEVEL_BACKUP_ACET>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of LEVEL_BACKUP_ACET records"));
-        });
-
-        modelBuilder.Entity<LEVEL_BACKUP_ACET_QUESTIONS>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of LEVEL_BACKUP_ACET_QUESTIONS records"));
         });
 
         modelBuilder.Entity<LEVEL_NAMES>(entity =>

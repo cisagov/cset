@@ -23,6 +23,7 @@ SOFTWARE.
 */
 @use "sass:color";
 @use '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@use '../../sass/force-light-mode';
 /* ---- Report styles ---- */
 
 $primary-color: #052637;
@@ -106,9 +107,8 @@ body {
 }
 
 
-.MarkedFlag {
-  width: 15px;
-  height: auto;
+.marked-flag {
+  height: 1rem;
 }
 
 .Filter {

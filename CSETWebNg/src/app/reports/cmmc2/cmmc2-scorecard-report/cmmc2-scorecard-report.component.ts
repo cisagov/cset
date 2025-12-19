@@ -11,7 +11,13 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
   selector: 'app-cmmc2-scorecard-report',
   templateUrl: './cmmc2-scorecard-report.component.html',
   styleUrls: ['../../../reports/reports.scss'],
-  standalone: false
+  standalone: false,
+    // eslint-disable-next-line
+    host: {
+      'class': 'force-light-mode',
+      '[attr.data-theme]': '"light"',
+      '[attr.data-bs-theme]': '"light"'
+    }
 })
 export class Cmmc2ScorecardReportComponent {
 
