@@ -262,17 +262,6 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        public virtual IList<RawCountsForEachAssessment_Standards> usp_GetRawCountsForEachAssessment_Standards()
-        {
-            IList<RawCountsForEachAssessment_Standards> myrval = null;
-            this.LoadStoredProc("usp_GetRawCountsForEachAssessment_Standards")
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<RawCountsForEachAssessment_Standards>();
-                     });
-            return myrval;
-        }
-
         public virtual IList<AnalyticsgetMedianOverall> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
         {
             IList<AnalyticsgetMedianOverall> myrval = null;
@@ -556,28 +545,6 @@ namespace CSETWebCore.DataLayer.Model
 
 
         /// <summary>
-        /// Executes stored procedure usp_MaturityDetailsCalculations.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_MaturityDetailsCalculations_Result> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_MaturityDetailsCalculations_Result> myrval = null;
-            this.LoadStoredProc("usp_MaturityDetailsCalculations")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_MaturityDetailsCalculations_Result>();
-                     });
-            return myrval;
-        }
-
-
-        /// <summary>
         /// Executes stored procedure GetMaturityDetailsCalculations.
         /// </summary>
         /// <param name="assessment_id"></param>
@@ -594,50 +561,6 @@ namespace CSETWebCore.DataLayer.Model
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
-                     });
-            return myrval;
-        }
-
-
-        /// <summary>
-        /// Executes stored procedure usp_StatementsReviewed.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_StatementsReviewed_Result> usp_StatementsReviewed(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_StatementsReviewed_Result> myrval = null;
-            this.LoadStoredProc("usp_StatementsReviewed")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_StatementsReviewed_Result>();
-                     });
-            return myrval;
-        }
-
-
-        /// <summary>
-        /// Executes stored procedure usp_StatementsReviewedTabTotals.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_StatementsReviewedTabTotals_Result> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_StatementsReviewedTabTotals_Result> myrval = null;
-            this.LoadStoredProc("usp_StatementsReviewedTabTotals")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_StatementsReviewedTabTotals_Result>();
                      });
             return myrval;
         }
