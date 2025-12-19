@@ -80,7 +80,7 @@ namespace DuplicateAssessments
 
             assessmentsExportArchive.Seek(0, SeekOrigin.Begin);
 
-            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context, _hooks);
+            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context, _hooks, Configuration);
             await importManager.BulkImportAssessments(assessmentsExportArchive, false);
         }
     }

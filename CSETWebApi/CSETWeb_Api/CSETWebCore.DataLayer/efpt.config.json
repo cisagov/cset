@@ -960,10 +960,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[AcetAnswerDistribution]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[analytics_Compute_MaturityAll]",
          "ObjectType": 1
       },
