@@ -32,7 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { ImportAssessmentService } from '../../services/import-assessment.service';
-import { UploadExportComponent } from '../../dialogs/upload-export/upload-export.component';
+import { UploadExportComponent } from '../../dialogs/import-assessment/import-assessment.component';
 import { Title } from '@angular/platform-browser';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';

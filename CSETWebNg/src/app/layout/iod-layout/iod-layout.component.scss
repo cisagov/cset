@@ -2791,11 +2791,11 @@ mat-sidenav.mat-sidenav {
 //   flex-direction: column;
 // }
 
-.upload-export-actions {
+.import-assessment-actions {
   justify-content: flex-end;
 }
 
-.upload-export {
+.import-assessment {
   min-width: 600px;
 }
 
@@ -3008,7 +3008,7 @@ mat-sidenav.mat-sidenav {
   TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
 
 */
-.upload-export .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
+.import-assessment .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
   padding: 0;
 }
 
