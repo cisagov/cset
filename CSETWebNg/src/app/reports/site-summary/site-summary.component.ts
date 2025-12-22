@@ -40,12 +40,12 @@ import DOMPurify from 'dompurify';
   templateUrl: './site-summary.component.html',
   styleUrls: ['../reports.scss'],
   standalone: false,
-    // eslint-disable-next-line
-    host: {
-      'class': 'force-light-mode',
-      '[attr.data-theme]': '"light"',
-      '[attr.data-bs-theme]': '"light"'
-    }
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
@@ -131,9 +131,9 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      console.log('x.diagram = ', x.diagram);
       this.networkDiagramImage = DOMPurify.sanitize(x.diagram);
     });
+
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
@@ -146,60 +146,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
 
-  }
-
-  processAcetAdminData() {
-    /// the data type Barry used to load data for this screen would be really, really hard
-    /// to work with in angular, with a single row described in multiple entries.
-    /// so here i turn barry's model into something more workable.
-    this.components = [];
-
-    // the totals at the bottom of the table
-    this.grandTotal = this.adminPageData.grandTotal;
-    for (let i = 0; i < this.adminPageData.reviewTotals.length; i++) {
-      if (this.adminPageData.reviewTotals[i].reviewType === "Documentation") {
-        this.documentationTotal = this.adminPageData.reviewTotals[i].total;
-      } else if (this.adminPageData.reviewTotals[i].reviewType === "Interview Process") {
-        this.interviewTotal = this.adminPageData.reviewTotals[i].total;
-      } else if (this.adminPageData.reviewTotals[i].reviewType === "Statements Reviewed") {
-        this.reviewedStatementTotal = this.adminPageData.reviewTotals[i].total;
-      }
-    }
-
-    // Create a framework for the page's values
-    this.buildComponent(this.components, "Pre-exam prep", false);
-    this.buildComponent(this.components, "IRP", false);
-    this.buildComponent(this.components, "Domain 1", false);
-    this.buildComponent(this.components, "Domain 2", false);
-    this.buildComponent(this.components, "Domain 3", false);
-    this.buildComponent(this.components, "Domain 4", false);
-    this.buildComponent(this.components, "Domain 5", false);
-    this.buildComponent(this.components, "Discussing end results with CU", false);
-    this.buildComponent(this.components, "Other (specify)", true);
-    this.buildComponent(this.components, "Additional Other (specify)", true);
-
-    // the "meat" of the page, the components list and hours on each
-    for (let i = 0; i < this.adminPageData.detailData.length; i++) {
-      const detail: HoursOverride = this.adminPageData.detailData[i];
-
-      // find the corresponding Component/Row in the framework
-      const c = this.components.find(function (element) {
-        return element.component === detail.data.component;
-      });
-
-      if (!!c) {
-        // drop in the hours
-        if (detail.data.reviewType === "Documentation") {
-          c.documentationHours = detail.data.hours;
-        } else if (detail.data.reviewType === "Interview Process") {
-          c.interviewHours = detail.data.hours;
-        }
-
-        c.statementsReviewed = detail.statementsReviewed;
-
-        c.otherSpecifyValue = detail.data.otherSpecifyValue;
-      }
-    }
   }
 
   /**
