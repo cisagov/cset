@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
-import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
+import { UploadExportComponent } from '../../../dialogs/import-assessment/import-assessment.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Vendor } from '../../../models/diagram-vulnerabilities.model';
 

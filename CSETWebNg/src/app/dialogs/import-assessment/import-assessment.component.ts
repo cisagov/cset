@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ImportAssessmentService } from './../../services/import-assessment.service';
+import { ImportAssessmentService } from '../../services/import-assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { DiagramService } from './../../services/diagram.service';
+import { DiagramService } from '../../services/diagram.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -31,11 +31,12 @@ import { ImportPasswordComponent } from '../assessment-encryption/import-passwor
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-    selector: 'app-upload-export',
-    templateUrl: './upload-export.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
-    standalone: false
+  selector: 'app-import-assessment',
+  templateUrl: './import-assessment.component.html',
+  styleUrls: ['./import-assessment.component.scss'],
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+  standalone: false
 })
 export class UploadExportComponent implements OnInit {
 
@@ -53,6 +54,7 @@ export class UploadExportComponent implements OnInit {
 
   passwordRequired = false;
   password = "";
+    showPassword = false;
   uploadedAssessments = [];
   successfulAssessmentIndexes = [];
 
@@ -223,7 +225,10 @@ export class UploadExportComponent implements OnInit {
   getAssessmentHint(fileName: string) {
     let hintMap = this.importSvc.hintMap;
 
+    console.log(hintMap);
+
     let hint = hintMap.get(fileName);
+    
     if (hint != undefined) {
       return hint;
     } else {
@@ -231,4 +236,7 @@ export class UploadExportComponent implements OnInit {
     }
   }
 
+    togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }

@@ -129,6 +129,7 @@ export class ImportAssessmentService {
 
       },
         (error) => {
+          console.log('error1:', error);
           this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
         }
       );
@@ -148,6 +149,7 @@ export class ImportAssessmentService {
       return;
     }
 
+    console.log('extractAssessmentHint: ', message);
 
     // We could use regex here, but this works.
     let firstSplit = message.split("- ");
