@@ -64,6 +64,9 @@ export class EvalAgainstStandardsComponent implements OnInit {
     this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.loading1 = false;
 
+      // tell the chart service that this is for a report
+      x.forceLightMode = true;
+
       setTimeout(() => {
         this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
       }, 0);
