@@ -54,7 +54,7 @@ export class UploadExportComponent implements OnInit {
 
   passwordRequired = false;
   password = "";
-    showPassword = false;
+  showPassword = false;
   uploadedAssessments = [];
   successfulAssessmentIndexes = [];
 
@@ -224,11 +224,8 @@ export class UploadExportComponent implements OnInit {
 
   getAssessmentHint(fileName: string) {
     let hintMap = this.importSvc.hintMap;
-
-    console.log(hintMap);
-
     let hint = hintMap.get(fileName);
-    
+
     if (hint != undefined) {
       return hint;
     } else {
@@ -236,7 +233,7 @@ export class UploadExportComponent implements OnInit {
     }
   }
 
-    togglePasswordVisibility() {
+  togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 }
