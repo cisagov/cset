@@ -324,9 +324,7 @@
 
         <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,CIE) SHOW-FEEDBACK ASSESSOR" />
-
-        <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
+        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="SHOW-FEEDBACK ASSESSOR" />
 
         <!--
         <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA HAS-URL-ANALYTICS"/>
