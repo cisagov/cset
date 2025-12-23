@@ -50,6 +50,9 @@ export class ImportAssessmentService {
     // this will be the our resulting map
     const status = {};
 
+    // Make sure our assessment hints are empty ahead of time
+    this.hintMap.clear();
+
     files.forEach(file => {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
@@ -86,9 +89,7 @@ export class ImportAssessmentService {
         progress: progress.asObservable()
       };
 
-      // Make sure our assessment hints are empty ahead of time
 
-      this.hintMap.clear();
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -129,11 +130,10 @@ export class ImportAssessmentService {
 
       },
         (error) => {
-          console.log('error1:', error);
           this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
         }
       );
-    })
+    });
 
     // return the map of progress.observables
     return status;
@@ -149,11 +149,15 @@ export class ImportAssessmentService {
       return;
     }
 
-    console.log('extractAssessmentHint: ', message);
-
     // We could use regex here, but this works.
     let firstSplit = message.split("- ");
+
+    if (firstSplit.length < 2) {
+      return '';
+    }
+
     let firstString = firstSplit[1];
+
     let secondSplit = firstString.split(".hint");
     hint = secondSplit[0];
 
