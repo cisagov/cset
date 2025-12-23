@@ -294,6 +294,11 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get theme-aware colors
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+
     return new Chart(canvasId,
       {
         type: 'bar',
@@ -315,9 +320,15 @@ export class AnalysisService {
           },
           scales: {
             y: {
+              ticks: {
+                color: textColor
+              },
               stacked: true
             },
             x: {
+              ticks: {
+                color: textColor
+              },
               stacked: true
             }
           },
