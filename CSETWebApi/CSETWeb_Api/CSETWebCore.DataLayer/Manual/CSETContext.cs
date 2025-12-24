@@ -378,17 +378,6 @@ namespace CSETWebCore.DataLayer.Model
 
         }
 
-        public virtual void usp_CopyIntoSet_Delete(string setName)
-        {
-            this.LoadStoredProc("usp_CopyIntoSet_Delete")
-                     .WithSqlParam("DestinationSetName", setName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-
-                     });
-        }
-
-
         /// <summary>
         /// Inserts missing skeleton ANSWER records for an assessment based on 
         /// its standard selection and SAL.  
