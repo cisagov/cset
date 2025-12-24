@@ -257,3 +257,33 @@ GO
 IF OBJECT_ID('dbo.usp_StatementsReviewedTabTotals', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_StatementsReviewedTabTotals;
 GO
+
+-- Get_Assess_Detail_Filter_Data
+IF OBJECT_ID('dbo.Get_Assess_Detail_Filter_Data', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.Get_Assess_Detail_Filter_Data;
+GO
+
+-- Get_Merge_Conflicts
+IF OBJECT_ID('dbo.Get_Merge_Conflicts', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.Get_Merge_Conflicts;
+GO
+
+-- GetMaturityDetailsCalculations
+IF OBJECT_ID('dbo.GetMaturityDetailsCalculations', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetMaturityDetailsCalculations;
+GO
+
+-- clean_out_requirements_mode
+IF OBJECT_ID('dbo.clean_out_requirements_mode', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.clean_out_requirements_mode;
+GO
+
+-- usp_CopyIntoSet_Delete (replaced with LINQ equivalent in ModuleBuilderBusiness.cs)
+IF OBJECT_ID('dbo.usp_CopyIntoSet_Delete', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CopyIntoSet_Delete;
+GO
+
+-- usp_getFirstPage (replaced with LINQ equivalent in CsetwebContextExtensions.cs)
+IF OBJECT_ID('dbo.usp_getFirstPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getFirstPage;
+GO
