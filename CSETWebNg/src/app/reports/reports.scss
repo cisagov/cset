@@ -40,6 +40,12 @@ $primary-900: $secondary-color;
   font-family: Arial, sans-serif;
 }
 
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+}
+
 body {
   padding: 3em;
 }
@@ -2010,38 +2016,6 @@ ol.alpha-bracket li {
 
 ol.alpha-bracket li::before {
   content: "[" counter(list-counter, lower-alpha) "] ";
-}
-
-
-/// For report classes used in the rest of the app 
-/// where dark mode may be turned on ///////////////////////
-:host-context(.dark-theme) {
-
-  .sub-header-1 {
-    color: #ffffffcc;
-  }
-
-}
-
-// force light mode (we do this for reports, always on white)
-:host-context(.force-light-mode),
-:host-context(.light-mode-wrapper) {
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-  }
-}
-
-
-///   CIE Styles ////////////////////////////////////////////////
-.cie-questions-header-collapse-button-radius {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-
-.cie-questions-header-expand-button-radius {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
 }
 
 
