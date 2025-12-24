@@ -4330,6 +4330,21 @@ h6.dropdown-header {
   margin-top: 1rem;
 }
 
+
+.notify-snackbar {
+  background-color: default !important;
+}
+
+.mat-mdc-snack-bar-container.notify-snackbar {
+  --mat-snack-bar-button-color: #000 !important;
+  --mat-snackbar-container-color: #ffc107 !important;
+  --mat-snackbar-supporting-text-color: #000 !important;
+}
+
+.print-instructions-snack-bar .mat-mdc-snackbar-surface {
+  background-color: #6b4a1f !important;
+}
+
 .gallery-btn-favorite:hover i.fa-star {
   color: #005288 !important;
 }
