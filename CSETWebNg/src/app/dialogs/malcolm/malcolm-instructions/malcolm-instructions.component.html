@@ -20,15 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a" style="width:800px;">
+<div class="d-flex flex-column justify-content-center flex-11a">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
         <span class="me-3 fs-base-6 {{iconClass}}"></span>
         <span>Malcolm Instructions</span>
     </div>
 
-    <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">
         <div class="pe-3">
-            Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly
+            <p>
+                Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly
+            </p>
             <div class="d-flex">
                 <div class="d-flex flex-column me-3">
                     <input #ipAddress class="form-control" maxlength="20" type="text"
@@ -40,14 +42,14 @@
                     (click)="attemptToImportFromMalcolm(ipAddress.value)">Import</button>
             </div>
 
-            <p style="text-align: center;" class="my-2">&mdash;OR&mdash;</p>
+            <p class="text-center my-3">&mdash; OR &mdash;</p>
             <ol>
                 <li>Open the command terminal. Type "cmd" in the Search box on the task bar</li>
                 <li>Find your IP address. Type "ipconfig" in a command terminal and use the "IPv4 Address" value
                 </li>
                 <li>Enter the following command into the command terminal, replacing the marked area with your IP
                     address:
-                    <div style="font-family: monospace; font-size: .8rem; background-color: #eee; padding: 1rem;">
+                    <div style="font-family: monospace; font-size: .8rem; background-color: var(--bg-tertiary);" class="mb-3 p-3">
                         curl -k -sSL -XPOST -H 'Content-Type: application/json'
                         https://(your_ip_here)/mapi/agg/source.ip,source.device.role,destination.ip,destination.device.role
                         -d '{{ '{' }} "from":"5 years ago","to": "now"{{ '}' }}'
@@ -66,7 +68,7 @@
         </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex ms-auto flex-00a">
+    <mat-dialog-actions class="p-3 d-flex ms-auto flex-00a">
         <button class="btn btn-secondary" (click)="dialogRef.close(true)">Close</button>
     </mat-dialog-actions>
 </div>

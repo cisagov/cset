@@ -24,10 +24,10 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
-    selector: 'app-logo-cset',
-    templateUrl: './logo-cset.component.html',
-    styleUrls: ['./logo-cset.component.scss'],
-    standalone: false
+  selector: 'app-logo-cset',
+  templateUrl: './logo-cset.component.html',
+  styleUrls: ['./logo-cset.component.scss'],
+  standalone: false
 })
 export class LogoCsetComponent implements OnInit {
 
@@ -46,28 +46,32 @@ export class LogoCsetComponent implements OnInit {
 
   logoWidth: number;
 
-  color1: string;
-  color2: string;
+  outlineColor: string;
+  fillColor: string;
+  cColor: string;
 
   constructor() { }
 
   ngOnInit(): void {
     this.logoWidth = this.logoHeight * 4.28;
-     this.updateColors();
+    this.updateColors();
 
   }
   ngOnChanges(changes: SimpleChanges) {
-    if(changes['mode']){
+    if (changes['mode']) {
       this.updateColors()
     }
   }
- private updateColors(): void {
-   if (this.mode == 'white') {
-     this.color1 = 'cset-logo-fill-color';
-     this.color2 = 'fill-white';
-   } else {
-     this.color1 = 'fill-white';
-     this.color2 = 'cset-logo-fill-color';
-   }
- }
+
+  private updateColors(): void {
+    if (this.mode == 'white') {
+      this.outlineColor = 'fill-white';
+      this.fillColor = 'fill-white';
+      this.cColor = 'cset-logo-fill-color'
+    } else {
+      this.outlineColor = 'cset-logo-fill-color';
+      this.fillColor = 'cset-logo-fill-color';
+      this.cColor = 'fill-white';
+    }
+  }
 }

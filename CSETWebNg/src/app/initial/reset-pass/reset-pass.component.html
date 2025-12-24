@@ -20,18 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" *transloco="let t" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary">
+<div id="white-panel" *transloco="let t"
+    class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary">
     <div class="px-4 pt-4 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
         <div class="mb-4 d-flex justify-content-start flex-00a">
-            <app-logo-cset [mode]="theme == 'light' ? 'fill-white' : 'white'"></app-logo-cset>
+            <app-logo-cset [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
         </div>
 
         <div class="mb-4 p-3 bgc-black c-white">
-            <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
-                {{t('change password.enter email cset')}}
-            </div>
+            {{t('change password.enter email cset')}}
         </div>
 
         <app-no-server-connection class="mb-4"></app-no-server-connection>
