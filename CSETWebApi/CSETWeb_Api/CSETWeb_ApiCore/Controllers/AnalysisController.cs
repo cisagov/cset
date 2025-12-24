@@ -265,17 +265,9 @@ namespace CSETWebCore.Api.Controllers
             var results = new FirstPageMultiResult();
             _context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Always;
 
-            _context.LoadStoredProc("[usp_GetFirstPage]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  results.Result1 = handler.ReadToList<GetCombinedOveralls>().ToList();
-              });
-
-
-            // Kludge - trying to avoid deadlocks between the two procs
-            // Need to fix this properly
-            System.Threading.Thread.Sleep(1000);
+            // Get combined answer distribution statistics using LINQ
+            // (replaces usp_GetFirstPage stored procedure call)
+            results.Result1 = _context.GetCombinedOveralls(assessmentId);
 
             _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
                .WithSqlParam("assessment_id", assessmentId)
