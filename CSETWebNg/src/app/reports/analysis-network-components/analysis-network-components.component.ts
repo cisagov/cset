@@ -54,6 +54,10 @@ export class AnalysisNetworkComponentsComponent implements OnInit {
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       this.loading1 = false;
+
+      // force light mode for report
+      x.forceLightMode = true;
+
       setTimeout(() => {
         this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 0);

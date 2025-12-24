@@ -28,80 +28,82 @@
     </div>
 
     <div *ngFor="let d of model?.domains">
-        <div class="cpg-domain-bar page-break" [class]="groupIdToClass[d.groupingId]">
-            {{d.title}}
+        <div class="page-break border-top-0">
+            <div class="cpg-domain-bar" [class]="groupIdToClass[d.groupingId]">
+                {{d.title}}
+            </div>
+
+            <table *ngFor="let q of parentQuestions(d)" class="cpg-table">
+                <tr>
+                    <th style="width: 45%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex flex-row">
+                                <div class="me-2 font-weight-bold">
+                                    {{q.displayNumber}}
+                                </div>
+                                <div class="font-weight-normal">
+                                    <span [innerHTML]="q.securityPractice"></span>
+                                </div>
+                            </div>
+                            <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
+                                <ng-container *ngFor="let c of q.csfMappings; let l = last">
+                                    <span class="text-nowrap">
+                                        {{c}}{{ l ? '' : ','}}
+                                    </span>&nbsp;
+                                </ng-container>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 25%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
+                        {{t('reports.core.cpg.report.current assessment') | uppercase}}
+                    </th>
+                    <th style="width: 30%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
+                        {{t('reports.core.cpg.report.notes') | uppercase}}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <app-cpg-cost-impact-complexity [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">
+                        </app-cpg-cost-impact-complexity>
+
+                        <div class="mb-3">
+                            <div class="sub-header-1">{{t('reports.core.cpg.report.ttp or risk addressed')}}</div>
+                            <ul *ngIf="q.ttp.length > 0">
+                                <li *ngFor="let t of q.ttp">
+                                    {{t.description}}
+                                </li>
+                            </ul>
+
+                            <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="sub-header-1">{{t('extras.recommended action')}}</div>
+                            <p [innerHTML]="q.recommendedAction"></p>
+                        </div>
+                    </td>
+                    <!-- CPG 1.1 and SSG ... holds the answer in the question itself -->
+                    <td *ngIf="model?.modelId !== 21">
+                        <app-cpg-answer-block [answer]="q.answer"></app-cpg-answer-block>
+                    </td>
+                    <!-- CPG 2.0 has child answers for OT/IT -->
+                    <td *ngIf="model?.modelId == 21">
+                        <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
+                            <div class="sub-header-1">{{t('reports.core.cpg.ot-abbrev')}}</div>
+                            <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
+                        </div>
+
+                        <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
+                            <div class="sub-header-1">{{t('reports.core.cpg.it-abbrev')}}</div>
+                            <app-cpg-answer-block [answer]="findChild(d, q, 'IT')?.answer"></app-cpg-answer-block>
+                        </div>
+                    </td>
+                    <td>
+                        {{q.comment}}
+                    </td>
+                </tr>
+            </table>
         </div>
-
-        <table *ngFor="let q of parentQuestions(d)" class="cpg-table">
-            <tr>
-                <th style="width: 45%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-row">
-                            <div class="me-2 font-weight-bold">
-                                {{q.displayNumber}}
-                            </div>
-                            <div class="font-weight-normal">
-                                <span [innerHTML]="q.securityPractice"></span>
-                            </div>
-                        </div>
-                        <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
-                            <ng-container *ngFor="let c of q.csfMappings; let l = last">
-                                <span class="text-nowrap">
-                                    {{c}}{{ l ? '' : ','}}
-                                </span>&nbsp;
-                            </ng-container>
-                        </div>
-                    </div>
-                </th>
-                <th style="width: 25%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
-                    {{t('reports.core.cpg.report.current assessment') | uppercase}}
-                </th>
-                <th style="width: 30%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
-                    {{t('reports.core.cpg.report.notes') | uppercase}}
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <app-cpg-cost-impact-complexity [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">
-                    </app-cpg-cost-impact-complexity>
-
-                    <div class="mb-3">
-                        <div class="sub-header-1">{{t('reports.core.cpg.report.ttp or risk addressed')}}</div>
-                        <ul *ngIf="q.ttp.length > 0">
-                            <li *ngFor="let t of q.ttp">
-                                {{t.description}}
-                            </li>
-                        </ul>
-
-                        <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="sub-header-1">{{t('extras.recommended action')}}</div>
-                        <p [innerHTML]="q.recommendedAction"></p>
-                    </div>
-                </td>
-                <!-- CPG 1.1 and SSG ... holds the answer in the question itself -->
-                <td *ngIf="model?.modelId !== 21">
-                    <app-cpg-answer-block [answer]="q.answer"></app-cpg-answer-block>
-                </td>
-                <!-- CPG 2.0 has child answers for OT/IT -->
-                <td *ngIf="model?.modelId == 21">
-                    <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
-                        <div class="sub-header-1">{{t('reports.core.cpg.ot-abbrev')}}</div>
-                        <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
-                    </div>
-
-                    <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
-                        <div class="sub-header-1">{{t('reports.core.cpg.it-abbrev')}}</div>
-                        <app-cpg-answer-block [answer]="findChild(d, q, 'IT')?.answer"></app-cpg-answer-block>
-                    </div>
-                </td>
-                <td>
-                    {{q.comment}}
-                </td>
-            </tr>
-        </table>
     </div>
 </ng-container>

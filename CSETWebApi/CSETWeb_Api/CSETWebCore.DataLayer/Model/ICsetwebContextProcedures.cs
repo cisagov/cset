@@ -19,22 +19,18 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<analytics_Compute_standard_allResult>> analytics_Compute_standard_allAsync(int? assessment_id, string set_name, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<analytics_selectedStandardListResult>> analytics_selectedStandardListAsync(int? standard_assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> analytics_setup_maturity_groupingsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<clean_out_requirements_modeResult>> clean_out_requirements_modeAsync(string standard_name, string standard_name_with_mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillAllAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillEmptyMaturityQuestionsForAnalysisAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillEmptyMaturityQuestionsForModelAsync(int? assessment_Id, int? model_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillEmptyQuestionsForAnalysisAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillNetworkDiagramQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<final_data_movesResult>> final_data_movesAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Get_Cie_Merge_ConflictsResult>> Get_Cie_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<Get_Merge_ConflictsResult>> Get_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetAnswerCountsForGroupingsResult>> GetAnswerCountsForGroupingsAsync(int? assessmentId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> GetApplicationModeDefaultAsync(int? assessment_Id, OutputParameter<string> application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? parent_Id, int? assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonBestToWorstResult>> GetComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<GetMaturityDetailsCalculationsResult>> GetMaturityDetailsCalculationsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetRelevantAnswersResult>> GetRelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<InScopeQuestionsResult>> InScopeQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<InScopeRequirementsResult>> InScopeRequirementsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -49,7 +45,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? user_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_BuildCatNumbersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_CopyIntoSetAsync(string sourceSetName, string destinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<int> usp_CopyIntoSet_DeleteAsync(string destinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_countsForLevelsByGroupMaturityModelResult>> usp_countsForLevelsByGroupMaturityModelAsync(int? assessment_id, int? mat_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getAnswerComponentOverridesResult>> usp_getAnswerComponentOverridesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getComponentsRankedCategoriesResult>> usp_getComponentsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -57,7 +52,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_getComponentsSummaryResult>> usp_getComponentsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getComponentTypesResult>> usp_getComponentTypesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getFirstPageResult>> usp_getFirstPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetMaturityAnswerTotalsResult>> usp_GetMaturityAnswerTotalsAsync(int? assessment_id, int? model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getOverallRankedCategoriesResult>> usp_getOverallRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetOverallRankedCategoriesPageResult>> usp_GetOverallRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

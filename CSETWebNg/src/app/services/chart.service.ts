@@ -172,7 +172,6 @@ export class ChartService {
               + (<Number>context.dataset.data[context.dataIndex]).toFixed() + percent)
           }
         },
-
       },
       scales: {
         x: {
@@ -240,7 +239,11 @@ export class ChartService {
 
     // Get the current theme colors for dark mode support
     const isDark = this.themeSvc.isDarkMode();
-    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    let textColor = isDark ? '#ffffffdd' : '#000000dd';
+
+    if (x.forceLightMode) {
+      textColor = '#000000dd';
+    }
 
     return new Chart(canvasId, {
       type: 'doughnut',
