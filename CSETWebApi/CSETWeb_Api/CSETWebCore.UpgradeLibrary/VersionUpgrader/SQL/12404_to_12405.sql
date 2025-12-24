@@ -277,3 +277,8 @@ GO
 IF OBJECT_ID('dbo.clean_out_requirements_mode', 'P') IS NOT NULL
     DROP PROCEDURE dbo.clean_out_requirements_mode;
 GO
+
+-- usp_CopyIntoSet_Delete (replaced with LINQ equivalent in ModuleBuilderBusiness.cs)
+IF OBJECT_ID('dbo.usp_CopyIntoSet_Delete', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CopyIntoSet_Delete;
+GO
