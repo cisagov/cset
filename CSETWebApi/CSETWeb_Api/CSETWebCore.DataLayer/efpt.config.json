@@ -1232,10 +1232,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getFirstPage]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_getGenericModelSummaryByGoal]",
          "ObjectType": 1
       },
