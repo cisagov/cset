@@ -117,7 +117,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   openSnackBar() {
     this._snackBar.openFromComponent(PrintSnackComponent, {
       verticalPosition: 'top',
-      horizontalPosition: 'center'
+      horizontalPosition: 'center',
+      panelClass: ['print-instructions-snack-bar']
     });
   }
 
@@ -311,12 +312,32 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
 @Component({
   selector: 'snack-bar-component-example-snack',
-  template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
-  styles: [''],
+  template: `<div class="d-flex flex-row justify-content-between align-items-start">
+    <div>{{ tSvc.translate(printInstructions) }}</div>
+    <button class="close-button p-0 ms-3" (click)="snackBarRef.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>`,
+  styles: [`
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close-button:hover {
+      font-weight: bold;
+    }
+  `],
   standalone: false
 })
 export class PrintSnackComponent implements OnInit {
-  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
+
+  constructor(
+    public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
     public tSvc: TranslocoService
   ) { }

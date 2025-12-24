@@ -4352,6 +4352,18 @@ h6.dropdown-header {
   --mat-snackbar-supporting-text-color: #000 !important;
 }
 
+.print-instructions-snack-bar .mat-mdc-snackbar-surface {
+  background-color: #6b4a1f !important;
+}
+
+.gallery-btn-favorite:hover i.fa-star {
+  color: #005288 !important;
+}
+
+.star-favorite {
+  color: var(--cset-primary);
+}
+
 .dark-theme .btn-app-mode,
 [data-theme="dark"] .btn-app-mode,
 [data-bs-theme="dark"] .btn-app-mode {
