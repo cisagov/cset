@@ -103,7 +103,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         {
             try
             {
-                _context.usp_CopyIntoSet_Delete(setName);
+                DeleteCopiedSetData(setName);
                 foreach (string sourceSet in setNames)
                 {
                     _context.usp_CopyIntoSet(sourceSet, setName);
@@ -219,7 +219,44 @@ namespace CSETWebCore.Business.ModuleBuilder
 
         public void DeleteCopyToSet(string setName)
         {
-            _context.usp_CopyIntoSet_Delete(setName);
+            DeleteCopiedSetData(setName);
+        }
+
+
+        /// <summary>
+        /// Deletes all data associated with a copied custom set.
+        /// This replaces the usp_CopyIntoSet_Delete stored procedure.
+        /// </summary>
+        /// <param name="setName">The name of the set to delete data for</param>
+        private void DeleteCopiedSetData(string setName)
+        {
+            // Validate: cannot modify standard (non-custom) sets
+            var set = _context.SETS.FirstOrDefault(s => s.Set_Name == setName);
+            if (set != null && !set.Is_Custom)
+            {
+                throw new InvalidOperationException("Destination set is not a custom set. Standard sets cannot be modified.");
+            }
+
+            // Delete from all related tables in the correct order
+            _context.REQUIREMENT_SETS.RemoveRange(
+                _context.REQUIREMENT_SETS.Where(rs => rs.Set_Name == setName));
+
+            _context.REQUIREMENT_QUESTIONS_SETS.RemoveRange(
+                _context.REQUIREMENT_QUESTIONS_SETS.Where(rqs => rqs.Set_Name == setName));
+
+            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.RemoveRange(
+                _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(usch => usch.Set_Name == setName));
+
+            _context.NEW_QUESTION_SETS.RemoveRange(
+                _context.NEW_QUESTION_SETS.Where(nqs => nqs.Set_Name == setName));
+
+            _context.NEW_REQUIREMENT.RemoveRange(
+                _context.NEW_REQUIREMENT.Where(nr => nr.Original_Set_Name == setName));
+
+            _context.CUSTOM_STANDARD_BASE_STANDARD.RemoveRange(
+                _context.CUSTOM_STANDARD_BASE_STANDARD.Where(csbs => csbs.Custom_Questionaire_Name == setName));
+
+            _context.SaveChanges();
         }
 
 
