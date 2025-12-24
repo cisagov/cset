@@ -27,6 +27,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { ConfigService } from '../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
     selector: 'app-reset-pass',
@@ -52,12 +53,17 @@ export class ResetPassComponent implements OnInit {
     emailSent = false;
     enableNext = true;
 
+    theme: string;
+    theme$ = this.themeSvc.theme$
+
 
     constructor(
         public tSvc: TranslocoService,
         private auth: AuthenticationService,
         public configSvc: ConfigService,
-        private emailSvc: EmailService) { }
+        private emailSvc: EmailService,
+        public themeSvc: ThemeService
+    ) { }
 
 
     /**
