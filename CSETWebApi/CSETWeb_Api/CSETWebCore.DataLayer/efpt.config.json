@@ -1164,10 +1164,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet_Delete]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_CopyIntoSet]",
          "ObjectType": 1
       },
