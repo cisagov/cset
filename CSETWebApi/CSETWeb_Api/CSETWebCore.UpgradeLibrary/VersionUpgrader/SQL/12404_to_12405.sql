@@ -282,3 +282,8 @@ GO
 IF OBJECT_ID('dbo.usp_CopyIntoSet_Delete', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_CopyIntoSet_Delete;
 GO
+
+-- usp_getFirstPage (replaced with LINQ equivalent in CsetwebContextExtensions.cs)
+IF OBJECT_ID('dbo.usp_getFirstPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getFirstPage;
+GO
