@@ -52,7 +52,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_getComponentsSummaryResult>> usp_getComponentsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getComponentTypesResult>> usp_getComponentTypesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getFirstPageResult>> usp_getFirstPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetMaturityAnswerTotalsResult>> usp_GetMaturityAnswerTotalsAsync(int? assessment_id, int? model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getOverallRankedCategoriesResult>> usp_getOverallRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetOverallRankedCategoriesPageResult>> usp_GetOverallRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
