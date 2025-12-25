@@ -28,7 +28,7 @@
     "@angular/compiler-cli": "^20.3.13",
     "@angular/core": "^20.3.13",
     "@angular/elements": "^20.3.15",
-    "@angular/forms": "^20.3.15",
+    "@angular/forms": "^21.0.6",
     "@angular/localize": "^20.3.15",
     "@angular/material": "^20.2.14",
     "@angular/platform-browser": "^20.3.13",
