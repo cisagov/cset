@@ -277,6 +277,19 @@ div.disclaimer-blurb {
   line-height: 0.9rem;
 }
 
+table.td-p-1 td {
+  padding: 0.25rem !important;
+}
+
+table.td-p-2 td {
+  padding: 0.5rem !important;
+}
+
+table.td-text-start th,
+table.td-text-start td {
+  text-align: left !important;
+}
+
 
 /* ---- common display container widget ---- */
 .cset-container {
