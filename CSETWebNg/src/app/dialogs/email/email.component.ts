@@ -46,8 +46,6 @@ export class EmailComponent implements OnInit {
   recipientList = '';
 
   constructor(
-    private assessSvc: AssessmentService,
-    private configSvc: ConfigService,
     private auth: AuthenticationService,
     private emailSvc: EmailService,
     private dialog: MatDialogRef<EmailComponent>,

@@ -330,7 +330,8 @@
     "reset password": "Reset Password",
     "forgot password": "Forgot Password",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "send": "Send"
   },
   "contact": {
     "contacts": "Contacts",
@@ -348,6 +349,13 @@
     "office phone": "Office Phone",
     "email": "Email",
     "email address": "Email Address",
+    "from": "From",
+    "to": "To",
+    "all have been invited": "All associated individuals have been invited",
+    "subject": "Subject",
+    "subject placeholder": "Subject",
+    "message": "Message",
+    "message placeholder": "Message Text",
     "emergency communications protocol": "Emergency Communications Protocol",
     "primary point of contact": "Primary point of contact",
     "participated in site visit": "Participated in site visit",
@@ -636,7 +644,8 @@
     "access denied": "Access Denied",
     "access denied 1": "Your session has expired, a connection error has occurred, or you are no longer authorized to access that assessment.",
     "access denied 2": "Please log in again.",
-    "access denied 3": "Your role on this assessment has been changed by another user."
+    "access denied 3": "Your role on this assessment has been changed by another user.",
+    "invitation email": "Invitation Email"
   },
   "observation": {
     "observation title": "Observation Title",

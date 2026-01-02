@@ -105,7 +105,7 @@
         "contacts": "Contactos",
         "contact": "Contacto",
         "add contact": "Agregar Contacto",
-        "email contacts": "Mandar E-mail a los Contactos",
+        "email contacts": "Enviar correo electronico a los contactos",
         "assessment owner": "Dueño de Evaluación",
         "first name": "Nombre de Pila",
         "last name": "Apellido",
@@ -114,9 +114,16 @@
         "organization": "Organización",
         "site name": "Nombre de Sitio",
         "cell phone": "Celular",
-        "office phone": "Teléfono de Oficina",
-        "email": "E-mail",
+        "office phone": "Teléfono de oficina",
+        "email": "Correo",
         "email address": "Correo electrónico",
+        "from": "De",
+        "to": "Para",
+        "all have been invited": "Todas las personas asociadas han sido invitadas",
+        "subject": "Asunto",
+        "subject placeholder": "Asunto",
+        "message": "Mensaje",
+        "message placeholder": "Escribe un mensaje",
         "emergency communications protocol": "Protocolo de comunicacíon de emergencia",
         "primary point of contact": "Punto de contacto principal",
         "participated in site visit": "Participó en la visita al sitio",
@@ -311,7 +318,8 @@
         "reset password": "Restablecer la contraseña",
         "forgot password": "Contraseña olvidada",
         "on": "Activo",
-        "off": "Inactivo"
+        "off": "Inactivo",
+        "send": "Enviar"
     },
     "answer-options": {
         "button-labels": {
@@ -447,7 +455,7 @@
         "export all": "Exporta una copia de todas las evaluaciones a otra ubicación.",
         "nav collapse": "Expandir/contraer la navegación",
         "add favorite": "Agregar a Favoritos",
-        "remove favorite":"Eliminar de Favoritos"
+        "remove favorite": "Eliminar de Favoritos"
     },
     "level": {
         "low": "Pequeño",
@@ -539,7 +547,8 @@
         "access denied": "Acceso denegado",
         "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.",
         "access denied 2": "Por favor inicia sesión nuevamente.",
-        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
+        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación.",
+        "invitation email": "Correo de invitación"
     },
     "observation": {
         "observation title": "Título de la Observación",
@@ -882,29 +891,29 @@
     },
     "modules": {
         "cpg": {
-          "display-name": "Metas de Rendimiento Cibernético (CPG)",
-          "model short title": "CPG"
+            "display-name": "Metas de Rendimiento Cibernético (CPG)",
+            "model short title": "CPG"
         },
-    "cmmc2f": {
-        "display-name": "Certificación del Modelo de Madurez en Ciberseguridad (CMMC) 2.0",
-        "model short title": "CMMC2"
-    },
-    "rra": {
-        "display-name": "Evaluación de Preparación contra Ransomware (RRA)",
-        "model short title": "RRA"
-    },
-    "c2m2": {
-        "model short title": "C2M2"
-    },
-    "cmmc": {
-        "model short title": "CMMC"
-    },
-    "edm": {
-        "model short title": "EDM"
-    },
-      "cis": {
-        "model short title": "CIS"
-      }
+        "cmmc2f": {
+            "display-name": "Certificación del Modelo de Madurez en Ciberseguridad (CMMC) 2.0",
+            "model short title": "CMMC2"
+        },
+        "rra": {
+            "display-name": "Evaluación de Preparación contra Ransomware (RRA)",
+            "model short title": "RRA"
+        },
+        "c2m2": {
+            "model short title": "C2M2"
+        },
+        "cmmc": {
+            "model short title": "CMMC"
+        },
+        "edm": {
+            "model short title": "EDM"
+        },
+        "cis": {
+            "model short title": "CIS"
+        }
     },
     "aggregation": {
         "assessment alias": "Alias de evaluación",
@@ -957,12 +966,12 @@
     "Select a Model": "Seleccione un Modelo.",
     "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
     "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta.",
-  "filters": {
-    "view all": "Ver Todo",
-    "done": "Completado",
+    "filters": {
+        "view all": "Ver Todo",
+        "done": "Completado",
+        "favorites": "Favoritos"
+    },
+    "categories": "Categorias",
+    "all assessments": "Todas las evaluaciones",
     "favorites": "Favoritos"
-  },
-  "categories": "Categorias",
-  "all assessments": "Todas las evaluaciones",
-  "favorites": "Favoritos"
 }
