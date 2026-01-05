@@ -292,3 +292,8 @@ GO
 IF OBJECT_ID('dbo.usp_getVADRSummaryOverall', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getVADRSummaryOverall;
 GO
+
+-- usp_countsForLevelsByGroupMaturityModel (replaced with LINQ equivalent in MaturityBusiness.cs)
+IF OBJECT_ID('dbo.usp_countsForLevelsByGroupMaturityModel', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_countsForLevelsByGroupMaturityModel;
+GO
