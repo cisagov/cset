@@ -21,14 +21,14 @@
   SOFTWARE.
 -------------------------->
 <form *transloco="let t">
-  <h6 class="p-3 mb-4 alert-warning">
+  <h6 class="p-3 mb-4 alert alert-warning">
     NOTE: Completion of all organization demographic, assessment configuration, and critical service fields are required
     to access reports.
   </h6>
 
   <div class="mb-4">
     <label for="orgType" class="form-label">Organization Type</label>
-    <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-select" id="orgType"
+    <select [ngClass]="{ 'is-invalid' : !demographicData.organizationType }" class="form-select" id="orgType"
       tabindex="0" name="orgType" [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select Type --</option>
       <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue"
@@ -40,14 +40,14 @@
 
   <div class="mb-4">
     <label for="orgName" class="form-label">Name of Organization</label>
-    <input [ngClass]="{ 'alert-danger' : !demographicData.organizationName }" class="form-control" autocomplete="off"
+    <input [ngClass]="{ 'is-invalid' : !demographicData.organizationName }" class="form-control" autocomplete="off"
       tabindex="0" type="text" maxlength="150" name="orgName" id="orgName"
       [(ngModel)]="demographicData.organizationName" placeholder="Name of Organization" (blur)="update($event)" />
   </div>
 
   <div class="mb-4">
     <label for="businessUnit" class="form-label">Business Unit</label>
-    <input [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }" class="form-control" autocomplete="off"
+    <input [ngClass]="{ 'is-invalid' : !demographicData.businessUnit }" class="form-control" autocomplete="off"
       tabindex="0" type="text" maxlength="150" name="businessUnit" id="businessUnit"
       [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (change)="update($event)" />
   </div>
@@ -55,7 +55,7 @@
   <div class="row mb-4">
     <div class="col">
       <label for="sector" class="form-label">Sector</label>
-      <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
+      <select [ngClass]="{ 'is-invalid' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
         name="sector" [(ngModel)]="demographicData.sector" (ngModelChange)="onChangeSector()">
         <option [ngValue]="null">-- Select Sector --</option>
         <option *ngFor="let i of demographicData.listSectors" [ngValue]="i.optionValue"
@@ -67,7 +67,7 @@
 
     <div class="col">
       <label for="subsector" class="form-label">Sub-Sector</label>
-      <select [ngClass]="{ 'alert-danger' : !demographicData.subsector }" class="form-select" id="subsector"
+      <select [ngClass]="{ 'is-invalid' : !demographicData.subsector }" class="form-select" id="subsector"
         tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector" (ngModelChange)="update($event)">
         <option [ngValue]="null">-- Select --</option>
         <option *ngFor="let i of demographicData.listSubsectors" [ngValue]="i.optionValue"
@@ -92,7 +92,7 @@
     <label for="numberEmployees" class="form-label" *ngIf="demographicData.organizationType != 1">
       Number of employees in the government agency?
     </label>
-    <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }" class="form-select"
+    <select [ngClass]="{ 'is-invalid' : !demographicData.numberEmployeesTotal }" class="form-select"
       id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
       [(ngModel)]="demographicData.numberEmployeesTotal" (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
@@ -109,7 +109,7 @@
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType != 1" class="form-label"> Number of
       employees in the department? </label>
 
-    <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }" class="form-select"
+    <select [ngClass]="{ 'is-invalid' : !demographicData.numberEmployeesUnit }" class="form-select"
       id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit" [(ngModel)]="demographicData.numberEmployeesUnit"
       (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
@@ -136,7 +136,7 @@
       What is the total annual funding for your governmental organization or agency?
     </label>
 
-    <select [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
+    <select [ngClass]="{ 'is-invalid' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
       tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
       (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
@@ -172,13 +172,13 @@
 
       <div>
         <label for="standard1" class="form-label">Most important</label>
-        <input [ngClass]="{ 'alert-danger' : !demographicData.standard1 }" type="text" maxlength="250"
+        <input [ngClass]="{ 'is-invalid' : !demographicData.standard1 }" type="text" maxlength="250"
           class="form-control mb-3" id="standard1" name="standard1" list="listStandards"
           [(ngModel)]="demographicData.standard1" (change)="update($event)" />
       </div>
       <div>
         <label for="standard2" class="form-label">Second most important</label>
-        <input [ngClass]="{ 'alert-danger' : !demographicData.standard2 }" type="text" maxlength="250"
+        <input [ngClass]="{ 'is-invalid' : !demographicData.standard2 }" type="text" maxlength="250"
           class="form-control mb-3" id="standard2" name="standard2" list="listStandards"
           [(ngModel)]="demographicData.standard2" (change)="update($event)" />
       </div>
@@ -277,11 +277,11 @@
         If the name of the barrier is not listed please enter it directly into each box as applicable.
       </div>
       <label for="barrier1" class="form-label">Most significant</label>
-      <input [ngClass]="{ 'alert-danger' : !demographicData.barrier1 }" type="text" maxlength="250"
+      <input [ngClass]="{ 'is-invalid' : !demographicData.barrier1 }" type="text" maxlength="250"
         class="form-control mb-3" id="barrier1" name="barrier1" list="listBarriers"
         [(ngModel)]="demographicData.barrier1" (change)="update($event)" />
       <label for="barrier2" class="form-label">Second most significant</label>
-      <input [ngClass]="{ 'alert-danger' : !demographicData.barrier2 }" type="text" maxlength="250"
+      <input [ngClass]="{ 'is-invalid' : !demographicData.barrier2 }" type="text" maxlength="250"
         class="form-control mb-3" id="barrier2" name="barrier2" list="listBarriers"
         [(ngModel)]="demographicData.barrier2" (change)="update($event)" />
     </div>

@@ -4,7 +4,7 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { AuthenticationService } from '../../../../services/authentication.service';
-import { UploadExportComponent } from "../../../../dialogs/upload-export/upload-export.component";
+import { UploadExportComponent } from "../../../../dialogs/import-assessment/import-assessment.component";
 import { AssessmentService } from '../../../../services/assessment.service';
 
 

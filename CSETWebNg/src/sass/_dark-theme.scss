@@ -27,14 +27,20 @@
   --border-highlight: #93c5fd;
   --border-light: #e5e7eb;
   --progress-bg: #d1d5db;
+  --bg-is-invalid: #ffefef;
+  --border-is-invalid: #990000;
+  --toggle-bg-is-invalid: #ffefef;
 }
 
+
 // Dark theme colors
-.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
   --bg-primary: #031925;
   --bg-secondary: #002236;
   --bg-tertiary: #15191e;
-  --text-primary:rgba(255, 255, 255, 0.70);
+  --text-primary: rgba(255, 255, 255, 0.70);
   --text-secondary: rgba(255, 255, 255, 0.6);
   --text-disabled: rgba(255, 255, 255, 0.38);
   --border-color: #6b7280;
@@ -48,7 +54,9 @@
   --border-highlight: #0c7dc4;
   --border-light: #374151;
   --progress-bg: #4b5563;
-
+  --bg-is-invalid: #000000;
+  --border-is-invalid: #990000;
+  --toggle-bg-is-invalid: #2b0000;
 }
 
 /* ===================================
@@ -66,7 +74,8 @@
    Dark Theme Base Styles
    =================================== */
 
-.dark-theme, [data-theme="dark"] {
+.dark-theme,
+[data-theme="dark"] {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 
@@ -76,8 +85,8 @@
     color: var(--text-primary);
   }
 
-  .landing-page{
-     background-color: var(--bg-primary) !important;
+  .landing-page {
+    background-color: var(--bg-primary) !important;
   }
 
   // ===================================
@@ -85,13 +94,13 @@
   // ===================================
 
   // Material buttons in dark mode
-  .mat-button, .mat-icon-button {
+  .mat-button,
+  .mat-icon-button {
     color: var(--text-primary) !important;
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.08) !important;
     }
-
 
   }
 
@@ -229,6 +238,7 @@
     color: var(--text-primary) !important;
   }
 
+  
   // Bootstrap forms
   .form-control,
   .form-select {
@@ -245,7 +255,13 @@
     &::placeholder {
       color: var(--text-disabled) !important;
     }
+
+    &.is-invalid {
+      border-color: var(--border-is-invalid) !important;
+    }
   }
+
+
 
   // Bootstrap buttons
   .btn-primary {
@@ -296,7 +312,8 @@
       }
     }
 
-    td, th {
+    td,
+    th {
       border-color: var(--border-color) !important;
     }
   }
@@ -364,6 +381,7 @@
     color: #fca5a5 !important;
   }
 
+
   // Bootstrap badges
   .badge {
     &.bg-light {
@@ -391,11 +409,18 @@
   // ===================================
 
   // Text colors
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--text-primary) !important;
   }
 
-  p, span, div {
+  p,
+  span,
+  div {
     color: var(--text-primary);
   }
 
@@ -413,7 +438,7 @@
   .form-label,
   .control-label,
   .mat-form-field-label,
-  .mat-input-element + label {
+  .mat-input-element+label {
     color: var(--text-primary) !important;
   }
 
@@ -461,14 +486,16 @@
   }
 
   // Code blocks
-  pre, code {
+  pre,
+  code {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
   }
 
   // Inputs and textareas
-  input, textarea {
+  input,
+  textarea {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
@@ -478,7 +505,10 @@
     }
   }
 }
-.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
 
   // All text in ngx-charts (axis labels, tick labels)
   .ngx-charts text,
@@ -492,8 +522,11 @@
     stroke: var(--border-color) !important;
   }
 }
+
 /* Score Ranges Component - Dark Mode Text */
-.dark-theme, [data-theme="dark"], [data-bs-theme="dark"] {
+.dark-theme,
+[data-theme="dark"],
+[data-bs-theme="dark"] {
 
   // SVG text in score ranges (the percentages at bottom)
   app-score-ranges svg text {

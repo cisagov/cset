@@ -20,48 +20,50 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a">
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-envelope"></span>
-    <span>Invitation Email</span>
+    <span>{{t('dialogs.invitation email')}}</span>
   </div>
 
-  <form class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content>
-      <div class="mt-3">
-        <label>From:</label> {{from.firstName}} {{from.lastName}} &lt;{{from.primaryEmail}}&gt;
+  <mat-dialog-content>
+    <form class="oy-auto d-flex flex-column flex-11a" style="min-width: 400px; max-width: 80cqw">
+      <div>
+        <p class="form-label">{{t('contact.from')}}</p>
+        <div>
+          {{from.firstName}} {{from.lastName}} &lt;{{from.primaryEmail}}&gt;
+        </div>
       </div>
 
       <div class="mt-3">
-        <label>To:</label>
-        <div class="p-1 email-to-box">
-          <div>
-            {{recipientList}}
-          </div>
-          <div *ngIf="recipientList.length === 0">
-            All associated individuals have been invited
-          </div>
+        <p class="form-label">{{t('contact.to')}}</p>
+        <div>
+          {{recipientList}}
+        </div>
+        <div *ngIf="recipientList.length === 0">
+          {{t('contact.all have been invited')}}
         </div>
       </div>
 
       <div class="mt-3 d-flex flex-column flex-11a">
-        <label for="subj">Subject:</label>
-        <input type="text" maxlength="250" name="subj" id="subj" placeholder="Subject" [(ngModel)]="subject"
-          class="ps-2 d-flex flex-11a" style="min-width: 50vw">
+        <label class="form-label" for="subj">{{t('contact.subject')}}</label>
+        <input type="text" maxlength="250" name="subj" id="subj" [placeholder]="t('contact.subject placeholder')" [(ngModel)]="subject"
+          class="ps-2 d-flex flex-11a form-control">
       </div>
 
       <div class="mt-3">
-        <label for="emailBody">Message:</label>
+        <label class="form-label" for="emailBody">{{t('contact.message')}}</label>
         <div>
-          <textarea name="emailBody" id="emailBody" placeholder="Message Text" [value]="body" [(ngModel)]="body"
-            style="width: 100%;height: 50%" rows=6></textarea>
+          <textarea name="emailBody" id="emailBody" appAutoSize [placeholder]="t('contact.message placeholder')" [value]="body" [(ngModel)]="body"
+            class="form-control" rows="6"></textarea>
         </div>
       </div>
-    </mat-dialog-content>
-  </form>
+    </form>
+  </mat-dialog-content>
+
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
-    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-secondary" (click)="close()">{{t('buttons.cancel')}}</button>
     <button type="button" class="m-0 btn btn-primary" (click)="send()"
-      [disabled]="recipientList.length === 0">Send</button>
+      [disabled]="recipientList.length === 0">{{t('buttons.send')}}</button>
   </mat-dialog-actions>
 </div>
