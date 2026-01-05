@@ -325,7 +325,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/vadrdetail")]
-        public IActionResult GetVADRDetailReport()
+        public async Task<IActionResult> GetVADRDetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -333,7 +333,7 @@ namespace CSETWebCore.Api.Controllers
 
             VADRReports summary = new VADRReports(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
-            data.VADRSummaryOverall = summary.GetSummaryOverall(assessmentId);
+            data.VADRSummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
             data.VADRSummary = summary.GetVADRSummary(assessmentId);
             data.VADRSummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
             data.VADRSummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
