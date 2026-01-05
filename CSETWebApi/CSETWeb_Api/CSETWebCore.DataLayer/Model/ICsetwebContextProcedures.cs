@@ -68,8 +68,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_getStandardSummaryOverallResult>> usp_getStandardSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getVADRSummaryResult>> usp_getVADRSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getVADRSummaryByGoalResult>> usp_getVADRSummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getVADRSummaryByGoalOverallResult>> usp_getVADRSummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_setTrendOrderAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
     }
 }
