@@ -114,12 +114,12 @@
               </button>
               <a href="{{node?.value ? docUrl + node.docId : ''}}" target="_blank" rel="noopener noreferrer"
                 *ngIf="node?.docId">
-                <span class="fs-base-2 ">
+                <span class="fs-base-2">
                   {{node?.label}}
                 </span>
               </a>
-              <button class="fs-base-2 btn btn-link p-0 mt-2 categTitle" *ngIf="!node?.value" matIconButton
-                matTreeNodeToggle>{{node?.label}}</button>
+              <button style="white-space: nowrap;" class="fs-base-2 btn btn-link p-0 categTitle" *ngIf="!node?.value"
+                matIconButton matTreeNodeToggle>{{node?.label}}</button>
             </div>
             <ul *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
               <ng-container matTreeNodeOutlet></ng-container>
