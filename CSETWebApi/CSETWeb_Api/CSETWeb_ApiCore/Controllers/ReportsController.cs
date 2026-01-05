@@ -335,8 +335,8 @@ namespace CSETWebCore.Api.Controllers
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.VADRSummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
             data.VADRSummary = summary.GetVADRSummary(assessmentId);
-            data.VADRSummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
-            data.VADRSummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
+            data.VADRSummaryByGoal = await summary.GetVADRSummaryByGoalAsync(assessmentId);
+            data.VADRSummaryByGoalOverall = await summary.GetVADRSummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
         }
 
