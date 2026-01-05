@@ -287,3 +287,8 @@ GO
 IF OBJECT_ID('dbo.usp_getFirstPage', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getFirstPage;
 GO
+
+-- usp_getVADRSummaryOverall (replaced with LINQ equivalent in VADRReports.cs)
+IF OBJECT_ID('dbo.usp_getVADRSummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getVADRSummaryOverall;
+GO
