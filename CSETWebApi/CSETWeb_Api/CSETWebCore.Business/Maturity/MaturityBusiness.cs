@@ -196,9 +196,62 @@ namespace CSETWebCore.Business.Maturity
 
         public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
         {
-            var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+            // Get all valid answer types
+            var answerTypes = new[] { "Y", "U", "N" };
 
-            //while the answer text is not null 
+            // Get all distinct grouping/level combinations for the maturity model
+            var allCombinations = _context.MATURITY_QUESTIONS
+                .AsNoTracking()
+                .Where(q => q.Maturity_Model_Id == mat_model_id)
+                .Select(q => new { q.Grouping_Id, q.Maturity_Level_Id })
+                .Distinct()
+                .ToList();
+
+            // Cross join with answer types to get all possible combinations
+            var baseCombinations = allCombinations
+                .SelectMany(c => answerTypes.Select(a => new
+                {
+                    c.Grouping_Id,
+                    c.Maturity_Level_Id,
+                    Answer_Text = a
+                }))
+                .ToList();
+
+            // Get actual answer counts for this assessment
+            var answerCounts = _context.ANSWER
+                .AsNoTracking()
+                .Where(a => a.Assessment_Id == assessmentId && a.Question_Type == "Maturity")
+                .Join(_context.MATURITY_QUESTIONS,
+                    a => a.Question_Or_Requirement_Id,
+                    q => q.Mat_Question_Id,
+                    (a, q) => new { q.Grouping_Id, q.Maturity_Level_Id, a.Answer_Text })
+                .GroupBy(x => new { x.Grouping_Id, x.Maturity_Level_Id, x.Answer_Text })
+                .Select(g => new
+                {
+                    g.Key.Grouping_Id,
+                    g.Key.Maturity_Level_Id,
+                    g.Key.Answer_Text,
+                    answer_count = g.Count()
+                })
+                .ToList();
+
+            // Left join: all combinations with their counts
+            var list = baseCombinations
+                .GroupJoin(answerCounts,
+                    bc => new { bc.Grouping_Id, bc.Maturity_Level_Id, bc.Answer_Text },
+                    ac => new { ac.Grouping_Id, ac.Maturity_Level_Id, ac.Answer_Text },
+                    (bc, ac) => new { bc, ac = ac.FirstOrDefault() })
+                .Select(x => new LevelsByGroupResult
+                {
+                    GROUPING_ID = x.bc.Grouping_Id,
+                    Maturity_Level_Id = x.bc.Maturity_Level_Id,
+                    Answer_Text = x.bc.Answer_Text,
+                    Answer_Text2 = x.ac?.Answer_Text,
+                    answer_count = x.ac?.answer_count ?? 0
+                })
+                .ToList();
+
+            //while the answer text is not null
             // increment the achieved level
             // must achieve level 1 before we can achieve level 2 ....
             //
@@ -234,7 +287,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 groupScores.Add(new GroupScores()
                 {
-                    Group_Id = keyPair.Key.GROUPING_ID,
+                    Group_Id = keyPair.Key.GROUPING_ID ?? 0,
                     Maturity_Level_Id = keyPair.Key.Maturity_Level_Id,
                     Maturity_Level_Name = "We'll get there"
                 });
@@ -243,8 +296,20 @@ namespace CSETWebCore.Business.Maturity
             return groupScores;
         }
 
-        private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
-        private void PushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        /// <summary>
+        /// Result class for level scores by group query (replaces stored procedure result)
+        /// </summary>
+        private class LevelsByGroupResult
+        {
+            public int? GROUPING_ID { get; set; }
+            public int Maturity_Level_Id { get; set; }
+            public string Answer_Text { get; set; }
+            public string Answer_Text2 { get; set; }
+            public int answer_count { get; set; }
+        }
+
+        private Dictionary<LevelsByGroupResult, int> levels = new Dictionary<LevelsByGroupResult, int>();
+        private void PushLevel(int nextLevel, LevelsByGroupResult item)
         {
             //if the previous level was achieved then we can go for the next level
             //other wise we cannot

@@ -1033,38 +1033,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_countsForLevelsByGroupMaturityModelResult>> usp_countsForLevelsByGroupMaturityModelAsync(int? assessment_id, int? mat_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "mat_model_id",
-                    Value = mat_model_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_countsForLevelsByGroupMaturityModelResult>("EXEC @returnValue = [dbo].[usp_countsForLevelsByGroupMaturityModel] @assessment_id = @assessment_id, @mat_model_id = @mat_model_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<usp_getAnswerComponentOverridesResult>> usp_getAnswerComponentOverridesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
