@@ -4,6 +4,7 @@
   "export all": "Export All",
   "new assessment": "New Assessment",
   "status": "Status",
+  "actions": "Actions!",
   "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
   "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
   "last modified": "Last Modified",
@@ -16,6 +17,7 @@
   "assessment name": "Assessment Name",
   "assessment date": "Assessment Date",
   "no pii in name": "Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)",
+  "has other users": "You cannot remove an assessment that has other users",
   "facility name": "Facility Name",
   "city or site name": "City or Site Name",
   "state province region": "State/Province/Region",
@@ -330,7 +332,8 @@
     "reset password": "Reset Password",
     "forgot password": "Forgot Password",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "send": "Send"
   },
   "contact": {
     "contacts": "Contacts",
@@ -348,6 +351,13 @@
     "office phone": "Office Phone",
     "email": "Email",
     "email address": "Email Address",
+    "from": "From",
+    "to": "To",
+    "all have been invited": "All associated individuals have been invited",
+    "subject": "Subject",
+    "subject placeholder": "Subject",
+    "message": "Message",
+    "message placeholder": "Message Text",
     "emergency communications protocol": "Emergency Communications Protocol",
     "primary point of contact": "Primary point of contact",
     "participated in site visit": "Participated in site visit",
@@ -636,7 +646,8 @@
     "access denied": "Access Denied",
     "access denied 1": "Your session has expired, a connection error has occurred, or you are no longer authorized to access that assessment.",
     "access denied 2": "Please log in again.",
-    "access denied 3": "Your role on this assessment has been changed by another user."
+    "access denied 3": "Your role on this assessment has been changed by another user.",
+    "invitation email": "Invitation Email"
   },
   "observation": {
     "observation title": "Observation Title",
@@ -797,7 +808,11 @@
       "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off",
-      "admin": "Admin Settings"
+      "admin": "Admin Settings",
+      "light mode": "Light Mode",
+      "switch to light mode": "Switch to light mode",
+      "dark mode": "Dark Mode",
+      "switch to dark mode": "Switch to dark mode"
     }
   },
   "merge examinations": {

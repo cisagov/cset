@@ -147,7 +147,7 @@
     <div class="row mb-4">
       <div class="col">
         <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
-        <textarea [ngClass]="{ 'alert-danger' : !demographics.criticalService }" appAutoSize class="form-control"
+        <textarea [ngClass]="{ 'is-invalid' : !demographics.criticalService }" appAutoSize class="form-control"
           autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService"
           [(ngModel)]="demographics.criticalService" placeholder="{{t('critical service name')}}"
           (blur)="updateDemographics()"></textarea>
@@ -156,7 +156,7 @@
       <div class="col">
         <label class="form-label" for="criticalService">Critical Dependency for
           Incident Response Support</label>
-        <textarea [ngClass]="{ 'alert-danger' : !iodDemographics.criticalDependencyIncidentResponseSupport }"
+        <textarea [ngClass]="{ 'is-invalid' : !iodDemographics.criticalDependencyIncidentResponseSupport }"
           appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalDependency"
           id="criticalDependency" [(ngModel)]="iodDemographics.criticalDependencyIncidentResponseSupport"
           placeholder="Critical Dependency for Incident Response Support" (blur)="updateDemographicsIod()"></textarea>
@@ -181,7 +181,7 @@
         Please estimate the percentage of your organization's annual revenue
         that depends on the critical service.
       </label>
-      <select [ngClass]="{ 'alert-danger' : !iodDemographics.criticalServiceRevenuePercent }" class="form-select"
+      <select [ngClass]="{ 'is-invalid' : !iodDemographics.criticalServiceRevenuePercent }" class="form-select"
         id="percentageRevenue" tabindex="0" name="percentageRevenue"
         [(ngModel)]="iodDemographics.criticalServiceRevenuePercent" (change)="updateDemographicsIod()">
         <option [ngValue]="null">-- Select --</option>
@@ -199,7 +199,7 @@
         critical service. If an estimate is not
         available, please select N/A.
       </label>
-      <select [ngClass]="{ 'alert-danger' : !iodDemographics.numberPeopleServedByCritSvc }" class="form-select"
+      <select [ngClass]="{ 'is-invalid' : !iodDemographics.numberPeopleServedByCritSvc }" class="form-select"
         id="numberPeopleServedByCritSvc" tabindex="0" name="numberPeopleServedByCritSvc"
         [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc" (change)="updateDemographicsIod()">
         <option [ngValue]="null">-- Select --</option>
@@ -221,7 +221,7 @@
 
       <div>
         <label class="form-label">Most important</label>
-        <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
+        <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
           name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
           (change)="updateDemographicsIod()">
           <option [ngValue]="null">-- Select --</option>
@@ -233,7 +233,7 @@
       </div>
       <div>
         <label class="form-label">Second most important</label>
-        <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
+        <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
           name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
           (change)="updateDemographicsIod()">
           <option [ngValue]="null">-- Select --</option>
