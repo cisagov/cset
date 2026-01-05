@@ -4,6 +4,7 @@
   "export all": "Export All",
   "new assessment": "New Assessment",
   "status": "Status",
+  "actions": "Actions!",
   "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
   "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
   "last modified": "Last Modified",
@@ -16,6 +17,7 @@
   "assessment name": "Assessment Name",
   "assessment date": "Assessment Date",
   "no pii in name": "Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)",
+  "has other users": "You cannot remove an assessment that has other users",
   "facility name": "Facility Name",
   "city or site name": "City or Site Name",
   "state province region": "State/Province/Region",
@@ -806,7 +808,11 @@
       "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off",
-      "admin": "Admin Settings"
+      "admin": "Admin Settings",
+      "light mode": "Light Mode",
+      "switch to light mode": "Switch to light mode",
+      "dark mode": "Dark Mode",
+      "switch to dark mode": "Switch to dark mode"
     }
   },
   "merge examinations": {
