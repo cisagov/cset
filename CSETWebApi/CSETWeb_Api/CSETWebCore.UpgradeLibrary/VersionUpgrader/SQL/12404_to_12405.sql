@@ -297,3 +297,13 @@ GO
 IF OBJECT_ID('dbo.usp_countsForLevelsByGroupMaturityModel', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_countsForLevelsByGroupMaturityModel;
 GO
+
+-- usp_getVADRSummaryByGoalOverall (replaced with LINQ equivalent in VADRReports.cs)
+IF OBJECT_ID('dbo.usp_getVADRSummaryByGoalOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getVADRSummaryByGoalOverall;
+GO
+
+-- usp_getVADRSummaryByGoal (replaced with LINQ equivalent in VADRReports.cs)
+IF OBJECT_ID('dbo.usp_getVADRSummaryByGoal', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getVADRSummaryByGoal;
+GO
