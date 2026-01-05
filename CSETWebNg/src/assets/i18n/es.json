@@ -4,6 +4,7 @@
     "export all": "Exportar todo",
     "new assessment": "Nueva evaluación",
     "status": "Estado",
+    "actions": "Acciones",
     "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
     "completion-statements": "{{complete}}/{{total}} declaraciones respondidas",
     "last modified": "Modificada",
@@ -19,6 +20,7 @@
     "assessment name": "Nombre de evaluación",
     "assessment date": "Fecha de evaluación",
     "no pii in name": "Tenga cuidado de no nombrar su evaluación con ninguna información identificable. (por ejemplo, nombres de personas u organizaciones)",
+    "has other users": "Esta evaluación no se puede eliminar porque tiene otros usuarios",
     "facility name": "Nombre de facilidad",
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
@@ -705,7 +707,11 @@
             "encrypt": "Cifrar Exportación de Evaluación",
             "on": "Encendido",
             "off": "Apagado",
-            "admin": "Configuración de Administrador"
+            "admin": "Configuración de Administrador",
+            "light mode": "Modo claro",
+            "switch to light mode": "Cambiar a modo claro",
+            "dark mode": "Modo oscuro",
+            "switch to dark mode": "Cambiar a modo oscuro"
         }
     },
     "merge examinations": {

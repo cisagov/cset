@@ -201,7 +201,7 @@
           <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment name') }}
           </th>
           <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
-          <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+          <th [aria-label]="tSvc.translate('actions')" style="width: 5%" *ngIf="layoutSvc.hp"></th>
           <tr *ngFor="let assessment of filteredAssessments;  let i = index">
             <td>
               <button tabindex="0"

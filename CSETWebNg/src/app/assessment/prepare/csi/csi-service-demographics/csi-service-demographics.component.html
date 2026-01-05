@@ -27,7 +27,7 @@
     <ng-container *ngIf="showCriticalServiceIdentifyingInfo()">
       <div class="mb-3">
         <label for="criticalServiceName" class="form-label">{{t('critical service name')}}</label>
-        <input [ngClass]="{ 'alert-danger': !demographics.criticalService && showErrors() }" class="form-control"
+        <input [ngClass]="{ 'is-invalid': !demographics.criticalService && showErrors() }" class="form-control"
           tabindex="0" type="text" maxlength="50" name="criticalServiceName" id="criticalServiceName"
           [(ngModel)]="demographics.criticalService" placeholder="{{t('critical service name')}}"
           (change)="updateBaseDemographics()" />
@@ -36,7 +36,7 @@
       <div class="mb-3">
         <label for="criticalServiceDescription" class="form-label">{{t('critical service description')}}</label>
         <input [ngClass]="{
-          'alert-danger': !csiServiceDemographic.criticalServiceDescription && showErrors()
+          'is-invalid': !csiServiceDemographic.criticalServiceDescription && showErrors()
         }" class="form-control" tabindex="0" type="text" maxlength="150" name="criticalServiceDescription"
           id="criticalServiceDescription" [(ngModel)]="csiServiceDemographic.criticalServiceDescription"
           placeholder="{{t('critical service description')}}" (change)="update()" />
@@ -44,7 +44,7 @@
 
       <div class="mb-3">
         <label for="itIcsName" class="form-label">Name of IT/ICS System (supporting the Critical Service)</label>
-        <input [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsName && showErrors() }" class="form-control"
+        <input [ngClass]="{ 'is-invalid': !csiServiceDemographic.itIcsName && showErrors() }" class="form-control"
           tabindex="0" type="text" maxlength="50" name="itIcsName" id="itIcsName"
           [(ngModel)]="csiServiceDemographic.itIcsName"
           placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()" />
@@ -59,7 +59,7 @@
                [(ngModel)]="csiServiceDemographic.multiSite"
                (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
         <input [ngClass]="{
-          'alert-danger':
+          'is-invalid':
             !csiServiceDemographic.multiSiteDescription &&
             csiServiceDemographic.multiSite &&
             showErrors()
@@ -76,7 +76,7 @@
           ngbRadioGroup>
           <label ngbButtonLabel class="btn btn-level border-2 mb-1" *ngFor="let budgetB of budgetBasisList"
             [class.active]="budgetB.budget_Basis === csiServiceDemographic.budgetBasis"
-            [ngClass]="{ 'alert-danger': !csiServiceDemographic.budgetBasis && showErrors() }">
+            [ngClass]="{ 'is-invalid': !csiServiceDemographic.budgetBasis && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="budgetBasis"
               [(ngModel)]="csiServiceDemographic.budgetBasis" (change)="update()" [value]="budgetB.budget_Basis" />
             {{ budgetB.budget_Basis }}
@@ -94,7 +94,7 @@
           ngbRadioGroup>
           <label ngbButtonLabel class="btn btn-level mb-1" *ngFor="let totalITStaffItem of itIcsStaffCountList"
             [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount"
-            [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsStaffCount && showErrors() }">
+            [ngClass]="{ 'is-invalid': !csiServiceDemographic.itIcsStaffCount && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="totalITStaff1"
               [(ngModel)]="csiServiceDemographic.itIcsStaffCount" (change)="update()"
               [value]="totalITStaffItem.staff_Count" />
@@ -113,7 +113,7 @@
           <label ngbButtonLabel class="btn btn-level mb-1"
             *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
             [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount"
-            [ngClass]="{ 'alert-danger': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }">
+            [ngClass]="{ 'is-invalid': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="totalITStaff2"
               [(ngModel)]="csiServiceDemographic.cybersecurityItIcsStaffCount" (change)="update()"
               [value]="totalITStaffItem.staff_Count" />
@@ -133,7 +133,7 @@
           <label ngbButtonLabel class="btn btn-level mb-1"
             *ngFor="let authorizedOrganizationalUserCountItem of authorizedOrganizationalUserCountList" [class.active]="
             authorizedOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedOrganizationalUserCount
-          " [ngClass]="{ 'alert-danger': !csiServiceDemographic.authorizedOrganizationalUserCount && showErrors() }">
+          " [ngClass]="{ 'is-invalid': !csiServiceDemographic.authorizedOrganizationalUserCount && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="authorizedOrganizationalUserCount"
               [(ngModel)]="csiServiceDemographic.authorizedOrganizationalUserCount" (ngModelChange)="update()"
               [value]="authorizedOrganizationalUserCountItem.user_Count" />
@@ -155,7 +155,7 @@
             authorizedNonOrganizationalUserCountItem.user_Count ===
             csiServiceDemographic.authorizedNonOrganizationalUserCount
           "
-            [ngClass]="{ 'alert-danger': !csiServiceDemographic.authorizedNonOrganizationalUserCount && showErrors() }">
+            [ngClass]="{ 'is-invalid': !csiServiceDemographic.authorizedNonOrganizationalUserCount && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="authorizedNonOrganizationUserCount"
               [(ngModel)]="csiServiceDemographic.authorizedNonOrganizationalUserCount" (change)="update()"
               [value]="authorizedNonOrganizationalUserCountItem.user_Count" />
@@ -174,7 +174,7 @@
           ngbRadioGroup>
           <label ngbButtonLabel class="btn btn-level mb-1" *ngFor="let customersCountItem of customersCountList"
             [class.active]="customersCountItem.customer_Count === csiServiceDemographic.customersCount"
-            [ngClass]="{ 'alert-danger': !csiServiceDemographic.customersCount && showErrors() }">
+            [ngClass]="{ 'is-invalid': !csiServiceDemographic.customersCount && showErrors() }">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="customersCount" (change)="update()"
               [(ngModel)]="csiServiceDemographic.customersCount" [value]="customersCountItem.customer_Count" />
             {{ customersCountItem.customer_Count }}

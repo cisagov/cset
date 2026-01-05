@@ -1279,32 +1279,46 @@ table.td-align-top td {
 .btn-level {
   background-color: $gray-150;
   color: $primary-color;
+
+
+  &:hover {
+    background-color: $gray-400;
+    color: $primary-color;
+  }
+
+  &:not(.disabled).active,
+  &:not(.disabled).activeLevel,
+  .show>&.dropdown-toggle {
+    background-color: $secondary-color;
+    color: $white;
+  }
+
+  &.primary.active {
+    background-color: $primary-800;
+    color: $white;
+  }
+
+  &.is-invalid {
+    // color: var(--bs-form-invalid-border-color);
+    border-color: var(--border-is-invalid);
+    background-color: var(--toggle-bg-is-invalid);
+  }
 }
 
-.btn-level:hover {
-  background-color: $gray-400;
-  color: $primary-color;
-}
-
-.btn-level:not(.disabled).active,
-.btn-level:not(.disabled).activeLevel,
-.show>.btn-level.dropdown-toggle {
-  background-color: $secondary-color;
-  color: $white;
-}
-
-.btn-level.primary.active {
-  background-color: $primary-800;
-  color: $white;
-}
 
 .dark-theme {
   .btn-level {
-    background-color: $gray-700;
-  }
-
-  .btn-level:hover {
     background-color: $gray-800;
+
+    &:hover {
+      background-color: $gray-900;
+    }
+
+    &.is-invalid {
+      // color: var(--bs-form-invalid-border-color);
+      border-color: var(--border-is-invalid);
+      background-color: var(--toggle-bg-is-invalid);
+    }
   }
 }
 
@@ -4352,6 +4366,29 @@ h6.dropdown-header {
 .star-favorite {
   color: var(--cset-primary);
 }
+
+.button-container {
+  position: relative;
+
+  .btn.is-invalid {
+    border-color: var(--bs-form-invalid-border-color) !important;
+    background-color: var(--toggle-bg-is-invalid) !important;
+  }
+
+  &:has(.is-invalid)::after {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
 
 .dark-theme .btn-app-mode,
 [data-theme="dark"] .btn-app-mode,
