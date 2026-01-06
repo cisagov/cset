@@ -340,7 +340,12 @@ export class TopMenusComponent implements OnInit {
     if (this.configSvc.config.isRunningAnonymous) {
       return false;
     }
-    return
+
+    return (
+      this.router.url !== '/resource-library' &&
+      this.router.url !== '/importModule' &&
+      !this.isModuleBuilder(this.router.url)
+    );
   }
 
   /**
