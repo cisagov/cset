@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -254,7 +256,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/dashboard")]
-        public IActionResult GetDashboard()
+        public async Task<IActionResult> GetDashboard()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
@@ -269,12 +271,10 @@ namespace CSETWebCore.Api.Controllers
             // (replaces usp_GetFirstPage stored procedure call)
             results.Result1 = _context.GetCombinedOveralls(assessmentId);
 
-            _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
-               .WithSqlParam("assessment_id", assessmentId)
-               .ExecuteStoredProc((handler) =>
-               {
-                   results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
-               });
+            // Get ranked categories using LINQ
+            // (replaces usp_GetOverallRankedCategoriesPage stored procedure call)
+            var rankedCategoriesBusiness = new RankedCategoriesBusiness(_context);
+            results.Result2 = await rankedCategoriesBusiness.GetRankedCategoriesAsync(assessmentId);
 
 
             if (results.Count >= 2)
@@ -397,7 +397,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/TopCategories")]
-        public IActionResult GetTopCategories(int? total)
+        public async Task<IActionResult> GetTopCategories(int? total)
         {
             if (total == null)
             {
@@ -409,31 +409,15 @@ namespace CSETWebCore.Api.Controllers
 
             ChartData chartData = null;
 
-            var results = new RankedCategoriesMultiResult();
-            _context.LoadStoredProc("[usp_GetRankedCategoriesPage]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
+            var rankedCategoriesBusiness = new RankedCategoriesBusiness(_context);
+            var rankedCategories = await rankedCategoriesBusiness.GetRankedCategoriesAsync(assessmentId);
 
-              });
-
-
-            if (results.Count >= 1)
+            if (rankedCategories.Any())
             {
-                List<double> data = new List<double>();
-                ChartData overallBars = new ChartData()
-                {
-                    backgroundColor = "red",
-                    borderWidth = "1",
-                    label = "Overall Ranked Categories",
-                    data = data
-                };
-
                 chartData = new ChartData();
-                foreach (usp_getRankedCategories c in results.Result1.Take((int)total))
+                foreach (usp_getRankedCategories c in rankedCategories.Take((int)total))
                 {
-                    chartData.data.Add((double)c.prc);
+                    chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
                 }
             }
@@ -517,23 +501,20 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/OverallRankedCategories")]
-        public IActionResult GetOverallRankedCategories()
+        public async Task<IActionResult> GetOverallRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
             ChartData chartData = null;
 
-            var results = new RankedCategoriesMultiResult();
-            _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
-              });
+            // Get ranked categories using LINQ
+            // (replaces usp_GetOverallRankedCategoriesPage stored procedure call)
+            var rankedCategoriesBusiness = new RankedCategoriesBusiness(_context);
+            var rankedCategories = await rankedCategoriesBusiness.GetRankedCategoriesAsync(assessmentId);
 
 
-            if (results.Count >= 1)
+            if (rankedCategories.Any())
             {
                 List<double> data = new List<double>();
                 ChartData overallBars = new ChartData()
@@ -547,7 +528,7 @@ namespace CSETWebCore.Api.Controllers
                 chartData = new ChartData();
                 chartData.DataRows = new List<DataRows>();
                 int i = 1;
-                foreach (usp_getRankedCategories c in results.Result1)
+                foreach (usp_getRankedCategories c in rankedCategories)
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
@@ -569,11 +550,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/StandardsSummaryOverall")]
-        public IActionResult GetStandardSummaryOverall()
+        public async Task<IActionResult> GetStandardSummaryOverall()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(GetStandardsSummarySingle(_context, assessmentId));
+            return Ok(await GetStandardsSummarySingleAsync(_context, assessmentId));
         }
 
         /// <summary>
@@ -582,30 +563,26 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsSummary")]
-        public IActionResult GetStandardsSummary()
+        public async Task<IActionResult> GetStandardsSummary()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             if (_context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Count() > 1)
             {
-                return Ok(GetStandardsSummaryMultiple(_context, assessmentId));
+                return Ok(await GetStandardsSummaryMultipleAsync(_context, assessmentId));
             }
-            return Ok(GetStandardsSummarySingle(_context, assessmentId));
+            return Ok(await GetStandardsSummarySingleAsync(_context, assessmentId));
         }
 
 
-        private ChartData GetStandardsSummarySingle(CSETContext context, int assessmentId)
+        private async Task<ChartData> GetStandardsSummarySingleAsync(CSETContext context, int assessmentId)
         {
             ChartData myChartData = null;
 
-            var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
-          .WithSqlParam("assessment_id", assessmentId)
-          .ExecuteStoredProc((handler) =>
-          {
-              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
+            var standardsSummaryBusiness = new StandardsSummaryBusiness(context);
+            var resultList = await standardsSummaryBusiness.GetStandardsSummaryAsync(assessmentId);
 
-          });
+            var results = new StandardSummaryOverallMultiResult { Result1 = resultList };
 
             if (results.Count >= 1)
             {
@@ -668,21 +645,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummaryMultiple(CSETContext context, int assessmentId)
+        private async Task<ChartData> GetStandardsSummaryMultipleAsync(CSETContext context, int assessmentId)
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
             myChartData.Colors = new List<string>();
 
+            var standardsSummaryBusiness = new StandardsSummaryBusiness(context);
+            var resultList = await standardsSummaryBusiness.GetStandardsSummaryAsync(assessmentId);
 
-            var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
-            .WithSqlParam("assessment_id", assessmentId)
-            .ExecuteStoredProc((handler) =>
-            {
-                results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
-
-            });
+            var results = new StandardSummaryOverallMultiResult { Result1 = resultList };
 
             SortIntoAnswerOrder(results);
 

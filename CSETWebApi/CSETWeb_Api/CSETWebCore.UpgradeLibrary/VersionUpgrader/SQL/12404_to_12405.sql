@@ -307,3 +307,33 @@ GO
 IF OBJECT_ID('dbo.usp_getVADRSummaryByGoal', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getVADRSummaryByGoal;
 GO
+
+-- usp_GetStandardsSummaryPage (replaced with LINQ equivalent in StandardsSummaryBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetStandardsSummaryPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetStandardsSummaryPage;
+GO
+
+-- usp_getStandardsSummary (replaced with LINQ equivalent in StandardsSummaryBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardsSummary', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardsSummary;
+GO
+
+-- usp_GetRankedCategoriesPage (replaced with LINQ equivalent in RankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetRankedCategoriesPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetRankedCategoriesPage;
+GO
+
+-- usp_getRankedCategories (replaced with LINQ equivalent in RankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRankedCategories;
+GO
+
+-- usp_GetOverallRankedCategoriesPage (replaced with LINQ equivalent in RankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetOverallRankedCategoriesPage', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetOverallRankedCategoriesPage;
+GO
+
+-- usp_getOverallRankedCategories (replaced with LINQ equivalent in RankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getOverallRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getOverallRankedCategories;
+GO
