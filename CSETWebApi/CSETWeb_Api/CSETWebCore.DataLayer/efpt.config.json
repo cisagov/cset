@@ -1260,14 +1260,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetRankedQuestions]",
          "ObjectType": 1
       },
@@ -1309,14 +1301,6 @@
       },
       {
          "Name": "[dbo].[usp_GetStandardsResultsByCategoryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsSummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsSummaryPage]",
          "ObjectType": 1
       },
       {
