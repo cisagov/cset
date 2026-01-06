@@ -1332,14 +1332,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getVADRSummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getVADRSummaryByGoalOverall]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_getVADRSummaryPage]",
          "ObjectType": 1
       },
