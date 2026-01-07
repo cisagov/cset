@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Maturity.Configuration;
@@ -14,6 +15,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -679,11 +681,12 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
+        public List<usp_getRankedCategories> GetTop5Categories()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var categories = _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+            var rankedCategoriesBusiness = new RankedCategoriesBusiness(_context);
+            var categories = rankedCategoriesBusiness.GetRankedCategoriesAsync(_assessmentId).Result.Take(5).ToList();
 
             for (var i = 0; i < categories.Count; i++)
             {
