@@ -40,6 +40,11 @@ namespace CSETWebCore.Constants
         public const string DOD8510 = "DODI_8510";
         public const string NERC5 = "Nerc_Cip_R5";
         public const string CSC = "CSC_V6";
+
+        public const int ROLE_USER = 1;
+        public const int ROLE_ADMIN = 2;
+
+
         // Application Name/Version
         // *************************************************************************************************************************
         public const String APPLICATION_NAME = "CSET";

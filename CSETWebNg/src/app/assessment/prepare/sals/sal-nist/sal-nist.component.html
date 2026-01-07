@@ -162,9 +162,9 @@
       <h4>{{t('titles.sal.nist.answer questions')}}</h4>
       <table class="nist-sal-questions table">
         <tr *ngFor="let question of topModel?.questions">
-          <td>{{question.question_Text}}</td>
+          <td class="pb-3">{{question.question_Text}}</td>
           <td class="yes-no-answers">
-            <div class="btn-group btn-group-toggle" style="white-space: nowrap" data-toggle="buttons">
+            <div class="btn-group btn-group-toggle border-bottom-0 text-nowrap" data-toggle="buttons">
               <label [attr.csetid]="question.question_Text + 'Yes'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
                 <input class="btn-check" type="radio" autocomplete="off" name="options{{question.question_Number}}"

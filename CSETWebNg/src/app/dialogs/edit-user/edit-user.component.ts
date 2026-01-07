@@ -38,6 +38,7 @@ import { NgForm } from '@angular/forms';
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
   securityQuestions: SecurityQuestion[];
+  errorEmailInUse = false;
 
   /**
    * Constructor.
@@ -88,13 +89,20 @@ export class EditUserComponent implements OnInit {
    */
   save(form: NgForm) {
     if (this.model && form.valid) {
-      this.auth.updateUser(this.model).subscribe(
-        () => {
-          this.auth.setUserInfo(this.model)
+      this.auth.updateCurrentUser(this.model).subscribe({
+        next: () => {
+          this.errorEmailInUse = false;
+          this.auth.setUserInfo(this.model);
+          this.dialog.close(this.model);
         },
-        error => console.error('Error updating the user information' + error.message)
-      );
-      this.dialog.close(this.model);
+        error: (error) => {
+          console.error('Error updating the user information: ', error);
+
+          if (error.error.toLowerCase().startsWith('email address belongs to another user')) {
+            this.errorEmailInUse = true;
+          }
+        }
+      });
     }
   }
 

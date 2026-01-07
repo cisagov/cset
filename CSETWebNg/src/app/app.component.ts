@@ -159,23 +159,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
-  editUser() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    this.dialogRef = this.dialog.open(EditUserComponent);
-    const subscription = this.dialogRef.afterClosed().subscribe(
-      (data: CreateUser) => {
-        if (data && data.primaryEmail) {
-          this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
-        }
-        this.dialogRef = undefined;
-      },
-      error => console.error(error.message)
-    );
-    this.dialogSubscriptions.push(subscription); // Store the subscription
-  }
-
   resetPassword() {
     if (this.dialog.openDialogs[0]) {
       return;

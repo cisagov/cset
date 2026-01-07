@@ -87,7 +87,7 @@
 
         <div *ngIf="emailSent" class="pb-4">
             <div class="mb-3">
-                <p *ngIf="warning.length > 0" class="alert alert-danger">{{warning}}</p>
+                <p *ngIf="warning.length > 0" class="alert alert-warning">{{warning}}</p>
                 <p class="alert alert-info">
                     {{t('change password.email sent', {email: model.email})}}
                 </p>

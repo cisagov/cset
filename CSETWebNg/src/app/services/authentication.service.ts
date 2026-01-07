@@ -328,8 +328,11 @@ export class AuthenticationService {
     return this.http.post(this.configSvc.apiUrl + 'contacts/userlang', JSON.stringify({ lang: data }), headers);
   }
 
-  updateUser(data: CreateUser): Observable<CreateUser> {
-    return this.http.post(this.configSvc.apiUrl + 'contacts/UpdateUser', data, headers);
+  /**
+   * Updates user details for the current CSET user
+   */
+  updateCurrentUser(data: CreateUser): Observable<CreateUser> {
+    return this.http.post(this.configSvc.apiUrl + 'user', data, headers);
   }
 
   getUserInfo(): Observable<CreateUser> {

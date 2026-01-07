@@ -4,17 +4,20 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Notification;
+using CSETWebCore.Interfaces.User;
+using CSETWebCore.Model.Contact;
+using CSETWebCore.Model.User;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Interfaces.Contact;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Contact;
-using CSETWebCore.Model.User;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Notification;
-using CSETWebCore.Interfaces.User;
-using CSETWebCore.Helpers;
+
 
 namespace CSETWebCore.Business.Contact
 {
@@ -386,10 +389,117 @@ namespace CSETWebCore.Business.Contact
 
 
         /// <summary>
+        /// Persist updates requested for a contact on an assessment.
+        /// This method is applicable for a Contact - meaning an assessment is involved.
+        /// If you just want to update your user properties, use something else.
+        /// </summary>
+        public void UpdateUserContact(int assessmentId, int currentUserId, CreateUser userBeingUpdated)
+        {
+            // check that we aren't trying to use an existing email address
+            if (!String.IsNullOrEmpty(userBeingUpdated.PrimaryEmail) 
+                && _context.USERS.Any(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail && x.UserId != userBeingUpdated.UserId))
+            {
+                throw new Exception("Email address belongs to another user");
+            }
+
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+
+
+            // Create USERS record if necessary
+            if (!_context.USERS.Any(x => x.UserId == userBeingUpdated.UserId))
+            {
+                UserDetail userDetail = new UserDetail
+                {
+                    Email = userBeingUpdated.PrimaryEmail,
+                    FirstName = userBeingUpdated.FirstName,
+                    LastName = userBeingUpdated.LastName,
+                    IsSuperUser = false,
+                    PasswordResetRequired = true
+                };
+
+                var newUser = _userBusiness.CreateUser(userDetail, _context);
+                userBeingUpdated.UserId = newUser.UserId;
+            }
+
+
+            // Create ASSESSMENT_CONTACTS record if necessary
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == userBeingUpdated.AssessmentContactId).FirstOrDefault();
+            if (ac == null)
+            {
+                ac = new ASSESSMENT_CONTACTS();
+                ac.Assessment_Id = assessmentId;
+                ac.UserId = userBeingUpdated.UserId;
+                _context.ASSESSMENT_CONTACTS.Add(ac);
+                _context.SaveChanges();
+            }
+
+
+            // populate the new or existing A_C record
+            ac.FirstName = userBeingUpdated.FirstName;
+            ac.LastName = userBeingUpdated.LastName;
+            ac.PrimaryEmail = userBeingUpdated.PrimaryEmail;
+            ac.Title = userBeingUpdated.Title;
+            ac.Phone = userBeingUpdated.Phone;
+            ac.Cell_Phone = userBeingUpdated.CellPhone;
+            ac.Reports_To = userBeingUpdated.ReportsTo;
+            ac.Organization_Name = userBeingUpdated.OrganizationName;
+            ac.Site_Name = userBeingUpdated.SiteName;
+            ac.AssessmentRoleId = userBeingUpdated.AssessmentRoleId;
+            ac.Is_Primary_POC = userBeingUpdated.IsPrimaryPoc;
+            ac.Is_Site_Participant = userBeingUpdated.IsSiteParticipant;
+            ac.Emergency_Communications_Protocol = userBeingUpdated.EmergencyCommunicationsProtocol;
+
+
+            _context.SaveChanges();
+
+
+            // If the user is changing their own record, push any
+            // name and email changes through to the USERS record.
+            if (userBeingUpdated.UserId == currentUserId)
+            {
+                // You cannot blank out your own email address
+                if (String.IsNullOrEmpty(userBeingUpdated.PrimaryEmail))
+                {
+                    throw new Exception("Email is required");
+                }
+
+                var myUser = _context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault();
+
+                myUser.FirstName = userBeingUpdated.FirstName;
+                myUser.LastName = userBeingUpdated.LastName;
+                myUser.PrimaryEmail = userBeingUpdated.PrimaryEmail;
+
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// See if the proposed email change is not being used by another user.
+        /// </summary>
+        private bool EmailAddressIsAllowed(USERS user, string newEmail)
+        {
+            if (string.IsNullOrEmpty(newEmail))
+            {
+                return false;
+            }
+
+            // if the proposed email belongs to another user, shut it down
+            if (_context.USERS.Any(x => x.PrimaryEmail == newEmail && x.UserId != user.UserId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
         /// Updates ASSESSMENT_CONTACT record with given userId using provided ContactDetail object
         /// </summary>
         /// <returns></returns>
-        public void UpdateContact(ContactDetail contact, int userId)
+        public void UpdateAssessmentContact(ContactDetail contact, int userId)
         {
             var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
                 && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();

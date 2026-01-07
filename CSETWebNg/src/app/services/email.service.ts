@@ -117,4 +117,23 @@ export class EmailService {
     }
     return newArray;
   }
+
+  /**
+   * 
+   */
+  isEmailAvailable(userId: number, proposedEmail: string): Promise<boolean> {
+    const url = `${this.apiUrl}is-email-available`;
+    const body = { userId, proposedEmail };
+
+    return new Promise((resolve, reject) => {
+      this.http.post<boolean>(url, body).subscribe({
+        next: (response) => {
+          resolve(response);
+        },
+        error: (error) => {
+          reject(error);
+        }
+      });
+    });
+  }
 }
