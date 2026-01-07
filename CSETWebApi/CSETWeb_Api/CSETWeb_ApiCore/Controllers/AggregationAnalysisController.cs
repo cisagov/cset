@@ -121,8 +121,8 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/top5")]
-        public IActionResult Top5([FromBody] int aggregationID)
+        [Route("api/aggregation/analysis/top5/{aggregationID}")]
+        public IActionResult Top5(int aggregationID)
         {
             if (aggregationID == null)
             {
@@ -141,8 +141,8 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/bottom5")]
-        public IActionResult Bottom5([FromBody] int aggregationID)
+        [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
+        public IActionResult Bottom5(int aggregationID)
         {
             if (aggregationID == null)
             {
