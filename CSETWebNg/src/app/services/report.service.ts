@@ -153,7 +153,7 @@ export class ReportService {
    * Opens a new window/tab
    */
   clickReportLink(reportType: string, print: boolean = false) {
-    const url = '/index.html?returnPath=report/' + reportType;
+    const url = '/report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
     localStorage.setItem('report-confidentiality', this.confidentiality);
     window.open(url, '_blank');
