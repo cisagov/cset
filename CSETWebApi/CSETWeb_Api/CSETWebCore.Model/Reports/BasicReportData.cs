@@ -8,17 +8,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Snickler.EFCore;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Diagram;
+using CSETWebCore.Model.Maturity;
+using Snickler.EFCore;
 
 namespace CSETWebCore.Business.Reports
 {
     public class BasicReportData
     {
         public string ApplicationMode { get; set; }
-        public List<usp_GetOverallRankedCategoriesPage_Result> top5Categories;
+        public List<usp_getRankedCategories> top5Categories;
 
         public INFORMATION information { get; set; }
 
