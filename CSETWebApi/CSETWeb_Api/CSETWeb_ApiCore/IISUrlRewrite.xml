@@ -62,7 +62,7 @@
         <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
         <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
       </conditions>
-      <action type="Redirect" url="/index.html?returnPath={R:1}" appendQueryString="true" />
+      <action type="Redirect" url="/index.html?returnPath=report/{R:1}" appendQueryString="true" />
     </rule>
   </rules>
 </rewrite>
