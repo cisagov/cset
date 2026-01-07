@@ -185,11 +185,11 @@ export class AggregationService {
   }
 
   getTrendTop5(aggregation: number) {
-    return this.http.post(this.apiUrl + 'analysis/top5', { aggregationID: aggregation });
+    return this.http.post(this.apiUrl + `analysis/top5/${aggregation}`, {});
   }
 
   getTrendBottom5(aggregation: number) {
-    return this.http.post(this.apiUrl + 'analysis/bottom5', { aggregationID: aggregation });
+    return this.http.post(this.apiUrl + `analysis/bottom5/${aggregation}`, {});
   }
 
   getCategoryPercentageComparisons() {
