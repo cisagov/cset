@@ -37,12 +37,12 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   templateUrl: './trend-report.component.html',
   styleUrls: ['../reports.scss'],
   standalone: false,
-    // eslint-disable-next-line
-    host: {
-      'class': 'force-light-mode',
-      '[attr.data-theme]': '"light"',
-      '[attr.data-bs-theme]': '"light"'
-    }
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {
@@ -120,12 +120,12 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
