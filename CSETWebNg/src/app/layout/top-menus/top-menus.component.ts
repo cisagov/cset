@@ -133,7 +133,7 @@ export class TopMenusComponent implements OnInit {
     // Resource Library
     this._hotkeysService.add(
       new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-        const url = 'index.html?returnPath=resource-library';
+        const url = '/resource-library';
         window.open(url, '_blank');
         return false; // Prevent bubbling
       })
