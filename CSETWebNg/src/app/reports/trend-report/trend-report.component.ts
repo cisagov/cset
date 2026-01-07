@@ -29,7 +29,6 @@ import { ChartService } from '../../services/chart.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
@@ -47,8 +46,6 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {
   response: any;
-  info: AssessmentDetail;
-
   // Charts for Components
   chartOverallCompl: Chart;
   chartTop5: Chart;
@@ -134,11 +131,6 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (r: AssessmentDetail) => {
-        this.info = r;
-      }
-    );
   }
 
   ngAfterViewChecked() {
