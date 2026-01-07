@@ -55,7 +55,7 @@
               [ngClass]="{ 'has-error': (email?.errors?.notValidEmail || email?.errors?.required) }">
               <label required for="email">{{t('user profile.email')}}</label>
               <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail"
-                #email="ngModel" required appEmailValidator />
+                #email="ngModel" required appEmailValidator (ngModelChange)="confirmEmail.control.updateValueAndValidity()" />
               <div class="alert alert-danger" *ngIf="email?.errors">
                 <div *ngIf="email?.errors?.required">{{t('user profile.email required')}}</div>
                 <div *ngIf="email?.errors?.notValidEmail">{{t('user profile.not valid email')}}</div>
@@ -75,6 +75,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="errorEmailInUse">
+          {{t('user profile.email in use')}}
         </div>
 
         <hr>

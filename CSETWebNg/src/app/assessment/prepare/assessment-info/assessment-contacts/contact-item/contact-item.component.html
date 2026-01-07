@@ -46,7 +46,7 @@
           [email]="contact.primaryEmail" [phone]="contact.phone" [assessmentRoleId]="contact.assessmentRoleId"
           [assessmentRole]="contact.role" [title]="contact.title" [organizationName]="contact.organizationName"
           [siteName]="contact.siteName" [cell]="contact.cellPhone" [ecp]="contact.emergencyCommunicationsProtocol"
-          [POC]="contact.isPrimaryPoc" [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
+          [POC]="contact.isPrimaryPoc" style="position: fixed" [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
         </app-contact-tooltip>
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
@@ -59,7 +59,7 @@
 
       <span class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="editContact()" [disabled]="!enableMyControls">
+          (click)="saveContactChanges()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
@@ -107,7 +107,7 @@
 
       <div class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="editContact()" [disabled]="!enableMyControls">
+          (click)="saveContactChanges()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>

@@ -113,11 +113,11 @@ export class ContactItemComponent implements OnInit, OnChanges {
 
   // if parent closes, this will detect the 'true' change 
   // on the 'impliedSave' property
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
 
     let impliedSave = changes['impliedSave'];
     if (impliedSave != null && impliedSave.currentValue && !this.editMode) {
-      this.finishEdit();
+      await this.finishEdit();
     }
   }
 
@@ -199,9 +199,9 @@ export class ContactItemComponent implements OnInit, OnChanges {
     this.edit.emit(this.contact);
   }
 
-  saveContact() {
+  async saveContact() {
     if (this.contact.isNew) {
-      if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
+      if (await this.existsDuplicateEmail(this.contact.primaryEmail)) {
         return;
       }
 
@@ -210,7 +210,7 @@ export class ContactItemComponent implements OnInit, OnChanges {
       this.contact.isNew = false;
       this.editMode = true;
     } else {
-      this.finishEdit();
+      await this.finishEdit();
     }
   }
 
@@ -218,12 +218,18 @@ export class ContactItemComponent implements OnInit, OnChanges {
     this.remove.emit(true);
   }
 
-  canEditContact(): boolean {
+  /**
+   * 
+   */
+  canSaveContactChanges(): boolean {
     return this.assessSvc.userRoleId === 2;
   }
 
-  editContact() {
-    if (!this.canEditContact()) {
+  /**
+   * 
+   */
+  saveContactChanges() {
+    if (!this.canSaveContactChanges()) {
       this.dialog.open(AlertComponent, {
         data: {
           messageText: "Only assessment facilitators can edit contact information. Please contact your assessment facilitator to make changes."
@@ -237,37 +243,59 @@ export class ContactItemComponent implements OnInit, OnChanges {
     this.editMode = false;
   }
 
-  existsDuplicateEmail(newEmail: string) {
+  /**
+   * 
+   */
+  async existsDuplicateEmail(newEmail: string) {
     if (!newEmail || newEmail.trim() === '') {
       return false;
     }
 
+    // check for dupes among the local contacts
     for (const c of this.contactsList.filter(item => item !== this.contact)) {
       if ((newEmail !== null || newEmail !== '') && (c.primaryEmail.toUpperCase() === newEmail.toUpperCase())) {
         this.dialog
           .open(AlertComponent, {
-            data: { messageText: "This email has already been used. " }
+            data: { messageText: "This email has already been used." }
           })
           .afterClosed()
           .subscribe();
         return true;
       }
     }
+
+    // check for dupes in the system at large
+    const isAvailable = await this.emailSvc.isEmailAvailable(this.contact.userId, newEmail);
+    if (!isAvailable) {
+      this.dialog
+        .open(AlertComponent, {
+          data: { messageText: "This email has already been used by another user, dude." }
+        })
+        .afterClosed()
+        .subscribe();
+      return true;
+    }
+
     return false;
   }
 
-  finishEdit() {
-    if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
+  /**
+   * 
+   */
+  async finishEdit() {
+    if (await this.existsDuplicateEmail(this.contact.primaryEmail)) {
       return;
     }
 
     if (this.isEmailValid()) {
       this.contact.endEdit();
-      if (!this.contact.isNew) {
-        this.edit.emit(this.contact);
-      } else {
+
+      if (this.contact.isNew) {
         this.saveContact();
+      } else {
+        this.edit.emit(this.contact);
       }
+
       this.editMode = true;
     }
   }
@@ -314,6 +342,7 @@ export class ContactItemComponent implements OnInit, OnChanges {
   scrollToTop() {
     this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
   }
+
   // Check if assessment was created by current user 
   assessmentCreator() {
     this.assessSvc.getCreator().then((response: any) => {

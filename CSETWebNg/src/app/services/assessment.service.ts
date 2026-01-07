@@ -410,7 +410,7 @@ export class AssessmentService {
    */
   updateContact(contact: User): any {
     return this.http.post(
-      this.apiUrl + 'contacts/UpdateUser',
+      this.apiUrl + 'contacts/update',
       contact,
       headers
     );

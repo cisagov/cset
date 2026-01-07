@@ -380,7 +380,7 @@ namespace CSETWebCore.Business.Tests.Contact
             };
 
             // Act
-            _contactBusiness.UpdateContact(updatedContact, userId);
+            _contactBusiness.UpdateAssessmentContact(updatedContact, userId);
 
             // Assert
             Assert.Equal("NewFirst", existingContact.FirstName);

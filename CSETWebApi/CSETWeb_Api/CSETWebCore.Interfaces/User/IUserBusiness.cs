@@ -16,7 +16,9 @@ namespace CSETWebCore.Interfaces.User
     public interface IUserBusiness
     {
         UserCreateResponse CreateUser(UserDetail userDetail, CSETContext tmpContext);
-        void UpdateUser(int userid, string PrimaryEmail, CreateUser user);
+
+        void UpdateCurrentUser(CreateUser user);
+
         UserDetail GetUserDetail(string email);
         CreateUser GetUserInfo(int? userId);
         UserCreateResponse CheckUserExists(UserDetail userDetail);
@@ -33,5 +35,7 @@ namespace CSETWebCore.Interfaces.User
         List<ROLES> GetAvailableRoles();
 
         List<UserRole> GetUsers();
+
+        bool CheckEmailIsAvailable(int userId, string proposedEmail);
     }
 }

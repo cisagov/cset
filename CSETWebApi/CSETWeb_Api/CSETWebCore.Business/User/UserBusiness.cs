@@ -4,9 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -14,7 +11,11 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Nelibur.ObjectMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWebCore.Business.User
 {
@@ -127,77 +128,19 @@ namespace CSETWebCore.Business.User
         /// </summary>
         /// <param name="userid">THIS VALUE SHOULD NEVER COME FROM THE POST OR URL ONLY THE AUTHTOKEN</param>
         /// <param name="user"></param>
-        public void UpdateUser(int userid, string PrimaryEmail, CreateUser user)
-        {
-            var dbuser = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
-            TinyMapper.Map(user, dbuser);
-            var details = _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == PrimaryEmail).FirstOrDefault();
-            if (details != null)
-                TinyMapper.Map<CreateUser, USER_DETAIL_INFORMATION>(user, details);
+        //public void UpdateUser(int userid, string PrimaryEmail, CreateUser user)
+        //{
+        //    var dbuser = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+        //    TinyMapper.Map(user, dbuser);
+        //    var details = _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == PrimaryEmail).FirstOrDefault();
+        //    if (details != null)
+        //    {
+        //        TinyMapper.Map<CreateUser, USER_DETAIL_INFORMATION>(user, details);
+        //    }
 
-            /**
-             * Some things to think about
-             * they have existing questions and are updating them
-             * they don't have existing questions and are reusing and existing provided question
-             * they are giving us a new custom question
-             */
+        //    _context.SaveChanges();
+        //}
 
-            // RKW - 9-May-2018 - Commenting out the question logic until we know if we are doing it or not
-            #region Security Question Logic
-            //List<int> processedQuestions = new List<int>();
-            //Dictionary<int, USER_SECURITY_QUESTIONS> existingQuestions = (from a in db.USER_SECURITY_QUESTIONS
-            //                                           join b in db.SECURITY_QUESTION on a.SecurityQuestionID equals b.SecurityQuestionId
-            //                                           where a.UserId == userid
-            //                                           select a
-            //                                           ).ToDictionary(x => x.SecurityQuestionID, x => x);
-            //USER_SECURITY_QUESTIONS question;
-            //if(existingQuestions.TryGetValue(user.CustomQuestion.SecurityQuestionId, out question))
-            //{
-            //    question.SecurityAnswer = user.CustomQuestion.Answer;
-            //    processedQuestions.Add(user.CustomQuestion.SecurityQuestionId);
-            //}
-            //else
-            //{
-            //    SECURITY_QUESTION sq= new SECURITY_QUESTION()
-            //    {
-            //        SecurityQuestion = user.CustomQuestion.SecurityQuestion,
-            //        IsCustomQuestion = true
-            //    };
-            //    db.USER_SECURITY_QUESTIONS.Add(new USER_SECURITY_QUESTIONS()
-            //    {
-            //        SecurityAnswer = user.CustomQuestion.Answer,
-            //        SECURITY_QUESTION = sq,
-            //        UserId = userid
-            //    });
-            //    db.SECURITY_QUESTION.Add(sq);
-            //}
-            //if(existingQuestions.TryGetValue(user.SelectedQuestion.SecurityQuestionId,out question))
-            //{
-            //    question.SecurityAnswer = user.SelectedQuestion.Answer;
-            //    processedQuestions.Add(user.SelectedQuestion.SecurityQuestionId);
-            //}
-            //else
-            //{
-            //    db.USER_SECURITY_QUESTIONS.Add(new USER_SECURITY_QUESTIONS()
-            //    {
-            //        SecurityQuestionID = user.SelectedQuestion.SecurityQuestionId,
-            //        SecurityAnswer = user.SelectedQuestion.Answer,
-            //        UserId = userid
-            //    });
-            //}
-            ////remove all the others;
-            //foreach(KeyValuePair<int,USER_SECURITY_QUESTIONS> pair in existingQuestions)
-            //{
-            //    if (!processedQuestions.Contains(pair.Key))
-            //    {
-            //        db.USER_SECURITY_QUESTIONS.Remove(pair.Value);
-            //    }                        
-            //}
-            #endregion
-
-            _context.SaveChanges();
-
-        }
 
         /// <summary>
         /// 
@@ -206,7 +149,6 @@ namespace CSETWebCore.Business.User
         /// <returns></returns>
         public UserDetail GetUserDetail(string email)
         {
-
             var result = _context.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
 
             if (result == null)
@@ -262,6 +204,15 @@ namespace CSETWebCore.Business.User
             return cu;
         }
 
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userDetail"></param>
+        /// <returns></returns>
         public UserCreateResponse CheckUserExists(UserDetail userDetail)
         {
             UserDetail existingUser = this.GetUserDetail(userDetail.Email);
@@ -277,7 +228,6 @@ namespace CSETWebCore.Business.User
                 resp.IsExisting = false;
             }
             return resp;
-
         }
 
 
@@ -310,7 +260,6 @@ namespace CSETWebCore.Business.User
             };
 
             return ud;
-
         }
 
 
@@ -323,6 +272,7 @@ namespace CSETWebCore.Business.User
             {
                 s = s.Insert(new Random().Next(1, s.Length), choices[new Random().Next(0, choices.Length)].ToString());
             }
+
             return s;
         }
 
@@ -355,6 +305,19 @@ namespace CSETWebCore.Business.User
             return $"{u.FirstName} {u.LastName}".Trim();
         }
 
+
+        public bool CheckEmailIsAvailable(int userId, string proposedEmail)
+        {
+            // check that we aren't trying to use an existing email address
+            if (_context.USERS.Any(x => x.PrimaryEmail == proposedEmail && x.UserId != userId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         /// <summary>
         /// Returns a role for specific user.
         /// </summary>
@@ -363,11 +326,26 @@ namespace CSETWebCore.Business.User
         public string GetRole(int? userId)
         {
             var userRole = _context.USER_ROLES.FirstOrDefault(x => x.UserId == userId);
+
+            // give the user a basic role if one has not been created
+            if (userRole == null)
+            {
+                userRole = new USER_ROLES() {
+                     UserId = (int)userId,
+                     RoleId = Constants.Constants.ROLE_USER
+                };
+
+                _context.USER_ROLES.Add(userRole);
+                _context.SaveChanges();
+            }
+
             var role = _context.ROLES
                 .Where(r => r.RoleId == userRole.RoleId)
                 .FirstOrDefault();
+
             return role.RoleName;
         }
+
 
         /// <summary>
         /// Returns all users in the database.
@@ -391,6 +369,7 @@ namespace CSETWebCore.Business.User
             return resp;
         }
 
+
         /// <summary>
         /// Returns all available roles.
         /// </summary>
@@ -405,6 +384,7 @@ namespace CSETWebCore.Business.User
             return roles;
         }
 
+
         /// <summary>
         /// Updates role for specific user.
         /// </summary>
@@ -417,6 +397,100 @@ namespace CSETWebCore.Business.User
             userRole.RoleId = roleId;
             _context.USER_ROLES.Update(userRole);
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        public void UpdateCurrentUser(CreateUser user)
+        {
+            var dbUser = _context.USERS.Where(x => x.UserId == user.UserId).FirstOrDefault();
+            if (dbUser == null)
+            {
+                throw new Exception("No user exists for the specified ID.");
+            }
+
+            // check that we aren't trying to use an existing email address
+            if (_context.USERS.Any(x => x.PrimaryEmail == user.PrimaryEmail && x.UserId != user.UserId))
+            {
+                throw new Exception("Email address belongs to another user");
+            }
+
+
+            dbUser.FirstName = user.FirstName;
+            dbUser.LastName = user.LastName;
+            dbUser.PrimaryEmail = user.PrimaryEmail;
+
+
+            // update my name and email address on any ASSESSMENT_CONTACTS
+            var myACs = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToList();
+            foreach (var ac in myACs)
+            {
+                ac.FirstName = user.FirstName;
+                ac.LastName = user.LastName;
+                ac.PrimaryEmail = user.PrimaryEmail;
+            }
+
+
+            // update security questions/answers
+            var sq = _context.USER_SECURITY_QUESTIONS.Where(x => x.UserId == user.UserId).FirstOrDefault();
+            if (sq == null)
+            {
+                sq = new USER_SECURITY_QUESTIONS
+                {
+                    UserId = user.UserId
+                };
+                _context.USER_SECURITY_QUESTIONS.Add(sq);
+                _context.SaveChanges();
+            }
+
+            sq.SecurityQuestion1 = NullIfEmpty(user.SecurityQuestion1);
+            sq.SecurityAnswer1 = NullIfEmpty(user.SecurityAnswer1);
+            sq.SecurityQuestion2 = NullIfEmpty(user.SecurityQuestion2);
+            sq.SecurityAnswer2 = NullIfEmpty(user.SecurityAnswer2);
+
+            // don't store a question or answer without its partner
+            if (sq.SecurityQuestion1 == null || sq.SecurityAnswer1 == null)
+            {
+                sq.SecurityQuestion1 = null;
+                sq.SecurityAnswer1 = null;
+            }
+            if (sq.SecurityQuestion2 == null || sq.SecurityAnswer2 == null)
+            {
+                sq.SecurityQuestion2 = null;
+                sq.SecurityAnswer2 = null;
+            }
+
+            // delete or add/update the record
+            if (sq.SecurityQuestion1 != null || sq.SecurityQuestion2 != null)
+            {
+                _context.USER_SECURITY_QUESTIONS.Update(sq);
+            }
+            else
+            {
+                // both questions are null -- remove the record                                                
+                _context.USER_SECURITY_QUESTIONS.Remove(sq);
+            }
+
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Returns null if the target string is empty or just spaces.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private string NullIfEmpty(string s)
+        {
+            if (s != null && s.Trim().Length == 0)
+            {
+                return null;
+            }
+
+            return s;
         }
     }
 }

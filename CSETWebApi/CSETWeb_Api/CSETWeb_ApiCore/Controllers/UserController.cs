@@ -4,6 +4,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Model.Email;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.User;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -23,6 +25,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
         private readonly ITokenManager _tokenManager;
+
 
         /// <summary>
         /// Constructor.
@@ -38,7 +41,6 @@ namespace CSETWebCore.Api.Controllers
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
             _tokenManager = tokenManager;
-
         }
 
 
@@ -155,6 +157,7 @@ namespace CSETWebCore.Api.Controllers
             return (apiKey == secret);
         }
 
+
         /// <summary>
         /// Checks for current user role.
         /// </summary>
@@ -177,6 +180,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// Grabs all users from the database.
         /// </summary>
@@ -197,6 +201,24 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+
+
+        [HttpPost]
+        [Route("api/user")]
+        public IActionResult UpdateCurrentUser([FromBody] CreateUser user)
+        {
+            try
+            {
+                _userBusiness.UpdateCurrentUser(user);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
+
+            return Ok();
+        }
+
 
         /// <summary>
         /// Updates user role.
@@ -220,6 +242,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// Grabs all current roles from the database.
         /// </summary>
@@ -231,6 +254,32 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 return Ok(_userBusiness.GetAvailableRoles());
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Returns a boolean indicating if the proposed email is available
+        /// to be assigned to the specified user and not used by another user account.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/is-email-available")]
+        public IActionResult CheckEmailForDupe([FromBody] CheckEmailRequest request)
+        {
+            try
+            {
+                var isAuthenticated = _tokenManager.IsAuthenticated();
+
+                var isAvailable = _userBusiness.CheckEmailIsAvailable(request.UserId, request.ProposedEmail);
+                return Ok(isAvailable);
             }
             catch (Exception exc)
             {
