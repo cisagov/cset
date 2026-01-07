@@ -1208,10 +1208,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getComponentTypes]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetComponentTypesPage]",
          "ObjectType": 1
       },
