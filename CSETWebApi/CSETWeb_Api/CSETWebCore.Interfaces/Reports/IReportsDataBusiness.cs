@@ -7,6 +7,7 @@
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -40,7 +41,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<List<DiagramZones>> GetDiagramZones();
         List<StandardQuestions> GetQuestionsForEachStandard();
         List<ComponentQuestion> GetComponentQuestions();
-        List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories();
+        List<usp_getRankedCategories> GetTop5Categories();
         List<RankedQuestions> GetTop5Questions();
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
         List<QuestionsWithComments> GetQuestionsWithComments();

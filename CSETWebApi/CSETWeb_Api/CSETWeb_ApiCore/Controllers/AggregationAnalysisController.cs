@@ -16,6 +16,8 @@ using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Analytics;
+using System.Threading.Tasks;
 
 
 
@@ -388,7 +390,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/componentsanswers")]
-        public IActionResult GetComponentsAnswerDistribution()
+        public async Task<IActionResult> GetComponentsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -408,22 +410,21 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            // Get components summary using LINQ
+            // (replaces usp_GetComponentsSummary stored procedure call)
+            var componentsSummaryBusiness = new ComponentsSummaryBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_GetComponentsSummary]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<usp_getComponentsSummmary>)handler.ReadToList<usp_getComponentsSummmary>();
+                var procResults = await componentsSummaryBusiness.GetComponentsSummaryAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.Answer_Text))
-                            {
-                                dict[procResult.Answer_Text].Add(procResult.value);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.Answer_Text))
+                    {
+                        dict[procResult.Answer_Text].Add(procResult.value);
+                    }
+                }
             }
 
             var response = new PieChart();
