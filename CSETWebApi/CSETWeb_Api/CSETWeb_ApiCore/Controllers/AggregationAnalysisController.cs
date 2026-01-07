@@ -123,10 +123,9 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/top5")]
-        public IActionResult Top5()
+        [Route("api/aggregation/analysis/top5/{aggregationID}")]
+        public IActionResult Top5(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
             {
                 return Ok();
@@ -144,10 +143,9 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/bottom5")]
-        public IActionResult Bottom5()
+        [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
+        public IActionResult Bottom5(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
             {
                 return Ok();

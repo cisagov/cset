@@ -93,7 +93,7 @@ export class ReportService {
     return this.http.get(this.apiUrl + 'reports/info');
   }
 
-  public getAggReport(reportId: string, aggId: number) {
+  getAggReport(reportId: string, aggId: number) {
     return this.http.get(this.apiUrl + 'reports/' + reportId + '?aggregationID=' + aggId);
   }
 

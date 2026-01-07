@@ -39,17 +39,16 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   templateUrl: './compare-report.component.html',
   styleUrls: ['../reports.scss'],
   standalone: false,
-    // eslint-disable-next-line
-    host: {
-      'class': 'force-light-mode',
-      '[attr.data-theme]': '"light"',
-      '[attr.data-bs-theme]': '"light"'
-    }
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
-  info: AssessmentDetail;
 
   chartOverallAverage: Chart;
   aggSvc: AggregationService;
@@ -75,11 +74,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.titleService.setTitle("Compare Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (r: AssessmentDetail) => {
-        this.info = r;
-      }
-    );
+
     this.reportSvc.getAggReport('compare-report', aggId).subscribe(
       (r: any) => {
         this.response = r;

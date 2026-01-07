@@ -184,12 +184,12 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', null);
   }
 
-  getTrendTop5() {
-    return this.http.post(this.apiUrl + 'analysis/top5', null);
+  getTrendTop5(aggregation: number) {
+    return this.http.post(this.apiUrl + `analysis/top5/${aggregation}`, {});
   }
 
-  getTrendBottom5() {
-    return this.http.post(this.apiUrl + 'analysis/bottom5', null);
+  getTrendBottom5(aggregation: number) {
+    return this.http.post(this.apiUrl + `analysis/bottom5/${aggregation}`, {});
   }
 
   getCategoryPercentageComparisons() {
