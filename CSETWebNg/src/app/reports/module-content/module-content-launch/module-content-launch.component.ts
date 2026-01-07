@@ -218,7 +218,7 @@ export class ModuleContentLaunchComponent implements OnInit {
    *
    */
   launchModelReport() {
-    const url = '/index.html?returnPath=report/module-content?mm=' + this.selectedModel;
+    const url = '/report/module-content?mm=' + this.selectedModel;
     window.open(url, '_blank');
   }
 
@@ -226,7 +226,7 @@ export class ModuleContentLaunchComponent implements OnInit {
    *
    */
   launchStandardReport() {
-    const url = '/index.html?returnPath=report/module-content?m=' + this.selectedStandard;
+    const url = '/report/module-content?m=' + this.selectedStandard;
     window.open(url, '_blank');
   }
 
