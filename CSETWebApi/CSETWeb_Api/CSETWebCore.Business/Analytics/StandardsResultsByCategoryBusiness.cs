@@ -16,7 +16,7 @@ namespace CSETWebCore.Business.Analytics
 {
     /// <summary>
     /// Provides standards results by category analysis functionality.
-    /// Replaces usp_getStandardsResultsByCategory stored procedure.
+    /// Replaces StandardsCategoryResult stored procedure.
     /// </summary>
     public class StandardsResultsByCategoryBusiness
     {
@@ -29,11 +29,11 @@ namespace CSETWebCore.Business.Analytics
 
         /// <summary>
         /// Gets the standards results by category data for an assessment.
-        /// This replaces the usp_getStandardsResultsByCategory stored procedure.
+        /// This replaces the StandardsCategoryResult stored procedure.
         /// </summary>
         /// <param name="assessmentId">The assessment ID</param>
-        /// <returns>List of usp_getStandardsResultsByCategory containing category results data</returns>
-        public async Task<List<usp_getStandardsResultsByCategory>> GetStandardsResultsByCategoryAsync(int assessmentId)
+        /// <returns>List of StandardsCategoryResult containing category results data</returns>
+        public async Task<List<StandardsCategoryResult>> GetStandardsResultsByCategoryAsync(int assessmentId)
         {
             var applicationMode = await GetApplicationModeAsync(assessmentId);
 
@@ -64,7 +64,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets standards results by category for Questions Based mode.
         /// </summary>
-        private async Task<List<usp_getStandardsResultsByCategory>> GetResultsForQuestionsAsync(int assessmentId)
+        private async Task<List<StandardsCategoryResult>> GetResultsForQuestionsAsync(int assessmentId)
         {
             // Get the selected SAL level
             var standardSelection = await _context.STANDARD_SELECTION
@@ -154,7 +154,7 @@ namespace CSETWebCore.Business.Analytics
 
             // Build final results
             var results = allCombinations
-                .Select(c => new usp_getStandardsResultsByCategory
+                .Select(c => new StandardsCategoryResult
                 {
                     Set_Name = c.setName,
                     Short_Name = setShortNames.GetValueOrDefault(c.setName, ""),
@@ -173,7 +173,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets standards results by category for Requirements Based mode.
         /// </summary>
-        private async Task<List<usp_getStandardsResultsByCategory>> GetResultsForRequirementsAsync(int assessmentId)
+        private async Task<List<StandardsCategoryResult>> GetResultsForRequirementsAsync(int assessmentId)
         {
             // Get all non-NA answered requirements grouped by Set_Name and Standard_Category
             var totalCounts = await (
@@ -243,7 +243,7 @@ namespace CSETWebCore.Business.Analytics
 
             // Build final results
             var results = allCombinations
-                .Select(c => new usp_getStandardsResultsByCategory
+                .Select(c => new StandardsCategoryResult
                 {
                     Set_Name = c.setName,
                     Short_Name = setShortNames.GetValueOrDefault(c.setName, ""),

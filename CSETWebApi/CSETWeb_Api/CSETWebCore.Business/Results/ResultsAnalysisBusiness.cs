@@ -47,13 +47,13 @@ namespace CSETWebCore.Business.Results
         {
             ChartData chartData = new();
 
-            // Get results using LINQ (replaces usp_getStandardsResultsByCategory stored procedure)
+            // Get results using LINQ (replaces StandardsCategoryResult stored procedure)
             var business = new StandardsResultsByCategoryBusiness(_context);
             var spResults = await business.GetStandardsResultsByCategoryAsync(assessmentId);
 
             // Begin with alpha-sorted group headings
             var result = spResults.OrderBy(x => x.Question_Group_Heading).ToList();
-            var labels = (from usp_getStandardsResultsByCategory an in result
+            var labels = (from StandardsCategoryResult an in result
                           orderby an.Question_Group_Heading
                           select new QuestionGroupHeadingSimple(an.Question_Group_Heading, an.QGH_Id)).Distinct().ToList();
 
@@ -76,7 +76,7 @@ namespace CSETWebCore.Business.Results
 
             ColorsList colors = new ColorsList();
 
-            var sets = (from usp_getStandardsResultsByCategory an in result
+            var sets = (from StandardsCategoryResult an in result
                         select new { an.Set_Name, an.Short_Name }).Distinct();
 
             foreach (var set in sets)
@@ -85,14 +85,14 @@ namespace CSETWebCore.Business.Results
                 chartData.dataSets.Add(nextChartData);
                 nextChartData.DataRows = [];
 
-                var nextSet = (from usp_getStandardsResultsByCategory an in result
+                var nextSet = (from StandardsCategoryResult an in result
                                where an.Set_Name == set.Set_Name
                                select an).ToList();
 
                 nextChartData.label = set.Short_Name;
                 nextChartData.backgroundColor = colors.getNext(set.Set_Name);
 
-                foreach (usp_getStandardsResultsByCategory c in nextSet)
+                foreach (StandardsCategoryResult c in nextSet)
                 {
                     nextChartData.data.Add((double)c.prc);
                     nextChartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), _lang)?.Value ?? c.Question_Group_Heading);
@@ -114,9 +114,9 @@ namespace CSETWebCore.Business.Results
         /// Orders the labels and results collections by the sequence defined
         /// by the Requirement_Sequence property of its requirements.
         /// </summary>
-        private void OrderCategoriesBySequence(int assessmentId, ref List<usp_getStandardsResultsByCategory> result, ref List<QuestionGroupHeadingSimple> labels)
+        private void OrderCategoriesBySequence(int assessmentId, ref List<StandardsCategoryResult> result, ref List<QuestionGroupHeadingSimple> labels)
         {
-            var newResult = new List<usp_getStandardsResultsByCategory>();
+            var newResult = new List<StandardsCategoryResult>();
             var newLabels = new List<QuestionGroupHeadingSimple>();
 
             var setNames = result.Select(x => x.Set_Name).Distinct().ToList();
