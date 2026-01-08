@@ -1284,22 +1284,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getStandardsRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsResultsByCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsResultsByCategoryPage]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_getStandardSummaryOverall]",
          "ObjectType": 1
       },
