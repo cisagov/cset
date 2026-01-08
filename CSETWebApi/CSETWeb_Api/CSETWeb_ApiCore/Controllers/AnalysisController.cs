@@ -822,38 +822,29 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/StandardsRankedCategories")]
-        public IActionResult GetStandardsRankedCategories()
+        public async Task<IActionResult> GetStandardsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            ChartData chartData = null;
 
-            _context.LoadStoredProc("[usp_getStandardsRankedCategories]")
-                  .WithSqlParam("assessment_Id", assessmentId)
-                  .ExecuteStoredProc((handler) =>
-                  {
-                      var result = handler.ReadToList<usp_getStandardsRankedCategories>();
-                      List<double> data = new List<double>();
-                      List<DataRows> rows = new List<DataRows>();
+            var business = new StandardsRankedCategoriesBusiness(_context);
+            var result = await business.GetStandardsRankedCategoriesAsync(assessmentId);
 
-                      chartData = new ChartData();
-                      chartData.DataRows = new List<DataRows>();
-                      foreach (usp_getStandardsRankedCategories c in result)
-                      {
-                          chartData.data.Add((double)(c.prc ?? 0));
-                          chartData.Labels.Add(c.Question_Group_Heading);
-                          chartData.DataRows.Add(new DataRows()
-                          {
-                              failed = c.nuCount ?? 0,
-                              title = c.Question_Group_Heading,
-                              percent = c.Percent ?? 0,
-                              total = c.qc ?? 0,
-                              rank = c.prc ?? 0
+            var chartData = new ChartData();
+            chartData.DataRows = new List<DataRows>();
 
-                          });
-                      }
-                  });
-
-
+            foreach (var c in result)
+            {
+                chartData.data.Add((double)(c.prc ?? 0));
+                chartData.Labels.Add(c.Question_Group_Heading);
+                chartData.DataRows.Add(new DataRows()
+                {
+                    failed = c.nuCount ?? 0,
+                    title = c.Question_Group_Heading,
+                    percent = c.Percent ?? 0,
+                    total = c.qc ?? 0,
+                    rank = c.prc ?? 0
+                });
+            }
 
             return Ok(chartData);
         }

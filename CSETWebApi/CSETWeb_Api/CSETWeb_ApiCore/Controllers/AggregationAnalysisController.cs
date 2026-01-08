@@ -125,13 +125,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/analysis/top5/{aggregationID}")]
         public IActionResult Top5(int aggregationID)
         {
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
+            _trendData.Process(_context, aggregationID, response, "TOP");
 
             return Ok(response);
         }
@@ -145,15 +141,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
         public IActionResult Bottom5(int aggregationID)
         {
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
+            _trendData.Process(_context, aggregationID, response, "BOTTOM");
 
             return Ok(response);
         }
