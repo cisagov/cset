@@ -180,7 +180,7 @@ namespace CSETWebCore.Api.Controllers
 
                 var percentages = await GetCategoryPercentagesAsync(a.Assessment_Id);
 
-                foreach (usp_getStandardsResultsByCategory pct in percentages)
+                foreach (StandardsCategoryResult pct in percentages)
                 {
                     if (!dt.Columns.Contains(pct.Question_Group_Heading))
                     {
@@ -229,7 +229,7 @@ namespace CSETWebCore.Api.Controllers
         /// Returns the category percentages for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        private async Task<List<usp_getStandardsResultsByCategory>> GetCategoryPercentagesAsync(int assessmentId)
+        private async Task<List<StandardsCategoryResult>> GetCategoryPercentagesAsync(int assessmentId)
         {
             var business = new StandardsResultsByCategoryBusiness(_context);
             return await business.GetStandardsResultsByCategoryAsync(assessmentId);

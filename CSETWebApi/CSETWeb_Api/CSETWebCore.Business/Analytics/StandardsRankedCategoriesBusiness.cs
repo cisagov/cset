@@ -16,7 +16,7 @@ namespace CSETWebCore.Business.Analytics
 {
     /// <summary>
     /// Provides standards ranked categories analysis functionality.
-    /// Replaces usp_getStandardsRankedCategories stored procedure.
+    /// Replaces StandardsRankedCategory stored procedure.
     /// </summary>
     public class StandardsRankedCategoriesBusiness
     {
@@ -29,12 +29,12 @@ namespace CSETWebCore.Business.Analytics
 
         /// <summary>
         /// Gets the standards ranked categories data for an assessment.
-        /// This replaces the usp_getStandardsRankedCategories stored procedure.
+        /// This replaces the StandardsRankedCategory stored procedure.
         /// Note: FillEmptyQuestionsForAnalysis should be called before this method (done in AnalysisController constructor).
         /// </summary>
         /// <param name="assessmentId">The assessment ID</param>
-        /// <returns>List of usp_getStandardsRankedCategories containing ranked category data</returns>
-        public async Task<List<usp_getStandardsRankedCategories>> GetStandardsRankedCategoriesAsync(int assessmentId)
+        /// <returns>List of StandardsRankedCategory containing ranked category data</returns>
+        public async Task<List<StandardsRankedCategory>> GetStandardsRankedCategoriesAsync(int assessmentId)
         {
             var applicationMode = await GetApplicationModeAsync(assessmentId);
 
@@ -65,7 +65,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets ranked categories for Questions Based mode.
         /// </summary>
-        private async Task<List<usp_getStandardsRankedCategories>> GetRankedCategoriesForQuestionsAsync(int assessmentId)
+        private async Task<List<StandardsRankedCategory>> GetRankedCategoriesForQuestionsAsync(int assessmentId)
         {
             // Get the selected SAL level
             var standardSelection = await _context.STANDARD_SELECTION
@@ -96,7 +96,7 @@ namespace CSETWebCore.Business.Analytics
 
             if (!questionsInScope.Any())
             {
-                return new List<usp_getStandardsRankedCategories>();
+                return new List<StandardsRankedCategory>();
             }
 
             // Get max ranking from questions in scope
@@ -162,7 +162,7 @@ namespace CSETWebCore.Business.Analytics
                 let prc = total > 0 ? Math.Round((decimal)actualCr / total * 100, 4) : 0
                 let percent = t.qc > 0 ? Math.Round((decimal)nuCount / t.qc * 100, 4) : 0
                 orderby prc descending
-                select new usp_getStandardsRankedCategories
+                select new StandardsRankedCategory
                 {
                     Set_Name = t.Set_Name,
                     Question_Group_Heading = t.Question_Group_Heading,
@@ -182,7 +182,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets ranked categories for Requirements Based mode.
         /// </summary>
-        private async Task<List<usp_getStandardsRankedCategories>> GetRankedCategoriesForRequirementsAsync(int assessmentId)
+        private async Task<List<StandardsRankedCategory>> GetRankedCategoriesForRequirementsAsync(int assessmentId)
         {
             // Get distinct requirement IDs in scope (selected standards)
             var requirementsInScope = await (
@@ -194,7 +194,7 @@ namespace CSETWebCore.Business.Analytics
 
             if (!requirementsInScope.Any())
             {
-                return new List<usp_getStandardsRankedCategories>();
+                return new List<StandardsRankedCategory>();
             }
 
             // Get max ranking from requirements in scope
@@ -228,7 +228,7 @@ namespace CSETWebCore.Business.Analytics
                 from t in categoryTotals
                 let prc = total > 0 ? Math.Round((decimal)t.cr / total * 100, 4) : 0
                 orderby prc descending
-                select new usp_getStandardsRankedCategories
+                select new StandardsRankedCategory
                 {
                     Set_Name = null,
                     Question_Group_Heading = t.Question_Group_Heading,
