@@ -27,7 +27,6 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
-        private static object _myLockObject = new object();
         private readonly ITokenManager _tokenManager;
         private readonly ITrendDataProcessor _trendData;
         private CSETContext _context;
@@ -126,13 +125,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/analysis/top5/{aggregationID}")]
         public IActionResult Top5(int aggregationID)
         {
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
+            _trendData.Process(_context, aggregationID, response, "TOP");
 
             return Ok(response);
         }
@@ -146,15 +141,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
         public IActionResult Bottom5(int aggregationID)
         {
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
+            _trendData.Process(_context, aggregationID, response, "BOTTOM");
 
             return Ok(response);
         }
@@ -166,7 +156,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare()
+        public async Task<IActionResult> CategoryPercentCompare()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -188,19 +178,16 @@ namespace CSETWebCore.Api.Controllers
                 row["Alias"] = a.Alias;
                 dt.Rows.Add(row);
 
-                lock (_myLockObject)
+                var percentages = await GetCategoryPercentagesAsync(a.Assessment_Id);
+
+                foreach (StandardsCategoryResult pct in percentages)
                 {
-                    var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
-
-                    foreach (usp_getStandardsResultsByCategory pct in percentages)
+                    if (!dt.Columns.Contains(pct.Question_Group_Heading))
                     {
-                        if (!dt.Columns.Contains(pct.Question_Group_Heading))
-                        {
-                            dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
-                        }
-
-                        row[pct.Question_Group_Heading] = pct.prc;
+                        dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
                     }
+
+                    row[pct.Question_Group_Heading] = pct.prc;
                 }
             }
 
@@ -242,28 +229,10 @@ namespace CSETWebCore.Api.Controllers
         /// Returns the category percentages for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        /// <param name="db"></param>
-        private List<usp_getStandardsResultsByCategory> GetCategoryPercentages(int assessmentId, CSETContext db)
+        private async Task<List<StandardsCategoryResult>> GetCategoryPercentagesAsync(int assessmentId)
         {
-            List<usp_getStandardsResultsByCategory> response = null;
-
-            lock (_myLockObject)
-            {
-                db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                            .WithSqlParam("assessment_Id", assessmentId)
-                            .ExecuteStoredProc((handler) =>
-                            {
-                                var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
-                                var labels = (from usp_getStandardsResultsByCategory an in result
-                                              orderby an.Question_Group_Heading
-                                              select an.Question_Group_Heading).Distinct().ToList();
-
-
-                                response = (List<usp_getStandardsResultsByCategory>)result;
-                            });
-            }
-
-            return response;
+            var business = new StandardsResultsByCategoryBusiness(_context);
+            return await business.GetStandardsResultsByCategoryAsync(assessmentId);
         }
 
 
@@ -439,7 +408,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/categoryaverages")]
-        public IActionResult GetCategoryAverages()
+        public async Task<IActionResult> GetCategoryAverages()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -452,27 +421,23 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            var business = new StandardsResultsByCategoryBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        // usp_getStandardsResultsByCategory 15
-                        var procResults = (List<usp_getStandardsResultsByCategory>)handler.ReadToList<usp_getStandardsResultsByCategory>();
+                var procResults = await business.GetStandardsResultsByCategoryAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (!dict.ContainsKey(procResult.Question_Group_Heading))
-                            {
-                                dict.Add(procResult.Question_Group_Heading, new List<decimal>());
-                            }
-                            if (procResult.Actualcr > 0)
-                            {
-                                dict[procResult.Question_Group_Heading].Add(procResult.prc);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (!dict.ContainsKey(procResult.Question_Group_Heading))
+                    {
+                        dict.Add(procResult.Question_Group_Heading, new List<decimal>());
+                    }
+                    if (procResult.Actualcr > 0)
+                    {
+                        dict[procResult.Question_Group_Heading].Add(procResult.prc);
+                    }
+                }
             }
 
             var catList = dict.Keys.ToList();
