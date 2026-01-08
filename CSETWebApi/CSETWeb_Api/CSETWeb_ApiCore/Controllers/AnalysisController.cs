@@ -803,18 +803,18 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns a ChartData object with category scores. 
+        /// Returns a ChartData object with category scores.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
-        public IActionResult GetStandardsResultsByCategory()
+        public async Task<IActionResult> GetStandardsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
             ResultsAnalysisBusiness resultsBusiness = new ResultsAnalysisBusiness(_context, _overlay, lang, _tokenManager);
-            var results = resultsBusiness.ResultsByCategory(assessmentId);
+            var results = await resultsBusiness.ResultsByCategoryAsync(assessmentId);
 
             return Ok(results);
         }
