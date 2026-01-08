@@ -352,3 +352,8 @@ GO
 IF OBJECT_ID('dbo.usp_getStandardsResultsByCategory', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getStandardsResultsByCategory;
 GO
+
+-- usp_getStandardsRankedCategories (replaced with LINQ equivalent in StandardsRankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardsRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardsRankedCategories;
+GO
