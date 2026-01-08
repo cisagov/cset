@@ -1325,32 +1325,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_getStandardsRankedCategoriesResult>> usp_getStandardsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getStandardsRankedCategoriesResult>("EXEC @returnValue = [dbo].[usp_getStandardsRankedCategories] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<usp_getStandardsSummaryResult>> usp_getStandardsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
