@@ -382,3 +382,8 @@ GO
 IF OBJECT_ID('dbo.usp_getRRASummary', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getRRASummary;
 GO
+
+-- usp_GetMaturityAnswerTotals (replaced with LINQ equivalent in MaturityAnswerTotalsBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetMaturityAnswerTotals', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetMaturityAnswerTotals;
+GO
