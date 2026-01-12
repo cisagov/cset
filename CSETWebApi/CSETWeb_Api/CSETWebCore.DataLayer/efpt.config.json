@@ -1284,10 +1284,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getStandardSummaryOverall]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetTop5Areas]",
          "ObjectType": 1
       },
