@@ -507,11 +507,10 @@ namespace CSETWebCore.Api.Controllers
         /// aggregation.  This logic is flexible for models that have their own answer option lists.
         /// In other words, no "Y", "N", "A" assumption is made.
         /// </summary>
-        /// <param name="aggregationID"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/maturity/answertotals")]
-        public IActionResult GetMaturityAnswerTotalsFlexible()
+        public async Task<IActionResult> GetMaturityAnswerTotalsFlexible()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -524,45 +523,40 @@ namespace CSETWebCore.Api.Controllers
 
             List<AnswerCountsGeneric> response = new List<AnswerCountsGeneric>();
 
+            var maturityAnswerTotalsBusiness = new MaturityAnswerTotalsBusiness(_context);
+
             foreach (var a in assessmentList)
             {
                 var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == a.Assessment.Assessment_Id)
                     .Include(x => x.model)
                     .FirstOrDefault();
 
-
                 // create a list of applicable answer options
                 var answerOrder = mm.model.Answer_Options.Split(',').ToList();
                 answerOrder.Add("U");
 
+                // Call LINQ-based method instead of SP
+                var results = await maturityAnswerTotalsBusiness.GetMaturityAnswerTotalsAsync(a.Assessment_Id);
 
-                _context.LoadStoredProc("[usp_GetMaturityAnswerTotals]")
-                   .WithSqlParam("assessment_id", a.Assessment_Id)
-                   .ExecuteStoredProc((handler) =>
-                   {
-                       var results = (List<AnswerCountsAndPercentages>)handler.ReadToList<AnswerCountsAndPercentages>();
+                var acg = new AnswerCountsGeneric();
+                acg.AssessmentId = a.Assessment_Id;
+                acg.ModelId = mm.model_id;
+                acg.Alias = a.Alias;
 
+                foreach (var item in answerOrder)
+                {
+                    var dbResult = results.FirstOrDefault(x => x.Answer_Text == item);
 
-                       var acg = new AnswerCountsGeneric();
-                       acg.AssessmentId = a.Assessment_Id;
-                       acg.ModelId = mm.model_id;
-                       acg.Alias = a.Alias;
+                    acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
+                    {
+                        Answer_Text = item,
+                        QC = dbResult?.QC ?? 0,
+                        Total = dbResult?.Total ?? 0,
+                        Percent = dbResult?.Percent ?? 0
+                    });
+                }
 
-                       foreach (var item in answerOrder)
-                       {
-                           var dbResult = results.Where(x => x.Answer_Text == item).FirstOrDefault();
-
-                           acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
-                           {
-                               Answer_Text = item,
-                               QC = dbResult?.QC ?? 0,
-                               Total = dbResult?.Total ?? 0,
-                               Percent = dbResult?.Percent ?? 0
-                           });
-                       }
-
-                       response.Add(acg);
-                   });
+                response.Add(acg);
             }
 
             return Ok(response);
