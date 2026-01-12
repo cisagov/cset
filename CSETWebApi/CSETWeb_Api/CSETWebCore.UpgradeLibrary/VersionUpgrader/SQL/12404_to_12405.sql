@@ -387,3 +387,8 @@ GO
 IF OBJECT_ID('dbo.usp_GetMaturityAnswerTotals', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_GetMaturityAnswerTotals;
 GO
+
+-- usp_getComponentsResultsByCategory (replaced with LINQ equivalent in ComponentsResultsByCategoryBusiness.cs)
+IF OBJECT_ID('dbo.usp_getComponentsResultsByCategory', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getComponentsResultsByCategory;
+GO
