@@ -1264,30 +1264,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getRRASummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryByGoalOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardSummaryOverall]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetTop5Areas]",
          "ObjectType": 1
       },

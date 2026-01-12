@@ -304,7 +304,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/standardsanswers")]
-        public IActionResult GetStandardsAnswerDistribution()
+        public async Task<IActionResult> GetStandardsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -324,22 +324,21 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            // Get standards summary using LINQ
+            // (replaces usp_getStandardSummaryOverall stored procedure call)
+            var standardSummaryOverallBusiness = new StandardSummaryOverallBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var procResults = await standardSummaryOverallBusiness.GetStandardSummaryOverallAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.Answer_Text))
-                            {
-                                dict[procResult.Answer_Text].Add(procResult.Percent);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.Answer_Text))
+                    {
+                        dict[procResult.Answer_Text].Add(procResult.Percent);
+                    }
+                }
             }
 
 
@@ -463,7 +462,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getanswertotals")]
-        public IActionResult GetAnswerTotals()
+        public async Task<IActionResult> GetAnswerTotals()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -476,28 +475,27 @@ namespace CSETWebCore.Api.Controllers
 
             List<AnswerCounts> response = new List<AnswerCounts>();
 
+            // Get standards summary using LINQ
+            // (replaces usp_getStandardSummaryOverall stored procedure call)
+            var standardSummaryOverallBusiness = new StandardSummaryOverallBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var results = await standardSummaryOverallBusiness.GetStandardSummaryOverallAsync(a.Assessment_Id);
 
-                        var ansCount = new AnswerCounts()
-                        {
-                            AssessmentId = a.Assessment_Id,
-                            Alias = a.Alias,
-                            Total = results.Max(x => x.Total),
-                            Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
-                            N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
-                            A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
-                            NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
-                            U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
-                        };
+                var ansCount = new AnswerCounts()
+                {
+                    AssessmentId = a.Assessment_Id,
+                    Alias = a.Alias,
+                    Total = results.Any() ? results.Max(x => x.Total) : 0,
+                    Y = results.FirstOrDefault(x => x.Answer_Text == "Y")?.qc ?? 0,
+                    N = results.FirstOrDefault(x => x.Answer_Text == "N")?.qc ?? 0,
+                    A = results.FirstOrDefault(x => x.Answer_Text == "A")?.qc ?? 0,
+                    NA = results.FirstOrDefault(x => x.Answer_Text == "NA")?.qc ?? 0,
+                    U = results.FirstOrDefault(x => x.Answer_Text == "U")?.qc ?? 0
+                };
 
-                        response.Add(ansCount);
-                    });
+                response.Add(ansCount);
             }
 
             return Ok(response);
