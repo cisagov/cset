@@ -90,13 +90,17 @@ namespace CSETWebCore.Business.Analytics
             var total = answerCounts.Values.Sum();
 
             // Build the result with all answer types from ANSWER_LOOKUP
-            var results = answerLookups.Select(a => new StandardSummaryOverallResult
+            var results = answerLookups.Select(a =>
             {
-                Answer_Full_Name = a.Answer_Full_Name,
-                Answer_Text = a.Answer_Text,
-                qc = answerCounts.TryGetValue(a.Answer_Text, out var count) ? count : 0,
-                Total = total,
-                Percent = total > 0 ? (int)Math.Round((double)(answerCounts.TryGetValue(a.Answer_Text, out var c) ? c : 0) / total * 100, 0) : 0
+                var qc = answerCounts.TryGetValue(a.Answer_Text, out var count) ? count : 0;
+                return new StandardSummaryOverallResult
+                {
+                    Answer_Full_Name = a.Answer_Full_Name,
+                    Answer_Text = a.Answer_Text,
+                    qc = qc,
+                    Total = total,
+                    Percent = total > 0 ? (int)Math.Round((double)qc / total * 100, 0) : 0
+                };
             }).ToList();
 
             return results;
