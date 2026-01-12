@@ -230,9 +230,9 @@ namespace CSETWebCore.Api.Controllers
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.RRASummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
 
-            data.RRASummary = summary.GetRRASummary(assessmentId);
+            data.RRASummary = await summary.GetRRASummaryAsync(assessmentId);
 
-            data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
+            data.RRASummaryByGoal = await summary.GetRRASummaryByGoalAsync(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
             {
