@@ -1111,58 +1111,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_getComponentsSummaryResult>> usp_getComponentsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getComponentsSummaryResult>("EXEC @returnValue = [dbo].[usp_getComponentsSummary] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_getComponentTypesResult>> usp_getComponentTypesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getComponentTypesResult>("EXEC @returnValue = [dbo].[usp_getComponentTypes] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1221,58 +1169,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_getOverallRankedCategoriesResult>> usp_getOverallRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getOverallRankedCategoriesResult>("EXEC @returnValue = [dbo].[usp_getOverallRankedCategories] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_GetOverallRankedCategoriesPageResult>> usp_GetOverallRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_GetOverallRankedCategoriesPageResult>("EXEC @returnValue = [dbo].[usp_GetOverallRankedCategoriesPage] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<usp_GetQuestionsResult>> usp_GetQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1293,58 +1189,6 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_GetQuestionsResult>("EXEC @returnValue = [dbo].[usp_GetQuestions] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_getRankedCategoriesResult>> usp_getRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getRankedCategoriesResult>("EXEC @returnValue = [dbo].[usp_getRankedCategories] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_GetRankedCategoriesPageResult>> usp_GetRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_GetRankedCategoriesPageResult>("EXEC @returnValue = [dbo].[usp_GetRankedCategoriesPage] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1475,58 +1319,6 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_getRRASummaryOverallResult>("EXEC @returnValue = [dbo].[usp_getRRASummaryOverall] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_getStandardsRankedCategoriesResult>> usp_getStandardsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getStandardsRankedCategoriesResult>("EXEC @returnValue = [dbo].[usp_getStandardsRankedCategories] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_getStandardsResultsByCategoryResult>> usp_getStandardsResultsByCategoryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getStandardsResultsByCategoryResult>("EXEC @returnValue = [dbo].[usp_getStandardsResultsByCategory] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

@@ -1208,10 +1208,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getComponentTypes]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetComponentTypesPage]",
          "ObjectType": 1
       },
@@ -1260,14 +1256,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetRankedQuestions]",
          "ObjectType": 1
       },
@@ -1293,30 +1281,6 @@
       },
       {
          "Name": "[dbo].[usp_getRRASummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsResultsByCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsResultsByCategoryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsSummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsSummaryPage]",
          "ObjectType": 1
       },
       {

@@ -1,12 +1,12 @@
-//////////////////////////////// 
-// 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
+////////////////////////////////
+//
+//   Copyright 2025 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 namespace CSETWebCore.Model.Aggregation
 {
-    public class usp_getStandardsResultsByCategory
+    public class StandardsCategoryResult
     {
         public string Short_Name { get; set; }
         public string Set_Name { get; set; }

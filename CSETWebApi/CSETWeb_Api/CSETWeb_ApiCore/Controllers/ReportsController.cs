@@ -591,7 +591,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trend-report")]
-        public IActionResult GetTrendReport(int aggregationID)
+        public IActionResult GetTrendReport([FromQuery] int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
