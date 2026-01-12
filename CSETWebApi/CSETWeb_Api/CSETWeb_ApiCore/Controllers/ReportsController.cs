@@ -219,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/rradetail")]
-        public IActionResult GetRRADetailReport()
+        public async Task<IActionResult> GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
             var lang = _token.GetCurrentLanguage();
@@ -228,12 +228,11 @@ namespace CSETWebCore.Api.Controllers
 
             RRASummary summary = new RRASummary(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
-            data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
+            data.RRASummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
 
+            data.RRASummary = await summary.GetRRASummaryAsync(assessmentId);
 
-            data.RRASummary = summary.GetRRASummary(assessmentId);
-
-            data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
+            data.RRASummaryByGoal = await summary.GetRRASummaryByGoalAsync(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
             {
@@ -244,7 +243,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
+            data.RRASummaryByGoalOverall = await summary.GetRRASummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
         }
 

@@ -357,3 +357,28 @@ GO
 IF OBJECT_ID('dbo.usp_getStandardsRankedCategories', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getStandardsRankedCategories;
 GO
+
+-- usp_getStandardSummaryOverall (replaced with LINQ equivalent in StandardSummaryOverallBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardSummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardSummaryOverall;
+GO
+
+-- usp_getRRASummaryOverall (replaced with LINQ equivalent in RraSummary.cs)
+IF OBJECT_ID('dbo.usp_getRRASummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummaryOverall;
+GO
+
+-- usp_getRRASummaryByGoalOverall (replaced with LINQ equivalent in RraSummary.cs)
+IF OBJECT_ID('dbo.usp_getRRASummaryByGoalOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummaryByGoalOverall;
+GO
+
+-- usp_getRRASummaryByGoal (replaced with LINQ equivalent in RraSummary.cs)
+IF OBJECT_ID('dbo.usp_getRRASummaryByGoal', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummaryByGoal;
+GO
+
+-- usp_getRRASummary (replaced with LINQ equivalent in RraSummary.cs)
+IF OBJECT_ID('dbo.usp_getRRASummary', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummary;
+GO
