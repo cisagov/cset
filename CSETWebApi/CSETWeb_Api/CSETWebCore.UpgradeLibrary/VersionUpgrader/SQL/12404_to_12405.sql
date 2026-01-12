@@ -362,3 +362,8 @@ GO
 IF OBJECT_ID('dbo.usp_getStandardSummaryOverall', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getStandardSummaryOverall;
 GO
+
+-- usp_getRRASummaryOverall (replaced with LINQ equivalent in RraSummary.cs)
+IF OBJECT_ID('dbo.usp_getRRASummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getRRASummaryOverall;
+GO
