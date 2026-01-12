@@ -121,17 +121,71 @@ namespace CSETWebCore.Business.Reports
 
         }
 
-        public List<usp_getRRASummaryByGoalOverall> GetRRASummaryByGoalOverall(int assessmentId)
+        public async Task<List<usp_getRRASummaryByGoalOverall>> GetRRASummaryByGoalOverallAsync(int assessmentId)
         {
-            List<usp_getRRASummaryByGoalOverall> results = null;
+            const int RRA_MODEL_ID = 5;
+            const int GOAL_LEVEL = 2;
 
-            _context.LoadStoredProc("[usp_getRRASummaryByGoalOverall]")
-            .WithSqlParam("assessment_id", assessmentId)
-            .ExecuteStoredProc((handler) =>
+            // Check for submodel filter (replicates func_AM/func_MQ logic)
+            var submodel = await _context.DETAILS_DEMOGRAPHICS
+                .AsNoTracking()
+                .Where(d => d.Assessment_Id == assessmentId && d.DataItemName == "MATURITY-SUBMODEL")
+                .Select(d => d.StringValue)
+                .FirstOrDefaultAsync();
+
+            // Get all goals for RRA model at Group_Level = 2, ordered by Sequence
+            var goals = await _context.MATURITY_GROUPINGS
+                .AsNoTracking()
+                .Where(g => g.Maturity_Model_Id == RRA_MODEL_ID && g.Group_Level == GOAL_LEVEL)
+                .OrderBy(g => g.Sequence)
+                .Select(g => new { g.Title, g.Grouping_Id })
+                .ToListAsync();
+
+            // Build base query for answered questions
+            var baseQuery =
+                from am in _context.Answer_Maturity.AsNoTracking()
+                join mq in _context.MATURITY_QUESTIONS.AsNoTracking()
+                    on am.Question_Or_Requirement_Id equals mq.Mat_Question_Id
+                join mg in _context.MATURITY_GROUPINGS.AsNoTracking()
+                    on new { Grouping_Id = mq.Grouping_Id, Maturity_Model_Id = (int?)mq.Maturity_Model_Id }
+                    equals new { Grouping_Id = (int?)mg.Grouping_Id, Maturity_Model_Id = (int?)mg.Maturity_Model_Id }
+                where am.Assessment_Id == assessmentId
+                    && am.Is_Maturity == true
+                    && mq.Maturity_Model_Id == RRA_MODEL_ID
+                    && mg.Group_Level == GOAL_LEVEL
+                select new { am, mq, mg };
+
+            // Apply submodel filter if present
+            if (submodel != null)
             {
-                results = handler.ReadToList<usp_getRRASummaryByGoalOverall>().ToList();
-            });
-            return results;
+                var submodelQuestionIds = _context.MATURITY_SUB_MODEL_QUESTIONS
+                    .AsNoTracking()
+                    .Where(sq => sq.Sub_Model_Name == submodel)
+                    .Select(sq => sq.Mat_Question_Id);
+
+                baseQuery = baseQuery.Where(x => submodelQuestionIds.Contains(x.mq.Mat_Question_Id));
+            }
+
+            // Get answered question counts per goal
+            var answerCounts = await baseQuery
+                .GroupBy(x => x.mg.Title)
+                .Select(g => new { Title = g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            int total = answerCounts.Sum(x => x.Count);
+
+            return goals.Select(g =>
+            {
+                int qc = answerCounts.FirstOrDefault(a => a.Title == g.Title)?.Count ?? 0;
+                return new usp_getRRASummaryByGoalOverall
+                {
+                    Assessment_Id = assessmentId,
+                    Title = g.Title,
+                    qc = qc,
+                    Total = total,
+                    Percent = total > 0 ? Math.Round((double)qc / total * 100, 2) : 0
+                };
+            }).ToList();
         }
     }
 }
