@@ -243,7 +243,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
+            data.RRASummaryByGoalOverall = await summary.GetRRASummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
         }
 
