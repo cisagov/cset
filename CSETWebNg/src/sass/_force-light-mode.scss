@@ -26,11 +26,55 @@ html:has(.light-mode-wrapper) {
   background: #ffffff !important;
   min-height: 100%;
 
+  // Force light mode scrollbars on html
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+  &::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 4px !important;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+
   body {
     background-color: #ffffff !important;
     background: #ffffff !important;
     color: rgba(0, 0, 0, 0.87) !important;
     min-height: 100%;
+
+    // Force light mode scrollbars on body
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+      height: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 4px !important;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+    }
   }
 }
 
@@ -129,10 +173,158 @@ app-layout-blank:has(.light-mode-wrapper) {
   > span:not([class*="badge"]):not([class*="btn"]) {
     background-color: transparent;
   }
+
+  // Force light mode scrollbars
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+  // Webkit scrollbar styling for light mode
+  &::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 4px !important;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  // Apply scrollbar styling to all scrollable elements within
+  * {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+      height: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 4px !important;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+  }
 }
 
 .light-mode-wrapper * {
   color-scheme: light !important;
+}
+
+// Override dark theme scrollbars when light mode wrapper is present
+html.dark-theme:has(.light-mode-wrapper),
+html[data-theme="dark"]:has(.light-mode-wrapper),
+html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
+  // Force light mode scrollbars on html
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+  &::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 4px !important;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  body {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+      height: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 4px !important;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+}
+
+// Override dark theme scrollbars specifically for light mode wrapper
+.dark-theme .light-mode-wrapper,
+[data-theme="dark"] .light-mode-wrapper,
+[data-bs-theme="dark"] .light-mode-wrapper {
+  // Force light mode scrollbars in dark theme
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+  &::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 4px !important;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  // Apply to all children
+  * {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+      height: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 4px !important;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+  }
 }
 
 // More selective overrides - don't touch elements with explicit backgrounds
