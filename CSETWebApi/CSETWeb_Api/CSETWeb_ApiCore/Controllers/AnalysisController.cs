@@ -852,32 +852,26 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsResultsByCategory")]
-        public IActionResult GetComponentsResultsByCategory()
+        public async Task<IActionResult> GetComponentsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            ChartData chartData = null;
 
-            _context.LoadStoredProc("[usp_getComponentsResultsByCategory]")
-                  .WithSqlParam("assessment_Id", assessmentId)
-                  .ExecuteStoredProc((handler) =>
-                  {
-                      var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
+            var business = new ComponentsResultsByCategoryBusiness(_context);
+            var result = await business.GetComponentsResultsByCategoryAsync(assessmentId);
 
-                      chartData = new ChartData();
-
-                      foreach (usp_getComponentsResultsByCategory c in result)
-                      {
-                          chartData.Labels.Add(c.Question_Group_Heading);
-                          chartData.data.Add((double)c.percent);
-                          chartData.DataRows.Add(new DataRows
-                          {
-                              title = c.Question_Group_Heading,
-                              passed = c.passed,
-                              total = c.total,
-                              percent = c.percent
-                          });
-                      }
-                  });
+            var chartData = new ChartData();
+            foreach (var c in result)
+            {
+                chartData.Labels.Add(c.Question_Group_Heading);
+                chartData.data.Add((double)c.percent);
+                chartData.DataRows.Add(new DataRows
+                {
+                    title = c.Question_Group_Heading,
+                    passed = c.passed,
+                    total = c.total,
+                    percent = c.percent
+                });
+            }
 
             return Ok(chartData);
         }
