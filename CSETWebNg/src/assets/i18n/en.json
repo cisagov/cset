@@ -525,7 +525,7 @@
     "export all": "Export a copy of all assessments to another location.",
     "nav collapse": "Expand/collapse navigation",
     "add favorite": "Add Favorites",
-    "remove favorite":"Remove Favorite"
+    "remove favorite": "Remove Favorite"
   },
   "level": {
     "low": "Low",
@@ -1054,7 +1054,7 @@
     },
     "edm": {
       "model short title": "EDM"
-  },
+    },
     "cis": {
       "model short title": "CIS"
     },

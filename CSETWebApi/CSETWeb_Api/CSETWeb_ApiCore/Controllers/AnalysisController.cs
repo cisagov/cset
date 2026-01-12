@@ -36,6 +36,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IRequirementBusiness _requirement;
         private readonly int _assessmentId;
         private readonly IConfiguration _configuration;
+        private readonly ComponentTypesBusiness _componentTypesBusiness;
 
         static Dictionary<String, String> answerColorDefs;
         private TranslationOverlay _overlay;
@@ -57,6 +58,7 @@ namespace CSETWebCore.Api.Controllers
             _tokenManager = tokenManager;
             _requirement = requirement;
             _configuration = configuration;
+            _componentTypesBusiness = new ComponentTypesBusiness(context);
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -712,7 +714,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]
-        public IActionResult GetComponentsSummary()
+        public async Task<IActionResult> GetComponentsSummary()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -721,45 +723,40 @@ namespace CSETWebCore.Api.Controllers
             chartData.Colors = new List<string>();
             chartData.DataRowsPie = new List<DataRowsPie>();
 
+            // Get components summary using LINQ
+            // (replaces usp_getComponentsSummary stored procedure call)
+            var componentsSummaryBusiness = new ComponentsSummaryBusiness(_context);
+            var answerTotals = await componentsSummaryBusiness.GetComponentsSummaryAsync(assessmentId);
 
-            _context.LoadStoredProc("[usp_getComponentsSummary]")
-                     .WithSqlParam("assessment_Id", assessmentId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var answerTotals = handler.ReadToList<usp_getComponentsSummmary>();
+            // re-order the list
+            var sortedList = new List<usp_getComponentsSummmary>();
+            AddItem("Y", sortedList, answerTotals);
+            AddItem("N", sortedList, answerTotals);
+            AddItem("NA", sortedList, answerTotals);
+            AddItem("A", sortedList, answerTotals);
+            AddItem("U", sortedList, answerTotals);
+            answerTotals = sortedList;
 
-                         // re-order the list 
-                         var sortedList = new List<usp_getComponentsSummmary>();
-                         AddItem("Y", sortedList, answerTotals);
-                         AddItem("N", sortedList, answerTotals);
-                         AddItem("NA", sortedList, answerTotals);
-                         AddItem("A", sortedList, answerTotals);
-                         AddItem("U", sortedList, answerTotals);
-                         answerTotals = sortedList;
+            var totalQuestionCount = answerTotals == null ? 0 : answerTotals.Sum(x => x.vcount);
 
+            foreach (usp_getComponentsSummmary c in answerTotals)
+            {
+                // build DataRowsPie for each answer total
+                DataRowsPie pie = new DataRowsPie();
+                pie.Answer_Full_Name = c.Answer_Full_Name;
+                pie.Short_Name = "";
+                pie.Answer_Text = c.Answer_Text;
+                pie.qc = c.vcount;
+                pie.Total = totalQuestionCount;
+                pie.Percent = (int)Math.Round(c.value, 0);
+                chartData.DataRowsPie.Add(pie);
 
-                         var totalQuestionCount = answerTotals == null ? 0 : answerTotals.Sum(x => x.vcount);
+                chartData.data.Add((double)c.value);
+                chartData.Labels.Add(c.Answer_Text);
 
-                         foreach (usp_getComponentsSummmary c in answerTotals)
-                         {
-                             // build DataRowsPie for each answer total
-                             DataRowsPie pie = new DataRowsPie();
-                             pie.Answer_Full_Name = c.Answer_Full_Name;
-                             pie.Short_Name = "";
-                             pie.Answer_Text = c.Answer_Text;
-                             pie.qc = c.vcount;
-                             pie.Total = totalQuestionCount;
-                             pie.Percent = (int)Math.Round(c.value, 0);
-                             chartData.DataRowsPie.Add(pie);
-
-                             chartData.data.Add((double)c.value);
-                             chartData.Labels.Add(c.Answer_Text);
-
-                             if (!chartData.Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
-                                 chartData.Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
-                         }
-                     });
-
+                if (!chartData.Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
+                    chartData.Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
+            }
 
             // include component count so front end can know whether components are present
             _context.LoadStoredProc("[usp_getExplodedComponent]")
@@ -806,18 +803,18 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns a ChartData object with category scores. 
+        /// Returns a ChartData object with category scores.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
-        public IActionResult GetStandardsResultsByCategory()
+        public async Task<IActionResult> GetStandardsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
             ResultsAnalysisBusiness resultsBusiness = new ResultsAnalysisBusiness(_context, _overlay, lang, _tokenManager);
-            var results = resultsBusiness.ResultsByCategory(assessmentId);
+            var results = await resultsBusiness.ResultsByCategoryAsync(assessmentId);
 
             return Ok(results);
         }
@@ -825,38 +822,29 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/StandardsRankedCategories")]
-        public IActionResult GetStandardsRankedCategories()
+        public async Task<IActionResult> GetStandardsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            ChartData chartData = null;
 
-            _context.LoadStoredProc("[usp_getStandardsRankedCategories]")
-                  .WithSqlParam("assessment_Id", assessmentId)
-                  .ExecuteStoredProc((handler) =>
-                  {
-                      var result = handler.ReadToList<usp_getStandardsRankedCategories>();
-                      List<double> data = new List<double>();
-                      List<DataRows> rows = new List<DataRows>();
+            var business = new StandardsRankedCategoriesBusiness(_context);
+            var result = await business.GetStandardsRankedCategoriesAsync(assessmentId);
 
-                      chartData = new ChartData();
-                      chartData.DataRows = new List<DataRows>();
-                      foreach (usp_getStandardsRankedCategories c in result)
-                      {
-                          chartData.data.Add((double)(c.prc ?? 0));
-                          chartData.Labels.Add(c.Question_Group_Heading);
-                          chartData.DataRows.Add(new DataRows()
-                          {
-                              failed = c.nuCount ?? 0,
-                              title = c.Question_Group_Heading,
-                              percent = c.Percent ?? 0,
-                              total = c.qc ?? 0,
-                              rank = c.prc ?? 0
+            var chartData = new ChartData();
+            chartData.DataRows = new List<DataRows>();
 
-                          });
-                      }
-                  });
-
-
+            foreach (var c in result)
+            {
+                chartData.data.Add((double)(c.prc ?? 0));
+                chartData.Labels.Add(c.Question_Group_Heading);
+                chartData.DataRows.Add(new DataRows()
+                {
+                    failed = c.nuCount ?? 0,
+                    title = c.Question_Group_Heading,
+                    percent = c.Percent ?? 0,
+                    total = c.qc ?? 0,
+                    rank = c.prc ?? 0
+                });
+            }
 
             return Ok(chartData);
         }
@@ -931,7 +919,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentTypes")]
-        public IActionResult ComponentTypes()
+        public async Task<IActionResult> ComponentTypes()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -942,76 +930,69 @@ namespace CSETWebCore.Api.Controllers
                 DataRowsPie = new List<DataRowsPie>()
             };
 
-            _context.LoadStoredProc("[usp_getComponentTypes]")
-                     .WithSqlParam("assessment_Id", assessmentId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var componentTotals = handler.ReadToList<usp_getComponentTypes>();
+            var componentTotals = await _componentTypesBusiness.GetComponentTypesAsync(assessmentId);
 
-                         var cdY = new ChartData
-                         {
-                             label = "Yes",
-                             backgroundColor = answerColorDefs["Y"]
-                         };
-                         chartData.dataSets.Add(cdY);
+            var cdY = new ChartData
+            {
+                label = "Yes",
+                backgroundColor = answerColorDefs["Y"]
+            };
+            chartData.dataSets.Add(cdY);
 
-                         var cdN = new ChartData
-                         {
-                             label = "No",
-                             backgroundColor = answerColorDefs["N"]
-                         };
-                         chartData.dataSets.Add(cdN);
+            var cdN = new ChartData
+            {
+                label = "No",
+                backgroundColor = answerColorDefs["N"]
+            };
+            chartData.dataSets.Add(cdN);
 
-                         var cdNA = new ChartData
-                         {
-                             label = "N/A",
-                             backgroundColor = answerColorDefs["NA"]
-                         };
-                         chartData.dataSets.Add(cdNA);
+            var cdNA = new ChartData
+            {
+                label = "N/A",
+                backgroundColor = answerColorDefs["NA"]
+            };
+            chartData.dataSets.Add(cdNA);
 
-                         var cdAlt = new ChartData
-                         {
-                             label = "Alt",
-                             backgroundColor = answerColorDefs["A"]
-                         };
-                         chartData.dataSets.Add(cdAlt);
+            var cdAlt = new ChartData
+            {
+                label = "Alt",
+                backgroundColor = answerColorDefs["A"]
+            };
+            chartData.dataSets.Add(cdAlt);
 
-                         var cdU = new ChartData
-                         {
-                             label = "Unanswered",
-                             backgroundColor = answerColorDefs["U"]
-                         };
-                         chartData.dataSets.Add(cdU);
+            var cdU = new ChartData
+            {
+                label = "Unanswered",
+                backgroundColor = answerColorDefs["U"]
+            };
+            chartData.dataSets.Add(cdU);
 
+            foreach (var total in componentTotals)
+            {
+                chartData.Labels.Add(total.Symbol_Name);
 
-                         foreach (var total in componentTotals)
-                         {
-                             chartData.Labels.Add(total.Symbol_Name);
+                // adjust the percentages to equal 100% after rounding
+                var adjTotal = new PercentageFixer(total.Y, total.N, total.NA, total.A, total.U);
 
-                             // adjust the percentages to equal 100% after rounding
-                             var adjTotal = new PercentageFixer(total.Y, total.N, total.NA, total.A, total.U);
+                cdY.data.Add((int)adjTotal.Y);
+                cdN.data.Add((int)adjTotal.N);
+                cdNA.data.Add((int)adjTotal.NA);
+                cdAlt.data.Add((int)adjTotal.A);
+                cdU.data.Add((int)adjTotal.U);
 
-                             cdY.data.Add((int)adjTotal.Y);
-                             cdN.data.Add((int)adjTotal.N);
-                             cdNA.data.Add((int)adjTotal.NA);
-                             cdAlt.data.Add((int)adjTotal.A);
-                             cdU.data.Add((int)adjTotal.U);
-
-
-                             // create a new DataRows entry with answer percentages for this component
-                             var row = new DataRows
-                             {
-                                 title = total.Symbol_Name,
-                                 yes = adjTotal.Y,
-                                 no = adjTotal.N,
-                                 na = adjTotal.NA,
-                                 alt = adjTotal.A,
-                                 unanswered = adjTotal.U,
-                                 total = total.Total
-                             };
-                             chartData.DataRows.Add(row);
-                         }
-                     });
+                // create a new DataRows entry with answer percentages for this component
+                var row = new DataRows
+                {
+                    title = total.Symbol_Name,
+                    yes = adjTotal.Y,
+                    no = adjTotal.N,
+                    na = adjTotal.NA,
+                    alt = adjTotal.A,
+                    unanswered = adjTotal.U,
+                    total = total.Total
+                };
+                chartData.DataRows.Add(row);
+            }
 
             chartData.dataSets.ForEach(ds =>
             {

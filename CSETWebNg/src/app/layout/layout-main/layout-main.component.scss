@@ -2700,6 +2700,10 @@ mat-sidenav.mat-sidenav {
   color: $white;
 }
 
+.rl-container, mat-tree.rl-container {
+  background-color: var(--bg-primary);
+}
+
 .btn-chevron {
   padding-left: 0;
 }

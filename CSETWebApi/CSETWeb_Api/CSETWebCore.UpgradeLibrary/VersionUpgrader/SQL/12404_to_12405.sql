@@ -337,3 +337,23 @@ GO
 IF OBJECT_ID('dbo.usp_getOverallRankedCategories', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getOverallRankedCategories;
 GO
+
+-- usp_getComponentTypes (replaced with LINQ equivalent in ComponentTypesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getComponentTypes', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getComponentTypes;
+GO
+
+-- usp_getComponentsSummary (replaced with LINQ equivalent in ComponentsSummaryBusiness.cs)
+IF OBJECT_ID('dbo.usp_getComponentsSummary', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getComponentsSummary;
+GO
+
+-- usp_getStandardsResultsByCategory (replaced with LINQ equivalent in StandardsResultsByCategoryBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardsResultsByCategory', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardsResultsByCategory;
+GO
+
+-- usp_getStandardsRankedCategories (replaced with LINQ equivalent in StandardsRankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardsRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardsRankedCategories;
+GO
