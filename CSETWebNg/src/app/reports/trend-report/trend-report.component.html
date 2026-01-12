@@ -21,94 +21,116 @@
   SOFTWARE.
 -------------------------->
 <div class="light-mode-wrapper" data-theme="light" data-bs-theme="light">
-<div class="report-body mb-5" *transloco="let t">
+  <div class="report-body mb-5" *transloco="let t">
 
-  <app-cover-page [assessDetail]="info" [title]="'SECURITY TREND REPORT'" />
+    <div class="flex-container">
+      <div class="column mt-3">
+        <p class="report-title">
+          {{"SECURITY TREND REPORT"}}
+        </p>
+      </div>
+      <div class="column d-flex justify-content-center">
+        <p style="text-align:center;">
+          <img width="471" height="529" alt="cset" src="assets/images/DetailFiles/image002.jpg">
+        </p>
+      </div>
 
-  <div class="page-break">
-    <h1>Security Assurance Level (SAL)</h1>
-    <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
-      wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
-
-    <table class="table table-bordered table-td-p2">
-      <tr>
-        <th style="width: 20%">Alias</th>
-        <th style="width: 20%">Overall</th>
-        <th style="width: 20%">Confidentiality</th>
-        <th style="width: 20%">Integrity</th>
-        <th style="width: 20%">Availability</th>
-      </tr>
-      <tr *ngFor="let a of response?.salList">
-        <td>{{a.alias}}</td>
-        <td>{{a.osv}}</td>
-        <td>{{a.q_CV}}</td>
-        <td>{{a.q_IV}}</td>
-        <td>{{a.q_AV}}</td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="page-break">
-    <h1>Overall Compliance Score</h1>
-    <div style="margin: 0 auto 2em auto; display: block;">
-      <div><canvas id="canvasOverallCompliance"> {{ chartOverallCompl }} </canvas></div>
+      <div class="cover-page-bottom">
+        <app-logo-for-reports></app-logo-for-reports>
+      </div>
     </div>
 
-    <h1>Assessment Answer Summary</h1>
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+      <app-report-disclaimer></app-report-disclaimer>
+    </div>
+
+    <div class="page-break">
+      <app-report-advisory></app-report-advisory>
+    </div>
+    <div class="page-break">
+      <h1>Security Assurance Level (SAL)</h1>
+      <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
+        wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
 
       <table class="table table-bordered table-td-p2">
         <tr>
-          <th class="text-start p-2">Assessment Alias</th>
-          <th class="text-end p-2 ps-3">Total</th>
-          <th class="text-end p-2 ps-3">Yes</th>
-          <th class="text-end p-2 ps-3">No</th>
-          <th class="text-end p-2 ps-3">NA</th>
-          <th class="text-end p-2 ps-3">Alt</th>
-          <th class="text-end p-2 ps-3">Unanswered</th>
+          <th style="width: 20%">Alias</th>
+          <th style="width: 20%">Overall</th>
+          <th style="width: 20%">Confidentiality</th>
+          <th style="width: 20%">Integrity</th>
+          <th style="width: 20%">Availability</th>
         </tr>
-        <tr *ngFor="let a of answerCounts">
-          <td class="text-start p-2">{{ a.alias }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
-          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
+        <tr *ngFor="let a of response?.salList">
+          <td>{{a.alias}}</td>
+          <td>{{a.osv}}</td>
+          <td>{{a.q_CV}}</td>
+          <td>{{a.q_IV}}</td>
+          <td>{{a.q_AV}}</td>
         </tr>
       </table>
     </div>
 
-    <div *ngIf="answerCounts == null">
-      <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+    <div class="page-break">
+      <h1>Overall Compliance Score</h1>
+      <div style="margin: 0 auto 2em auto; display: block;">
+        <div><canvas id="canvasOverallCompliance"> {{ chartOverallCompl }} </canvas></div>
+      </div>
+
+      <h1>Assessment Answer Summary</h1>
+      <div class="chart d-flex flex-column flex-00a">
+
+        <table class="table table-bordered table-td-p2">
+          <tr>
+            <th class="text-start p-2">Assessment Alias</th>
+            <th class="text-end p-2 ps-3">Total</th>
+            <th class="text-end p-2 ps-3">Yes</th>
+            <th class="text-end p-2 ps-3">No</th>
+            <th class="text-end p-2 ps-3">NA</th>
+            <th class="text-end p-2 ps-3">Alt</th>
+            <th class="text-end p-2 ps-3">Unanswered</th>
+          </tr>
+          <tr *ngFor="let a of answerCounts">
+            <td class="text-start p-2">{{ a.alias }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
+            <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div *ngIf="answerCounts == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="page-break">
-    <h1>The Top Five Most Improved Areas</h1>
-    <div style="margin: 0 auto 2em auto; display: block;">
-      <div><canvas id="canvasTop5"> {{ chartTop5 }} </canvas></div>
+    <div class="page-break">
+      <h1>The Top Five Most Improved Areas</h1>
+      <div style="margin: 0 auto 2em auto; display: block;">
+        <div><canvas id="canvasTop5"> {{ chartTop5 }} </canvas></div>
+      </div>
+    </div>
+
+    <div class="page-break">
+      <h1>The Bottom Five (Areas of Concern)</h1>
+      <div style="margin: 0 auto 2em auto; display: block;">
+        <div><canvas id="canvasBottom5"> {{ chartBottom5 }} </canvas></div>
+      </div>
+    </div>
+
+    <div class="page-break">
+      <h1>Individual Category Comparisons</h1>
+
+      <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
+
+    </div>
+
+    <div class="page-break mb-5">
+      <app-document-library [docs]="response?.documentLibraryEntries"></app-document-library>
     </div>
   </div>
-
-  <div class="page-break">
-    <h1>The Bottom Five (Areas of Concern)</h1>
-    <div style="margin: 0 auto 2em auto; display: block;">
-      <div><canvas id="canvasBottom5"> {{ chartBottom5 }} </canvas></div>
-    </div>
-  </div>
-
-  <div class="page-break">
-    <h1>Individual Category Comparisons</h1>
-
-    <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
-
-  </div>
-
-  <div class="page-break mb-5">
-    <app-document-library [docs]="response?.documentLibraryEntries"></app-document-library>
-  </div>
-</div>
 </div>

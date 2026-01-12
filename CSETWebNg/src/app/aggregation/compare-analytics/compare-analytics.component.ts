@@ -63,7 +63,7 @@ export class CompareAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    const url = '/index.html?returnPath=report/' + reportType;
+    const url = '/report/' + reportType;
     window.open(url, "_blank");
   }
 }

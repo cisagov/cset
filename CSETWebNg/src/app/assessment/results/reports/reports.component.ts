@@ -179,7 +179,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    * and into their own sub-components.
    */
   clickReportLink(reportType: string) {
-    const url = '/index.html?returnPath=report/' + reportType;
+    const url = '/report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
 
     window.open(url, '_blank');
