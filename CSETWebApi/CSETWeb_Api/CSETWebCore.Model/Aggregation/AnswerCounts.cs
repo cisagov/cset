@@ -41,7 +41,7 @@ namespace CSETWebCore.Model.Aggregation
     }
 
 
-    public class usp_getStandardSummaryOverall
+    public class StandardSummaryOverallResult
     {
         public string Answer_Full_Name { get; set; }
         public string Answer_Text { get; set; }
