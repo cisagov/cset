@@ -357,3 +357,8 @@ GO
 IF OBJECT_ID('dbo.usp_getStandardsRankedCategories', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getStandardsRankedCategories;
 GO
+
+-- usp_getStandardSummaryOverall (replaced with LINQ equivalent in StandardSummaryOverallBusiness.cs)
+IF OBJECT_ID('dbo.usp_getStandardSummaryOverall', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getStandardSummaryOverall;
+GO
