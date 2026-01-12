@@ -26,26 +26,27 @@ html:has(.light-mode-wrapper) {
   background: #ffffff !important;
   min-height: 100%;
 
-  // Force light mode scrollbars on html
-  scrollbar-width: thin !important;
+
+  // Ensure scrollbars are visible on html
+  scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
 
   &::-webkit-scrollbar {
-    width: 8px !important;
-    height: 8px !important;
+    width: 12px;
+    height: 12px;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent !important;
+    background: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2) !important;
-    border-radius: 4px !important;
-  }
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
 
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
   }
 
   body {
@@ -54,26 +55,26 @@ html:has(.light-mode-wrapper) {
     color: rgba(0, 0, 0, 0.87) !important;
     min-height: 100%;
 
-    // Force light mode scrollbars on body
-    scrollbar-width: thin !important;
+    // Ensure scrollbars are visible on body as well
+    scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
 
     &::-webkit-scrollbar {
-      width: 8px !important;
-      height: 8px !important;
+      width: 12px;
+      height: 12px;
     }
 
     &::-webkit-scrollbar-track {
-      background: transparent !important;
+      background: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      border-radius: 4px !important;
-    }
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
 
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(0, 0, 0, 0.3) !important;
+      &:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
     }
   }
 }
@@ -129,6 +130,28 @@ app-layout-blank:has(.light-mode-wrapper) {
   padding: 0 !important;
   position: relative;
   z-index: 1;
+
+  // Ensure scrollbars are visible
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent !important;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
 
   // Create white backdrop that covers everything behind the content
   &::before {
