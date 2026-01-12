@@ -1276,10 +1276,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getRRASummaryOverall]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_getRRASummaryPage]",
          "ObjectType": 1
       },
