@@ -24,15 +24,16 @@
 
   <!-- Tabs -->
   <ul #tabs class="nav nav-tabs d-flex flex-00a">
-    <li style="margin-left: 45px;" [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'"
-      class="d-flex align-items-center flex-00a">
+    <li style="width: 45px"></li>
+    <li [ngClass]="(selectedPane === 'search') ? ['active', 'landing-page'] : []" class="d-flex align-items-center flex-00a"
+      (click)="selectedPane = 'search'">
       <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Search the resource library">
         <span class="me-2 fs-base-6 cset-icons-magnify-glass"></span>
         <span class="nav-tab-text ms-1">Search</span>
       </button>
     </li>
-    <li [class.active]="selectedPane === 'browse'" (click)="selectedPane = 'browse'"
-      class="d-flex align-items-center flex-00a">
+    <li [ngClass]="(selectedPane === 'browse') ? ['active', 'landing-page'] : []" class="d-flex align-items-center flex-00a"
+      (click)="selectedPane = 'browse'">
       <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Browse the resource library">
         <span class="me-2 fs-base-6 cset-icons-browse"></span>
         <span class="nav-tab-text ms-1">Browse</span>
@@ -40,7 +41,7 @@
     </li>
   </ul>
 
-  <div class="bgc-gray-50 d-flex flex-11a w-100">
+  <div class="d-flex flex-11a w-100">
 
     <!-- Tree (Browse) -->
     <div class="d-flex flex-column justify-content-start flex-11a w-100 p-4 pe-5" *ngIf="selectedPane === 'browse'">
@@ -79,7 +80,7 @@
       </div>
 
       <div class="row flex-column" *ngIf="!isLoading">
-        <mat-tree #tree class="ms-4 oy-auto bgc-trans example-tree" style="margin-bottom:1rem;"
+        <mat-tree #tree class="ms-4 oy-auto example-tree rl-container" style="margin-bottom: 1rem;"
           [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl">
           <mat-tree-node *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild"
             [style.display]="(node.visible == null ? true : node.visible) ? 'flex' : 'none!important'"
@@ -143,7 +144,7 @@
           <button type="submit"
             class="btn btn-primary search-btn ms-2 d-flex justify-content-start align-items-center flex-00a"
             matTooltip="Search the resource library" (click)="search(searchTerm)">
-            <span class="me-2 fs-base-2 cset-icons-magnify-glass"></span>
+             <span class="me-2 d-flex align-items-end fs-base-2 cset-icons-magnify-glass"></span>
             <span>Search</span>
           </button>
 
