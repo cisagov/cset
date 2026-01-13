@@ -1085,32 +1085,6 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_getComponentsResultsByCategoryResult>> usp_getComponentsResultsByCategoryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_getComponentsResultsByCategoryResult>("EXEC @returnValue = [dbo].[usp_getComponentsResultsByCategory] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
         public virtual async Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1131,38 +1105,6 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_getExplodedComponentResult>("EXEC @returnValue = [dbo].[usp_getExplodedComponent] @assessment_id = @assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<usp_GetMaturityAnswerTotalsResult>> usp_GetMaturityAnswerTotalsAsync(int? assessment_id, int? model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "assessment_id",
-                    Value = assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "model_id",
-                    Value = model_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_GetMaturityAnswerTotalsResult>("EXEC @returnValue = [dbo].[usp_GetMaturityAnswerTotals] @assessment_id = @assessment_id, @model_id = @model_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

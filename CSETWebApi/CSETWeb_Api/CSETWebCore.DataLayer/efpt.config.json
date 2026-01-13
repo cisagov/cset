@@ -1192,10 +1192,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getComponentsResultsByCategory]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetComponentsResultsByCategoryPage]",
          "ObjectType": 1
       },
@@ -1225,10 +1221,6 @@
       },
       {
          "Name": "[dbo].[usp_getGenericModelSummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetMaturityAnswerTotals]",
          "ObjectType": 1
       },
       {
