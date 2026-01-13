@@ -392,3 +392,8 @@ GO
 IF OBJECT_ID('dbo.usp_getComponentsResultsByCategory', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getComponentsResultsByCategory;
 GO
+
+-- usp_getAnswerComponentOverrides (replaced with LINQ query using Answer_Components_Overrides view)
+IF OBJECT_ID('dbo.usp_getAnswerComponentOverrides', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getAnswerComponentOverrides;
+GO
