@@ -7,6 +7,7 @@
 using CSETWebCore.Business.Malcolm;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
@@ -93,7 +94,7 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="resp"></param>
         /// <param name="context"></param>
@@ -102,16 +103,46 @@ namespace CSETWebCore.Business.Question
             int assessmentId = _tokenManager.AssessmentForUser();
 
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
-            List<Answer_Components_Base> dlist = null;
-            _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  dlist = handler.ReadToList<Answer_Components_Base>()
-                    .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
-                    .ThenBy(x => x.Universal_Sub_Category)
-                    .ToList();
-              });
+            var dlist = _context.Answer_Components_Overrides
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId)
+                .OrderBy(x => x.Symbol_Name)
+                .ThenBy(x => x.ComponentName)
+                .ThenBy(x => x.Component_Guid)
+                .ThenBy(x => x.Universal_Sub_Category)
+                .AsEnumerable()
+                .Select(x => new Answer_Components_Base
+                {
+                    UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
+                    Assessment_Id = x.Assessment_Id,
+                    Answer_Id = x.Answer_Id ?? 0,
+                    Question_Id = x.Question_Id,
+                    Answer_Text = x.Answer_Text,
+                    Comment = x.Comment,
+                    Alternate_Justification = x.Alternate_Justification,
+                    Question_Number = x.Question_Number,
+                    QuestionText = x.QuestionText,
+                    ComponentName = x.ComponentName,
+                    Symbol_Name = x.Symbol_Name,
+                    Question_Group_Heading = x.Question_Group_Heading,
+                    GroupHeadingId = x.GroupHeadingId ?? 0,
+                    Universal_Sub_Category = x.Universal_Sub_Category,
+                    SubCategoryId = x.SubCategoryId ?? 0,
+                    Is_Component = x.Is_Component,
+                    Component_Guid = x.Component_Guid,
+                    SAL = x.SAL,
+                    Mark_For_Review = x.Mark_For_Review,
+                    Is_Requirement = x.Is_Requirement ?? false,
+                    Is_Framework = x.Is_Framework ?? false,
+                    Reviewed = x.Reviewed,
+                    Simple_Question = x.Simple_Question,
+                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                    heading_pair_id = x.heading_pair_id ?? 0,
+                    Label = x.label,
+                    Component_Symbol_Id = x.Component_Symbol_Id,
+                    FeedBack = x.FeedBack
+                })
+                .ToList();
 
             AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
