@@ -47,9 +47,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<int> usp_CopyIntoSetAsync(string sourceSetName, string destinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getAnswerComponentOverridesResult>> usp_getAnswerComponentOverridesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getComponentsRankedCategoriesResult>> usp_getComponentsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getComponentsResultsByCategoryResult>> usp_getComponentsResultsByCategoryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_GetMaturityAnswerTotalsResult>> usp_GetMaturityAnswerTotalsAsync(int? assessment_id, int? model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetQuestionsResult>> usp_GetQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetRankedQuestionsResult>> usp_GetRankedQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getStandardsSummaryResult>> usp_getStandardsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
