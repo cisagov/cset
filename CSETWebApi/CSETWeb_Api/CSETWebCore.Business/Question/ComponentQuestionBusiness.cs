@@ -69,14 +69,43 @@ namespace CSETWebCore.Business.Question
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
 
-            var list1 = _context.usp_Answer_Components_Default(assessmentId).ToList();
-            var list2 = new List<Answer_Components_Base>();
-            foreach (var component1 in list1)
-            {
-                TinyMapper.Bind<Answer_Components_Default, Answer_Components_Base>();
-                var component2 = TinyMapper.Map<Answer_Components_Default, Answer_Components_Base>(component1);
-                list2.Add(component2);
-            }
+            var list2 = _context.Answer_Components_Default
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId)
+                .OrderBy(x => x.Question_Group_Heading)
+                .ThenBy(x => x.Universal_Sub_Category)
+                .Select(x => new Answer_Components_Base
+                {
+                    UniqueKey = x.UniqueKey,
+                    Assessment_Id = x.Assessment_Id,
+                    Answer_Id = x.Answer_Id,
+                    Question_Id = x.Question_Id,
+                    Answer_Text = x.Answer_Text,
+                    Comment = x.Comment,
+                    Alternate_Justification = x.Alternate_Justification,
+                    Question_Number = x.Question_Number,
+                    QuestionText = x.QuestionText,
+                    Question_Group_Heading = x.Question_Group_Heading,
+                    GroupHeadingId = x.GroupHeadingId,
+                    Universal_Sub_Category = x.Universal_Sub_Category,
+                    SubCategoryId = x.SubCategoryId,
+                    FeedBack = x.FeedBack,
+                    Is_Component = x.Is_Component ?? false,
+                    Component_Guid = x.Component_Guid,
+                    SAL = x.SAL,
+                    Mark_For_Review = x.Mark_For_Review,
+                    Is_Requirement = x.Is_Requirement ?? false,
+                    Is_Framework = x.Is_Framework ?? false,
+                    heading_pair_id = x.heading_pair_id,
+                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                    Simple_Question = x.Simple_Question,
+                    Reviewed = x.Reviewed,
+                    Label = x.label,
+                    ComponentName = x.ComponentName,
+                    Symbol_Name = x.Symbol_Name,
+                    Component_Symbol_Id = x.Component_Symbol_id
+                })
+                .ToList();
 
             // Get all answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")

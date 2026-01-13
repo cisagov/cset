@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
-using Nelibur.ObjectMapper;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
@@ -341,14 +340,46 @@ namespace CSETWebCore.Business.Question
         /// <param name="resp"></param>        
         public void BuildComponentsResponse(QuestionResponse resp)
         {
-            var answerComponents = _context.usp_Answer_Components_Default(this.AssessmentId);
-            var list = answerComponents.Select(component => TinyMapper.Map<Answer_Components_Base>(component)).ToList();
-            //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
-            //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
+            var list = _context.Answer_Components_Default
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == this.AssessmentId)
+                .OrderBy(x => x.Question_Group_Heading)
+                .ThenBy(x => x.Universal_Sub_Category)
+                .Select(x => new Answer_Components_Base
+                {
+                    UniqueKey = x.UniqueKey,
+                    Assessment_Id = x.Assessment_Id,
+                    Answer_Id = x.Answer_Id,
+                    Question_Id = x.Question_Id,
+                    Answer_Text = x.Answer_Text,
+                    Comment = x.Comment,
+                    Alternate_Justification = x.Alternate_Justification,
+                    Question_Number = x.Question_Number,
+                    QuestionText = x.QuestionText,
+                    Question_Group_Heading = x.Question_Group_Heading,
+                    GroupHeadingId = x.GroupHeadingId,
+                    Universal_Sub_Category = x.Universal_Sub_Category,
+                    SubCategoryId = x.SubCategoryId,
+                    FeedBack = x.FeedBack,
+                    Is_Component = x.Is_Component ?? false,
+                    Component_Guid = x.Component_Guid,
+                    SAL = x.SAL,
+                    Mark_For_Review = x.Mark_For_Review,
+                    Is_Requirement = x.Is_Requirement ?? false,
+                    Is_Framework = x.Is_Framework ?? false,
+                    heading_pair_id = x.heading_pair_id,
+                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                    Simple_Question = x.Simple_Question,
+                    Reviewed = x.Reviewed,
+                    Label = x.label,
+                    ComponentName = x.ComponentName,
+                    Symbol_Name = x.Symbol_Name,
+                    Component_Symbol_Id = x.Component_Symbol_id
+                })
+                .ToList();
 
             AddResponse(resp, list, "Component Defaults");
             BuildOverridesOnly(resp);
-
         }
 
         public void BuildOverridesOnly(QuestionResponse resp)
