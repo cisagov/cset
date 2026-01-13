@@ -1144,10 +1144,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_Answer_Components_Default]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_Assessments_Completion_For_Access_Key]",
          "ObjectType": 1
       },
