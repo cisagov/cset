@@ -1176,10 +1176,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getAnswerComponentOverrides]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetAssessmentPie]",
          "ObjectType": 1
       },
