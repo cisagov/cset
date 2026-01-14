@@ -106,7 +106,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 DeleteCopiedSetData(setName);
                 foreach (string sourceSet in setNames)
                 {
-                    _context.usp_CopyIntoSet(sourceSet, setName);
+                    CopyIntoSet(sourceSet, setName);
                 }
             }
             catch (Exception exc)
@@ -211,9 +211,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
         public void AddCopyToSet(string sourceSetName, string destinationSetName)
         {
-
-            _context.usp_CopyIntoSet(sourceSetName, destinationSetName);
-
+            CopyIntoSet(sourceSetName, destinationSetName);
         }
 
 
@@ -261,7 +259,316 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
         /// <summary>
-        /// Copies the structure of an existing set into a new one.  
+        /// Copies a base set into an existing custom set.
+        /// This replaces the usp_CopyIntoSet stored procedure.
+        /// </summary>
+        /// <param name="sourceSetName">The source set to copy from</param>
+        /// <param name="destinationSetName">The destination custom set to copy into</param>
+        private void CopyIntoSet(string sourceSetName, string destinationSetName)
+        {
+            // Step 1: Validate destination is a custom set
+            var destinationSet = _context.SETS.FirstOrDefault(s => s.Set_Name == destinationSetName);
+            if (destinationSet != null && !destinationSet.Is_Custom)
+            {
+                throw new InvalidOperationException("Destination set is not a custom set. Standard sets cannot be modified.");
+            }
+
+            // Step 2: Record base relationship
+            _context.CUSTOM_STANDARD_BASE_STANDARD.Add(new CUSTOM_STANDARD_BASE_STANDARD
+            {
+                Custom_Questionaire_Name = destinationSetName,
+                Base_Standard = sourceSetName
+            });
+            _context.SaveChanges();
+
+            // Step 3: Copy headers (UNIVERSAL_SUB_CATEGORY_HEADINGS)
+            CopySubCategoryHeadings(sourceSetName, destinationSetName);
+
+            // Step 4: Copy requirements (NEW_REQUIREMENT with Old_Id_For_Copy)
+            CopyRequirements(sourceSetName, destinationSetName);
+
+            // Step 5: Copy requirement-set mappings (REQUIREMENT_SETS)
+            CopyRequirementSets(sourceSetName, destinationSetName);
+
+            // Step 6: Copy requirement levels (REQUIREMENT_LEVELS)
+            CopyRequirementLevels(sourceSetName, destinationSetName);
+
+            // Step 7: Copy requirement-question mappings (REQUIREMENT_QUESTIONS_SETS)
+            CopyRequirementQuestionsSets(sourceSetName, destinationSetName);
+
+            // Step 8: Copy question-set mappings (NEW_QUESTION_SETS)
+            CopyQuestionSets(sourceSetName, destinationSetName);
+
+            // Step 9: Copy question levels (NEW_QUESTION_LEVELS)
+            CopyQuestionLevels(sourceSetName, destinationSetName);
+        }
+
+
+        /// <summary>
+        /// Copies UNIVERSAL_SUB_CATEGORY_HEADINGS from source to destination set,
+        /// avoiding duplicates based on Question_Group_Heading_Id and Universal_Sub_Category_Id.
+        /// </summary>
+        private void CopySubCategoryHeadings(string sourceSetName, string destinationSetName)
+        {
+            // Get existing headings in destination to avoid duplicates
+            var existingInDestination = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                .Where(h => h.Set_Name == destinationSetName)
+                .Select(h => new { h.Question_Group_Heading_Id, h.Universal_Sub_Category_Id })
+                .ToList()
+                .ToHashSet();
+
+            // Get source headings that don't already exist in destination
+            var sourceHeadings = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                .Where(h => h.Set_Name == sourceSetName)
+                .ToList();
+
+            var headingsToAdd = sourceHeadings
+                .Where(h => !existingInDestination.Contains(new { h.Question_Group_Heading_Id, h.Universal_Sub_Category_Id }))
+                .Select(h => new UNIVERSAL_SUB_CATEGORY_HEADINGS
+                {
+                    Sub_Heading_Question_Description = h.Sub_Heading_Question_Description,
+                    Question_Group_Heading_Id = h.Question_Group_Heading_Id,
+                    Universal_Sub_Category_Id = h.Universal_Sub_Category_Id,
+                    Set_Name = destinationSetName
+                })
+                .ToList();
+
+            if (headingsToAdd.Count > 0)
+            {
+                _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.AddRange(headingsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies requirements from source set to destination set.
+        /// Sets Old_Id_For_Copy to track the original requirement ID for later mapping.
+        /// </summary>
+        private void CopyRequirements(string sourceSetName, string destinationSetName)
+        {
+            // Get requirements from source set ordered by sequence
+            var sourceRequirements = (from rs in _context.REQUIREMENT_SETS
+                                      join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
+                                      where rs.Set_Name == sourceSetName
+                                      orderby rs.Requirement_Sequence
+                                      select r).ToList();
+
+            var newRequirements = sourceRequirements.Select(r => new NEW_REQUIREMENT
+            {
+                Requirement_Title = r.Requirement_Title,
+                Requirement_Text = r.Requirement_Text,
+                Supplemental_Info = r.Supplemental_Info,
+                Standard_Category = r.Standard_Category,
+                Standard_Sub_Category = r.Standard_Sub_Category,
+                Weight = r.Weight,
+                Implementation_Recommendations = r.Implementation_Recommendations,
+                Original_Set_Name = destinationSetName,
+                NCSF_Cat_Id = r.NCSF_Cat_Id,
+                NCSF_Number = r.NCSF_Number,
+                Ranking = r.Ranking,
+                Question_Group_Heading_Id = r.Question_Group_Heading_Id,
+                ExaminationApproach = r.ExaminationApproach,
+                Old_Id_For_Copy = r.Requirement_Id
+            }).ToList();
+
+            if (newRequirements.Count > 0)
+            {
+                _context.NEW_REQUIREMENT.AddRange(newRequirements);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies REQUIREMENT_SETS mappings using Old_Id_For_Copy to link new requirements.
+        /// </summary>
+        private void CopyRequirementSets(string sourceSetName, string destinationSetName)
+        {
+            // Get source requirement sequences
+            var sourceSequences = _context.REQUIREMENT_SETS
+                .Where(rs => rs.Set_Name == sourceSetName)
+                .ToDictionary(rs => rs.Requirement_Id, rs => rs.Requirement_Sequence);
+
+            // Get newly created requirements for destination set with their original IDs
+            var newRequirements = _context.NEW_REQUIREMENT
+                .Where(nr => nr.Original_Set_Name == destinationSetName && nr.Old_Id_For_Copy != null)
+                .ToList();
+
+            var requirementSetsToAdd = newRequirements
+                .Where(nr => sourceSequences.ContainsKey(nr.Old_Id_For_Copy.Value))
+                .Select(nr => new REQUIREMENT_SETS
+                {
+                    Requirement_Id = nr.Requirement_Id,
+                    Set_Name = destinationSetName,
+                    Requirement_Sequence = sourceSequences[nr.Old_Id_For_Copy.Value]
+                })
+                .ToList();
+
+            if (requirementSetsToAdd.Count > 0)
+            {
+                _context.REQUIREMENT_SETS.AddRange(requirementSetsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies REQUIREMENT_LEVELS from source requirements to new requirements.
+        /// </summary>
+        private void CopyRequirementLevels(string sourceSetName, string destinationSetName)
+        {
+            // Get new requirements with their Old_Id_For_Copy mappings
+            var newRequirements = _context.NEW_REQUIREMENT
+                .Where(nr => nr.Original_Set_Name == destinationSetName && nr.Old_Id_For_Copy != null)
+                .ToDictionary(nr => nr.Old_Id_For_Copy.Value, nr => nr.Requirement_Id);
+
+            // Get source requirement levels
+            var sourceLevels = (from rs in _context.REQUIREMENT_SETS
+                                join rl in _context.REQUIREMENT_LEVELS on rs.Requirement_Id equals rl.Requirement_Id
+                                where rs.Set_Name == sourceSetName
+                                select rl).ToList();
+
+            var levelsToAdd = sourceLevels
+                .Where(sl => newRequirements.ContainsKey(sl.Requirement_Id))
+                .Select(sl => new REQUIREMENT_LEVELS
+                {
+                    Requirement_Id = newRequirements[sl.Requirement_Id],
+                    Level_Type = sl.Level_Type,
+                    Standard_Level = sl.Standard_Level
+                })
+                .ToList();
+
+            if (levelsToAdd.Count > 0)
+            {
+                _context.REQUIREMENT_LEVELS.AddRange(levelsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies REQUIREMENT_QUESTIONS_SETS mappings, avoiding duplicates.
+        /// </summary>
+        private void CopyRequirementQuestionsSets(string sourceSetName, string destinationSetName)
+        {
+            // Get new requirements with their Old_Id_For_Copy mappings
+            var newRequirements = _context.NEW_REQUIREMENT
+                .Where(nr => nr.Original_Set_Name == destinationSetName && nr.Old_Id_For_Copy != null)
+                .ToDictionary(nr => nr.Old_Id_For_Copy.Value, nr => nr.Requirement_Id);
+
+            // Get existing question mappings for destination set to avoid duplicates
+            var existingMappings = _context.REQUIREMENT_QUESTIONS_SETS
+                .Where(rqs => rqs.Set_Name == destinationSetName)
+                .Select(rqs => rqs.Question_Id)
+                .ToHashSet();
+
+            // Get source requirement-question mappings
+            var sourceRqs = _context.REQUIREMENT_QUESTIONS_SETS
+                .Where(rqs => rqs.Set_Name == sourceSetName)
+                .ToList();
+
+            var mappingsToAdd = sourceRqs
+                .Where(rqs => newRequirements.ContainsKey(rqs.Requirement_Id) && !existingMappings.Contains(rqs.Question_Id))
+                .Select(rqs => new REQUIREMENT_QUESTIONS_SETS
+                {
+                    Question_Id = rqs.Question_Id,
+                    Requirement_Id = newRequirements[rqs.Requirement_Id],
+                    Set_Name = destinationSetName
+                })
+                .ToList();
+
+            if (mappingsToAdd.Count > 0)
+            {
+                _context.REQUIREMENT_QUESTIONS_SETS.AddRange(mappingsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies NEW_QUESTION_SETS mappings, avoiding duplicates.
+        /// </summary>
+        private void CopyQuestionSets(string sourceSetName, string destinationSetName)
+        {
+            // Get existing question-set mappings in destination to avoid duplicates
+            var existingQuestionIds = _context.NEW_QUESTION_SETS
+                .Where(nqs => nqs.Set_Name == destinationSetName)
+                .Select(nqs => nqs.Question_Id)
+                .ToHashSet();
+
+            // Get source question-set mappings
+            var sourceQuestions = _context.NEW_QUESTION_SETS
+                .Where(nqs => nqs.Set_Name == sourceSetName)
+                .Select(nqs => nqs.Question_Id)
+                .ToList();
+
+            var questionSetsToAdd = sourceQuestions
+                .Where(qid => !existingQuestionIds.Contains(qid))
+                .Select(qid => new NEW_QUESTION_SETS
+                {
+                    Set_Name = destinationSetName,
+                    Question_Id = qid
+                })
+                .ToList();
+
+            if (questionSetsToAdd.Count > 0)
+            {
+                _context.NEW_QUESTION_SETS.AddRange(questionSetsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies NEW_QUESTION_LEVELS for newly added question sets.
+        /// </summary>
+        private void CopyQuestionLevels(string sourceSetName, string destinationSetName)
+        {
+            // Get source question set IDs with their levels
+            var sourceLevels = (from nqs in _context.NEW_QUESTION_SETS
+                                join nql in _context.NEW_QUESTION_LEVELS on nqs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                                where nqs.Set_Name == sourceSetName
+                                select new { nqs.Question_Id, nql.Universal_Sal_Level })
+                                .Distinct()
+                                .ToList();
+
+            // Get destination question sets that don't have levels yet
+            var destQuestionSets = _context.NEW_QUESTION_SETS
+                .Where(nqs => nqs.Set_Name == destinationSetName)
+                .ToList();
+
+            var destQuestionSetIds = destQuestionSets.Select(dqs => dqs.New_Question_Set_Id).ToList();
+
+            var existingDestLevels = _context.NEW_QUESTION_LEVELS
+                .Where(nql => destQuestionSetIds.Contains(nql.New_Question_Set_Id))
+                .Select(nql => nql.New_Question_Set_Id)
+                .ToHashSet();
+
+            // Only add levels for question sets that don't already have levels
+            var questionSetsWithoutLevels = destQuestionSets
+                .Where(nqs => !existingDestLevels.Contains(nqs.New_Question_Set_Id))
+                .ToDictionary(nqs => nqs.Question_Id, nqs => nqs.New_Question_Set_Id);
+
+            var levelsToAdd = sourceLevels
+                .Where(sl => questionSetsWithoutLevels.ContainsKey(sl.Question_Id))
+                .Select(sl => new NEW_QUESTION_LEVELS
+                {
+                    New_Question_Set_Id = questionSetsWithoutLevels[sl.Question_Id],
+                    Universal_Sal_Level = sl.Universal_Sal_Level
+                })
+                .ToList();
+
+            if (levelsToAdd.Count > 0)
+            {
+                _context.NEW_QUESTION_LEVELS.AddRange(levelsToAdd);
+                _context.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Copies the structure of an existing set into a new one.
         /// </summary>
         public SetDetail CloneSet(string setName)
         {
