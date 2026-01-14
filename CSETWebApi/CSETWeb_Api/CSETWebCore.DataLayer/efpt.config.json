@@ -1144,10 +1144,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_Answer_Components_Default]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_Assessments_Completion_For_Access_Key]",
          "ObjectType": 1
       },
@@ -1164,19 +1160,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_financial_attributes]",
          "ObjectType": 1
       },
       {
          "Name": "[dbo].[usp_GenerateSPRSScore]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getAnswerComponentOverrides]",
          "ObjectType": 1
       },
       {

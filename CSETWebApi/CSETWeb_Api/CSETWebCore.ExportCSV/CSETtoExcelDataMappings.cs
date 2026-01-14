@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ReportEngine;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -284,9 +285,10 @@ namespace CSETWebCore.ExportCSV
 
             // Components worksheet
 
-            var answers = _context.usp_Answer_Components_Default(_assessmentId);
-
-            // var answer2 = _context.Answer_Components_Exploded
+            var answers = _context.Answer_Components_Default
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == _assessmentId)
+                .ToList();
 
             list = from a in answers
                    join q in _context.NEW_QUESTION on a.Question_Id equals q.Question_Id

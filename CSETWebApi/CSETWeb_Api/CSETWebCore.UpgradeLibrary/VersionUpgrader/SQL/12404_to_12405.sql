@@ -392,3 +392,18 @@ GO
 IF OBJECT_ID('dbo.usp_getComponentsResultsByCategory', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getComponentsResultsByCategory;
 GO
+
+-- usp_getAnswerComponentOverrides (replaced with LINQ query using Answer_Components_Overrides view)
+IF OBJECT_ID('dbo.usp_getAnswerComponentOverrides', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getAnswerComponentOverrides;
+GO
+
+-- usp_Answer_Components_Default (replaced with LINQ query using Answer_Components_Default view)
+IF OBJECT_ID('dbo.usp_Answer_Components_Default', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Answer_Components_Default;
+GO
+
+-- usp_CopyIntoSet (replaced with LINQ equivalent in ModuleBuilderBusiness.cs)
+IF OBJECT_ID('dbo.usp_CopyIntoSet', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CopyIntoSet;
+GO
