@@ -155,81 +155,69 @@ table.cpg-table td {
 
 :host-context(.dark-theme) {
 
-    table.cpg-table th * {
-        color: #ffffff;
+    .sub-header-1 {
+        color: $near-white;
     }
-
 
     // CSF2
-    .csf2-func-gv {
+    .cpg-table .csf2-func-gv, .cpg-table .csf2-func-gv * {
         background-color: #111111;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
-    .csf2-func-id {
+    .cpg-table .csf2-func-id, .cpg-table .csf2-func-id * {
         background-color: #203864;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
-    .csf2-func-pr {
+    .cpg-table .csf2-func-pr, .cpg-table .csf2-func-pr * {
         background-color: #7c7c7c;
         border-color: $near-white;
-        color: $near-white;
+        color: $white !important;
     }
 
-    .csf2-func-de {
+    .cpg-table .csf2-func-de, .cpg-table .csf2-func-de * {
         background-color: #a26527;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
-    .csf2-func-rs {
+    .cpg-table .csf2-func-rs, .cpg-table .csf2-func-rs * {
         background-color: #a21c3b;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
-    .csf2-func-rc {
+    .cpg-table .csf2-func-rc, .cpg-table .csf2-func-rc * {
         background-color: #54823b;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
 
-    .ssg-it-product-design {
+    .cpg-table .ssg-it-product-design, .cpg-table .ssg-it-product-design * {
         background-color: #548235;
         border-color: $near-white;
-        color: $near-white;
+        color: $near-white !important;
     }
 
-    .ssg-it-software-dev {
+    .cpg-table .ssg-it-software-dev, .cpg-table .ssg-it-software-dev * {
         background-color: #305496;
         border-color: $near-white;
-        color: $near-white;
-    }
-
-
-
-     // CSF1
-    .csf1-func-id {
-        background-color: #2563EB;
-    }
-
-    .csf1-func-pr {
-        background-color: #7e22ce;
+        color: $near-white !important;
     }
 }
 
 // Force light mode colors when inside report containers
 :host-context(.force-light-mode),
 :host-context(.light-mode-wrapper) {
-    table.cpg-table th * {
-        color: $white !important;
+    
+    .sub-header-1 {
+        color: $near-black;
     }
 
-    
     // CPG 2 (CSF 2) - light mode backgrounds
     .csf2-func-gv {
         background-color: #111111;
