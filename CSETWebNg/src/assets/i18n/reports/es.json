@@ -374,7 +374,10 @@
                     "complexity": "Facilidad",
                     "low": "BAJO",
                     "medium": "MEDIO",
-                    "high": "ALTO"
+                    "high": "ALTO",
+                    "simple": "SENCILLA",
+                    "moderate": "MODERADA",
+                    "complex": "COMPLEJA"
                },
                "deficiency": {
                     "report title": "Informe Deficiencias - Objetivos de Rendimiento Cibernético (CPG)",
