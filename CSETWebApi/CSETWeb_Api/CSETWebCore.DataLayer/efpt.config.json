@@ -1160,10 +1160,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_financial_attributes]",
          "ObjectType": 1
       },

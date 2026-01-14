@@ -331,20 +331,8 @@ namespace CSETWebCore.DataLayer.Model
         }
 
 
-        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
-        {
-            this.LoadStoredProc("usp_CopyIntoSet")
-                     .WithSqlParam("SourceSetName", sourcesetName)
-                     .WithSqlParam("DestinationSetName", destinationSetName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-
-                     });
-
-        }
-
         /// <summary>
-        /// Inserts missing skeleton ANSWER records for an assessment based on 
+        /// Inserts missing skeleton ANSWER records for an assessment based on
         /// its standard selection and SAL.  
         /// </summary>
         /// <param name="assessment_Id"></param>
