@@ -402,3 +402,8 @@ GO
 IF OBJECT_ID('dbo.usp_Answer_Components_Default', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_Answer_Components_Default;
 GO
+
+-- usp_CopyIntoSet (replaced with LINQ equivalent in ModuleBuilderBusiness.cs)
+IF OBJECT_ID('dbo.usp_CopyIntoSet', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CopyIntoSet;
+GO
