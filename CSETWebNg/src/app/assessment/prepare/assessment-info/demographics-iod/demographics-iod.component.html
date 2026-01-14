@@ -85,7 +85,7 @@
   </div>
 
   <!-- #1 -->
-  <div class="mb-4">
+  <div class="mb-5">
     <label for="numberEmployeesTotal" class="form-label" *ngIf="demographicData.organizationType == 1">
       Number of employees in the organization?
     </label>
@@ -103,7 +103,7 @@
   </div>
 
   <!-- #2 -->
-  <div class="mb-4">
+  <div class="mb-5">
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType == 1" class="form-label"> Number of
       employees in the business unit? </label>
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType != 1" class="form-label"> Number of
@@ -128,7 +128,7 @@
   </div>
 
   <!-- #3 -->
-  <div class="mb-4">
+  <div class="mb-5">
     <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType == 1" class="form-label"> What is the total
       annual revenue for your organization?
     </label>
@@ -153,7 +153,7 @@
   <!-- #6 -->
 
   <!-- #7 -->
-  <div class="row mb-5">
+  <div class="mb-5">
     <label for="assetValue" class="col-9">Does your organization use a body of practice, industry standard, or similar
       resource to support or inform its cybersecurity efforts?
     </label>
@@ -190,7 +190,7 @@
   </div>
 
   <!-- #8 -->
-  <div class="row mb-5">
+  <div class="mb-5">
     <label class="col-9" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
       regulation?
     </label>
@@ -286,6 +286,7 @@
         [(ngModel)]="demographicData.barrier2" (change)="update($event)" />
     </div>
   </div>
+
   <datalist id="listBarriers">
     <option *ngFor="let barrier of demographicData.listBarriers" [attr.data-value]="barrier.optionValue"
       [value]="barrier.optionText"></option>
