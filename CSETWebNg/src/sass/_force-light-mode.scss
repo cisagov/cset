@@ -13,17 +13,17 @@ body.dark-theme,
 body[data-theme="dark"],
 body[data-bs-theme="dark"] {
   &:has(.force-light-mode) {
-    background-color: #ffffff !important;
-    background: #ffffff !important;
-    color: rgba(0, 0, 0, 0.87) !important;
+    background-color: #ffffff;
+    background: #ffffff;
+    color: rgba(0, 0, 0, 0.87);
   }
 }
 
 // Additional brute force overrides
 html:has(.force-light-mode),
 html:has(.light-mode-wrapper) {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
+  background-color: #ffffff;
+  background: #ffffff;
   min-height: 100%;
 
 
@@ -378,8 +378,8 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
   .table thead th,
   table:not(.cset-table):not(.cset-table-4) th,
   table:not(.cset-table):not(.cset-table-4) thead th {
-    color: rgba(0, 0, 0, 0.87) !important;
-    background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: transparent;
   }
 
   // cset-table headers with dark backgrounds need white text
@@ -393,7 +393,9 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
 .force-light-mode,
 .light-mode-wrapper {
   .table th,
-  .table thead th {
+  .table th *,
+  .table thead th,
+  .table thead th * {
     color: rgba(0, 0, 0, 0.87) !important;
     background-color: transparent !important;
   }
@@ -406,18 +408,9 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
 
   // CPG practice table headers - need very high specificity to override component styles
   // The first header column (Security Practice) needs white text
-  table.cpg-table th {
+  table.cpg-table th, 
+  table.cpg-table th * {
     color: #ffffffdd !important; // near-white (default for most headers)
-  }
-
-  // CSF2 functions have lighter backgrounds and need dark text
-  table.cpg-table th.csf2-func-gv,
-  table.cpg-table th.csf2-func-id,
-  table.cpg-table th.csf2-func-pr,
-  table.cpg-table th.csf2-func-de,
-  table.cpg-table th.csf2-func-rs,
-  table.cpg-table th.csf2-func-rc {
-    color: #000000d5 !important; // near-black
   }
 
   // CSF1 functions with dark backgrounds need white text
@@ -437,9 +430,11 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
 .dark-theme .force-light-mode,
 .dark-theme .light-mode-wrapper {
   .table th,
-  .table thead th {
-    color: rgba(0, 0, 0, 0.87) !important;
-    background-color: transparent !important;
+  .table th *,
+  .table thead th,
+  .table thead th * {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: transparent;
   }
 
   table.cset-table th,
@@ -450,15 +445,6 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
 
   table.cpg-table th {
     color: #ffffffdd !important;
-  }
-
-  table.cpg-table th.csf2-func-gv,
-  table.cpg-table th.csf2-func-id,
-  table.cpg-table th.csf2-func-pr,
-  table.cpg-table th.csf2-func-de,
-  table.cpg-table th.csf2-func-rs,
-  table.cpg-table th.csf2-func-rc {
-    color: #000000d5 !important;
   }
 
   table.cpg-table th.csf1-func-id,
