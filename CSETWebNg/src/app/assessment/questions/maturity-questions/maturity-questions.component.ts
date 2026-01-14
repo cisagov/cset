@@ -127,7 +127,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     });
 
 
-    // Refresh the page in case of user language change.  
+    // Refresh the page in case of display language change.  
     // The more complex event analysis is needed because
     // the Transloco service will also emit langChanges$ when the
     // component is initialized.  We only care about a true language 
