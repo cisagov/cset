@@ -63,6 +63,45 @@ namespace CSETWebCore.Business.Diagram
         Dictionary<string, COMPONENT_SYMBOLS> legacyNames = null;
         #endregion
 
+
+        /// <summary>
+        /// Sanitizes input for use in XPath queries to prevent XPath injection attacks.
+        /// Escapes single quotes by using XPath's concat() function.
+        /// </summary>
+        /// <param name="input">The input string to sanitize</param>
+        /// <returns>A safe XPath expression</returns>
+        private string SanitizeXPathInput(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "''";
+            }
+
+            // If the input contains no single quotes, we can use it directly
+            if (!input.Contains("'"))
+            {
+                return "'" + input + "'";
+            }
+
+            // Split on single quotes and build a concat() expression
+            var parts = input.Split('\'');
+            var concatParts = new List<string>();
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0)
+                {
+                    concatParts.Add("'" + parts[i] + "'");
+                }
+                if (i < parts.Length - 1)
+                {
+                    concatParts.Add("\"'\"");
+                }
+            }
+
+            return "concat(" + string.Join(", ", concatParts) + ")";
+        }
+
         /// <summary>
         /// Converts XML from a .csetd file into the equivalent XML for draw.io.
         /// </summary>
@@ -187,7 +226,7 @@ namespace CSETWebCore.Business.Diagram
 
                 // determine the parent layer
                 var layerName = ChildValue(zone, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                var newLayerID = xDrawio.SelectSingleNode("//mxCell[@value=" + SanitizeXPathInput(layerName) + "]").Attributes["id"].InnerText;
                 xZone.SetAttribute("parent", newLayerID);
 
 
@@ -281,7 +320,7 @@ namespace CSETWebCore.Business.Diagram
 
                 // determine the parent layer
                 var layerName = ChildValue(msc, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                var newLayerID = xDrawio.SelectSingleNode("//mxCell[@value=" + SanitizeXPathInput(layerName) + "]").Attributes["id"].InnerText;
                 xZone.SetAttribute("parent", newLayerID);
 
 
@@ -350,7 +389,7 @@ namespace CSETWebCore.Business.Diagram
 
                 // determine the parent layer
                 var layerName = ChildValue(component, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                var newLayerID = xDrawio.SelectSingleNode("//mxCell[@value=" + SanitizeXPathInput(layerName) + "]").Attributes["id"].InnerText;
                 xComponent.SetAttribute("parent", newLayerID);
 
 
@@ -439,7 +478,7 @@ namespace CSETWebCore.Business.Diagram
 
                 // determine the parent layer
                 var layerName = ChildValue(shape, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                var newLayerID = xDrawio.SelectSingleNode("//mxCell[@value=" + SanitizeXPathInput(layerName) + "]").Attributes["id"].InnerText;
                 xShape.SetAttribute("parent", newLayerID);
 
                 // geometry
@@ -635,7 +674,7 @@ namespace CSETWebCore.Business.Diagram
 
                 // determine the parent layer
                 var layerName = ChildValue(edge, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                var newLayerID = xDrawio.SelectSingleNode("//mxCell[@value=" + SanitizeXPathInput(layerName) + "]").Attributes["id"].InnerText;
                 xEdge.SetAttribute("parent", newLayerID);
 
                 // However ... if both ends' vertices have the same parent, then our edge should have that parent.
