@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.Helpers;
 using System;
 using System.Collections.Generic;
@@ -223,7 +224,7 @@ namespace CSETWebCore.Business.Maturity
                 .GroupBy(x => x.answer_text)
                 .ToDictionary(g => g.Key, g => g.Sum(x => x.answer_count));
 
-            double total = summary.Sum(x => x.Value) ?? 0;
+            double total = (double)summary.Sum(x => x.Value);
             double y = (double)summary.GetValueOrDefault("Y", 0);
             double i = (double)summary.GetValueOrDefault("I", 0) * 0.5;
 

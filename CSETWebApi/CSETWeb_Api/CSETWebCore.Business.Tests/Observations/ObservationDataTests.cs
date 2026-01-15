@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             // Assert
             mockFindingSet.Verify(m => m.Add(It.Is<FINDING>(
-                f => f.Assessment_Id == 1 &&
+                f => f.Assessment_ID == 1 &&
                      f.Summary == "New observation" &&
                      f.Issue == "New issue" &&
                      f.Importance_Id == 2 &&
@@ -133,7 +133,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             // Assert
             mockFindingSet.Verify(m => m.Add(It.Is<FINDING>(
-                f => f.Assessment_Id == 1 &&
+                f => f.Assessment_ID == 1 &&
                      f.Answer_Id == 123 &&
                      f.Summary == "Summary text" &&
                      f.Issue == "Issue text" &&
@@ -163,7 +163,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Original summary",
                 Issue = "Original issue",
                 Importance_Id = 1,
@@ -206,7 +206,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
@@ -257,7 +257,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT> { existingContact }
             };
@@ -307,7 +307,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT> { existingContact }
             };
@@ -357,7 +357,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT> { existingContact1 }
             };
@@ -402,7 +402,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
@@ -443,7 +443,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 Importance_Id = null,
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
@@ -481,7 +481,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
@@ -527,7 +527,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 42,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
@@ -571,7 +571,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "To be deleted",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
@@ -611,7 +611,7 @@ namespace CSETWebCore.Business.Tests.Observations
             var existingFinding = new FINDING
             {
                 Finding_Id = 1,
-                Assessment_Id = 1,
+                Assessment_ID = 1,
                 Summary = "Test",
                 FINDING_CONTACT = new List<FINDING_CONTACT>()
             };
