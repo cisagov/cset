@@ -53,6 +53,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
 
+    public virtual DbSet<ASSESSMENT_SECTOR_SUBSECTOR> ASSESSMENT_SECTOR_SUBSECTOR { get; set; }
+
     public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
 
     public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
@@ -164,7 +166,7 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
 
     public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-    
+
     public virtual DbSet<EXT_SECTOR> EXT_SECTOR { get; set; }
 
     public virtual DbSet<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
@@ -271,6 +273,10 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
 
+    public virtual DbSet<METRIC_COMPLETED_ENTRY> METRIC_COMPLETED_ENTRY { get; set; }
+
+    public virtual DbSet<METRIC_ENTRY_QUESTIONS> METRIC_ENTRY_QUESTIONS { get; set; }
+
     public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
 
     public virtual DbSet<METRO_AREA> METRO_AREA { get; set; }
@@ -295,7 +301,11 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
 
+    public virtual DbSet<NCSF_INDEX_ANSWERS> NCSF_INDEX_ANSWERS { get; set; }
+
     public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
+
+    public virtual DbSet<NCSF_MIGRATION2> NCSF_MIGRATION2 { get; set; }
 
     public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
 
@@ -316,8 +326,6 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<NIST_SAL_QUESTIONS> NIST_SAL_QUESTIONS { get; set; }
 
     public virtual DbSet<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
-
-    public virtual DbSet<Nlogs> Nlogs { get; set; }
 
     public virtual DbSet<PARAMETERS> PARAMETERS { get; set; }
 
@@ -450,6 +458,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
 
     public virtual DbSet<WEIGHT> WEIGHT { get; set; }
+
+    public virtual DbSet<vAllQuestionsOnly> vAllQuestionsOnly { get; set; }
 
     public virtual DbSet<vAllSimpleQuestions> vAllSimpleQuestions { get; set; }
 
@@ -696,6 +706,25 @@ public partial class CsetwebContext : DbContext
             entity.HasKey(e => e.AssessmentRoleId).HasName("PK_ASSESSMENT_ROLES_1");
 
             entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_ROLES records"));
+        });
+
+        modelBuilder.Entity<ASSESSMENT_SECTOR_SUBSECTOR>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.SectorId, e.IndustryId }).HasName("PK__ASSESSME__21E975218C3D9C39");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ASSESSMEN__Asses__29820FAE");
+
+            entity.HasOne(d => d.Industry).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
+                .HasPrincipalKey(p => p.IndustryId)
+                .HasForeignKey(d => d.IndustryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ASSESSMEN__Indus__2B6A5820");
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ASSESSMEN__Secto__2A7633E7");
         });
 
         modelBuilder.Entity<ASSESSMENT_SELECTED_LEVELS>(entity =>
@@ -1313,6 +1342,8 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<GALLERY_ITEM_USER>(entity =>
         {
+            entity.HasIndex(e => new { e.UserId, e.IsFavorite }, "IX_GALLERY_ITEM_USER_Favorites").HasFilter("([IsFavorite]=(1))");
+
             entity.HasOne(d => d.Gallery_Item).WithMany(p => p.GALLERY_ITEM_USER)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GALLERY_ITEM_USER_GALLERY_ITEM");
@@ -1483,7 +1514,6 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of INSTALLATION records"));
         });
-        
 
         modelBuilder.Entity<JWT>(entity =>
         {
@@ -1667,6 +1697,16 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Sub_Model_NameNavigation).WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS).HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_SUB_MODELS");
         });
 
+        modelBuilder.Entity<METRIC_COMPLETED_ENTRY>(entity =>
+        {
+            entity.ToView("METRIC_COMPLETED_ENTRY");
+        });
+
+        modelBuilder.Entity<METRIC_ENTRY_QUESTIONS>(entity =>
+        {
+            entity.ToView("METRIC_ENTRY_QUESTIONS");
+        });
+
         modelBuilder.Entity<METRO_ANSWERS>(entity =>
         {
             entity.HasKey(e => new { e.Assessment_Id, e.Metro_FIPS }).HasName("PK_ExtendedDemographicMetropolitanAnswers_1");
@@ -1742,6 +1782,11 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of NCSF_FUNCTIONS records"));
+        });
+
+        modelBuilder.Entity<NCSF_INDEX_ANSWERS>(entity =>
+        {
+            entity.Property(e => e.Raw_Answer_Value).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<NERC_RISK_RANKING>(entity =>
@@ -1897,16 +1942,13 @@ public partial class CsetwebContext : DbContext
                 .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_NIST_SAL_QUESTIONS");
         });
 
-        modelBuilder.Entity<Nlogs>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-        });
-
         modelBuilder.Entity<PARAMETERS>(entity =>
         {
             entity.HasKey(e => e.Parameter_ID).HasName("PK_Parameters");
 
             entity.ToTable(tb => tb.HasComment("A collection of PARAMETERS records"));
+
+            entity.Property(e => e.Lang).HasDefaultValue("en");
         });
 
         modelBuilder.Entity<PARAMETER_ASSESSMENT>(entity =>
@@ -2636,6 +2678,11 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of WEIGHT records"));
 
             entity.Property(e => e.Weight1).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<vAllQuestionsOnly>(entity =>
+        {
+            entity.ToView("vAllQuestionsOnly");
         });
 
         modelBuilder.Entity<vAllSimpleQuestions>(entity =>

@@ -17,8 +17,8 @@ public partial class GALLERY_ITEM_USER
     [Key]
     public int UserId { get; set; }
 
-    [Column("IsFavorite")]
     public bool IsFavorite { get; set; }
+
     [ForeignKey("Gallery_Item_Guid")]
     [InverseProperty("GALLERY_ITEM_USER")]
     public virtual GALLERY_ITEM Gallery_Item { get; set; }
