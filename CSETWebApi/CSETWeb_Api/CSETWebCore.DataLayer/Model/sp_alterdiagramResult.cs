@@ -6,13 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class GetAnswerDistribGroupingsResult
+    public partial class sp_alterdiagramResult
     {
-        public int grouping_id { get; set; }
-        [StringLength(500)]
-        public string title { get; set; }
-        [StringLength(50)]
-        public string answer_text { get; set; }
-        public int? answer_count { get; set; }
     }
 }

@@ -9,23 +9,21 @@ using Microsoft.EntityFrameworkCore;
 namespace CSETWebCore.DataLayer.Model;
 
 [Keyless]
-public partial class Nlogs
+public partial class vAllQuestionsOnly
 {
-    public int Id { get; set; }
+    [Required]
+    [StringLength(11)]
+    [Unicode(false)]
+    public string AssessmentMode { get; set; }
 
-    [Column(TypeName = "datetime")]
-    public DateTime Date { get; set; }
+    [StringLength(250)]
+    public string title { get; set; }
 
-    [StringLength(10)]
-    public string Level { get; set; }
+    public int CSETId { get; set; }
+
+    public string question { get; set; }
 
     [Required]
-    [StringLength(255)]
-    public string Logger { get; set; }
-
-    [StringLength(4000)]
-    public string Message { get; set; }
-
     [StringLength(100)]
-    public string User { get; set; }
+    public string Original_Set_Name { get; set; }
 }

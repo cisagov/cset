@@ -31,6 +31,9 @@ public partial class SECTOR_INDUSTRY
 
     public int? NIPP_subsector { get; set; }
 
+    [InverseProperty("Industry")]
+    public virtual ICollection<ASSESSMENT_SECTOR_SUBSECTOR> ASSESSMENT_SECTOR_SUBSECTOR { get; set; } = new List<ASSESSMENT_SECTOR_SUBSECTOR>();
+
     [ForeignKey("SectorId")]
     [InverseProperty("SECTOR_INDUSTRY")]
     public virtual SECTOR Sector { get; set; }

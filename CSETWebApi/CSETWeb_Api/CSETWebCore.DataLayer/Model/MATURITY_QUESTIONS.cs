@@ -78,7 +78,6 @@ public partial class MATURITY_QUESTIONS
     [ForeignKey("Grouping_Id")]
     [InverseProperty("MATURITY_QUESTIONS")]
     public virtual MATURITY_GROUPINGS Grouping { get; set; }
-    
 
     [InverseProperty("Parent_Question")]
     public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; } = new List<MATURITY_QUESTIONS>();
