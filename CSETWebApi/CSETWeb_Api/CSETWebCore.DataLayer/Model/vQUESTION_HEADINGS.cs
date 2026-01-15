@@ -20,7 +20,7 @@ public partial class vQUESTION_HEADINGS
     public int Question_Group_Heading_Id { get; set; }
 
     [Required]
-    [StringLength(150)]
+    [StringLength(100)]
     public string Universal_Sub_Category { get; set; }
 
     [StringLength(1000)]

@@ -56,7 +56,7 @@ namespace CSETWebCore.Business.Tests.Observations
                 new FINDING
                 {
                     Finding_Id = 1,
-                    Assessment_Id = _assessmentId,
+                    Assessment_ID = _assessmentId,
                     Answer_Id = null,
                     Summary = "Test observation",
                     Issue = "Test issue",
@@ -91,7 +91,7 @@ namespace CSETWebCore.Business.Tests.Observations
                 new FINDING
                 {
                     Finding_Id = 1,
-                    Assessment_Id = _assessmentId,
+                    Assessment_ID = _assessmentId,
                     Answer_Id = null,
                     Summary = "Assessment level",
                     Importance = importance,
@@ -100,7 +100,7 @@ namespace CSETWebCore.Business.Tests.Observations
                 new FINDING
                 {
                     Finding_Id = 2,
-                    Assessment_Id = _assessmentId,
+                    Assessment_ID = _assessmentId,
                     Answer_Id = 123,
                     Summary = "Answer level",
                     Importance = importance,
@@ -129,7 +129,7 @@ namespace CSETWebCore.Business.Tests.Observations
                 new FINDING
                 {
                     Finding_Id = 1,
-                    Assessment_Id = _assessmentId,
+                    Assessment_ID = _assessmentId,
                     Answer_Id = null,
                     Summary = "Test",
                     Importance = null,

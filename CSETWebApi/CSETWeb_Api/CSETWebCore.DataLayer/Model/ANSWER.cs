@@ -97,7 +97,7 @@ public partial class ANSWER
 
     [InverseProperty("Answer")]
     public virtual ICollection<FINDING> FINDING { get; set; } = new List<FINDING>();
-    
+
     [ForeignKey("Mat_Option_Id")]
     [InverseProperty("ANSWER")]
     public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
