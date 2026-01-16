@@ -52,12 +52,9 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<spEXECsp_RECOMPILEResult>> spEXECsp_RECOMPILEAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? user_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_BuildCatNumbersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getComponentsRankedCategoriesResult>> usp_getComponentsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetQuestionsResult>> usp_GetQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetRankedQuestionsResult>> usp_GetRankedQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_getVADRSummaryResult>> usp_getVADRSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_setTrendOrderAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
     }
 }

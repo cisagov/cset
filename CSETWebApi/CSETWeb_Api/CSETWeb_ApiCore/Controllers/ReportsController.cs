@@ -333,7 +333,7 @@ namespace CSETWebCore.Api.Controllers
             VADRReports summary = new VADRReports(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.VADRSummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
-            data.VADRSummary = summary.GetVADRSummary(assessmentId);
+            data.VADRSummary = await summary.GetVADRSummaryAsync(assessmentId);
             data.VADRSummaryByGoal = await summary.GetVADRSummaryByGoalAsync(assessmentId);
             data.VADRSummaryByGoalOverall = await summary.GetVADRSummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
