@@ -407,3 +407,8 @@ GO
 IF OBJECT_ID('dbo.usp_CopyIntoSet', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_CopyIntoSet;
 GO
+
+-- usp_getComponentsRankedCategories (replaced with LINQ equivalent in ComponentsRankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getComponentsRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getComponentsRankedCategories;
+GO
