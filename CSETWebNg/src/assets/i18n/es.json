@@ -456,6 +456,7 @@
         "merged checked exams": "Fusiona los exámenes marcados",
         "export all": "Exporta una copia de todas las evaluaciones a otra ubicación.",
         "nav collapse": "Expandir/contraer la navegación",
+        "view assessment list": "Ver la lista de evaluaciones",
         "add favorite": "Agregar a Favoritos",
         "remove favorite": "Eliminar de Favoritos"
     },
@@ -881,6 +882,7 @@
         "enter name and email": "Ingrese su nombre y dirección de correo electrónico para registrar una nueva cuenta CSET"
     },
     "footer": {
+        "expand footer": "Expandir pie de página",
         "faq": "FAQ",
         "accessibility": "Accesibilidad",
         "privacy and use": "Privacidad y Uso",
