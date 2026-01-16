@@ -412,3 +412,8 @@ GO
 IF OBJECT_ID('dbo.usp_getComponentsRankedCategories', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_getComponentsRankedCategories;
 GO
+
+-- usp_getExplodedComponent (replaced with LINQ query using Answer_Components_Exploded view)
+IF OBJECT_ID('dbo.usp_getExplodedComponent', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getExplodedComponent;
+GO
