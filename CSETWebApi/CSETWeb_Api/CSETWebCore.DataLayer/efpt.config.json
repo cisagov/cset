@@ -1084,14 +1084,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getComponentsRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getExplodedComponent]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetQuestions]",
          "ObjectType": 1
       },

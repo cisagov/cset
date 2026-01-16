@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
-using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -383,21 +382,37 @@ namespace CSETWebCore.Business.Question
         {
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
 
-            List<usp_getExplodedComponent> questionlist = null;
+            var questionlist = _context.Answer_Components_Exploded
+                .AsNoTracking()
+                .Where(c => c.Assessment_Id == assessmentId
+                    && c.Question_Id == question_id
+                    && c.Component_Symbol_Id == Component_Symbol_Id)
+                .Select(c => new usp_getExplodedComponent
+                {
+                    UniqueKey = c.UniqueKey,
+                    Assessment_Id = c.Assessment_Id,
+                    Answer_Id = c.Answer_Id,
+                    Question_Id = c.Question_Id,
+                    Answer_Text = c.Answer_Text,
+                    Comment = c.Comment,
+                    Alternate_Justification = c.Alternate_Justification,
+                    Question_Number = c.Question_Number,
+                    QuestionText = c.QuestionText,
+                    ComponentName = c.ComponentName,
+                    Component_Symbol_Id = c.Component_Symbol_Id,
+                    Is_Component = c.Is_Component,
+                    Component_GUID = c.Component_Guid,
+                    Layer_Id = c.Layer_Id,
+                    LayerName = c.LayerName,
+                    Container_Id = c.Container_Id,
+                    ZoneName = c.ZoneName,
+                    SAL = c.SAL,
+                    Mark_For_Review = c.Mark_For_Review,
+                    Feedback = c.FeedBack
+                })
+                .ToList();
 
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  questionlist = handler.ReadToList<usp_getExplodedComponent>().Where(c => c.Question_Id == question_id
-                                && c.Component_Symbol_Id == Component_Symbol_Id).ToList();
-              });
-
-            IQueryable<Answer_Components> answeredQuestionList = _context.Answer_Components.Where(a =>
-                a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
-
-
-            foreach (var question in questionlist.ToList())
+            foreach (var question in questionlist)
             {
                 Answer_Components_Exploded_ForJSON tmp = null;
                 TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
