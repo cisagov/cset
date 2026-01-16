@@ -18,7 +18,6 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
-using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Results;
@@ -761,12 +760,12 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // include component count so front end can know whether components are present
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  chartData.ComponentCount = handler.ReadToList<usp_getExplodedComponent>().Distinct().Count();
-              });
+            chartData.ComponentCount = _context.Answer_Components_Exploded
+                .AsNoTracking()
+                .Where(c => c.Assessment_Id == assessmentId)
+                .Select(c => c.UniqueKey)
+                .Distinct()
+                .Count();
 
             chartData.dataSets.ForEach(ds =>
             {
