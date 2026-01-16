@@ -33,15 +33,6 @@ namespace CSETWebCore.Model.Analysis
             set { result1 = value; Count++; }
         }
     }
-    public class OverallRankedCategoriesMultiResult : MultiResultBase
-    {
-        private List<usp_getRankedCategories> result1;
-        public List<usp_getRankedCategories> Result1
-        {
-            get { return result1; }
-            set { result1 = value; Count++; }
-        }
-    }
     public class StandardSummaryOverallMultiResult : MultiResultBase
     {
         private List<DataRowsPie> result1;
