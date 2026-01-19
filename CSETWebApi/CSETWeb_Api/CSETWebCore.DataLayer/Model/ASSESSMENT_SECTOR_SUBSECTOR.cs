@@ -21,7 +21,7 @@ public partial class ASSESSMENT_SECTOR_SUBSECTOR
     [Key]
     public int IndustryId { get; set; }
 
-    public int? Sequence { get; set; }
+    public int Sequence { get; set; }
 
     [ForeignKey("Assessment_Id")]
     [InverseProperty("ASSESSMENT_SECTOR_SUBSECTOR")]

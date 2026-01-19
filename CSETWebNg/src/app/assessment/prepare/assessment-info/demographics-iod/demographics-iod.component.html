@@ -52,36 +52,16 @@
       [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (change)="update($event)" />
   </div>
 
-  <div class="row mb-4">
-    <div class="col">
-      <label for="sector" class="form-label">Sector</label>
-      <select [ngClass]="{ 'is-invalid' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
-        name="sector" [(ngModel)]="demographicData.sector" (ngModelChange)="onChangeSector()">
-        <option [ngValue]="null">-- Select Sector --</option>
-        <option *ngFor="let i of demographicData.listSectors" [ngValue]="i.optionValue"
-          [selected]="i.optionValue === demographicData?.sector">
-          {{ i.optionText }}
-        </option>
-      </select>
-    </div>
 
-    <div class="col">
-      <label for="subsector" class="form-label">Sub-Sector</label>
-      <select [ngClass]="{ 'is-invalid' : !demographicData.subsector }" class="form-select" id="subsector"
-        tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector" (ngModelChange)="update($event)">
-        <option [ngValue]="null">-- Select --</option>
-        <option *ngFor="let i of demographicData.listSubsectors" [ngValue]="i.optionValue"
-          [selected]="i.optionValue === demographicData?.subsector">
-          {{ i.optionText }}
-        </option>
-      </select>
-    </div>
-  </div>
+  <app-sector-subsector [demographicData]="demographicData"></app-sector-subsector>
+
 
   <!-- show SSG sector selection control for CPG2 assessments -->
-  <div class="row mb-4" *ngIf="assessSvc.assessment?.maturityModel?.modelId == 21 || assessSvc.assessment?.maturityModel?.modelId == 11">
+  <div class="row mb-4"
+    *ngIf="assessSvc.assessment?.maturityModel?.modelId == 21 || assessSvc.assessment?.maturityModel?.modelId == 11">
     <label class="form-label">{{ t('titles.ssg.1') }}</label>
-    <app-ssg-selector [value]="demographicData.ssgSectors" [sectorList]="demographicData.listSectors" (valueChange)="onChangeSsg($event)"></app-ssg-selector>
+    <app-ssg-selector [value]="demographicData.ssgSectors" [sectorList]="demographicData.listSectors"
+      (valueChange)="onChangeSsg($event)"></app-ssg-selector>
   </div>
 
   <!-- #1 -->
@@ -157,12 +137,8 @@
     <label for="assetValue" class="col-9">Does your organization use a body of practice, industry standard, or similar
       resource to support or inform its cybersecurity efforts?
     </label>
-    <input type="checkbox"
-           name="usesStandard"
-           id="usesStandard"
-           [checked]="demographicData.usesStandard"
-           (change)="setBool(demographicData, 'usesStandard', !demographicData.usesStandard)"
-           class="tw:toggle">
+    <input type="checkbox" name="usesStandard" id="usesStandard" [checked]="demographicData.usesStandard"
+      (change)="setBool(demographicData, 'usesStandard', !demographicData.usesStandard)" class="tw:toggle">
 
     <div *ngIf="demographicData.usesStandard ?? false" class="ms-5">
       <div class="fst-italic my-2">
@@ -194,12 +170,8 @@
     <label class="col-9" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
       regulation?
     </label>
-    <input type="checkbox"
-           name="requiredToComply"
-           id="requiredToComply"
-           [checked]="demographicData.requiredToComply"
-           (change)="setBool(demographicData, 'requiredToComply', !demographicData.requiredToComply)"
-           class="tw:toggle">
+    <input type="checkbox" name="requiredToComply" id="requiredToComply" [checked]="demographicData.requiredToComply"
+      (change)="setBool(demographicData, 'requiredToComply', !demographicData.requiredToComply)" class="tw:toggle">
 
     <div *ngIf="demographicData.requiredToComply" class="ms-5">
       <p class="fst-italic">

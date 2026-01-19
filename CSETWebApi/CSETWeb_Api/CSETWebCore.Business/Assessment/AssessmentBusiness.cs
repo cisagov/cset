@@ -487,8 +487,18 @@ namespace CSETWebCore.Business.Assessment
                 // Some demographics
                 var d1 = new Demographic.DemographicBusiness(_context, _assessmentUtil);
                 var d1Demographics = d1.GetDemographics(assessmentId);
-                assessment.SectorId = d1Demographics.SectorId;
-                assessment.IndustryId = d1Demographics.IndustryId;
+
+
+                // load up sector/subsectors
+                assessment.Sectors = d1.GetSectorSubsectorList(assessmentId);
+
+
+
+                //assessment.SectorId = d1Demographics.SectorId;
+                //assessment.IndustryId = d1Demographics.IndustryId;
+
+
+
 
 
                 // update sector if need be
@@ -496,8 +506,8 @@ namespace CSETWebCore.Business.Assessment
                 var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
                 if (newSectorInfo?.Changed ?? false)
                 {
-                    assessment.SectorId = newSectorInfo.SectorId;
-                    assessment.IndustryId = null;
+       //  TODO-3261           assessment.SectorId = newSectorInfo.SectorId;
+       //  TODO-3261           assessment.IndustryId = null;
                 }
 
 

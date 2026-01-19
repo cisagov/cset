@@ -24,7 +24,7 @@
 
 
 export interface DemographicsIod {
-  acknowledgement?:boolean;
+  acknowledgement?: boolean;
   assessmentId?: number;
   version?: number;
   organizationType?: number;
@@ -33,8 +33,9 @@ export interface DemographicsIod {
 
   // PPD-21 or NIPP
   sectorDirective?: string;
-  sector?: number;
-  subsector?: number;
+
+  sectors?: SectorThing[];
+
 
   ssgSectors?: number[];
 
@@ -86,4 +87,9 @@ export interface DemographicsIod {
 export interface CisaWorkflowFieldValidationResponse {
   invalidField: string[];
   isValid: boolean;
+}
+
+export interface SectorThing {
+  sector?: number;
+  subsector?: number;
 }

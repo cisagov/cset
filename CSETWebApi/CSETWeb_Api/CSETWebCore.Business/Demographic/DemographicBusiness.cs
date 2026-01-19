@@ -9,7 +9,9 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -48,8 +50,12 @@ namespace CSETWebCore.Business.Demographic
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
-            demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
-            demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
+
+            // TODO-3261 emographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
+            // TODO-3261 demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
+
+
+
             demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
             demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
@@ -112,8 +118,8 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
-            extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null : demographics.SectorId);
-            extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null : demographics.IndustryId);
+            // TODO-3261 extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null : demographics.SectorId);
+            // TODO-3261 extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null : demographics.IndustryId);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
             extBiz.SaveX(demographics.AssessmentId, "SCOPED", demographics.IsScoped);
             extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);
@@ -162,6 +168,30 @@ namespace CSETWebCore.Business.Demographic
 
             dd.StringValue = value;
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Build a list of SectorSubsector instances.
+        /// </summary>
+        public List<SectorSubsector> GetSectorSubsectorList(int assessmentId)
+        {
+            var resp = new List<SectorSubsector>();
+            
+            var x = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
+            foreach (var dbSS in x)
+            {
+                var g = new SectorSubsector()
+                {
+                    SectorId = dbSS.SectorId,
+                    IndustryId = dbSS.IndustryId,
+                    Sequence = dbSS.Sequence
+                };
+
+                resp.Add(g);
+            }
+
+            return resp;
         }
     }
 }
