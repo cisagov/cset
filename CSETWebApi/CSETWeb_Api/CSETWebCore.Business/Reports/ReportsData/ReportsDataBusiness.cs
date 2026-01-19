@@ -22,7 +22,6 @@ using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -652,14 +651,35 @@ namespace CSETWebCore.Business.Reports
         {
             var l = new List<ComponentQuestion>();
 
-            List<usp_getExplodedComponent> results = null;
-
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", _assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  results = handler.ReadToList<usp_getExplodedComponent>().OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText).ToList();
-              });
+            var results = _context.Answer_Components_Exploded
+                .AsNoTracking()
+                .Where(c => c.Assessment_Id == _assessmentId)
+                .OrderBy(c => c.ComponentName)
+                .ThenBy(c => c.QuestionText)
+                .Select(c => new usp_getExplodedComponent
+                {
+                    UniqueKey = c.UniqueKey,
+                    Assessment_Id = c.Assessment_Id,
+                    Answer_Id = c.Answer_Id,
+                    Question_Id = c.Question_Id,
+                    Answer_Text = c.Answer_Text,
+                    Comment = c.Comment,
+                    Alternate_Justification = c.Alternate_Justification,
+                    Question_Number = c.Question_Number,
+                    QuestionText = c.QuestionText,
+                    ComponentName = c.ComponentName,
+                    Component_Symbol_Id = c.Component_Symbol_Id,
+                    Is_Component = c.Is_Component,
+                    Component_GUID = c.Component_Guid,
+                    Layer_Id = c.Layer_Id,
+                    LayerName = c.LayerName,
+                    Container_Id = c.Container_Id,
+                    ZoneName = c.ZoneName,
+                    SAL = c.SAL,
+                    Mark_For_Review = c.Mark_For_Review,
+                    Feedback = c.FeedBack
+                })
+                .ToList();
 
             foreach (usp_getExplodedComponent q in results)
             {
