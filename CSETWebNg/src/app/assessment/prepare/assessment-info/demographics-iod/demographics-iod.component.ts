@@ -64,25 +64,6 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   /**
-   *
-   */
-  onChangeSector() {
-    if (!this.demographicData.sector) {
-      this.demographicData.listSubsectors = [];
-      this.demographicData.subsector = null;
-    } else {
-      this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
-        this.demographicData.listSubsectors = data;
-      });
-    }
-    this.assessSvc.assessment.sectorId = this.demographicData.sector;
-    this.assessSvc.assessment.ssgSectorIds = this.demographicData.ssgSectors;
-
-    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-    this.updateDemographics();
-  }
-
-  /**
    * 
    */
   onChangeSsg(list: number[]) {
