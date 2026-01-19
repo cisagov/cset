@@ -443,6 +443,7 @@
           "merged checked exams": "チェックされた試験をマージ",
           "export all": "すべての評価のコピーを別の場所にエクスポート。",
           "nav collapse": "ナビゲーションを展開/折りたたむ",
+          "view assessment list": "評価リストを表示",
           "add favorite": "お気に入りに追加",
           "remove favorite":"お気に入りから削除"
      },
@@ -477,6 +478,7 @@
           "enter name and email": "新しいアカウントを登録するには、名前とメールアドレスを入力してください"
      },
      "footer": {
+          "expand footer": "フッターを展開",
           "faq": "よくある質問 (FAQ)",
           "accessibility": "アクセシビリティ",
           "privacy and use": "プライバシーと使用",
