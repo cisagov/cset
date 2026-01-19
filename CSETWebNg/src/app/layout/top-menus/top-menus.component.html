@@ -37,10 +37,12 @@
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item (click)="showSharedDocs()" class="tw:dark:hover:bg-bg-tertiary">
-                <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.shared documents') }}</span>
-            </button>
+            <!--  
+                <button mat-menu-item (click)="showSharedDocs()" class="tw:dark:hover:bg-bg-tertiary">
+                    <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
+                    <span>{{ t('menu.tools.shared documents') }}</span>
+                </button>
+            -->
 
             <button mat-menu-item [disabled]="isNullOrEmptyAssessment()"
                 [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="showAssessDocs()"
