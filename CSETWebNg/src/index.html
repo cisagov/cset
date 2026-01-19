@@ -80,14 +80,15 @@
                         }
                     }
                     if (additionalParams.length > 0) {
-                        returnPath = returnPath + '?' + additionalParams.join('&');
+                        var separator = returnPath.includes('?') ? '&' : '?';
+                        returnPath = returnPath + separator + additionalParams.join('&');
                     }
                 }
                 localStorage.setItem("returnPath", returnPath);
             }
             if (apiUrl != null)
                 localStorage.setItem("apiUrl", apiUrl);
-            if (apiUrl != null)
+            if (libraryUrl != null)
                 localStorage.setItem("libraryUrl", libraryUrl);
         } else {
             // Sorry! No Web Storage support..
