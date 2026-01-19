@@ -60,7 +60,7 @@
     </div>
 
     <!-- Body -->
-    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100" role="main">
       <div class="p-0 d-flex col-12 main-content-scrollableß">
         <router-outlet></router-outlet>
       </div>
@@ -70,7 +70,8 @@
     <div class="accordion sticky-footer text-center" id="accordionFooter">
 
       <h4 class="accordion-header" id="headingOne">
-        <button id="footerExpanderButton" class="cset-footer-expand-button" style="font-size: 1rem; align-items: center"
+        <button id="footerExpanderButton" [aria-label]="t('footer.expand footer')"
+          class="cset-footer-expand-button" style="font-size: 1rem; align-items: center"
           type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne"
           (click)="toggleFooter()"
           [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
