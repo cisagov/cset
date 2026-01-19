@@ -42,6 +42,7 @@ import { concatMap, map, tap, catchError } from 'rxjs/operators';
 import { NavTreeService } from '../../services/navigation/nav-tree.service';
 import { LayoutService } from '../../services/layout.service';
 import { Comparer } from '../../helpers/comparer';
+import { parseReturnPath } from '../../helpers/url-routing.helper';
 import {
   ExportAssessmentComponent
 } from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
@@ -427,7 +428,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem('returnPath');
-      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
   }
 
