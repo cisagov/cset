@@ -53,7 +53,7 @@ namespace CSETWebCore.Business.Observations
             List<Observation> observations = new List<Observation>();
 
             var obsList = _context.FINDING
-                .Where(x => x.Assessment_Id == _assessmentId && x.Answer_Id == null)
+                .Where(x => x.Assessment_ID == _assessmentId && x.Answer_Id == null)
                 .Include(i => i.Importance)
                 .ToList();
 

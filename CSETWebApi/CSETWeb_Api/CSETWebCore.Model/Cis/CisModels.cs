@@ -77,6 +77,7 @@ namespace CSETWebCore.Model.Nested
         public string Scope { get; set; }
         public string RecommendedAction { get; set; }
         public string ImplementationGuides { get; set; }
+        public string Services { get; set; }
 
 
         public bool IsAnswerable { get; set; }

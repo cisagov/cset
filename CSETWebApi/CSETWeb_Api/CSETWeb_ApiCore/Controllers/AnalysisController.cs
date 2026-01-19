@@ -18,7 +18,6 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
-using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Results;
@@ -37,6 +36,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly int _assessmentId;
         private readonly IConfiguration _configuration;
         private readonly ComponentTypesBusiness _componentTypesBusiness;
+        private readonly ComponentsRankedCategoriesBusiness _componentsRankedCategoriesBusiness;
 
         static Dictionary<String, String> answerColorDefs;
         private TranslationOverlay _overlay;
@@ -59,6 +59,7 @@ namespace CSETWebCore.Api.Controllers
             _requirement = requirement;
             _configuration = configuration;
             _componentTypesBusiness = new ComponentTypesBusiness(context);
+            _componentsRankedCategoriesBusiness = new ComponentsRankedCategoriesBusiness(context);
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -759,12 +760,12 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // include component count so front end can know whether components are present
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  chartData.ComponentCount = handler.ReadToList<usp_getExplodedComponent>().Distinct().Count();
-              });
+            chartData.ComponentCount = _context.Answer_Components_Exploded
+                .AsNoTracking()
+                .Where(c => c.Assessment_Id == assessmentId)
+                .Select(c => c.UniqueKey)
+                .Distinct()
+                .Count();
 
             chartData.dataSets.ForEach(ds =>
             {
@@ -879,33 +880,27 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsRankedCategories")]
-        public IActionResult GetComponentsRankedCategories()
+        public async Task<IActionResult> GetComponentsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            ChartData chartData = null;
 
-            _context.LoadStoredProc("[usp_getComponentsRankedCategories]")
-                .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProc((handler) =>
+            var result = await _componentsRankedCategoriesBusiness.GetComponentsRankedCategoriesAsync(assessmentId);
+
+            var chartData = new ChartData();
+            foreach (var c in result)
+            {
+                chartData.data.Add((double)c.prc);
+                chartData.Labels.Add(c.Question_Group_Heading);
+
+                chartData.DataRows.Add(new DataRows
                 {
-                    var result = handler.ReadToList<usp_getComponentsRankedCategories>();
-                    chartData = new ChartData();
-                    foreach (usp_getComponentsRankedCategories c in result)
-                    {
-                        chartData.data.Add((double)c.prc);
-                        chartData.Labels.Add(c.Question_Group_Heading);
-
-                        // create a new DataRows entry with answer percentages for this component
-                        chartData.DataRows.Add(new DataRows
-                        {
-                            title = c.Question_Group_Heading,
-                            rank = c.prc,
-                            failed = c.nuCount,  /// ??????
-                            total = c.qc,
-                            percent = c.Percent
-                        });
-                    }
+                    title = c.Question_Group_Heading,
+                    rank = c.prc,
+                    failed = c.nuCount,
+                    total = c.qc,
+                    percent = c.Percent
                 });
+            }
 
             return Ok(chartData);
         }

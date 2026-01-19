@@ -52,7 +52,7 @@ public partial class NEW_QUESTION
 
     [InverseProperty("Question")]
     public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; } = new List<COMPONENT_QUESTIONS>();
-    
+
     [ForeignKey("Heading_Pair_Id")]
     [InverseProperty("NEW_QUESTION")]
     public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }

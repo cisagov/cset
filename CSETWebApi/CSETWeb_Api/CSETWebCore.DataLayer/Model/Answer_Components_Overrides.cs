@@ -45,7 +45,7 @@ public partial class Answer_Components_Overrides
 
     public int? GroupHeadingId { get; set; }
 
-    [StringLength(150)]
+    [StringLength(100)]
     public string Universal_Sub_Category { get; set; }
 
     public int? SubCategoryId { get; set; }

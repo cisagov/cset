@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="mb-4">
+<div class="mb-5" style="border-bottom: 2px solid gray">
     <div style="color: gray;">
         CSET ID: {{q.questionId}}
     </div>
@@ -39,13 +39,13 @@
 
     <div *ngIf="!!q.securityPractice" class="mb-3">
         <div class="cpg-header">Security Practice</div>
-        <div class="mb-2">{{q.securityPractice}}</div>
+        <div class="mb-4">{{q.securityPractice}}</div>
         <div class="cpg-header">Outcome</div>
-        <div class="mb-2" [innerHTML]="q.outcome"></div>
+        <div class="mb-4" [innerHTML]="q.outcome"></div>
         <div class="cpg-header">Scope</div>
-        <div class="mb-2">{{q.scope}}</div>
+        <div class="mb-4">{{q.scope}}</div>
         <div class="cpg-header">Recommended Action</div>
-        <div class="mb-2" [innerHTML]="q.recommendedAction"></div>
+        <div class="mb-4" [innerHTML]="q.recommendedAction"></div>
     </div>
 
     <app-guidance-block [question]="q" *ngIf="reportSvc.showGuidance"></app-guidance-block>

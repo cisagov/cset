@@ -55,7 +55,7 @@ public partial class NEW_REQUIREMENT
     public string ExaminationApproach { get; set; }
 
     public int? Old_Id_For_Copy { get; set; }
-    
+
     [ForeignKey("NCSF_Cat_Id")]
     [InverseProperty("NEW_REQUIREMENT")]
     public virtual NCSF_CATEGORY NCSF_Cat { get; set; }

@@ -52,19 +52,19 @@ public partial class FINDING
 
     public string Supp_Guidance { get; set; }
 
-    public int? Assessment_Id { get; set; }
+    public int? Assessment_ID { get; set; }
 
     [ForeignKey("Answer_Id")]
     [InverseProperty("FINDING")]
     public virtual ANSWER Answer { get; set; }
 
-    [ForeignKey("Assessment_Id")]
+    [ForeignKey("Assessment_ID")]
     [InverseProperty("FINDING")]
     public virtual ASSESSMENTS Assessment { get; set; }
 
     [InverseProperty("Finding")]
     public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; } = new List<FINDING_CONTACT>();
-    
+
     [ForeignKey("Importance_Id")]
     [InverseProperty("FINDING")]
     public virtual IMPORTANCE Importance { get; set; }
