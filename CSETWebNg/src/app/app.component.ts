@@ -36,6 +36,7 @@ import { GlobalParametersComponent } from './dialogs/global-parameters/global-pa
 import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
 import { CreateUser } from './models/user.model';
+import { parseReturnPath } from './helpers/url-routing.helper';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
@@ -107,24 +108,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
-      const qParams = this.processParams(rpath);
-      rpath = rpath.split('?')[0];
-      this.router.navigate([rpath], { queryParams: qParams, queryParamsHandling: 'merge' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
-  }
-
-  processParams(url: string) {
-    if (!url.includes('?'))
-      return null
-
-    let queryParams = url.split('?')[1];
-    let params = queryParams.split('&');
-    let queryParamsObj = {};
-    params.forEach((d) => {
-      let pair = d.split('=');
-      queryParamsObj[`${pair[0]}`] = pair[1];
-    });
-    return queryParamsObj;
   }
 
   goHome() {

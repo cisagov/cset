@@ -45,7 +45,7 @@ $primary: (
   300: #79a0b5,
   350: #6390a9,
   400: #4c819c,
-  450: #005288,
+  450: #004D73,
   500: #206184,
   550: #0a5278,
   600: #0a4b6e,
@@ -4364,7 +4364,7 @@ h6.dropdown-header {
 }
 
 .gallery-btn-favorite:hover i.fa-star {
-  color: #005288 !important;
+  color: $primary-450 !important;
 }
 
 .star-favorite {
@@ -4455,14 +4455,14 @@ h6.dropdown-header {
 
     .btn-alt:hover,
     .btn-alt.answer-selected {
-      background-color: #ff9800 !important;
+      background-color: #995200 !important;
       color: white;
     }
 
 
     .btn-inc:hover,
     .btn-inc.answer-selected {
-      background-color: #ff9800 !important;
+      background-color: #995200 !important;
       color: white;
     }
 

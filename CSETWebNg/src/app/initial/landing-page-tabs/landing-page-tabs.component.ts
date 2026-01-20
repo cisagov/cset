@@ -25,6 +25,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, isDevMode } fr
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { parseReturnPath } from '../../helpers/url-routing.helper';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -100,7 +101,8 @@ export class LandingPageTabsComponent implements OnInit {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem('returnPath');
-      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
   }
 
