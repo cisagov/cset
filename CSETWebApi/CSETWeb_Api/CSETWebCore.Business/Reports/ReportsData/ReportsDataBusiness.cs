@@ -607,14 +607,29 @@ namespace CSETWebCore.Business.Reports
 
         public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
         {
-            CsetwebContextProcedures context = new CsetwebContextProcedures(_context);
+            // Call FillEmptyQuestionsForAnalysis (still needed as SP call)
+            _context.FillEmptyQuestionsForAnalysis(assessId);
+
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
-            var dblist = await context.usp_GetQuestionsAsync(assessId);
+
+            // Get the application mode
+            var applicationMode = await GetApplicationModeForQuestionsAsync(assessId);
+
+            // Get results based on mode
+            List<QuestionResult> dblist;
+            if (applicationMode == "Questions Based")
+            {
+                dblist = await GetQuestionsBasedResultsAsync(assessId);
+            }
+            else
+            {
+                dblist = await GetRequirementsBasedResultsAsync(assessId);
+            }
 
             List<StandardQuestions> list = new List<StandardQuestions>();
             string lastshortname = "";
             List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
-            foreach (var a in dblist.ToList())
+            foreach (var a in dblist)
             {
                 if (a.ShortName != lastshortname)
                 {
@@ -638,6 +653,167 @@ namespace CSETWebCore.Business.Reports
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// DTO for question/requirement results from LINQ queries.
+        /// </summary>
+        private class QuestionResult
+        {
+            public string ShortName { get; set; }
+            public string Category { get; set; }
+            public string QuestionText { get; set; }
+            public int? QuestionId { get; set; }
+            public int? RequirementId { get; set; }
+            public int AnswerID { get; set; }
+            public string AnswerText { get; set; }
+            public string Level { get; set; }
+            public string QuestionRef { get; set; }
+            public string CategoryAndNumber { get; set; }
+            public int QuestionOrRequirementID { get; set; }
+        }
+
+        /// <summary>
+        /// Gets the application mode for the assessment.
+        /// </summary>
+        private async Task<string> GetApplicationModeForQuestionsAsync(int assessmentId)
+        {
+            var mode = await _context.STANDARD_SELECTION
+                .AsNoTracking()
+                .Where(s => s.Assessment_Id == assessmentId)
+                .Select(s => s.Application_Mode)
+                .FirstOrDefaultAsync();
+
+            return mode ?? "Questions Based";
+        }
+
+        /// <summary>
+        /// Gets question results for Questions Based mode.
+        /// </summary>
+        private async Task<List<QuestionResult>> GetQuestionsBasedResultsAsync(int assessmentId)
+        {
+            // Get the universal SAL level for the selected SAL
+            var standardSelection = await _context.STANDARD_SELECTION
+                .AsNoTracking()
+                .Where(s => s.Assessment_Id == assessmentId)
+                .Select(s => s.Selected_Sal_Level)
+                .FirstOrDefaultAsync();
+
+            var universalSalLevel = await _context.UNIVERSAL_SAL_LEVEL
+                .AsNoTracking()
+                .Where(u => u.Full_Name_Sal == standardSelection)
+                .Select(u => u.Universal_Sal_Level1)
+                .FirstOrDefaultAsync();
+
+            // Build the subquery for valid questions based on available standards and SAL level
+            var validQuestions = await (
+                from s in _context.NEW_QUESTION_SETS.AsNoTracking()
+                join v in _context.AVAILABLE_STANDARDS.AsNoTracking() on s.Set_Name equals v.Set_Name
+                join ns in _context.SETS.AsNoTracking() on s.Set_Name equals ns.Set_Name
+                join l in _context.NEW_QUESTION_LEVELS.AsNoTracking() on s.New_Question_Set_Id equals l.New_Question_Set_Id
+                where v.Selected == true
+                    && v.Assessment_Id == assessmentId
+                    && l.Universal_Sal_Level == universalSalLevel
+                select new { s.Question_Id, ns.Short_Name }
+            ).Distinct().ToListAsync();
+
+            var validQuestionIds = validQuestions.Select(vq => vq.Question_Id).ToHashSet();
+            var questionShortNames = validQuestions.ToDictionary(vq => vq.Question_Id, vq => vq.Short_Name);
+
+            // Main query
+            var results = await (
+                from a in _context.Answer_Questions.AsNoTracking()
+                join c in _context.NEW_QUESTION.AsNoTracking() on a.Question_Or_Requirement_Id equals c.Question_Id
+                join h in _context.vQUESTION_HEADINGS.AsNoTracking() on c.Heading_Pair_Id equals h.Heading_Pair_Id
+                where a.Assessment_Id == assessmentId
+                    && validQuestionIds.Contains(c.Question_Id)
+                select new
+                {
+                    a.Answer_Id,
+                    a.Question_Or_Requirement_Id,
+                    a.Question_Number,
+                    a.Answer_Text,
+                    c.Question_Id,
+                    c.Simple_Question,
+                    c.Universal_Sal_Level,
+                    h.Question_Group_Heading
+                }
+            ).ToListAsync();
+
+            // Project to QuestionResult with ordering
+            return results
+                .Select(r => new QuestionResult
+                {
+                    ShortName = questionShortNames.GetValueOrDefault(r.Question_Id, ""),
+                    Category = r.Question_Group_Heading,
+                    QuestionText = r.Simple_Question,
+                    QuestionId = r.Question_Id,
+                    RequirementId = null,
+                    AnswerID = r.Answer_Id,
+                    AnswerText = r.Answer_Text,
+                    Level = r.Universal_Sal_Level,
+                    QuestionRef = r.Question_Number?.ToString() ?? "",
+                    CategoryAndNumber = r.Question_Group_Heading + " # " + (r.Question_Number?.ToString() ?? ""),
+                    QuestionOrRequirementID = r.Question_Or_Requirement_Id
+                })
+                .OrderBy(r => r.ShortName)
+                .ThenBy(r => r.Category)
+                .ThenBy(r => int.TryParse(r.QuestionRef, out var n) ? n : 0)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Gets question results for Requirements Based mode.
+        /// </summary>
+        private async Task<List<QuestionResult>> GetRequirementsBasedResultsAsync(int assessmentId)
+        {
+            // Get the selected sets for this assessment
+            var selectedSets = await _context.AVAILABLE_STANDARDS
+                .AsNoTracking()
+                .Where(a => a.Assessment_Id == assessmentId && a.Selected == true)
+                .Select(a => a.Set_Name)
+                .ToListAsync();
+
+            // Get the universal SAL level for the selected SAL
+            var standardSelection = await _context.STANDARD_SELECTION
+                .AsNoTracking()
+                .Where(s => s.Assessment_Id == assessmentId)
+                .Select(s => s.Selected_Sal_Level)
+                .FirstOrDefaultAsync();
+
+            var universalSalLevel = await _context.UNIVERSAL_SAL_LEVEL
+                .AsNoTracking()
+                .Where(u => u.Full_Name_Sal == standardSelection)
+                .Select(u => u.Universal_Sal_Level1)
+                .FirstOrDefaultAsync();
+
+            var results = await (
+                from rs in _context.REQUIREMENT_SETS.AsNoTracking()
+                join ans in _context.ANSWER.AsNoTracking() on rs.Requirement_Id equals ans.Question_Or_Requirement_Id
+                join s in _context.SETS.AsNoTracking() on rs.Set_Name equals s.Set_Name
+                join req in _context.NEW_REQUIREMENT.AsNoTracking() on rs.Requirement_Id equals req.Requirement_Id
+                join rl in _context.REQUIREMENT_LEVELS.AsNoTracking() on req.Requirement_Id equals rl.Requirement_Id
+                where selectedSets.Contains(rs.Set_Name)
+                    && ans.Assessment_Id == assessmentId
+                    && rl.Standard_Level == universalSalLevel
+                orderby rs.Requirement_Sequence
+                select new QuestionResult
+                {
+                    ShortName = s.Short_Name,
+                    Category = req.Standard_Category,
+                    QuestionText = req.Requirement_Text,
+                    QuestionId = null,
+                    RequirementId = req.Requirement_Id,
+                    AnswerID = ans.Answer_Id,
+                    AnswerText = ans.Answer_Text,
+                    Level = universalSalLevel,
+                    QuestionRef = req.Requirement_Title,
+                    CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                    QuestionOrRequirementID = rs.Requirement_Id
+                }
+            ).ToListAsync();
+
+            return results;
         }
 
 
