@@ -8,6 +8,7 @@ using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Maturity.Configuration;
+using CSETWebCore.Business.Results;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -894,9 +895,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<RankedQuestions> GetTop5Questions()
+        public async Task<List<RankedQuestions>> GetTop5QuestionsAsync()
         {
-            return GetRankedQuestions().Take(5).ToList();
+            var rankedQuestions = await GetRankedQuestionsAsync();
+            return rankedQuestions.Take(5).ToList();
         }
 
 
@@ -1148,14 +1150,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<RankedQuestions> GetRankedQuestions()
+        public async Task<List<RankedQuestions>> GetRankedQuestionsAsync()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            var rankedQuestionsBusiness = new RankedQuestionsBusiness(_context);
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = await rankedQuestionsBusiness.GetRankedQuestionsAsync(_assessmentId);
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
                 if (q.RequirementId != null)
@@ -1185,14 +1188,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<PhysicalQuestions> GetQuestionsWithSupplementals()
+        public async Task<List<PhysicalQuestions>> GetQuestionsWithSupplementalsAsync()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<PhysicalQuestions> list = new List<PhysicalQuestions>();
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            var rankedQuestionsBusiness = new RankedQuestionsBusiness(_context);
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = await rankedQuestionsBusiness.GetRankedQuestionsAsync(_assessmentId);
 
 
             var supplementalLookups = (from a in _context.NEW_REQUIREMENT
