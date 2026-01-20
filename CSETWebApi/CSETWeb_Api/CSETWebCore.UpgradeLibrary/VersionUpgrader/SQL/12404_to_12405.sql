@@ -427,3 +427,8 @@ GO
 IF OBJECT_ID('dbo.GetCombinedOveralls', 'P') IS NOT NULL
     DROP PROCEDURE dbo.GetCombinedOveralls;
 GO
+
+-- usp_GetQuestions (replaced with LINQ equivalent in ReportsDataBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetQuestions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetQuestions;
+GO
