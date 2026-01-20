@@ -761,12 +761,17 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // include component count so front end can know whether components are present
-            chartData.ComponentCount = _context.Answer_Components_Exploded
+            // Use ASSESSMENT_DIAGRAM_COMPONENTS directly instead of the expensive Answer_Components_Exploded view
+            chartData.ComponentCount = await _context.ASSESSMENT_DIAGRAM_COMPONENTS
                 .AsNoTracking()
-                .Where(c => c.Assessment_Id == assessmentId)
-                .Select(c => c.UniqueKey)
-                .Distinct()
-                .Count();
+                .Where(adc => adc.Assessment_Id == assessmentId)
+                .Join(
+                    _context.DIAGRAM_CONTAINER.AsNoTracking(),
+                    adc => adc.Layer_Id,
+                    dc => dc.Container_Id,
+                    (adc, dc) => new { adc, dc })
+                .Where(x => x.dc.Visible == true)
+                .CountAsync();
 
             chartData.dataSets.ForEach(ds =>
             {
