@@ -123,7 +123,7 @@ export class QuestionsService {
    *
    */
   getComponentQuestionsList(): Observable<QuestionResponse> {
-    return this.http.get<QuestionResponse>(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
+    return this.http.get<QuestionResponse>(this.configSvc.apiUrl + 'componentquestionlist', headers);
   }
 
   /**
