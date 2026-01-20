@@ -114,7 +114,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public async Task<IActionResult> GetComponentQuestionsList([FromQuery] string skin, string group)
+        public async Task<IActionResult> GetComponentQuestionsList()
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = await manager.GetResponseAsync();
