@@ -41,7 +41,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<List<DiagramZones>> GetDiagramZones();
         List<StandardQuestions> GetQuestionsForEachStandard();
         List<ComponentQuestion> GetComponentQuestions();
-        List<usp_getRankedCategories> GetTop5Categories();
+        List<RankedCategories> GetTop5Categories();
         Task<List<RankedQuestions>> GetTop5QuestionsAsync();
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
         List<QuestionsWithComments> GetQuestionsWithComments();

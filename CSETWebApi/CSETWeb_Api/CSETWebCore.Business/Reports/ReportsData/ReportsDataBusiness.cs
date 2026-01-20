@@ -878,7 +878,7 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<usp_getRankedCategories> GetTop5Categories()
+        public List<RankedCategories> GetTop5Categories()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
