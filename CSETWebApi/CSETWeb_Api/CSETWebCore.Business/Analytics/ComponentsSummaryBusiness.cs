@@ -35,13 +35,13 @@ namespace CSETWebCore.Business.Analytics
         /// <returns>List of component answer summary with counts and percentages</returns>
         public async Task<List<usp_getComponentsSummmary>> GetComponentsSummaryAsync(int assessmentId)
         {
-            // Get distinct component answers for the assessment
-            // The SP uses: SELECT DISTINCT answer_text, assessment_id, answer_id FROM Answer_Components_InScope
-            var componentAnswers = await _context.Answer_Components_InScope
+            // Get component answers for the assessment using the simpler Answer_Components view
+            // This is more efficient than Answer_Components_InScope which has 8+ table joins
+            // Answer_Components already filters for Is_Component = 1 and Is_Requirement = 0
+            var componentAnswers = await _context.Answer_Components
                 .AsNoTracking()
                 .Where(ac => ac.Assessment_Id == assessmentId)
-                .Select(ac => new { ac.Answer_Text, ac.Assessment_Id, ac.Answer_Id })
-                .Distinct()
+                .Select(ac => new { ac.Answer_Text, ac.Answer_Id })
                 .ToListAsync();
 
             // Group by answer text and calculate counts
