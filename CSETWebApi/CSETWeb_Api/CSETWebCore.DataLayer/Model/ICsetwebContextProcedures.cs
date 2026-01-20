@@ -32,7 +32,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<GetAnswerCountsForGroupingsResult>> GetAnswerCountsForGroupingsAsync(int? assessmentId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> GetApplicationModeDefaultAsync(int? assessment_Id, OutputParameter<string> application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? parent_Id, int? assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonBestToWorstResult>> GetComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetRelevantAnswersResult>> GetRelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<InScopeQuestionsResult>> InScopeQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
