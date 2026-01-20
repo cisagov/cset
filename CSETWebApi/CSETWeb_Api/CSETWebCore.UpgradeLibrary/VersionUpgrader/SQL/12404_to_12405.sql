@@ -432,3 +432,8 @@ GO
 IF OBJECT_ID('dbo.usp_GetQuestions', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_GetQuestions;
 GO
+
+-- usp_GetRankedQuestions (replaced with LINQ equivalent in RankedQuestionsBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetRankedQuestions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetRankedQuestions;
+GO
