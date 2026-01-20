@@ -24,6 +24,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -113,10 +114,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public IActionResult GetComponentQuestionsList([FromQuery] string skin, string group)
+        public async Task<IActionResult> GetComponentQuestionsList([FromQuery] string skin, string group)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = manager.GetResponse();
+            QuestionResponse resp = await manager.GetResponseAsync();
 
             return Ok(resp);
         }
