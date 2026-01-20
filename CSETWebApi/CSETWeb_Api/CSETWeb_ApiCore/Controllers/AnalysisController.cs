@@ -82,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public IActionResult GetRankedQuestions()
+        public async Task<IActionResult> GetRankedQuestionsAsync()
         {
             var lang = _tokenManager.GetCurrentLanguage();
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
@@ -92,7 +92,8 @@ namespace CSETWebCore.Api.Controllers
 
             string mode = GetAssessmentMode(assessmentId);
 
-            var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
+            var rankedQuestionsBusiness = new RankedQuestionsBusiness(_context);
+            var rankedQuestionList = await rankedQuestionsBusiness.GetRankedQuestionsAsync(assessmentId);
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {

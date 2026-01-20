@@ -42,12 +42,12 @@ namespace CSETWebCore.Interfaces.Reports
         List<StandardQuestions> GetQuestionsForEachStandard();
         List<ComponentQuestion> GetComponentQuestions();
         List<usp_getRankedCategories> GetTop5Categories();
-        List<RankedQuestions> GetTop5Questions();
+        Task<List<RankedQuestions>> GetTop5QuestionsAsync();
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
         List<QuestionsWithComments> GetQuestionsWithComments();
         List<QuestionsMarkedForReview> GetQuestionsMarkedForReview();
         List<QuestionsMarkedForReview> GetQuestionsReviewed();
-        List<RankedQuestions> GetRankedQuestions();
+        Task<List<RankedQuestions>> GetRankedQuestionsAsync();
         List<DocumentLibraryEntry> GetDocumentLibrary();
         BasicReportData.OverallSALTable GetNistSals();
         List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes();
@@ -61,7 +61,7 @@ namespace CSETWebCore.Interfaces.Reports
 
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
         List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
-        List<PhysicalQuestions> GetQuestionsWithSupplementals();
+        Task<List<PhysicalQuestions>> GetQuestionsWithSupplementalsAsync();
         Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId);
     }
 }
