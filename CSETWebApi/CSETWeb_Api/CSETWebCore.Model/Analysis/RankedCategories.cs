@@ -1,14 +1,14 @@
-//////////////////////////////// 
-// 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
+////////////////////////////////
+//
+//   Copyright 2025 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using System;
 
 namespace CSETWebCore.Model.Analysis
 {
-    public class usp_getRankedCategories
+    public class RankedCategories
     {
         public String Question_Group_Heading { get; set; }
         public int QGH_Id { get; set; }

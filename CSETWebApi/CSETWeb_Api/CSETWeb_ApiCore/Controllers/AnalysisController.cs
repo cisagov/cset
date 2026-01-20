@@ -378,7 +378,7 @@ namespace CSETWebCore.Api.Controllers
 
                 ChartData chartData = new ChartData();
 
-                foreach (usp_getRankedCategories c in results.Result2.Take(5))
+                foreach (RankedCategories c in results.Result2.Take(5))
                 {
                     chartData.data.Add((double)(c.prc ?? 0.0M));
                     chartData.Labels.Add(c.Question_Group_Heading);
@@ -419,7 +419,7 @@ namespace CSETWebCore.Api.Controllers
             if (rankedCategories.Any())
             {
                 chartData = new ChartData();
-                foreach (usp_getRankedCategories c in rankedCategories.Take((int)total))
+                foreach (RankedCategories c in rankedCategories.Take((int)total))
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
@@ -532,7 +532,7 @@ namespace CSETWebCore.Api.Controllers
                 chartData = new ChartData();
                 chartData.DataRows = new List<DataRows>();
                 int i = 1;
-                foreach (usp_getRankedCategories c in rankedCategories)
+                foreach (RankedCategories c in rankedCategories)
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
