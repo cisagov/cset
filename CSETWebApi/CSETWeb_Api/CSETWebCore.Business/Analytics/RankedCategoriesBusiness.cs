@@ -16,7 +16,7 @@ namespace CSETWebCore.Business.Analytics
 {
     /// <summary>
     /// Provides ranked categories analysis functionality.
-    /// Replaces usp_GetRankedCategoriesPage and usp_getRankedCategories stored procedures.
+    /// Replaces usp_GetRankedCategoriesPage and RankedCategories stored procedures.
     /// </summary>
     public class RankedCategoriesBusiness
     {
@@ -29,12 +29,12 @@ namespace CSETWebCore.Business.Analytics
 
         /// <summary>
         /// Gets the ranked categories data for an assessment.
-        /// This replaces the usp_GetRankedCategoriesPage and usp_getRankedCategories stored procedures.
+        /// This replaces the usp_GetRankedCategoriesPage and RankedCategories stored procedures.
         /// Note: FillEmptyQuestionsForAnalysis should be called before this method (done in AnalysisController constructor).
         /// </summary>
         /// <param name="assessmentId">The assessment ID</param>
-        /// <returns>List of usp_getRankedCategories containing ranked category data</returns>
-        public async Task<List<usp_getRankedCategories>> GetRankedCategoriesAsync(int assessmentId)
+        /// <returns>List of RankedCategories containing ranked category data</returns>
+        public async Task<List<RankedCategories>> GetRankedCategoriesAsync(int assessmentId)
         {
             // Get application mode
             var applicationMode = await GetApplicationModeAsync(assessmentId);
@@ -66,7 +66,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets ranked categories for Questions Based mode.
         /// </summary>
-        private async Task<List<usp_getRankedCategories>> GetRankedCategoriesForQuestionsAsync(int assessmentId)
+        private async Task<List<RankedCategories>> GetRankedCategoriesForQuestionsAsync(int assessmentId)
         {
             // Get the selected SAL level
             var standardSelection = await _context.STANDARD_SELECTION
@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Analytics
 
             if (!questionsInScope.Any())
             {
-                return new List<usp_getRankedCategories>();
+                return new List<RankedCategories>();
             }
 
             // Get max ranking from questions in scope
@@ -155,7 +155,7 @@ namespace CSETWebCore.Business.Analytics
                 let prc = total > 0 ? (decimal)actualCr / total * 100 : 0
                 let percent = t.qc > 0 ? (decimal)nuCount / t.qc : 0
                 orderby prc descending
-                select new usp_getRankedCategories
+                select new RankedCategories
                 {
                     Question_Group_Heading = t.Question_Group_Heading,
                     QGH_Id = t.Question_Group_Heading_Id,
@@ -175,7 +175,7 @@ namespace CSETWebCore.Business.Analytics
         /// <summary>
         /// Gets ranked categories for Requirements Based mode.
         /// </summary>
-        private async Task<List<usp_getRankedCategories>> GetRankedCategoriesForRequirementsAsync(int assessmentId)
+        private async Task<List<RankedCategories>> GetRankedCategoriesForRequirementsAsync(int assessmentId)
         {
             // Get distinct requirement IDs in scope (selected standards)
             var requirementsInScope = await (
@@ -187,7 +187,7 @@ namespace CSETWebCore.Business.Analytics
 
             if (!requirementsInScope.Any())
             {
-                return new List<usp_getRankedCategories>();
+                return new List<RankedCategories>();
             }
 
             // Get max ranking from requirements in scope
@@ -221,7 +221,7 @@ namespace CSETWebCore.Business.Analytics
                 from t in categoryTotals
                 let prc = total > 0 ? (decimal)t.cr / total * 100 : 0
                 orderby prc descending
-                select new usp_getRankedCategories
+                select new RankedCategories
                 {
                     Question_Group_Heading = t.Question_Group_Heading,
                     QGH_Id = t.Question_Group_Heading_Id,
