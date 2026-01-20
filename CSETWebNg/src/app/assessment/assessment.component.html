@@ -85,7 +85,7 @@
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
               class="btn btn-link no-underline ta-left tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:text-left tw:dark:text-text-primary tw:border tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors"
                     [ngClass]="{
-               'tw:dark:bg-cset-primary tw:dark:text-white tw:dark:hover:bg-cset-primary-hover': node?.isCurrent,
+               'tw:dark:bg-cset-secondary tw:dark:text-white tw:dark:hover:bg-cset-secondary-hover': node?.isCurrent,
                 'tw:opacity-50 tw:cursor-not-allowed': !(node?.enabled)
               }">
               <span class="menu-link ws-normal">
