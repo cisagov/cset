@@ -525,6 +525,7 @@
     "merged checked exams": "Merge checked examinations",
     "export all": "Export a copy of all assessments to another location.",
     "nav collapse": "Expand/collapse navigation",
+    "view assessment list": "View assessment list",
     "add favorite": "Add Favorites",
     "remove favorite": "Remove Favorite"
   },
@@ -983,6 +984,7 @@
     "enter name and email": "Enter your name and email address to register a new account"
   },
   "footer": {
+    "expand footer": "Expand footer",
     "faq": "FAQ",
     "accessibility": "Accessibility",
     "privacy and use": "Privacy & Use",

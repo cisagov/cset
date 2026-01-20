@@ -18,7 +18,6 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
-using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Results;
@@ -37,6 +36,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly int _assessmentId;
         private readonly IConfiguration _configuration;
         private readonly ComponentTypesBusiness _componentTypesBusiness;
+        private readonly ComponentsRankedCategoriesBusiness _componentsRankedCategoriesBusiness;
 
         static Dictionary<String, String> answerColorDefs;
         private TranslationOverlay _overlay;
@@ -59,6 +59,7 @@ namespace CSETWebCore.Api.Controllers
             _requirement = requirement;
             _configuration = configuration;
             _componentTypesBusiness = new ComponentTypesBusiness(context);
+            _componentsRankedCategoriesBusiness = new ComponentsRankedCategoriesBusiness(context);
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -81,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public IActionResult GetRankedQuestions()
+        public async Task<IActionResult> GetRankedQuestionsAsync()
         {
             var lang = _tokenManager.GetCurrentLanguage();
             var parmSub = new ParameterSubstitution(_context, _tokenManager);
@@ -91,7 +92,8 @@ namespace CSETWebCore.Api.Controllers
 
             string mode = GetAssessmentMode(assessmentId);
 
-            var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
+            var rankedQuestionsBusiness = new RankedQuestionsBusiness(_context);
+            var rankedQuestionList = await rankedQuestionsBusiness.GetRankedQuestionsAsync(assessmentId);
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
@@ -376,7 +378,7 @@ namespace CSETWebCore.Api.Controllers
 
                 ChartData chartData = new ChartData();
 
-                foreach (usp_getRankedCategories c in results.Result2.Take(5))
+                foreach (RankedCategories c in results.Result2.Take(5))
                 {
                     chartData.data.Add((double)(c.prc ?? 0.0M));
                     chartData.Labels.Add(c.Question_Group_Heading);
@@ -417,7 +419,7 @@ namespace CSETWebCore.Api.Controllers
             if (rankedCategories.Any())
             {
                 chartData = new ChartData();
-                foreach (usp_getRankedCategories c in rankedCategories.Take((int)total))
+                foreach (RankedCategories c in rankedCategories.Take((int)total))
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
@@ -530,7 +532,7 @@ namespace CSETWebCore.Api.Controllers
                 chartData = new ChartData();
                 chartData.DataRows = new List<DataRows>();
                 int i = 1;
-                foreach (usp_getRankedCategories c in rankedCategories)
+                foreach (RankedCategories c in rankedCategories)
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
                     chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
@@ -759,12 +761,17 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // include component count so front end can know whether components are present
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProc((handler) =>
-              {
-                  chartData.ComponentCount = handler.ReadToList<usp_getExplodedComponent>().Distinct().Count();
-              });
+            // Use ASSESSMENT_DIAGRAM_COMPONENTS directly instead of the expensive Answer_Components_Exploded view
+            chartData.ComponentCount = await _context.ASSESSMENT_DIAGRAM_COMPONENTS
+                .AsNoTracking()
+                .Where(adc => adc.Assessment_Id == assessmentId)
+                .Join(
+                    _context.DIAGRAM_CONTAINER.AsNoTracking(),
+                    adc => adc.Layer_Id,
+                    dc => dc.Container_Id,
+                    (adc, dc) => new { adc, dc })
+                .Where(x => x.dc.Visible == true)
+                .CountAsync();
 
             chartData.dataSets.ForEach(ds =>
             {
@@ -879,33 +886,27 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsRankedCategories")]
-        public IActionResult GetComponentsRankedCategories()
+        public async Task<IActionResult> GetComponentsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            ChartData chartData = null;
 
-            _context.LoadStoredProc("[usp_getComponentsRankedCategories]")
-                .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProc((handler) =>
+            var result = await _componentsRankedCategoriesBusiness.GetComponentsRankedCategoriesAsync(assessmentId);
+
+            var chartData = new ChartData();
+            foreach (var c in result)
+            {
+                chartData.data.Add((double)c.prc);
+                chartData.Labels.Add(c.Question_Group_Heading);
+
+                chartData.DataRows.Add(new DataRows
                 {
-                    var result = handler.ReadToList<usp_getComponentsRankedCategories>();
-                    chartData = new ChartData();
-                    foreach (usp_getComponentsRankedCategories c in result)
-                    {
-                        chartData.data.Add((double)c.prc);
-                        chartData.Labels.Add(c.Question_Group_Heading);
-
-                        // create a new DataRows entry with answer percentages for this component
-                        chartData.DataRows.Add(new DataRows
-                        {
-                            title = c.Question_Group_Heading,
-                            rank = c.prc,
-                            failed = c.nuCount,  /// ??????
-                            total = c.qc,
-                            percent = c.Percent
-                        });
-                    }
+                    title = c.Question_Group_Heading,
+                    rank = c.prc,
+                    failed = c.nuCount,
+                    total = c.qc,
+                    percent = c.Percent
                 });
+            }
 
             return Ok(chartData);
         }

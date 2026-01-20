@@ -423,49 +423,6 @@ namespace CSETWebCore.DataLayer.Model
 
 
         /// <summary>
-        /// Executes stored procedure usp_GetOverallRankedCategoriesPage.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_GetOverallRankedCategoriesPage_Result> myrval = null;
-            this.LoadStoredProc("usp_GetOverallRankedCategoriesPage")
-                     .WithSqlParam("assessment_id", assessment_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetOverallRankedCategoriesPage_Result>();
-                     });
-            return myrval;
-        }
-
-
-        /// <summary>
-        /// Executes stored procedure usp_GetRankedQuestions.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_GetRankedQuestions_Result> myrval = null;
-            this.LoadStoredProc("usp_GetRankedQuestions")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetRankedQuestions_Result>();
-                     });
-            return myrval;
-        }
-
-
-        /// <summary>
         /// Executes stored procedure usp_GetQuestionsWithFeedbacks.
         /// </summary>
         /// <param name="assessment_id"></param>

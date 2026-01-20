@@ -35,6 +35,7 @@ import { Router } from '@angular/router';
 import { Answer } from '../models/questions.model';
 import { ConversionService } from './conversion.service';
 import { ConstantsService } from './constants.service';
+import { parseReturnPath } from '../helpers/url-routing.helper';
 
 export interface Role {
   assessmentRoleId: number;
@@ -555,8 +556,9 @@ export class AssessmentService {
 
           // return path specified
           localStorage.removeItem('returnPath');
-          const returnPath = `/assessment/${id}/${rpath}`;
-          this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
+          const { path, queryParams } = parseReturnPath(rpath);
+          const returnPath = `/assessment/${id}/${path}`;
+          this.router.navigate([returnPath], { queryParams, queryParamsHandling: 'merge' });
           resolve(returnPath);
         });
       });

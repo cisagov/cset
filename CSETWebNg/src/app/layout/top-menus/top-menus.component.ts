@@ -53,6 +53,7 @@ import { translate } from '@jsverse/transloco';
 import { FileExportService } from '../../services/file-export.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { AdminSettingsComponent } from '../../initial/admin-settings/admin-settings.component';
+import { parseReturnPath } from '../../helpers/url-routing.helper';
 import { UserService } from '../../services/user.service';
 
 
@@ -104,7 +105,8 @@ export class TopMenusComponent implements OnInit {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem('returnPath');
-      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
   }
 

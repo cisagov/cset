@@ -172,8 +172,8 @@ SOFTWARE.
     width: 100%;
     display: flex;
     flex-direction: row;
-    border-top: solid 2px black;
-    border-bottom: solid 2px black;
+    border-top: solid 2px var(--text-primary);
+    border-bottom: solid 2px var(--text-primary);
     margin-top: 8px;
 }
 
@@ -257,7 +257,7 @@ SOFTWARE.
 .sr-body-mil-two-to-five-data-row {
     display: flex;
     flex-direction: row;
-    border-top: solid black 2px;
+    border-top: solid var(--text-primary) 2px;
 }
 
 .sr-body-mil-one-text {
@@ -294,6 +294,7 @@ SOFTWARE.
 .sr-arrow-body {
     font-size: 12px;
     background-color: #bfbfbf;
+    color: #000000;
     display: flex;
     -ms-writing-mode: tb-rl;
     writing-mode: vertical-lr;

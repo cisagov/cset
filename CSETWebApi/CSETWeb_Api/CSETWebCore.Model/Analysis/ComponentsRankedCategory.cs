@@ -1,16 +1,17 @@
-//////////////////////////////// 
-// 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
-
-namespace CSETWebCore.DataLayer.Model
+////////////////////////////////
+//
+//   Copyright 2025 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Model.Analysis
 {
-    public partial class usp_GetOverallRankedCategoriesPage_Result
+    /// <summary>
+    /// Result model for components ranked categories analysis.
+    /// </summary>
+    public class ComponentsRankedCategory
     {
         public string Question_Group_Heading { get; set; }
-        public int QGH_Id { get; set; }
         public int qc { get; set; }
         public int cr { get; set; }
         public int Total { get; set; }
@@ -20,5 +21,3 @@ namespace CSETWebCore.DataLayer.Model
         public decimal Percent { get; set; }
     }
 }
-
-

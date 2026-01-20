@@ -407,3 +407,33 @@ GO
 IF OBJECT_ID('dbo.usp_CopyIntoSet', 'P') IS NOT NULL
     DROP PROCEDURE dbo.usp_CopyIntoSet;
 GO
+
+-- usp_getComponentsRankedCategories (replaced with LINQ equivalent in ComponentsRankedCategoriesBusiness.cs)
+IF OBJECT_ID('dbo.usp_getComponentsRankedCategories', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getComponentsRankedCategories;
+GO
+
+-- usp_getExplodedComponent (replaced with LINQ query using Answer_Components_Exploded view)
+IF OBJECT_ID('dbo.usp_getExplodedComponent', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getExplodedComponent;
+GO
+
+-- usp_getVADRSummary (replaced with LINQ equivalent in VADRReports.cs)
+IF OBJECT_ID('dbo.usp_getVADRSummary', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_getVADRSummary;
+GO
+
+-- GetCombinedOveralls (replaced with LINQ equivalent in CsetContextExtensions.GetCombinedOveralls.cs)
+IF OBJECT_ID('dbo.GetCombinedOveralls', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.GetCombinedOveralls;
+GO
+
+-- usp_GetQuestions (replaced with LINQ equivalent in ReportsDataBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetQuestions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetQuestions;
+GO
+
+-- usp_GetRankedQuestions (replaced with LINQ equivalent in RankedQuestionsBusiness.cs)
+IF OBJECT_ID('dbo.usp_GetRankedQuestions', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_GetRankedQuestions;
+GO

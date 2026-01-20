@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Analytics;
+using CSETWebCore.Business.Results;
 using System.Threading.Tasks;
 
 
@@ -85,32 +86,29 @@ namespace CSETWebCore.Api.Controllers
 
                 response.labels.Add(a.Assessment.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
+
+                foreach (var procResult in procResults)
+                {
+                    var mode = a.Assessment.STANDARD_SELECTION.Application_Mode;
+
+                    string stat = procResult.StatType;
+
+                    // funnel questions and requirements into 'standards' if assessment mode matches
+                    if ((mode.StartsWith("Questions") && procResult.StatType == "Questions")
+                    || (mode.StartsWith("Requirement") && procResult.StatType == "Requirement"))
                     {
-                        var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+                        stat = "Standards";
+                    }
 
-                        foreach (var procResult in procResults)
-                        {
-                            var mode = a.Assessment.STANDARD_SELECTION.Application_Mode;
-
-                            string stat = procResult.StatType;
-
-                            // funnel questions and requirements into 'standards' if assessment mode matches
-                            if ((mode.StartsWith("Questions") && procResult.StatType == "Questions")
-                            || (mode.StartsWith("Requirement") && procResult.StatType == "Requirement"))
-                            {
-                                stat = "Standards";
-                            }
-
-                            var ds = response.datasets.Find(x => x.Label == stat);
-                            if (ds != null)
-                            {
-                                ds.Data[i] = (float)procResult.Value;
-                            }
-                        }
-                    });
+                    var ds = response.datasets.Find(x => x.Label == stat);
+                    if (ds != null)
+                    {
+                        ds.Data[i] = (float)procResult.Value;
+                    }
+                }
             }
 
             return Ok(response);
@@ -268,20 +266,17 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.StatType))
-                            {
-                                dict[procResult.StatType].Add(procResult.Value);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.StatType))
+                    {
+                        dict[procResult.StatType].Add(procResult.Value);
+                    }
+                }
             }
 
             var ds = new ChartDataSet();
@@ -589,38 +584,34 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
+
+                Dictionary<string, double> dict = new Dictionary<string, double>();
+                dict["Standards"] = 0;
+
+                foreach (GetCombinedOveralls row in procResults)
+                {
+                    if (row.StatType == "Requirement" || row.StatType == "Questions")
                     {
-                        var result = handler.ReadToList<GetCombinedOveralls>();
-                        var g = (List<GetCombinedOveralls>)result;
+                        dict["Standards"] += row.Value;
+                    }
+                    else
+                    {
+                        dict[row.StatType] = row.Value;
+                    }
+                }
 
-                        Dictionary<string, double> dict = new Dictionary<string, double>();
-                        dict["Standards"] = 0;
-
-                        foreach (GetCombinedOveralls row in g)
-                        {
-                            if (row.StatType == "Requirement" || row.StatType == "Questions")
-                            {
-                                dict["Standards"] += row.Value;
-                            }
-                            else
-                            {
-                                dict[row.StatType] = row.Value;
-                            }
-                        }
-
-                        var ds = new ChartDataSet
-                        {
-                            Label = a.Alias
-                        };
-                        response.Datasets.Add(ds);
-                        foreach (var statType in statTypes)
-                        {
-                            ds.Data.Add((float)dict[statType]);
-                        }
-                    });
+                var ds = new ChartDataSet
+                {
+                    Label = a.Alias
+                };
+                response.Datasets.Add(ds);
+                foreach (var statType in statTypes)
+                {
+                    ds.Data.Add((float)dict[statType]);
+                }
             }
 
             return Ok(response);
