@@ -1084,10 +1084,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_GetQuestions]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetRankedQuestions]",
          "ObjectType": 1
       },
