@@ -75,13 +75,11 @@ export class TrendAnalyticsComponent implements OnInit {
     // Top 5
     this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
-      console.log('top5', this.chartTop5)
     });
 
     // Bottom 5
     this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
-      console.log('bottom5', this.chartBottom5)
     });
 
     // Category Percentage Comparison
