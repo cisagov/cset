@@ -38,11 +38,11 @@ import { LayoutService } from "../../../../services/layout.service";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
 
 @Component({
-    selector: "app-assessment-contacts",
-    templateUrl: "./assessment-contacts.component.html",
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: "app-assessment-contacts",
+  templateUrl: "./assessment-contacts.component.html",
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AssessmentContactsComponent implements OnInit {
   @Output() triggerChange = new EventEmitter();
@@ -75,7 +75,7 @@ export class AssessmentContactsComponent implements OnInit {
       // Fetch creator ID first
       this.assessSvc.getCreator().then((creatorId: any) => {
         this.creatorId = creatorId;
-        
+
         // Then fetch contacts
         return this.assessSvc.getAssessmentContacts();
       }).then((data: AssessmentContactsResponse) => {
@@ -84,7 +84,7 @@ export class AssessmentContactsComponent implements OnInit {
         }
         this.userRole = data.currentUserRole;
         this.userEmail = this.auth.email();
-        
+
         // Apply sorting with creator first
         this.sortContactsWithCreatorFirst();
       }).catch(error => {
@@ -105,32 +105,32 @@ export class AssessmentContactsComponent implements OnInit {
     if (!this.creatorId || this.contacts.length === 0) {
       return;
     }
-    
+
     // Find creator contact
     const creatorIndex = this.contacts.findIndex(
       contact => contact.userId === this.creatorId
     );
-    
+
     if (creatorIndex > 0) {
       // Move creator to top
       const [creator] = this.contacts.splice(creatorIndex, 1);
       this.contacts.unshift(creator);
     }
-    
+
     // Find current user (if different from creator)
     const currentUserEmail = this.auth.email().toUpperCase();
     const currentUserIndex = this.contacts.findIndex(
-      (contact, index) => 
+      (contact, index) =>
         index > 0 && // Skip if already at position 0 (creator)
         contact.primaryEmail?.toUpperCase() === currentUserEmail
     );
-    
+
     if (currentUserIndex > 1) {
       // Move current user to position 1 (after creator)
       const [currentUser] = this.contacts.splice(currentUserIndex, 1);
       this.contacts.splice(1, 0, currentUser);
     }
-    
+
     // Mark first contact with isFirst flag
     if (this.contacts.length > 0) {
       this.contacts[0].isFirst = true;
@@ -289,10 +289,8 @@ export class AssessmentContactsComponent implements OnInit {
           error: (error) => {
             console.error(error);
           }
-        } else {
-          console.error("User does not have the correct role to edit")
-        }
-      })
+        });
+      });
   }
 
   refreshContacts() {
@@ -312,9 +310,9 @@ export class AssessmentContactsComponent implements OnInit {
 
     // update the API
     this.assessSvc.removeContact(contact.assessmentContactId).subscribe(
-      (response: { ContactList: User[] }) => { 
+      (response: { ContactList: User[] }) => {
         this.sortContactsWithCreatorFirst();
-        this.changeOccurred(); 
+        this.changeOccurred();
       },
       error => {
         this.dialog
