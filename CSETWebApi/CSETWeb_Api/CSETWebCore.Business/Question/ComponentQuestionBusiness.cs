@@ -14,6 +14,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Business.Question
@@ -26,11 +27,19 @@ namespace CSETWebCore.Business.Question
         private readonly IQuestionRequirementManager _questionRequirement;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public List<SubCategoryAnswersPlus> SubCatAnswers;
 
-        List<FullAnswer> Answers;
+        /// <summary>
+        /// Dictionary for O(1) lookup of answers by Question_Or_Requirement_Id
+        /// </summary>
+        private Dictionary<int, FullAnswer> _answersByQuestionId = new Dictionary<int, FullAnswer>();
+
+        /// <summary>
+        /// Dictionary for O(1) lookup of SubCatAnswers by HeadingId
+        /// </summary>
+        private Dictionary<int, SubCategoryAnswersPlus> _subCatAnswersByHeadingId = new Dictionary<int, SubCategoryAnswersPlus>();
 
 
         /// <summary>
@@ -106,18 +115,282 @@ namespace CSETWebCore.Business.Question
                 })
                 .ToList();
 
-            // Get all answers for the assessment
-            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
-                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
+            // Get all answers for the assessment and build O(1) lookup dictionary
+            LoadAnswersOptimized(assessmentId);
 
-            this.Answers = answers.ToList();
+            // Build SubCatAnswers dictionary for O(1) lookups
+            if (SubCatAnswers != null)
+            {
+                _subCatAnswersByHeadingId = SubCatAnswers
+                    .Where(x => x.HeadingId > 0)
+                    .GroupBy(x => x.HeadingId)
+                    .ToDictionary(g => g.Key, g => g.First());
+            }
 
             AddResponse(resp, list2, "Component Defaults");
             BuildOverridesOnly(resp);
 
             return resp;
+        }
+
+
+        /// <summary>
+        /// Async version of GetResponse with optimized database queries.
+        /// Uses batched queries and O(1) dictionary lookups for better performance.
+        /// </summary>
+        public async Task<QuestionResponse> GetResponseAsync()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var resp = new QuestionResponse();
+
+            // Only call SP if no component answers exist yet (optimization)
+            var hasComponentAnswers = await _context.ANSWER
+                .AsNoTracking()
+                .AnyAsync(a => a.Assessment_Id == assessmentId && a.Question_Type == "Component");
+
+            if (!hasComponentAnswers)
+            {
+                _context.FillNetworkDiagramQuestions(assessmentId);
+            }
+
+            // Get component defaults (single query)
+            var list2 = await _context.Answer_Components_Default
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId)
+                .OrderBy(x => x.Question_Group_Heading)
+                .ThenBy(x => x.Universal_Sub_Category)
+                .Select(x => new Answer_Components_Base
+                {
+                    UniqueKey = x.UniqueKey,
+                    Assessment_Id = x.Assessment_Id,
+                    Answer_Id = x.Answer_Id,
+                    Question_Id = x.Question_Id,
+                    Answer_Text = x.Answer_Text,
+                    Comment = x.Comment,
+                    Alternate_Justification = x.Alternate_Justification,
+                    Question_Number = x.Question_Number,
+                    QuestionText = x.QuestionText,
+                    Question_Group_Heading = x.Question_Group_Heading,
+                    GroupHeadingId = x.GroupHeadingId,
+                    Universal_Sub_Category = x.Universal_Sub_Category,
+                    SubCategoryId = x.SubCategoryId,
+                    FeedBack = x.FeedBack,
+                    Is_Component = x.Is_Component ?? false,
+                    Component_Guid = x.Component_Guid,
+                    SAL = x.SAL,
+                    Mark_For_Review = x.Mark_For_Review,
+                    Is_Requirement = x.Is_Requirement ?? false,
+                    Is_Framework = x.Is_Framework ?? false,
+                    heading_pair_id = x.heading_pair_id,
+                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                    Simple_Question = x.Simple_Question,
+                    Reviewed = x.Reviewed,
+                    Label = x.label,
+                    ComponentName = x.ComponentName,
+                    Symbol_Name = x.Symbol_Name,
+                    Component_Symbol_Id = x.Component_Symbol_id
+                })
+                .ToListAsync();
+
+            // Load answers with optimized batched queries
+            await LoadAnswersOptimizedAsync(assessmentId);
+
+            // Build SubCatAnswers dictionary for O(1) lookups
+            if (SubCatAnswers != null)
+            {
+                _subCatAnswersByHeadingId = SubCatAnswers
+                    .Where(x => x.HeadingId > 0)
+                    .GroupBy(x => x.HeadingId)
+                    .ToDictionary(g => g.Key, g => g.First());
+            }
+
+            AddResponse(resp, list2, "Component Defaults");
+            await BuildOverridesOnlyAsync(resp);
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Loads all answers with optimized batched queries instead of N+1 pattern.
+        /// Avoids expensive VIEW_QUESTIONS_STATUS view by computing status directly.
+        /// </summary>
+        private async Task LoadAnswersOptimizedAsync(int assessmentId)
+        {
+            // 1. Get all component answers (single query)
+            var answers = await _context.ANSWER
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
+                .ToListAsync();
+
+            if (!answers.Any())
+            {
+                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                return;
+            }
+
+            var answerIds = answers.Select(a => a.Answer_Id).ToHashSet();
+
+            // 2. Batch query for document counts (replaces VIEW_QUESTIONS_STATUS document part)
+            var documentCounts = await _context.DOCUMENT_ANSWERS
+                .AsNoTracking()
+                .Where(d => answerIds.Contains(d.Answer_Id))
+                .GroupBy(d => d.Answer_Id)
+                .Select(g => new { AnswerId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.AnswerId, x => x.Count);
+
+            // 3. Batch query for finding counts (replaces VIEW_QUESTIONS_STATUS finding part)
+            var findingCounts = await _context.FINDING
+                .AsNoTracking()
+                .Where(f => f.Answer_Id.HasValue && answerIds.Contains(f.Answer_Id.Value))
+                .GroupBy(f => f.Answer_Id.Value)
+                .Select(g => new { AnswerId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.AnswerId, x => x.Count);
+
+            // 4. Build O(1) lookup dictionary with computed status
+            _answersByQuestionId = answers.ToDictionary(
+                a => a.Question_Or_Requirement_Id,
+                a =>
+                {
+                    documentCounts.TryGetValue(a.Answer_Id, out var docCount);
+                    findingCounts.TryGetValue(a.Answer_Id, out var findCount);
+
+                    return new FullAnswer
+                    {
+                        a = a,
+                        b = new DataLayer.Model.VIEW_QUESTIONS_STATUS
+                        {
+                            Answer_Id = a.Answer_Id,
+                            Assessment_Id = a.Assessment_Id,
+                            Question_Or_Requirement_Id = a.Question_Or_Requirement_Id,
+                            HasComment = !string.IsNullOrEmpty(a.Comment),
+                            MarkForReview = a.Mark_For_Review,
+                            HasDocument = docCount > 0,
+                            docnum = docCount,
+                            HasDiscovery = findCount > 0,
+                            findingnum = findCount
+                        },
+                        ObservationsExist = findCount > 0
+                    };
+                });
+        }
+
+
+        /// <summary>
+        /// Synchronous version of LoadAnswersOptimizedAsync for backward compatibility.
+        /// Avoids expensive VIEW_QUESTIONS_STATUS view by computing status directly.
+        /// </summary>
+        private void LoadAnswersOptimized(int assessmentId)
+        {
+            // 1. Get all component answers (single query)
+            var answers = _context.ANSWER
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
+                .ToList();
+
+            if (!answers.Any())
+            {
+                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                return;
+            }
+
+            var answerIds = answers.Select(a => a.Answer_Id).ToHashSet();
+
+            // 2. Batch query for document counts (replaces VIEW_QUESTIONS_STATUS document part)
+            var documentCounts = _context.DOCUMENT_ANSWERS
+                .AsNoTracking()
+                .Where(d => answerIds.Contains(d.Answer_Id))
+                .GroupBy(d => d.Answer_Id)
+                .Select(g => new { AnswerId = g.Key, Count = g.Count() })
+                .ToDictionary(x => x.AnswerId, x => x.Count);
+
+            // 3. Batch query for finding counts (replaces VIEW_QUESTIONS_STATUS finding part)
+            var findingCounts = _context.FINDING
+                .AsNoTracking()
+                .Where(f => f.Answer_Id.HasValue && answerIds.Contains(f.Answer_Id.Value))
+                .GroupBy(f => f.Answer_Id.Value)
+                .Select(g => new { AnswerId = g.Key, Count = g.Count() })
+                .ToDictionary(x => x.AnswerId, x => x.Count);
+
+            // 4. Build O(1) lookup dictionary with computed status
+            _answersByQuestionId = answers.ToDictionary(
+                a => a.Question_Or_Requirement_Id,
+                a =>
+                {
+                    documentCounts.TryGetValue(a.Answer_Id, out var docCount);
+                    findingCounts.TryGetValue(a.Answer_Id, out var findCount);
+
+                    return new FullAnswer
+                    {
+                        a = a,
+                        b = new DataLayer.Model.VIEW_QUESTIONS_STATUS
+                        {
+                            Answer_Id = a.Answer_Id,
+                            Assessment_Id = a.Assessment_Id,
+                            Question_Or_Requirement_Id = a.Question_Or_Requirement_Id,
+                            HasComment = !string.IsNullOrEmpty(a.Comment),
+                            MarkForReview = a.Mark_For_Review,
+                            HasDocument = docCount > 0,
+                            docnum = docCount,
+                            HasDiscovery = findCount > 0,
+                            findingnum = findCount
+                        },
+                        ObservationsExist = findCount > 0
+                    };
+                });
+        }
+
+
+        /// <summary>
+        /// Async version of BuildOverridesOnly.
+        /// </summary>
+        private async Task BuildOverridesOnlyAsync(QuestionResponse resp)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var dlist = (await _context.Answer_Components_Overrides
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId)
+                .OrderBy(x => x.Symbol_Name)
+                .ThenBy(x => x.ComponentName)
+                .ThenBy(x => x.Component_Guid)
+                .ThenBy(x => x.Universal_Sub_Category)
+                .ToListAsync())
+                .Select(x => new Answer_Components_Base
+                {
+                    UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
+                    Assessment_Id = x.Assessment_Id,
+                    Answer_Id = x.Answer_Id ?? 0,
+                    Question_Id = x.Question_Id,
+                    Answer_Text = x.Answer_Text,
+                    Comment = x.Comment,
+                    Alternate_Justification = x.Alternate_Justification,
+                    Question_Number = x.Question_Number,
+                    QuestionText = x.QuestionText,
+                    ComponentName = x.ComponentName,
+                    Symbol_Name = x.Symbol_Name,
+                    Question_Group_Heading = x.Question_Group_Heading,
+                    GroupHeadingId = x.GroupHeadingId ?? 0,
+                    Universal_Sub_Category = x.Universal_Sub_Category,
+                    SubCategoryId = x.SubCategoryId ?? 0,
+                    Is_Component = x.Is_Component,
+                    Component_Guid = x.Component_Guid,
+                    SAL = x.SAL,
+                    Mark_For_Review = x.Mark_For_Review,
+                    Is_Requirement = x.Is_Requirement ?? false,
+                    Is_Framework = x.Is_Framework ?? false,
+                    Reviewed = x.Reviewed,
+                    Simple_Question = x.Simple_Question,
+                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                    heading_pair_id = x.heading_pair_id ?? 0,
+                    Label = x.label,
+                    Component_Symbol_Id = x.Component_Symbol_Id,
+                    FeedBack = x.FeedBack
+                })
+                .ToList();
+
+            AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
 
 
@@ -229,13 +502,16 @@ namespace CSETWebCore.Business.Question
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
                 if ((dbQ.Universal_Sub_Category != curSubHeading) || (dbQ.Question_Id == prevQuestionId))
                 {
+                    // O(1) dictionary lookup instead of O(N) linear search
+                    _subCatAnswersByHeadingId.TryGetValue(dbQ.heading_pair_id, out var subCatAnswer);
+
                     sc = new QuestionSubCategory()
                     {
                         GroupHeadingId = dbQ.GroupHeadingId,
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = subCatAnswer?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -259,7 +535,8 @@ namespace CSETWebCore.Business.Question
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty
                 };
 
-                FullAnswer answer = this.Answers.Where(x => x.a.Question_Or_Requirement_Id == qa.QuestionId).FirstOrDefault();
+                // O(1) dictionary lookup instead of O(N) linear search
+                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -321,13 +598,16 @@ namespace CSETWebCore.Business.Question
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
                 if (dbQ.heading_pair_id != curHeadingPairId)
                 {
+                    // O(1) dictionary lookup instead of O(N) linear search
+                    _subCatAnswersByHeadingId.TryGetValue(dbQ.heading_pair_id, out var subCatAnswer);
+
                     sc = new QuestionSubCategory()
                     {
                         GroupHeadingId = dbQ.GroupHeadingId,
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description ?? string.Empty,
-                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = subCatAnswer?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -352,7 +632,8 @@ namespace CSETWebCore.Business.Question
                     Feedback = dbQ.FeedBack
                 };
 
-                FullAnswer answer = this.Answers.Where(x => x.a.Question_Or_Requirement_Id == qa.QuestionId).FirstOrDefault();
+                // O(1) dictionary lookup instead of O(N) linear search
+                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
