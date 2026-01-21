@@ -61,7 +61,6 @@ export class ObservationDetailComponent implements OnInit {
    * 
    */
   async ngOnInit() {
-    console.log('data:', this.data)
     this.observationsSvc.getImportances().subscribe((result: Importance[]) => {
       this.importances = result;
     });
@@ -73,8 +72,6 @@ export class ObservationDetailComponent implements OnInit {
     // makes 'Individuals Responsible' show up initially
     if (this.observation.observation_Contacts.length == 0)
       this.observation.observation_Contacts = await this.observationsSvc.getContactsForEmptyObservation();
-    // else 
-    //   this.observation.observation_Contacts = await this.assessSvc.getAssessmentContacts();
   }
 
   /**
@@ -135,12 +132,12 @@ export class ObservationDetailComponent implements OnInit {
     this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
       if (this.observation.observation_Id == 0 && resp.observationId) {
         this.observation.observation_Id = resp.observationId;
-        console.log('obsId:', this.observation.observation_Id)
       }
       if (this.observation.answer_Id == 0 && resp.answerId) {
         this.observation.answer_Id = resp.answerId;
-        console.log('ansId:', this.observation.answer_Id)
-
+      }
+      if (this.observation.question_Id == 0 && resp.questionId) {
+        this.observation.question_Id = resp.questionId;
       }
       
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
@@ -154,13 +151,15 @@ export class ObservationDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   * Using 'sequence' instead of 'contactId' because if the user selects a 
+   * previously unselected option, the ID is 0. 
+   * If there were multiple unselected options, the first unselected option 
+   * was defaulted to because every unselected option had 0 as the ID
    */
-  updateContact(contactid) {
-    const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
-    console.log('contact:', c)
+  updateContact(contact, sequence) {
+    const c = this.observation.observation_Contacts[sequence];
     if (!!c) {
-      c.selected = contactid.selected;
+      c.selected = contact.selected;
     }
   }
 }
