@@ -21,11 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ActionItemText, ActionItemTextUpdate, Observation } from '../assessment/questions/observations/observations.model';
+import { ActionItemText, ActionItemTextUpdate, Observation, ObservationContact } from '../assessment/questions/observations/observations.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -39,8 +40,11 @@ const headers = {
 export class ObservationsService {
   impliedSave: boolean = false;
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
-  }
+  constructor(
+    private http: HttpClient, 
+    private configSvc: ConfigService,
+    private assessSvc: AssessmentService
+  ) {}
 
   getSubRisks(): any {
     const qstring = this.configSvc.apiUrl + 'GetSubRisks';
@@ -102,4 +106,42 @@ export class ObservationsService {
   deleteObservation(observationId: number): any {
     return this.http.post(this.configSvc.apiUrl + 'observation/delete', observationId, headers);
   }
+
+  /**
+   * Fills the empty observation_Contacts field with front-facing array
+   * of contacts assigned to the assessment
+   */
+  async getContactsForEmptyObservation(): Promise<ObservationContact[]> {
+    let observationContacts = [];
+    let userContacts = (await this.assessSvc.getAssessmentContacts()).contactList;
+    userContacts.forEach(user => {
+      observationContacts.push({
+        assessment_Contact_Id: user.assessmentContactId,
+        name: user.primaryEmail + ' -- ' + user.firstName + ' ' + user.lastName,
+        observation_Id: 0,
+        selected: false
+      });
+    });
+
+    return observationContacts;
+  }
+
+  /**
+   * Fills the empty observation_Contacts field with front-facing array
+   * of contacts assigned to the assessment
+   */
+  // async getContactsForObservation(): Promise<ObservationContact[]> {
+  //   let observationContacts = [];
+  //   let userContacts = (await this.assessSvc.getAssessmentContacts()).contactList;
+  //   userContacts.forEach(user => {
+  //     observationContacts.push({
+  //       assessment_Contact_Id: user.assessmentContactId,
+  //       name: user.primaryEmail + ' -- ' + user.firstName + ' ' + user.lastName,
+  //       observation_Id: 0,
+  //       selected: true
+  //     });
+  //   });
+
+  //   return observationContacts;
+  // }
 }
