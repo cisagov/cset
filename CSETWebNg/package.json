@@ -35,7 +35,7 @@
     "@angular/platform-browser-dynamic": "^20.3.15",
     "@angular/router": "^20.3.15",
     "@babel/helpers": "^7.28.6",
-    "@fortawesome/angular-fontawesome": "^4.0.0",
+    "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@jsverse/transloco": "^8.2.0",
@@ -57,7 +57,6 @@
     "font-awesome": "^4.7.0",
     "fuse.js": "^7.1.0",
     "html-to-pdfmake": "^2.5.32",
-    "intersection-observer": "^0.12.2",
     "jquery": "^3.7.1",
     "locate-path": "^8.0.0",
     "lodash": "^4.17.21",
@@ -89,6 +88,7 @@
     "webpack-dev-server": "^5.2.3"
   },
   "overrides": {
-    "tar": "^7.5.2"
+    "tar": "^7.5.4",
+    "diff": "^8.0.3"
   }
 }

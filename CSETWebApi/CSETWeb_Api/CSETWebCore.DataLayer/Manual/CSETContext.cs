@@ -423,27 +423,6 @@ namespace CSETWebCore.DataLayer.Model
 
 
         /// <summary>
-        /// Executes stored procedure usp_GetQuestionsWithFeedbacks.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_GetQuestionsWithFeedback> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("sql parameters may not be null");
-
-            IList<usp_GetQuestionsWithFeedback> rval = null;
-            this.LoadStoredProc("usp_GetQuestionsWithFeedback")
-                .WithSqlParam("assessment_id", assessment_id)
-                .ExecuteStoredProc((handler) =>
-                {
-                    rval = handler.ReadToList<usp_GetQuestionsWithFeedback>();
-                });
-            return rval;
-        }
-
-
-        /// <summary>
         /// Executes stored procedure usp_GetTop5Areas.
         /// </summary>
         /// <param name="aggregation_id"></param>

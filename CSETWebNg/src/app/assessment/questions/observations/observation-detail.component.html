@@ -84,10 +84,10 @@
       </div>
 
       <div class="ps-3 pb-5">
-        <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
-          <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}"
-            (change)="updateContact(contact)" [(ngModel)]="contact.selected">
-          <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
+        <div *ngFor="let contact of observation.observation_Contacts; let i = index" class="py-1">
+          <input class="checkbox-custom d-none" type="checkbox" id="contact_{{i}}"
+            (change)="updateContact(contact, i)" [(ngModel)]="contact.selected">
+          <label for="contact_{{i}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
       </div>
 

@@ -392,6 +392,10 @@ export class QuestionExtrasComponent implements OnInit {
       obs = await this.buildEmptyObservation();
     }
 
+    if (!obs.question_Id || obs.question_Id == 0){
+      obs.question_Id = this.myQuestion.questionId;
+    }
+
     obs.answerLevel = true;
 
     this.dialog.open(ObservationDetailComponent, {

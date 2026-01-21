@@ -38,6 +38,7 @@ namespace CSETWebCore.Business.Observations
                 .Where(x => x.Finding_Id == obs.Observation_Id)
                 .FirstOrDefault();
 
+            
             if (_dbObservation == null)
             {
                 var observation = new FINDING
@@ -73,6 +74,15 @@ namespace CSETWebCore.Business.Observations
 
             TinyMapper.Bind<Observation, FINDING>(config => config.Bind(source => source.Observation_Id, target => target.Finding_Id));
             TinyMapper.Map(obs, this._dbObservation);
+
+            // making sure the answerId doesn't get overwritten to null if it exists in the db
+            var answerId = _context.FINDING.Where(x => x.Finding_Id == obs.Observation_Id).Select(x => x.Answer_Id).FirstOrDefault();
+            if (obs.Answer_Id == null && answerId != null)
+            {
+                this._dbObservation.Answer_Id = answerId;
+                obs.Answer_Id = answerId;
+            }
+
 
             int importid = (obs.Importance_Id == null) ? 1 : (int)obs.Importance_Id;
             _dbObservation.Importance = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
