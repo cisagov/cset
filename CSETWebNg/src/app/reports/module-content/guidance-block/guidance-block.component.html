@@ -39,11 +39,16 @@
         </svg>
     </div>
     <div *ngIf="!!q.supplementalInfo && q.supplementalInfo.length > 0"
-        [innerHTML]="q.supplementalInfo | linebreak | safe: 'html'"></div>
+        [innerHTML]="q.supplementalInfo | linebreak | safe: 'html'" class="mb-4"></div>
 
     <div *ngIf="!!q.implementationGuides">
          <strong><em>{{t('extras.implementation guidance CPG2')}}</em></strong>
-        <div [innerHTML]="q.implementationGuides"></div>
+        <div [innerHTML]="q.implementationGuides" class="mb-4"></div>
+    </div>
+
+    <div *ngIf="!!q.services">
+         <strong><em>Support Resources</em></strong>
+        <div [innerHTML]="q.services" class="mb-4"></div>
     </div>
 
     <div *ngIf="(!q.supplementalInfo || q.supplementalInfo.length === 0) && !q.implementationGuides"

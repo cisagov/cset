@@ -9,6 +9,7 @@ using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
+using Snickler.EFCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -16,7 +17,15 @@ namespace CSETWebCore.Helpers
     {
         public void Process(CSETContext db, int aggregationID, LineChart response, string Type)
         {
-            var results = db.usp_GetTop5Areas(aggregationID);
+
+            var results = new List<usp_GetTop5Areas_result>();
+            db.LoadStoredProc("[usp_GetTop5Areas]")
+                .WithSqlParam("aggregation_id", aggregationID)
+                .ExecuteStoredProc((handler) =>
+                {
+                    results = handler.ReadToList<usp_GetTop5Areas_result>().ToList();
+                });
+
             HashSet<int> labels = new HashSet<int>();
 
             Dictionary<string, ChartDataSet> datasets = new Dictionary<string, ChartDataSet>();

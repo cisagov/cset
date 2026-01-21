@@ -44,7 +44,7 @@ $primary: (
   300: #79a0b5,
   350: #6390a9,
   400: #4c819c,
-  450: #005288,
+  450: #004D73,
   500: #206184,
   550: #0a5278,
   600: #0a4b6e,
@@ -2700,6 +2700,11 @@ mat-sidenav.mat-sidenav {
   color: $white;
 }
 
+.rl-container,
+mat-tree.rl-container {
+  background-color: var(--bg-primary);
+}
+
 .btn-chevron {
   padding-left: 0;
 }
@@ -2789,11 +2794,11 @@ mat-sidenav.mat-sidenav {
 //   flex-direction: column;
 // }
 
-.upload-export-actions {
+.import-assessment-actions {
   justify-content: flex-end;
 }
 
-.upload-export {
+.import-assessment {
   min-width: 600px;
 }
 
@@ -3007,7 +3012,7 @@ mat-sidenav.mat-sidenav {
   TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
 
 */
-.upload-export .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
+.import-assessment .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
   padding: 0;
 }
 
@@ -4313,7 +4318,7 @@ h6.dropdown-header {
 }
 
 .gallery-btn-favorite:hover i.fa-star {
-  color: #005288 !important;
+  color: $primary-450 !important;
 }
 
 .newinstaller {
@@ -4352,6 +4357,18 @@ h6.dropdown-header {
   --mat-snackbar-supporting-text-color: #000 !important;
 }
 
+.print-instructions-snack-bar .mat-mdc-snackbar-surface {
+  background-color: #6b4a1f !important;
+}
+
+.gallery-btn-favorite:hover i.fa-star {
+  color: $primary-450 !important;
+}
+
+.star-favorite {
+  color: var(--cset-primary);
+}
+
 .dark-theme .btn-app-mode,
 [data-theme="dark"] .btn-app-mode,
 [data-bs-theme="dark"] .btn-app-mode {
@@ -4367,9 +4384,9 @@ h6.dropdown-header {
 }
 
 .btn-app-mode.active {
-  background-color: #005288;
+  background-color: $primary-450;
   color: #fff;
-  border-color: #005288;
+  border-color: $primary-450;
 }
 
 .dark-theme .btn-app-mode.active,
@@ -4419,13 +4436,13 @@ h6.dropdown-header {
 
     .btn-alt:hover,
     .btn-alt.answer-selected {
-      background-color: #ff9800 !important;
+      background-color: #995200 !important;
       color: white;
     }
 
     .btn-inc:hover,
     .btn-inc.answer-selected {
-      background-color: #ff9800 !important;
+      background-color: #995200 !important;
       color: white;
     }
 

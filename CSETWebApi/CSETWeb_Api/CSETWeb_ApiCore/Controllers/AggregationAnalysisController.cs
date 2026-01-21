@@ -16,6 +16,9 @@ using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Analytics;
+using CSETWebCore.Business.Results;
+using System.Threading.Tasks;
 
 
 
@@ -25,7 +28,6 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
-        private static object _myLockObject = new object();
         private readonly ITokenManager _tokenManager;
         private readonly ITrendDataProcessor _trendData;
         private CSETContext _context;
@@ -84,32 +86,29 @@ namespace CSETWebCore.Api.Controllers
 
                 response.labels.Add(a.Assessment.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
+
+                foreach (var procResult in procResults)
+                {
+                    var mode = a.Assessment.STANDARD_SELECTION.Application_Mode;
+
+                    string stat = procResult.StatType;
+
+                    // funnel questions and requirements into 'standards' if assessment mode matches
+                    if ((mode.StartsWith("Questions") && procResult.StatType == "Questions")
+                    || (mode.StartsWith("Requirement") && procResult.StatType == "Requirement"))
                     {
-                        var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+                        stat = "Standards";
+                    }
 
-                        foreach (var procResult in procResults)
-                        {
-                            var mode = a.Assessment.STANDARD_SELECTION.Application_Mode;
-
-                            string stat = procResult.StatType;
-
-                            // funnel questions and requirements into 'standards' if assessment mode matches
-                            if ((mode.StartsWith("Questions") && procResult.StatType == "Questions")
-                            || (mode.StartsWith("Requirement") && procResult.StatType == "Requirement"))
-                            {
-                                stat = "Standards";
-                            }
-
-                            var ds = response.datasets.Find(x => x.Label == stat);
-                            if (ds != null)
-                            {
-                                ds.Data[i] = (float)procResult.Value;
-                            }
-                        }
-                    });
+                    var ds = response.datasets.Find(x => x.Label == stat);
+                    if (ds != null)
+                    {
+                        ds.Data[i] = (float)procResult.Value;
+                    }
+                }
             }
 
             return Ok(response);
@@ -121,17 +120,12 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/top5")]
-        public IActionResult Top5()
+        [Route("api/aggregation/analysis/top5/{aggregationID}")]
+        public IActionResult Top5(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
+            _trendData.Process(_context, aggregationID, response, "TOP");
 
             return Ok(response);
         }
@@ -142,19 +136,13 @@ namespace CSETWebCore.Api.Controllers
         /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/bottom5")]
-        public IActionResult Bottom5()
+        [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
+        public IActionResult Bottom5(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
+            _trendData.Process(_context, aggregationID, response, "BOTTOM");
 
             return Ok(response);
         }
@@ -166,7 +154,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare()
+        public async Task<IActionResult> CategoryPercentCompare()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -188,19 +176,16 @@ namespace CSETWebCore.Api.Controllers
                 row["Alias"] = a.Alias;
                 dt.Rows.Add(row);
 
-                lock (_myLockObject)
+                var percentages = await GetCategoryPercentagesAsync(a.Assessment_Id);
+
+                foreach (StandardsCategoryResult pct in percentages)
                 {
-                    var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
-
-                    foreach (usp_getStandardsResultsByCategory pct in percentages)
+                    if (!dt.Columns.Contains(pct.Question_Group_Heading))
                     {
-                        if (!dt.Columns.Contains(pct.Question_Group_Heading))
-                        {
-                            dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
-                        }
-
-                        row[pct.Question_Group_Heading] = pct.prc;
+                        dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
                     }
+
+                    row[pct.Question_Group_Heading] = pct.prc;
                 }
             }
 
@@ -242,28 +227,10 @@ namespace CSETWebCore.Api.Controllers
         /// Returns the category percentages for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        /// <param name="db"></param>
-        private List<usp_getStandardsResultsByCategory> GetCategoryPercentages(int assessmentId, CSETContext db)
+        private async Task<List<StandardsCategoryResult>> GetCategoryPercentagesAsync(int assessmentId)
         {
-            List<usp_getStandardsResultsByCategory> response = null;
-
-            lock (_myLockObject)
-            {
-                db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                            .WithSqlParam("assessment_Id", assessmentId)
-                            .ExecuteStoredProc((handler) =>
-                            {
-                                var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
-                                var labels = (from usp_getStandardsResultsByCategory an in result
-                                              orderby an.Question_Group_Heading
-                                              select an.Question_Group_Heading).Distinct().ToList();
-
-
-                                response = (List<usp_getStandardsResultsByCategory>)result;
-                            });
-            }
-
-            return response;
+            var business = new StandardsResultsByCategoryBusiness(_context);
+            return await business.GetStandardsResultsByCategoryAsync(assessmentId);
         }
 
 
@@ -299,20 +266,17 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.StatType))
-                            {
-                                dict[procResult.StatType].Add(procResult.Value);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.StatType))
+                    {
+                        dict[procResult.StatType].Add(procResult.Value);
+                    }
+                }
             }
 
             var ds = new ChartDataSet();
@@ -335,7 +299,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/standardsanswers")]
-        public IActionResult GetStandardsAnswerDistribution()
+        public async Task<IActionResult> GetStandardsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -355,22 +319,21 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            // Get standards summary using LINQ
+            // (replaces usp_getStandardSummaryOverall stored procedure call)
+            var standardSummaryOverallBusiness = new StandardSummaryOverallBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var procResults = await standardSummaryOverallBusiness.GetStandardSummaryOverallAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.Answer_Text))
-                            {
-                                dict[procResult.Answer_Text].Add(procResult.Percent);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.Answer_Text))
+                    {
+                        dict[procResult.Answer_Text].Add(procResult.Percent);
+                    }
+                }
             }
 
 
@@ -388,7 +351,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/componentsanswers")]
-        public IActionResult GetComponentsAnswerDistribution()
+        public async Task<IActionResult> GetComponentsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -408,22 +371,21 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            // Get components summary using LINQ
+            // (replaces usp_GetComponentsSummary stored procedure call)
+            var componentsSummaryBusiness = new ComponentsSummaryBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_GetComponentsSummary]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var procResults = (List<usp_getComponentsSummmary>)handler.ReadToList<usp_getComponentsSummmary>();
+                var procResults = await componentsSummaryBusiness.GetComponentsSummaryAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (dict.ContainsKey(procResult.Answer_Text))
-                            {
-                                dict[procResult.Answer_Text].Add(procResult.value);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (dict.ContainsKey(procResult.Answer_Text))
+                    {
+                        dict[procResult.Answer_Text].Add(procResult.value);
+                    }
+                }
             }
 
             var response = new PieChart();
@@ -440,7 +402,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/categoryaverages")]
-        public IActionResult GetCategoryAverages()
+        public async Task<IActionResult> GetCategoryAverages()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -453,27 +415,23 @@ namespace CSETWebCore.Api.Controllers
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
+            var business = new StandardsResultsByCategoryBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        // usp_getStandardsResultsByCategory 15
-                        var procResults = (List<usp_getStandardsResultsByCategory>)handler.ReadToList<usp_getStandardsResultsByCategory>();
+                var procResults = await business.GetStandardsResultsByCategoryAsync(a.Assessment_Id);
 
-                        foreach (var procResult in procResults)
-                        {
-                            if (!dict.ContainsKey(procResult.Question_Group_Heading))
-                            {
-                                dict.Add(procResult.Question_Group_Heading, new List<decimal>());
-                            }
-                            if (procResult.Actualcr > 0)
-                            {
-                                dict[procResult.Question_Group_Heading].Add(procResult.prc);
-                            }
-                        }
-                    });
+                foreach (var procResult in procResults)
+                {
+                    if (!dict.ContainsKey(procResult.Question_Group_Heading))
+                    {
+                        dict.Add(procResult.Question_Group_Heading, new List<decimal>());
+                    }
+                    if (procResult.Actualcr > 0)
+                    {
+                        dict[procResult.Question_Group_Heading].Add(procResult.prc);
+                    }
+                }
             }
 
             var catList = dict.Keys.ToList();
@@ -499,7 +457,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getanswertotals")]
-        public IActionResult GetAnswerTotals()
+        public async Task<IActionResult> GetAnswerTotals()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -512,28 +470,27 @@ namespace CSETWebCore.Api.Controllers
 
             List<AnswerCounts> response = new List<AnswerCounts>();
 
+            // Get standards summary using LINQ
+            // (replaces usp_getStandardSummaryOverall stored procedure call)
+            var standardSummaryOverallBusiness = new StandardSummaryOverallBusiness(_context);
+
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var results = await standardSummaryOverallBusiness.GetStandardSummaryOverallAsync(a.Assessment_Id);
 
-                        var ansCount = new AnswerCounts()
-                        {
-                            AssessmentId = a.Assessment_Id,
-                            Alias = a.Alias,
-                            Total = results.Max(x => x.Total),
-                            Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
-                            N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
-                            A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
-                            NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
-                            U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
-                        };
+                var ansCount = new AnswerCounts()
+                {
+                    AssessmentId = a.Assessment_Id,
+                    Alias = a.Alias,
+                    Total = results.Any() ? results.Max(x => x.Total) : 0,
+                    Y = results.FirstOrDefault(x => x.Answer_Text == "Y")?.qc ?? 0,
+                    N = results.FirstOrDefault(x => x.Answer_Text == "N")?.qc ?? 0,
+                    A = results.FirstOrDefault(x => x.Answer_Text == "A")?.qc ?? 0,
+                    NA = results.FirstOrDefault(x => x.Answer_Text == "NA")?.qc ?? 0,
+                    U = results.FirstOrDefault(x => x.Answer_Text == "U")?.qc ?? 0
+                };
 
-                        response.Add(ansCount);
-                    });
+                response.Add(ansCount);
             }
 
             return Ok(response);
@@ -545,11 +502,10 @@ namespace CSETWebCore.Api.Controllers
         /// aggregation.  This logic is flexible for models that have their own answer option lists.
         /// In other words, no "Y", "N", "A" assumption is made.
         /// </summary>
-        /// <param name="aggregationID"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/maturity/answertotals")]
-        public IActionResult GetMaturityAnswerTotalsFlexible()
+        public async Task<IActionResult> GetMaturityAnswerTotalsFlexible()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -562,45 +518,40 @@ namespace CSETWebCore.Api.Controllers
 
             List<AnswerCountsGeneric> response = new List<AnswerCountsGeneric>();
 
+            var maturityAnswerTotalsBusiness = new MaturityAnswerTotalsBusiness(_context);
+
             foreach (var a in assessmentList)
             {
                 var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == a.Assessment.Assessment_Id)
                     .Include(x => x.model)
                     .FirstOrDefault();
 
-
                 // create a list of applicable answer options
                 var answerOrder = mm.model.Answer_Options.Split(',').ToList();
                 answerOrder.Add("U");
 
+                // Call LINQ-based method instead of SP
+                var results = await maturityAnswerTotalsBusiness.GetMaturityAnswerTotalsAsync(a.Assessment_Id);
 
-                _context.LoadStoredProc("[usp_GetMaturityAnswerTotals]")
-                   .WithSqlParam("assessment_id", a.Assessment_Id)
-                   .ExecuteStoredProc((handler) =>
-                   {
-                       var results = (List<AnswerCountsAndPercentages>)handler.ReadToList<AnswerCountsAndPercentages>();
+                var acg = new AnswerCountsGeneric();
+                acg.AssessmentId = a.Assessment_Id;
+                acg.ModelId = mm.model_id;
+                acg.Alias = a.Alias;
 
+                foreach (var item in answerOrder)
+                {
+                    var dbResult = results.FirstOrDefault(x => x.Answer_Text == item);
 
-                       var acg = new AnswerCountsGeneric();
-                       acg.AssessmentId = a.Assessment_Id;
-                       acg.ModelId = mm.model_id;
-                       acg.Alias = a.Alias;
+                    acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
+                    {
+                        Answer_Text = item,
+                        QC = dbResult?.QC ?? 0,
+                        Total = dbResult?.Total ?? 0,
+                        Percent = dbResult?.Percent ?? 0
+                    });
+                }
 
-                       foreach (var item in answerOrder)
-                       {
-                           var dbResult = results.Where(x => x.Answer_Text == item).FirstOrDefault();
-
-                           acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
-                           {
-                               Answer_Text = item,
-                               QC = dbResult?.QC ?? 0,
-                               Total = dbResult?.Total ?? 0,
-                               Percent = dbResult?.Percent ?? 0
-                           });
-                       }
-
-                       response.Add(acg);
-                   });
+                response.Add(acg);
             }
 
             return Ok(response);
@@ -633,38 +584,34 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                // Get combined answer distribution statistics using LINQ
+                // (replaces GetCombinedOveralls stored procedure call)
+                var procResults = _context.GetCombinedOveralls(a.Assessment_Id);
+
+                Dictionary<string, double> dict = new Dictionary<string, double>();
+                dict["Standards"] = 0;
+
+                foreach (GetCombinedOveralls row in procResults)
+                {
+                    if (row.StatType == "Requirement" || row.StatType == "Questions")
                     {
-                        var result = handler.ReadToList<GetCombinedOveralls>();
-                        var g = (List<GetCombinedOveralls>)result;
+                        dict["Standards"] += row.Value;
+                    }
+                    else
+                    {
+                        dict[row.StatType] = row.Value;
+                    }
+                }
 
-                        Dictionary<string, double> dict = new Dictionary<string, double>();
-                        dict["Standards"] = 0;
-
-                        foreach (GetCombinedOveralls row in g)
-                        {
-                            if (row.StatType == "Requirement" || row.StatType == "Questions")
-                            {
-                                dict["Standards"] += row.Value;
-                            }
-                            else
-                            {
-                                dict[row.StatType] = row.Value;
-                            }
-                        }
-
-                        var ds = new ChartDataSet
-                        {
-                            Label = a.Alias
-                        };
-                        response.Datasets.Add(ds);
-                        foreach (var statType in statTypes)
-                        {
-                            ds.Data.Add((float)dict[statType]);
-                        }
-                    });
+                var ds = new ChartDataSet
+                {
+                    Label = a.Alias
+                };
+                response.Datasets.Add(ds);
+                foreach (var statType in statTypes)
+                {
+                    ds.Data.Add((float)dict[statType]);
+                }
             }
 
             return Ok(response);

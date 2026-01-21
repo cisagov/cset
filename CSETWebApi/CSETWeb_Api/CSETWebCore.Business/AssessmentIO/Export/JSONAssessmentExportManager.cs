@@ -833,7 +833,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             // assessment level
             var obs1 = _context.FINDING
-               .Where(f => f.Assessment_Id == assessmentId)
+               .Where(f => f.Assessment_ID == assessmentId)
                .Select(f => new ObservationJson
                {
                    ObservationId = f.Finding_Id,

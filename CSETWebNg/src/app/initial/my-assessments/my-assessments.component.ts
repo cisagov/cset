@@ -32,7 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { ImportAssessmentService } from '../../services/import-assessment.service';
-import { UploadExportComponent } from '../../dialogs/upload-export/upload-export.component';
+import { UploadExportComponent } from '../../dialogs/import-assessment/import-assessment.component';
 import { Title } from '@angular/platform-browser';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
@@ -42,6 +42,7 @@ import { concatMap, map, tap, catchError } from 'rxjs/operators';
 import { NavTreeService } from '../../services/navigation/nav-tree.service';
 import { LayoutService } from '../../services/layout.service';
 import { Comparer } from '../../helpers/comparer';
+import { parseReturnPath } from '../../helpers/url-routing.helper';
 import {
   ExportAssessmentComponent
 } from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
@@ -297,7 +298,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         flex: 2
       },
       {
-        headerName: 'Actions',
+        headerName: this.tSvc.translate('actions'),
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
@@ -427,7 +428,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem('returnPath');
-      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
   }
 
@@ -440,7 +442,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       this.assessSvc.isDeletePermitted().subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {
-            data: { messageText: 'You cannot remove an assessment that has other users.' }
+            data: { messageText: this.tSvc.translate('has other users') }
           });
           return;
         }
@@ -676,6 +678,9 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
     const rowIndex = params.rowIndex;
+    const labelRemove = this.tSvc.translate('buttons.remove');
+    const labelExport = this.tSvc.translate('buttons.export');
+    const labelExportJson = this.tSvc.translate('buttons.export json');
 
     let buttons = `
     <button class="btn btn-ghost btn-sm hover:btn-error"
@@ -684,7 +689,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
             data-row-index="${rowIndex}"
             title="Remove assessment">
       <span class="cset-icons-trash-x tw:text-sm mr-2"></span>
-      <span class="text-nowrap">Remove</span>
+      <span class="text-nowrap">${labelRemove}</span>
     </button>
   `;
 
@@ -695,7 +700,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
               data-assessment-id="${assessmentId}"
               title="Export assessment">
         <span class="cset-icons-export-up tw:text-sm mr-2"></span>
-        <span class="text-nowrap">Export</span>
+        <span class="text-nowrap">${labelExport}</span>
       </button>
     `;
     }
@@ -707,7 +712,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
               data-assessment-id="${assessmentId}"
               title="Export assessment JSON">
         <span class="cset-icons-export-up tw:text-sm mr-2"></span>
-        <span class="text-nowrap">Export JSON</span>
+        <span class="text-nowrap">${labelExportJson}</span>
       </button>
     `;
     }

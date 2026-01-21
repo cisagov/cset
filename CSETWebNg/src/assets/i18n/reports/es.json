@@ -368,13 +368,16 @@
                     },
                     "current assessment": "Evaluacion corriente",
                     "notes": "Notas",
-                    "ttp or risk addressed": "TTP o Riesgo Abordad",
+                    "ttp or risk addressed": "TTP o Riesgo Abordado",
                     "cost": "Costo",
                     "impact": "Impacto",
                     "complexity": "Facilidad",
                     "low": "BAJO",
                     "medium": "MEDIO",
-                    "high": "ALTO"
+                    "high": "ALTO",
+                    "simple": "SENCILLA",
+                    "moderate": "MODERADA",
+                    "complex": "COMPLEJA"
                },
                "deficiency": {
                     "report title": "Informe Deficiencias - Objetivos de Rendimiento Cibernético (CPG)",

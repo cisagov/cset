@@ -13,6 +13,7 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,6 +54,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>        
         [HttpPost]
         [Route("/api/files/blob/create/")]
+        [RequestSizeLimit(524288000)] // 500 MB in bytes
+        [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
         public async Task<IActionResult> Upload()
         {
             const string key_questionId = "questionId";
@@ -76,8 +79,9 @@ namespace CSETWebCore.Api.Controllers
             {
                 result = await loader.ProcessUploadStream(HttpContext, keyDict);
             }
-            catch
+            catch (Exception exc)
             {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 return StatusCode(400);
             }
 

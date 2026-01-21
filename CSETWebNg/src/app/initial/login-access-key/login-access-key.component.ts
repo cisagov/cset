@@ -28,6 +28,7 @@ import { ConfigService } from '../../services/config.service';
 import { LayoutService } from '../../services/layout.service';
 import { Utilities } from '../../services/utilities.service';
 import { JwtParser } from '../../helpers/jwt-parser';
+import { parseReturnPath } from '../../helpers/url-routing.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
@@ -180,7 +181,8 @@ export class LoginAccessKeyComponent implements OnInit {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem('returnPath');
-      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
+      const { path, queryParams } = parseReturnPath(rpath);
+      this.router.navigate([path], { queryParams, queryParamsHandling: 'merge' });
     }
   }
 
