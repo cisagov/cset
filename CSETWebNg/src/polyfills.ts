@@ -91,7 +91,6 @@ import 'zone.js'; // Included with Angular CLI.
  * APPLICATION IMPORTS
  */
 
-import 'intersection-observer/intersection-observer.js';
 Promise.all = function (values: any): Promise<any> {
   let resolve: (v: any) => void;
   let reject: (v: any) => void;
