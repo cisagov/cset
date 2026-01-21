@@ -141,7 +141,7 @@ namespace CSETWebCore.Business.Observations
                 obs.Summary = o.Summary;
                 obs.Observation_Id = o.Finding_Id;
 
-                obs.Assessment_Id = assessmentId ?? o.Assessment_Id;
+                obs.Assessment_Id = assessmentId ?? o.Assessment_ID;
                 obs.Answer_Id = answerId ?? o.Answer_Id;
 
                 if (dictTitles.TryGetValue(obs.Observation_Id, out var record))
