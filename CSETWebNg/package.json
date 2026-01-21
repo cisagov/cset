@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^20.0.0",
-    "@angular/build": "^20.3.14",
+    "@angular/build": "^21.1.0",
     "@electron/packager": "^19.0.1",
     "@tailwindcss/postcss": "^4.1.18",
     "autoprefixer": "^10.4.23",
