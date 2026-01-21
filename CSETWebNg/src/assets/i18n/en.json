@@ -4,18 +4,20 @@
   "export all": "Export All",
   "new assessment": "New Assessment",
   "status": "Status",
+  "actions": "Actions!",
   "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
   "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
   "last modified": "Last Modified",
   "primary assessor": "Primary Assessor",
   "prevent encryption": "Turn Off Export Encryption",
-  "user language": "User Language",
+  "display language": "Display Language",
   "note language change": "Select the desired language",
   "assessment information": "Assessment Information",
   "organization details": "Organization Details",
   "assessment name": "Assessment Name",
   "assessment date": "Assessment Date",
   "no pii in name": "Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)",
+  "has other users": "You cannot remove an assessment that has other users",
   "facility name": "Facility Name",
   "city or site name": "City or Site Name",
   "state province region": "State/Province/Region",
@@ -330,7 +332,8 @@
     "reset password": "Reset Password",
     "forgot password": "Forgot Password",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "send": "Send"
   },
   "contact": {
     "contacts": "Contacts",
@@ -348,6 +351,13 @@
     "office phone": "Office Phone",
     "email": "Email",
     "email address": "Email Address",
+    "from": "From",
+    "to": "To",
+    "all have been invited": "All associated individuals have been invited",
+    "subject": "Subject",
+    "subject placeholder": "Subject",
+    "message": "Message",
+    "message placeholder": "Message Text",
     "emergency communications protocol": "Emergency Communications Protocol",
     "primary point of contact": "Primary point of contact",
     "participated in site visit": "Participated in site visit",
@@ -514,8 +524,9 @@
     "merged checked exams": "Merge checked examinations",
     "export all": "Export a copy of all assessments to another location.",
     "nav collapse": "Expand/collapse navigation",
+    "view assessment list": "View assessment list",
     "add favorite": "Add Favorites",
-    "remove favorite":"Remove Favorite"
+    "remove favorite": "Remove Favorite"
   },
   "level": {
     "low": "Low",
@@ -636,7 +647,8 @@
     "access denied": "Access Denied",
     "access denied 1": "Your session has expired, a connection error has occurred, or you are no longer authorized to access that assessment.",
     "access denied 2": "Please log in again.",
-    "access denied 3": "Your role on this assessment has been changed by another user."
+    "access denied 3": "Your role on this assessment has been changed by another user.",
+    "invitation email": "Invitation Email"
   },
   "observation": {
     "observation title": "Observation Title",
@@ -678,7 +690,7 @@
     "questions related to req": "Questions Related to this Requirement",
     "scope": "Scope",
     "recommended action": "Recommended Action",
-    "free services": "Free Services and References",
+    "support resources": "Support Resources",
     "implementation guidance CPG": "Implementation Guidance",
     "implementation guidance CPG2": "Assessment Criteria",
     "implementation guidance CRE+": "Assessment Criteria",
@@ -759,7 +771,7 @@
             "2": "Many of the documents in this application are in HTML or ASCII (plain text) formats. These formats are generally accessible to people who use screen readers. We also have a large number of documents in Adobe Acrobat® Portable Document Format (PDF). When using a screen reader to read documents directly in PDF format using Adobe Acrobat Reader, you will likely need to install an accessibility plug-in. This plug-in is available free of charge on the <a href=\"https://www.adobe.com/trust/accessibility.html\">Adobe Accessibility</a> website.",
             "3": "Our team works to integrate Section 508 accessibility considerations in every application update and release.",
             "4": "We offer app-specific keyboard shortcuts in the Help menu.",
-            "5": "We recommend the use of Google Chrome, Microsoft Edge, and Mozilla Firefox for optimal application functionality. For accessibility functionality specific to each browser, please visit the following features lists: <li><a href=\"https://about.google/belonging/disability-inclusion/product-accessibility/\">Google Chrome Accessibility Features</a></li> <li><a href=\"https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a\">Microsoft Edge Accessibility Features</a></li> <li><a href=\"https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US\">Mozilla Firefox Accessibility Features</a></li>",
+            "5": "We recommend the use of Google Chrome, Microsoft Edge, and Mozilla Firefox for optimal application functionality. For accessibility functionality specific to each browser, please visit the following features lists: <ul><li><a href=\"https://about.google/belonging/disability-inclusion/product-accessibility/\">Google Chrome Accessibility Features</a></li> <li><a href=\"https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a\">Microsoft Edge Accessibility Features</a></li> <li><a href=\"https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US\">Mozilla Firefox Accessibility Features</a></li></ul>",
             "6": "We believe that a trusted, effective, open-source cybersecurity tool should be readily available and accessible to all.",
             "7": "To ensure the most accessible experience for all of our users, in addition to the above Section 508 best practices, we regularly test our software for the following functionality:",
             "8": "We test that all functionality can be accessed and executed using only the keyboard.",
@@ -769,7 +781,7 @@
             "12": "We test for functionality that each heading describes the topic or purpose of its content, and that each programmatically determinable heading is a visual heading. We want each visual heading to be programmatically determinable. We check for programmatic heading levels to logically match the visual heading presentation within the heading structure, so that all visually apparent lists are programmatically identified according to their type.",
             "13": "We check that the default human language of each Web page can be programmatically determined, and that any passage (content, image descriptions, form labels etc.) that differs from the default language of the page is identified correctly.",
             "14": "We test to identify that a title element is defined for the web page, and that it identifies the contents or purpose of our page.",
-            "15": "We test to ensure that: <li>Color is not used as the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element</li> <li>The visual presentation of text and images of text have sufficient contrast</li> <li>The text and images of text has a contrast ratio of at least 4.5:1 & Large-scale text and images has ratio of at least 3:1</li> <li>Instructions provided for understanding and operating content do not rely solely on sensory characteristics of components, such as shape, size, visual location, orientation, or sound</li>",
+            "15": "We test to ensure that: <ul><li>Color is not used as the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element</li> <li>The visual presentation of text and images of text have sufficient contrast</li> <li>The text and images of text has a contrast ratio of at least 4.5:1 & Large-scale text and images has ratio of at least 3:1</li> <li>Instructions provided for understanding and operating content do not rely solely on sensory characteristics of components, such as shape, size, visual location, orientation, or sound</li></ul>",
             "16": "The accessible name and description for a meaningful image provides an equivalent description of the image.",
             "17": "We check for functionality to resize, scale, or zoom in on the text to at least 200% of its original size without loss of content or performance.",
             "18": "We work to make sure our users find information is available using more than one way to locate the web page so they can find information quickly.",
@@ -777,7 +789,7 @@
             "20": "This accessibility feature does not apply to our software.",
             "21": "We check that data tables’ row or column headers are identified programmatically, data cells are associated with relevant headers, and that the layout table does not include structural attributes.",
             "22": "We check that interactive interface elements with multiple statuses indicate a current status, and that an input form role reflects its function accurately so any input text fields will have the correct value.",
-            "23": "<li>Autoplay/update</li> <li>Flashing</li> <li>Adjustable time limits</li> <li>Video-Audio only</li> <li>Multimedia</li> <li>Time Outs</li> <li>Required Plug-ins</li> <li>Alternative Version</li>"
+            "23": "<ul><li>Autoplay/update</li> <li>Flashing</li> <li>Adjustable time limits</li> <li>Video-Audio only</li> <li>Multimedia</li> <li>Time Outs</li> <li>Required Plug-ins</li> <li>Alternative Version</li></ul>"
           }
         },
         "terms of use": {
@@ -791,13 +803,17 @@
       "user profile": "User Profile",
       "my assessments": "My Assessments",
       "change password": "Change Password",
-      "user language": "User Language",
+      "display language": "Display Language",
       "logout": "Logout",
       "settings": "Settings",
       "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off",
-      "admin": "Admin Settings"
+      "admin": "Admin Settings",
+      "light mode": "Light Mode",
+      "switch to light mode": "Switch to light mode",
+      "dark mode": "Dark Mode",
+      "switch to dark mode": "Switch to dark mode"
     }
   },
   "merge examinations": {
@@ -967,6 +983,7 @@
     "enter name and email": "Enter your name and email address to register a new account"
   },
   "footer": {
+    "expand footer": "Expand footer",
     "faq": "FAQ",
     "accessibility": "Accessibility",
     "privacy and use": "Privacy & Use",
@@ -1038,7 +1055,7 @@
     },
     "edm": {
       "model short title": "EDM"
-  },
+    },
     "cis": {
       "model short title": "CIS"
     },

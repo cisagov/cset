@@ -29,7 +29,7 @@
         <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
           class.active="false" (click)="toggleNav()">
           <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
-            [matTooltip]="t('tooltip.nav collapse')" matTooltipPosition="below">
+            [matTooltip]="t('tooltip.nav collapse')" matTooltipPosition="below" [aria-label]="t('tooltip.nav collapse')">
             <span class="fs-base-1 m-0"
               [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
           </button>
@@ -71,7 +71,8 @@
   <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
     <mat-sidenav-container id="sidenav-container" class="d-flex flex-column flex-11a">
       <mat-sidenav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav" (openedChange)="openStateChange($event)">
-        <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
+        
+        <button class="btn btn-home" (click)="goHome()" [matTooltip]="t('tooltip.view assessment list')" [aria-label]="t('tooltip.view assessment list')">
           <i class="fas fa-home"></i>
         </button>
 
@@ -84,7 +85,7 @@
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
               class="btn btn-link no-underline ta-left tw:w-full tw:py-2 tw:px-3 tw:rounded-md tw:text-left tw:dark:text-text-primary tw:border tw:border-transparent tw:hover:border-[#6b7280]  tw:transition-colors"
                     [ngClass]="{
-               'tw:dark:bg-cset-primary tw:dark:text-white tw:dark:hover:bg-cset-primary-hover': node?.isCurrent,
+               'tw:dark:bg-cset-secondary tw:dark:text-white tw:dark:hover:bg-cset-secondary-hover': node?.isCurrent,
                 'tw:opacity-50 tw:cursor-not-allowed': !(node?.enabled)
               }">
               <span class="menu-link ws-normal">
@@ -106,7 +107,7 @@
               </div>
             </button>
 
-            <ul class="mat-tree-node tw:ml-4 tw:pl-2 tw:border-l tw:border-[#6b7280]" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
+            <ul role="tree" class="mat-tree-node tw:ml-4 tw:pl-2 tw:border-l tw:border-[#6b7280]" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
               <ng-container matTreeNodeOutlet></ng-container>
             </ul>
           </mat-nested-tree-node>
@@ -147,7 +148,7 @@
               <div class="tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
               <div class="tw:flex tw:items-center tw:gap-3">
-                <span class="tw:text-sm tw:font-medium tw:whitespace-nowrap">Mark Assessment Done</span>
+                <label for="assessmentDoneSwitch" class="tw:text-sm tw:font-medium tw:whitespace-nowrap">Mark Assessment Done</label>
                 <input
                   type="checkbox"
                   class="tw:toggle"

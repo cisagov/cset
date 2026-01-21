@@ -29,7 +29,6 @@ import { ChartService } from '../../services/chart.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
@@ -37,18 +36,16 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   templateUrl: './trend-report.component.html',
   styleUrls: ['../reports.scss'],
   standalone: false,
-    // eslint-disable-next-line
-    host: {
-      'class': 'force-light-mode',
-      '[attr.data-theme]': '"light"',
-      '[attr.data-bs-theme]': '"light"'
-    }
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {
   response: any;
-  info: AssessmentDetail;
-
   // Charts for Components
   chartOverallCompl: Chart;
   chartTop5: Chart;
@@ -120,12 +117,12 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
@@ -134,11 +131,6 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (r: AssessmentDetail) => {
-        this.info = r;
-      }
-    );
   }
 
   ngAfterViewChecked() {

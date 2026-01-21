@@ -31,11 +31,11 @@ import { ConfigService } from '../../services/config.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-    selector: 'app-trend-analytics',
-    templateUrl: './trend-analytics.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-trend-analytics',
+  templateUrl: './trend-analytics.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class TrendAnalyticsComponent implements OnInit {
 
@@ -73,12 +73,12 @@ export class TrendAnalyticsComponent implements OnInit {
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
@@ -90,7 +90,7 @@ export class TrendAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    const url = '/index.html?returnPath=report/' + reportType;
+    const url = '/report/' + reportType;
     window.open(url, "_blank");
   };
 }

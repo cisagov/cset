@@ -23,18 +23,20 @@
 ////////////////////////////////
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ImportAssessmentService } from '../../../services/import-assessment.service';
 
 @Component({
-    selector: 'app-import-password',
-    templateUrl: './import-password.component.html',
-    styleUrls: ['./import-password.component.scss'],
-    standalone: false
+  selector: 'app-import-password',
+  templateUrl: './import-password.component.html',
+  styleUrls: ['./import-password.component.scss'],
+  standalone: false
 })
 export class ImportPasswordComponent {
 
-  constructor(public dialogRef: MatDialogRef<ImportPasswordComponent>) {
-
-  }
+  constructor(
+    private importSvc: ImportAssessmentService,
+    public dialogRef: MatDialogRef<ImportPasswordComponent>
+  ) {  }
 
   dialogTitle: string = "Unlock Assessment";
   password = "";
@@ -50,5 +52,16 @@ export class ImportPasswordComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  getAssessmentHint(fileName: string) {
+    let hintMap = this.importSvc.hintMap;
+
+    let hint = hintMap.get(fileName);
+    if (hint != undefined) {
+      return hint;
+    } else {
+      return "";
+    }
   }
 }

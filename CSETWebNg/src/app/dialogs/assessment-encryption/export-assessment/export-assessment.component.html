@@ -33,7 +33,7 @@
       <p>{{t('dialogs.encrypt 2')}}</p>
     </div>
 
-    <div class="input-container ms-1 me-1">
+    <div class="input-container ms-1 me-1 mb-3">
       <div *ngIf="input.encryption && !input.jsonOnly">
         <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
           placeholder="Password" [(ngModel)]="password" />

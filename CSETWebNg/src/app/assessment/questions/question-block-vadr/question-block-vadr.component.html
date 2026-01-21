@@ -25,7 +25,7 @@
 
         <div class="subcat-header tw:dark:bg-bg-primary tw:dark:border-b-0" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
             (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
-            [attr.aria-expanded]="myGrouping.expanded">
+            [attr.aria-expanded]="myGrouping.expanded" role="group">
             <div class="sub-head-1" tabindex="0">
                 <div *ngIf="myGrouping.title != ''" class="sub-head-2">
                     {{ myGrouping.title }}

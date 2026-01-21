@@ -84,15 +84,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ASSESSMENT_IRP]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ASSESSMENT_IRP_HEADER]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[ASSESSMENT_ROLES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ASSESSMENT_SECTOR_SUBSECTOR]",
          "ObjectType": 0
       },
       {
@@ -288,10 +284,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[EXTRA_ACET_MAPPING]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[FILE_KEYWORDS]",
          "ObjectType": 0
       },
@@ -388,18 +380,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[HYDRO_DATA]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[HYDRO_DATA_ACTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[HYDRO_PROGRESS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[IMPORTANCE]",
          "ObjectType": 0
       },
@@ -412,31 +392,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[IRP]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[IRP_HEADER]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ISE_ACTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ISE_ACTIONS_FINDINGS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[JWT]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[LEVEL_BACKUP_ACET]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[LEVEL_BACKUP_ACET_QUESTIONS]",
          "ObjectType": 0
       },
       {
@@ -576,7 +532,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[NCSF_INDEX_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[NCSF_MIGRATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_MIGRATION2]",
          "ObjectType": 0
       },
       {
@@ -617,10 +581,6 @@
       },
       {
          "Name": "[dbo].[NIST_SAL_QUESTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Nlogs]",
          "ObjectType": 0
       },
       {
@@ -936,6 +896,18 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[METRIC_COMPLETED_ENTRY]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[METRIC_ENTRY_QUESTIONS]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vAllQuestionsOnly]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vAllSimpleQuestions]",
          "ObjectType": 3
       },
@@ -956,15 +928,11 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[Acet_GetActionItemsForReport]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[AcetAnswerDistribution]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[analytics_Compute_MaturityAll]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySampleSize]",
          "ObjectType": 1
       },
       {
@@ -984,27 +952,15 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[analytics_SequenceMaturityGroups]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[analytics_setup_maturity_groupings]",
          "ObjectType": 1
       },
       {
          "Name": "[dbo].[changeEmail]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CheckHeading]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[clean_out_requirements_mode]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[DeleteAssessment]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[DeleteUser]",
          "ObjectType": 1
       },
       {
@@ -1032,19 +988,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[Get_Assess_Detail_Filter_Data]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[Get_Cie_Merge_Conflicts]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[Get_Merge_Conflicts]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[Get_Recommendations]",
          "ObjectType": 1
       },
       {
@@ -1052,23 +996,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[GetAnswerDistribGroupings]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetAnswerDistribMaturity]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[GetApplicationModeDefault]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetAreasData]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetAreasOverall]",
          "ObjectType": 1
       },
       {
@@ -1080,43 +1008,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[GetComparisonAreasFile]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[GetComparisonBestToWorst]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetComparisonFileOveralls]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetComparisonFilePercentage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetComparisonFileSummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetCompatibilityCounts]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetMaturityComparisonBestToWorst]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetMaturityDetailsCalculations]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetMaturityGroupings]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetPercentageOverall]",
          "ObjectType": 1
       },
       {
@@ -1129,10 +1021,6 @@
       },
       {
          "Name": "[dbo].[InScopeRequirements]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[IseAnswerDistribution]",
          "ObjectType": 1
       },
       {
@@ -1152,27 +1040,39 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[sp_alterdiagram]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_creatediagram]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_dropdiagram]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_helpdiagramdefinition]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_helpdiagrams]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_renamediagram]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[SP_SearchTables]",
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[sp_upgraddiagrams]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[spEXECsp_RECOMPILE]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_AggregationCustomQuestionnaireLoad]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_Answer_Components_Default]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_Assessments_Completion_For_Access_Key]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_Assessments_Completion_For_User]",
          "ObjectType": 1
       },
       {
@@ -1184,186 +1084,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet_Delete]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_CopyIntoSet]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_countsForLevelsByGroupMaturityModel]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_financial_attributes]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GenerateSPRSScore]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getAnswerComponentOverrides]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetAssessmentPie]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getComponentsRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetComponentsRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getComponentsResultsByCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetComponentsResultsByCategoryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getComponentsSummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetComponentsSummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getComponentTypes]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetComponentTypesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getCSETQuestionsForCRRM]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getExplodedComponent]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getFinancialQuestions]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getFirstPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getGenericModelSummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetMaturityAnswerTotals]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getMaturitySummaryOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getMedianOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getMinMaxAverageForSectorIndustry]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getOverallRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetOverallRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetQuestions]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetQuestionsWithFeedBack]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRankedQuestions]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRankedStandardCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetRawCountsForEachAssessment_Standards]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryByGoalOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getRRASummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsRankedCategories]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsRankedCategoriesPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsResultsByCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsResultsByCategoryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardsSummary]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_GetStandardsSummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getStandardSummaryOverall]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_GetTop5Areas]",
          "ObjectType": 1
       },
@@ -1372,35 +1092,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_getVADRSummaryByGoal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getVADRSummaryByGoalOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getVADRSummaryOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getVADRSummaryPage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_MaturityDetailsCalculations]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_setTrendOrder]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_StatementsReviewed]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
          "ObjectType": 1
       },
       {

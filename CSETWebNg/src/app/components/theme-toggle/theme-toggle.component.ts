@@ -11,10 +11,11 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class ThemeToggleComponent implements OnInit, OnDestroy {
   @Input() showText: boolean = true;
+  @Input() forceWhiteFill: boolean = false;
   isDarkMode: boolean = false;
   private themeSubscription?: Subscription;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkMode = this.themeService.getTheme() === 'dark';

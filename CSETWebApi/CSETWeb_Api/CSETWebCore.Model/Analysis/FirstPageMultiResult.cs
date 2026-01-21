@@ -17,8 +17,8 @@ namespace CSETWebCore.Model.Analysis
             set { result1 = value; Count++; }
         }
 
-        private List<usp_getRankedCategories> result2;
-        public List<usp_getRankedCategories> Result2
+        private List<RankedCategories> result2;
+        public List<RankedCategories> Result2
         {
             get { return result2; }
             set { result2 = value; Count++; }
@@ -26,17 +26,8 @@ namespace CSETWebCore.Model.Analysis
     }
     public class RankedCategoriesMultiResult : MultiResultBase
     {
-        private List<usp_getRankedCategories> result1;
-        public List<usp_getRankedCategories> Result1
-        {
-            get { return result1; }
-            set { result1 = value; Count++; }
-        }
-    }
-    public class OverallRankedCategoriesMultiResult : MultiResultBase
-    {
-        private List<usp_getRankedCategories> result1;
-        public List<usp_getRankedCategories> Result1
+        private List<RankedCategories> result1;
+        public List<RankedCategories> Result1
         {
             get { return result1; }
             set { result1 = value; Count++; }

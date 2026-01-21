@@ -111,7 +111,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executive")]
-        public IActionResult GetExecutive()
+        public async Task<IActionResult> GetExecutiveAsync()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -125,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistSalTable = _report.GetNistSals();
 
             data.top5Categories = _report.GetTop5Categories();
-            data.top5Questions = _report.GetTop5Questions();
+            data.top5Questions = await _report.GetTop5QuestionsAsync();
             return Ok(data);
         }
 
@@ -219,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/rradetail")]
-        public IActionResult GetRRADetailReport()
+        public async Task<IActionResult> GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
             var lang = _token.GetCurrentLanguage();
@@ -228,12 +228,11 @@ namespace CSETWebCore.Api.Controllers
 
             RRASummary summary = new RRASummary(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
-            data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
+            data.RRASummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
 
+            data.RRASummary = await summary.GetRRASummaryAsync(assessmentId);
 
-            data.RRASummary = summary.GetRRASummary(assessmentId);
-
-            data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
+            data.RRASummaryByGoal = await summary.GetRRASummaryByGoalAsync(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
             {
@@ -244,7 +243,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
+            data.RRASummaryByGoalOverall = await summary.GetRRASummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
         }
 
@@ -325,7 +324,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/vadrdetail")]
-        public IActionResult GetVADRDetailReport()
+        public async Task<IActionResult> GetVADRDetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -333,10 +332,10 @@ namespace CSETWebCore.Api.Controllers
 
             VADRReports summary = new VADRReports(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
-            data.VADRSummaryOverall = summary.GetSummaryOverall(assessmentId);
-            data.VADRSummary = summary.GetVADRSummary(assessmentId);
-            data.VADRSummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
-            data.VADRSummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
+            data.VADRSummaryOverall = await summary.GetSummaryOverallAsync(assessmentId);
+            data.VADRSummary = await summary.GetVADRSummaryAsync(assessmentId);
+            data.VADRSummaryByGoal = await summary.GetVADRSummaryByGoalAsync(assessmentId);
+            data.VADRSummaryByGoalOverall = await summary.GetVADRSummaryByGoalOverallAsync(assessmentId);
             return Ok(data);
         }
 
@@ -521,7 +520,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
-        public IActionResult GetSiteSummary()
+        public async Task<IActionResult> GetSiteSummaryAsync()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -535,7 +534,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistSalTable = _report.GetNistSals();
 
             data.DocumentLibraryEntries = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestionsAsync();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -543,15 +542,15 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/reports/physicalsummary")]
-        public IActionResult GetPhysicalSummary()
+        public async Task<IActionResult> GetPhysicalSummaryAsync()
         {
             int assessmentId = _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
-            data.QuestionsWithSupplementals = _report.GetQuestionsWithSupplementals();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.QuestionsWithSupplementals = await _report.GetQuestionsWithSupplementalsAsync();
+            data.RankedQuestionsTable = await _report.GetRankedQuestionsAsync();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -561,7 +560,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/detail")]
-        public IActionResult GetDetail()
+        public async Task<IActionResult> GetDetailAsync()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -575,7 +574,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistSalTable = _report.GetNistSals();
 
             data.DocumentLibraryEntries = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestionsAsync();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -591,7 +590,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trend-report")]
-        public IActionResult GetTrendReport(int aggregationID)
+        public IActionResult GetTrendReport([FromQuery] int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();

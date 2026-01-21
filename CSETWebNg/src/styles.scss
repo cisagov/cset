@@ -25,6 +25,7 @@ SOFTWARE.
 @use './sass/_mixins.scss';
 @use './sass/_material-theme.scss';
 @use './sass/_dark-theme.scss';
+@use './sass/_force-light-mode.scss';
 //@use "~@ng-select/ng-select/themes/material.theme.css";
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';

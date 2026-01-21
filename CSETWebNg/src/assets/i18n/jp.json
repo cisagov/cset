@@ -9,7 +9,7 @@
      "last modified": "最終更新日",
      "primary assessor": "主な評価者",
      "prevent encryption": "エクスポート暗号化を無効にする",
-     "user language": "ユーザーの言語",
+     "display language": "表示言語",
      "note language change": "希望する言語を選択してください",
      "assessment information": "評価情報",
      "organization details": "組織の詳細",
@@ -390,7 +390,7 @@
                "user profile": "ユーザープロファイル",
                "my assessments": "私の評価",
                "change password": "パスワードを変更する",
-               "user language": "ユーザー言語",
+               "display language": "表示言語",
                "logout": "ログアウト",
                "setting": "設定",
                "encrypt": "評価エクスポートを暗号化する",
@@ -443,6 +443,7 @@
           "merged checked exams": "チェックされた試験をマージ",
           "export all": "すべての評価のコピーを別の場所にエクスポート。",
           "nav collapse": "ナビゲーションを展開/折りたたむ",
+          "view assessment list": "評価リストを表示",
           "add favorite": "お気に入りに追加",
           "remove favorite":"お気に入りから削除"
      },
@@ -477,6 +478,7 @@
           "enter name and email": "新しいアカウントを登録するには、名前とメールアドレスを入力してください"
      },
      "footer": {
+          "expand footer": "フッターを展開",
           "faq": "よくある質問 (FAQ)",
           "accessibility": "アクセシビリティ",
           "privacy and use": "プライバシーと使用",

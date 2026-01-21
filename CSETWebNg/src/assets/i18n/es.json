@@ -4,12 +4,13 @@
     "export all": "Exportar todo",
     "new assessment": "Nueva evaluación",
     "status": "Estado",
+    "actions": "Acciones",
     "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
     "completion-statements": "{{complete}}/{{total}} declaraciones respondidas",
     "last modified": "Modificada",
     "primary assessor": "Evaluador principal",
     "prevent encryption": "Prevenir el cifrado",
-    "user language": "Idioma del usuario",
+    "display language": "Idioma de pantalla",
     "note language change": "Seleccione el idioma deseado",
     "prepare": "Preparar",
     "assessment": "Evaluación",
@@ -19,6 +20,7 @@
     "assessment name": "Nombre de evaluación",
     "assessment date": "Fecha de evaluación",
     "no pii in name": "Tenga cuidado de no nombrar su evaluación con ninguna información identificable. (por ejemplo, nombres de personas u organizaciones)",
+    "has other users": "Esta evaluación no se puede eliminar porque tiene otros usuarios",
     "facility name": "Nombre de facilidad",
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
@@ -105,7 +107,7 @@
         "contacts": "Contactos",
         "contact": "Contacto",
         "add contact": "Agregar Contacto",
-        "email contacts": "Mandar E-mail a los Contactos",
+        "email contacts": "Enviar correo electronico a los contactos",
         "assessment owner": "Dueño de Evaluación",
         "first name": "Nombre de Pila",
         "last name": "Apellido",
@@ -114,9 +116,16 @@
         "organization": "Organización",
         "site name": "Nombre de Sitio",
         "cell phone": "Celular",
-        "office phone": "Teléfono de Oficina",
-        "email": "E-mail",
+        "office phone": "Teléfono de oficina",
+        "email": "Correo",
         "email address": "Correo electrónico",
+        "from": "De",
+        "to": "Para",
+        "all have been invited": "Todas las personas asociadas han sido invitadas",
+        "subject": "Asunto",
+        "subject placeholder": "Asunto",
+        "message": "Mensaje",
+        "message placeholder": "Escribe un mensaje",
         "emergency communications protocol": "Protocolo de comunicacíon de emergencia",
         "primary point of contact": "Punto de contacto principal",
         "participated in site visit": "Participó en la visita al sitio",
@@ -311,7 +320,8 @@
         "reset password": "Restablecer la contraseña",
         "forgot password": "Contraseña olvidada",
         "on": "Activo",
-        "off": "Inactivo"
+        "off": "Inactivo",
+        "send": "Enviar"
     },
     "answer-options": {
         "button-labels": {
@@ -446,8 +456,9 @@
         "merged checked exams": "Fusiona los exámenes marcados",
         "export all": "Exporta una copia de todas las evaluaciones a otra ubicación.",
         "nav collapse": "Expandir/contraer la navegación",
+        "view assessment list": "Ver la lista de evaluaciones",
         "add favorite": "Agregar a Favoritos",
-        "remove favorite":"Eliminar de Favoritos"
+        "remove favorite": "Eliminar de Favoritos"
     },
     "level": {
         "low": "Pequeño",
@@ -539,7 +550,8 @@
         "access denied": "Acceso denegado",
         "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.",
         "access denied 2": "Por favor inicia sesión nuevamente.",
-        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
+        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación.",
+        "invitation email": "Correo de invitación"
     },
     "observation": {
         "observation title": "Título de la Observación",
@@ -581,7 +593,7 @@
         "questions related to req": "Preguntas relacionadas con este requisito",
         "scope": "Ámbito",
         "recommended action": "Acción recomendada",
-        "free services": "Servicios gratuitas y referencias",
+        "support resources": "Recursos de apoyo",
         "implementation guidance CPG": "Guía de implementación",
         "implementation guidance CPG2": "Criterios de evaluación",
         "attestation": "Atestación",
@@ -658,7 +670,7 @@
                         "2": "Muchos de los documentos en esta aplicación están en formatos HTML o ASCII (texto plano). Estos formatos generalmente son accesibles para las personas que usan lectores de pantalla. También tenemos una gran cantidad de documentos en formato de documento portátil Adobe Acrobat® (PDF). Al usar un lector de pantalla para leer documentos directamente en formato PDF usando Adobe Acrobat Reader, es probable que necesite instalar un complemento de accesibilidad.",
                         "3": "Nuestro equipo trabaja para integrar las consideraciones de accesibilidad de la Sección 508 en cada actualización y lanzamiento de la aplicación.",
                         "4": "Ofrecemos atajos de teclado específicos de la aplicación en el menú Ayuda.",
-                        "5": "Recomendamos el uso de Google Chrome, Microsoft Edge y Mozilla Firefox para una funcionalidad óptima de la aplicación. Para la funcionalidad de accesibilidad específica de cada navegador, visite las siguientes listas de características: <li><a href=\"https://about.google/belonging/disability-inclusion/product-accessibility/\">Google Chrome Accessibility Features</a></li> <li><a href=\"https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a\">Microsoft Edge Accessibility Features</a></li> <li><a href=\"https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US\">Mozilla Firefox Accessibility Features</a></li>",
+                        "5": "Recomendamos el uso de Google Chrome, Microsoft Edge y Mozilla Firefox para una funcionalidad óptima de la aplicación. Para la funcionalidad de accesibilidad específica de cada navegador, visite las siguientes listas de características: <ul><li><a href=\"https://about.google/belonging/disability-inclusion/product-accessibility/\">Google Chrome Accessibility Features</a></li> <li><a href=\"https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a\">Microsoft Edge Accessibility Features</a></li> <li><a href=\"https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US\">Mozilla Firefox Accessibility Features</a></li></ul>",
                         "6": "Creemos que una herramienta de ciberseguridad de código abierto, efectiva y confiable, debería estar disponible y ser accesible para todos.",
                         "7": "Para garantizar la experiencia más accesible para todos nuestros usuarios, además de las mejores prácticas de la Sección 508 mencionadas anteriormente, probamos regularmente nuestro software para la siguiente funcionalidad:",
                         "8": "Probamos que toda la funcionalidad se puede acceder y ejecutar usando solo el teclado.",
@@ -668,7 +680,7 @@
                         "12": "Probamos la funcionalidad que cada título describe el tema o propósito de su contenido, y que cada título determinable programáticamente sea un título visual. Queremos que cada título visual sea determinable programáticamente. Verificamos que los niveles de encabezado programáticos coincidan lógicamente con la presentación del encabezado visual dentro de la estructura del encabezado, de modo que todas las listas visualmente aparentes se identifiquen programáticamente según su tipo.",
                         "13": "Verificamos que el idioma humano predeterminado de cada página web se pueda determinar programáticamente, y que cualquier pasaje (contenido, descripciones de imágenes, etiquetas de formularios, etc.) que difiera del idioma predeterminado de la página se identifique correctamente.",
                         "14": "Probamos para identificar que se define un elemento de título para la página web y que identifica el contenido o propósito de nuestra página.",
-                        "15": "Probamos para asegurarnos de que: <li> El color no se use como el único medio visual para transmitir información, indicar una acción, solicitar una respuesta o distinguir un elemento visual. </li> <li> La presentación visual del texto y las imágenes de texto tenga un contraste suficiente. </li> <li> El texto y las imágenes de texto tengan una relación de contraste de al menos 4.5: 1 y el texto e imágenes a gran escala tengan una relación de al menos 3: 1. </li> <li> Las instrucciones proporcionadas para comprender y operar el contenido no se basan únicamente en las características sensoriales de los componentes, como la forma, el tamaño, la ubicación visual, la orientación o el sonido. </li>",
+                        "15": "Probamos para asegurarnos de que: <ul><li> El color no se use como el único medio visual para transmitir información, indicar una acción, solicitar una respuesta o distinguir un elemento visual. </li> <li> La presentación visual del texto y las imágenes de texto tenga un contraste suficiente. </li> <li> El texto y las imágenes de texto tengan una relación de contraste de al menos 4.5: 1 y el texto e imágenes a gran escala tengan una relación de al menos 3: 1. </li> <li> Las instrucciones proporcionadas para comprender y operar el contenido no se basan únicamente en las características sensoriales de los componentes, como la forma, el tamaño, la ubicación visual, la orientación o el sonido. </li></ul>",
                         "16": "El nombre accesible y la descripción de una imagen con significado proporcionan una descripción equivalente de la imagen.",
                         "17": "Verificamos la funcionalidad para redimensionar, escalar o acercar el texto al menos al 200% de su tamaño original sin pérdida de contenido o rendimiento.",
                         "18": "Trabajamos para asegurarnos de que nuestros usuarios encuentren la información disponible utilizando más de una forma de localizar la página web para que puedan encontrarla rápidamente.",
@@ -676,7 +688,7 @@
                         "20": "Esta característica de accesibilidad no se aplica a nuestro software.",
                         "21": "Verificamos que los encabezados de filas o columnas de las tablas de datos se identifiquen programáticamente, que las celdas de datos estén asociadas con encabezados relevantes y que la tabla de diseño no incluya atributos estructurales.",
                         "22": "Verificamos que los elementos de la interfaz interactiva con múltiples estados indiquen un estado actual y que el rol del formulario de entrada refleje su función con precisión para que cualquier campo de texto de entrada tenga el valor correcto.",
-                        "23": "<li>Reproducción automática/actualización</li> <li>Parpadeo</li> <li>Límites de tiempo ajustables</li> <li>Solo video-audio</li> <li>Multimedia</li> <li>Tiempos de espera</li> <li>Complementos requeridos</li> <li>Versión alternativa</li>"
+                        "23": "<ul><li>Reproducción automática/actualización</li> <li>Parpadeo</li> <li>Límites de tiempo ajustables</li> <li>Solo video-audio</li> <li>Multimedia</li> <li>Tiempos de espera</li> <li>Complementos requeridos</li> <li>Versión alternativa</li></ul>"
                     }
                 },
                 "terms of use": {
@@ -690,13 +702,17 @@
             "user profile": "Perfil del usuario",
             "my assessments": "Mis evaluaciones",
             "change password": "Cambiar la contraseña",
-            "user language": "Idioma del usuario",
+            "display language": "Idioma de pantalla",
             "logout": "Cerrar sesión",
             "settings": "Ajustes",
-            "encrypt": "Cifrar Exportación de Evaluación",
+            "encrypt": "Cifrar exportación de evaluación",
             "on": "Encendido",
             "off": "Apagado",
-            "admin": "Configuración de Administrador"
+            "admin": "Configuración de Administrador",
+            "light mode": "Modo claro",
+            "switch to light mode": "Cambiar a modo claro",
+            "dark mode": "Modo oscuro",
+            "switch to dark mode": "Cambiar a modo oscuro"
         }
     },
     "merge examinations": {
@@ -866,6 +882,7 @@
         "enter name and email": "Ingrese su nombre y dirección de correo electrónico para registrar una nueva cuenta CSET"
     },
     "footer": {
+        "expand footer": "Expandir pie de página",
         "faq": "FAQ",
         "accessibility": "Accesibilidad",
         "privacy and use": "Privacidad y Uso",
@@ -882,29 +899,29 @@
     },
     "modules": {
         "cpg": {
-          "display-name": "Metas de Rendimiento Cibernético (CPG)",
-          "model short title": "CPG"
+            "display-name": "Metas de Rendimiento Cibernético (CPG)",
+            "model short title": "CPG"
         },
-    "cmmc2f": {
-        "display-name": "Certificación del Modelo de Madurez en Ciberseguridad (CMMC) 2.0",
-        "model short title": "CMMC2"
-    },
-    "rra": {
-        "display-name": "Evaluación de Preparación contra Ransomware (RRA)",
-        "model short title": "RRA"
-    },
-    "c2m2": {
-        "model short title": "C2M2"
-    },
-    "cmmc": {
-        "model short title": "CMMC"
-    },
-    "edm": {
-        "model short title": "EDM"
-    },
-      "cis": {
-        "model short title": "CIS"
-      }
+        "cmmc2f": {
+            "display-name": "Certificación del Modelo de Madurez en Ciberseguridad (CMMC) 2.0",
+            "model short title": "CMMC2"
+        },
+        "rra": {
+            "display-name": "Evaluación de Preparación contra Ransomware (RRA)",
+            "model short title": "RRA"
+        },
+        "c2m2": {
+            "model short title": "C2M2"
+        },
+        "cmmc": {
+            "model short title": "CMMC"
+        },
+        "edm": {
+            "model short title": "EDM"
+        },
+        "cis": {
+            "model short title": "CIS"
+        }
     },
     "aggregation": {
         "assessment alias": "Alias de evaluación",
@@ -957,12 +974,12 @@
     "Select a Model": "Seleccione un Modelo.",
     "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
     "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta.",
-  "filters": {
-    "view all": "Ver Todo",
-    "done": "Completado",
+    "filters": {
+        "view all": "Ver Todo",
+        "done": "Completado",
+        "favorites": "Favoritos"
+    },
+    "categories": "Categorias",
+    "all assessments": "Todas las evaluaciones",
     "favorites": "Favoritos"
-  },
-  "categories": "Categorias",
-  "all assessments": "Todas las evaluaciones",
-  "favorites": "Favoritos"
 }

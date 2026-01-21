@@ -163,7 +163,7 @@ import { QuestionFiltersComponent } from './dialogs/question-filters/question-fi
 import { QuestionFiltersReportsComponent } from './dialogs/question-filters-reports/question-filters-reports.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
 import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
-import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
+import { UploadExportComponent } from './dialogs/import-assessment/import-assessment.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AggregationGuard } from './guards/aggregation.guard';

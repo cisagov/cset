@@ -64,11 +64,31 @@
             var libraryUrl = getParameterByName("libraryUrl");
             if (redirectid != null)
                 localStorage.setItem("redirectid", redirectid);
-            if (returnPath != null)
+            if (returnPath != null) {
+                // Collect any additional query params (like m, mm) that should be
+                // appended to returnPath for proper routing (e.g., module-content reports)
+                var knownParams = ['assessment_id', 'returnPath', 'apiUrl', 'libraryUrl'];
+                var queryString = window.location.search;
+                if (queryString && queryString.length > 1) {
+                    var additionalParams = [];
+                    var pairs = queryString.substring(1).split('&');
+                    for (var i = 0; i < pairs.length; i++) {
+                        var pair = pairs[i].split('=');
+                        var key = decodeURIComponent(pair[0]);
+                        if (knownParams.indexOf(key) === -1 && pair.length > 1) {
+                            additionalParams.push(pair[0] + '=' + pair[1]);
+                        }
+                    }
+                    if (additionalParams.length > 0) {
+                        var separator = returnPath.includes('?') ? '&' : '?';
+                        returnPath = returnPath + separator + additionalParams.join('&');
+                    }
+                }
                 localStorage.setItem("returnPath", returnPath);
+            }
             if (apiUrl != null)
                 localStorage.setItem("apiUrl", apiUrl);
-            if (apiUrl != null)
+            if (libraryUrl != null)
                 localStorage.setItem("libraryUrl", libraryUrl);
         } else {
             // Sorry! No Web Storage support..
