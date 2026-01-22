@@ -38,7 +38,7 @@ namespace CSETWebCore.Business.Observations
                 .Where(x => x.Finding_Id == obs.Observation_Id)
                 .FirstOrDefault();
 
-            
+
             if (_dbObservation == null)
             {
                 var observation = new FINDING
