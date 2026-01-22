@@ -29,8 +29,13 @@ namespace CSETWebCore.Model.Demographic
         /// </summary>
         public string SectorDirective { get; set; }
 
-        public int? Sector { get; set; }
-        public int? Subsector { get; set; }
+
+        public List<SectorSubsector> SectorSubsectors { get; set; } = [];
+
+
+        // TODO-3261 - things to consider:  import/export, export JSON, upgrade from old sector list, on-the-fly upgrade of existing assessments storing in D_D
+
+
 
         public bool? Acknowledgement { get; set; }
         public List<int> SsgSectors { get; set; } = [];

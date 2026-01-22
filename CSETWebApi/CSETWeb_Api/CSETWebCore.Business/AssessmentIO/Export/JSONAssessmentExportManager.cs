@@ -631,25 +631,30 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var demog = biz.GetExtDemographics(assessment.Id);
 
 
-            if (demog.Sector != null)
-            {
-                var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
-                if (s != null)
-                {
-                    details.SectorId = s.SectorId;
-                    details.SectorName = s.SectorName;
-                }
-            }
+            // TODO-3261
+            //if (demog.Sector != null)
+            //{
+            //    var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
+            //    if (s != null)
+            //    {
+            //        details.SectorId = s.SectorId;
+            //        details.SectorName = s.SectorName;
+            //    }
+            //}
 
-            if (demog.Subsector != null)
-            {
-                var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
-                if (ss != null)
-                {
-                    details.SubsectorId = demog.Subsector.Value;
-                    details.SubsectorName = ss.IndustryName;
-                }
-            }
+            //if (demog.Subsector != null)
+            //{
+            //    var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
+            //    if (ss != null)
+            //    {
+            //        details.SubsectorId = demog.Subsector.Value;
+            //        details.SubsectorName = ss.IndustryName;
+            //    }
+            //}
+
+
+
+
 
             details.CisaRegion = demog.CisaRegion;
 

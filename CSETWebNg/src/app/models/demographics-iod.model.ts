@@ -34,7 +34,7 @@ export interface DemographicsIod {
   // PPD-21 or NIPP
   sectorDirective?: string;
 
-  sectors?: SectorThing[];
+  sectorSubsectors?: SectorThing[];
 
 
   ssgSectors?: number[];
