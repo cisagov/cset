@@ -169,7 +169,7 @@ namespace CSETWebCore.Business.Observations
                 // grabs all contacts attached to this assessment to allow the user to assign new Individuals Responsible
                 int assessIdForContacts = (int)(assessmentId != null ? obs.Assessment_Id :
                     _context.ANSWER.Where(x => x.Answer_Id == obs.Answer_Id).Select(x => x.Assessment_Id).FirstOrDefault());
-        
+
                 List<ASSESSMENT_CONTACTS> contactsInThisAssess = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessIdForContacts).ToList();
 
                 foreach (ASSESSMENT_CONTACTS ac in contactsInThisAssess)
