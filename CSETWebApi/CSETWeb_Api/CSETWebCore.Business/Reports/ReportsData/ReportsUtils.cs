@@ -289,6 +289,11 @@ namespace CSETWebCore.Business.Reports
                     return;
 
                 case "Requirement":
+                    if (f.NewRequirement == null)
+                    {
+                        return;
+                    }
+
                     identifier = f.NewRequirement.Requirement_Title;
 
                     var parmSub = new ParameterSubstitution(_context, _tokenManager);
@@ -301,6 +306,11 @@ namespace CSETWebCore.Business.Reports
                     return;
 
                 case "Maturity":
+                    if (f.MaturityQuestion == null)
+                    {
+                        return;
+                    }
+
                     identifier = f.MaturityQuestion.Question_Title;
                     questionText = f.MaturityQuestion.Question_Text;
 
