@@ -20,6 +20,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -477,7 +478,15 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/observations/tearout")]
         public IActionResult GetObservations()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId;
+            try
+            {
+                assessmentId = _token.AssessmentForUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized(new { message = "User not authorized for assessment" });
+            }
 
             _report.SetReportsAssessmentId(assessmentId);
 
@@ -495,9 +504,17 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/observations/excel")]
         public IActionResult ExportObservationsCsv()
         {
-            _report.SetToken(_token);
+            int assessmentId;
+            try
+            {
+                _report.SetToken(_token);
+                assessmentId = _token.AssessmentForUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized(new { message = "User not authorized for assessment" });
+            }
 
-            int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
