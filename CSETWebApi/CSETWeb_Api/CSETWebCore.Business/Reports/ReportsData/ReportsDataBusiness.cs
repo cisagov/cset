@@ -1517,7 +1517,7 @@ namespace CSETWebCore.Business.Reports
             Observation obs = TinyMapper.Map<Observation>(oi.Finding);
             obs.ObservationTitle = oi.Finding.Summary;
             obs.ResolutionDate = oi.Finding.Resolution_Date;
-            obs.Importance = oi.Importance.Value;
+            obs.Importance = oi.Importance?.Value;
 
 
             // get the question identifier and text
