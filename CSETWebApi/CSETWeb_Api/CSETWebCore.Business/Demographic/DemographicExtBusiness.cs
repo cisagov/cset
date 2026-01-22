@@ -47,9 +47,19 @@ namespace CSETWebCore.Business.Demographic
 
             d.OrganizationType = myDD.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
             d.OrganizationName = info.Facility_Name;
-            d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
-            d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+
+
+            var smm = new SectorMultiManager(_context);
+            d.SectorSubsectors = smm.Get(assessmentId);
+
+
+
             d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
+            //d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
+            //d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+
+
+
 
 
             // update sector if need be
@@ -57,8 +67,9 @@ namespace CSETWebCore.Business.Demographic
             var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
             if (newSectorInfo?.Changed ?? false)
             {
-                d.Sector = newSectorInfo.SectorId;
-                d.Subsector = null;
+                // TODO-3261
+                //d.Sector = newSectorInfo.SectorId;
+                //d.Subsector = null;
             }
 
 
@@ -67,6 +78,8 @@ namespace CSETWebCore.Business.Demographic
             {
                 d.SsgSectors.Add((int)ssg.IntValue);
             }
+
+
 
             d.CisaRegion = myDD.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
 
@@ -121,11 +134,12 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            // get the subsectors for the current sector (if there is one)
-            if (d.Sector != null)
-            {
-                d.ListSubsectors = GetSubsectors((int)d.Sector);
-            }
+            // 
+            // TODO-3261 - get the subsectors for the current sector (if there is one)
+            //if (d.Sector != null)
+            //{
+            //    d.ListSubsectors = GetSubsectors((int)d.Sector);
+            //}
 
             d.CisaRegions = opts.Where(opt => opt.DataItemName == "CISA-REGION").Select(opts => new ListItem2()
             {
@@ -187,10 +201,11 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            var sectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+            // No more HSPD-7 list support (Is_NIPP = true) - only the PPD-21 list of 18 sectors supported now
+            var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
             d.ListSectors = new List<ListItem2>();
-            foreach (var sec in sectors)
+            foreach (var sec in availableSectors)
             {
                 d.ListSectors.Add(new ListItem2
                 {
@@ -325,8 +340,10 @@ namespace CSETWebCore.Business.Demographic
             SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType, existingRecords);
             SaveString(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName, existingRecords);
             SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
-            SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector, existingRecords);
-            SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector, existingRecords);
+            
+            // TODO-3261
+            //SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector, existingRecords);
+            //SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector, existingRecords);
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);
@@ -365,6 +382,12 @@ namespace CSETWebCore.Business.Demographic
             }
 
             _context.SaveChanges();
+
+
+
+            var smm = new SectorMultiManager(_context);
+            smm.Save(demographic.SectorSubsectors);
+
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
         }

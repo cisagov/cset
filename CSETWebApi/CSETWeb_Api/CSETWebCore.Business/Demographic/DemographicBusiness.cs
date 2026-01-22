@@ -51,8 +51,18 @@ namespace CSETWebCore.Business.Demographic
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
 
-            // TODO-3261 emographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
+
+
+
+            // TODO-3261 demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
             // TODO-3261 demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
+
+            // TODO-3261 dig up existing data.  If nothing exists, add an empty SectorSubsector instance.
+            var smm = new SectorMultiManager(_context);
+            demographics.SectorSubsectors = smm.Get(assessmentId);
+
+            
+
 
 
 
@@ -168,30 +178,6 @@ namespace CSETWebCore.Business.Demographic
 
             dd.StringValue = value;
             _context.SaveChanges();
-        }
-
-
-        /// <summary>
-        /// Build a list of SectorSubsector instances.
-        /// </summary>
-        public List<SectorSubsector> GetSectorSubsectorList(int assessmentId)
-        {
-            var resp = new List<SectorSubsector>();
-            
-            var x = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
-            foreach (var dbSS in x)
-            {
-                var g = new SectorSubsector()
-                {
-                    SectorId = dbSS.SectorId,
-                    IndustryId = dbSS.IndustryId,
-                    Sequence = dbSS.Sequence
-                };
-
-                resp.Add(g);
-            }
-
-            return resp;
         }
     }
 }

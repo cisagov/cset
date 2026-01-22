@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { DemographicsIod, SectorThing } from '../../../../models/demographics-iod.model';
@@ -9,10 +9,11 @@ import { DemographicsIod, SectorThing } from '../../../../models/demographics-io
   templateUrl: './sector-subsector.component.html',
   styleUrl: './sector-subsector.component.scss',
 })
-export class SectorSubsectorComponent implements OnInit {
+export class SectorSubsectorComponent implements OnInit, OnChanges {
 
   @Input()
   demographicData: DemographicsIod;
+
 
 
   list: SectorThing[];
@@ -21,37 +22,38 @@ export class SectorSubsectorComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public demoSvc: DemographicIodService
-  ) {
-    if (this.demographicData.sectors.length == 0) {
-      this.demographicData.sectors = [];
-      this.demographicData.sectors.push({
-        sector: 17,
-        subsector: 124
-      });
-    }
-  }
+  ) {  }
 
 
   ngOnInit(): void {
+  }
 
-    console.log(this.demographicData.sectors);
+  /**
+   * 
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    this.list = this.demographicData.sectorSubsectors;
   }
 
 
   /**
    *
    */
-  onChangeSector() {
-    if (!this.demographicData.sector) {
-      this.demographicData.listSubsectors = [];
-      this.demographicData.subsector = null;
+  onChangeSector(evt, item) {
+    console.log('onChangeSector: ', evt, item);
+
+    if (!item.sectorId) {
+      item.listSubsectors = [];
+      item.subsectorId = null;
     } else {
-      this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
-        this.demographicData.listSubsectors = data;
+      this.demoSvc.getSubsectors(item.sectorId).subscribe((data: any[]) => {
+        console.log('getSubsectors from API: ', data);
+        item.listSubsectors = data;
       });
     }
-    this.assessSvc.assessment.sectorId = this.demographicData.sector;
-    this.assessSvc.assessment.ssgSectorIds = this.demographicData.ssgSectors;
+
+    //this.assessSvc.assessment.sectorId = this.demographicData.sector;
+    //this.assessSvc.assessment.ssgSectorIds = this.demographicData.ssgSectors;
 
 
     // TODO -- emit some things
@@ -59,10 +61,11 @@ export class SectorSubsectorComponent implements OnInit {
     //this.updateDemographics();
   }
 
-  update(evt) {
+  /**
+   * 
+   */
+  onChangeSubsector(evt, item) {
 
+    console.log('onChangeSubsector:', evt, item);
   }
-
-
-
 }

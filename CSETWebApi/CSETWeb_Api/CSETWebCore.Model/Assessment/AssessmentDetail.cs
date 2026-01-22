@@ -47,7 +47,7 @@ namespace CSETWebCore.Model.Assessment
         /// <summary>
         /// A list of sector/subsector pairs 
         /// </summary>
-        public List<SectorSubsector> Sectors { get; set; }
+        public List<SectorSubsector> SectorSubsectors { get; set; }
       
 
         public List<int> SsgSectorIds { get; set; } = [];

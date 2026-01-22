@@ -490,7 +490,7 @@ namespace CSETWebCore.Business.Assessment
 
 
                 // load up sector/subsectors
-                assessment.Sectors = d1.GetSectorSubsectorList(assessmentId);
+                assessment.SectorSubsectors = new SectorMultiManager(_context).Get(assessmentId);
 
 
 
