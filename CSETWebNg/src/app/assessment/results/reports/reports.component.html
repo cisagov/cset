@@ -23,8 +23,6 @@
 <div *transloco="let t; read: 'reports'">
   <div class="white-panel oy-auto d-flex flex-column flex-11a">
     <div>
-      <h3>{{ 'titles.reports' | transloco }}</h3>
-
       <p>
         {{ t('assessment complete message').replace('{date}', lastModifiedTimestamp | localizeDate: 'GMT') }}
         {{ t('reports run prior message') }}
