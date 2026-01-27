@@ -121,6 +121,27 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpDelete("{seq}")]
+        [Route("api/demographics/ext2/sector")]
+        public IActionResult DeleteSector([FromQuery] int seq)
+        {
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+
+                var smm = new SectorMultiManager(_context);
+                smm.Delete(assessmentId, seq);
+
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+
+
         [HttpGet]
         [Route("api/demographics/export")]
         public IActionResult ExportDemographic()

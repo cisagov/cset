@@ -3,7 +3,7 @@
           <div class="row mb-3"  style="background-color: rgb(70, 18, 70)">
                <div class="col">
                     <label for="sector" class="form-label">{{ t('sector') }}</label> 
-                    <button *ngIf="i > 0 && i < sectorList.length" class="btn btn-link ms-3" (click)="removeSector(i)">Remove</button>
+                    <button *ngIf="i > 0 && i < sectorList.length" class="btn btn-link ms-3" (click)="onRemoveSector($event, ssPair)">Remove</button>
                     <select [ngClass]="{ 'is-invalid' : !ssPair.sectorId}" class="form-select" id="sector" tabindex="0"
                          name="sector" [(ngModel)]="ssPair.sectorId" (ngModelChange)="onChangeSector($event, ssPair)">
                          <option [ngValue]="null">-- {{ t('select') }} --</option>
@@ -28,7 +28,7 @@
                </div>
           </div>
           <div *ngIf="i == sectorList.length - 1 && multi">
-               <button class="btn btn-link">
+               <button class="btn btn-link" (click)="onAddSector()">
                     + add additional sector
                </button>
           </div>

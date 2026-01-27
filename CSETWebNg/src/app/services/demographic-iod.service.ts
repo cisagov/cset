@@ -64,15 +64,23 @@ export class DemographicIodService {
 
   /**
    *
-   * @param sectorId
-   * @returns
    */
   getSubsectors(sectorId) {
     return this.http.get(this.apiUrl + `/subsectors/${sectorId}`);
   }
 
+  /**
+   * 
+   */
   saveSector(item) {
     return this.http.post(this.apiUrl + '/sector/', item);
+  }
+
+  /**
+   * 
+   */
+  removeSector(item) {
+    return this.http.delete(this.apiUrl + '/sector', { params: { seq: item.sequence }});
   }
 
   /**

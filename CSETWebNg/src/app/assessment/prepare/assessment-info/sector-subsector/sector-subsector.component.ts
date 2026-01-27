@@ -47,7 +47,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
    */
   onChangeSector(evt, item) {
     // update the model 
-    const target = this.assessSvc.assessment.sectorSubsectors.find(x => x.sequence == item.sequence);
+    const target = this.demographicData.sectorSubsectors.find(x => x.sequence == item.sequence);
     target.sectorId = item.sectorId;
     target.subsectorId = item.subsectorId;
 
@@ -60,20 +60,46 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
         target.subsectorId = null;
       }
 
-      // TODO -- emit some things
-      this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+      this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
 
-      console.log('666');
-      console.log(item);
-      console.log(target);
+
+      this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
     });
   }
 
+  /**
+   * 
+   */
   onAddSector() {
+    // get the max current sequence
+    const seqs = this.assessSvc.assessment.sectorSubsectors.map(x => x.sequence);
+    const max = Math.max(...seqs);
 
+
+    const newSectorSubsector: SectorThing = {
+      sequence: max + 1
+    };
+    this.demographicData.sectorSubsectors.push(newSectorSubsector);
+    this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
+
+
+    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
   }
 
-  onRemoveSector() {
+  /**
+   * 
+   */
+  onRemoveSector(evt, item) {
+    this.demoSvc.removeSector(item).subscribe(() => {
+      const idd = this.demographicData.sectorSubsectors.findIndex(i => i.sequence == item.sequence);
+      if (idd !== -1) {
+        this.demographicData.sectorSubsectors.splice(idd, 1);
+      }
 
+      this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
+
+
+      this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+    });
   }
 }
