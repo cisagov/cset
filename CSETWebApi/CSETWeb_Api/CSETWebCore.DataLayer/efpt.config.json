@@ -1004,10 +1004,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[GetCombinedOveralls]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[GetComparisonBestToWorst]",
          "ObjectType": 1
       },
@@ -1085,10 +1081,6 @@
       },
       {
          "Name": "[dbo].[usp_GetTop5Areas]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_getVADRSummary]",
          "ObjectType": 1
       },
       {

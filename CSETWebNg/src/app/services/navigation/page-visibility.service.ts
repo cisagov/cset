@@ -318,7 +318,7 @@ export class PageVisibilityService {
     let targets = this.getTargets(rule);
     let has = false;
     targets.forEach((t: string) => {
-      has = has || this.assessSvc.assessment?.sectorId == +t;
+      has = has || this.assessSvc.assessment?.sectorSubsectors.some(x => x.sectorId == +t);
     });
     return has;
   }

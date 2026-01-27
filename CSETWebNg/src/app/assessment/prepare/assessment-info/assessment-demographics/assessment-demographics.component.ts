@@ -40,16 +40,6 @@ interface DemographicsAssetValue {
     assetValue: string;
 }
 
-interface Industry {
-    sectorId: number;
-    industryId: number;
-    industryName: string;
-}
-
-interface Sector {
-    sectorId: number;
-    sectorName: string;
-}
 
 interface AssessmentSize {
     sizeId: number;
@@ -75,10 +65,8 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     private eventsSubscription: any;
     unsupportedImportFile: boolean = false;
-    sectorsList: Sector[];
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
-    industryList: Industry[];
     contacts: User[];
     isSLTT: boolean = false;
     demographicData: Demographic = {};
@@ -95,14 +83,6 @@ export class AssessmentDemographicsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.demoSvc.getAllSectors().subscribe(
-            (data: Sector[]) => {
-                this.sectorsList = data;
-            },
-            error => {
-                console.error('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-                console.error('Error Getting all sectors (cont): ' + (<Error>error).stack);
-            });
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
                 this.assetValues = data;
@@ -156,14 +136,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.exportDemographics()
     }
 
-
-    changeSector(evt: any) {
-        this.populateIndustryOptions(this.demographicData.sectorId);
-        // invalidate the current Industry, as the Sector list has just changed
-        this.demographicData.industryId = null;
-        this.updateDemographics();
-    }
-
     /**
      * 
      */
@@ -187,9 +159,6 @@ export class AssessmentDemographicsComponent implements OnInit {
 
                 // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
-
-                // populate Industry dropdown based on Sector
-                this.populateIndustryOptions(this.demographicData.sectorId);
             },
             error => console.error('Demographic load Error: ' + (<Error>error).message)
         );
@@ -214,20 +183,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
     }
 
-    populateIndustryOptions(sectorId?: any) {
-        if (!sectorId || isNaN(Number(sectorId))) {
-            return;
-        }
-
-        this.demoSvc.getIndustry(sectorId).subscribe(
-            (data: Industry[]) => {
-                this.industryList = data;
-            },
-            error => {
-                console.error('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
-                console.error('Error Getting Industry (cont): ' + (<Error>error).stack);
-            });
-    }
 
     // Select asset value after import 
     setAssetValue(selectedValue: any): void {

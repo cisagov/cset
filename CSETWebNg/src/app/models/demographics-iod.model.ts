@@ -90,6 +90,7 @@ export interface CisaWorkflowFieldValidationResponse {
 }
 
 export interface SectorThing {
-  sector?: number;
-  subsector?: number;
+  sectorId?: number;
+  subsectorId?: number;
+  sequence?: number;
 }

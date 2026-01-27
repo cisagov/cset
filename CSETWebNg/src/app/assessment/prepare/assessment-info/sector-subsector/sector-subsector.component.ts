@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { DemographicsIod, SectorThing } from '../../../../models/demographics-iod.model';
+import { ConstantsService } from '../../../../services/constants.service';
 
 @Component({
   selector: 'app-sector-subsector',
@@ -14,15 +15,20 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   @Input()
   demographicData: DemographicsIod;
 
+  /**
+   * Switch to turn on "multi sector" support.
+   */
+  @Input()
+  multi: boolean = true;
 
-
-  list: SectorThing[];
+  sectorList: SectorThing[];
 
 
   constructor(
     public assessSvc: AssessmentService,
-    public demoSvc: DemographicIodService
-  ) {  }
+    public demoSvc: DemographicIodService,
+    private c: ConstantsService
+  ) { }
 
 
   ngOnInit(): void {
@@ -32,7 +38,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
    * 
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.list = this.demographicData.sectorSubsectors;
+    this.sectorList = this.demographicData.sectorSubsectors;
   }
 
 
@@ -40,32 +46,34 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
    *
    */
   onChangeSector(evt, item) {
-    console.log('onChangeSector: ', evt, item);
-
-    if (!item.sectorId) {
-      item.listSubsectors = [];
-      item.subsectorId = null;
-    } else {
-      this.demoSvc.getSubsectors(item.sectorId).subscribe((data: any[]) => {
-        console.log('getSubsectors from API: ', data);
-        item.listSubsectors = data;
-      });
-    }
-
-    //this.assessSvc.assessment.sectorId = this.demographicData.sector;
-    //this.assessSvc.assessment.ssgSectorIds = this.demographicData.ssgSectors;
+    // update the model 
+    const target = this.assessSvc.assessment.sectorSubsectors.find(x => x.sequence == item.sequence);
+    target.sectorId = item.sectorId;
+    target.subsectorId = item.subsectorId;
 
 
-    // TODO -- emit some things
-    //this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-    //this.updateDemographics();
+    // post the sector model to update the back end
+    this.demoSvc.saveSector(item).subscribe(subsectorList => {
+      item.subsectorList = subsectorList;
+
+      if (!item.subsectorList.some(x => x.optionValue == item.subsectorId)) {
+        target.subsectorId = null;
+      }
+
+      // TODO -- emit some things
+      this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+
+      console.log('666');
+      console.log(item);
+      console.log(target);
+    });
   }
 
-  /**
-   * 
-   */
-  onChangeSubsector(evt, item) {
+  onAddSector() {
 
-    console.log('onChangeSubsector:', evt, item);
+  }
+
+  onRemoveSector() {
+
   }
 }

@@ -45,27 +45,12 @@ namespace CSETWebCore.Business.Demographic
                 AssessmentId = assessmentId
             };
 
+
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
-
-
-
-
-            // TODO-3261 demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
-            // TODO-3261 demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
-
-            // TODO-3261 dig up existing data.  If nothing exists, add an empty SectorSubsector instance.
-            var smm = new SectorMultiManager(_context);
-            demographics.SectorSubsectors = smm.Get(assessmentId);
-
-            
-
-
-
-
             demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
             demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
@@ -77,6 +62,7 @@ namespace CSETWebCore.Business.Demographic
 
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
             var sizeId = (int?)extBiz.GetX(assessmentId, "SIZE");
+
 
             //Asset value and size are stored in DETAILS_DEMOGRAPHICS_OPTIONS
             if (assetId != null)
@@ -102,8 +88,29 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
+
+            // Only the PPD-21 list of 16 sectors supported now.  No more HSPD-7 list support (Is_NIPP = true)
+            var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+            demographics.ListSectors = new List<ListItem2>();
+            foreach (var sec in availableSectors)
+            {
+                demographics.ListSectors.Add(new ListItem2
+                {
+                    OptionValue = sec.SectorId,
+                    OptionText = sec.SectorName
+                });
+            }
+
+
+            // Get Sector/Subsector pairs.  Note that in the general (non-IOD) assessments
+            // we only support a single sector/subsector.  
+            var smm = new SectorMultiManager(_context);
+            demographics.SectorSubsectors = smm.Get(assessmentId);
+
+
             return demographics;
         }
+
 
         /// <summary>
         /// Persists data to the DEMOGRAPHICS table.

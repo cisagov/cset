@@ -21,7 +21,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
 
             var cisServiceDemographics = new CisServiceDemographics
             {
@@ -59,7 +59,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -89,7 +89,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -119,7 +119,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -151,7 +151,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 Standard2 = null,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -189,7 +189,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 RegulationType1 = null, // Should not cause validation failure
                 RegulationType2 = null
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -225,7 +225,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100",
@@ -291,7 +291,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 UsesStandard = false,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = null, IndustryId = null });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = null, SubsectorId = null });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -357,7 +357,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 Standard2 = null,
                 RequiredToComply = false
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -395,7 +395,7 @@ namespace CSETWebCore.Business.Tests.Demographic
                 RegulationType1 = null, // Should cause validation failure if in validation JSON
                 RegulationType2 = null
             };
-            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, IndustryId = 129 });
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"

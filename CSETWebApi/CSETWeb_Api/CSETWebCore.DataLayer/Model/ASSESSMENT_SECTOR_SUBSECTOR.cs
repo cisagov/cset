@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[PrimaryKey("Assessment_Id", "SectorId", "IndustryId")]
+[Index("Assessment_Id", "SectorId", "IndustryId", Name = "UQ_ASSESSMENT_SECTOR_SUBSECTOR", IsUnique = true)]
 [Index("Assessment_Id", "Sequence", Name = "UQ_Assessment_Sequence", IsUnique = true)]
 public partial class ASSESSMENT_SECTOR_SUBSECTOR
 {
     [Key]
+    public int AssessmentSectorSubsectorId { get; set; }
+
     public int Assessment_Id { get; set; }
 
-    [Key]
     public int SectorId { get; set; }
 
-    [Key]
-    public int IndustryId { get; set; }
+    public int? IndustryId { get; set; }
 
     public int Sequence { get; set; }
 

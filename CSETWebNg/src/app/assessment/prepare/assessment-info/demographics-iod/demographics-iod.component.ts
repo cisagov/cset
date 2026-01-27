@@ -28,7 +28,7 @@ export class DemographicsIodComponent implements OnInit {
   assessmentConfig: AssessmentConfig;
   serviceDemographics: ServiceDemographic;
   serviceComposition: ServiceComposition;
-  msg:string = "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework. Previously selected subsectors are no longer applicable and should be re-selected."
+  msg:string = "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework as defined in PPD-21. Previously selected subsectors are no longer applicable and should be re-selected."
 
   /**
    * 

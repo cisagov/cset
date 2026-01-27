@@ -1,9 +1,9 @@
 <div *transloco="let t">
-     <div *ngFor="let ssPair of list; let i = index">
+     <div *ngFor="let ssPair of sectorList; let i = index">
           <div class="row mb-3"  style="background-color: rgb(70, 18, 70)">
                <div class="col">
                     <label for="sector" class="form-label">{{ t('sector') }}</label> 
-                    <button *ngIf="i > 0 && i < list.length" class="btn btn-link ms-3" (click)="removeSector(i)">Remove</button>
+                    <button *ngIf="i > 0 && i < sectorList.length" class="btn btn-link ms-3" (click)="removeSector(i)">Remove</button>
                     <select [ngClass]="{ 'is-invalid' : !ssPair.sectorId}" class="form-select" id="sector" tabindex="0"
                          name="sector" [(ngModel)]="ssPair.sectorId" (ngModelChange)="onChangeSector($event, ssPair)">
                          <option [ngValue]="null">-- {{ t('select') }} --</option>
@@ -16,20 +16,20 @@
 
                <div class="col">
                     <label for="subsector" class="form-label">Sub-Sector</label>
-                    <select [ngClass]="{ 'is-invalid' : !ssPair.industryId }" class="form-select" id="subsector"
-                         tabindex="0" name="subsector" [(ngModel)]="ssPair.industryId"
-                         (ngModelChange)="onChangeSubsector($event, ssPair)">
+                    <select [ngClass]="{ 'is-invalid' : !ssPair.subsectorId }" class="form-select" id="subsector"
+                         tabindex="0" name="subsector" [(ngModel)]="ssPair.subsectorId"
+                         (ngModelChange)="onChangeSector($event, ssPair)">
                          <option [ngValue]="null">-- {{ t('select') }} --</option>
-                         <option *ngFor="let i of ssPair.industryList" [ngValue]="i.id"
-                              [selected]="i.id === ssPair?.industryId">
-                              {{ i.value }}
+                         <option *ngFor="let i of ssPair.subsectorList" [ngValue]="i.optionValue"
+                              [selected]="i.optionValue === ssPair?.subsectorId">
+                              {{ i.optionText }}
                          </option>
                     </select>
                </div>
           </div>
-          <div *ngIf="i == list.length - 1">
+          <div *ngIf="i == sectorList.length - 1 && multi">
                <button class="btn btn-link">
-                    + add sector
+                    + add additional sector
                </button>
           </div>
      </div>

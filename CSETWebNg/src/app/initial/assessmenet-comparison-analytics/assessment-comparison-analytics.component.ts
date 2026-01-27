@@ -353,7 +353,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.demographicData = data;
 
         // populate Industry dropdown based on Sector
-        this.populateIndustryOptions(this.demographicData.sectorId);
+       // TODO-3261 this.populateIndustryOptions(this.demographicData.sectorId);
       },
       (error) =>
         console.error("Demographic load Error: " + (<Error>error).message)
