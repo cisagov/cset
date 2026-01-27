@@ -361,7 +361,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
   }
 
   getOrganizationTypes() {
-    this.assessSvc.getOrganizationTypes().subscribe((data: any) => {
+    this.demoSvc.getOrganizationTypes().subscribe((data: any) => {
       this.orgTypes = data;
     });
   }

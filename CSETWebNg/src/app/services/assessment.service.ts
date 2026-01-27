@@ -239,6 +239,7 @@ export class AssessmentService {
    *
    */
   getAssessmentDetail() {
+    console.trace();
     return this.http.get(this.apiUrl + 'assessmentdetail');
   }
 
@@ -319,13 +320,6 @@ export class AssessmentService {
       .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.apiUrl + 'contactsById', headers);
-  }
-
-  /**
-   *
-   */
-  getOrganizationTypes() {
-    return this.http.get(this.apiUrl + 'getOrganizationTypes');
   }
 
   /**

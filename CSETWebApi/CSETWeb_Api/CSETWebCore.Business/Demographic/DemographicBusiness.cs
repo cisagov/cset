@@ -135,8 +135,6 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
-            // TODO-3261 extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null : demographics.SectorId);
-            // TODO-3261 extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null : demographics.IndustryId);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
             extBiz.SaveX(demographics.AssessmentId, "SCOPED", demographics.IsScoped);
             extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);

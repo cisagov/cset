@@ -40,18 +40,9 @@ export class PrepareComponent implements OnInit {
 
   constructor(
     private assessSvc: AssessmentService,
-
     private navSvc: NavigationService,
-    public navTreeSvc: NavTreeService,
-    private router: Router,
-    private route: ActivatedRoute
+    public navTreeSvc: NavTreeService
   ) {
-    if (this.assessSvc.assessment == null) {
-      this.assessSvc.getAssessmentDetail().subscribe(
-        (data: any) => {
-          this.assessSvc.assessment = data;
-        });
-    }
     this.assessSvc.setCurrentTab('prepare');
   }
 

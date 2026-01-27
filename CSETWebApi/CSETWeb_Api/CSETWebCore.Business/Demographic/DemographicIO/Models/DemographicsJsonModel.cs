@@ -146,8 +146,6 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 
         public Int32 eMass_Document_Id { get; set; }
 
-        public Boolean IsAcetOnly { get; set; }
-
         [MaxLength(30)]
         public String Workflow { get; set; }
 

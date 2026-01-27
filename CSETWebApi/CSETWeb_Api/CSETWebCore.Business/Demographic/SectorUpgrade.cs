@@ -86,14 +86,17 @@ namespace CSETWebCore.Business.Demographic
                     BoolValue = true
                 };
 
-                _context.DETAILS_DEMOGRAPHICS.Add(ack);
+                _context.DETAILS_DEMOGRAPHICS.Update(ack);
 
                 resp.Changed = true;
             }
 
 
             var dbSubsector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SUBSECTOR");
-            _context.Remove(dbSubsector);
+            if (dbSubsector != null)
+            {
+                _context.Remove(dbSubsector);
+            }
 
             _context.SaveChanges();
 

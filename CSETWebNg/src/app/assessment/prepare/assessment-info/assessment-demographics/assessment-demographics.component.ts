@@ -166,7 +166,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     getOrganizationTypes() {
-        this.assessSvc.getOrganizationTypes().subscribe(
+        this.demoSvc.getOrganizationTypes().subscribe(
             (data: any) => {
                 this.orgTypes = data;
             }

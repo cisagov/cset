@@ -73,11 +73,11 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   onAddSector() {
     // get the max current sequence
     const seqs = this.assessSvc.assessment.sectorSubsectors.map(x => x.sequence);
-    const max = Math.max(...seqs);
+    const maxSeq = Math.max(...seqs);
 
 
     const newSectorSubsector: SectorThing = {
-      sequence: max + 1
+      sequence: maxSeq + 1
     };
     this.demographicData.sectorSubsectors.push(newSectorSubsector);
     this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];

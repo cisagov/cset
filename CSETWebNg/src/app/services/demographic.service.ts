@@ -57,21 +57,29 @@ export class DemographicService {
   ) {
   }
 
+  
+  /**
+   *
+   */
+  getOrganizationTypes() {
+    return this.http.get(this.apiUrl + 'organization-types');
+  }
+
   // calls to retrieve static data
   getAllSectors() {
-    return this.http.get(this.apiUrl + 'Sectors');
+    return this.http.get(this.apiUrl + 'sectors');
   }
 
   getAllAssetValues() {
-    return this.http.get(this.apiUrl + 'AssetValues');
+    return this.http.get(this.apiUrl + 'asset-values');
   }
 
-  getAllStatesAndProvinces() {
-    return this.http.get(this.apiUrl + 'StatesAndProvinces');
-  }
+  // getAllStatesAndProvinces() {
+  //   return this.http.get(this.apiUrl + 'StatesAndProvinces');
+  // }
 
   getSizeValues() {
-    return this.http.get(this.apiUrl + 'Size');
+    return this.http.get(this.apiUrl + 'size');
   }
 
   // calls to dependent data
