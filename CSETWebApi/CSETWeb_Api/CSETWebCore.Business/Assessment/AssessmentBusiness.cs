@@ -355,6 +355,7 @@ namespace CSETWebCore.Business.Assessment
 
         }
 
+
         /// <summary>
         /// Returns the details for the specified Assessments given a GUID.
         /// Returns null if no assessment with the provided GUID exists.
@@ -372,6 +373,7 @@ namespace CSETWebCore.Business.Assessment
 
             return GetAssessmentDetail(assessment.Assessment_Id);
         }
+
 
         /// <summary>
         /// Returns the details for the specified Assessment.
@@ -493,14 +495,6 @@ namespace CSETWebCore.Business.Assessment
                 assessment.SectorSubsectors = new SectorMultiManager(_context).Get(assessmentId);
 
 
-
-                //assessment.SectorId = d1Demographics.SectorId;
-                //assessment.IndustryId = d1Demographics.IndustryId;
-
-
-
-
-
                 // update sector if need be
                 var sectorUp = new SectorUpgradePpd21(_context);
                 var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
@@ -509,6 +503,7 @@ namespace CSETWebCore.Business.Assessment
        //  TODO-3261           assessment.SectorId = newSectorInfo.SectorId;
        //  TODO-3261           assessment.IndustryId = null;
                 }
+
 
 
                 assessment.SsgSectorIds = [];

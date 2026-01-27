@@ -29,7 +29,9 @@ namespace CSETWebCore.Model.Demographic
         /// </summary>
         public string SectorDirective { get; set; }
 
-
+        /// <summary>
+        /// A list of sector/subsector (industry) pairs pertaining to the asset
+        /// </summary>
         public List<SectorSubsector> SectorSubsectors { get; set; } = [];
 
 

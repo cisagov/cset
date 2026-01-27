@@ -384,9 +384,9 @@ namespace CSETWebCore.Business.Demographic
             _context.SaveChanges();
 
 
-
-            var smm = new SectorMultiManager(_context);
-            smm.Save(demographic.SectorSubsectors);
+            // TODO-3261 demographics are persisted through their own logic
+            //var smm = new SectorMultiManager(_context);
+            //smm.Save(demographic.SectorSubsectors);
 
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);

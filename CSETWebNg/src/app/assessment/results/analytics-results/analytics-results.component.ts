@@ -67,7 +67,10 @@ export class AnalyticsResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.assessSvc.getAssessmentDetail().subscribe((resp: AssessmentDetail) => {
-      this.sectorId = resp.sectorId;
+
+      // TODO-3261 - how does multi-sector affect analytics?
+      this.sectorId = resp.sectorSubsectors[0]?.sectorId;
+
       this.modelId = resp.maturityModel.modelId;
       if (this.sectorId == null) {
         this.showSector = false;

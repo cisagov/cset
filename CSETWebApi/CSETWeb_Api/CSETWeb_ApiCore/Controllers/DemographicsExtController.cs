@@ -5,6 +5,9 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Demographic.DemographicIO;
+using CSETWebCore.Business.Demographic.Export;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -12,9 +15,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using CSETWebCore.Business.Demographic.Export;
-using CSETWebCore.Business.Demographic.DemographicIO;
-using CSETWebCore.Business.Question;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -82,6 +83,41 @@ namespace CSETWebCore.Api.Controllers
             _hooks.HookDemographicsChanged(demographics.AssessmentId);
 
             return Ok();
+        }
+
+
+        /// <summary>
+        /// Persists the sector/subsector values.  Returns a list of
+        /// subsector IDs for the sector.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/demographics/ext2/sector")]
+        public IActionResult PostSector([FromBody] SectorSubsector request)
+        {
+            var response = new List<ListItem2>();
+
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+
+                var smm = new SectorMultiManager(_context);
+                smm.Save(assessmentId, request);
+
+
+                if (request.SectorId != null)
+                {
+                    var mgr = new DemographicExtBusiness(_context);
+                    response = mgr.GetSubsectors((int)request.SectorId);
+                }
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(response);
         }
 
 

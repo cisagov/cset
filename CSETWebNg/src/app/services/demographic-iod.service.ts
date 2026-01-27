@@ -71,6 +71,9 @@ export class DemographicIodService {
     return this.http.get(this.apiUrl + `/subsectors/${sectorId}`);
   }
 
+  saveSector(item) {
+    return this.http.post(this.apiUrl + '/sector/', item);
+  }
 
   /**
    * POSTs the screen data to the API.

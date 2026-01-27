@@ -49,25 +49,7 @@
     </div>
     <form>
         <div class="row mb-3">
-            <div class="col">
-                <label class="form-label" for="sector">{{t('sector')}}</label>
-                <select class="form-select" id="sector" name="sector" tabindex="0"
-                    [(ngModel)]="demographicData.sectorId" (ngModelChange)="changeSector($event)">
-                    <option [ngValue]="null">-- {{ t('select sector') }} --</option>
-                    <option *ngFor="let sector of sectorsList" [ngValue]="sector.sectorId">{{sector.sectorName}}
-                    </option>
-                </select>
-            </div>
-            <div class="col">
-                <label class="form-label" for="industry">{{t('industry')}}</label>
-                <select class="form-select" id="industry" name="industry" tabindex="0"
-                    [(ngModel)]="demographicData.industryId" (ngModelChange)="update($event)">
-                    <option [ngValue]="null">-- {{ t('select industry') }} --</option>
-                    <option *ngFor="let industry of industryList" [ngValue]="industry.industryId">
-                        {{industry.industryName}}
-                    </option>
-                </select>
-            </div>
+              <app-sector-subsector [demographicData]="demographicData" [multi]="false"></app-sector-subsector>
         </div>
 
         <!-- show SSG sector selection control for CPG2 assessments -->
