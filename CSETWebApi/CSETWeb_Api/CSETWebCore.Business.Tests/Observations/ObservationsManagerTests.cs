@@ -68,6 +68,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetAssessmentLevelObservations();
@@ -110,6 +111,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetAssessmentLevelObservations();
@@ -139,6 +141,7 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetAssessmentLevelObservations();
@@ -192,6 +195,7 @@ namespace CSETWebCore.Business.Tests.Observations
             _mockContext.Setup(c => c.MATURITY_QUESTIONS).Returns(CreateMockDbSet(new List<MATURITY_QUESTIONS>()).Object);
             _mockContext.Setup(c => c.NEW_QUESTION).Returns(CreateMockDbSet(new List<NEW_QUESTION>()).Object);
             _mockContext.Setup(c => c.NEW_REQUIREMENT).Returns(CreateMockDbSet(new List<NEW_REQUIREMENT>()).Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetAnswerLevelObservations(_assessmentId);
@@ -253,6 +257,11 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ANSWER).Returns(CreateMockDbSet(new List<ANSWER>
+            {
+                new ANSWER { Answer_Id = answerId, Assessment_Id = _assessmentId }
+            }).Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetObservationsForAnswer(answerId);
@@ -312,6 +321,14 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ANSWER).Returns(CreateMockDbSet(new List<ANSWER>
+            {
+                new ANSWER { Answer_Id = answerId, Assessment_Id = _assessmentId }
+            }).Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>
+            {
+                new ASSESSMENT_CONTACTS { Assessment_Contact_Id = 10, Assessment_Id = _assessmentId, FirstName = "John", LastName = "Doe", PrimaryEmail = "john@example.com" }
+            }).Object);
 
             // Act
             var result = _observationsManager.GetObservationsForAnswer(answerId);
@@ -334,6 +351,7 @@ namespace CSETWebCore.Business.Tests.Observations
         {
             // Arrange
             var observationId = 1;
+            var answerId = 100;
             var importance = new IMPORTANCE { Importance_Id = 3, Value = "High" };
 
             var findings = new List<FINDING>
@@ -341,6 +359,7 @@ namespace CSETWebCore.Business.Tests.Observations
                 new FINDING
                 {
                     Finding_Id = observationId,
+                    Answer_Id = answerId,
                     Summary = "Specific observation",
                     Issue = "Critical issue",
                     Recommendations = "Fix immediately",
@@ -351,6 +370,11 @@ namespace CSETWebCore.Business.Tests.Observations
 
             var mockFindingSet = CreateMockDbSet(findings);
             _mockContext.Setup(c => c.FINDING).Returns(mockFindingSet.Object);
+            _mockContext.Setup(c => c.ANSWER).Returns(CreateMockDbSet(new List<ANSWER>
+            {
+                new ANSWER { Answer_Id = answerId, Assessment_Id = _assessmentId }
+            }).Object);
+            _mockContext.Setup(c => c.ASSESSMENT_CONTACTS).Returns(CreateMockDbSet(new List<ASSESSMENT_CONTACTS>()).Object);
 
             // Act
             var result = _observationsManager.GetObservation(observationId);

@@ -20,7 +20,11 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -475,45 +479,114 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/reports/observations/tearout")]
-        public IActionResult GetObservations()
+        public async Task<IActionResult> GetObservationsAsync()
         {
-            int assessmentId = _token.AssessmentForUser();
+            var stopwatch = Stopwatch.StartNew();
+            int assessmentId;
 
-            _report.SetReportsAssessmentId(assessmentId);
+            try
+            {
+                assessmentId = _token.AssessmentForUser();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = "User not authorized for assessment", error = ex.Message });
+            }
 
-            BasicReportData data = new BasicReportData();
-            data.information = _report.GetInformation();
-            data.Individuals = _report.GetObservationIndividuals();
-            return Ok(data);
+            try
+            {
+                _report.SetReportsAssessmentId(assessmentId);
+
+                var data = new BasicReportData();
+                data.information = _report.GetInformation();
+                data.Individuals = await _report.GetObservationIndividualsAsync();
+
+                return Ok(data);
+            }
+            catch (SqlException ex) when (ex.Number == -2) // SQL Server timeout
+            {
+                stopwatch.Stop();
+                return StatusCode(504, new
+                {
+                    message = "Database query timed out while generating observations report",
+                    assessmentId = assessmentId,
+                    elapsedMs = stopwatch.ElapsedMilliseconds
+                });
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                return StatusCode(500, new
+                {
+                    message = "Error generating observations report",
+                    error = ex.Message,
+                    assessmentId = assessmentId,
+                    elapsedMs = stopwatch.ElapsedMilliseconds
+                });
+            }
         }
 
 
         /// <summary>
-        /// Returns a file stream containing Observations in a CSV format.
+        /// Returns a file stream containing Observations in an Excel format.
         /// </summary>
         [HttpGet]
         [Route("api/reports/observations/excel")]
-        public IActionResult ExportObservationsCsv()
+        public async Task<IActionResult> ExportObservationsExcelAsync()
         {
-            _report.SetToken(_token);
+            var stopwatch = Stopwatch.StartNew();
+            int assessmentId;
 
-            int assessmentId = _token.AssessmentForUser();
-            string lang = _token.GetCurrentLanguage();
-
-            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-
-            // Generate the Excel file
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                var otx = new ObservationsToExcel(_context, _report);
-                otx.GenerateSpreadsheet(assessmentId, memoryStream);
+                _report.SetToken(_token);
+                assessmentId = _token.AssessmentForUser();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = "User not authorized for assessment", error = ex.Message });
+            }
 
-                // Return the file as a downloadable attachment
-                return File(
-                    memoryStream.ToArray(),
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    $"{info.Assessment_Name} - Observations.xlsx"
-                );
+            try
+            {
+                var info = await _context.INFORMATION
+                    .Where(x => x.Id == assessmentId)
+                    .FirstOrDefaultAsync();
+
+                // Generate the Excel file
+                using (var memoryStream = new MemoryStream())
+                {
+                    var otx = new ObservationsToExcel(_context, _report);
+                    await otx.GenerateSpreadsheetAsync(assessmentId, memoryStream);
+
+                    // Return the file as a downloadable attachment
+                    return File(
+                        memoryStream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        $"{info?.Assessment_Name ?? "Assessment"} - Observations.xlsx"
+                    );
+                }
+            }
+            catch (SqlException ex) when (ex.Number == -2) // SQL Server timeout
+            {
+                stopwatch.Stop();
+                return StatusCode(504, new
+                {
+                    message = "Database query timed out while generating observations Excel export",
+                    assessmentId = assessmentId,
+                    elapsedMs = stopwatch.ElapsedMilliseconds
+                });
+            }
+            catch (Exception ex)
+            {
+                stopwatch.Stop();
+                return StatusCode(500, new
+                {
+                    message = "Error generating observations Excel export",
+                    error = ex.Message,
+                    assessmentId = assessmentId,
+                    elapsedMs = stopwatch.ElapsedMilliseconds
+                });
             }
         }
 

@@ -12,6 +12,7 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Reports
@@ -40,7 +41,9 @@ namespace CSETWebCore.Interfaces.Reports
         List<BasicReportData.RequirementControl> GetControls(string applicationMode);
         List<List<DiagramZones>> GetDiagramZones();
         List<StandardQuestions> GetQuestionsForEachStandard();
+        Task<List<StandardQuestions>> GetQuestionsForEachStandardAsync(CancellationToken cancellationToken = default);
         List<ComponentQuestion> GetComponentQuestions();
+        Task<List<ComponentQuestion>> GetComponentQuestionsAsync(CancellationToken cancellationToken = default);
         List<RankedCategories> GetTop5Categories();
         Task<List<RankedQuestions>> GetTop5QuestionsAsync();
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
@@ -54,6 +57,7 @@ namespace CSETWebCore.Interfaces.Reports
         BasicReportData.OverallSALTable GetSals();
         BasicReportData.INFORMATION GetInformation();
         List<Individual> GetObservationIndividuals();
+        Task<List<Individual>> GetObservationIndividualsAsync(CancellationToken cancellationToken = default);
         GenSALTable GetGenSals();
         MaturityReportData.MaturityModel GetBasicMaturityModel();
         List<MaturityReportData.MaturityModel> GetMaturityModelData();
