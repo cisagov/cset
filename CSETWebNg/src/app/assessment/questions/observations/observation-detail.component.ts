@@ -60,7 +60,7 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  ngOnInit() {
+  async ngOnInit() {
     this.observationsSvc.getImportances().subscribe((result: Importance[]) => {
       this.importances = result;
     });
@@ -68,6 +68,10 @@ export class ObservationDetailComponent implements OnInit {
     this.dialog.backdropClick().subscribe(() => {
       this.save();
     });
+
+    // makes 'Individuals Responsible' show up initially
+    if (this.observation.observation_Contacts.length == 0)
+      this.observation.observation_Contacts = await this.observationsSvc.getContactsForEmptyObservation();
   }
 
   /**
@@ -121,15 +125,20 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  refreshContacts(): void {
+  async refreshContacts(): Promise<void> {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
 
     this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      if (this.observation.observation_Id == 0 && resp.observationId)
+      if (this.observation.observation_Id == 0 && resp.observationId) {
         this.observation.observation_Id = resp.observationId;
-      if (this.observation.answer_Id == 0 && resp.answerId)
+      }
+      if (this.observation.answer_Id == 0 && resp.answerId) {
         this.observation.answer_Id = resp.answerId;
+      }
+      if (this.observation.question_Id == 0 && resp.questionId) {
+        this.observation.question_Id = resp.questionId;
+      }
       
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
@@ -142,12 +151,15 @@ export class ObservationDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   * Using 'sequence' instead of 'contactId' because if the user selects a 
+   * previously unselected option, the ID is 0. 
+   * If there were multiple unselected options, the first unselected option 
+   * was defaulted to because every unselected option had 0 as the ID
    */
-  updateContact(contactid) {
-    const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
+  updateContact(contact, sequence) {
+    const c = this.observation.observation_Contacts[sequence];
     if (!!c) {
-      c.selected = contactid.selected;
+      c.selected = contact.selected;
     }
   }
 }

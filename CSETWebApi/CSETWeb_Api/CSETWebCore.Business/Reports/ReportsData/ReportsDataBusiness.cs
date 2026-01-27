@@ -26,6 +26,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -606,6 +607,51 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// Async version of GetQuestionsForEachStandard.
+        /// </summary>
+        public async Task<List<StandardQuestions>> GetQuestionsForEachStandardAsync(CancellationToken cancellationToken = default)
+        {
+            var dblist = await (from a in _context.AVAILABLE_STANDARDS
+                                join b in _context.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
+                                join c in _context.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
+                                join q in _context.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
+                                join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                                join s in _context.SETS on b.Set_Name equals s.Set_Name
+                                where a.Selected == true && a.Assessment_Id == _assessmentId
+                                && c.Assessment_Id == _assessmentId
+                                orderby s.Short_Name, h.Question_Group_Heading, c.Question_Number
+                                select new SimpleStandardQuestions()
+                                {
+                                    ShortName = s.Short_Name,
+                                    Answer = c.Answer_Text,
+                                    CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
+                                    Question = q.Simple_Question,
+                                    QuestionId = q.Question_Id
+                                }).ToListAsync(cancellationToken);
+
+            List<StandardQuestions> list = new List<StandardQuestions>();
+            string lastshortname = "";
+            List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
+            foreach (var a in dblist)
+            {
+                if (a.ShortName != lastshortname)
+                {
+                    qlist = new List<SimpleStandardQuestions>();
+                    list.Add(new StandardQuestions()
+                    {
+                        Questions = qlist,
+                        StandardShortName = a.ShortName
+                    });
+                }
+                lastshortname = a.ShortName;
+                qlist.Add(a);
+            }
+
+            return list;
+        }
+
+
         public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
         {
             // Call FillEmptyQuestionsForAnalysis (still needed as SP call)
@@ -875,6 +921,35 @@ namespace CSETWebCore.Business.Reports
             }
 
             return l;
+        }
+
+
+        /// <summary>
+        /// Async version of GetComponentQuestions with optimized projection.
+        /// Projects directly to ComponentQuestion without intermediate mapping.
+        /// </summary>
+        public async Task<List<ComponentQuestion>> GetComponentQuestionsAsync(CancellationToken cancellationToken = default)
+        {
+            var results = await _context.Answer_Components_Exploded
+                .AsNoTracking()
+                .Where(c => c.Assessment_Id == _assessmentId)
+                .OrderBy(c => c.ComponentName)
+                .ThenBy(c => c.QuestionText)
+                .Select(c => new ComponentQuestion
+                {
+                    Answer = c.Answer_Text,
+                    ComponentName = c.ComponentName,
+                    Component_Symbol_Id = c.Component_Symbol_Id,
+                    Question = c.QuestionText,
+                    QuestionId = c.Question_Id,
+                    LayerName = c.LayerName,
+                    SAL = c.SAL,
+                    Zone = c.ZoneName,
+                    IsOverride = (c.Answer_Id != null)
+                })
+                .ToListAsync(cancellationToken);
+
+            return results;
         }
 
 
@@ -1430,7 +1505,7 @@ namespace CSETWebCore.Business.Reports
         {
             List<Individual> individualList = [];
 
-            var observations = (from f in _context.FINDING
+            var observations = (from f in _context.FINDING.AsNoTracking()
                                 join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id into fc1
                                 from fc in fc1.DefaultIfEmpty()
                                 join a in _context.ANSWER on f.Answer_Id equals a.Answer_Id
@@ -1453,8 +1528,28 @@ namespace CSETWebCore.Business.Reports
                                     Importance = i
                                 }).ToList();
 
-            var acc = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).OrderBy(x => x.Assessment_Contact_Id).ToList();
+            var acc = _context.ASSESSMENT_CONTACTS
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == _assessmentId)
+                .OrderBy(x => x.Assessment_Contact_Id)
+                .ToList();
 
+            // Batch load contact names into dictionary to avoid N+1 queries
+            var contactNamesDict = acc.ToDictionary(
+                c => c.Assessment_Contact_Id,
+                c => FormatName(c.FirstName, c.LastName)
+            );
+
+            // Batch load finding contacts for all findings to avoid N+1 queries
+            var findingIds = observations.Select(o => o.Finding.Finding_Id).Distinct().ToList();
+            var findingContactsLookup = _context.FINDING_CONTACT
+                .AsNoTracking()
+                .Where(fc => findingIds.Contains(fc.Finding_Id))
+                .GroupBy(fc => fc.Finding_Id)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Select(fc => fc.Assessment_Contact_Id).ToList()
+                );
 
             // Get any associated questions to get their display reference
             var standardQuestions = GetQuestionsForEachStandard();
@@ -1474,7 +1569,7 @@ namespace CSETWebCore.Business.Reports
 
                 foreach (var m in obsList)
                 {
-                    var obs = GenerateObservation(m, standardQuestions, componentQuestions);
+                    var obs = GenerateObservation(m, standardQuestions, componentQuestions, findingContactsLookup, contactNamesDict);
 
                     individual.Observations.Add(obs);
                 }
@@ -1493,7 +1588,111 @@ namespace CSETWebCore.Business.Reports
             var unnasignedObs = observations.Where(x => x.FC == null).ToList();
             foreach (var obs in unnasignedObs)
             {
-                var observation = GenerateObservation(obs, standardQuestions, componentQuestions);
+                var observation = GenerateObservation(obs, standardQuestions, componentQuestions, findingContactsLookup, contactNamesDict);
+                ind.Observations.Add(observation);
+            }
+
+            if (ind.Observations.Count > 0)
+            {
+                individualList.Add(ind);
+            }
+
+            return individualList;
+        }
+
+
+        /// <summary>
+        /// Async version of GetObservationIndividuals.
+        /// Uses async database queries for better performance under load.
+        /// </summary>
+        public async Task<List<Individual>> GetObservationIndividualsAsync(CancellationToken cancellationToken = default)
+        {
+            List<Individual> individualList = [];
+
+            var observations = await (from f in _context.FINDING.AsNoTracking()
+                                      join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id into fc1
+                                      from fc in fc1.DefaultIfEmpty()
+                                      join a in _context.ANSWER on f.Answer_Id equals a.Answer_Id
+                                      join mq in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+                                      from mq in mq1.DefaultIfEmpty()
+                                      join nr in _context.NEW_REQUIREMENT on a.Question_Or_Requirement_Id equals nr.Requirement_Id into nr1
+                                      from nr in nr1.DefaultIfEmpty()
+                                      join ac in _context.ASSESSMENT_CONTACTS on fc.Assessment_Contact_Id equals ac.Assessment_Contact_Id into ac1
+                                      from ac in ac1.DefaultIfEmpty()
+                                      join i in _context.IMPORTANCE on f.Importance_Id equals i.Importance_Id into i1
+                                      from i in i1.DefaultIfEmpty()
+                                      where a.Assessment_Id == _assessmentId
+                                      select new ObservationIngredients()
+                                      {
+                                          Finding = f,
+                                          FC = fc,
+                                          Answer = a,
+                                          MaturityQuestion = mq,
+                                          NewRequirement = nr,
+                                          Importance = i
+                                      }).ToListAsync(cancellationToken);
+
+            var acc = await _context.ASSESSMENT_CONTACTS
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == _assessmentId)
+                .OrderBy(x => x.Assessment_Contact_Id)
+                .ToListAsync(cancellationToken);
+
+            // Batch load contact names into dictionary to avoid N+1 queries
+            var contactNamesDict = acc.ToDictionary(
+                c => c.Assessment_Contact_Id,
+                c => FormatName(c.FirstName, c.LastName)
+            );
+
+            // Batch load finding contacts for all findings to avoid N+1 queries
+            var findingIds = observations.Select(o => o.Finding.Finding_Id).Distinct().ToList();
+            var findingContactsLookup = await _context.FINDING_CONTACT
+                .AsNoTracking()
+                .Where(fc => findingIds.Contains(fc.Finding_Id))
+                .GroupBy(fc => fc.Finding_Id)
+                .ToDictionaryAsync(
+                    g => g.Key,
+                    g => g.Select(fc => fc.Assessment_Contact_Id).ToList(),
+                    cancellationToken
+                );
+
+            // Get any associated questions to get their display reference using async methods
+            var standardQuestions = await GetQuestionsForEachStandardAsync(cancellationToken);
+            var componentQuestions = await GetComponentQuestionsAsync(cancellationToken);
+
+
+            // First handle the 'assigned' Observations
+            foreach (var contact in acc)
+            {
+                Individual individual = new Individual()
+                {
+                    FullName = FormatName(contact.FirstName, contact.LastName)
+                };
+
+                var obsList = observations.Where(x => x.FC?.Assessment_Contact_Id == contact.Assessment_Contact_Id).ToList();
+
+                foreach (var m in obsList)
+                {
+                    var obs = GenerateObservation(m, standardQuestions, componentQuestions, findingContactsLookup, contactNamesDict);
+
+                    individual.Observations.Add(obs);
+                }
+
+                if (individual.Observations.Count > 0)
+                {
+                    individualList.Add(individual);
+                }
+            }
+
+
+            // Include any 'unassigned' Observations
+            var ind = new Individual();
+            ind.FullName = "Unassigned";
+
+            var unnasignedObs = observations.Where(x => x.FC == null).ToList();
+            foreach (var obs in unnasignedObs)
+            {
+                var observation = GenerateObservation(obs, standardQuestions, componentQuestions, findingContactsLookup, contactNamesDict);
                 ind.Observations.Add(observation);
             }
 
@@ -1510,14 +1709,23 @@ namespace CSETWebCore.Business.Reports
         /// Creates and populates an instance of Observation
         /// </summary>
         /// <param name="oi"></param>
+        /// <param name="standardQuestions"></param>
+        /// <param name="componentQuestions"></param>
+        /// <param name="findingContactsLookup"></param>
+        /// <param name="contactNamesDict"></param>
         /// <returns></returns>
-        private Observation GenerateObservation(ObservationIngredients oi, List<StandardQuestions> standardQuestions, List<ComponentQuestion> componentQuestions)
+        private Observation GenerateObservation(
+            ObservationIngredients oi,
+            List<StandardQuestions> standardQuestions,
+            List<ComponentQuestion> componentQuestions,
+            Dictionary<int, List<int>> findingContactsLookup,
+            Dictionary<int, string> contactNamesDict)
         {
             TinyMapper.Bind<FINDING, Observation>();
             Observation obs = TinyMapper.Map<Observation>(oi.Finding);
             obs.ObservationTitle = oi.Finding.Summary;
             obs.ResolutionDate = oi.Finding.Resolution_Date;
-            obs.Importance = oi.Importance.Value;
+            obs.Importance = oi.Importance?.Value;
 
 
             // get the question identifier and text
@@ -1528,11 +1736,19 @@ namespace CSETWebCore.Business.Reports
             obs.QuestionText = qtxt;
 
 
-            // list names of all people assigned to the observation
-            var othersList = (from a in oi.Finding.FINDING_CONTACT
-                              join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
-                              select FormatName(b.FirstName, b.LastName)).ToList();
-            obs.Assignees = string.Join(",", othersList);
+            // list names of all people assigned to the observation using pre-loaded dictionaries
+            var assigneeNames = new List<string>();
+            if (findingContactsLookup.TryGetValue(oi.Finding.Finding_Id, out var contactIds))
+            {
+                foreach (var contactId in contactIds)
+                {
+                    if (contactNamesDict.TryGetValue(contactId, out var name))
+                    {
+                        assigneeNames.Add(name);
+                    }
+                }
+            }
+            obs.Assignees = string.Join(",", assigneeNames);
 
 
             return obs;
