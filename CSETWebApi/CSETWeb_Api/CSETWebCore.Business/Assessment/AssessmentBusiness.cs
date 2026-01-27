@@ -444,14 +444,7 @@ namespace CSETWebCore.Business.Assessment
                 // set workflow for legacy assessments
                 if (string.IsNullOrEmpty(assessment.Workflow))
                 {
-                    if (result.ii.IsAcetOnly ?? false)
-                    {
-                        assessment.Workflow = "ACET";
-                    }
-                    else
-                    {
-                        assessment.Workflow = "BASE";
-                    }
+                    assessment.Workflow = "BASE";
                 }
 
                 assessment.Origin = result.ii.Origin;
@@ -486,26 +479,20 @@ namespace CSETWebCore.Business.Assessment
                 }
 
 
-                // Some demographics
-                var d1 = new Demographic.DemographicBusiness(_context, _assessmentUtil);
-                var d1Demographics = d1.GetDemographics(assessmentId);
-
-
-                // load up sector/subsectors
-                assessment.SectorSubsectors = new SectorMultiManager(_context).Get(assessmentId);
-
 
                 // update sector if need be
                 var sectorUp = new SectorUpgradePpd21(_context);
                 var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
-                if (newSectorInfo?.Changed ?? false)
-                {
-       //  TODO-3261           assessment.SectorId = newSectorInfo.SectorId;
-       //  TODO-3261           assessment.IndustryId = null;
-                }
 
 
+                // Some demographics
+                var d1 = new DemographicBusiness(_context, _assessmentUtil);
+                var d1Demographics = d1.GetDemographics(assessmentId);
 
+                assessment.SectorSubsectors = d1Demographics.SectorSubsectors;
+
+
+                // SSG sector selections
                 assessment.SsgSectorIds = [];
                 var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
                 foreach (var ssg in ssgs)
@@ -533,21 +520,12 @@ namespace CSETWebCore.Business.Assessment
                 }
 
 
-                bool defaultAcet = (app_code == "ACET");
-                assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
-
                 assessment.BaselineAssessmentId = result.ii.Baseline_Assessment_Id;
                 if (assessment.BaselineAssessmentId != null)
                 {
                     var baseInfo = _context.INFORMATION.FirstOrDefault(x => x.Id == assessment.BaselineAssessmentId);
                     assessment.BaselineAssessmentName = baseInfo?.Assessment_Name;
                 }
-
-
-                // ACET-specific fields
-                assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
-                assessment.CreditUnion = result.aa.CreditUnionName;
-                assessment.Assets = result.aa.Assets != null ? long.Parse(result.aa.Assets) : 0;
 
 
                 // Fields located on the Overview page
@@ -741,7 +719,6 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Executive_Summary = assessment.ExecutiveSummary;
             dbInformation.Assessment_Description = assessment.AssessmentDescription;
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
-            dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;

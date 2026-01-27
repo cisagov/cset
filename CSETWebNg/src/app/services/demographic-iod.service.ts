@@ -63,21 +63,21 @@ export class DemographicIodService {
   }
 
   /**
-   *
+   * Retrieve all subsectors for the specified sector ID
    */
   getSubsectors(sectorId) {
     return this.http.get(this.apiUrl + `/subsectors/${sectorId}`);
   }
 
   /**
-   * 
+   * Post the updated sector/subsector to the API
    */
   saveSector(item) {
     return this.http.post(this.apiUrl + '/sector/', item);
   }
 
   /**
-   * 
+   * Remove a sector from the database
    */
   removeSector(item) {
     return this.http.delete(this.apiUrl + '/sector', { params: { seq: item.sequence }});

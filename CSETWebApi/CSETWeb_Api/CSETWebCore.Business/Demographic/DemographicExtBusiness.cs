@@ -17,7 +17,7 @@ namespace CSETWebCore.Business.Demographic
 {
     public class DemographicExtBusiness
     {
-        private CSETContext _context;
+        private readonly CSETContext _context;
 
         /// <summary>
         /// 
@@ -134,13 +134,6 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            // 
-            // TODO-3261 - get the subsectors for the current sector (if there is one)
-            //if (d.Sector != null)
-            //{
-            //    d.ListSubsectors = GetSubsectors((int)d.Sector);
-            //}
-
             d.CisaRegions = opts.Where(opt => opt.DataItemName == "CISA-REGION").Select(opts => new ListItem2()
             {
                 OptionValue = opts.OptionValue,
@@ -200,6 +193,7 @@ namespace CSETWebCore.Business.Demographic
                 OptionValue = opts.OptionValue,
                 OptionText = opts.OptionText
             }).ToList();
+
 
             // No more HSPD-7 list support (Is_NIPP = true) - only the PPD-21 list of 18 sectors supported now
             var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);

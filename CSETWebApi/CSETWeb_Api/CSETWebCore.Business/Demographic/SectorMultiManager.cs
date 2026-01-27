@@ -1,6 +1,5 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,8 @@ namespace CSETWebCore.Business.Demographic
 {
     public class SectorMultiManager
     {
-        private CSETContext _context;
+        private readonly CSETContext _context;
+
 
         public SectorMultiManager(CSETContext context)
         {
@@ -19,8 +19,7 @@ namespace CSETWebCore.Business.Demographic
 
         /// <summary>
         /// Returns a List<SectorSubsector>.  If no sectors
-        /// have been persisted, an empty one is added to the
-        /// response.
+        /// have been persisted, an empty one is added to the response.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
@@ -58,7 +57,7 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
-        /// 
+        /// Returns list of subsectors for a sector
         /// </summary>
         /// <param name="sectorId"></param>
         /// <returns></returns>
@@ -100,22 +99,29 @@ namespace CSETWebCore.Business.Demographic
 
 
                 // save the new ASSESSMENT_SECTOR_INDUSTRY record
-                var newRec = new ASSESSMENT_SECTOR_SUBSECTOR() { Assessment_Id = assessmentId, SectorId = (int)ddSector.IntValue, IndustryId = (int)ddSubsector?.IntValue, Sequence = 1 };
+                var newRec = new ASSESSMENT_SECTOR_SUBSECTOR() { 
+                    Assessment_Id = assessmentId, 
+                    SectorId = (int)ddSector.IntValue, 
+                    IndustryId = resp.SubsectorId, 
+                    Sequence = 1 };
+
                 _context.Add(newRec);
-                _context.SaveChangesAsync();
 
 
                 // clean up the old DETAILS_DEMOGRAPHICS records
                 _context.Remove(ddSector);
-                _context.Remove(ddSubsector);
-                _context.SaveChangesAsync();
+                if (ddSubsector != null)
+                {
+                    _context.Remove(ddSubsector);
+                }
+
+                _context.SaveChanges();
 
                 return resp;
             }
 
             return null;
         }
-
 
 
         /// <summary>
@@ -168,7 +174,7 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
-        /// 
+        /// Removes a sector/subsector record from the assessment.
         /// </summary>
         public void Delete(int assessmentId, int sequence)
         {
@@ -179,10 +185,6 @@ namespace CSETWebCore.Business.Demographic
                 _context.SaveChanges();
             }
         }
-
-
-        // ignore any invalid pairings, ignore any NULL sector insances
-
     }
 }
 
