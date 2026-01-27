@@ -167,7 +167,18 @@ namespace CSETWebCore.Business.Demographic
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Delete(int assessmentId, int sequence)
+        {
+            var target = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(a => a.Assessment_Id == assessmentId && a.Sequence == sequence).FirstOrDefault();
+            if (target != null)
+            {
+                _context.ASSESSMENT_SECTOR_SUBSECTOR.Remove(target);
+                _context.SaveChanges();
+            }
+        }
 
 
         // ignore any invalid pairings, ignore any NULL sector insances
