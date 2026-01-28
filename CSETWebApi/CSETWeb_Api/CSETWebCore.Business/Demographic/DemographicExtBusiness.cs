@@ -49,31 +49,20 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
 
 
-            // update sector if need be
+            // update sector if the assessment was built with the old HSPD-7 list
             var sectorUp = new SectorUpgradePpd21(_context);
             var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
-            if (newSectorInfo?.Changed ?? false)
-            {
-                // TODO-3261
-                //d.Sector = newSectorInfo.SectorId;
-                //d.Subsector = null;
-            }
 
-
+            // get sectors
             var smm = new SectorMultiManager(_context);
-            
             d.SectorSubsectors = smm.Get(assessmentId);
 
-
-
+            // see if the sector list had been upgraded to notify the user
             d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
-            //d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
-            //d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
-            // TODO-3261
 
 
 
-
+            // TODO-3261 - no more SSG-SECTOR- records - use the actual selected sectors
             var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
             foreach (var ssg in ssgs)
             {
