@@ -49,19 +49,6 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
 
 
-            var smm = new SectorMultiManager(_context);
-            d.SectorSubsectors = smm.Get(assessmentId);
-
-
-
-            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
-            //d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
-            //d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
-
-
-
-
-
             // update sector if need be
             var sectorUp = new SectorUpgradePpd21(_context);
             var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
@@ -71,6 +58,20 @@ namespace CSETWebCore.Business.Demographic
                 //d.Sector = newSectorInfo.SectorId;
                 //d.Subsector = null;
             }
+
+
+            var smm = new SectorMultiManager(_context);
+            
+            d.SectorSubsectors = smm.Get(assessmentId);
+
+
+
+            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
+            //d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
+            //d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+            // TODO-3261
+
+
 
 
             var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));

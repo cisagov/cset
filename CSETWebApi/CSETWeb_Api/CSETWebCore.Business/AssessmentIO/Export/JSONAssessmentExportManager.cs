@@ -399,10 +399,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             payload.Assessment.OrganizationInfo.CityOrSiteName = null;
             payload.Assessment.OrganizationInfo.FacilityName = null;
             payload.Assessment.OrganizationInfo.StateProvRegion = null;
-            payload.Assessment.OrganizationInfo.SectorId = 0;
-            payload.Assessment.OrganizationInfo.SectorName = null;
-            payload.Assessment.OrganizationInfo.SubsectorId = null;
-            payload.Assessment.OrganizationInfo.SubsectorName = null;
+            payload.Assessment.OrganizationInfo.Sectors = null;
             payload.Assessment.OrganizationInfo.OrganizationName = null;
 
             // Remove PCII fields from CIS demographics
@@ -631,29 +628,21 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             var demog = biz.GetExtDemographics(assessment.Id);
 
 
-            // TODO-3261
-            //if (demog.Sector != null)
-            //{
-            //    var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == demog.Sector.Value);
-            //    if (s != null)
-            //    {
-            //        details.SectorId = s.SectorId;
-            //        details.SectorName = s.SectorName;
-            //    }
-            //}
+            // build out sector/subsector
+            foreach (var sectorSubsector in demog.SectorSubsectors)
+            {
+                var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == sectorSubsector.SectorId);
+                var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(s => s.IndustryId == sectorSubsector.SubsectorId);
 
-            //if (demog.Subsector != null)
-            //{
-            //    var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(x => x.IndustryId == demog.Subsector.Value);
-            //    if (ss != null)
-            //    {
-            //        details.SubsectorId = demog.Subsector.Value;
-            //        details.SubsectorName = ss.IndustryName;
-            //    }
-            //}
+                var ssj = new SectorSubsectorJson() { 
+                    SectorId = sectorSubsector.SectorId,
+                    SectorName = s?.SectorName,
+                    SubsectorId = sectorSubsector.SubsectorId,
+                    SubsectorName = ss?.IndustryName
+                };
 
-
-
+                details.Sectors.Add(ssj);
+            }
 
 
             details.CisaRegion = demog.CisaRegion;

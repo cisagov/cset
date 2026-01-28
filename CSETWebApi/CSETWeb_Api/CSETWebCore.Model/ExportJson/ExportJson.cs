@@ -48,10 +48,8 @@ namespace CSETWebCore.Model.ExportJson
         public string FacilityName { get; set; }
 
 
-        public int SectorId { get; set; }
-        public string SectorName { get; set; }
-        public int? SubsectorId { get; set; }
-        public string SubsectorName { get; set; }
+        public List<SectorSubsectorJson> Sectors { get; set; } = [];
+
 
         public int? CisaRegion { get; set; }
 
@@ -83,6 +81,15 @@ namespace CSETWebCore.Model.ExportJson
         public string Barrier1 { get; set; }
         public string Barrier2 { get; set; }
 
+    }
+
+
+    public class SectorSubsectorJson
+    {
+        public int? SectorId { get; set; }
+        public string SectorName { get; set; }
+        public int? SubsectorId { get; set; }
+        public string SubsectorName { get; set; }
     }
 
 

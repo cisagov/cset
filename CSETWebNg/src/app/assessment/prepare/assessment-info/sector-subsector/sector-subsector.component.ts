@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { DemographicsIod, SectorThing } from '../../../../models/demographics-iod.model';
+import { DemographicsIod } from '../../../../models/demographics-iod.model';
+import { SectorSub } from '../../../../models/demographics-extended.model';
 import { ConstantsService } from '../../../../services/constants.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   @Input()
   multi: boolean = true;
 
-  sectorList: SectorThing[];
+  sectorList: SectorSub[];
 
 
   constructor(
@@ -40,7 +41,6 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.sectorList = this.demographicData.sectorSubsectors;
   }
-
 
   /**
    *
@@ -75,8 +75,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
     const seqs = this.assessSvc.assessment.sectorSubsectors.map(x => x.sequence);
     const maxSeq = Math.max(...seqs);
 
-
-    const newSectorSubsector: SectorThing = {
+    const newSectorSubsector: SectorSub = {
       sequence: maxSeq + 1
     };
     this.demographicData.sectorSubsectors.push(newSectorSubsector);
