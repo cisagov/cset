@@ -89,6 +89,8 @@ import { OverviewComponent } from '../../assessment/results/overview/overview.co
 import { ReportsComponent } from '../../assessment/results/reports/reports.component';
 import { ResultsComponent } from '../../assessment/results/results.component';
 import { TsaAssessmentCompleteComponent } from '../../assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { CisSectionScoringPageComponent } from '../../assessment/results/cis/cis-section-scoring-page/cis-section-scoring-page.component';
+import { CisRankedDeficiencyPageComponent } from '../../assessment/results/cis/cis-ranked-deficiency-page/cis-ranked-deficiency-page.component';
 import { AssessGuard } from '../../guards/assess.guard';
 import { CisaVadrLevelsComponent } from '../../assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from '../../assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
@@ -193,6 +195,10 @@ const routes: Routes = [
             { path: 'crr-domain-edm', component: CrrResultsPage },
             { path: 'crr-domain-ta', component: CrrResultsPage },
             { path: 'crr-domain-sa', component: CrrResultsPage },
+
+            // CIS results pages
+            { path: 'section-scoring', component: CisSectionScoringPageComponent },
+            { path: 'ranked-deficiency', component: CisRankedDeficiencyPageComponent },
 
             { path: 'overview', component: OverviewComponent },
             { path: 'reports', component: ReportsComponent },
