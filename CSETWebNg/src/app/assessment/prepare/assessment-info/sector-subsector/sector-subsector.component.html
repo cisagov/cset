@@ -1,6 +1,6 @@
 <div *transloco="let t">
      <div *ngFor="let ssPair of sectorList; let i = index">
-          <div class="row mb-3"  style="background-color: rgb(70, 18, 70)">
+          <div class="row mb-3">
                <div class="col">
                     <label for="sector" class="form-label">{{ t('sector') }}</label> 
                     <button *ngIf="i > 0 && i < sectorList.length" class="btn btn-link ms-3" (click)="onRemoveSector($event, ssPair)">Remove</button>
@@ -15,7 +15,7 @@
                </div>
 
                <div class="col">
-                    <label for="subsector" class="form-label">Sub-Sector</label>
+                    <label for="subsector" class="form-label">{{ t('subsector') }}</label>
                     <select [ngClass]="{ 'is-invalid' : !ssPair.subsectorId }" class="form-select" id="subsector"
                          tabindex="0" name="subsector" [(ngModel)]="ssPair.subsectorId"
                          (ngModelChange)="onChangeSector($event, ssPair)">

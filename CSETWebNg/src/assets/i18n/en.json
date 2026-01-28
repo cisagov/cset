@@ -31,6 +31,7 @@
   "select type": "Select Type",
   "sector": "Sector",
   "select sector": "Select Sector",
+  "subsector": "Subsector",
   "industry": "Industry",
   "select industry": "Select Industry",
   "org name": "Name of Organization",
