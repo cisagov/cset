@@ -239,7 +239,6 @@ export class AssessmentService {
    *
    */
   getAssessmentDetail() {
-    console.trace();
     return this.http.get(this.apiUrl + 'assessmentdetail');
   }
 

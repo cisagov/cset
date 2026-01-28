@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { SectorThing } from './demographics-iod.model';
+import { SectorSub } from './demographics-extended.model';
 import { User } from './user.model';
 
 export interface AssessmentDetail {
@@ -47,7 +47,7 @@ export interface AssessmentDetail {
 
 
     // sectors
-    sectorSubsectors?: SectorThing[];
+    sectorSubsectors?: SectorSub[];
     ssgSectorIds?: number[];
 
 
@@ -121,6 +121,7 @@ export interface Demographic {
     // TODO-3261
     sectorId?: number;
     industryId?: number;
+    sectorSubsectors?: SectorSub[];
 
     ssgSectorIds?: number[];
 
@@ -242,6 +243,7 @@ export interface CriticalServiceInfo {
     pointOfContact?: number;
     size?: any;
 }
+
 export interface Upgrades {
     name: string;
     target: string;
