@@ -130,20 +130,20 @@ namespace CSETWebCore.Business.Maturity
         {
             List<int> list = [];
 
-            var ddSectors = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+            var ddSectors = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).ToList();
 
             foreach (var s in ddSectors)
             {
                 // CHEMICAL
                 var chemicalSectors = new List<int>() { 1, 19 };
-                if (chemicalSectors.Contains((int)s.IntValue))
+                if (chemicalSectors.Contains((int)s.SectorId))
                 {
                     list.Add(Constants.Constants.Model_SSG_CHEM);
                 }
 
                 // INFORMATION TECHNOLOGY (IT)
                 var itSectors = new List<int>() { 13, 28 };
-                if (itSectors.Contains((int)s.IntValue))
+                if (itSectors.Contains((int)s.SectorId))
                 {
                     list.Add(Constants.Constants.Model_SSG_IT);
                 }

@@ -58,6 +58,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<ANSWER, jANSWER>();
             TinyMapper.Bind<ANSWER_PROFILE, jANSWER_PROFILE>();
             TinyMapper.Bind<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>();
+            TinyMapper.Bind<ASSESSMENT_SECTOR_SUBSECTOR, jASSESSMENT_SECTOR_SUBSECTOR>();
             TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
             TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
             TinyMapper.Bind<ASSESSMENTS, jASSESSMENTS>();
@@ -195,6 +196,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENTS.Add(TinyMapper.Map<ASSESSMENTS, jASSESSMENTS>(item));
+            }
+
+            foreach (var item in _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jASSESSMENT_SECTOR_SUBSECTOR.Add(TinyMapper.Map<ASSESSMENT_SECTOR_SUBSECTOR, jASSESSMENT_SECTOR_SUBSECTOR>(item));
             }
 
             foreach (var item in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessmentId))

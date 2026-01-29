@@ -353,7 +353,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.demographicData = data;
 
         // populate Industry dropdown based on Sector
-        this.populateIndustryOptions(this.demographicData.sectorId);
+       // TODO-3261 this.populateIndustryOptions(this.demographicData.sectorId);
       },
       (error) =>
         console.error("Demographic load Error: " + (<Error>error).message)
@@ -361,7 +361,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
   }
 
   getOrganizationTypes() {
-    this.assessSvc.getOrganizationTypes().subscribe((data: any) => {
+    this.demoSvc.getOrganizationTypes().subscribe((data: any) => {
       this.orgTypes = data;
     });
   }

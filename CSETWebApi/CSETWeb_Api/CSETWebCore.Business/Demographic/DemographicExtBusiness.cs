@@ -5,19 +5,21 @@
 // 
 //////////////////////////////// 
 
+using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Assessment;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Demographic;
 
 
 namespace CSETWebCore.Business.Demographic
 {
     public class DemographicExtBusiness
     {
-        private CSETContext _context;
+        private readonly CSETContext _context;
 
         /// <summary>
         /// 
@@ -47,26 +49,19 @@ namespace CSETWebCore.Business.Demographic
 
             d.OrganizationType = myDD.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
             d.OrganizationName = info.Facility_Name;
-            d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
-            d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
-            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
 
 
-            // update sector if need be
+            // update sector if the assessment was built with the old HSPD-7 list
             var sectorUp = new SectorUpgradePpd21(_context);
             var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
-            if (newSectorInfo?.Changed ?? false)
-            {
-                d.Sector = newSectorInfo.SectorId;
-                d.Subsector = null;
-            }
 
+            // get sectors
+            var smm = new SectorMultiManager(_context);
+            d.SectorSubsectors = smm.Get(assessmentId);
 
-            var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
-            foreach (var ssg in ssgs)
-            {
-                d.SsgSectors.Add((int)ssg.IntValue);
-            }
+            // see if the sector list had been upgraded to notify the user
+            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
+
 
             d.CisaRegion = myDD.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
 
@@ -120,12 +115,6 @@ namespace CSETWebCore.Business.Demographic
                 OptionValue = opts.OptionValue,
                 OptionText = opts.OptionText
             }).ToList();
-
-            // get the subsectors for the current sector (if there is one)
-            if (d.Sector != null)
-            {
-                d.ListSubsectors = GetSubsectors((int)d.Sector);
-            }
 
             d.CisaRegions = opts.Where(opt => opt.DataItemName == "CISA-REGION").Select(opts => new ListItem2()
             {
@@ -187,10 +176,12 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            var sectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+
+            // No more HSPD-7 list support (Is_NIPP = true) - only the PPD-21 list of 18 sectors supported now
+            var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
             d.ListSectors = new List<ListItem2>();
-            foreach (var sec in sectors)
+            foreach (var sec in availableSectors)
             {
                 d.ListSectors.Add(new ListItem2
                 {
@@ -325,8 +316,7 @@ namespace CSETWebCore.Business.Demographic
             SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType, existingRecords);
             SaveString(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName, existingRecords);
             SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
-            SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector, existingRecords);
-            SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector, existingRecords);
+            
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);
@@ -354,16 +344,9 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2, existingRecords);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit, existingRecords);
 
-            // replace 
+            // clean up SSG sectors - deprecated
             var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographic.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
             _context.RemoveRange(ssg);
-            _context.SaveChanges();
-
-            foreach (var ssgId in demographic.SsgSectors)
-            {
-                SaveX(demographic.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
-            }
-
             _context.SaveChanges();
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);

@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.DataLayer.Model;
+using DocumentFormat.OpenXml.InkML;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -76,7 +77,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
-            // let the caller know that the sector was changed
+            // save an ACKNOWLEDGMENT flag; let the caller know that the sector was changed
             if (newSectorId != oldSectorId)
             {
                 var ack = new DETAILS_DEMOGRAPHICS()
@@ -86,14 +87,22 @@ namespace CSETWebCore.Business.Demographic
                     BoolValue = true
                 };
 
-                _context.DETAILS_DEMOGRAPHICS.Add(ack);
+                if (!_context.DETAILS_DEMOGRAPHICS.Any(d =>
+                    d.Assessment_Id == assessmentId &&
+                    d.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21))
+                {
+                    _context.DETAILS_DEMOGRAPHICS.Add(ack);
+                }
 
                 resp.Changed = true;
             }
 
 
             var dbSubsector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SUBSECTOR");
-            _context.Remove(dbSubsector);
+            if (dbSubsector != null)
+            {
+                _context.Remove(dbSubsector);
+            }
 
             _context.SaveChanges();
 

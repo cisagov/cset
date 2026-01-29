@@ -27,9 +27,11 @@
   "assessment type": "Assessment Type",
   "type": "Type",
   "demographics": "Demographics",
+  "select": "Select",
   "select type": "Select Type",
   "sector": "Sector",
   "select sector": "Select Sector",
+  "subsector": "Subsector",
   "industry": "Industry",
   "select industry": "Select Industry",
   "org name": "Name of Organization",
@@ -38,7 +40,8 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
-  "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework. Previously selected subsectors are no longer applicable and should be re-selected.",
+  "sector changes": "Sector Changes",
+  "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the 16-sector framework as defined in PPD-21. Previously selected subsectors are no longer applicable and should be re-selected.",
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",
@@ -283,10 +286,11 @@
     "cset icons": "CSET Icons",
     "answer buttons": "Answer Buttons",
     "ssg": {
-      "1": "Additional Goals",
+      "1": "Additional Goals for CPG Assessments",
       "chemical": "Chemical Sector Goals",
       "it": "Information Technology Goals",
-      "other": "Other Sector Goals"
+      "other": "Other Sector Goals",
+      "guidance": "Selecting the <strong>Chemical</strong> and <strong>Information Technology</strong> sectors will result in additional assessment goals. See the tutorial for more information."
     },
     "optional domain questions": "Optional Domain Questions",
     "optional mil questions": "Optional MIL Questions"
@@ -333,7 +337,8 @@
     "forgot password": "Forgot Password",
     "on": "On",
     "off": "Off",
-    "send": "Send"
+    "send": "Send",
+    "add sector": "Add Additional Sector"
   },
   "contact": {
     "contacts": "Contacts",
@@ -526,7 +531,8 @@
     "nav collapse": "Expand/collapse navigation",
     "view assessment list": "View assessment list",
     "add favorite": "Add Favorites",
-    "remove favorite": "Remove Favorite"
+    "remove favorite": "Remove Favorite",
+    "remove sector": "Remove sector"
   },
   "level": {
     "low": "Low",

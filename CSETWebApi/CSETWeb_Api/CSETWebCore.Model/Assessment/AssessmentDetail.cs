@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Demographic;
 
 namespace CSETWebCore.Model.Assessment
 {
@@ -43,17 +44,17 @@ namespace CSETWebCore.Model.Assessment
         public string DiagramImage { get; set; }
 
 
-        public int? SectorId { get; set; }
-        public int? IndustryId { get; set; }
-
-        public List<int> SsgSectorIds { get; set; } = [];
+        /// <summary>
+        /// A list of sector/subsector pairs 
+        /// </summary>
+        public List<SectorSubsector> SectorSubsectors { get; set; }
+      
 
 
         // Selected features of the assessment
         public bool UseStandard { get; set; }
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
-        public bool? IsAcetOnly { get; set; }
 
 
         public bool? IseSubmitted { get; set; }

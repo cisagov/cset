@@ -114,6 +114,9 @@ export class AssessCompareAnalyticsService {
     return this.http.get<any[]>(this.configSvc.apiUrl + 'TSA/getStandardList');
   }
 
+  /**
+   * TODO-3261 - old sector methodology - it's TSA, so we can probably remove it as well
+   */
   getSectorIndustryStandardsTSA(sectorId?: number, industryId?: number): any {
     var url = this.http.get(this.configSvc.apiUrl + 'TSA/getSectorIndustryStandardsTSA');
     if (sectorId && industryId) {
