@@ -40,6 +40,7 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "sector changes": "Sector Changes",
   "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the 16-sector framework as defined in PPD-21. Previously selected subsectors are no longer applicable and should be re-selected.",
   "tech domain": {
     "label": "Technology Domain for Assessment",
@@ -335,7 +336,8 @@
     "forgot password": "Forgot Password",
     "on": "On",
     "off": "Off",
-    "send": "Send"
+    "send": "Send",
+    "add sector": "Add Additional Sector"
   },
   "contact": {
     "contacts": "Contacts",
@@ -528,7 +530,8 @@
     "nav collapse": "Expand/collapse navigation",
     "view assessment list": "View assessment list",
     "add favorite": "Add Favorites",
-    "remove favorite": "Remove Favorite"
+    "remove favorite": "Remove Favorite",
+    "remove sector": "Remove sector"
   },
   "level": {
     "low": "Low",

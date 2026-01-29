@@ -52,7 +52,9 @@
       [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (change)="update($event)" />
   </div>
 
-  <app-sector-subsector [demographicData]="demographicData" [multi]="true"></app-sector-subsector>
+  <div class="row mb-3">
+    <app-sector-subsector [demographicData]="demographicData" [multi]="true"></app-sector-subsector>
+  </div>
 
 
   <!-- show SSG sector selection control for CPG2 assessments -->
