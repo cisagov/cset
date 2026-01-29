@@ -492,15 +492,6 @@ namespace CSETWebCore.Business.Assessment
                 assessment.SectorSubsectors = d1Demographics.SectorSubsectors;
 
 
-                // SSG sector selections
-                assessment.SsgSectorIds = [];
-                var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
-                foreach (var ssg in ssgs)
-                {
-                    assessment.SsgSectorIds.Add((int)ssg.IntValue);
-                }
-
-
                 // facilitator
                 assessment.FacilitatorName = assessment.CreatorName;
 
