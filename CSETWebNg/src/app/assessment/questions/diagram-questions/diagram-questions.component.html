@@ -46,11 +46,6 @@
     </div>
   </div>
   <div class="white-panel-body avail-h-minus tw:dark:bg-bg-secondary" style="--offset: 400px">
-    <div class="d-block mb-2">
-      <h3>
-        {{t('titles.diagram component questions')}}
-      </h3>
-    </div>
     <div *ngIf="!!categories && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
 
     <div *ngIf="!categories" class="w-100">

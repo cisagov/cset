@@ -20,10 +20,26 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" >
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <label>Enter any general remarks or observations for the assessment</label>
-    <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
-  </div>
-  <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>\
+
+<div class="p-4" *transloco="let t">
+    <h3>CIS Section Scoring</h3>
+
+    <p class="mb-4">
+        This page displays scoring charts for each CIS section based on your assessment responses.
+        If a baseline assessment was selected, baseline scores will also be displayed for comparison.
+    </p>
+
+    <div *ngIf="loading" class="d-flex justify-content-center my-4">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!loading">
+        <div *ngFor="let s of myModel?.groupings">
+            <div class="mb-4">
+                <app-cis-scoring-chart [g]="s"></app-cis-scoring-chart>
+            </div>
+        </div>
+    </div>
 </div>

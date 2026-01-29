@@ -20,10 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" >
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <label>Enter any general remarks or observations for the assessment</label>
-    <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
-  </div>
-  <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>\
+
+<div class="p-4" *transloco="let t">
+    <h3>{{t('reports.core.cis.deficiencies.title')}}</h3>
+
+    <p class="mb-4">
+        {{t('reports.core.cis.deficiencies.para 1')}}
+    </p>
+
+    <app-ranked-deficiency-chart></app-ranked-deficiency-chart>
 </div>
