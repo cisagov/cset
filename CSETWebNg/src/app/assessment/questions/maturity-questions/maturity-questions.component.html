@@ -50,10 +50,6 @@
     <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
       <div class="d-block mb-2">
-        <h3>{{ pageTitle }}</h3>
-
-        <h4>{{ groupingTitle }}</h4>
-
         <div class="mb-2" *ngIf="showTargetLevel">
           The target maturity level for this assessment is set to
           <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
