@@ -710,21 +710,20 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ASSESSMENT_SECTOR_SUBSECTOR>(entity =>
         {
-            entity.HasKey(e => new { e.Assessment_Id, e.SectorId, e.IndustryId }).HasName("PK__ASSESSME__21E975218C3D9C39");
+            entity.HasKey(e => e.AssessmentSectorSubsectorId).HasName("PK__ASSESSME__43AF4010758B5AA6");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ASSESSMEN__Asses__29820FAE");
+                .HasConstraintName("FK__ASSESSMEN__Asses__4CCB4BEB");
 
             entity.HasOne(d => d.Industry).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
                 .HasPrincipalKey(p => p.IndustryId)
                 .HasForeignKey(d => d.IndustryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ASSESSMEN__Indus__2B6A5820");
+                .HasConstraintName("FK__ASSESSMEN__Indus__4EB3945D");
 
             entity.HasOne(d => d.Sector).WithMany(p => p.ASSESSMENT_SECTOR_SUBSECTOR)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ASSESSMEN__Secto__2A7633E7");
+                .HasConstraintName("FK__ASSESSMEN__Secto__4DBF7024");
         });
 
         modelBuilder.Entity<ASSESSMENT_SELECTED_LEVELS>(entity =>

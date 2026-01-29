@@ -25,15 +25,21 @@ namespace CSETWebCore.Model.Demographic
         public string OrganizationName { get; set; }
 
         /// <summary>
-        /// PPD-21 or NIPP
+        /// PPD-21 or NIPP.  As of late 2025, CSET
         /// </summary>
         public string SectorDirective { get; set; }
 
-        public int? Sector { get; set; }
-        public int? Subsector { get; set; }
+        /// <summary>
+        /// A list of sector/subsector(industry) pairs pertaining to the asset.
+        /// </summary>
+        public List<SectorSubsector> SectorSubsectors { get; set; } = [];
 
+
+        /// <summary>
+        /// Let the user know that something changed
+        /// </summary>
         public bool? Acknowledgement { get; set; }
-        public List<int> SsgSectors { get; set; } = [];
+
 
         public int? OrgPointOfContact { get; set; }
 

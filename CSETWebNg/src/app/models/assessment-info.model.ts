@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { SectorSub } from './demographics-extended.model';
 import { User } from './user.model';
 
 export interface AssessmentDetail {
@@ -44,11 +45,11 @@ export interface AssessmentDetail {
 
     galleryItemGuid?: string;
 
-    // a few demographics to track
-    sectorId?: number;
-    industryId?: number;
 
+    // sectors
+    sectorSubsectors?: SectorSub[];
     ssgSectorIds?: number[];
+
 
     useStandard?: boolean;
     useMaturity?: boolean;
@@ -117,8 +118,10 @@ export interface Demographic {
     // PPD-21 or NIPP
     sectorDirective?: string;
 
+    // TODO-3261
     sectorId?: number;
     industryId?: number;
+    sectorSubsectors?: SectorSub[];
 
     ssgSectorIds?: number[];
 
@@ -233,15 +236,14 @@ export interface CriticalServiceInfo {
     criticalService?: string;
     facilitatorId?: number;
     id?: number;
-    industryId?: any;
     isScoped?: boolean;
     orgPointOfContact?: any;
     organizationName?: any;
     organizationType?: any;
     pointOfContact?: number;
-    sectorId?: any;
     size?: any;
 }
+
 export interface Upgrades {
     name: string;
     target: string;
