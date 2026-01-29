@@ -330,7 +330,7 @@ export class PageVisibilityService {
     let targets = this.getTargets(rule);
     let has = false;
     targets.forEach((t: string) => {
-      has = has || (this.assessSvc.assessment?.ssgSectorIds?.includes(+t) ?? false);
+      has = has || (this.assessSvc.assessment?.sectorSubsectors.some(x => x.sectorId == +t) ?? false);
     });
     return has;
   }

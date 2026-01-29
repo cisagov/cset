@@ -41,9 +41,6 @@ namespace CSETWebCore.Model.Demographic
         public bool? Acknowledgement { get; set; }
 
 
-        // TODO-3261 - stop using this
-        public List<int> SsgSectors { get; set; } = [];
-
         public int? OrgPointOfContact { get; set; }
 
         [DisplayName("CISA Region")]

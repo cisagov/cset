@@ -5,13 +5,15 @@
 // 
 //////////////////////////////// 
 
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -81,11 +83,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
-            var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
-            foreach (var ssg in ssgs)
-            {
-                demographics.SsgSectorIds.Add((int)ssg.IntValue);
-            }
+            demographics.SsgSectorIds.AddRange(new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId));
 
 
 
@@ -144,15 +142,11 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);
 
 
-            // replace SSG sectors
+            // clean up SSG sectors - deprecated
             var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
             _context.RemoveRange(ssg);
             _context.SaveChanges();
 
-            foreach (var ssgId in demographics.SsgSectorIds)
-            {
-                extBiz.SaveX(demographics.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
-            }
 
 
             _assessmentUtil.TouchAssessment(demographics.AssessmentId);

@@ -544,7 +544,6 @@ import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/c
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { SectorSubsectorComponent } from './assessment/prepare/assessment-info/sector-subsector/sector-subsector.component';
-import { SsgSelectorComponent } from './assessment/prepare/assessment-info/ssg-selector/ssg-selector.component';
 import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
@@ -1005,7 +1004,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         AssessmentConfigIodComponent,
         AssessmentDemogIodComponent,
         SectorSubsectorComponent,
-        SsgSelectorComponent,
         DemographicsIodComponent,
         TutorialImrComponent,
         ImrCoverSheetComponent,

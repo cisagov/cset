@@ -286,10 +286,11 @@
     "cset icons": "CSET Icons",
     "answer buttons": "Answer Buttons",
     "ssg": {
-      "1": "Additional Goals",
+      "1": "Additional Goals for CPG Assessments",
       "chemical": "Chemical Sector Goals",
       "it": "Information Technology Goals",
-      "other": "Other Sector Goals"
+      "other": "Other Sector Goals",
+      "guidance": "Selecting the <strong>Chemical</strong> and <strong>Information Technology</strong> sectors will result in additional assessment goals. See the tutorial for more information."
     },
     "optional domain questions": "Optional Domain Questions",
     "optional mil questions": "Optional MIL Questions"

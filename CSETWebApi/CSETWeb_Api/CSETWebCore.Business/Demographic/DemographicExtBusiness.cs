@@ -5,12 +5,14 @@
 // 
 //////////////////////////////// 
 
+using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Assessment;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Demographic;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -59,16 +61,6 @@ namespace CSETWebCore.Business.Demographic
 
             // see if the sector list had been upgraded to notify the user
             d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
-
-
-
-            // TODO-3261 - no more SSG-SECTOR- records - use the actual selected sectors
-            var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
-            foreach (var ssg in ssgs)
-            {
-                d.SsgSectors.Add((int)ssg.IntValue);
-            }
-
 
 
             d.CisaRegion = myDD.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
@@ -325,9 +317,6 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName, existingRecords);
             SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
             
-            // TODO-3261
-            //SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector, existingRecords);
-            //SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector, existingRecords);
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);
@@ -355,23 +344,10 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2, existingRecords);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit, existingRecords);
 
-            // replace 
+            // clean up SSG sectors - deprecated
             var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographic.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
             _context.RemoveRange(ssg);
             _context.SaveChanges();
-
-            foreach (var ssgId in demographic.SsgSectors)
-            {
-                SaveX(demographic.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
-            }
-
-            _context.SaveChanges();
-
-
-            // TODO-3261 demographics are persisted through their own logic
-            //var smm = new SectorMultiManager(_context);
-            //smm.Save(demographic.SectorSubsectors);
-
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
         }
