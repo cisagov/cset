@@ -6,9 +6,7 @@
 //////////////////////////////// 
 
 using CSETWebCore.Business.Assessment;
-using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using System;
 using System.Collections.Generic;

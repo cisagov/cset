@@ -31,6 +31,8 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { AwwaStandardComponent } from '../../standards/awwa-standard/awwa-standard.component';
 import { AwwaService } from '../../../../services/awwa.service';
 import { DemographicService } from '../../../../services/demographic.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 
 
 @Component({
@@ -60,6 +62,7 @@ export class AssessmentDetailComponent implements OnInit {
     public navSvc: NavigationService,
     public awwaSvc: AwwaService,
     public configSvc: ConfigService,
+    public tSvc: TranslocoService,
     public datePipe: DatePipe,
     public dialog: MatDialog
   ) { }
@@ -87,6 +90,18 @@ export class AssessmentDetailComponent implements OnInit {
 
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
+
+
+      if (data.acknowledgement == true) {
+        const dlgOkay = this.dialog.open(OkayComponent, {
+          data: {
+            title: this.tSvc.translate('sector changes'),
+            messageText: this.tSvc.translate('sector acknowledgement')
+          }
+        }).afterClosed().subscribe(result => {
+          this.assessSvc.saveAcknowledgement().subscribe();
+        });
+      }
     });
   }
 
