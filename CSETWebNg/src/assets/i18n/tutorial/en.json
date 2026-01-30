@@ -86,7 +86,6 @@
           "3d": "Detect",
           "3e": "Respond",
           "3f": "Recover",
-          "3g": "Users can also add Sector-Specific Goals via the Additional Goals on the Assessment Configuration page. SSGs address unique requirements in select critical infrastructure sectors and build upon the CPGs. Users are recommended to select any additional functions relevant to their organization, even if they are not the primary focus. For example, a financial institution that also maintains IT systems should include the Information Technology sector.",
           "4": "Each security practice includes the following components.",
           "5": "Each NIST CSF function has a set of associated security practices.",
           "6": "Each question has an assigned practice identifier.",
@@ -119,7 +118,16 @@
           "12d": "Operation Technology (OT)",
           "12e": "A broad range of programmable systems and devices that interact with the physical environment or manage devices that interact with the physical environment. These systems and devices detect or cause a direct change through the monitoring and/or control of devices, processes, and events. Examples include industrial control systems, building automation systems, transportation systems, physical access control systems, physical environment monitoring systems, and physical environment measurement systems. (Source: NIST SP 800-82 Rev. 3)",
           "12f": "Information Technology (IT)",
-          "12g": "Any services, equipment, or interconnected system(s) or subsystem(s) of equipment, that are used in the automatic acquisition, storage, analysis, evaluation, manipulation, management, movement, control, display, switching, interchange, transmission, or reception of data or information by the agency. For purposes of this definition, such services or equipment if used by the agency directly or is used by a contractor under a contract with the agency that requires its use; or to a significant extent, its use in the performance of a service or the furnishing of a product. Information technology includes computers, ancillary equipment (including imaging peripherals, input, output, and storage devices necessary for security and surveillance), peripheral equipment designed to be controlled by the central processing unit of a computer, software, firmware and similar procedures, services (including cloud computing and help-desk services or other professional services which support any point of the life cycle of the equipment or service), and related resources.  (Source: NIST SP 800-53 Rev. 5)"
+          "12g": "Any services, equipment, or interconnected system(s) or subsystem(s) of equipment, that are used in the automatic acquisition, storage, analysis, evaluation, manipulation, management, movement, control, display, switching, interchange, transmission, or reception of data or information by the agency. For purposes of this definition, such services or equipment if used by the agency directly or is used by a contractor under a contract with the agency that requires its use; or to a significant extent, its use in the performance of a service or the furnishing of a product. Information technology includes computers, ancillary equipment (including imaging peripherals, input, output, and storage devices necessary for security and surveillance), peripheral equipment designed to be controlled by the central processing unit of a computer, software, firmware and similar procedures, services (including cloud computing and help-desk services or other professional services which support any point of the life cycle of the equipment or service), and related resources.  (Source: NIST SP 800-53 Rev. 5)",
+          "13a": "Sector-Specific Goals (SSG)",
+          "13b": "Certain critical infrastructure sectors require Sector-Specific Goals, which build upon the CPGs and address unique sector requirements. Users are recommended to select any additional sectors relevant to their organization, even if they are not the primary focus. For example, a financial institution that also maintains IT systems should include the Information Technology sector.",
+          "13c": "CSET currently supports SSGs for the following sectors:",
+          "13d": " Chemical Sector (Not Oil and Gas) - <em>organizations involved in the use, production, storage, or distribution of chemicals within one or more components of the Chemical Sector—including agricultural chemicals, basic chemicals, specialty chemicals, and consumer products</em>",
+          "13e": "Information Technology Sector - <em>organizations that develop software for internal, commercial, or open source use</em>",
+          "13f": "The following sectors include additional guidance not covered in CSET. For more information about these sector-specific performance goals, please visit CISA's Cross-Sector Cybersecurity Performance Goals page:",
+          "13g": "Energy Sector",
+          "13h": "Healthcare and Public Health Sector",
+          "13i": "Water and Wastewater Systems Sector"
      },
      "cmmc2": {
           "title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 Tutorial",

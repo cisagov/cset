@@ -118,6 +118,8 @@ export interface Demographic {
     // PPD-21 or NIPP
     sectorDirective?: string;
 
+    acknowledgement?: boolean;
+
     // TODO-3261
     sectorId?: number;
     industryId?: number;

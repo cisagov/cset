@@ -32,6 +32,8 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { ConstantsService } from '../../../../services/constants.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 
 
 
@@ -80,6 +82,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         private c: ConstantsService,
         public configSvc: ConfigService,
         public dialog: MatDialog,
+        public tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -159,6 +162,17 @@ export class AssessmentDemographicsComponent implements OnInit {
 
                 // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
+
+                if (this.demographicData.acknowledgement == true) {
+                    const dlgOkay = this.dialog.open(OkayComponent, {
+                        data: {
+                            title: this.tSvc.translate('sector changes'),
+                            messageText: this.tSvc.translate('sector acknowledgement')
+                        }
+                    }).afterClosed().subscribe(result => {
+                        this.assessSvc.saveAcknowledgement().subscribe();
+                    });
+                }
             },
             error => console.error('Demographic load Error: ' + (<Error>error).message)
         );

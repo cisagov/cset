@@ -72,8 +72,6 @@
                 <li>{{ttcpg('3f')}}</li>
             </ul>
 
-            <p>{{ttcpg('3g')}}</p>
-
             <p>{{ttcpg('4')}}</p>
             <div class="img-frame">
                 <img src="assets/images/CPG2/tutorial/Picture1.png" style="width: 650px">
@@ -168,11 +166,45 @@
                 <li><b>{{t('answer-options.labels.not-cpg')}}</b> {{ttcpg('11d')}}</li>
             </ul>
 
+
+            <!---- Sector-Specific Goals (SSG)  ---------------------->
+            <h5 class="mt-5">{{ttcpg('13a')}}</h5>
+            <p>{{ttcpg('13b')}}</p>
+
+            <p>{{ttcpg('13c')}}
+
+            <ul>
+                <li [innerHTML]="ttcpg('13d')">
+                </li>
+                <li [innerHTML]="ttcpg('13e')">
+                </li>
+            </ul>
+
+            <p>
+                {{ttcpg('13f')}}
+                <a href="https://www.cisa.gov/cross-sector-cybersecurity-performance-goals"
+                    target="_blank">https://www.cisa.gov/cross-sector-cybersecurity-performance-goals</a>
+            </p>
+            <ul>
+                <li>
+                    {{ttcpg('13g')}}
+                </li>
+                <li>
+                    {{ttcpg('13h')}}
+                </li>
+                <li>
+                    {{ttcpg('13i')}}
+                </li>
+            </ul>
+
+
+            <!---- Additional Resources  ---------------------->
             <h5 class="mt-5">{{t('titles.additional resources')}}</h5>
             <p>{{t('tutorial.additional resources')}}</p>
             <p>{{t('tutorial.please visit')}} <a href="https://www.cisa.gov/cpgs"
                     target="_blank">https://www.cisa.gov/cpgs</a> {{t('tutorial.for more information')}}</p>
         </div>
     </div>
+
     <app-nav-back-next [page]="'tutorial-cpg2'"></app-nav-back-next>
 </div>
