@@ -88,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(assessmentId);
+            return Ok(_demographic.GetDemographics(assessmentId));
         }
 
 

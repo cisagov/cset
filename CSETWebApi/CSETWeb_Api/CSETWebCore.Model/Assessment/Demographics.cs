@@ -30,7 +30,11 @@ namespace CSETWebCore.Model.Assessment
         public List<SectorSubsector> SectorSubsectors { get; set; } = [];
 
 
-        public List<int> SsgSectorIds { get; set; } = [];
+        /// <summary>
+        /// The list of all in-scope SSG models due to the assessment's
+        /// current state.
+        /// </summary>
+        public List<int> SsgModelIds { get; set; } = [];
 
 
         public int? Size { get; set; }

@@ -84,29 +84,6 @@ export class SsgService {
    * Indicates if any of the SSGs are selected.
    */
   get isSsgActive(): boolean {
-    if (this.assessSvc.assessment?.ssgSectorIds) {
-      return this.assessSvc.assessment.ssgSectorIds.length > 0;
-    }
-
-    return false;
-  }
-
-  /**
-   * Returns the currently selected SSG models.
-   */
-  get activeSsgModelIds(): number[] {
-
-    // TODO:  crude mapping - make this slicker
-    const list = new Set<number>();
-    this.assessSvc.assessment?.ssgSectorIds?.forEach(sectorId => {
-      if (sectorId == 1 || sectorId == 19) {
-        list.add(18); // SSG CHEM
-      }
-      if (sectorId == 13 || sectorId == 28) {
-        list.add(20); // SSG IT
-      }
-    });
-
-    return Array.from(list);
+    return (this.assessSvc.assessment?.ssgModelIds?.length ?? 0) > 0;
   }
 }
