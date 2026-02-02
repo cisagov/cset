@@ -202,7 +202,7 @@ namespace CSETWebCore.Business.Question
                 _subCatAnswersByHeadingId = SubCatAnswers
                     .Where(x => x.HeadingId > 0)
                     .GroupBy(x => x.HeadingId)
-                    .ToDictionary(g => g.Key, g => g.First());
+                    .ToDictionary(g => g.Key, g => g.FirstOrDefault());
             }
 
             AddResponse(resp, list2, "Component Defaults");
