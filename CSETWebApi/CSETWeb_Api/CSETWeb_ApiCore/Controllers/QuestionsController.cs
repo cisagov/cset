@@ -116,10 +116,19 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ComponentQuestionList")]
         public async Task<IActionResult> GetComponentQuestionsList()
         {
-            var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = await manager.GetResponseAsync();
+            try
+            {
+                var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
+                QuestionResponse resp = await manager.GetResponseAsync();
 
-            return Ok(resp);
+                return Ok(resp);
+            }
+            catch (Exception exc)
+            {
+                LogManager.GetCurrentClassLogger().Error(exc);
+                return BadRequest(exc.Message);
+            }            
+
         }
 
 
