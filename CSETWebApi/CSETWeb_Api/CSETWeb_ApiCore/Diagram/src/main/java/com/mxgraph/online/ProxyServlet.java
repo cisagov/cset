@@ -87,6 +87,12 @@ public class ProxyServlet extends HttpServlet
 				request.setCharacterEncoding("UTF-8");
 				response.setCharacterEncoding("UTF-8");
 
+				// Re-validate immediately before connection to prevent DNS rebinding TOCTOU attacks
+				if (!Utils.sanitizeUrl(urlParam))
+				{
+					throw new SecurityException("URL validation failed before connection");
+				}
+
 				URL url = new URL(urlParam);
 				URLConnection connection = url.openConnection();
 				connection.setConnectTimeout(TIMEOUT);
@@ -127,6 +133,13 @@ public class ProxyServlet extends HttpServlet
 							break;
 						}
 
+
+					// Re-validate immediately before connection to prevent DNS rebinding TOCTOU attacks
+					if (!Utils.sanitizeUrl(redirectUrl))
+					{
+						log.log(Level.SEVERE, "Redirect URL validation failed before connection (possible DNS rebinding attack): " + redirectUrl);
+						break;
+					}
 						url = new URL(redirectUrl);
 						connection = url.openConnection();
 						((HttpURLConnection) connection)
