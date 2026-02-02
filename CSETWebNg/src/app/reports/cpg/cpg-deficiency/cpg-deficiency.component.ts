@@ -126,7 +126,7 @@ export class CpgDeficiencyComponent implements OnInit {
    */
   getSsgModels() {
     this.loadingSsg = true;
-    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
+    this.ssgBonusModels = this.assessSvc.assessment.ssgModelIds;
 
     const obs: Observable<any>[] = [];
     this.ssgBonusModels.forEach(m => obs.push(this.maturitySvc.getMaturityDeficiency(m)));

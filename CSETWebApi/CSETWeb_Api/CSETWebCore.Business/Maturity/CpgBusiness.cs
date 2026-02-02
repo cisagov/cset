@@ -123,33 +123,33 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// Figures out if an SSG model is applicable as a bonus.
         /// The SSG is based on the assessment's sector.
-        /// Returns null if no SSG is applicable.
+        /// Returns an empty list if no SSG is applicable.
         /// </summary>
         /// <returns></returns>
         public List<int> DetermineSsgModels(int assessmentId)
         {
-            List<int> list = [];
-
-            var ddSectors = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).ToList();
-
-            foreach (var s in ddSectors)
+            var sectorToModelMap = new Dictionary<int, int>
             {
-                // CHEMICAL
-                var chemicalSectors = new List<int>() { 1, 19 };
-                if (chemicalSectors.Contains((int)s.SectorId))
-                {
-                    list.Add(Constants.Constants.Model_SSG_CHEM);
-                }
+                { 1, Constants.Constants.Model_SSG_CHEM },
+                { 19, Constants.Constants.Model_SSG_CHEM },
+                { 13, Constants.Constants.Model_SSG_IT },
+                { 28, Constants.Constants.Model_SSG_IT },
+            };
 
-                // INFORMATION TECHNOLOGY (IT)
-                var itSectors = new List<int>() { 13, 28 };
-                if (itSectors.Contains((int)s.SectorId))
+            var ssgModels = new HashSet<int>();
+            var sectors = _context.ASSESSMENT_SECTOR_SUBSECTOR
+                .Where(x => x.Assessment_Id == assessmentId)
+                .ToList();
+
+            foreach (var sector in sectors)
+            {
+                if (sectorToModelMap.TryGetValue((int)sector.SectorId, out var modelId))
                 {
-                    list.Add(Constants.Constants.Model_SSG_IT);
+                    ssgModels.Add(modelId);
                 }
             }
 
-            return list;
+            return ssgModels.ToList();
         }
 
 

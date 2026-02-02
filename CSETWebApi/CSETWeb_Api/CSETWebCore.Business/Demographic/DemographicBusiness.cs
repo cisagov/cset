@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
-            demographics.SsgSectorIds.AddRange(new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId));
+            demographics.SsgModelIds.AddRange(new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId));
 
 
 

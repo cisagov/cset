@@ -48,7 +48,7 @@ export interface AssessmentDetail {
 
     // sectors
     sectorSubsectors?: SectorSub[];
-    ssgSectorIds?: number[];
+    ssgModelIds?: number[];
 
 
     useStandard?: boolean;
@@ -125,7 +125,7 @@ export interface Demographic {
     industryId?: number;
     sectorSubsectors?: SectorSub[];
 
-    ssgSectorIds?: number[];
+    ssgModelIds?: number[];
 
     size?: number;
     assetValue?: number;
