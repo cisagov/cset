@@ -107,11 +107,15 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
+        
         this.refreshContacts();
         this.getOrganizationTypes();
     }
 
-    // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    /**
+     * Functionality to import demographic information, excluding contacts, 
+     * organization point of contact, facilitator, critical service point of contact 
+     */
     importClick(event) {
         let dialogRef = null;
         this.unsupportedImportFile = false;
@@ -134,19 +138,12 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
 
-    //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    /**
+     * Functionality to export demographic information, excluding contacts, 
+     * organization point of contact, facilitator, critical service point of contact 
+     */
     exportClick() {
         this.demoSvc.exportDemographics()
-    }
-
-    /**
-     * 
-     */
-    onChangeSsg(list: number[]) {
-        this.demographicData.ssgSectorIds = list;
-        this.assessSvc.assessment.ssgSectorIds = list;
-        this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-        this.updateDemographics();
     }
 
     /**
@@ -156,6 +153,8 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
                 this.demographicData = data;
+                this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
+
                 if (this.demographicData.organizationType == "3") {
                     this.isSLTT = true;
                 }
@@ -224,7 +223,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         return (this.configSvc.behaviors.showCriticalService ?? true)
             && (moduleBehavior?.showCriticalServiceDemog ?? true);
     }
-
 
     showEdmFields() {
         return this.assessSvc.assessment?.maturityModel?.modelName == 'EDM';

@@ -57,7 +57,7 @@ export class DemographicService {
   ) {
   }
 
-  
+
   /**
    *
    */
@@ -99,25 +99,19 @@ export class DemographicService {
    * @param demographic
    */
   updateDemographic(demographic: Demographic) {
-    // TODO-3261 - how should we do this?
-    //this.assessSvc.assessment.sectorId = demographic.sectorId;
-    
-    this.assessSvc.assessment.ssgSectorIds = demographic.ssgSectorIds;
     this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-      .subscribe(() => {
-        if (this.configSvc.userIsCisaAssessor) {
-        }
+      .subscribe((demographic: Demographic) => {
+        this.assessSvc.assessment.ssgModelIds = demographic.ssgModelIds;
+
         this.demographicUpdateCompleted$.next();
       });
   }
 
   importDemographics(demographic: Demographic) {
     return this.http.post(this.apiUrl + 'import', JSON.stringify(demographic), headers)
-      .subscribe(() => {
-
-      });
+      .subscribe(() => { });
   }
 
   exportDemographics() {

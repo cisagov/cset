@@ -110,7 +110,7 @@ namespace CSETWebCore.Helpers
             Top.ModelName = mm.Model_Name;
             Top.ModelId = (int)this.ModelId;
 
-            Top.TechDomain = _context.DETAILS_DEMOGRAPHICS.Where(x => x.DataItemName == "TECH-DOMAIN").FirstOrDefault()?.StringValue ?? null;
+            Top.TechDomain = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == this.AssessmentId && x.DataItemName == "TECH-DOMAIN").FirstOrDefault()?.StringValue ?? null;
 
 
 
