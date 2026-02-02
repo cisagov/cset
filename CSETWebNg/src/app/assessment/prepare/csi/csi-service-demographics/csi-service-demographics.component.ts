@@ -32,6 +32,7 @@ import {
 import { CsiService } from '../../../../services/cis-csi.service';
 import { ConfigService } from './../../../../services/config.service';
 import { DemographicService } from '../../../../services/demographic.service';
+import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
     selector: 'app-csi-service-demographics',
@@ -92,7 +93,12 @@ export class CsiServiceDemographicsComponent implements OnInit {
 
   demographics: any = {};
 
-  constructor(private csiSvc: CsiService, private demoSvc: DemographicService, private configSvc: ConfigService) { }
+  constructor(
+    private assessSvc: AssessmentService,
+    private csiSvc: CsiService, 
+    private demoSvc: DemographicService, 
+    private configSvc: ConfigService
+  ) { }
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiBudgetBases().subscribe(
@@ -136,6 +142,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
 
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
+      this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
     });
   }
 

@@ -45,8 +45,8 @@
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",
-    "ot": "Operational Technology (OT)",
-    "it": "Information Technology (IT)",
+    "ot": "Cross-Sector Goals - Operational Technology (OT)",
+    "it": "Cross-Sector Goals - Information Technology (IT)",
     "ot+it": "Both OT and IT"
   },
   "crit svc poc": "Critical Service Point of Contact",
@@ -1012,7 +1012,7 @@
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
       "model short title": "CPG 2.0",
-      "question node title": "Goals"
+      "question node title": "Cross-Sector Goals"
     },
     "ssg": {
       "1": "Select any additional functions to include as Sector-Specific Goals",

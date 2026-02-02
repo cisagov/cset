@@ -29,6 +29,7 @@ import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
 import { ReportService } from '../../services/report.service';
 import { saveAs } from "file-saver";
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
     selector: 'edm',
@@ -56,6 +57,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
    */
   constructor(
     private titleService: Title,
+    private assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public demoSvc: DemographicService,
     public reportSvc: ReportService
@@ -132,7 +134,9 @@ export class EdmComponent implements OnInit, AfterContentInit {
         this.demoSvc.getDemographic().subscribe(
           (data: Demographic) => {
             this.demographicData = data;
+            this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
             this.orgName = this.demographicData.organizationName;
+
             if (this.demographicData.organizationName?.length > 0) {
               this.displayName = this.orgName;
             }

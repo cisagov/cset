@@ -90,6 +90,7 @@ export class AssessmentDetailComponent implements OnInit {
 
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
+      this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
 
 
       if (data.acknowledgement == true) {

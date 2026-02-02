@@ -37,7 +37,7 @@ export interface DemographicsIod {
   sectorSubsectors?: SectorSub[];
 
 
-  ssgSectors?: number[];
+  // TODO-3261 ssgSectors?: number[];
 
   // Technology Domain (IT vs OT)
   techDomain?: string;

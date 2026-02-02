@@ -94,16 +94,6 @@ export class DemographicsIodComponent implements OnInit {
   /**
    * 
    */
-  onChangeSsg(list: number[]) {
-    this.demographicData.ssgSectors = list;
-    this.assessSvc.assessment.ssgSectorIds = list;
-    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-    this.updateDemographics();
-  }
-
-  /**
-   * 
-   */
   changeRegType1(o: any, evt: any) {
     this.demographicData.regulationType1 = o.optionValue;
     this.updateDemographics();
