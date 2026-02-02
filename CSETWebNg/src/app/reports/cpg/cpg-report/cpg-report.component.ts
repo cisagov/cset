@@ -131,6 +131,7 @@ export class CpgReportComponent implements OnInit {
 
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
+    this.assessSvc.assessment.ssgModelIds = demog.ssgModelIds;
 
     // CPG 1.1
     if (this.modelId == 11) {
@@ -173,7 +174,7 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initSsg(): Promise<void> {
-    this.ssgBonusModelIds = this.ssgSvc.activeSsgModelIds;
+    this.ssgBonusModelIds = this.assessSvc.assessment.ssgModelIds;
 
     const ssgDistrib$ = this.ssgBonusModelIds.map(async id => {
       const d = await this.getAnswerDistribution(id, '');

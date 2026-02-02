@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2025 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
@@ -28,7 +51,7 @@ export class DemographicsIodComponent implements OnInit {
   assessmentConfig: AssessmentConfig;
   serviceDemographics: ServiceDemographic;
   serviceComposition: ServiceComposition;
-  msg:string = "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework. Previously selected subsectors are no longer applicable and should be re-selected."
+
 
   /**
    * 
@@ -55,41 +78,17 @@ export class DemographicsIodComponent implements OnInit {
     this.demoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.demographicData = data;
 
-      if(this.demographicData.acknowledgement == true){
-      const dlgOkay = this.dialog.open(OkayComponent, { data: { title: "Sub-Sector Changes", messageText:this.tSvc.translate('sector acknowledgement')} }).afterClosed().subscribe(result => {
+      if (this.demographicData.acknowledgement == true) {
+        const dlgOkay = this.dialog.open(OkayComponent, {
+          data: {
+            title: this.tSvc.translate('sector changes'),
+            messageText: this.tSvc.translate('sector acknowledgement')
+          }
+        }).afterClosed().subscribe(result => {
           this.assessSvc.saveAcknowledgement().subscribe();
         });
       }
     })
-  }
-
-  /**
-   *
-   */
-  onChangeSector() {
-    if (!this.demographicData.sector) {
-      this.demographicData.listSubsectors = [];
-      this.demographicData.subsector = null;
-    } else {
-      this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
-        this.demographicData.listSubsectors = data;
-      });
-    }
-    this.assessSvc.assessment.sectorId = this.demographicData.sector;
-    this.assessSvc.assessment.ssgSectorIds = this.demographicData.ssgSectors;
-
-    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-    this.updateDemographics();
-  }
-
-  /**
-   * 
-   */
-  onChangeSsg(list: number[]) {
-    this.demographicData.ssgSectors = list;
-    this.assessSvc.assessment.ssgSectorIds = list;
-    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-    this.updateDemographics();
   }
 
   /**

@@ -147,8 +147,7 @@ namespace CSETWebCore.Business.Standards
 
             // Build a list of standard sets that are recommended for the current demographics
             list = _context.SECTOR_STANDARD_RECOMMENDATIONS.Where(
-                            x => x.Industry_Id == demographics.IndustryId
-                            && x.Sector_Id == demographics.SectorId
+                            x => demographics.SectorSubsectors.Any(g => g.SectorId == x.Sector_Id && g.SubsectorId == x.Industry_Id)
                             && x.Organization_Size == assetSize.OptionText
                             && x.Asset_Value == assetValue.OptionText)
                             .Select(x => x.Set_Name).ToList();

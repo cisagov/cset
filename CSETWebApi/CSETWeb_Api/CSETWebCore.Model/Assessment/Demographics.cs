@@ -7,6 +7,7 @@
 #nullable enable
 using System.ComponentModel;
 using System.Collections.Generic;
+using CSETWebCore.Model.Demographic;
 
 namespace CSETWebCore.Model.Assessment
 {
@@ -20,10 +21,20 @@ namespace CSETWebCore.Model.Assessment
         /// </summary>
         public string? SectorDirective { get; set; }
 
-        public int? SectorId { get; set; }
-        public int? IndustryId { get; set; }
 
-        public List<int> SsgSectorIds { get; set; } = [];
+        /// <summary>
+        /// The list of sectors to choose from
+        /// </summary>
+        public List<ListItem2> ListSectors { get; set; } = [];
+
+        public List<SectorSubsector> SectorSubsectors { get; set; } = [];
+
+
+        /// <summary>
+        /// The list of all in-scope SSG models due to the assessment's
+        /// current state.
+        /// </summary>
+        public List<int> SsgModelIds { get; set; } = [];
 
 
         public int? Size { get; set; }

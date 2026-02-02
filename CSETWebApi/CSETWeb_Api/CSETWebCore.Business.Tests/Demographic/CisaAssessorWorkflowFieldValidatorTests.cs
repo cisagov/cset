@@ -18,10 +18,11 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
+
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -55,10 +56,10 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = null, // Missing required field
-                Sector = null,
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -85,10 +86,10 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "", // Empty string should be invalid
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -115,10 +116,10 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "   ", // Whitespace should be invalid
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -145,12 +146,12 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = false, // Standard fields should be excluded
                 Standard1 = null, // Should not cause validation failure
                 Standard2 = null,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -183,12 +184,12 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = false, // Regulation fields should be excluded
                 RegulationType1 = null, // Should not cause validation failure
                 RegulationType2 = null
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -221,10 +222,10 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100",
@@ -287,10 +288,10 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = null, // Invalid
-                Sector = null, // Invalid
                 UsesStandard = false,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = null, SubsectorId = null });
             var cisServiceDemographics = new CisServiceDemographics();
             var cisServiceComposition = new CisServiceComposition();
 
@@ -351,12 +352,12 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = true, // Standard fields should be included
                 Standard1 = null, // Should cause validation failure if in validation JSON
                 Standard2 = null,
                 RequiredToComply = false
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"
@@ -389,12 +390,12 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographicExt = new DemographicExt
             {
                 OrganizationName = "Test Org",
-                Sector = 1,
                 UsesStandard = false,
                 RequiredToComply = true, // Regulation fields should be included
                 RegulationType1 = null, // Should cause validation failure if in validation JSON
                 RegulationType2 = null
             };
+            demographicExt.SectorSubsectors.Add(new SectorSubsector() { SectorId = 18, SubsectorId = 129 });
             var cisServiceDemographics = new CisServiceDemographics
             {
                 CustomersCount = "100"

@@ -24,8 +24,6 @@
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div *ngIf="componentCount != 0; else elseBlock">
       <div id="chart" class="mb-3">
-        <h3>Components Summary</h3>
-
         <div style="max-width:300px; margin:auto;">
           <canvas id="canvasComponentSummary">{{canvasComponentSummary}}</canvas>
         </div>
@@ -58,7 +56,6 @@
       </div>
     </div>
     <ng-template #elseBlock>
-      <h3>Components Summary</h3>
       <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
         <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">

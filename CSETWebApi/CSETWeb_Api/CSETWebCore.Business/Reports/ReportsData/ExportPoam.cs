@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Reports
                         foreach (var question in subgrouping.Questions)
                         {
                             // Skip questions that have been met.
-                            if (question.Answer == "Y" || isUnpardonable(question.DisplayNumber))
+                            if (question.Answer == "Y" || IsBarredFromInclusion(question.DisplayNumber))
                             {
                                 continue;
                             }
@@ -224,14 +224,34 @@ namespace CSETWebCore.Business.Reports
             return filename;
         }
 
+
         /// <summary>
-        /// Check if an item is unpardonable based on its control title.
+        /// Check if an item is not allowed in the POAM based on its control title.
+        /// 
+        /// These controls cannot be included in a Plan of Action and Milestones (POA&M).
+        /// They are explicitly barred from being included in a POA&M for Level 2 certification 
+        /// per § 170.21 of the 32 CFR CMMC Program final rule.
+        /// 
+        /// Key Points:
+        /// 
+        ///  - Must be fully implemented at assessment: This control must be fully implemented 
+        ///    from the start of the assessment and is non-negotiable
+        ///    
+        ///  - No deferrals allowed: Unlike some 1-point controls that can be deferred to a POA&M 
+        ///    for 180-day remediation, these controls must be "MET" at the time of the assessment
+        ///    
+        ///  - Certification blocker: If deficiencies are found in this control, it would result 
+        ///    in a "NOT MET" finding that cannot be remediated via a POA&M, and CMMC at Level 2 
+        ///    would not be achieved
+        ///    
+        ///  These controls receive no grace period. They must be working correctly before the 
+        ///  assessment begins.
         /// </summary>
         /// <param name="controlTitle"></param>
         /// <returns>bool</returns>
-        private static bool isUnpardonable(string controlTitle)
+        private static bool IsBarredFromInclusion(string controlTitle)
         {
-            var unpardonables = new List<string> {
+            var list = new List<string> {
                 "AC.L2-3.1.20",
                 "AC.L2-3.1.22",
                 "PE.L2-3.10.3",
@@ -246,7 +266,7 @@ namespace CSETWebCore.Business.Reports
                 "SI.L3-3.14.3E"
             };
 
-            return unpardonables.Contains(controlTitle);
+            return list.Contains(controlTitle);
         }
     }
 }

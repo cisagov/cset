@@ -195,6 +195,7 @@ namespace CSETWebCore.Helpers
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        IsAnswerable = myQ.Is_Answerable,
                         AnswerText = answer?.Answer_Text,
                         AltAnswerText = answer?.Alternate_Justification,
                         Comment = answer?.Comment,
@@ -260,6 +261,9 @@ namespace CSETWebCore.Helpers
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
+                    IsAnswerable = myQ.Is_Answerable,
+                    AnswerText = answer?.Answer_Text,
+                    AltAnswerText = answer?.Alternate_Justification,
                     Comment = answer?.Comment ?? "",
                     Options = GetOptions(myQ.Mat_Question_Id)
                 };
@@ -323,6 +327,7 @@ namespace CSETWebCore.Helpers
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        IsAnswerable = myQ.Is_Answerable,
                         Options = GetOptions(myQ.Mat_Question_Id)
                     };
 

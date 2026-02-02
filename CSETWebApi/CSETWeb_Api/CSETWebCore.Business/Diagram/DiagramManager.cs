@@ -39,6 +39,44 @@ namespace CSETWebCore.Business.Diagram
         }
 
         /// <summary>
+        /// Sanitizes input for use in XPath queries to prevent XPath injection attacks.
+        /// Escapes single quotes by using XPath's concat() function.
+        /// </summary>
+        /// <param name="input">The input string to sanitize</param>
+        /// <returns>A safe XPath expression</returns>
+        private string SanitizeXPathInput(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "''";
+            }
+
+            // If the input contains no single quotes, we can use it directly
+            if (!input.Contains("'"))
+            {
+                return "'" + input + "'";
+            }
+
+            // Split on single quotes and build a concat() expression
+            var parts = input.Split('\'');
+            var concatParts = new List<string>();
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0)
+                {
+                    concatParts.Add("'" + parts[i] + "'");
+                }
+                if (i < parts.Length - 1)
+                {
+                    concatParts.Add("\"'\"");
+                }
+            }
+
+            return "concat(" + string.Join(", ", concatParts) + ")";
+        }
+
+        /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
         /// <param name="assessmentId"></param>
@@ -849,9 +887,9 @@ namespace CSETWebCore.Business.Diagram
 
             var xDiagram = new XmlDocument();
             xDiagram.LoadXml(assessment.Diagram_Markup);
-            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']/mxCell");
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid=" + SanitizeXPathInput(componentGuid.ToString()) + "]/mxCell");
 
-            //var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
+            //var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid=" + SanitizeXPathInput(componentGuid.ToString()) + "]/mxCell");
             if (mxCell == null)
             {
                 return;
@@ -945,7 +983,7 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
 
             // puts the UserObject right after its parent (to keep them together for readability)
-            var parentNode = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@id='{parent}']");
+            var parentNode = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@id=" + SanitizeXPathInput(parent) + "]");
 
             var root = (XmlElement)xDiagram.SelectSingleNode($"//root");
             root.InsertAfter(userObject, parentNode);
@@ -980,7 +1018,7 @@ namespace CSETWebCore.Business.Diagram
 
             var xDiagram = new XmlDocument();
             xDiagram.LoadXml(assessment.Diagram_Markup);
-            var userObject = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']");
+            var userObject = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid=" + SanitizeXPathInput(componentGuid.ToString()) + "]");
             userObject.Attributes["label"].Value = label;
 
             if (userObject == null)

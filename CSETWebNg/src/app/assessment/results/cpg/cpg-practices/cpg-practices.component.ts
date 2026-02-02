@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { SsgService } from '../../../../services/ssg.service';
+import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
   selector: 'app-cpg-practices',
@@ -38,6 +39,7 @@ export class CpgPracticesComponent implements OnInit {
    * 
    */
   constructor(
+    public assessSvc: AssessmentService,
     public ssgSvc: SsgService
   ) { }
 
@@ -46,7 +48,7 @@ export class CpgPracticesComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
+    this.ssgBonusModels = this.assessSvc.assessment.ssgModelIds;
   }
 
   /**

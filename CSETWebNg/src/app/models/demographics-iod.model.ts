@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-
+import { SectorSub } from './demographics-extended.model';
 
 export interface DemographicsIod {
-  acknowledgement?:boolean;
+  acknowledgement?: boolean;
   assessmentId?: number;
   version?: number;
   organizationType?: number;
@@ -33,10 +33,11 @@ export interface DemographicsIod {
 
   // PPD-21 or NIPP
   sectorDirective?: string;
-  sector?: number;
-  subsector?: number;
 
-  ssgSectors?: number[];
+  sectorSubsectors?: SectorSub[];
+
+
+  // TODO-3261 ssgSectors?: number[];
 
   // Technology Domain (IT vs OT)
   techDomain?: string;
@@ -80,7 +81,6 @@ export interface DemographicsIod {
   listRegulationTypes?: any[];
   listShareOrgs?: any[];
   listBarriers?: any[];
-
 }
 
 export interface CisaWorkflowFieldValidationResponse {
