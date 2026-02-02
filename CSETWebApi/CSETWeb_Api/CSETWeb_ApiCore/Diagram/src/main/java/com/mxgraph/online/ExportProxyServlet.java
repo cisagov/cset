@@ -78,7 +78,44 @@ public class ExportProxyServlet extends HttpServlet
 				exportUrl += "/";
 			}
 			
+			// Validate proxy path to prevent path traversal and URL manipulation
+			if (proxyPath != null && !proxyPath.isEmpty())
+			{
+				// Block path traversal attempts
+				if (proxyPath.contains("..") || proxyPath.contains("//") ||
+				    proxyPath.contains("@") || proxyPath.contains("\\"))
+				{
+					throw new SecurityException("Invalid path: potential path traversal or URL manipulation detected");
+				}
+
+				// Block URL encoding tricks that could bypass validation
+				String decodedPath = java.net.URLDecoder.decode(proxyPath, "UTF-8");
+				if (decodedPath.contains("..") || decodedPath.contains("@") ||
+				    decodedPath.contains("://") || decodedPath.contains("\\"))
+				{
+					throw new SecurityException("Invalid path: encoded path traversal or URL manipulation detected");
+				}
+			}
+
 			URL url = new URL(exportUrl + proxyPath + queryString);
+
+			// Validate that the final URL still points to the expected base URL (prevent SSRF)
+			URL baseUrl = new URL(exportUrl);
+			if (!url.getProtocol().equals(baseUrl.getProtocol()) ||
+			    !url.getHost().equalsIgnoreCase(baseUrl.getHost()) ||
+			    url.getPort() != baseUrl.getPort())
+			{
+				throw new SecurityException("Invalid URL: request redirects outside of the configured service");
+			}
+
+			// Additional check: ensure the path starts with the base path
+			String basePath = baseUrl.getPath();
+			String fullPath = url.getPath();
+			if (!fullPath.startsWith(basePath))
+			{
+				throw new SecurityException("Invalid URL: path does not start with base path");
+			}
+
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			
 			con.setRequestMethod(method);

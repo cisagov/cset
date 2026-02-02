@@ -3,5 +3,7 @@
     "angular.enable-strict-mode-prompt": false, 
     "github.copilot.advanced": {
         "debug.useNodeFetcher": true
-      }
+    },
+    "snyk.advanced.organization": "86e238a9-134e-42e1-a99c-8466515ecdb6",
+    "snyk.advanced.autoSelectOrganization": true
 }

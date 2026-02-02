@@ -32,6 +32,8 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { ConstantsService } from '../../../../services/constants.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 
 
 
@@ -40,16 +42,6 @@ interface DemographicsAssetValue {
     assetValue: string;
 }
 
-interface Industry {
-    sectorId: number;
-    industryId: number;
-    industryName: string;
-}
-
-interface Sector {
-    sectorId: number;
-    sectorName: string;
-}
 
 interface AssessmentSize {
     sizeId: number;
@@ -75,10 +67,8 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     private eventsSubscription: any;
     unsupportedImportFile: boolean = false;
-    sectorsList: Sector[];
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
-    industryList: Industry[];
     contacts: User[];
     isSLTT: boolean = false;
     demographicData: Demographic = {};
@@ -92,17 +82,10 @@ export class AssessmentDemographicsComponent implements OnInit {
         private c: ConstantsService,
         public configSvc: ConfigService,
         public dialog: MatDialog,
+        public tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
-        this.demoSvc.getAllSectors().subscribe(
-            (data: Sector[]) => {
-                this.sectorsList = data;
-            },
-            error => {
-                console.error('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-                console.error('Error Getting all sectors (cont): ' + (<Error>error).stack);
-            });
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
                 this.assetValues = data;
@@ -124,11 +107,15 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
+        
         this.refreshContacts();
         this.getOrganizationTypes();
     }
 
-    // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    /**
+     * Functionality to import demographic information, excluding contacts, 
+     * organization point of contact, facilitator, critical service point of contact 
+     */
     importClick(event) {
         let dialogRef = null;
         this.unsupportedImportFile = false;
@@ -151,27 +138,12 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
 
-    //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    /**
+     * Functionality to export demographic information, excluding contacts, 
+     * organization point of contact, facilitator, critical service point of contact 
+     */
     exportClick() {
         this.demoSvc.exportDemographics()
-    }
-
-
-    changeSector(evt: any) {
-        this.populateIndustryOptions(this.demographicData.sectorId);
-        // invalidate the current Industry, as the Sector list has just changed
-        this.demographicData.industryId = null;
-        this.updateDemographics();
-    }
-
-    /**
-     * 
-     */
-    onChangeSsg(list: number[]) {
-        this.demographicData.ssgSectorIds = list;
-        this.assessSvc.assessment.ssgSectorIds = list;
-        this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-        this.updateDemographics();
     }
 
     /**
@@ -181,6 +153,8 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
                 this.demographicData = data;
+                this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
+
                 if (this.demographicData.organizationType == "3") {
                     this.isSLTT = true;
                 }
@@ -188,8 +162,16 @@ export class AssessmentDemographicsComponent implements OnInit {
                 // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
 
-                // populate Industry dropdown based on Sector
-                this.populateIndustryOptions(this.demographicData.sectorId);
+                if (this.demographicData.acknowledgement == true) {
+                    const dlgOkay = this.dialog.open(OkayComponent, {
+                        data: {
+                            title: this.tSvc.translate('sector changes'),
+                            messageText: this.tSvc.translate('sector acknowledgement')
+                        }
+                    }).afterClosed().subscribe(result => {
+                        this.assessSvc.saveAcknowledgement().subscribe();
+                    });
+                }
             },
             error => console.error('Demographic load Error: ' + (<Error>error).message)
         );
@@ -197,7 +179,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     getOrganizationTypes() {
-        this.assessSvc.getOrganizationTypes().subscribe(
+        this.demoSvc.getOrganizationTypes().subscribe(
             (data: any) => {
                 this.orgTypes = data;
             }
@@ -214,20 +196,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
     }
 
-    populateIndustryOptions(sectorId?: any) {
-        if (!sectorId || isNaN(Number(sectorId))) {
-            return;
-        }
-
-        this.demoSvc.getIndustry(sectorId).subscribe(
-            (data: Industry[]) => {
-                this.industryList = data;
-            },
-            error => {
-                console.error('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
-                console.error('Error Getting Industry (cont): ' + (<Error>error).stack);
-            });
-    }
 
     // Select asset value after import 
     setAssetValue(selectedValue: any): void {
@@ -255,7 +223,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         return (this.configSvc.behaviors.showCriticalService ?? true)
             && (moduleBehavior?.showCriticalServiceDemog ?? true);
     }
-
 
     showEdmFields() {
         return this.assessSvc.assessment?.maturityModel?.modelName == 'EDM';

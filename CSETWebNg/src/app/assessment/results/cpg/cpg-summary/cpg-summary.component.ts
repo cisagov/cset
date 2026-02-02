@@ -75,6 +75,7 @@ export class CpgSummaryComponent implements OnInit {
     this.assessorWorkflow = this.assessSvc.assessment.assessorMode ?? false;
 
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
+    this.assessSvc.assessment.ssgModelIds = demog.ssgModelIds;
     this.techDomain = demog.techDomain;
 
     // CPG 1.1
@@ -94,7 +95,7 @@ export class CpgSummaryComponent implements OnInit {
     }
 
     // SSG
-    const ssgPromises = this.ssgSvc.activeSsgModelIds.map(async id => {
+    const ssgPromises = this.assessSvc.assessment.ssgModelIds.map(async id => {
       const d = await this.getAnswerDistribution(id, '');
       return {
         modelId: id,

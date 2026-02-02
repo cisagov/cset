@@ -5,20 +5,22 @@
 // 
 //////////////////////////////// 
 
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CSETWebCore.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -86,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(assessmentId);
+            return Ok(_demographic.GetDemographics(assessmentId));
         }
 
 
@@ -94,7 +96,7 @@ namespace CSETWebCore.Api.Controllers
         /// Get organization types
         /// </summary>
         [HttpGet]
-        [Route("api/getOrganizationTypes")]
+        [Route("api/demographics/organization-types")]
         public IActionResult GetOrganizationTypes()
         {
             return Ok(_assessment.GetOrganizationTypes());
@@ -102,98 +104,10 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Get SECTOR list applicable to scope (base or IOD)
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/Sectors")]
-        public async Task<IActionResult> GetSECTORs()
-        {
-            string scope = _token.Payload("scope");
-
-
-            var list = await _context.SECTOR.ToListAsync<SECTOR>();
-
-
-            // For now, based on the scope/skin, show either the
-            // classic CISA sectors or the NIPP sectors (for IOD).
-            // If NIPP becomes the preferred for all, code will
-            // be added to convert CISA to NIPP on the fly.
-            if (scope == "IOD")
-            {
-                list.RemoveAll(x => !x.Is_NIPP);
-            }
-            else
-            {
-                list.RemoveAll(x => x.Is_NIPP);
-            }
-
-            var otherItems = list.Where(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase)).ToList();
-            foreach (var o in otherItems)
-            {
-                list.Remove(o);
-                list.Add(o);
-            }
-
-
-            // translate if not running in english.  
-            var lang = _token.GetCurrentLanguage();
-            if (lang != "en")
-            {
-                list.ForEach(x =>
-                {
-                    var val = _overlay.GetValue("SECTOR", x.SectorId.ToString(), lang)?.Value;
-                    if (val != null)
-                    {
-                        x.SectorName = val;
-                    }
-                });
-            }
-
-
-            return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/Sectors_Industry/{id}")]
-        public async Task<IActionResult> GetSectorIndustry(int id)
-        {
-            var list = await _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id)
-                .OrderBy(a => a.IndustryName).ToListAsync<SECTOR_INDUSTRY>();
-
-            var otherItems = list.Where(x => x.Is_Other).ToList();
-            foreach (var o in otherItems)
-            {
-                list.Remove(o);
-                list.Add(o);
-            }
-
-
-            // translate if not running in english.  
-            var lang = _token.GetCurrentLanguage();
-            if (lang != "en")
-            {
-                list.ForEach(x =>
-                {
-                    var val = _overlay.GetValue("SECTOR_INDUSTRY", x.IndustryId.ToString(), lang)?.Value;
-                    if (val != null)
-                    {
-                        x.IndustryName = val;
-                    }
-                });
-            }
-
-            return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
-        }
-
-
-        /// <summary>
         /// Get asset value options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
-        [Route("api/Demographics/AssetValues")]
+        [Route("api/demographics/asset-values")]
         public async Task<IActionResult> GetAssetValues()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
@@ -205,7 +119,7 @@ namespace CSETWebCore.Api.Controllers
         /// Get size options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
-        [Route("api/Demographics/Size")]
+        [Route("api/demographics/size")]
         public async Task<IActionResult> GetSize()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> assetSize = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "SIZE").ToListAsync();
@@ -226,6 +140,119 @@ namespace CSETWebCore.Api.Controllers
 
 
             return Ok(assetSize.OrderBy(a => a.Sequence).Select(s => new AssessmentSize() { SizeId = s.OptionValue, Description = s.OptionText }).ToList());
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/demographics/ext2")]
+        public IActionResult GetExtended2()
+        {
+            var assessmentId = _token.AssessmentForUser();
+
+            var mgr = new DemographicExtBusiness(_context);
+            var response = mgr.GetExtDemographics(assessmentId);
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/demographics/ext2/subsectors/{id}")]
+        public IActionResult GetSubsectors(int id)
+        {
+            var mgr = new DemographicExtBusiness(_context);
+            var response = mgr.GetSubsectors(id);
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Persists extended demographics.
+        /// </summary>
+        /// <param name="demographics"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/demographics/ext2")]
+        public IActionResult PostExtended2([FromBody] DemographicExt demographics)
+        {
+            demographics.AssessmentId = _token.AssessmentForUser();
+            var userid = _token.GetCurrentUserId();
+
+            var mgr = new DemographicExtBusiness(_context);
+            mgr.SaveDemographics(demographics, userid ?? 0);
+
+            _hooks.HookDemographicsChanged(demographics.AssessmentId);
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Persists the sector/subsector values.  Returns a list of
+        /// subsector IDs for the sector.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/demographics/ext2/sector")]
+        public IActionResult PostSector([FromBody] SectorSubsector request)
+        {
+            var response = new List<ListItem2>();
+
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+
+                var smm = new SectorMultiManager(_context);
+                smm.Save(assessmentId, request);
+
+
+                if (request.SectorId != null)
+                {
+                    var mgr = new DemographicExtBusiness(_context);
+                    response = mgr.GetSubsectors((int)request.SectorId);
+                }
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Delete a sector/subsector record from the assessment.
+        /// </summary>
+        /// <param name="seq"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("api/demographics/ext2/sector")]
+        public IActionResult DeleteSector([FromQuery] int seq)
+        {
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+
+                var smm = new SectorMultiManager(_context);
+                smm.Delete(assessmentId, seq);
+
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
         }
     }
 }

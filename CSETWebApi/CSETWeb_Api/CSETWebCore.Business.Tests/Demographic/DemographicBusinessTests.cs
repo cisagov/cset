@@ -249,7 +249,7 @@ namespace CSETWebCore.Business.Tests.Demographic
             // Assert
             Assert.NotNull(result);
             Assert.Equal(assessmentId, result.AssessmentId);
-            Assert.Empty(result.SsgSectorIds);
+            Assert.Empty(result.SsgModelIds);
         }
 
         [Fact]
@@ -278,10 +278,10 @@ namespace CSETWebCore.Business.Tests.Demographic
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(3, result.SsgSectorIds.Count);
-            Assert.Contains(1, result.SsgSectorIds);
-            Assert.Contains(2, result.SsgSectorIds);
-            Assert.Contains(3, result.SsgSectorIds);
+            Assert.Equal(3, result.SsgModelIds.Count);
+            Assert.Contains(1, result.SsgModelIds);
+            Assert.Contains(2, result.SsgModelIds);
+            Assert.Contains(3, result.SsgModelIds);
         }
 
         [Fact]
@@ -321,7 +321,7 @@ namespace CSETWebCore.Business.Tests.Demographic
             var demographics = new Demographics
             {
                 AssessmentId = assessmentId,
-                SsgSectorIds = new List<int> { 1, 2, 3 }
+                SsgModelIds = new List<int> { 1, 2, 3 }
             };
 
             var existingSSG = new List<DETAILS_DEMOGRAPHICS>

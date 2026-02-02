@@ -640,7 +640,7 @@
                          "1": "This table lists all applicable SSG security practices and how they have been answered.",
                          "2": "Sector Specific"
                     },
-                    "compliance score": "Compliance Score",
+                    "compliance score": "Cross-Sector Goals Compliance Score",
                     "current assessment": "Current Assessment",
                     "notes": "Notes",
                     "ttp or risk addressed": "TTP or Risk Addressed",
@@ -667,9 +667,9 @@
                          "5": "There are no deficiences in the sector-specific questions."
                     }
                },
-               "ot": "Operational Technology (OT)",
+               "ot": "Cross-Sector Goals - Operational Technology (OT)",
                "ot-abbrev": "OT",
-               "it": "Information Technology (IT)",
+               "it": "Cross-Sector Goals - Information Technology (IT)",
                "it-abbrev": "IT"
           },
           "ssg": {

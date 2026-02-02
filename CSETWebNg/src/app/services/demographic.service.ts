@@ -57,21 +57,29 @@ export class DemographicService {
   ) {
   }
 
+
+  /**
+   *
+   */
+  getOrganizationTypes() {
+    return this.http.get(this.apiUrl + 'organization-types');
+  }
+
   // calls to retrieve static data
   getAllSectors() {
-    return this.http.get(this.apiUrl + 'Sectors');
+    return this.http.get(this.apiUrl + 'sectors');
   }
 
   getAllAssetValues() {
-    return this.http.get(this.apiUrl + 'AssetValues');
+    return this.http.get(this.apiUrl + 'asset-values');
   }
 
-  getAllStatesAndProvinces() {
-    return this.http.get(this.apiUrl + 'StatesAndProvinces');
-  }
+  // getAllStatesAndProvinces() {
+  //   return this.http.get(this.apiUrl + 'StatesAndProvinces');
+  // }
 
   getSizeValues() {
-    return this.http.get(this.apiUrl + 'Size');
+    return this.http.get(this.apiUrl + 'size');
   }
 
   // calls to dependent data
@@ -91,23 +99,19 @@ export class DemographicService {
    * @param demographic
    */
   updateDemographic(demographic: Demographic) {
-    this.assessSvc.assessment.sectorId = demographic.sectorId;
-    this.assessSvc.assessment.ssgSectorIds = demographic.ssgSectorIds;
     this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-      .subscribe(() => {
-        if (this.configSvc.userIsCisaAssessor) {
-        }
+      .subscribe((demographic: Demographic) => {
+        this.assessSvc.assessment.ssgModelIds = demographic.ssgModelIds;
+
         this.demographicUpdateCompleted$.next();
       });
   }
 
   importDemographics(demographic: Demographic) {
     return this.http.post(this.apiUrl + 'import', JSON.stringify(demographic), headers)
-      .subscribe(() => {
-
-      });
+      .subscribe(() => { });
   }
 
   exportDemographics() {

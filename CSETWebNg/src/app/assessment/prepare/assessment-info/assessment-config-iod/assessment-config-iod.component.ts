@@ -36,6 +36,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   ngOnInit() {
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
+      this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
     });
 
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {

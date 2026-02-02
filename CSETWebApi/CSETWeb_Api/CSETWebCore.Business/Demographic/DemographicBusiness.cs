@@ -5,10 +5,13 @@
 // 
 //////////////////////////////// 
 
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -43,13 +46,12 @@ namespace CSETWebCore.Business.Demographic
                 AssessmentId = assessmentId
             };
 
+
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
-            demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
-            demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
             demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
             demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
@@ -61,6 +63,7 @@ namespace CSETWebCore.Business.Demographic
 
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
             var sizeId = (int?)extBiz.GetX(assessmentId, "SIZE");
+
 
             //Asset value and size are stored in DETAILS_DEMOGRAPHICS_OPTIONS
             if (assetId != null)
@@ -79,15 +82,32 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
-            var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
-            foreach (var ssg in ssgs)
+            demographics.SsgModelIds.AddRange(new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId));
+
+
+
+            // Only the PPD-21 list of 16 sectors supported now.  No more HSPD-7 list support (Is_NIPP = true)
+            var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+            demographics.ListSectors = new List<ListItem2>();
+            foreach (var sec in availableSectors)
             {
-                demographics.SsgSectorIds.Add((int)ssg.IntValue);
+                demographics.ListSectors.Add(new ListItem2
+                {
+                    OptionValue = sec.SectorId,
+                    OptionText = sec.SectorName
+                });
             }
+
+
+            // Get Sector/Subsector pairs.  Note that in the general (non-IOD) assessments
+            // we only support a single sector/subsector.  
+            var smm = new SectorMultiManager(_context);
+            demographics.SectorSubsectors = smm.Get(assessmentId);
 
 
             return demographics;
         }
+
 
         /// <summary>
         /// Persists data to the DEMOGRAPHICS table.
@@ -112,8 +132,6 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
-            extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null : demographics.SectorId);
-            extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null : demographics.IndustryId);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
             extBiz.SaveX(demographics.AssessmentId, "SCOPED", demographics.IsScoped);
             extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);
@@ -123,15 +141,11 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);
 
 
-            // replace SSG sectors
+            // clean up SSG sectors - deprecated
             var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
             _context.RemoveRange(ssg);
             _context.SaveChanges();
 
-            foreach (var ssgId in demographics.SsgSectorIds)
-            {
-                extBiz.SaveX(demographics.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
-            }
 
 
             _assessmentUtil.TouchAssessment(demographics.AssessmentId);

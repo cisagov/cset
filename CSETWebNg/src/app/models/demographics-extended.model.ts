@@ -63,6 +63,7 @@ export interface Region {
     regionName: string;
     counties: County[];
 }
+
 export interface County {
     selected: boolean;
     fips: string;
@@ -97,4 +98,15 @@ export interface Geographics {
 export interface GeoRegion {
     state: string;
     regionCode: string;
+}
+
+/**
+ * A model for defining a sector/subsector selection
+ * on an assessment.  An assessment may have 
+ * multiples.  
+ */
+export interface SectorSub {
+  sectorId?: number;
+  subsectorId?: number;
+  sequence?: number;
 }

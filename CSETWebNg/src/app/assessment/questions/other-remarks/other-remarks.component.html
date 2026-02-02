@@ -22,7 +22,6 @@
 -------------------------->
 <div *transloco="let t" >
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">{{t('titles.other remarks')}}</h3>
     <label>Enter any general remarks or observations for the assessment</label>
     <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
   </div>

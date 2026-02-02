@@ -324,13 +324,6 @@ export class AssessmentService {
   /**
    *
    */
-  getOrganizationTypes() {
-    return this.http.get(this.apiUrl + 'getOrganizationTypes');
-  }
-
-  /**
-   *
-   */
   getOtherRemarks() {
     return this.http.get(this.apiUrl + 'remarks', { responseType: 'text' });
   }
