@@ -4,22 +4,25 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Analytics;
+using CSETWebCore.Business.Question;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Business.Question;
-using CSETWebCore.Interfaces.Analytics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -36,11 +39,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionBusiness _question;
         private readonly IAnalyticsBusiness _analytics;
         private readonly IConfiguration _configuration;
+        private readonly CSETContext _context;
+
 
         public AnalyticsController(IRequirementBusiness requirement, IAssessmentBusiness assessment,
             ITokenManager token, IDemographicBusiness demographic,
             IQuestionRequirementManager questionRequirement,
             IQuestionBusiness question, IAnalyticsBusiness analytics,
+            CSETContext context,
             IConfiguration configuration)
         {
             _requirement = requirement;
@@ -51,30 +57,9 @@ namespace CSETWebCore.Api.Controllers
             _question = question;
             _analytics = analytics;
             _configuration = configuration;
+            _context = context;
         }
 
-        /// <summary>
-        /// Get analytic information
-        /// </summary>
-        /// <returns></returns>
-        // [HttpGet]
-        // [Route("api/analytics/getAnalytics")]
-        // public IActionResult GetAnalytics()
-        // {
-        //     var demographics = GetDemographics();
-        //     var assessment = GetAnalyticsAssessment();
-        //     assessment.Assets = demographics.AssetValue;
-        //     assessment.Size = demographics.Size;
-        //     assessment.IndustryId = demographics.IndustryId;
-        //     assessment.SectorId = demographics.SectorId;
-        //
-        //     return Ok(new Analytics
-        //     {
-        //         Assessment = assessment,
-        //         Demographics = demographics,
-        //         QuestionAnswers = GetQuestionsAnswers()
-        //     });
-        // }
 
         [HttpGet]
         [Route("api/analytics/getAggregation")]
@@ -84,6 +69,22 @@ namespace CSETWebCore.Api.Controllers
             var agg = _analytics.GetAggregationAssessment(assessmentId);
 
             return Ok(agg);
+        }
+
+
+        /// <summary>
+        /// Gets a list of sectors and sample sizes of those sectors
+        /// </summary>
+        [HttpGet]
+        [Route("api/analytics/samplesizes")]
+        public IActionResult GetSampleSizes()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var biz = new AnalyticsBusiness(_context);
+            var resp = biz.GetSectorsAndSampleSizes(assessmentId, _token.GetCurrentLanguage());
+
+            return Ok(resp);
         }
 
 
@@ -108,6 +109,8 @@ namespace CSETWebCore.Api.Controllers
 
                     command.ExecuteNonQuery();
                 }
+
+
                 using (SqlCommand command = new SqlCommand("FillAll", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -115,6 +118,7 @@ namespace CSETWebCore.Api.Controllers
                     command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
                     command.ExecuteNonQuery();
                 }
+
 
                 using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
                 {
@@ -146,6 +150,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                 }
 
+
                 using (SqlCommand command = new SqlCommand("analytics_Compute_MaturitySampleSize", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -159,21 +164,8 @@ namespace CSETWebCore.Api.Controllers
                         SampleSize.Load(reader);
                     }
                 }
-
             }
 
-
-            /*
-        categories: any[] = [
-    { label: 'Invent', min: 10, max: 77, median: 42, myScore: 33},
-    { label: 'Prevent', min: 40, max: 95, median: 61, myScore: 83},
-    { label: 'Circumvent', min: 25, max: 54, median: 33, myScore: 50},
-    { label: 'Dryer Vent', min: 0, max: 94, median: 67, myScore: 23},
-    { label: 'Lament', min: 47, max: 62, median: 52, myScore: 47},
-    { label: 'Intent', min: 8, max: 80, median: 63, myScore: 33},
-    { label: 'Get Bent', min: 14, max: 58, median: 36, myScore: 29}
-  ];
-        */
 
             var response = new NewResponse();
 
@@ -239,15 +231,6 @@ namespace CSETWebCore.Api.Controllers
             return assessment;
         }
 
-        /// <summary>
-        /// Returns an instance of Demographics for Anonymous export 
-        /// </summary>        
-        /// <returns></returns>
-        // private AnalyticsDemographic GetDemographics()
-        // {
-        //     int assessmentId = _token.AssessmentForUser();
-        //     return _demographic.GetAnonymousDemographics(assessmentId);
-        // }
 
         /// <summary>
         /// Returns questions/answers for current selected assessment

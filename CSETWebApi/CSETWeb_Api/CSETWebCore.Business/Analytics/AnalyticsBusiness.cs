@@ -5,13 +5,16 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Model.Analytics;
 using System.Collections.Generic;
 using System.Linq;
 using AggregationAssessment = CSETWebCore.Model.Assessment.AggregationAssessment;
+
 
 namespace CSETWebCore.Business.Analytics
 {
@@ -19,10 +22,10 @@ namespace CSETWebCore.Business.Analytics
     {
         private CSETContext _context;
 
+
         public AnalyticsBusiness(CSETContext context)
         {
             _context = context;
-
         }
 
 
@@ -206,5 +209,89 @@ namespace CSETWebCore.Business.Analytics
         }
 
 
+        /// <summary>
+        /// Returns a list of sectors for an assessment.  Included are
+        /// numbers of other assessments for each sector.  
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public List<SectorsAndSamples> GetSectorsAndSampleSizes(int assessmentId, string lang)
+        {
+            var sectors = _context.SECTOR.ToList();
+
+            TranslationOverlay _overlay = new TranslationOverlay();
+
+            // get the in-scope models for this assessment.  We will limit other candidates to them.
+            var modelIds = new CompletionCounter(_context).DetermineInScopeModels(assessmentId);
+
+
+            // Create a list of sectors in the target assessment
+            List<int> mySectorIds = [];
+
+            var ass = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence);
+            mySectorIds.AddRange(ass.Select(x => x.SectorId));
+
+            var ass2 = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR");
+            mySectorIds.AddRange(ass2.Select(x => (int)x.IntValue));
+
+
+            // Get assessment counts for the target assessments' sectors
+            var result = (from qASS in _context.ASSESSMENT_SECTOR_SUBSECTOR
+                          join qAMM in _context.AVAILABLE_MATURITY_MODELS on qASS.Assessment_Id equals qAMM.Assessment_Id
+                          where modelIds.Contains(qAMM.model_id) && mySectorIds.Contains(qASS.SectorId)
+                          group qASS by qASS.SectorId into g
+                          select new
+                          {
+                              SectorId = g.Key,
+                              Count = g.Count()
+                          }).ToList();
+
+            var result2 = (from qDD in _context.DETAILS_DEMOGRAPHICS
+                           join qAMM in _context.AVAILABLE_MATURITY_MODELS on qDD.Assessment_Id equals qAMM.Assessment_Id
+                           where modelIds.Contains(qAMM.model_id) && mySectorIds.Contains((int)qDD.IntValue)
+                            && qDD.DataItemName == "SECTOR" && qDD.IntValue.HasValue
+                           group qDD by qDD.IntValue into g
+                           select new
+                           {
+                               SectorId = g.Key,
+                               Count = g.Count()
+                           }).ToList();
+
+
+            List<SectorsAndSamples> resp = [];
+            foreach (var id in mySectorIds)
+            {
+                var sas = new SectorsAndSamples()
+                {
+                    SectorId = id,
+                    SectorName = _overlay.GetValue("SECTOR", id.ToString(), lang)?.Value ?? sectors.FirstOrDefault(x => x.SectorId == id).SectorName
+                };
+
+                resp.Add(sas);
+
+                var x1 = result.FirstOrDefault(x => x.SectorId == id);
+                if (x1 != null)
+                {
+                    sas.SampleCount += x1.Count;
+                }
+
+                var x2 = result2.FirstOrDefault(x => x.SectorId == id);
+                if (x2 != null)
+                {
+                    sas.SampleCount += x2.Count;
+                }
+            }
+
+            // insert a total item up front
+            var totalItem = new SectorsAndSamples()
+            {
+                SectorId = 0,
+                SectorName = "All Sectors",
+                SampleCount = resp.Sum(x => x.SampleCount)
+            };
+            resp.Insert(0, totalItem);
+
+            return resp;
+        }
     }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,13 @@ export class AnalyticsService {
    */
   isCisaAssessorMode() {
     return this.configSvc.installationMode == "IOD";
+  }
+
+  /**
+   * Gets a list of sectors and the sample size (number of assessments in that sector)
+   */
+  getSampleSizes() {
+    return lastValueFrom(this.http.get(this.apiUrl + 'samplesizes'));
   }
 
   /**
