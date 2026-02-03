@@ -4,8 +4,8 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Analytics;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Analytics;
@@ -13,8 +13,7 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Question;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -222,39 +221,8 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(response);
         }
-
-
-        private AnalyticsAssessment GetAnalyticsAssessment()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var assessment = _assessment.GetAnalyticsAssessmentDetail(assessmentId);
-            return assessment;
-        }
-
-
-        /// <summary>
-        /// Returns questions/answers for current selected assessment
-        /// </summary>
-        /// <returns></returns>
-        private List<AnalyticsQuestionAnswer> GetQuestionsAnswers()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
-
-            if (applicationMode.ToLower().StartsWith("questions"))
-            {
-                _question.SetQuestionAssessmentId(assessmentId);
-                QuestionResponse resp = _question.GetQuestionListWithSet("*");
-                return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
-            }
-            else
-            {
-                _requirement.SetRequirementAssessmentId(assessmentId);
-                QuestionResponse resp = _requirement.GetRequirementsList();
-                return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
-            }
-        }
     }
+
 
     public class NewResponse
     {

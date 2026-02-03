@@ -11,7 +11,9 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Model.Analytics;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using AggregationAssessment = CSETWebCore.Model.Assessment.AggregationAssessment;
 
@@ -40,15 +42,18 @@ namespace CSETWebCore.Business.Analytics
             return _context.analytics_Compute_MaturityAll(maturity_model_id, sectorId, industryId).ToList();
         }
 
+
         public List<AnalyticsgetMedianOverall> GetMaturityGroupsForAssessment(int assessmentId, int maturity_model_id)
         {
             return _context.analytics_compute_single_averages_maturity(assessmentId, maturity_model_id).ToList();
         }
 
+
         public List<standardAnalyticsgetMedianOverall> GetStandardSingleAvg(int assessmentId, string set_name)
         {
             return _context.analytics_compute_single_averages_standard(assessmentId, set_name).ToList();
         }
+
 
         public List<SetStandard> GetStandardList(int assessmentId)
         {
@@ -61,12 +66,14 @@ namespace CSETWebCore.Business.Analytics
             return results.ToList();
         }
 
+
         public List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(int assessmentId, string setname, int? sectorId,
             int? industryId)
         {
             var minmaxavg = _context.analytics_Compute_standard_all(assessmentId, setname, sectorId, industryId);
             return minmaxavg.ToList();
         }
+
 
         public object GetAggregationAssessment(int assessmentId)
         {
@@ -282,12 +289,24 @@ namespace CSETWebCore.Business.Analytics
                 }
             }
 
-            // insert a total item up front
+            // insert a total item up front - all assessments with the target model
+            var assessmentCount = _context.AVAILABLE_MATURITY_MODELS
+                .Join(
+                    _context.AVAILABLE_MATURITY_MODELS
+                        .Where(x => x.Assessment_Id == assessmentId)
+                        .Select(x => x.model_id)
+                        .Distinct(),
+                    x => x.model_id,
+                    modelId => modelId,
+                    (x, modelId) => x
+                )
+                .Count();
+
             var totalItem = new SectorsAndSamples()
             {
                 SectorId = 0,
                 SectorName = "All Sectors",
-                SampleCount = resp.Sum(x => x.SampleCount)
+                SampleCount = assessmentCount
             };
             resp.Insert(0, totalItem);
 

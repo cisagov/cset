@@ -77,7 +77,7 @@ export class ScoreRangeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.containerWidth = this.chartWidth * 1.25;
+    this.containerWidth = this.chartWidth * 1.1;
     this.barH = this.h * .1;
   }
 }

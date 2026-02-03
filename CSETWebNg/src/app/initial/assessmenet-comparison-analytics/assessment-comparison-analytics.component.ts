@@ -64,6 +64,11 @@ interface OrgTypes {
   text: string;
 }
 
+
+/**
+ * This is the 'old' analytics page and is currently not
+ * in the workflow.  It may be deleted at some point.
+ */
 @Component({
   selector: "app-assessment-comparison-analytics",
   templateUrl: "./assessment-comparison-analytics.component.html",
