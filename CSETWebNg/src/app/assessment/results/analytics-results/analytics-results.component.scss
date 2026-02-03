@@ -1,16 +1,27 @@
 .mat-card-margin-10 {
-    margin: 10px;
-    float: left;
-    width: 99%;
-  }
-  .mat-row:hover {
-    background-color: #f2f2f2;
-    cursor: pointer;
-  }
-  
-  .table-container {
-    position: relative;
-    height: 350px;
-    max-height: 350px;
-    overflow: auto;
-  }
+  margin: 10px;
+  float: left;
+  width: 99%;
+}
+
+.mat-row:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.table-container {
+  position: relative;
+  height: 350px;
+  max-height: 350px;
+  overflow: auto;
+}
+
+.legend-table td:first-child {
+  min-width: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.legend-table svg {
+  display: inline-block;
+}

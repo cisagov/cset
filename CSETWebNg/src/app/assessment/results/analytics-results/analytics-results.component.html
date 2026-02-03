@@ -12,9 +12,43 @@
               <div class="p-4">
                 <label>Comparison Group</label>
                 <select class="form-select" (change)="onChangeSectorSelection($event)">
-                  <option *ngFor="let s of mySectors" [value]="s.sectorId">{{s.sectorName}} - sample size: {{s.sampleCount}}</option>
+                  <option *ngFor="let s of mySectors" [value]="s.sectorId">{{s.sectorName}} - sample size:
+                    {{s.sampleCount}}</option>
                 </select>
               </div>
+
+              <table class="legend-table mt-2 mb-4 ms-4 p-2" style="border: 1px solid #ddd; width: 50%">
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" [attr.fill]="myColor" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.current score')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>|</span>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.vertical bar')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" fill="#4682B4" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.max')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" fill="#F28C28" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.min')}}</span></td>
+                </tr>
+              </table>
 
 
               <div *ngIf="!scoreBarData">
@@ -22,7 +56,8 @@
                   <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
               </div>
-              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="500" [data]="scoreBarData"
+
+              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="700" [data]="scoreBarData"
                 myColor="#174792"></app-score-ranges>
 
             </mat-card>

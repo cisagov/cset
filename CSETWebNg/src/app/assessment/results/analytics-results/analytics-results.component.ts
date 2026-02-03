@@ -60,6 +60,9 @@ export class AnalyticsResultsComponent implements OnInit {
     public tSvc: TranslocoService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.assessSvc.getAssessmentDetail().subscribe((resp: AssessmentDetail) => {
 
