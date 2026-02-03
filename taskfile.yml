@@ -112,22 +112,22 @@ tasks:
     cmds:
       - docker compose -f compose.postgres.yml up -d db
 
-  split-bak:
+  split:bak:
     desc: Split the database backup file into smaller chunks
     cmds:
       - split -b 50M backup/CSET.bak backup/bak-files/CSET.bak.part_
 
-  create-bak:
+  create:bak:
     desc: Reassemble the database backup file from chunks
     cmds:
       - cat backup/bak-files/CSET.bak.part_* > backup/CSET.bak
 
-  load-bak:
+  load:bak:
     desc: Load the database backup file
     cmds:
       - docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
 
-  load-bak:dev:
+  load:bak:dev:
     desc: Load the database backup file (dev container)
     cmds:
       - docker exec -i cset-mssql-dev /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
@@ -146,17 +146,17 @@ tasks:
     desc: Open SQL shell for database exploration
     interactive: true
     cmds:
-      - docker exec -it cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C
+      - docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C
 
   sql:query:
     desc: Execute a SQL query non-interactively (for coding agents)
     cmds:
-      - docker exec cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" -Q "{{.CLI_ARGS}}"
+      - docker exec cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" -Q {{.CLI_ARGS}}
 
   sql:file:
     desc: Execute SQL from a file non-interactively
     cmds:
-      - docker exec -i cset-mssql /opt/mssql-tools18/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" < {{.CLI_ARGS}}
+      - docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" < {{.CLI_ARGS}}
 
   mssql-to-postgres:
     desc: Convert MSSQL .bak to PostgreSQL 17 backup
