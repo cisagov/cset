@@ -530,6 +530,18 @@
     },
     "cis": {
       "model short title": "CIS"
+    },
+    "crr": {
+      "display-name": "サイバーレジリエンスレビュー (CRR)",
+      "model short title": "CRR"
+    },
+    "imr": {
+      "display-name": "インシデント管理レビュー (IMR)",
+      "model short title": "IMR"
+    },
+    "vadr": {
+      "display-name": "CISA検証済みアーキテクチャ設計レビュー (VADR)",
+      "model short title": "VADR"
     }
   }
 }
