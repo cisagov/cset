@@ -1065,6 +1065,18 @@
     "cis": {
       "model short title": "CIS"
     },
+    "crr": {
+      "display-name": "Cyber Resilience Review (CRR)",
+      "model short title": "CRR"
+    },
+    "imr": {
+      "display-name": "Incident Management Review (IMR)",
+      "model short title": "IMR"
+    },
+    "vadr": {
+      "display-name": "CISA Validated Architecture Design Review (VADR)",
+      "model short title": "VADR"
+    },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
       "model short title": "CISA VADR",
