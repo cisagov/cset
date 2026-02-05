@@ -921,6 +921,18 @@
         },
         "cis": {
             "model short title": "CIS"
+        },
+        "crr": {
+            "display-name": "Revisión de Resiliencia Cibernética (CRR)",
+            "model short title": "CRR"
+        },
+        "imr": {
+            "display-name": "Revisión de Gestión de Incidentes (IMR)",
+            "model short title": "IMR"
+        },
+        "vadr": {
+            "display-name": "Revisión de Diseño de Arquitectura Validada de CISA (VADR)",
+            "model short title": "VADR"
         }
     },
     "aggregation": {
