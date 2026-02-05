@@ -77,6 +77,36 @@ public class ExportProxyServlet extends HttpServlet
 			{
 				exportUrl += "/";
 			}
+
+		// Validate query string to prevent URL manipulation
+		if (queryString != null && !queryString.isEmpty())
+		{
+			// Remove the leading "?" for validation
+			String rawQuery = queryString.substring(1);
+
+			// Block URL manipulation attempts in query string
+			if (rawQuery.contains("@") || rawQuery.contains("\\") ||
+			    rawQuery.contains("\r") || rawQuery.contains("\n"))
+			{
+				throw new SecurityException("Invalid query string: potential URL manipulation detected");
+			}
+
+			// Check for URL-encoded variants that could bypass validation
+			try
+			{
+				String decodedQuery = java.net.URLDecoder.decode(rawQuery, "UTF-8");
+				if (decodedQuery.contains("@") || decodedQuery.contains("\\") ||
+				    decodedQuery.contains("\r") || decodedQuery.contains("\n") ||
+				    decodedQuery.contains("://"))
+				{
+					throw new SecurityException("Invalid query string: encoded URL manipulation detected");
+				}
+			}
+			catch (java.io.UnsupportedEncodingException e)
+			{
+				throw new SecurityException("Invalid query string encoding");
+			}
+		}
 			
 			// Validate proxy path to prevent path traversal and URL manipulation
 			if (proxyPath != null && !proxyPath.isEmpty())
