@@ -54,6 +54,7 @@ export class UploadExportComponent implements OnInit {
 
   passwordRequired = false;
   password = "";
+  passwordHint = "";
   showPassword = false;
   uploadedAssessments = [];
   successfulAssessmentIndexes = [];
@@ -126,6 +127,8 @@ export class UploadExportComponent implements OnInit {
 
     // set the component state to "uploading"
     this.uploading = true;
+    this.passwordHint = "";
+    this.passwordRequired = false;
 
     // start the upload and save the progress map
 
@@ -168,9 +171,11 @@ export class UploadExportComponent implements OnInit {
         },
         fail => {
           if (fail && fail.message) {
+            this.uploading = false;
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
+            this.passwordHint = fail.hint || "";
             if (fail.message.includes("File requires a password")) {
               this.passwordRequired = true;
             }
@@ -208,11 +213,12 @@ export class UploadExportComponent implements OnInit {
     this.uploadedAssessments = this.uploadedAssessments.filter(item => item !== undefined) // Now we can remove undefined
     this.successfulAssessmentIndexes = [];
 
-    // Retry the upload process with the password. Will be called repeatedly for each assessment that 
+    // Retry the upload process with the password. Will be called repeatedly for each assessment that
     // needs a different password.
     this.xCount++; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
     let passwordDialog = this.newDialog.open(ImportPasswordComponent, {
-      disableClose: true
+      disableClose: true,
+      data: { hint: this.passwordHint }
     });
     passwordDialog.afterClosed().subscribe(result => {
       if (result) {
