@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImportAssessmentService } from '../../../services/import-assessment.service';
 
 @Component({
@@ -31,16 +31,24 @@ import { ImportAssessmentService } from '../../../services/import-assessment.ser
   styleUrls: ['./import-password.component.scss'],
   standalone: false
 })
-export class ImportPasswordComponent {
+export class ImportPasswordComponent implements OnInit {
 
   constructor(
     private importSvc: ImportAssessmentService,
-    public dialogRef: MatDialogRef<ImportPasswordComponent>
-  ) {  }
+    public dialogRef: MatDialogRef<ImportPasswordComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   dialogTitle: string = "Unlock Assessment";
   password = "";
+  passwordHint = "";
   showPassword = false;
+
+  ngOnInit() {
+    if (this.data && this.data.hint) {
+      this.passwordHint = this.data.hint;
+    }
+  }
 
   confirm(): void {
     this.dialogRef.close(this.password);
