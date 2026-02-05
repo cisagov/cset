@@ -409,6 +409,12 @@ public class EmbedServlet2 extends HttpServlet
 				if (!completed.contains(urls[i]) && Utils.sanitizeUrl(urls[i]))
 				{
 					completed.add(urls[i]);
+
+				// Re-validate immediately before connection to prevent DNS rebinding TOCTOU attacks
+				if (!Utils.sanitizeUrl(urls[i]))
+				{
+					throw new SecurityException("URL validation failed before connection (possible DNS rebinding attack): " + urls[i]);
+				}
 					URL url = new URL(urls[i]);
 					URLConnection connection = url.openConnection();
 					((HttpURLConnection) connection).setInstanceFollowRedirects(false);

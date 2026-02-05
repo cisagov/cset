@@ -103,6 +103,29 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Returns HTML content with proper security headers to prevent XSS.
+        /// </summary>
+        private IActionResult SecureHtmlContent(string content)
+        {
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            Response.Headers.Add("X-Frame-Options", "DENY");
+            Response.Headers.Add("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'");
+            return Content(content, "text/html; charset=utf-8");
+        }
+
+
+        /// <summary>
+        /// Returns SVG content with proper security headers to prevent XSS.
+        /// </summary>
+        private IActionResult SecureSvgContent(string content)
+        {
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            Response.Headers.Add("Content-Security-Policy", "default-src 'none'");
+            return Content(content, "image/svg+xml; charset=utf-8");
+        }
+
+
+        /// <summary>
         /// Returns name-value pairs indicating the domains
         /// and percentage compliant ('Yes' answers).
         /// </summary>
@@ -292,6 +315,17 @@ namespace CSETWebCore.Api.Controllers
 
             _scoring.InstantiateScoringHelper(assessmentId);
 
+            // Validate domain parameter to prevent XPath injection and XSS
+            if (string.IsNullOrWhiteSpace(domain) || !System.Text.RegularExpressions.Regex.IsMatch(domain, @"^[a-zA-Z0-9_-]+$"))
+            {
+                return BadRequest("Invalid domain parameter");
+            }
+
+            // Validate mil parameter if provided to prevent XPath injection and XSS
+            if (mil != null && !System.Text.RegularExpressions.Regex.IsMatch(mil, @"^[a-zA-Z0-9_-]+$"))
+            {
+                return BadRequest("Invalid mil parameter");
+            }
 
             var xPath = $"//Domain[@abbreviation='{domain}']";
             if (mil != null)
@@ -305,15 +339,15 @@ namespace CSETWebCore.Api.Controllers
                 return NotFound();
             }
 
-            // the MilHeatMap class works for Domains as well.  
+            // the MilHeatMap class works for Domains as well.
             var heatmap = new MilHeatMap(xDomain, true, false);
             if (scale != null)
             {
                 heatmap.Scale((double)scale);
             }
 
-            // return the svg
-            return Content(heatmap.ToString(), "image/svg+xml");
+            // return the svg with security headers
+            return SecureSvgContent(heatmap.ToString());
         }
 
 
@@ -326,7 +360,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cmu/blocklegend")]
         public IActionResult GetBlockLegend(bool includeGoal = true)
         {
-            return Content(new BlockLegend(includeGoal).ToString(), "text/html");
+            return SecureHtmlContent(new BlockLegend(includeGoal).ToString());
         }
 
 
@@ -339,7 +373,7 @@ namespace CSETWebCore.Api.Controllers
 
         public IActionResult GetFullAnswerDistribHtml()
         {
-            return Content(GetTotalBarChart(), "text/html");
+            return SecureHtmlContent(GetTotalBarChart());
         }
 
         /// <summary>
@@ -351,7 +385,7 @@ namespace CSETWebCore.Api.Controllers
 
         public IActionResult GetMil1FullAnswerDistribHtml()
         {
-            return Content(GetMil1TotalBarChart(), "text/html");
+            return SecureHtmlContent(GetMil1TotalBarChart());
         }
 
 
@@ -399,7 +433,13 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cmu/mil1PerformanceSummaryLegend")]
         public IActionResult getMil1PerformanceSummaryLegend([FromQuery] string configuration = "")
         {
-            return Content(GetPerformanceSummaryLegend(configuration), "text/html");
+            // Validate configuration parameter to prevent XSS
+            if (configuration != null && !System.Text.RegularExpressions.Regex.IsMatch(configuration, @"^[a-zA-Z0-9_\-,\s]*$"))
+            {
+                return BadRequest("Invalid configuration parameter");
+            }
+
+            return SecureHtmlContent(GetPerformanceSummaryLegend(configuration));
         }
 
         /// <summary>
@@ -410,7 +450,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cmu/mil1PerformanceLegend")]
         public IActionResult GetMil1PerformanceLegend()
         {
-            return Content(new MIL1PerformanceLegend().ToString(), "text/html");
+            return SecureHtmlContent(new MIL1PerformanceLegend().ToString());
         }
 
 
@@ -484,7 +524,7 @@ namespace CSETWebCore.Api.Controllers
             var bciAll = new BarChartInput() { Height = 80, Width = 100 };
             bciAll.IncludePercentFirstBar = true;
             bciAll.AnswerCounts = new List<int> { distAll.Green, distAll.Yellow, distAll.Red };
-            return Content(new ScoreBarChart(bciAll).ToString(), "text/html");
+            return SecureHtmlContent(new ScoreBarChart(bciAll).ToString());
         }
 
 
