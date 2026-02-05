@@ -4,22 +4,23 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using Microsoft.Extensions.Configuration;
+using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Question;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Question;
-using CSETWebCore.Business.Question;
-using CSETWebCore.Interfaces.Analytics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -36,11 +37,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionBusiness _question;
         private readonly IAnalyticsBusiness _analytics;
         private readonly IConfiguration _configuration;
+        private readonly CSETContext _context;
+
 
         public AnalyticsController(IRequirementBusiness requirement, IAssessmentBusiness assessment,
             ITokenManager token, IDemographicBusiness demographic,
             IQuestionRequirementManager questionRequirement,
             IQuestionBusiness question, IAnalyticsBusiness analytics,
+            CSETContext context,
             IConfiguration configuration)
         {
             _requirement = requirement;
@@ -51,30 +55,9 @@ namespace CSETWebCore.Api.Controllers
             _question = question;
             _analytics = analytics;
             _configuration = configuration;
+            _context = context;
         }
 
-        /// <summary>
-        /// Get analytic information
-        /// </summary>
-        /// <returns></returns>
-        // [HttpGet]
-        // [Route("api/analytics/getAnalytics")]
-        // public IActionResult GetAnalytics()
-        // {
-        //     var demographics = GetDemographics();
-        //     var assessment = GetAnalyticsAssessment();
-        //     assessment.Assets = demographics.AssetValue;
-        //     assessment.Size = demographics.Size;
-        //     assessment.IndustryId = demographics.IndustryId;
-        //     assessment.SectorId = demographics.SectorId;
-        //
-        //     return Ok(new Analytics
-        //     {
-        //         Assessment = assessment,
-        //         Demographics = demographics,
-        //         QuestionAnswers = GetQuestionsAnswers()
-        //     });
-        // }
 
         [HttpGet]
         [Route("api/analytics/getAggregation")]
@@ -84,6 +67,22 @@ namespace CSETWebCore.Api.Controllers
             var agg = _analytics.GetAggregationAssessment(assessmentId);
 
             return Ok(agg);
+        }
+
+
+        /// <summary>
+        /// Gets a list of sectors and sample sizes of those sectors
+        /// </summary>
+        [HttpGet]
+        [Route("api/analytics/samplesizes")]
+        public IActionResult GetSampleSizes()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var biz = new AnalyticsBusiness(_context);
+            var resp = biz.GetSectorsAndSampleSizes(assessmentId, _token.GetCurrentLanguage());
+
+            return Ok(resp);
         }
 
 
@@ -108,6 +107,8 @@ namespace CSETWebCore.Api.Controllers
 
                     command.ExecuteNonQuery();
                 }
+
+
                 using (SqlCommand command = new SqlCommand("FillAll", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -116,6 +117,7 @@ namespace CSETWebCore.Api.Controllers
                     command.ExecuteNonQuery();
                 }
 
+
                 using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -123,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
                     // Add input parameter
                     command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
                     command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-                    command.Parameters.Add(new SqlParameter("@industry_id", industryId));
+                    //command.Parameters.Add(new SqlParameter("@industry_id", industryId));
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -145,35 +147,8 @@ namespace CSETWebCore.Api.Controllers
                         dtTargetAssessment.Load(reader);
                     }
                 }
-
-                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturitySampleSize", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        SampleSize.Load(reader);
-                    }
-                }
-
             }
 
-
-            /*
-        categories: any[] = [
-    { label: 'Invent', min: 10, max: 77, median: 42, myScore: 33},
-    { label: 'Prevent', min: 40, max: 95, median: 61, myScore: 83},
-    { label: 'Circumvent', min: 25, max: 54, median: 33, myScore: 50},
-    { label: 'Dryer Vent', min: 0, max: 94, median: 67, myScore: 23},
-    { label: 'Lament', min: 47, max: 62, median: 52, myScore: 47},
-    { label: 'Intent', min: 8, max: 80, median: 63, myScore: 33},
-    { label: 'Get Bent', min: 14, max: 58, median: 36, myScore: 29}
-  ];
-        */
 
             var response = new NewResponse();
 
@@ -188,7 +163,7 @@ namespace CSETWebCore.Api.Controllers
                 cat.Min = (double)row["minimum"];
                 cat.Max = (double)row["maximum"];
                 cat.Avg = (double)row["average"];
-                cat.Median = (int)row["median"];
+                cat.Median = (double)row["median"];
             }
 
 
@@ -197,86 +172,18 @@ namespace CSETWebCore.Api.Controllers
                 var r = response.Categories.FirstOrDefault(x => x.Label == row["title"].ToString());
                 if (r != null)
                 {
-                    r.MyScore = (int)row["Percentage"];
+                    r.MyScore = (double)row["Percentage"];
                 }
             }
-
-
-            int total_count = 0;
-            foreach (DataRow row in SampleSize.Rows)
-            {
-                if (sectorId == null)
-                {
-                    if (row["SectorId"].ToString() == "")
-                    {
-                        total_count += Convert.ToInt32(row["AssessmentCount"]);
-                        break;
-                    }
-                }
-
-                else if (sectorId == Convert.ToInt32(row["SectorId"]))
-                {
-                    total_count += Convert.ToInt32(row["AssessmentCount"]);
-                    break;
-                }
-                else
-                {
-                    total_count += Convert.ToInt32(row["AssessmentCount"]);
-                    break;
-                }
-            }
-            response.SampleSize = total_count;
-
 
             return Ok(response);
         }
-
-
-        private AnalyticsAssessment GetAnalyticsAssessment()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var assessment = _assessment.GetAnalyticsAssessmentDetail(assessmentId);
-            return assessment;
-        }
-
-        /// <summary>
-        /// Returns an instance of Demographics for Anonymous export 
-        /// </summary>        
-        /// <returns></returns>
-        // private AnalyticsDemographic GetDemographics()
-        // {
-        //     int assessmentId = _token.AssessmentForUser();
-        //     return _demographic.GetAnonymousDemographics(assessmentId);
-        // }
-
-        /// <summary>
-        /// Returns questions/answers for current selected assessment
-        /// </summary>
-        /// <returns></returns>
-        private List<AnalyticsQuestionAnswer> GetQuestionsAnswers()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
-
-            if (applicationMode.ToLower().StartsWith("questions"))
-            {
-                _question.SetQuestionAssessmentId(assessmentId);
-                QuestionResponse resp = _question.GetQuestionListWithSet("*");
-                return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
-            }
-            else
-            {
-                _requirement.SetRequirementAssessmentId(assessmentId);
-                QuestionResponse resp = _requirement.GetRequirementsList();
-                return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
-            }
-        }
     }
+
 
     public class NewResponse
     {
         public List<Category> Categories { get; set; } = [];
-        public int SampleSize { get; set; } = 0;
     }
 
 
@@ -288,24 +195,5 @@ namespace CSETWebCore.Api.Controllers
         public double Median { get; set; }
         public double Avg { get; set; }
         public double MyScore { get; set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class AnalyticsResponse
-    {
-        public List<double> Min { get; set; } = [];
-        public List<double> Max { get; set; } = [];
-        public List<int> Median { get; set; } = [];
-        public List<double> Average { get; set; } = [];
-        public BarItem BarData { get; set; } = new BarItem();
-        public int SampleSize { get; set; } = 0;
-    }
-
-    public class BarItem
-    {
-        public List<double> Values { get; set; } = [];
-        public List<string> Labels { get; set; } = [];
     }
 }

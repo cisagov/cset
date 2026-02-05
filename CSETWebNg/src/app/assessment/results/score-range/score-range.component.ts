@@ -66,7 +66,7 @@ export class ScoreRangeComponent implements OnInit {
   @Input()
   myColor = "#0000aa";
 
-  rangeColor = "#87909e";
+  rangeColor = "#707885";
 
   padding = 10;
 
@@ -77,7 +77,7 @@ export class ScoreRangeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.containerWidth = this.chartWidth * 1.25;
+    this.containerWidth = this.chartWidth * 1.1;
     this.barH = this.h * .1;
   }
 }
