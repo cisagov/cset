@@ -4,7 +4,7 @@
   "export all": "Export All",
   "new assessment": "New Assessment",
   "status": "Status",
-  "actions": "Actions!",
+  "actions": "Actions",
   "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
   "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
   "last modified": "Last Modified",
