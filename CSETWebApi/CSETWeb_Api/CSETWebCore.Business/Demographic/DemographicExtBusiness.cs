@@ -314,7 +314,7 @@ namespace CSETWebCore.Business.Demographic
             SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType, existingRecords);
             SaveString(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName, existingRecords);
             SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
-            
+
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);

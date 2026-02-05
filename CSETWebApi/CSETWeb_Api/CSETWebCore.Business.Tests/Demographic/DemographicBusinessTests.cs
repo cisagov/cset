@@ -236,12 +236,18 @@ namespace CSETWebCore.Business.Tests.Demographic
 
             var demographics = new List<DETAILS_DEMOGRAPHICS>();
             var demographicOptions = new List<DETAILS_DEMOGRAPHICS_OPTIONS>();
+            var sectorSubsectors = new List<ASSESSMENT_SECTOR_SUBSECTOR>();
+            var sectors = new List<SECTOR>();
 
             var mockDemographicsSet = CreateMockDbSet(demographics);
             var mockOptionsSet = CreateMockDbSet(demographicOptions);
+            var mockSectorSubsectorSet = CreateMockDbSet(sectorSubsectors);
+            var mockSectorSet = CreateMockDbSet(sectors);
 
             _mockContext.Setup(c => c.DETAILS_DEMOGRAPHICS).Returns(mockDemographicsSet.Object);
             _mockContext.Setup(c => c.DETAILS_DEMOGRAPHICS_OPTIONS).Returns(mockOptionsSet.Object);
+            _mockContext.Setup(c => c.ASSESSMENT_SECTOR_SUBSECTOR).Returns(mockSectorSubsectorSet.Object);
+            _mockContext.Setup(c => c.SECTOR).Returns(mockSectorSet.Object);
 
             // Act
             var result = _demographicBusiness.GetDemographics(assessmentId);
@@ -258,30 +264,38 @@ namespace CSETWebCore.Business.Tests.Demographic
             // Arrange
             var assessmentId = 1;
 
-            var demographics = new List<DETAILS_DEMOGRAPHICS>
-            {
-                new DETAILS_DEMOGRAPHICS { Assessment_Id = assessmentId, DataItemName = "SSG-SECTOR-1", IntValue = 1 },
-                new DETAILS_DEMOGRAPHICS { Assessment_Id = assessmentId, DataItemName = "SSG-SECTOR-2", IntValue = 2 },
-                new DETAILS_DEMOGRAPHICS { Assessment_Id = assessmentId, DataItemName = "SSG-SECTOR-3", IntValue = 3 }
-            };
-
+            var demographics = new List<DETAILS_DEMOGRAPHICS>();
             var demographicOptions = new List<DETAILS_DEMOGRAPHICS_OPTIONS>();
+
+            // Sector 1 maps to Model_SSG_CHEM (18), Sector 13 maps to Model_SSG_IT (20)
+            var sectorSubsectors = new List<ASSESSMENT_SECTOR_SUBSECTOR>
+            {
+                new ASSESSMENT_SECTOR_SUBSECTOR { Assessment_Id = assessmentId, SectorId = 1, Sequence = 1 },
+                new ASSESSMENT_SECTOR_SUBSECTOR { Assessment_Id = assessmentId, SectorId = 13, Sequence = 2 }
+            };
+            var sectors = new List<SECTOR>();
+            var sectorIndustries = new List<SECTOR_INDUSTRY>();
 
             var mockDemographicsSet = CreateMockDbSet(demographics);
             var mockOptionsSet = CreateMockDbSet(demographicOptions);
+            var mockSectorSubsectorSet = CreateMockDbSet(sectorSubsectors);
+            var mockSectorSet = CreateMockDbSet(sectors);
+            var mockSectorIndustrySet = CreateMockDbSet(sectorIndustries);
 
             _mockContext.Setup(c => c.DETAILS_DEMOGRAPHICS).Returns(mockDemographicsSet.Object);
             _mockContext.Setup(c => c.DETAILS_DEMOGRAPHICS_OPTIONS).Returns(mockOptionsSet.Object);
+            _mockContext.Setup(c => c.ASSESSMENT_SECTOR_SUBSECTOR).Returns(mockSectorSubsectorSet.Object);
+            _mockContext.Setup(c => c.SECTOR).Returns(mockSectorSet.Object);
+            _mockContext.Setup(c => c.SECTOR_INDUSTRY).Returns(mockSectorIndustrySet.Object);
 
             // Act
             var result = _demographicBusiness.GetDemographics(assessmentId);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(3, result.SsgModelIds.Count);
-            Assert.Contains(1, result.SsgModelIds);
-            Assert.Contains(2, result.SsgModelIds);
-            Assert.Contains(3, result.SsgModelIds);
+            Assert.Equal(2, result.SsgModelIds.Count);
+            Assert.Contains(18, result.SsgModelIds); // Model_SSG_CHEM
+            Assert.Contains(20, result.SsgModelIds); // Model_SSG_IT
         }
 
         [Fact]

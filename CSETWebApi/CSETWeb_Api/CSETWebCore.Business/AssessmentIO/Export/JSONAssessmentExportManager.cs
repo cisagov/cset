@@ -634,7 +634,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 var s = _context.SECTOR.FirstOrDefault(s => s.SectorId == sectorSubsector.SectorId);
                 var ss = _context.SECTOR_INDUSTRY.FirstOrDefault(s => s.IndustryId == sectorSubsector.SubsectorId);
 
-                var ssj = new SectorSubsectorJson() { 
+                var ssj = new SectorSubsectorJson()
+                {
                     SectorId = sectorSubsector.SectorId,
                     SectorName = s?.SectorName,
                     SubsectorId = sectorSubsector.SubsectorId,
