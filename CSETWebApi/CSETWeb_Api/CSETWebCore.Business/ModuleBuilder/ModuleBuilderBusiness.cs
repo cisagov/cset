@@ -1023,30 +1023,31 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
             // Add question to set
-            NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
+            if (!_context.NEW_QUESTION_SETS.Any(x => x.Question_Id == q.Question_Id && x.Set_Name == request.SetName))
             {
-                Question_Id = q.Question_Id,
-                Set_Name = request.SetName
-            };
-
-            _context.NEW_QUESTION_SETS.Add(nqs);
-
-            _context.SaveChanges();
-
-
-            // Define SALs
-            foreach (string level in request.SalLevels)
-            {
-                NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
+                NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
                 {
-                    New_Question_Set_Id = nqs.New_Question_Set_Id,
-                    Universal_Sal_Level = level
+                    Question_Id = q.Question_Id,
+                    Set_Name = request.SetName
                 };
 
-                _context.NEW_QUESTION_LEVELS.Add(nql);
-            }
+                _context.NEW_QUESTION_SETS.Add(nqs);
+                _context.SaveChanges();
 
-            _context.SaveChanges();
+                // Define SALs
+                foreach (string level in request.SalLevels)
+                {
+                    NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
+                    {
+                        New_Question_Set_Id = nqs.New_Question_Set_Id,
+                        Universal_Sal_Level = level
+                    };
+
+                    _context.NEW_QUESTION_LEVELS.Add(nql);
+                }
+
+                _context.SaveChanges();
+            }
         }
 
 
@@ -1083,18 +1084,23 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
             // Attach this question to the Set
-            NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
+            var existingNqs = _context.NEW_QUESTION_SETS
+                .FirstOrDefault(x => x.Question_Id == request.QuestionID && x.Set_Name == request.SetName);
+
+            if (existingNqs == null)
             {
-                Question_Id = request.QuestionID,
-                Set_Name = request.SetName
-            };
+                existingNqs = new NEW_QUESTION_SETS
+                {
+                    Question_Id = request.QuestionID,
+                    Set_Name = request.SetName
+                };
 
-            _context.NEW_QUESTION_SETS.Add(nqs);
-            _context.SaveChanges();
-
+                _context.NEW_QUESTION_SETS.Add(existingNqs);
+                _context.SaveChanges();
+            }
 
             // SAL levels
-            var nqls = _context.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id);
+            var nqls = _context.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == existingNqs.New_Question_Set_Id);
             foreach (NEW_QUESTION_LEVELS l in nqls)
             {
                 _context.NEW_QUESTION_LEVELS.Remove(l);
@@ -1105,7 +1111,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             {
                 NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
                 {
-                    New_Question_Set_Id = nqs.New_Question_Set_Id,
+                    New_Question_Set_Id = existingNqs.New_Question_Set_Id,
                     Universal_Sal_Level = l
                 };
 
