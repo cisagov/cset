@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
 
@@ -99,37 +99,44 @@ export class ImportAssessmentService {
 
           // pass the percentage into the progress-stream
           progress.next(percentDone);
-        } else if (event instanceof HttpResponseBase) {
-          if (event.status == 404) {
-            let errObj = {
-              message: "File import failed. Custom module not found",
-            };
-            progress.error(errObj);
+        } else if (event instanceof HttpResponse) {
+          // Only process when we have the full response with body, not just headers
+          if (event.status == 200) {
+            // Close the progress-stream if we get a successful answer from the API
+            // The upload is complete
+            progress.complete();
           }
-          if (event.status == 423) {
-            let errObj = {
+        }
+
+      },
+        (error) => {
+          // Handle different error statuses
+          if (error.status === 423) {
+            let errObj: any = {
               message: "File requires a password",
             };
+            // Extract hint from error response body
+            if (error.error && error.error.hint) {
+              errObj.hint = error.error.hint;
+            }
             progress.error(errObj);
-          } else if (event.status == 406) {
+          } else if (error.status === 406) {
             let errObj = {
               message: "Invalid password.",
             };
             progress.error(errObj);
-          } else if (event.status != 200 && event.status != 406 && event.status != 423) {
+          } else if (error.status === 404) {
+            let errObj = {
+              message: "File import failed. Custom module not found",
+            };
+            progress.error(errObj);
+          } else {
             let errObj = {
               message: "File Import Failed",
             };
             progress.error(errObj);
           }
 
-          // Close the progress-stream if we get an answer form the API
-          // The upload is complete
-          else progress.complete();
-        }
-
-      },
-        (error) => {
           this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
         }
       );
