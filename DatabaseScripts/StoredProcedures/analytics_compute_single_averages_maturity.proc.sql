@@ -25,7 +25,7 @@ BEGIN
 		select
 		Question_Group as Title, answer_text, count(answer_text) answer_count,
 		sum(count(answer_text)) OVER(PARTITION BY Question_Group) AS Total,
-		cast(IsNull(Round((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY Question_Group),0),1)))*100,0),0) as int)  as [Percentage] 
+		cast(IsNull((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY Question_Group),0),1)))*100,0) as float) as [Percentage] 
 		from Analytics_Answers a
 		join ANALYTICS_MATURITY_GROUPINGS g on a.Question_Or_Requirement_Id=g.Maturity_Question_Id
 		where assessment_id = @assessment_id

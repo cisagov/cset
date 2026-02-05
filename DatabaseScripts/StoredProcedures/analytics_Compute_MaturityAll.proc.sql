@@ -13,8 +13,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[analytics_Compute_MaturityAll]
 @maturity_model_id int,
-@sector_id int = NULL,
-@industry_id int = NULL
+@sector_id int = NULL
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -33,16 +32,14 @@ BEGIN
 --step 1 get the base data
 select a.Assessment_Id,Question_Group, Answer_Text, isnull(COUNT(a.answer_text),0) Answer_Count, 
 		sum(isnull(count(answer_text),0)) OVER(PARTITION BY a.assessment_id,question_group) AS Total	
-		,cast(IsNull(Round((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY a.assessment_id,question_group),0),1)))*100,0),0) as int)  as [Percentage] 
+		,cast(IsNull((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY a.assessment_id,question_group),0),1)))*100,0) as float)  as [Percentage] 
 		into #temp
 		from [Analytics_Answers] a	
 		join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
 		join ANALYTICS_MATURITY_GROUPINGS g on q.Mat_Question_Id=g.Maturity_Question_Id
-		left join details_demographics ddsector on a.Assessment_Id = ddsector.Assessment_Id and ddsector.DataItemName = 'SECTOR'
-		left join details_demographics ddsubsector on a.Assessment_Id = ddsubsector.Assessment_Id and ddsubsector.DataItemName = 'SUBSECTOR'
+		left join ASSESSMENT_SECTOR_SUBSECTOR ddsector on a.Assessment_Id = ddsector.Assessment_Id
 		where a.question_type = 'Maturity' and q.Maturity_Model_Id=@maturity_model_id and g.Maturity_Model_Id=@maturity_model_id
-			and (nullif(@sector_id, ddsector.IntValue) is null)
-			and (nullif(@industry_id, ddsubsector.IntValue) is null)
+			and (nullif(@sector_id, ddsector.SectorId) is null)
 		group by a.assessment_id, Question_Group, Answer_Text
 
 
