@@ -70,9 +70,9 @@
                     <div *ngIf="q.parentQuestionId" class="ms-4 ps-5"></div>
 
                     <!-- parent-level questions -->
-                    <div *ngIf="!q.parentQuestionId"
-                        style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                        {{ q.displayNumber }}
+                    <div *ngIf="!q.parentQuestionId" style="font-weight: bold; margin-right: 2rem; max-width: 25%;" 
+                        [class.text-nowrap]="!q.displayNumber.includes(' ')">
+                        {{ q.displayNumber }} 
                         <div>
                             <span class="question-mat-level-name" *ngIf="showLevelIndicator(q)">
                                 {{ t('level.' + q.maturityLevelName.toLowerCase()) }}

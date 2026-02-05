@@ -24,6 +24,8 @@ interface listSectors {
   optionValue: number;
   optionText: string;
 }
+
+
 @Component({
   selector: 'app-analytics-results',
   templateUrl: './analytics-results.component.html',
@@ -44,6 +46,7 @@ export class AnalyticsResultsComponent implements OnInit {
   sampleSize: number;
   allSectors: string = 'All Sectors';
 
+  myColor = '#174792';
   mySectors: any[];
 
   // result from API call

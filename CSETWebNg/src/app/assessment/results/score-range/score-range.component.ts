@@ -66,7 +66,7 @@ export class ScoreRangeComponent implements OnInit {
   @Input()
   myColor = "#0000aa";
 
-  rangeColor = "#87909e";
+  rangeColor = "#707885";
 
   padding = 10;
 

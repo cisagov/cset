@@ -104,7 +104,9 @@
         <!-- Landscape ---------------------------------------------------------------------->
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div class="number-and-text">
-            <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
+            <div style="font-weight: bold; margin-right: 1em; max-width: 25%;" [class.text-nowrap]="!q.displayNumber.includes(' ')">
+              {{ q.displayNumber }}
+            </div>
 
             <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
               <div style="width: 100%;list-style-type: none;">

@@ -24,7 +24,7 @@
 
      <table class="ms-3">
           <tr *ngFor="let cat of categories">
-               <td class="pe-3 text-end" style="font-size: .8rem">
+               <td class="pe-3 py-3 text-end" style="font-size: .8rem" [style.width]="labelWidth + 'px'">
                     {{cat.label}}
                </td>
                <td>
@@ -39,7 +39,7 @@
                <td>
                     <!-- scale -->
                     <svg width="containerWidth" height="50" xmlns="http://www.w3.org/2000/svg">
-                         <line [x1]="leftMargin" y1="25" [attr.x2]="leftMargin + containerWidth" y2="25" stroke="#666666" stroke-width=".8" />
+                         <line [attr.x1]="ticks[0].x" y1="25" [attr.x2]="leftMargin + containerWidth" y2="25" stroke="#666666" stroke-width=".8" />
 
                          <g *ngFor="let tick of ticks">
                               <line [attr.x1]="tick.x" y1="20" [attr.x2]="tick.x" y2="30" stroke="#666666"
