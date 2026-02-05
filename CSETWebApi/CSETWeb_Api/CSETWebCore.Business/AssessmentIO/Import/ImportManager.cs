@@ -306,13 +306,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         throw;
                     }
                 }
-             
-            }   
-            catch (ZipException ex) 
+
+            }
+            catch (ZipException ex)
             {
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             process.Start();
             process.WaitForExit();// Waits here for the process to exit.
         }
-        
+
         private string ExtractPasswordHintFromZip(byte[] zipData)
         {
             try
@@ -387,7 +387,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 {
                     // DON'T set password - we just want to read entry names
                     // Entry names are not encrypted, even in password-protected ZIPs
-            
+
                     foreach (ZipEntry entry in zipFile)
                     {
                         if (entry.Name.EndsWith(".hint", StringComparison.OrdinalIgnoreCase))
@@ -404,7 +404,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             {
                 Console.WriteLine($"Could not extract password hint: {ex.Message}");
             }
-    
+
             return string.Empty;
         }
     }
