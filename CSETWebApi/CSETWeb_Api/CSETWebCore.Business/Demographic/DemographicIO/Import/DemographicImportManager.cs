@@ -68,8 +68,15 @@ namespace CSETWebCore.Business.Demographic.Import
             }
         }
 
+
+        /// <summary>
+        /// Load exported demographic data into the assessment.
+        /// </summary>
         private async Task LoadDemographicsData(int assessmentId, CSETContext context, UploadDemographicsModel model)
         {
+            var isAssessorWorkflow = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.AssessorMode ?? false;
+
+
             foreach (var serviceDemographics in model.jCIS_CSI_SERVICE_DEMOGRAPHICS)
             {
                 var dbServiceDemographics = context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -122,10 +129,32 @@ namespace CSETWebCore.Business.Demographic.Import
                 dbServiceComposition.Other_Defining_System_Description = serviceComposition.Other_Defining_System_Description;
                 dbServiceComposition.Primary_Defining_System = serviceComposition.Primary_Defining_System;
 
-
                 await context.SaveChangesAsync();
-
             }
+
+
+            // clear and rebuild sectors
+            var jASS = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).ToList();
+            _context.ASSESSMENT_SECTOR_SUBSECTOR.RemoveRange(jASS);
+            await context.SaveChangesAsync();
+
+            // import all sectors - but only take the first one if not in assessor workflow
+            foreach (var jSector in isAssessorWorkflow 
+                ? model.jASSESSMENT_SECTOR_SUBSECTOR 
+                : model.jASSESSMENT_SECTOR_SUBSECTOR.Take(1))
+            {
+                var dbASS = new ASSESSMENT_SECTOR_SUBSECTOR()
+                {
+                    Assessment_Id = assessmentId,
+                    SectorId = jSector.SectorId,
+                    IndustryId = jSector.IndustryId,
+                    Sequence = jSector.Sequence
+                };
+
+                context.ASSESSMENT_SECTOR_SUBSECTOR.Add(dbASS);
+            }
+
+            await context.SaveChangesAsync();
 
 
             foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
@@ -198,6 +227,5 @@ namespace CSETWebCore.Business.Demographic.Import
                 await context.SaveChangesAsync();
             }
         }
-
     }
 }

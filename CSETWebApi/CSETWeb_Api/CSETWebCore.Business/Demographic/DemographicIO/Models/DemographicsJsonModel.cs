@@ -22,7 +22,21 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         public Boolean? BoolValue { get; set; }
 
         public DateTime? DateTimeValue { get; set; }
+    }
 
+    public class jASSESSMENT_SECTOR_SUBSECTOR
+    {
+        [Required]
+        public Int32 AssessmentSectorSubsectorId { get; set; }
+
+        [Required]
+        public Int32 Assessment_Id { get; set; }
+
+        [Required]
+        public Int32 SectorId { get; set; }
+        public Int32 IndustryId { get; set; }
+        [Required]
+        public Int32 Sequence { get; set; }
     }
 
     public class jCIS_CSI_SERVICE_DEMOGRAPHICS
