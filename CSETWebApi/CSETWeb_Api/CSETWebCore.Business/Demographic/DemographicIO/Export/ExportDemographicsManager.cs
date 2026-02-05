@@ -67,10 +67,10 @@ namespace CSETWebCore.Business.Demographic.Export
 
             }
 
-            foreach (var item in _context.INFORMATION.Where(x => x.Id == assessmentId))
-            {
-                model.jORG_DETAILS.Add(TinyMapper.Map<INFORMATION, jORG_DETAILS>(item));
-            }
+            //foreach (var item in _context.INFORMATION.Where(x => x.Id == assessmentId))
+            //{
+            //    model.jORG_DETAILS.Add(TinyMapper.Map<INFORMATION, jORG_DETAILS>(item));
+            //}
 
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
