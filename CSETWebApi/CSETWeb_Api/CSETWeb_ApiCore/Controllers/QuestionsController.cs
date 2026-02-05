@@ -127,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 LogManager.GetCurrentClassLogger().Error(exc);
                 return BadRequest(exc.Message);
-            }            
+            }
 
         }
 
