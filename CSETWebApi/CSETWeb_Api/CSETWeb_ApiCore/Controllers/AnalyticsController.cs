@@ -13,7 +13,6 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -126,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
                     // Add input parameter
                     command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
                     command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-                    command.Parameters.Add(new SqlParameter("@industry_id", industryId));
+                    //command.Parameters.Add(new SqlParameter("@industry_id", industryId));
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -148,21 +147,6 @@ namespace CSETWebCore.Api.Controllers
                         dtTargetAssessment.Load(reader);
                     }
                 }
-
-
-                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturitySampleSize", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        SampleSize.Load(reader);
-                    }
-                }
             }
 
 
@@ -179,7 +163,7 @@ namespace CSETWebCore.Api.Controllers
                 cat.Min = (double)row["minimum"];
                 cat.Max = (double)row["maximum"];
                 cat.Avg = (double)row["average"];
-                cat.Median = (int)row["median"];
+                cat.Median = (double)row["median"];
             }
 
 
@@ -188,36 +172,9 @@ namespace CSETWebCore.Api.Controllers
                 var r = response.Categories.FirstOrDefault(x => x.Label == row["title"].ToString());
                 if (r != null)
                 {
-                    r.MyScore = (int)row["Percentage"];
+                    r.MyScore = (double)row["Percentage"];
                 }
             }
-
-
-            int total_count = 0;
-            foreach (DataRow row in SampleSize.Rows)
-            {
-                if (sectorId == null)
-                {
-                    if (row["SectorId"].ToString() == "")
-                    {
-                        total_count += Convert.ToInt32(row["AssessmentCount"]);
-                        break;
-                    }
-                }
-
-                else if (sectorId == Convert.ToInt32(row["SectorId"]))
-                {
-                    total_count += Convert.ToInt32(row["AssessmentCount"]);
-                    break;
-                }
-                else
-                {
-                    total_count += Convert.ToInt32(row["AssessmentCount"]);
-                    break;
-                }
-            }
-            response.SampleSize = total_count;
-
 
             return Ok(response);
         }
@@ -227,7 +184,6 @@ namespace CSETWebCore.Api.Controllers
     public class NewResponse
     {
         public List<Category> Categories { get; set; } = [];
-        public int SampleSize { get; set; } = 0;
     }
 
 
@@ -239,24 +195,5 @@ namespace CSETWebCore.Api.Controllers
         public double Median { get; set; }
         public double Avg { get; set; }
         public double MyScore { get; set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class AnalyticsResponse
-    {
-        public List<double> Min { get; set; } = [];
-        public List<double> Max { get; set; } = [];
-        public List<int> Median { get; set; } = [];
-        public List<double> Average { get; set; } = [];
-        public BarItem BarData { get; set; } = new BarItem();
-        public int SampleSize { get; set; } = 0;
-    }
-
-    public class BarItem
-    {
-        public List<double> Values { get; set; } = [];
-        public List<string> Labels { get; set; } = [];
     }
 }

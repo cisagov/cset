@@ -49,6 +49,8 @@ export class ScoreRangesComponent implements OnInit, OnChanges {
   @Input()
   chartWidth: number;
 
+  labelWidth: number;
+
   containerWidth: number;
 
 
@@ -68,6 +70,7 @@ export class ScoreRangesComponent implements OnInit, OnChanges {
    */
   ngOnInit(): void {
     this.containerWidth = this.chartWidth;
+    this.labelWidth = this.chartWidth * .3;
 
     // build scale
     this.ticks = Array.from({ length: 11 }, (_, i) => ({

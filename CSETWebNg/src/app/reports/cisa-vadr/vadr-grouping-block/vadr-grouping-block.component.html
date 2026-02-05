@@ -31,7 +31,7 @@
                     <td>
                          <div [innerHTML]="q.questionText"></div>
 
-                         <div *ngIf="!!q.altAnswerText" style="border: 1px solid #ccc; border-radius: .3rem"
+                         <div *ngIf="q.answerText == 'NA' && !!q.altAnswerText" style="border: 1px solid #ccc; border-radius: .3rem"
                               class="p-2 m-2 mt-4">
                               <div class="fw-bold">{{t('reports.core.cisa vadr.report.na answer justification')}}</div>
                               <p>
