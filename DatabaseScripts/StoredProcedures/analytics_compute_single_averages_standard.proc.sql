@@ -23,7 +23,6 @@ begin
 	join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id		
 	join NEW_QUESTION_SETS s on c.Question_Id = s.Question_Id			
 	join AVAILABLE_STANDARDS avs on a.Assessment_Id=avs.Assessment_Id		
-	left join DEMOGRAPHICS d on a.Assessment_Id = d.Assessment_Id
 	where a.Answer_Text != 'NA' and a.question_type = 'Question' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name
@@ -60,7 +59,6 @@ begin
 	join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id=c.Requirement_Id
 	join REQUIREMENT_SETS s on c.Requirement_Id=s.Requirement_Id	
 	join AVAILABLE_STANDARDS avs on a.Assessment_Id=avs.Assessment_Id		
-	left join DEMOGRAPHICS d on a.Assessment_Id = d.Assessment_Id
 	where a.Answer_Text != 'NA' and a.question_type = 'Requirement' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name			
