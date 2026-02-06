@@ -207,12 +207,22 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
 
+  /**
+   * Gets completion stats for all assessments attached to the current user
+   */
   getAssessmentsCompletion() {
-    return this.http.get(this.apiUrl + 'assessmentsCompletionForUser');
+    return this.http.get(this.apiUrl + 'assessments-completion-for-user');
   }
 
   /**
-   * Get a new token that carries the assessmentID as a claim.  This token
+   * Gets completion stats for a single assessment
+   */
+  getAssessmentCompletion() {
+    return this.http.get(this.apiUrl + 'assessment-completion');
+  }
+
+  /**
+   * Gets a new token that carries the assessmentID as a claim.  This token
    * should be used for all assessment-specific requests.
    */
   getAssessmentToken(assessId: number) {
