@@ -37,6 +37,25 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
+        /// Returns completion counts for a single assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public CompletionCounts GetAssessmentCompletion(int assessmentId)
+        {
+            var response = new List<CompletionCounts>();
+
+            var q = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId);
+
+            var myAssessments = q.ToList();
+
+            var counts = FillInMissingCounts(myAssessments, q);
+
+            return counts.First();
+        }
+
+
+        /// <summary>
         /// Returns a collection of completion counts for each assessment that the user
         /// is associated with.
         /// </summary>
