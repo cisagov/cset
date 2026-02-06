@@ -272,6 +272,16 @@ namespace CSETWebCore.Business.Assessment
             return list;
         }
 
+        /// <summary>
+        /// Returns a collection of answer counts for a user's assessments.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public CompletionCounts GetAssessmentCompletion(int assessmentId)
+        {
+            return new CompletionCounter(_context).GetAssessmentCompletion(assessmentId);
+        }
+
 
         /// <summary>
         /// Returns a collection of answer counts for a user's assessments.

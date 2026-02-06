@@ -4,24 +4,24 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Business.Maturity;
-using System.Collections.Generic;
+using CSETWebCore.Model.Assessment;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using CSETWebCore.Business.GalleryParser;
-using CSETWebCore.Business.Demographic;
-using CSETWebCore.Helpers;
-using CSETWebCore.Business.Assessment;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -39,6 +39,10 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
         private readonly IUtilities _utilities;
 
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil, IGalleryEditor galleryEditor, IUtilities utilities)
@@ -52,6 +56,7 @@ namespace CSETWebCore.Api.Controllers
             _galleryEditor = galleryEditor;
             _utilities = utilities;
         }
+
 
         /// <summary>
         /// Creates a new Assessment and populates it with the options defined
@@ -230,14 +235,24 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/assessment-completion")]
+        public IActionResult GetAssessmentCompletion()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(_assessmentBusiness.GetAssessmentCompletion(assessmentId));
+        }
+
+
         /// <summary>
         /// Returns an array of Assessments connected to the current user 
         /// and their completion stats (questions answered / total questions).
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/assessmentsCompletionForUser")]
-        public IActionResult GetAssessmentsCompletion()
+        [Route("api/assessments-completion-for-user")]
+        public IActionResult GetAssessmentsCompletionForUser()
         {
             // get completion stats for all assessments associated to the current user
             var userId = _tokenManager.GetCurrentUserId();
@@ -255,6 +270,7 @@ namespace CSETWebCore.Api.Controllers
             return BadRequest();
         }
 
+
         /// <summary>
         /// Returns the AssessmentDetail for current Assessment defined in the security token.
         /// </summary>
@@ -268,6 +284,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_assessmentBusiness.GetAssessmentDetail(assessmentId));
         }
+
 
         /// <summary>
         /// Persists the posted AssessmentDetail.
@@ -287,6 +304,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
         }
+
 
         /// <summary>
         /// Returns a collection of documents.  
