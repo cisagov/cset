@@ -27,6 +27,8 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { SectorSub } from '../../../../models/demographics-extended.model';
 import { ConstantsService } from '../../../../services/constants.service';
+import { CompletionService } from '../../../../services/completion.service';
+import { SectorChangeResponse } from '../../../../models/questions.model';
 
 
 @Component({
@@ -41,7 +43,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   demographicData: DemographicsIod;
 
   /**
-   * Switch to turn on "multi sector" support.
+   * Switch to turn on "multi sector" support; multiple sector displays, add and delete links, etc.
    */
   @Input()
   multi: boolean = true;
@@ -52,6 +54,7 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   constructor(
     public assessSvc: AssessmentService,
     public demoSvc: DemographicIodService,
+    public completionSvc: CompletionService,
     private c: ConstantsService
   ) { }
 
@@ -64,6 +67,8 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
    */
   ngOnChanges(changes: SimpleChanges): void {
     this.sectorList = this.demographicData.sectorSubsectors;
+
+    this.demoSvc.demographicUpdateCompleted$.next();
   }
 
   /**
@@ -77,15 +82,16 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
 
 
     // post the sector model to update the back end
-    this.demoSvc.saveSector(item).subscribe(subsectorList => {
-      item.subsectorList = subsectorList;
+    this.demoSvc.saveSector(item).subscribe((response: SectorChangeResponse) => {
+      item.subsectorList = response.subsectors;
 
       if (!item.subsectorList.some(x => x.optionValue == item.subsectorId)) {
         target.subsectorId = null;
       }
 
+      this.refreshCompletion(response);
+    
       this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
-
 
       this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
     });
@@ -107,7 +113,6 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
     this.demographicData.sectorSubsectors.push(newSectorSubsector);
     this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
 
-
     this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
   }
 
@@ -115,16 +120,35 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
    * 
    */
   onRemoveSector(evt, item) {
-    this.demoSvc.removeSector(item).subscribe(() => {
+    this.demoSvc.removeSector(item).subscribe((response: SectorChangeResponse) => {
+      
       const idd = this.demographicData.sectorSubsectors.findIndex(i => i.sequence == item.sequence);
       if (idd !== -1) {
         this.demographicData.sectorSubsectors.splice(idd, 1);
       }
 
-      this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
+      this.refreshCompletion(response);
 
+      this.assessSvc.assessment.sectorSubsectors = [...this.demographicData.sectorSubsectors];
 
       this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
     });
+  }
+
+  /**
+   * refresh the questions counts to drive the progress bar
+   */
+  refreshCompletion(response: SectorChangeResponse) {
+      if (response?.completedCount !== undefined) {
+        const totalCount =
+          (response.totalMaturityQuestionsCount || 0) +
+          (response.totalDiagramQuestionsCount || 0) +
+          (response.totalStandardQuestionsCount || 0);
+          
+        this.assessSvc.completionRefreshRequested$.next({
+          completedCount: response.completedCount,
+          totalCount: totalCount
+        });
+      }
   }
 }

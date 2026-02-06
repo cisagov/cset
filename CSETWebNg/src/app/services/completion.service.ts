@@ -157,7 +157,5 @@ export class CompletionService {
   countAnswers() {
     this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
     this.totalCount = this.questionflat.length;
-
-
   }
 }
