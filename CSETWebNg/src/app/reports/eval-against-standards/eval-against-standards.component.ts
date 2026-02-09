@@ -71,10 +71,15 @@ export class EvalAgainstStandardsComponent implements OnInit {
         this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
       }, 0);
     });
-
+    
     // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.loading2 = false;
+
+      x.dataSets.forEach(ds => {
+        ds.borderColor = 'transparent';
+        ds.borderWidth = 0;
+      });
 
       setTimeout(() => {
         this.canvasStandardResultsByCategory = <Chart>this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);

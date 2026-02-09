@@ -235,6 +235,12 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns a single CompletionCounts instance with the 
+        /// completion stats of the current assessment (obtained
+        /// from the JWT).
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/assessment-completion")]
         public IActionResult GetAssessmentCompletion()
