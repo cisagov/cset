@@ -143,7 +143,6 @@ export class ReportAnalysisService {
   *
   */
   buildStandardResultsByCategoryChart(canvasId: string, x: any) {
-
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
