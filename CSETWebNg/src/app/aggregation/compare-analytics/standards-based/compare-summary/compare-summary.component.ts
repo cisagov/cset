@@ -73,6 +73,7 @@ export class CompareSummaryComponent implements OnInit {
       // apply visual attributes
       x.datasets.forEach(ds => {
         ds.backgroundColor = '#007BFF';
+        ds.borderColor = ds.backgroundColor;
       });
       this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
