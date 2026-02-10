@@ -46,7 +46,9 @@ namespace CSETWebCore.Business.Demographic
             d.AssessmentDate = assessment.Assessment_Date;
 
             d.OrganizationType = myDD.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
-            d.OrganizationName = info.Facility_Name;
+            d.OrganizationName = myDD.Find(z => z.DataItemName == "ORG-NAME")?.StringValue;
+
+            d.FacilityName = info.Facility_Name;
 
 
             // update sector if the assessment was built with the old HSPD-7 list
