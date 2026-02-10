@@ -1091,6 +1091,9 @@
         "desc-high": "This is what you would pick if you are shooting for a high level of maturity"
       },
       "addl observations 1": "Include any other observations that might be helpful in the assessment. They will be included in the report but are not related to any specific question."
+    },
+    "mvra": {
+      "model short title": "MVRA"
     }
   },
   "aggregation": {

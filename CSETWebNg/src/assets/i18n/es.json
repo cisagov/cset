@@ -933,6 +933,9 @@
         "vadr": {
             "display-name": "Revisión de Diseño de Arquitectura Validada de CISA (VADR)",
             "model short title": "VADR"
+        },
+        "mvra": {
+            "model short title": "MVRA"
         }
     },
     "aggregation": {
