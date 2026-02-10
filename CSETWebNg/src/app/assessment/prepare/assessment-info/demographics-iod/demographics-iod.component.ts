@@ -161,9 +161,6 @@ export class DemographicsIodComponent implements OnInit {
     this.configSvc.userIsCisaAssessor = true;
     this.demographicData.sectorDirective = 'NIPP';
 
-    // keep a few things in sync
-    this.assessSvc.assessment.facilityName = this.demographicData.organizationName;
-
     this.demoSvc.updateDemographic(this.demographicData);
   }
 } 
