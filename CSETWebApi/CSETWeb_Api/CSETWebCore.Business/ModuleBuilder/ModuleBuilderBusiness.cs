@@ -514,6 +514,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (questionSetsToAdd.Count > 0)
             {
+                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
                 _context.NEW_QUESTION_SETS.AddRange(questionSetsToAdd);
                 _context.SaveChanges();
             }
@@ -1031,6 +1032,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Set_Name = request.SetName
                 };
 
+                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
                 _context.NEW_QUESTION_SETS.Add(nqs);
                 _context.SaveChanges();
 
@@ -1095,6 +1097,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Set_Name = request.SetName
                 };
 
+                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
                 _context.NEW_QUESTION_SETS.Add(existingNqs);
                 _context.SaveChanges();
             }
