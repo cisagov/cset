@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>14</LangVersion>
-    <AssemblyVersion>12.4.0.4</AssemblyVersion>
+    <AssemblyVersion>13.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

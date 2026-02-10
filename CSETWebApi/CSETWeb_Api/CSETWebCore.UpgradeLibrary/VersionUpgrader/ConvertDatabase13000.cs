@@ -12,11 +12,11 @@ using System.IO;
 
 namespace UpgradeLibrary.Upgrade
 {
-    internal class ConvertDatabase12405 : ConvertSqlDatabase
+    internal class ConvertDatabase13000 : ConvertSqlDatabase
     {
-        public ConvertDatabase12405(string path) : base(path)
+        public ConvertDatabase13000(string path) : base(path)
         {
-            myVersion = new Version("12.4.0.5");
+            myVersion = new Version("13.0.0.0");
         }
 
 
@@ -28,14 +28,14 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_12405.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
 
                 ConvertSectors(conn);
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading database version 12.4.0.4 to 12.4.0.5: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 12.4.0.4 to 13.0.0.0: " + e.Message);
             }
         }
 
