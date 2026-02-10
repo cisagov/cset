@@ -587,8 +587,8 @@ label[required]::after {
   }
 }
 
-// Fill the available height minus 130px
-.avail-h-minus {
+// Fill the available height minus the offset defined in the style attribute
+.avail-h-minus-offset {
   min-height: calc(100cqh - var(--offset, 0px));
   max-height: calc(100cqh - var(--offset, 0px));
 }

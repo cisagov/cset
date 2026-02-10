@@ -36,7 +36,7 @@ export class AssessmentDemogIodComponent {
   importClick(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
-    if (event.target.files[0].name.endsWith(".json")) {
+    if (event.target.files[0]?.name.endsWith(".json")) {
       // Call Standard import service
       dialogRef = this.dialog.open(UploadDemographicsComponent, {
         data: { files: event.target.files, IsNormalLoad: true }
@@ -49,11 +49,12 @@ export class AssessmentDemogIodComponent {
       dialogRef.afterClosed().subscribe(result => {
         this.demoIOD.populateDemographicsModel();
         this.assessmentSvc.refreshAssessment();
+        this.demoSvc.demographicUpdateCompleted$.next();
       });
     }
   }
 
   exportClick() {
-    this.demoSvc.exportDemographics()
+    this.demoSvc.exportDemographics();
   }
 }
