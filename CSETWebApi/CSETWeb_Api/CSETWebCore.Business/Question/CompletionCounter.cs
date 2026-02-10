@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// Returns completion counts for a single assessment.
+        /// Recalculates and returns completion counts for a single assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
@@ -46,9 +46,9 @@ namespace CSETWebCore.Business.Question
             var response = new List<CompletionCounts>();
 
             var q = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId);
-
             var myAssessments = q.ToList();
 
+            new CompletionCounter(_context).Count(assessmentId);
             var counts = FillInMissingCounts(myAssessments, q);
 
             return counts.First();
