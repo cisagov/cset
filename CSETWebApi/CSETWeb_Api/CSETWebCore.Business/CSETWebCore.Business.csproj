@@ -196,9 +196,6 @@
 
   <ItemGroup>
     <Folder Include="Version\" />
-    <Folder Include="Demographic\DemographicIO\" />
-    <Folder Include="Demographic\DemographicIO\Export\" />
-    <Folder Include="Demographic\DemographicIO\Import\" />
     <Folder Include="Demographic\DemographicIO\Models\" />
   </ItemGroup>
 
