@@ -130,9 +130,10 @@ export class AssessmentDemographicsComponent implements OnInit {
 
         if (!this.unsupportedImportFile) {
             dialogRef.afterClosed().subscribe(result => {
-                this.getDemographics()
-                this.getOrganizationTypes()
-                this.assessSvc.refreshAssessment()
+                this.getDemographics();
+                this.getOrganizationTypes();
+                this.assessSvc.refreshAssessment();
+                this.demoSvc.demographicUpdateCompleted$.next();
             });
         }
     }
