@@ -16,7 +16,7 @@ using CSETWebCore.Business.Demographic.DemographicIO.Models;
 
 namespace CSETWebCore.Business.Demographic.Import
 {
-    public class DemographicImportManager : IDemographicImportManager
+    public class DemographicsImportManager : IDemographicsImportManager
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
@@ -27,7 +27,7 @@ namespace CSETWebCore.Business.Demographic.Import
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public DemographicImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
+        public DemographicsImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
         {
             _token = token;
             _assessmentUtil = assessmentUtil;
@@ -42,7 +42,7 @@ namespace CSETWebCore.Business.Demographic.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, int assessmentId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
+        public async Task ImportDemographics(byte[] zipFileFromDatabase, int? currentUserId, int assessmentId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -201,28 +201,6 @@ namespace CSETWebCore.Business.Demographic.Import
                     };
                     context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(dserviceCompositionSecondary);
                 }
-
-                await context.SaveChangesAsync();
-            }
-
-            foreach (var information in model.jORG_DETAILS)
-            {
-                var dinformation = context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-
-                // Creating new Service Composition record for this assessment
-                if (dinformation == null)
-                {
-                    dinformation = new INFORMATION()
-                    {
-                        Id = assessmentId,
-
-                    };
-                    context.INFORMATION.Add(dinformation);
-                    await context.SaveChangesAsync();
-                }
-                dinformation.Facility_Name = information.Facility_Name;
-                dinformation.City_Or_Site_Name = information.City_Or_Site_Name;
-                dinformation.State_Province_Or_Region = information.State_Province_Or_Region;
 
                 await context.SaveChangesAsync();
             }

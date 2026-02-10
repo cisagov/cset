@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Demographic.Import
 {
-    public interface IDemographicImportManager
+    public interface IDemographicsImportManager
     {
-        Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, int assessmentid, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false);
+        Task ImportDemographics(byte[] zipFileFromDatabase, int? currentUserId, int assessmentid, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false);
     }
 }
 

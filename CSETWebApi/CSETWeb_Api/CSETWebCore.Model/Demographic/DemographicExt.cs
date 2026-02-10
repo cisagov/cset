@@ -21,8 +21,11 @@ namespace CSETWebCore.Model.Demographic
     {
         public int AssessmentId { get; set; }
         public DateTime AssessmentDate { get; set; }
+
         public int? OrganizationType { get; set; }
         public string OrganizationName { get; set; }
+
+        public string FacilityName { get; set; }
 
         /// <summary>
         /// PPD-21 or NIPP.  As of late 2025, CSET
