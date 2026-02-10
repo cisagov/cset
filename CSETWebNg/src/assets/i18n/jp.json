@@ -542,6 +542,9 @@
     "vadr": {
       "display-name": "CISA検証済みアーキテクチャ設計レビュー (VADR)",
       "model short title": "VADR"
+    },
+    "mvra": {
+      "model short title": "MVRA"
     }
   }
 }
