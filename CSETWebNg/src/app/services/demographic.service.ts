@@ -44,7 +44,7 @@ export class DemographicService {
   public demographicUpdateCompleted$ = new Subject<void>();
 
   private get apiUrl(): string {
-    return this.configSvc.apiUrl + 'Demographics/';
+    return this.configSvc.apiUrl + 'demographics/';
   }
 
   constructor(
