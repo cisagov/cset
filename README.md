@@ -1,5 +1,6 @@
 
 # What is CSET?
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cisagov/cset)
 The Cybersecurity Infrastructure Security Agency (CISA) and the Idaho National Laboratory (INL) develop the Cyber Security Evaluation Tool (CSET®) for asset owners with the primary objective of reducing the risk to the nation’s critical infrastructure. Control systems are defined as electronic devices that control physical processes and as such, are a crucial element in the protection of our nation’s infrastructure.
  
 CSET is a free software tool that guides users through a step-by-step process to collect facility-specific information addressing topics such as hardware, software, administrative policies, and user obligations. It then compares that information to relevant security standards and regulations, assesses overall compliance, and provides appropriate recommendations for improving cybersecurity posture. The tool pulls its recommendations from a collection of the best available cybersecurity standards, guidelines, and practices. Where appropriate, recommendations are linked to a set of actions that can be applied to enhance cybersecurity controls.
