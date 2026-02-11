@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Interfaces.Helpers;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using CSETWebCore.Interfaces.Helpers;
 using Microsoft.Extensions.Configuration;
 
 namespace CSETWebCore.Helpers

@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Malcolm
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Model.Malcolm
 {
     public class ValuePairs2
     {
