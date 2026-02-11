@@ -1,4 +1,10 @@
-﻿using System.IO;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System.IO;
 
 namespace CSETWebCore.Model.AssessmentIO
 {

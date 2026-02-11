@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Question;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using CSETWebCore.Model.Question;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity.CPG

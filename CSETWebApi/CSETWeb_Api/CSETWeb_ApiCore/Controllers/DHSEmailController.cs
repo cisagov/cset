@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 

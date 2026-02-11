@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 #nullable enable
 namespace CSETWebCore.DataLayer.Model
 {
