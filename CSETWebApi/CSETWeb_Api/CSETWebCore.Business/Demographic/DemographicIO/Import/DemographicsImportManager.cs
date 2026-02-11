@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Demographic.Import
         /// Some screen items stored in DETAILS_DEMOGRAPHICS are not presented on the UI as "demographics" 
         /// and importing/overwriting their values could be confusing to the user.  
         /// </summary>
-        private List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
+        private readonly List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
 
 
         /// <summary>
