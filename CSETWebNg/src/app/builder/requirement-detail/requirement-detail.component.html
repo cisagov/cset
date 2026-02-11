@@ -97,7 +97,7 @@
       <h4>Supplemental Information</h4>
       <p class="keyboard">HTML markup can be edited directly by clicking the <kbd><i class="fa fa-code"></i></kbd>
         button.</p>
-      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.supplementalInfo"
+      <angular-editor name="supplemental" [config]="editorConfig" [(ngModel)]="r.supplementalInfo"
         (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>
     </div>
 
