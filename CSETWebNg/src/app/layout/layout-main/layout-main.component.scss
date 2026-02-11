@@ -647,11 +647,61 @@ mat-dialog-content {
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
+  .subcat-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .list-group {
+    background-color: transparent;
+  }
+
+  .list-group-item {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
 }
 
 // end dark mode -----------------------------------------------------------------
 
+// Angular Editor dark mode styles
+::ng-deep [data-bs-theme="dark"] {
+  .angular-editor-wrapper {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
 
+  .angular-editor-toolbar {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set button {
+    background-color: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set button:hover {
+    background-color: var(--bg-secondary);
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set .angular-editor-button[title="Insert Image"] {
+    background-color: transparent;
+    color: var(--text-primary);
+  }
+
+  .angular-editor-textarea {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .angular-editor-placeholder {
+    color: var(--text-secondary);
+  }
+}
 
 .white-dialog {
   background-color: $white;
