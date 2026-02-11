@@ -4,14 +4,15 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Business.Demographic.DemographicIO.Models;
 
 
 namespace CSETWebCore.Business.Demographic.Import
@@ -22,6 +23,14 @@ namespace CSETWebCore.Business.Demographic.Import
         private IAssessmentUtil _assessmentUtil;
         private IUtilities _utilities;
         private CSETContext _context;
+
+
+        /// <summary>
+        /// Some screen items stored in DETAILS_DEMOGRAPHICS are not presented on the UI as "demographics" 
+        /// and importing/overwriting their values could be confusing to the user.  
+        /// </summary>
+        private List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
+
 
         /// <summary>
         /// 
@@ -159,6 +168,12 @@ namespace CSETWebCore.Business.Demographic.Import
 
             foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
             {
+                // do not include some values - not considered part of a demographics export
+                if (_detailsDemographicsNotExported.Contains(jdd.DataItemName))
+                {
+                    continue;
+                }
+
                 var dd = context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == jdd.DataItemName).FirstOrDefault();
                 if (dd == null)
                 {
