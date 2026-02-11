@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
