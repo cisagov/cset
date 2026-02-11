@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Malcolm;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using CSETWebCore.Model.Malcolm;
 using System.Collections.Generic;
 using System.Linq;
 

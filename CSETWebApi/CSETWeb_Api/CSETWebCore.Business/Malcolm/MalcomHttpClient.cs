@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
