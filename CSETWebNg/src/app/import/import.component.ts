@@ -31,6 +31,7 @@ import { FileItem, FileUploader } from '../modules/ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
+import { ThemeService } from '../services/theme.service';
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
 
@@ -283,7 +284,8 @@ export class ImportComponent implements OnInit, OnDestroy {
   constructor(
     private configSvc: ConfigService,
     private fileClient: FileUploadClientService,
-    private editorService: CodeEditorService
+    private editorService: CodeEditorService,
+    public themeSvc: ThemeService
   ) {
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
     Promise.all = function (values: any): Promise<any> {
@@ -345,10 +347,24 @@ export class ImportComponent implements OnInit, OnDestroy {
       this.initializeUploader();
     }
     this.configureMonacoEnvironment();
+
+    // Subscribe to theme changes to update Monaco editor theme
+    this.subscriptions.push(
+      this.themeSvc.theme$.subscribe(() => {
+        this.updateMonacoTheme();
+      })
+    );
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  private updateMonacoTheme() {
+    if (this.monaco?.editor) {
+      const theme = this.themeSvc.isDarkMode() ? 'vs-dark' : 'vs';
+      this.monaco.editor.setTheme(theme);
+    }
   }
 
   private configureMonacoEnvironment() {
