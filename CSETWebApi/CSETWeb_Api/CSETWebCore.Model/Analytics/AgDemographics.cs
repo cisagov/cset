@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 namespace CSETWebCore.Model.Analytics;
 
 public class AgDemographics
