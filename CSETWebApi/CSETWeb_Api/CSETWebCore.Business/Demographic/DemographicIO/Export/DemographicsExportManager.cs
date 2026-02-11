@@ -9,6 +9,7 @@ using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,17 @@ namespace CSETWebCore.Business.Demographic.Export
     {
         private readonly CSETContext _context;
 
+        /// <summary>
+        /// Some screen items stored in DETAILS_DEMOGRAPHICS are not presented on the UI as "demographics" 
+        /// and importing/overwriting their values could be confusing to the user.  
+        /// </summary>
+        private List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="context"></param>
         public DemographicsExportManager(CSETContext context)
         {
             this._context = context;
@@ -27,6 +39,10 @@ namespace CSETWebCore.Business.Demographic.Export
             SetupBindings();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void SetupBindings()
         {
             TinyMapper.Bind<CIS_CSI_SERVICE_COMPOSITION, jCIS_CSI_SERVICE_COMPOSITION>();
@@ -66,10 +82,12 @@ namespace CSETWebCore.Business.Demographic.Export
 
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
-                if (item.DataItemName == "ORG-POC")
+                // do not include some values - not considered part of a demographics export
+                if (_detailsDemographicsNotExported.Contains(item.DataItemName))
                 {
                     continue;
                 }
+
                 model.jDETAILS_DEMOGRAPHICS.Add(TinyMapper.Map<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>(item));
             }
 
