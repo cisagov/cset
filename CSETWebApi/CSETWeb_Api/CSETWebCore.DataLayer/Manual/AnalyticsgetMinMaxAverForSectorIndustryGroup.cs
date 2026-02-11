@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.DataLayer.Manual
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.DataLayer.Manual
 {
     public class AnalyticsgetMinMaxAverForSectorIndustryGroup
     {

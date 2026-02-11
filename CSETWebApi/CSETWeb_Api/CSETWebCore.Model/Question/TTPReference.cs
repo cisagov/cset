@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Question
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Model.Question
 {
     public class TTPReference
     {

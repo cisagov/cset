@@ -1,4 +1,10 @@
-﻿using System.Linq;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System.Linq;
 using System.Reflection;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Version;

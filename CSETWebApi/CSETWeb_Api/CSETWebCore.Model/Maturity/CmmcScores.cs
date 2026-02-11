@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Maturity
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Model.Maturity
 {
     public class CmmcScores
     {

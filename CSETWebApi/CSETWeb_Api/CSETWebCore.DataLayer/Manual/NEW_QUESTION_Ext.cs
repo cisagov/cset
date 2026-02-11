@@ -1,4 +1,10 @@
-﻿using System.Linq;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
