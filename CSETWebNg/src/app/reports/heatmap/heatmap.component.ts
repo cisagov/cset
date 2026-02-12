@@ -57,7 +57,8 @@ export class HeatmapComponent implements OnInit {
     'blue': 'blue-score',
     'green': 'green-score',
     'lightgray': 'light-gray-score',
-    'default': 'default-score'
+    'default': 'default-score',
+    'outline': 'outline-score'
   };
 
 

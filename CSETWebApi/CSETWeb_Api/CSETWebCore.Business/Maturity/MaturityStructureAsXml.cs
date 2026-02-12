@@ -12,7 +12,7 @@ using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.Helpers
+namespace CSETWebCore.Business.Maturity
 {
     /// <summary>
     /// The idea is a lightweight XDocument based 
@@ -28,7 +28,7 @@ namespace CSETWebCore.Helpers
 
         private XDocument xDoc { get; set; }
 
-        private AdditionalSupplemental _addlSuppl { get; set; }
+        private Helpers.AdditionalSupplemental _addlSuppl { get; set; }
 
 
         private bool _includeQuestionText = true;
@@ -58,7 +58,7 @@ namespace CSETWebCore.Helpers
             this._includeSupplemental = options.IncludeSupplemental;
             this._includeOtherText = options.IncludeOtherText;
 
-            this._addlSuppl = new AdditionalSupplemental(context);
+            this._addlSuppl = new Helpers.AdditionalSupplemental(context);
 
             LoadStructureAsXml();
         }
@@ -201,7 +201,7 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
                     xQuestion.SetAttributeValue("comment", answer?.a.Comment ?? "");
-                    xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
+                    xQuestion.SetAttributeValue("isparentquestion", parentQuestionIDs.Contains(myQ.Mat_Question_Id) ? "true" : "false");
 
                     if (_includeQuestionText)
                     {
@@ -288,18 +288,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string ToJson()
         {
-            return CustomJsonWriter.Serialize(this.xDoc.Root);
-        }
-
-
-        /// <summary>
-        /// Bool-to-string
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static string B2S(bool b)
-        {
-            return b ? "true" : "false";
+            return Helpers.CustomJsonWriter.Serialize(this.xDoc.Root);
         }
     }
 }
