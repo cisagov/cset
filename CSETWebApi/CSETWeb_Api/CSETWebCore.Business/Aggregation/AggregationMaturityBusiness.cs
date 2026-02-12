@@ -4,16 +4,17 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Aggregation;
+using CSETWebCore.Model.Charting;
+using CSETWebCore.Model.Maturity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Xml.Linq;
-using CSETWebCore.Model.Charting;
-using CSETWebCore.Model.Aggregation;
-using System;
-using CSETWebCore.Business.Maturity.Configuration;
-using CSETWebCore.Model.Maturity;
+
 
 namespace CSETWebCore.Business.Aggregation
 {
@@ -64,7 +65,7 @@ namespace CSETWebCore.Business.Aggregation
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
                 var options = new StructureOptions() { IncludeQuestionText = false, IncludeSupplemental = false };
-                var ms = new Helpers.MaturityStructureAsXml(assessmentId, _context, options);
+                var ms = new Maturity.MaturityStructureAsXml(assessmentId, _context, options);
                 var mx = ms.ToXDocument();
 
                 // ignore assessment if it doesn't have a maturity model

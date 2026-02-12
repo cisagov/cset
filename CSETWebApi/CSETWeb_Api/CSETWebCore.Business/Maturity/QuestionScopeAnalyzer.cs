@@ -14,6 +14,8 @@ namespace CSETWebCore.Business.Maturity
     /// <summary>
     /// Provides a way to exclude certain questions from a model
     /// based on current conditions. 
+    /// 
+    /// Example:  A CPG2 assessmenet might be OT only.  The IT followup questions are out of scope.
     /// </summary>
     public class QuestionScopeAnalyzer
     {
