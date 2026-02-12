@@ -78,6 +78,7 @@ namespace CSETWebCore.Business.Maturity
                 FullTitle = grouping.Title,
                 GroupingId = grouping.GroupingId,
                 Color = "red",
+                RollupColor = "red",
                 Children = []
             };
 
@@ -92,13 +93,28 @@ namespace CSETWebCore.Business.Maturity
                         heatmapNode.Children.Add(childNode);
 
 
-                        // look for followups
+                        // include followups
                         foreach (var followup in question.Followups)
                         {
                             var followupNode = ConvertToHeatmapNode(followup, modelId);
                             if (followupNode != null)
                             {
                                 childNode.Children.Add(followupNode);
+                            }
+                        }
+
+
+                        // if the question is not answerable, give it a color for rollup purposes.
+                        if (!question.IsAnswerable)
+                        {
+                            if (childNode.Children.Any(x => !unansweredColors.Contains(x.Color)))
+                            {
+                                childNode.RollupColor = "yellow";
+                            }
+
+                            if (childNode.Children.All(x => x.Color == "green"))
+                            {
+                                childNode.RollupColor = "green";
                             }
                         }
                     }
@@ -118,16 +134,18 @@ namespace CSETWebCore.Business.Maturity
                 }
             }
 
+
+            // Color-grade the group based on its children (color or rollup color)
             if (heatmapNode.Children.Count > 0)
             {
                 // if not all red or unanswered, promote to yellow
-                if (heatmapNode.Children.Any(x => !unansweredColors.Contains(x.Color)))
+                if (heatmapNode.Children.Any(x => (!unansweredColors.Contains(x.Color) || !unansweredColors.Contains(x.RollupColor))))
                 {
                     heatmapNode.Color = "yellow";
                 }
 
                 // if all green, promote to green
-                if (heatmapNode.Children.All(x => x.Color == "green"))
+                if (heatmapNode.Children.All(x => x.Color == "green" || x.RollupColor == "green"))
                 {
                     heatmapNode.Color = "green";
                 }
@@ -152,7 +170,8 @@ namespace CSETWebCore.Business.Maturity
                 Title = "Q",
                 FullTitle = source.DisplayNumber,
                 QuestionId = source.QuestionId,
-                Children = []
+                Children = [],
+                RollupColor = "lightgray"
             };
 
             // customize the question title 
@@ -188,10 +207,11 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// Builds a "Q1" type label to keep the heatmap
-        /// segments short.  
+        /// Builds a short label that will fit in the chiclet.
         /// 
-        /// This may need to be expanded if used for other
+        /// Default is a "Q1" type label.  
+        /// 
+        /// This method can be enhanced if used for other
         /// models with different question naming conventions.
         /// </summary>
         private string CustomizeTitle(Model.Nested.Question q, int modelId)

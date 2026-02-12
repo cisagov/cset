@@ -27,6 +27,12 @@ namespace CSETWebCore.Model.Maturity
 
         public string Color { get; set; }
 
+        /// <summary>
+        /// A non-displayed internal color for non-answered nodes to 
+        /// hold a rollup color value based on their children.
+        /// </summary>
+        public string RollupColor { get; set; }
+
         public List<HeatmapNode> Children { get; set; } = [];
     }
 }
