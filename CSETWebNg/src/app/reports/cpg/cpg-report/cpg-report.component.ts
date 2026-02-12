@@ -143,10 +143,6 @@ export class CpgReportComponent implements OnInit {
       this.initCpg2();
 
       this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(21));
-
-
-
-      console.log(this.heatmapModelCpg);
     }
 
     // SSG
