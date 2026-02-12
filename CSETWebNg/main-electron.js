@@ -43,6 +43,46 @@ if (!gotTheLock) {
   });
 }
 
+/**
+ * Save a BrowserWindow as PDF
+ * @param {BrowserWindow} window - The window to save as PDF
+ */
+async function saveWindowAsPDF(window) {
+  try {
+    // Get window title and sanitize for valid filename
+    const windowTitle = window.getTitle();
+    const sanitizedTitle = windowTitle.replace(/[/\\?%*:|"<>]/g, '-');
+
+    const saveDialogOptions = {
+      title: `${appName} - Save as PDF`,
+      filters: [
+        {
+          name: 'PDF',
+          extensions: ['pdf']
+        }
+      ],
+      defaultPath: path.join(app.getPath('downloads'), sanitizedTitle)
+    };
+
+    const filepath = dialog.showSaveDialogSync(saveDialogOptions);
+
+    if (!filepath) return; // User cancelled
+
+    // Generate PDF
+    const data = await window.webContents.printToPDF({ pageSize: 'Letter' });
+
+    // Save file
+    fs.writeFile(filepath, data, (error) => {
+      if (error) {
+        log.error(error);
+      }
+    });
+
+  } catch (error) {
+    log.error(error);
+  }
+}
+
 function createWindow() {
   // Create the browser window
   mainWindow = new BrowserWindow({
@@ -83,33 +123,10 @@ function createWindow() {
             label: 'Save as PDF',
             accelerator: 'Ctrl+S',
             click: () => {
-              BrowserWindow.getFocusedWindow()
-                .webContents.printToPDF({ pageSize: 'Letter' })
-                .then((data) => {
-                  const saveDialogOptions = {
-                    title: `${appName} - Save as PDF`,
-                    filters: [
-                      {
-                        name: 'PDF',
-                        extensions: ['pdf']
-                      }
-                    ],
-                    defaultPath: app.getPath('downloads')
-                  };
-
-                  let filepath = dialog.showSaveDialogSync(saveDialogOptions);
-
-                  if (filepath) {
-                    fs.writeFile(filepath, data, (error) => {
-                      if (error) {
-                        log.error(error);
-                      }
-                    });
-                  }
-                })
-                .catch((error) => {
-                  log.error(error);
-                });
+              const focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow) {
+                saveWindowAsPDF(focusedWindow);
+              }
             }
           })
         );
