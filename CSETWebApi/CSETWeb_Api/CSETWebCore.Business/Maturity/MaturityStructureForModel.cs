@@ -11,7 +11,9 @@ using System.Linq;
 using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Question;
 
-namespace CSETWebCore.Helpers
+
+
+namespace CSETWebCore.Business.Maturity
 {
     /// <summary>
     /// Represents a maturity model's questions
@@ -56,6 +58,9 @@ namespace CSETWebCore.Helpers
         private bool _includeText = true;
 
 
+        private QuestionScopeAnalyzer _questionScope = null;
+
+
         /// <summary>
         /// Returns a populated instance of the maturity grouping
         /// and question structure for a maturity model.
@@ -72,6 +77,21 @@ namespace CSETWebCore.Helpers
             _selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+
+            // Spin up the generic scope analyzer or a maturity model-specific one
+            _questionScope = new QuestionScopeAnalyzer(assessmentId);
+
+            // CPG 2.0
+            if (modelId == Constants.Constants.Model_CPG2)
+            {
+                var _techDomain = _context.DETAILS_DEMOGRAPHICS
+                    .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "TECH-DOMAIN")
+                    .FirstOrDefault()?.StringValue ?? null;
+
+                _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, _techDomain);
+            }
+
 
             LoadStructure();
         }
@@ -103,6 +123,7 @@ namespace CSETWebCore.Helpers
             allQuestions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
+                .Include(x => x.MATURITY_QUESTION_PROPS)
                 .Where(q =>
                 _modelId == q.Maturity_Model_Id).ToList();
 
@@ -151,7 +172,7 @@ namespace CSETWebCore.Helpers
                 var nodeName = System.Text.RegularExpressions
                     .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
 
-                var grouping = new Grouping()
+                var grouping = new Model.Nested.Grouping()
                 {
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
@@ -170,9 +191,9 @@ namespace CSETWebCore.Helpers
                     ((ModelStructure)oParent).Groupings.Add(grouping);
                 }
 
-                if (oParent is Grouping)
+                if (oParent is Model.Nested.Grouping)
                 {
-                    ((Grouping)oParent).Groupings.Add(grouping);
+                    ((Model.Nested.Grouping)oParent).Groupings.Add(grouping);
                 }
 
 
@@ -186,7 +207,7 @@ namespace CSETWebCore.Helpers
                     var answer = AllAnswers
                         .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
 
-                    var question = new Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
@@ -241,18 +262,25 @@ namespace CSETWebCore.Helpers
         /// <param name="allQuestions"></param>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        private List<Question> GetFollowupQuestions(int parentId)
+        private List<Model.Nested.Question> GetFollowupQuestions(int parentId)
         {
-            var qList = new List<Question>();
+            var qList = new List<Model.Nested.Question>();
 
             var myQuestions = allQuestions.Where(x => x.Parent_Question_Id == parentId && x.Parent_Option_Id == null).ToList();
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
+                // Before doing anything, see if the question should be included in the response
+                if (_questionScope.OutOfScopeQuestionIds.Contains(myQ.Mat_Question_Id))
+                {
+                    continue;
+                }
+
+
                 var answer = AllAnswers
                     .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
 
-                var question = new Question()
+                var question = new Model.Nested.Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
@@ -267,6 +295,15 @@ namespace CSETWebCore.Helpers
                     Comment = answer?.Comment ?? "",
                     Options = GetOptions(myQ.Mat_Question_Id)
                 };
+
+                foreach (var p in myQ.MATURITY_QUESTION_PROPS)
+                {
+                    question.Properties.Add(new QuestionProp()
+                    {
+                        Name = p.PropertyName,
+                        Value = p.PropertyValue
+                    });
+                }
 
 
                 if (_includeText)
@@ -289,8 +326,9 @@ namespace CSETWebCore.Helpers
             return qList;
         }
 
+
         /// <summary>
-        /// Build options for a question.
+        /// Build answer options for a question.
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
@@ -317,7 +355,7 @@ namespace CSETWebCore.Helpers
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var question = new Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
@@ -352,6 +390,9 @@ namespace CSETWebCore.Helpers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void GetReferences(int questionId, out List<ReferenceDocLink> sourceDocs,
                 out List<ReferenceDocLink> additionalDocs)
         {
@@ -361,17 +402,6 @@ namespace CSETWebCore.Helpers
 
             sourceDocs = s;
             additionalDocs = r;
-        }
-
-
-        /// <summary>
-        /// Bool-to-string
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static string B2S(bool b)
-        {
-            return b ? "true" : "false";
         }
     }
 }

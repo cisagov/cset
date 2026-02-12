@@ -6,8 +6,10 @@
 ////////////////////////////////
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -63,40 +65,52 @@ namespace CSETWebCore.Business.Maturity
         /// Converts a Grouping to a node.  It colors the
         /// node depending on the child Question scoring.
         /// </summary>
-        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping source, int modelId)
+        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping grouping, int modelId)
         {
-            if (source == null)
+            if (grouping == null)
             {
                 return null;
             }
 
             var heatmapNode = new HeatmapNode
             {
-                Title = source.Title,
-                FullTitle = source.Title,
-                GroupingId = source.GroupingId,
+                Title = grouping.Title,
+                FullTitle = grouping.Title,
+                GroupingId = grouping.GroupingId,
                 Color = "red",
                 Children = []
             };
 
-            if (source.Questions != null && source.Questions.Any())
+
+            if (grouping.Questions != null && grouping.Questions.Any())
             {
-                foreach (var question in source.Questions)
+                foreach (var question in grouping.Questions)
                 {
                     var childNode = ConvertToHeatmapNode(question, modelId);
                     if (childNode != null)
                     {
                         heatmapNode.Children.Add(childNode);
+
+
+                        // look for followups
+                        foreach (var followup in question.Followups)
+                        {
+                            var followupNode = ConvertToHeatmapNode(followup, modelId);
+                            if (followupNode != null)
+                            {
+                                childNode.Children.Add(followupNode);
+                            }
+                        }
                     }
                 }
             }
 
             // Recursively convert all groupings to children
-            if (source.Groupings != null && source.Groupings.Any())
+            if (grouping.Groupings != null && grouping.Groupings.Any())
             {
-                foreach (var grouping in source.Groupings)
+                foreach (var g in grouping.Groupings)
                 {
-                    var childNode = ConvertToHeatmapNode(grouping, modelId);
+                    var childNode = ConvertToHeatmapNode(g, modelId);
                     if (childNode != null)
                     {
                         heatmapNode.Children.Add(childNode);
@@ -111,6 +125,7 @@ namespace CSETWebCore.Business.Maturity
                 {
                     heatmapNode.Color = "yellow";
                 }
+
                 // if all green, promote to green
                 if (heatmapNode.Children.All(x => x.Color == "green"))
                 {
@@ -163,6 +178,11 @@ namespace CSETWebCore.Business.Maturity
                     break;
             }
 
+            if (!source.IsAnswerable)
+            {
+                heatmapNode.Color = "lightgray";
+            }
+
             return heatmapNode;
         }
 
@@ -172,12 +192,23 @@ namespace CSETWebCore.Business.Maturity
         /// segments short.  
         /// 
         /// This may need to be expanded if used for other
-        /// models with different question namging conventions.
+        /// models with different question naming conventions.
         /// </summary>
         private string CustomizeTitle(Model.Nested.Question q, int modelId)
         {
             if (modelId == Constants.Constants.Model_CPG2)
             {
+                // create labels for OT/IT followups in CPG2
+                if (q.IsOT)
+                {
+                    return "OT";
+                }
+                if (q.IsIT)
+                {
+                    return "IT";
+                }
+
+
                 // 5.A
                 return q.DisplayNumber;
             }
@@ -187,19 +218,5 @@ namespace CSETWebCore.Business.Maturity
             int dotIdx = q.DisplayNumber.LastIndexOf(".") + 1;
             return "Q" + q.DisplayNumber.Substring(dotIdx);
         }
-    }
-
-
-    public class HeatmapNode
-    {
-        public int GroupingId { get; set; }
-        public int QuestionId { get; set; }
-        public string Title { get; set; }
-        /// <summary>
-        /// The question's title as defined with no formatting
-        /// </summary>
-        public string FullTitle { get; set; }
-        public string Color { get; set; }
-        public List<HeatmapNode> Children { get; set; } = [];
     }
 }
