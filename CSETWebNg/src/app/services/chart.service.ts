@@ -47,6 +47,24 @@ export class ChartService {
   ) { }
 
   /**
+   * Deep merge two objects, preserving nested properties from the target
+   * @param target The target object to merge into
+   * @param source The source object to merge from
+   */
+  private deepMerge(target: any, source: any): any {
+    for (const key in source) {
+      if (source.hasOwnProperty(key)) {
+        if (source[key] instanceof Object && key in target && target[key] instanceof Object) {
+          this.deepMerge(target[key], source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  }
+
+  /**
   * Builds a line chart from the aggregation API response.
   * @param canvasId
   * @param x
@@ -151,7 +169,13 @@ export class ChartService {
 
     // Get theme-aware colors
     const isDark = this.themeSvc.isDarkMode();
-    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    const textColor = isDark ? '#f8fafc' : '#000000dd';
+    const gridColor = isDark
+      ? this.themeSvc.updateAlpha('#ffffff', 0.25)
+      : 'rgba(0, 0, 0, 0.1)';
+    const axisBorderColor = isDark
+      ? this.themeSvc.updateAlpha('#ffffff', 0.45)
+      : 'rgba(0, 0, 0, 0.3)';
 
     var myOptions: any = {
       indexAxis: 'y',
@@ -176,25 +200,33 @@ export class ChartService {
       scales: {
         x: {
           ticks: {
-            color: textColor
+            color: textColor,
+            font: { weight: '500' }
           },
           grid: {
-            color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+            color: gridColor
+          },
+          border: {
+            color: axisBorderColor
           }
         },
         y: {
           ticks: {
-            color: textColor
+            color: textColor,
+            font: { weight: '500' }
           },
           grid: {
-            color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+            color: gridColor
+          },
+          border: {
+            color: axisBorderColor
           }
         }
       }
     };
 
-    // overlay the options object with any passed-in properties
-    Object.assign(myOptions, opts);
+    // Deep merge the options object with any passed-in properties
+    this.deepMerge(myOptions, opts);
 
     // set the scale if desired
     if (zeroHundred) {

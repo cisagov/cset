@@ -446,6 +446,7 @@ export class ImportComponent implements OnInit, OnDestroy {
           if (t?.monaco) {
             this.monaco = t.monaco;
             this.registerXmlProviders(s);
+            this.updateMonacoTheme();
           } else {
             console.warn("Monaco not fully initialized, retrying...");
             // Retry initialization after a short delay
@@ -453,6 +454,7 @@ export class ImportComponent implements OnInit, OnDestroy {
               if ((window as any).monaco) {
                 this.monaco = (window as any).monaco;
                 this.registerXmlProviders(s);
+                this.updateMonacoTheme();
               }
             }, 1000);
           }
