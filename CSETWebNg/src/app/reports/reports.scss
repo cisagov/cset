@@ -1511,6 +1511,12 @@ h1.pageHeader {
   color: #fff;
 }
 
+.outline-score,
+.outline-score div {
+  border: 1px solid #999;
+  color: #000;
+}
+
 @media print {
   * {
     print-color-adjust: exact;

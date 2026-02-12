@@ -4,15 +4,15 @@
 //
 //
 ////////////////////////////////
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System;
-using CSETWebCore.Business.Authorization;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {

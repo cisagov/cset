@@ -27,8 +27,13 @@
     </div>
     <div class="goal-content">
       <div class="question-group" *ngFor="let q of goal.children">
-        <div class="score-cell" [ngClass]="q.scoreClass">
-          {{q.title}}
+        <div class="question-column">
+          <div class="score-cell" [ngClass]="q.scoreClass">
+            {{q.title}}
+          </div>
+          <div class="score-cell" [ngClass]="f.scoreClass" *ngFor="let f of q.children">
+            {{f.title}}
+          </div>
         </div>
       </div>
     </div>
