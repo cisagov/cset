@@ -44,6 +44,56 @@ if (!gotTheLock) {
 }
 
 /**
+ * Setup spell check context menu for a window
+ * @param {WebContents} webContents - The webContents to add spell check context menu to
+ */
+function setupSpellCheckContextMenu(webContents) {
+  webContents.on('context-menu', (event, params) => {
+    const menu = new Menu();
+
+    // Add spelling suggestions if there are any
+    for (const suggestion of params.dictionarySuggestions) {
+      menu.append(new MenuItem({
+        label: suggestion,
+        click: () => webContents.replaceMisspelling(suggestion)
+      }));
+    }
+
+    // Add "Add to dictionary" option for misspelled words
+    if (params.misspelledWord) {
+      if (menu.items.length > 0) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({
+        label: 'Add to Dictionary',
+        click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+      }));
+    }
+
+    // Add standard context menu items
+    if (params.selectionText) {
+      if (menu.items.length > 0) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({ label: 'Cut', role: 'cut' }));
+      menu.append(new MenuItem({ label: 'Copy', role: 'copy' }));
+    }
+
+    if (params.editFlags.canPaste) {
+      if (menu.items.length > 0 && !params.selectionText) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({ label: 'Paste', role: 'paste' }));
+    }
+
+    // Only show the menu if there are items
+    if (menu.items.length > 0) {
+      menu.popup();
+    }
+  });
+}
+
+/**
  * Save a BrowserWindow as PDF
  * @param {BrowserWindow} window - The window to save as PDF
  */
@@ -84,11 +134,14 @@ async function saveWindowAsPDF(window) {
 }
 
 function createWindow() {
+  // Configure spell checker languages
+  session.defaultSession.setSpellCheckerLanguages(['en-US']);
+
   // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: { nodeIntegration: true, webSecurity: false },
+    webPreferences: { nodeIntegration: true, webSecurity: false, spellcheck: true },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
     title: appName
   });
@@ -238,6 +291,9 @@ function createWindow() {
 
   Menu.setApplicationMenu(newMenu);
 
+  // Setup spell check context menu for main window
+  setupSpellCheckContextMenu(mainWindow.webContents);
+
   mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHTML));
   let rootDir = path.dirname(app.getPath('exe'));
 
@@ -312,7 +368,7 @@ function createWindow() {
         parent: mainWindow,
         width: 1000,
         height: 800,
-        webPreferences: { nodeIntegration: true },
+        webPreferences: { nodeIntegration: true, spellcheck: true },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });
@@ -322,6 +378,9 @@ function createWindow() {
 
       log.info('Navigated to ' + newUrl);
       childWindow.loadURL(newUrl);
+
+      // Setup spell check context menu for child window
+      setupSpellCheckContextMenu(childWindow.webContents);
 
       // Setup external links in child windows
       childWindow.webContents.setWindowOpenHandler((details) => {
@@ -337,12 +396,15 @@ function createWindow() {
     } else if (details.url.includes('htmlhelp')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
-        webPreferences: { nodeIntegration: true },
+        webPreferences: { nodeIntegration: true, spellcheck: true },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });
 
       childWindow.loadURL(details.url);
+
+      // Setup spell check context menu for child window
+      setupSpellCheckContextMenu(childWindow.webContents);
 
       // Setup external links in child windows
       childWindow.webContents.setWindowOpenHandler((details) => {
