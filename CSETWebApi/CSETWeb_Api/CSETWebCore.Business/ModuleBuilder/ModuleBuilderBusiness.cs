@@ -235,18 +235,34 @@ namespace CSETWebCore.Business.ModuleBuilder
                 throw new InvalidOperationException("Destination set is not a custom set. Standard sets cannot be modified.");
             }
 
-            // Delete from all related tables in the correct order
+            // Phase 1: Remove question/requirement mappings and custom questions.
+            // Child tables (NQS, RQS, RS) must be deleted before NEW_QUESTION
+            // because the FK from NEW_QUESTION to USCH uses NO_ACTION at the DB
+            // level and ClientSetNull in EF Core — neither cascades automatically.
             _context.REQUIREMENT_SETS.RemoveRange(
                 _context.REQUIREMENT_SETS.Where(rs => rs.Set_Name == setName));
 
             _context.REQUIREMENT_QUESTIONS_SETS.RemoveRange(
                 _context.REQUIREMENT_QUESTIONS_SETS.Where(rqs => rqs.Set_Name == setName));
 
-            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.RemoveRange(
-                _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(usch => usch.Set_Name == setName));
-
             _context.NEW_QUESTION_SETS.RemoveRange(
                 _context.NEW_QUESTION_SETS.Where(nqs => nqs.Set_Name == setName));
+
+            _context.NEW_QUESTION.RemoveRange(
+                _context.NEW_QUESTION.Where(nq => nq.Original_Set_Name == setName));
+
+            _context.SaveChanges();
+
+            // Phase 2: Delete USCH rows for this set, but only those not still
+            // referenced by a NEW_QUESTION from another set. GetHeadingPair uses
+            // FirstOrDefault without filtering by Set_Name, so a question in a
+            // different set may have been assigned a Heading_Pair_Id that belongs
+            // to this set's USCH. Skipping those avoids the NO_ACTION FK violation.
+            var safeToDeleteUsch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                .Where(usch => usch.Set_Name == setName)
+                .Where(usch => !_context.NEW_QUESTION.Any(nq => nq.Heading_Pair_Id == usch.Heading_Pair_Id))
+                .ToList();
+            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.RemoveRange(safeToDeleteUsch);
 
             _context.NEW_REQUIREMENT.RemoveRange(
                 _context.NEW_REQUIREMENT.Where(nr => nr.Original_Set_Name == setName));
@@ -374,6 +390,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (newRequirements.Count > 0)
             {
+                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_REQUIREMENT', RESEED)");
                 _context.NEW_REQUIREMENT.AddRange(newRequirements);
                 _context.SaveChanges();
             }
