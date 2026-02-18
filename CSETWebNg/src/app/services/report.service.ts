@@ -246,7 +246,7 @@ export class ReportService {
   }
 
   validateCisaAssessorFields() {
-    return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
+    return this.http.get(this.configSvc.apiUrl + 'reports/cisa-assessor-workflow-validate-fields');
   }
 
   applyJwtOffset(d: DateTime, format: string) {
