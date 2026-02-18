@@ -93,9 +93,14 @@ namespace CSETWebCore.Business.Demographic
                 // special case for sector/subsector
                 if (field.Key == "SectorSubsectors")
                 {
-
+                    var ss = (List<SectorSubsector>)propertyValue;
+                    if (ss.All(x => x.SectorId == null && x.SubsectorId == null)
+                        || ss.Any(x => x.SectorId != null && x.SubsectorId == null))
+                    {
+                        invalidFields.Add(field.Value);
+                        continue;
+                    }
                 }
-
 
                 if (propertyValue == null)
                 {

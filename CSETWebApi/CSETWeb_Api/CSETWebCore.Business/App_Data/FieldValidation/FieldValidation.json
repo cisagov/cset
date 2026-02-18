@@ -5,7 +5,7 @@
   },
   {
     "key": "OrganizationName",
-    "value": "Organization Name"
+    "value": "Name of Organization"
   },
   {
     "key": "BusinessUnit",
@@ -15,21 +15,13 @@
     "key": "SectorSubsectors",
     "value": "Sector and Subsector"
   },
-  //{
-  //  "key": "Subsector",
-  //  "value": "Subsector"
-  //},
   {
     "key": "NumberEmployeesTotal",
     "value": "Number of employees in the agency/business"
   },
-  //{
-  //  "key": "NumberEmployeesUnit",
-  //  "value": "Number of employees in the department/unit"
-  //},
   {
     "key": "AnnualRevenue",
-    "value": "Annual revenue/funding"
+    "value": "Annual revenue/funding of agency/business"
   },
   {
     "key": "Standard1",
@@ -47,14 +39,7 @@
     "key": "RegulationType2",
     "value": "Regulation Type 2"
   },
-  //{
-  //  "key": "Barrier1",
-  //  "value": "Most significant information sharing barrier"
-  //},
-  //{
-  //  "key": "Barrier2",
-  //  "value": "Second most significant information sharing barrier"
-  //},
+
 
 
 
@@ -65,21 +50,6 @@
     "key": "cisaregion",
     "value": "CISA Region"
   },
-  //11
-  //{
-  //  "key": "CriticalDependencyIncidentResponseSupport",
-  //  "value": "Critical Dependency for Incident Response Support"
-  //},
-  //12
-  //{
-  //  "key": "CriticalServiceRevenuePercent",
-  //  "value": "Percent of annual revenue dependent on the Critical Service"
-  //},
-  //13
-  //{
-  //  "key": "NumberPeopleServedByCritSvc",
-  //  "value": "Number of people served annually by the Critical Service"
-  //},
 
 
 
@@ -103,59 +73,4 @@
     "key": "DisruptedSector2",
     "value": "Second most important disrupted sector"
   }
-  // 16
-  //{
-  //  "key": "ItIcsName",
-  //  "value": "Critical Service - IT/ICS System"
-  //},
-  //18
-  //{
-  //  "key": "ItIcsStaffCount",
-  //  "value": "Critical Service - IT/ICS management and staff count"
-  //},
-  //19
-  //{
-  //  "key": "CybersecurityItIcsStaffCount",
-  //  "value": "Critical Service - IT/ICS cybersecurity management and staff count"
-  //},
-  //20
-  //{
-  //  "key": "AuthorizedOrganizationalUserCount",
-  //  "value": "Critical Service - Organizational user count"
-  ////},
-  //21
-  //{
-  //  "key": "AuthorizedNonOrganizationalUserCount",
-  //  "value": "Critical Service - Non-organizational user count"
-  ////},
-  //22
-  //{
-  //  "key": "CustomersCount",
-  //  "value": "Critical Service - Customer count"
-  //},
-  //23
-  //{
-  //  "key": "NetworksDescription",
-  //  "value": "Critical Service - Networks description"
-  //},
-  //24
-  //{
-  //  "key": "ServicesDescription",
-  //  "value": "Critical Service - Services description"
-  //},
-  //25
-  //{
-  //  "key": "ApplicationsDescription",
-  //  "value": "Critical Service - Applications description"
-  //},
-  //26
-  //{
-  //  "key": "ConnectionsDescription",
-  //  "value": "Critical Service - Connections description"
-  //},
-  //27
-  //{
-  //  "key": "PersonnelDescription",
-  //  "value": "Critical Service - Individuals Description"
-  //}
 ]

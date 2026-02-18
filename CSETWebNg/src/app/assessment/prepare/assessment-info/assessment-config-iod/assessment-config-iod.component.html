@@ -60,7 +60,7 @@
         <label for="name" class="form-label">{{t('cisa region')}}</label>
         <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
           [(ngModel)]="iodDemographics.cisaRegion">
-          <option [ngValue]="null">-- Select Region --</option>
+          <option [ngValue]="null">-- {{t('select')}} --</option>
           <option *ngFor="let region of iodDemographics.cisaRegions" [ngValue]="region.optionValue">
             {{region.optionText}}
           </option>
@@ -136,7 +136,7 @@
       <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
       <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="updateDemographics()"
         [(ngModel)]="demographics.facilitatorId">
-        <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+        <option [ngValue]="null">-- {{t('select')}} --</option>
         <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
           {{contact.lastName}}</option>
       </select>
