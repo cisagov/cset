@@ -5,31 +5,23 @@
   },
   {
     "key": "OrganizationName",
-    "value": "Organization Name"
+    "value": "Name of Organization"
   },
   {
     "key": "BusinessUnit",
     "value": "Business Unit"
   },
   {
-    "key": "Sector",
-    "value": "Sector"
-  },
-  {
-    "key": "Subsector",
-    "value": "Subsector"
+    "key": "SectorSubsectors",
+    "value": "Sector and Subsector"
   },
   {
     "key": "NumberEmployeesTotal",
     "value": "Number of employees in the agency/business"
   },
   {
-    "key": "NumberEmployeesUnit",
-    "value": "Number of employees in the department/unit"
-  },
-  {
     "key": "AnnualRevenue",
-    "value": "Annual revenue/funding"
+    "value": "Annual revenue/funding of agency/business"
   },
   {
     "key": "Standard1",
@@ -47,14 +39,7 @@
     "key": "RegulationType2",
     "value": "Regulation Type 2"
   },
-  {
-    "key": "Barrier1",
-    "value": "Most significant information sharing barrier"
-  },
-  {
-    "key": "Barrier2",
-    "value": "Second most significant information sharing barrier"
-  },
+
 
 
 
@@ -65,21 +50,20 @@
     "key": "cisaregion",
     "value": "CISA Region"
   },
+
+
+
+
+
+  /////////////////////////    CRITICAL SERVCIE PAGE STARTS HERE
+
   {
     "key": "CriticalServiceName",
     "value": "Critical Service Name"
   },
   {
-    "key": "CriticalDependencyIncidentResponseSupport",
-    "value": "Critical Dependency for Incident Response Support"
-  },
-  {
-    "key": "CriticalServiceRevenuePercent",
-    "value": "Percent of annual revenue dependent on the Critical Service"
-  },
-  {
-    "key": "NumberPeopleServedByCritSvc",
-    "value": "Number of people served annually by the Critical Service"
+    "key": "CriticalServiceDescription",
+    "value": "Critical Service Description"
   },
   {
     "key": "DisruptedSector1",
@@ -88,63 +72,5 @@
   {
     "key": "DisruptedSector2",
     "value": "Second most important disrupted sector"
-  },
-
-
-
-
-  /////////////////////////    CRITICAL SERVCIE PAGE STARTS HERE
-
-  {
-    "key": "CriticalServiceDescription",
-    "value": "Critical Service Description"
-  },
-  {
-    "key": "ItIcsName",
-    "value": "Critical Service - IT/ICS System"
-  },
-  {
-    "key": "BudgetBasis",
-    "value": "Critical Service - Cybersecurity Budget Basis"
-  },
-  {
-    "key": "ItIcsStaffCount",
-    "value": "Critical Service - IT/ICS management and staff count"
-  },
-  {
-    "key": "CybersecurityItIcsStaffCount",
-    "value": "Critical Service - IT/ICS cybersecurity management and staff count"
-  },
-  {
-    "key": "AuthorizedOrganizationalUserCount",
-    "value": "Critical Service - Organizational user count"
-  },
-  {
-    "key": "AuthorizedNonOrganizationalUserCount",
-    "value": "Critical Service - Non-organizational user count"
-  },
-  {
-    "key": "CustomersCount",
-    "value": "Critical Service - Customer count"
-  },
-  {
-    "key": "NetworksDescription",
-    "value": "Critical Service - Networks description"
-  },
-  {
-    "key": "ServicesDescription",
-    "value": "Critical Service - Services description"
-  },
-  {
-    "key": "ApplicationsDescription",
-    "value": "Critical Service - Applications description"
-  },
-  {
-    "key": "ConnectionsDescription",
-    "value": "Critical Service - Connections description"
-  },
-  {
-    "key": "PersonnelDescription",
-    "value": "Critical Service - Individuals Description"
   }
 ]
