@@ -6,7 +6,6 @@
 ////////////////////////////////
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Dashboard;
 using CSETWebCore.Model.Dashboard.BarCharts;

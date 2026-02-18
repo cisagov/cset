@@ -148,8 +148,8 @@ namespace CSETWebCore.Business.Demographic.Import
             await context.SaveChangesAsync();
 
             // import all sectors - but only take the first one if not in assessor workflow
-            foreach (var jSector in isAssessorWorkflow 
-                ? model.jASSESSMENT_SECTOR_SUBSECTOR 
+            foreach (var jSector in isAssessorWorkflow
+                ? model.jASSESSMENT_SECTOR_SUBSECTOR
                 : model.jASSESSMENT_SECTOR_SUBSECTOR.Take(1))
             {
                 var dbASS = new ASSESSMENT_SECTOR_SUBSECTOR()
