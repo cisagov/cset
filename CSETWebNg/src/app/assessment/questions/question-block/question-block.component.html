@@ -35,10 +35,10 @@
         </div>
         <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
           <span [class.display-hidden]="!mySubCategory.hasReviewItems"
-            class="d-flex justify-content-center align-items-center flex-00a"
+            class="d-flex justify-content-center align-items-center mfr flex-00a"
             matTooltip="{{ t('tooltip.category requires review') }}">
-            <span class="me-1 cset-icons-flag-dark fs-small"></span>
-            <span class="mb-1 fs-small">{{ t('requires review') }}</span>
+            <span class="me-1 mfr cset-icons-flag-dark fs-small"></span>
+            <span class="mb-1 mfr fs-small">{{ t('requires review') }}</span>
           </span>
           <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
           <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
