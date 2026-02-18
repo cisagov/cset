@@ -23,13 +23,18 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { DemographicService } from '../../../services/demographic.service';
+import { DemographicIodService } from '../../../services/demographic-iod.service';
+import { CsiServiceDemographic } from '../../../models/csi.model';
+import { CsiService } from '../../../services/cis-csi.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
-    selector: 'app-csi',
-    templateUrl: './csi.component.html',
-    standalone: false
+  selector: 'app-csi',
+  templateUrl: './critical-service.component.html',
+  standalone: false
 })
-export class CsiComponent implements OnInit {
+export class CriticalServiceComponent implements OnInit {
 
   /**
    * The 'id' that this page is using to distinguish
@@ -37,12 +42,52 @@ export class CsiComponent implements OnInit {
    */
   aliasId: string;
 
+  demographics: any = {};
+  iodDemographics: any = {};
+
+  csiServiceDemographic: CsiServiceDemographic = {};
+  serviceComposition: any = {};
+
+
   constructor(
-    public navSvc: NavigationService
+    public configSvc: ConfigService,
+    public navSvc: NavigationService,
+    public demoSvc: DemographicService,
+    public iodDemoSvc: DemographicIodService,
+    public csiSvc: CsiService
   ) { }
 
   ngOnInit(): void {
     this.aliasId = this.navSvc.destinationId;
+
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.demographics = data;
+    });
+
+    this.iodDemoSvc.getDemographics().subscribe((data: any) => {
+      this.iodDemographics = data;
+    });
+
+    this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
+      this.csiServiceDemographic = result;
+    });
   }
 
+  updateServiceComp(): void {
+    this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
+  }
+
+  updateDemographics() {
+    this.demoSvc.updateDemographic(this.demographics);
+  }
+
+  updateDemographicsIod() {
+    this.iodDemoSvc.updateDemographic(this.iodDemographics);
+  }
+
+
+
+  showErrors() {
+    return this.configSvc.installationMode === 'IOD';
+  }
 }

@@ -83,7 +83,7 @@
   </div>
 
   <!-- #2 -->
-  <div class="mb-5">
+  <!-- <div class="mb-5">
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType == 1" class="form-label"> Number of
       employees in the business unit? </label>
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType != 1" class="form-label"> Number of
@@ -105,7 +105,7 @@
     <div *ngIf="demographicData.organizationType != 1" class="fst-italic mb-2">
       Please select N/A if the department and the overall organization are the same.
     </div>
-  </div>
+  </div> -->
 
   <!-- #3 -->
   <div class="mb-5">
@@ -116,7 +116,7 @@
       What is the total annual funding for your governmental organization or agency?
     </label>
 
-    <select [ngClass]="{ 'is-invalid' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
+    <select class="form-select" id="totalAnnualRevenue"
       tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
       (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
@@ -214,7 +214,7 @@
   </div>
 
   <!-- #9 -->
-  <div class="mb-5">
+  <!-- <div class="mb-5">
     <label for="assetValue" class="form-label">
       Please indicate the group(s) that your organization shares with or obtains cybersecurity-related information from.
     </label>
@@ -236,10 +236,10 @@
         (change)="update($event)" name="shareOther" />
       <p class="fst-italic">Commas should be used to separate more than one entry.</p>
     </div>
-  </div>
+  </div> -->
 
   <!-- #10 -->
-  <div>
+  <!-- <div>
     <label for="assetValue" class="form-label">
       Please select the two most significant barriers or concerns limiting your organization's participation in
       cybersecurity information sharing groups or initiatives.
@@ -262,5 +262,5 @@
   <datalist id="listBarriers">
     <option *ngFor="let barrier of demographicData.listBarriers" [attr.data-value]="barrier.optionValue"
       [value]="barrier.optionText"></option>
-  </datalist>
+  </datalist> -->
 </form>
