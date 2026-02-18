@@ -43,6 +43,7 @@ export class TrendAnalyticsComponent implements OnInit {
   chartTop5: Chart;
   chartBottom5: Chart;
   chartCategoryPercent: Chart;
+  selectAtLeastFiveCategories: boolean = false;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -75,11 +76,17 @@ export class TrendAnalyticsComponent implements OnInit {
     // Top 5
     this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
+      if (this.chartTop5.config.data.datasets.length == 0) {
+        this.selectAtLeastFiveCategories = true;
+      }
     });
 
     // Bottom 5
     this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
+      if (this.chartBottom5.config.data.datasets.length == 0) {
+        this.selectAtLeastFiveCategories = true;
+      }
     });
 
     // Category Percentage Comparison
