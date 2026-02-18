@@ -63,7 +63,7 @@
             <label class="form-label" for="assetValue">{{t('asset gross value')}}</label>
             <select #assetValueSelect class="form-select" id="assetValue" tabindex="0" name="assetValue"
                 [(ngModel)]="demographicData.assetValue" (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select gross value')}} --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let asset of assetValues" [ngValue]="asset.demographicsAssetId"
                     [selected]="asset.demographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
             </select>
@@ -73,7 +73,7 @@
             <label class="form-label" for="size">{{t('expected effort')}}</label>
             <select class="form-select" id="size" tabindex="0" name="size" [(ngModel)]="demographicData.size"
                 (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select effort')}} --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let s of sizeList" [ngValue]="s.sizeId">{{s.description}}</option>
             </select>
         </div>
@@ -82,9 +82,9 @@
             <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
             <select class="form-select" id="facilitator" tabindex="0" name="facilitator"
                 [(ngModel)]="demographicData.facilitatorId" (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
-                <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
-                    {{contact.lastName}}</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
+                <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
+                    {{contact.firstName}} {{contact.lastName}}</option>
             </select>
         </div>
 
@@ -106,12 +106,12 @@
             <label class="form-label" for="edmOrganizationType">{{t('org type')}}</label>
             <select *ngIf="isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select type')}} --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let t of orgTypes" [ngValue]="t.id">{{t.text}}</option>
             </select>
             <select *ngIf="!isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select type')}} --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <ng-container *ngFor="let t of orgTypes">
                     <option *ngIf="t.id!==3" [ngValue]="t.id">{{t.text}}
                     </option>
@@ -123,7 +123,7 @@
             <label class="form-label" for="orgPointOfContact">{{t('org poc')}}</label>
             <select class="form-select" id="orgPointOfContact" tabindex="0" name="orgPointOfContact"
                 [(ngModel)]="demographicData.orgPointOfContact" (ngModelChange)="update($event)">
-                <option [ngValue]="null">-- {{t('select contact')}} --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
             </select>
@@ -140,7 +140,7 @@
                 <label class="form-label" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>
                 <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
                     [(ngModel)]="demographicData.pointOfContact" (ngModelChange)="update($event)">
-                    <option [ngValue]="null">-- {{t('select contact')}} --</option>
+                    <option [ngValue]="null">-- {{t('select')}} --</option>
                     <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
                         {{contact.firstName}}
                         {{contact.lastName}}</option>

@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
+<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
   <h3>Assessment Comparison</h3>
   <div class="row">
     <div class="col-sm-3">
@@ -71,7 +71,7 @@
               <label class="mb-1" for="industry">Industry</label>
               <select class="form-select" id="industry" name="industry" tabindex="0"
                 [(ngModel)]="demographicData.industryId" (change)="update($event)">
-                <option [ngValue]="null">-- Select Industry --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let industry of industryList" [value]="industry.industryId">
                   {{industry.industryName}}</option>
               </select>
@@ -80,7 +80,7 @@
               <label for="edmOrganizationType">Organization Type</label>
               <select class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
-                <option [ngValue]="null">-- Select Type --</option>
+                <option [ngValue]="null">-- {{t('select')}} --</option>
                 <option *ngFor="let t of orgTypes" [value]="t.id">{{t.text}}</option>
               </select>
             </div>
