@@ -346,8 +346,6 @@ export class ImportComponent implements OnInit, OnDestroy {
     if (this.uploader === undefined) {
       this.initializeUploader();
     }
-    this.configureMonacoEnvironment();
-
     // Subscribe to theme changes to update Monaco editor theme
     this.subscriptions.push(
       this.themeSvc.theme$.subscribe(() => {
@@ -367,26 +365,6 @@ export class ImportComponent implements OnInit, OnDestroy {
     }
   }
 
-  private configureMonacoEnvironment() {
-    // Configure Monaco Editor environment to load assets from correct path
-    (window as any).MonacoEnvironment = {
-      getWorkerUrl: function (moduleId: string, label: string) {
-        if (label === 'json') {
-          return './assets/monaco/vs/language/json/jsonWorker.js';
-        }
-        if (label === 'css' || label === 'scss' || label === 'less') {
-          return './assets/monaco/vs/language/css/cssWorker.js';
-        }
-        if (label === 'html' || label === 'handlebars' || label === 'razor') {
-          return './assets/monaco/vs/language/html/htmlWorker.js';
-        }
-        if (label === 'typescript' || label === 'javascript') {
-          return './assets/monaco/vs/language/typescript/tsWorker.js';
-        }
-        return './assets/monaco/vs/base/worker/workerMain.js';
-      }
-    };
-  }
 
   private initializeUploader() {
     this.referenceUrl = this.configSvc.refDocUrl;
