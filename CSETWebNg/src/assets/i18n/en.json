@@ -40,8 +40,8 @@
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",
-    "ot": "Cross-Sector Goals - Operational Technology (OT)",
-    "it": "Cross-Sector Goals - Information Technology (IT)",
+    "ot": "Operational Technology (OT)",
+    "it": "Information Technology (IT)",
     "ot+it": "Both OT and IT"
   },
   "crit svc poc": "Critical Service Point of Contact",

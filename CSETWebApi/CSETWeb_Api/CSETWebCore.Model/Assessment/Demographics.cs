@@ -52,7 +52,8 @@ namespace CSETWebCore.Model.Assessment
 
         public bool SelfAssessment { get; set; }
         public string? CriticalService { get; set; }
-        public int? PointOfContact { get; set; }
+        public string? CriticalServiceDescription { get; set; }
+        public int? CriticalServicePointOfContact { get; set; }
         public bool? IsScoped { get; set; }
         public bool? Acknowledgement { get; set; }
 
