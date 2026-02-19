@@ -147,7 +147,7 @@ export interface Demographic {
     criticalService?: string;
 
     // Critical Service POC
-    pointOfContact?: number;
+    criticalServicePointOfContact?: number;
 
     // An EDM-only field
     isScoped?: boolean;
