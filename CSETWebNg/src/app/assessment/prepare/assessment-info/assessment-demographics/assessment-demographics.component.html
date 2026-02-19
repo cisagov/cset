@@ -139,7 +139,7 @@
             <div class="col">
                 <label class="form-label" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>
                 <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
-                    [(ngModel)]="demographicData.pointOfContact" (ngModelChange)="update($event)">
+                    [(ngModel)]="demographicData.criticalServicePointOfContact" (ngModelChange)="update($event)">
                     <option [ngValue]="null">-- {{t('select')}} --</option>
                     <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
                         {{contact.firstName}}

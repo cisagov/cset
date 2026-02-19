@@ -35,8 +35,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             upgraders.Add("10.2.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());
             upgraders.Add("10.3.0.0", new CSET_10_2_0_to_12_4_0_4_Upgrade());
             upgraders.Add("12.4.0.3", new CSET_10_2_0_to_12_4_0_4_Upgrade());
-            upgraders.Add("12.4.0.4", new CSET_12_4_0_4_to_12_4_0_5_Upgrade());
-            upgraders.Add("12.4.0.5", null);
+            upgraders.Add("12.4.0.4", new CSET_12_4_0_4_to_13_0_0_0_Upgrade());
+            upgraders.Add("13.0.0.0", null);
         }
 
 

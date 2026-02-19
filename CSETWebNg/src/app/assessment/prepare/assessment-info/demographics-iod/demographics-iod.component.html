@@ -87,14 +87,14 @@
 
   <!-- #3 -->
   <div class="mb-5">
-    <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType == 1" class="form-label"> What is the total
-      annual revenue for your organization?
+    <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType == 1" class="form-label">
+      What is the total annual revenue for your organization?
     </label>
     <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType != 1" class="form-label">
       What is the total annual funding for your governmental organization or agency?
     </label>
 
-    <select class="form-select" id="totalAnnualRevenue"
+    <select [ngClass]="{ 'is-invalid' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
       tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
       (ngModelChange)="update($event)">
       <option [ngValue]="null">-- {{t('select')}} --</option>

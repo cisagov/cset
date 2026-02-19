@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import;
 
-internal class CSET_12_4_0_4_to_12_4_0_5_Upgrade : ICSETJSONFileUpgrade
+internal class CSET_12_4_0_4_to_13_0_0_0_Upgrade : ICSETJSONFileUpgrade
 {
     /// <summary>
     ///     this is the string we will be upgrading to

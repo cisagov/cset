@@ -28,6 +28,9 @@ import { DemographicIodService } from '../../../services/demographic-iod.service
 import { CsiServiceDemographic } from '../../../models/csi.model';
 import { CsiService } from '../../../services/cis-csi.service';
 import { ConfigService } from '../../../services/config.service';
+import { AssessmentContactsResponse } from '../../../models/assessment-info.model';
+import { AssessmentService } from '../../../services/assessment.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-csi',
@@ -47,9 +50,11 @@ export class CriticalServiceComponent implements OnInit {
 
   csiServiceDemographic: CsiServiceDemographic = {};
   serviceComposition: any = {};
+  contacts: User[];
 
 
   constructor(
+    public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
     public demoSvc: DemographicService,
@@ -71,6 +76,8 @@ export class CriticalServiceComponent implements OnInit {
     this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
       this.csiServiceDemographic = result;
     });
+
+    this.refreshContacts();
   }
 
   updateServiceComp(): void {
@@ -83,6 +90,14 @@ export class CriticalServiceComponent implements OnInit {
 
   updateDemographicsIod() {
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
+  }
+
+  refreshContacts() {
+    if (this.assessSvc.id()) {
+      this.assessSvc.getAssessmentContacts().then((data: AssessmentContactsResponse) => {
+        this.contacts = data.contactList;
+      });
+    }
   }
 
 
