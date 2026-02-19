@@ -94,7 +94,7 @@
       What is the total annual funding for your governmental organization or agency?
     </label>
 
-    <select [ngClass]="{ 'is-invalid' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
+    <select class="form-select" id="totalAnnualRevenue"
       tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
       (ngModelChange)="update($event)">
       <option [ngValue]="null">-- {{t('select')}} --</option>
