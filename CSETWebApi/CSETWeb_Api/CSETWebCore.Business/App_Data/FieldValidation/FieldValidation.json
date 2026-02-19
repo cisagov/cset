@@ -20,10 +20,6 @@
     "value": "Number of employees in the agency/business"
   },
   {
-    "key": "AnnualRevenue",
-    "value": "Annual revenue/funding of agency/business"
-  },
-  {
     "key": "Standard1",
     "value": "Most important standard/body of practice"
   },
