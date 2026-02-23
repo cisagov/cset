@@ -113,6 +113,15 @@
           </div>
         </div>
 
+        <div *ngIf="noCategoryData == true">
+          <div class="alert alert-info border-primary" role="alert"
+            style="margin: 2em auto; padding: 1.5em; text-align: center; font-weight: 500;">
+            <div style="font-size: 1.1em; margin-bottom: 0.5em;"><strong>Insufficient Data</strong></div>
+            <div>No category data is available for this aggregation. Please complete questions across categories to
+              view this visualization.</div>
+          </div>
+        </div>
+
         <div class="chart-container" style="position: relative; height:80vh; width: 100%">
           <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
         </div>

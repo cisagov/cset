@@ -121,11 +121,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/top5/{aggregationID}")]
-        public IActionResult Top5(int aggregationID)
+        public async Task<IActionResult> Top5(int aggregationID)
         {
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, aggregationID, response, "TOP");
+            await _trendData.ProcessAsync(_context, aggregationID, response, "TOP");
 
             return Ok(response);
         }
@@ -137,12 +137,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/bottom5/{aggregationID}")]
-        public IActionResult Bottom5(int aggregationID)
+        public async Task<IActionResult> Bottom5(int aggregationID)
         {
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, aggregationID, response, "BOTTOM");
+            await _trendData.ProcessAsync(_context, aggregationID, response, "BOTTOM");
 
             return Ok(response);
         }
