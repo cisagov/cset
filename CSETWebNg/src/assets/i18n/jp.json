@@ -386,11 +386,15 @@
                "change password": "パスワードを変更する",
                "display language": "表示言語",
                "logout": "ログアウト",
-               "setting": "設定",
+               "settings": "設定",
                "encrypt": "評価エクスポートを暗号化する",
                "on": "の上",
                "off": "オフ",
-               "admin": "管理者設定"
+               "admin": "管理者設定",
+               "light mode": "ライトモード",
+               "switch to light mode": "ライトモードに切り替え",
+               "dark mode": "ダークモード",
+               "switch to dark mode": "ダークモードに切り替え"
           }
      },
      "tooltip": {
