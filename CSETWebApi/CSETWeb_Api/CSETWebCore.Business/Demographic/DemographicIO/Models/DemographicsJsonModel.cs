@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CSETWebCore.Business.Demographic.DemographicIO.Models
@@ -22,7 +28,21 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         public Boolean? BoolValue { get; set; }
 
         public DateTime? DateTimeValue { get; set; }
+    }
 
+    public class jASSESSMENT_SECTOR_SUBSECTOR
+    {
+        [Required]
+        public Int32 AssessmentSectorSubsectorId { get; set; }
+
+        [Required]
+        public Int32 Assessment_Id { get; set; }
+
+        [Required]
+        public Int32 SectorId { get; set; }
+        public Int32 IndustryId { get; set; }
+        [Required]
+        public Int32 Sequence { get; set; }
     }
 
     public class jCIS_CSI_SERVICE_DEMOGRAPHICS
@@ -163,20 +183,6 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 
         public DateTime? Submitted_Date { get; set; }
 
-    }
-
-    //Do not export demographics full information. Instead export chunks
-
-    public class jORG_DETAILS
-    {
-        [MaxLength(100)]
-        public String Facility_Name { get; set; }
-
-        [MaxLength(100)]
-        public String City_Or_Site_Name { get; set; }
-
-        [MaxLength(100)]
-        public String State_Province_Or_Region { get; set; }
     }
 }
 

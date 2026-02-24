@@ -30,21 +30,15 @@
     "assessment type": "Tipo de evaluación",
     "type": "Tipo",
     "demographics": "Demografía",
-    "select type": "Selecctionar tipo",
     "sector": "Sector",
-    "select sector": "Selecciona sector",
     "industry": "Industria",
-    "select industry": "Selecciona industria",
     "org name": "Nombre de Organizatión",
     "org type": "Tipo de Organizatión",
     "org poc": "Punto de contacto de la organización",
-    "select contact": "Seleccionar contacto",
-    "select facilitator": "Seleccionar facilitador",
     "self assessment": "Autoevaluación",
     "sector acknowledgement": "Los sectores de infraestructura crítica se han actualizado de la HSPD-7 al marco actual de 16 sectores. Los subsectores seleccionados previamente ya no son aplicables y deben volver a seleccionarse.",
     "crit svc poc": "Punto de contacto del servicio crítico",
     "asset gross value": "¿Cuál es el valor bruto del activo que intenta proteger?",
-    "select gross value": "Selecciona valor",
     "not selected": "No seleccionado",
     "expected effort": "¿Cuál es el esfuerzo relativo esperado para esta evaluación?",
     "select effort": "Selecciona esfuerzo",
@@ -921,6 +915,21 @@
         },
         "cis": {
             "model short title": "CIS"
+        },
+        "crr": {
+            "display-name": "Revisión de Resiliencia Cibernética (CRR)",
+            "model short title": "CRR"
+        },
+        "imr": {
+            "display-name": "Revisión de Gestión de Incidentes (IMR)",
+            "model short title": "IMR"
+        },
+        "vadr": {
+            "display-name": "Revisión de Diseño de Arquitectura Validada de CISA (VADR)",
+            "model short title": "VADR"
+        },
+        "mvra": {
+            "model short title": "MVRA"
         }
     },
     "aggregation": {

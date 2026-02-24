@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Business.Aggregation
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Business.Aggregation
 {
     public class AggregationCpgBusiness
     {

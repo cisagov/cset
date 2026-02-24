@@ -1,35 +1,76 @@
+<!----------------------
+
+  Copyright 2026 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
 <div>
   <div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a" *transloco="let t">
     <p>{{t('analytics.description 1')}}</p>
     <p>{{t('analytics.description 2')}}</p>
+
     <div class="container ps-0">
       <div class="container-fluid ps-0">
         <div class="row">
           <div class="col-sm ps-0">
-            <mat-card class="p-3" style="background-color: transparent; box-shadow: none">
-              <mat-card-header class="d-flex justify-content-center">
-                <h4>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h4>
-              </mat-card-header>
+            <mat-card class="p-3 pt-0" style="background-color: transparent; box-shadow: none">
+
               <div class="p-4">
-                <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
-                  <mat-button-toggle [value]="'mySector'" [disabled]="!showSector"
-                    matTooltip="Select a sector from Demographics in Assessment Information"
-                    [matTooltipDisabled]="showSector">
-                    {{t('analytics.my sector')}}
-                    <div *ngIf="dataType === 'mySector'">
-                      <h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6>
-                    </div>
-                  </mat-button-toggle>
-                  <mat-button-toggle value="allSectors">{{t('analytics.all sectors')}}
-                    <div *ngIf="dataType === 'allSectors'">
-                      <h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6>
-                    </div>
-                  </mat-button-toggle>
-                </mat-button-toggle-group>
+                <label>Comparison Group</label>
+                <select class="form-select" (change)="onChangeSectorSelection($event)">
+                  <option *ngFor="let s of mySectors" [value]="s.sectorId">{{s.sectorName}} - sample size:
+                    {{s.sampleCount}}</option>
+                </select>
               </div>
-              <div style="display: block;" class="d-none">
-                <canvas #barCanvas></canvas>
-              </div>
+
+              <table class="legend-table mt-2 mb-4 ms-4 p-2" style="border: 1px solid #ddd; width: 50%">
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" [attr.fill]="myColor" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.current score')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>|</span>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.vertical bar')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" fill="#4682B4" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.max')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <svg width="8" height="8">
+                      <circle cy="4" cx="4" r="4" fill="#F28C28" />
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.min')}}</span></td>
+                </tr>
+              </table>
 
 
               <div *ngIf="!scoreBarData">
@@ -37,8 +78,9 @@
                   <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
               </div>
-              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="500" [data]="scoreBarData"
-                myColor="#174792"></app-score-ranges>
+
+              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="600" [data]="scoreBarData"
+                [myColor]="myColor"></app-score-ranges>
 
             </mat-card>
 
@@ -47,5 +89,5 @@
       </div>
     </div>
   </div>
-    <app-nav-back-next [page]="'analytics-results-page'"></app-nav-back-next>
+  <app-nav-back-next [page]="'analytics-results-page'"></app-nav-back-next>
 </div>

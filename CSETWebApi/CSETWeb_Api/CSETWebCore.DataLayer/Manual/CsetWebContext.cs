@@ -1,4 +1,10 @@
-﻿#nullable disable
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+#nullable disable
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;

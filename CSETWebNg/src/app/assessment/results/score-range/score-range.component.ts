@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ export class ScoreRangeComponent implements OnInit {
   @Input()
   myColor = "#0000aa";
 
-  rangeColor = "#87909e";
+  rangeColor = "#707885";
 
   padding = 10;
 
@@ -77,7 +77,7 @@ export class ScoreRangeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.containerWidth = this.chartWidth * 1.25;
+    this.containerWidth = this.chartWidth * 1.1;
     this.barH = this.h * .1;
   }
 }

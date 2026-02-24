@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2025 Battelle Energy Alliance, LLC
+   Copyright 2026 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@
         <label for="name" class="form-label">{{t('cisa region')}}</label>
         <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
           [(ngModel)]="iodDemographics.cisaRegion">
-          <option [ngValue]="null">-- Select Region --</option>
+          <option [ngValue]="null">-- {{t('select')}} --</option>
           <option *ngFor="let region of iodDemographics.cisaRegions" [ngValue]="region.optionValue">
             {{region.optionText}}
           </option>
@@ -136,112 +136,22 @@
       <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
       <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="updateDemographics()"
         [(ngModel)]="demographics.facilitatorId">
-        <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+        <option [ngValue]="null">-- {{t('select')}} --</option>
         <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
           {{contact.lastName}}</option>
       </select>
     </div>
 
-    <div class="row mb-4">
-      <div class="col">
-        <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
-        <textarea [ngClass]="{ 'is-invalid' : !demographics.criticalService }" appAutoSize class="form-control"
-          autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService"
-          [(ngModel)]="demographics.criticalService" placeholder="{{t('critical service name')}}"
-          (blur)="updateDemographics()"></textarea>
-      </div>
 
-      <div class="col">
-        <label class="form-label" for="criticalService">Critical Dependency for
-          Incident Response Support</label>
-        <textarea [ngClass]="{ 'is-invalid' : !iodDemographics.criticalDependencyIncidentResponseSupport }"
-          appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalDependency"
-          id="criticalDependency" [(ngModel)]="iodDemographics.criticalDependencyIncidentResponseSupport"
-          placeholder="Critical Dependency for Incident Response Support" (blur)="updateDemographicsIod()"></textarea>
-      </div>
-    </div>
 
-    <div class="mb-4">
-      <label class="form-label" for="critSvcPointOfContact">Critical Service Point of
-        Contact</label>
-      <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
-        (change)="updateDemographics()" [(ngModel)]="demographics.pointOfContact">
-        <option [ngValue]="null">-- Select Contact --</option>
-        <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
-          {{ contact.firstName }} {{ contact.lastName }}
-        </option>
-      </select>
-    </div>
 
-    <!-- #4 -->
-    <div class="mb-4">
-      <label for="percentageRevenue" class="form-label">
-        Please estimate the percentage of your organization's annual revenue
-        that depends on the critical service.
-      </label>
-      <select [ngClass]="{ 'is-invalid' : !iodDemographics.criticalServiceRevenuePercent }" class="form-select"
-        id="percentageRevenue" tabindex="0" name="percentageRevenue"
-        [(ngModel)]="iodDemographics.criticalServiceRevenuePercent" (change)="updateDemographicsIod()">
-        <option [ngValue]="null">-- Select --</option>
-        <option *ngFor="let i of iodDemographics.listRevenuePercentages" [ngValue]="i.optionValue"
-          [selected]="i.optionValue === iodDemographics.criticalServiceRevenuePercent">
-          {{ i.optionText }}
-        </option>
-      </select>
-    </div>
 
-    <!-- #5 -->
-    <div class="mb-4">
-      <label for="NumberPeopleServedByCritSvc" class="form-label">
-        If possible, please estimate the number of people served annually by the
-        critical service. If an estimate is not
-        available, please select N/A.
-      </label>
-      <select [ngClass]="{ 'is-invalid' : !iodDemographics.numberPeopleServedByCritSvc }" class="form-select"
-        id="numberPeopleServedByCritSvc" tabindex="0" name="numberPeopleServedByCritSvc"
-        [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc" (change)="updateDemographicsIod()">
-        <option [ngValue]="null">-- Select --</option>
-        <option *ngFor="let i of iodDemographics.listNumberPeopleServed" [ngValue]="i.optionValue"
-          [selected]="i.optionValue === iodDemographics.numberPeopleServedByCritSvc">
-          {{ i.optionText }}
-        </option>
-      </select>
-    </div>
 
-    <!-- #6 -->
-    <div class="mb-4">
-      <label for="disruptedSectors" class="form-label">
-        Please select in order of criticality, the two critical infrastructure
-        sectors which, if they were unavailable
-        or disrupted for one week or more, would most affect your ability to
-        sustain the critical service.
-      </label>
 
-      <div>
-        <label class="form-label">Most important</label>
-        <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
-          name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
-          (change)="updateDemographicsIod()">
-          <option [ngValue]="null">-- Select --</option>
-          <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
-            [selected]="i.optionValue === iodDemographics.disruptedSector1">
-            {{ i.optionText }}
-          </option>
-        </select>
-      </div>
-      <div>
-        <label class="form-label">Second most important</label>
-        <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
-          name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
-          (change)="updateDemographicsIod()">
-          <option [ngValue]="null">-- Select --</option>
-          <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
-            [selected]="i.optionValue === iodDemographics.disruptedSector2">
-            {{ i.optionText }}
-          </option>
-        </select>
-      </div>
-    </div>
+
+
+
+
   </div>
   <app-nav-back-next [page]="'info-config-iod'"></app-nav-back-next>
 </div>

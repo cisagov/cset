@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
-    public class DemographicImportController : ControllerBase
+    public class DemographicsImportController : ControllerBase
     {
         private ITokenManager _tokenManager;
         private CSETContext _context;
-        private IDemographicImportManager _demographicImportManager;
+        private IDemographicsImportManager _demographicsImportManager;
 
 
         /// <summary>
@@ -28,11 +28,11 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public DemographicImportController(ITokenManager token, CSETContext context, IDemographicImportManager demographicImportManager)
+        public DemographicsImportController(ITokenManager token, CSETContext context, IDemographicsImportManager demographicsImportManager)
         {
             _tokenManager = token;
             _context = context;
-            _demographicImportManager = demographicImportManager;
+            _demographicsImportManager = demographicsImportManager;
         }
 
 
@@ -56,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                await _demographicImportManager.ProcessCSETDemographicImport(target.ToArray(), currentUserId, assessmentId, _tokenManager.GetAccessKey(), _context);
+                await _demographicsImportManager.ImportDemographics(target.ToArray(), currentUserId, assessmentId, _tokenManager.GetAccessKey(), _context);
             }
             catch (JsonReaderException)
             {
@@ -70,7 +70,5 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(true);
         }
-
     }
-
 }

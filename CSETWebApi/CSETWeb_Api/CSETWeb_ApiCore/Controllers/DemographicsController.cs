@@ -1,10 +1,9 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Question;
@@ -15,6 +14,7 @@ using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -205,7 +205,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext2/sector")]
         public IActionResult PostSector([FromBody] SectorSubsector request)
         {
-            var response = new List<ListItem2>();
+            var response = new SectorChangeResponse();
 
             try
             {
@@ -218,7 +218,17 @@ namespace CSETWebCore.Api.Controllers
                 if (request.SectorId != null)
                 {
                     var mgr = new DemographicExtBusiness(_context);
-                    response = mgr.GetSubsectors((int)request.SectorId);
+                    response.Subsectors = mgr.GetSubsectors((int)request.SectorId);
+                }
+
+
+                CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+                if (stats != null)
+                {
+                    response.CompletedCount = stats.CompletedCount;
+                    response.TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0;
+                    response.TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0;
+                    response.TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0;
                 }
             }
             catch (Exception exc)
@@ -239,6 +249,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext2/sector")]
         public IActionResult DeleteSector([FromQuery] int seq)
         {
+            var response = new SectorChangeResponse();
+
             try
             {
                 int assessmentId = _token.AssessmentForUser();
@@ -246,13 +258,22 @@ namespace CSETWebCore.Api.Controllers
                 var smm = new SectorMultiManager(_context);
                 smm.Delete(assessmentId, seq);
 
+
+                CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+                if (stats != null)
+                {
+                    response.CompletedCount = stats.CompletedCount;
+                    response.TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0;
+                    response.TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0;
+                    response.TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0;
+                }
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return Ok();
+            return Ok(response);
         }
     }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import { AssessmentConfigIodComponent } from '../../assessment/prepare/assessmen
 import { AssessmentDemogIodComponent } from '../../assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { AssessmentInfoComponent } from '../../assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from '../../assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
-import { CsiComponent } from '../../assessment/prepare/csi/csi.component';
+import { CriticalServiceComponent } from '../../assessment/prepare/csi/critical-service.component';
 import { FrameworkComponent } from '../../assessment/prepare/framework/framework.component';
 import { CmmcLevelsComponent } from '../../assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { Cmmc2LevelsComponent } from '../../assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
@@ -114,7 +114,7 @@ const routes: Routes = [
             { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
             { path: 'cisa-vadr-info', component: CisaVadrInfoComponent },
             { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
-            { path: 'csi', component: CsiComponent },
+            { path: 'critical-service', component: CriticalServiceComponent },
             { path: 'sal', component: SalsComponent },
             { path: 'framework', component: FrameworkComponent },
             { path: 'required', component: RequiredDocsComponent },

@@ -1,10 +1,9 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
-//////////////////////////////// 
-
+/////////////////////////////////
 using System;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
@@ -33,6 +32,7 @@ namespace CSETWebCore.Interfaces.Assessment
         List<DetailsDemographicsOptionsDTO> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);
+        CompletionCounts GetAssessmentCompletion(int assessmentId);
         IEnumerable<CompletionCounts> GetAssessmentsCompletionForUser(int userId);
         IEnumerable<CompletionCounts> GetAssessmentsCompletionForAccessKey(string accessKey);
 

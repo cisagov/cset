@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@
 ////////////////////////////////
 
 import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output, HostListener,
-  ApplicationRef,
-  Renderer2,
-  ElementRef,
-  ChangeDetectorRef
+   Component,
+   EventEmitter,
+   OnInit,
+   Output, HostListener,
+   ApplicationRef,
+   Renderer2,
+   ElementRef,
+   ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -46,300 +46,302 @@ import { DemographicService } from '../services/demographic.service';
 import { DemographicIodService } from '../services/demographic-iod.service';
 
 interface UserAssessment {
-  isEntry: boolean;
-  isEntryString: string;
-  assessmentId: number;
-  assessmentName: string;
-  useDiagram: boolean;
-  useStandard: boolean;
-  useMaturity: boolean;
-  type: string;
-  assessmentCreatedDate: string;
-  creatorName: string;
-  markedForReview: boolean;
-  altTextMissing: boolean;
-  selectedMaturityModel?: string;
-  selectedStandards?: string;
-  completedQuestionsCount: number;
-  totalAvailableQuestionsCount: number;
-  questionAlias: string;
-  iseSubmission: boolean;
-  submittedDate?: Date;
-  done?: boolean;
-  favorite?: boolean;
-  firstName?: string;
-  lastName?: string;
+   isEntry: boolean;
+   isEntryString: string;
+   assessmentId: number;
+   assessmentName: string;
+   useDiagram: boolean;
+   useStandard: boolean;
+   useMaturity: boolean;
+   type: string;
+   assessmentCreatedDate: string;
+   creatorName: string;
+   markedForReview: boolean;
+   altTextMissing: boolean;
+   selectedMaturityModel?: string;
+   selectedStandards?: string;
+   completedQuestionsCount: number;
+   totalAvailableQuestionsCount: number;
+   questionAlias: string;
+   iseSubmission: boolean;
+   submittedDate?: Date;
+   done?: boolean;
+   favorite?: boolean;
+   firstName?: string;
+   lastName?: string;
 }
 
+
 @Component({
-  selector: 'app-assessment',
-  styleUrls: ['./assessment.component.scss'],
-  templateUrl: './assessment.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' },
-  standalone: false
+   selector: 'app-assessment',
+   styleUrls: ['./assessment.component.scss'],
+   templateUrl: './assessment.component.html',
+   // eslint-disable-next-line
+   host: { class: 'd-flex flex-column flex-11a w-100' },
+   standalone: false
 })
 export class AssessmentComponent implements OnInit {
-  private destroy$ = new Subject<void>();
-  currentTab: string = 'prepare';
+   private destroy$ = new Subject<void>();
+   currentTab: string = 'prepare';
 
-  innerWidth: number;
-  innerHeight: number;
-  completionPercentage: number = 0;
-  completedQuestions = 0;
-  totalQuestions = 0;
-  private completionSubscription: Subscription;
-  /**
-   * Indicates whether the nav panel is visible (true)
-   * or hidden (false).
-   */
-  expandNav = false;
+   innerWidth: number;
+   innerHeight: number;
+   completionPercentage: number = 0;
+   completedQuestions = 0;
+   totalQuestions = 0;
+   private completionSubscription: Subscription;
 
-  /**
-   * Indicates whether the nav stays visible (true)
-   * or auto-hides when the screen is narrow (false).
-   */
-  lockNav = true;
+   /**
+    * Indicates whether the nav panel is visible (true)
+    * or hidden (false).
+    */
+   expandNav = false;
 
-  widthBreakpoint = 960;
-  scrollTop = 0;
+   /**
+    * Indicates whether the nav stays visible (true)
+    * or auto-hides when the screen is narrow (false).
+    */
+   lockNav = true;
 
-  assessmentAlias = this.tSvc.translate('titles.assessment');
-  assessment: AssessmentDetail = {};
+   widthBreakpoint = 960;
+   scrollTop = 0;
 
-  @Output() navSelected = new EventEmitter<string>();
-  isSet: boolean;
+   assessmentAlias = this.tSvc.translate('titles.assessment');
+   assessment: AssessmentDetail = {};
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.evaluateWindowSize();
-  }
+   @Output() navSelected = new EventEmitter<string>();
+   isSet: boolean;
 
-  private wheelListener: (() => void) | undefined;
+   @HostListener('window:resize', ['$event'])
+   onResize(event) {
+      this.evaluateWindowSize();
+   }
 
-  /**
-   *
-   */
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    public assessSvc: AssessmentService,
-    public navSvc: NavigationService,
-    public navTreeSvc: NavTreeService,
-    public layoutSvc: LayoutService,
-    public tSvc: TranslocoService,
-    private configSvc: ConfigService,
-    private appRef: ApplicationRef,
-    private completionSvc: CompletionService,
-    private demoSvc: DemographicService,
-    private demoIodSvc: DemographicIodService,
-    private cdr: ChangeDetectorRef,
-    private renderer: Renderer2,
-    private el: ElementRef
-  ) {
-    this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
-    this.assessSvc.getMode();
-    this.setTab('prepare');
-    this.navSvc.activeResultsView = null;
-    this.isSet = false;
-  }
+   private wheelListener: (() => void) | undefined;
 
-  ngOnInit(): void {
-    if (this.isSet) {
-      this.isSet = true;
-      this.appRef.tick();
-    }
+   /**
+    *
+    */
+   constructor(
+      private router: Router,
+      private route: ActivatedRoute,
+      public assessSvc: AssessmentService,
+      public navSvc: NavigationService,
+      public navTreeSvc: NavTreeService,
+      public layoutSvc: LayoutService,
+      public tSvc: TranslocoService,
+      private configSvc: ConfigService,
+      private appRef: ApplicationRef,
+      private completionSvc: CompletionService,
+      private demoSvc: DemographicService,
+      private demoIodSvc: DemographicIodService,
+      private cdr: ChangeDetectorRef,
+      private renderer: Renderer2,
+      private el: ElementRef
+   ) {
+      this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
+      this.assessSvc.getMode();
+      this.setTab('prepare');
+      this.navSvc.activeResultsView = null;
+      this.isSet = false;
+   }
 
-    // Subscribe to tab changes from the service
-    this.assessSvc.currentTab$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(tab => {
-        this.currentTab = tab;
-        this.cdr.detectChanges();
-      });
-
-    this.wheelListener = this.renderer.listen(
-      this.el.nativeElement,
-      'wheel',
-      (event: WheelEvent) => this.scrollWhitePanel(event),
-      { passive: true }
-    );
-
-    this.evaluateWindowSize();
-
-    if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
-      this.assessmentAlias = this.tSvc.translate('titles.analysis');
-    }
-
-    this.tSvc.langChanges$.subscribe((event) => {
-      this.navSvc.buildTree();
-    });
-    if (this.assessSvc.id()) {
-      this.getAssessmentDetail();
-      this.loadCompletionData();
-      this.assessSvc.completionRefreshRequested$.subscribe((stats) => {
-        if (stats) {
-          this.completedQuestions = stats.completedCount;
-          this.totalQuestions = stats.totalCount;
-          this.completionPercentage = this.totalQuestions > 0 ?
-            Math.round((this.completedQuestions / this.totalQuestions) * 100) : 0;
-        }
-      });
-      merge(
-        this.demoSvc.demographicUpdateCompleted$,
-        this.demoIodSvc.demographicUpdateCompleted$
-      ).subscribe(() => {
-        this.loadCompletionData();
-      });
-    }
-  }
-
-  ngAfterViewInit() {
-    // Detect changes after initial view check
-    this.cdr.detectChanges();
-  }
-
-  getAssessmentDetail() {
-    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-      this.assessment = data;
-      this.assessSvc.assessment = data;
-    });
-  }
-
-  setAssessmentDone() {
-    this.assessment.done = !this.assessment.done;
-    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
-  }
-
-  setTab(tab: string) {
-    this.assessSvc.setCurrentTab(tab);
-  }
-
-  /**
-   * Determines how to display the sidenav.
-   */
-  sidenavMode() {
-    if (this.layoutSvc.hp) {
-      this.lockNav = false;
-      return 'over';
-    }
-
-    return this.innerWidth < this.widthBreakpoint ? 'over' : 'side';
-  }
-
-  /**
-   * Evaluates sidenav drawer behavior based on window size
-   */
-  evaluateWindowSize() {
-    this.innerWidth = window.innerWidth;
-    this.innerHeight = window.innerHeight;
-
-    // show/hide lock/unlock the nav drawer based on available width
-    if (this.innerWidth < this.widthBreakpoint) {
-      this.expandNav = false;
-      this.lockNav = false;
-    } else {
-      this.expandNav = true;
-      this.lockNav = true;
-    }
-  }
-
-  /**
-   * Allow the user to scroll the white-panel content
-   * by mousewheel out in the gray part.
-   */
-  scrollWhitePanel(event: WheelEvent) {
-    const target = event.target as HTMLElement;
-    if (target.classList.contains('mat-drawer-content')) {
-      const element = document.querySelector('.white-panel');
-      if (element) {
-        element.scrollBy({ top: event.deltaY });
+   ngOnInit(): void {
+      if (this.isSet) {
+         this.isSet = true;
+         this.appRef.tick();
       }
-    }
-  }
 
-  /**
-   * Called when the user clicks an item
-   * in the nav.
-   */
-  selectNavItem(target: string) {
-    if (!this.lockNav) {
-      this.expandNav = false;
-    } else {
-      this.expandNav = true;
-    }
+      // Subscribe to tab changes from the service
+      this.assessSvc.currentTab$
+         .pipe(takeUntil(this.destroy$))
+         .subscribe(tab => {
+            this.currentTab = tab;
+            this.cdr.detectChanges();
+         });
 
-    this.navSvc.navDirect(target);
-    setTimeout(() => {
-      this.navTreeSvc.setSideNavScrollLocation(target)
-    }, 300);
-  }
+      this.wheelListener = this.renderer.listen(
+         this.el.nativeElement,
+         'wheel',
+         (event: WheelEvent) => this.scrollWhitePanel(event),
+         { passive: true }
+      );
 
-  toggleNav() {
-    this.expandNav = !this.expandNav;
-  }
+      this.evaluateWindowSize();
 
-  /**
-   * Returns the text for the Requirements label.
-   */
-  requirementsLabel() {
-    return 'Requirements';
-  }
+      if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
+         this.assessmentAlias = this.tSvc.translate('titles.analysis');
+      }
 
-  /**
-   * Fired when the sidenav's opened state changes.
-   * @param e
-   */
-  openStateChange(e) {
-    this.expandNav = e;
-  }
+      this.tSvc.langChanges$.subscribe((event) => {
+         this.navSvc.buildTree();
+      });
 
-  goHome() {
-    this.assessSvc.dropAssessment();
-    this.router.navigate(['/home']);
-  }
+      if (this.assessSvc.id()) {
+         this.getAssessmentDetail();
+         this.loadCompletionStats();
 
-  loadCompletionData() {
-    this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
-      const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
+         this.assessSvc.completionRefreshRequested$.subscribe((stats) => {
+            if (stats) {
+               this.completedQuestions = stats.completedCount;
+               this.totalQuestions = stats.totalCount;
+               this.completionPercentage = this.totalQuestions > 0 ?
+                  Math.round((this.completedQuestions / this.totalQuestions) * 100) : 0;
+            }
+         });
 
-      if (currentAssessment) {
-        this.completedQuestions = currentAssessment.completedCount || 0;
-        this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
-          (currentAssessment.totalDiagramQuestionsCount ?? 0) +
-          (currentAssessment.totalStandardQuestionsCount ?? 0);
+         this.completionSubscription = merge(
+            this.demoSvc.demographicUpdateCompleted$,
+            this.demoIodSvc.demographicUpdateCompleted$
+         ).subscribe(() => {
+            this.loadCompletionStats();
+         });
+      }
+   }
 
-        if (this.totalQuestions > 0) {
-          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
-        } else {
-          this.completionPercentage = 0;
-        }
+   ngAfterViewInit() {
+      // Detect changes after initial view check
+      this.cdr.detectChanges();
+   }
 
+   getAssessmentDetail() {
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+         this.assessment = data;
+         this.assessSvc.assessment = data;
+      });
+   }
+
+   setAssessmentDone() {
+      this.assessment.done = !this.assessment.done;
+      this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
+   }
+
+   setTab(tab: string) {
+      this.assessSvc.setCurrentTab(tab);
+   }
+
+   /**
+    * Determines how to display the sidenav.
+    */
+   sidenavMode() {
+      if (this.layoutSvc.hp) {
+         this.lockNav = false;
+         return 'over';
+      }
+
+      return this.innerWidth < this.widthBreakpoint ? 'over' : 'side';
+   }
+
+   /**
+    * Evaluates sidenav drawer behavior based on window size
+    */
+   evaluateWindowSize() {
+      this.innerWidth = window.innerWidth;
+      this.innerHeight = window.innerHeight;
+
+      // show/hide lock/unlock the nav drawer based on available width
+      if (this.innerWidth < this.widthBreakpoint) {
+         this.expandNav = false;
+         this.lockNav = false;
       } else {
-        this.completionPercentage = 0;
-        this.completedQuestions = 0;
-        this.totalQuestions = 0;
+         this.expandNav = true;
+         this.lockNav = true;
       }
-    });
-  }
+   }
 
-  getCompletionPercentage(): number {
-    return this.completionPercentage;
-  }
+   /**
+    * Allow the user to scroll the white-panel content
+    * by mousewheel out in the gray part.
+    */
+   scrollWhitePanel(event: WheelEvent) {
+      const target = event.target as HTMLElement;
+      if (target.classList.contains('mat-drawer-content')) {
+         const element = document.querySelector('.white-panel');
+         if (element) {
+            element.scrollBy({ top: event.deltaY });
+         }
+      }
+   }
 
-  getProgressTooltip(): string {
-    if (this.totalQuestions === 0) return 'No questions available';
-    return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
-  }
+   /**
+    * Called when the user clicks an item
+    * in the nav.
+    */
+   selectNavItem(target: string) {
+      if (!this.lockNav) {
+         this.expandNav = false;
+      } else {
+         this.expandNav = true;
+      }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+      this.navSvc.navDirect(target);
+      setTimeout(() => {
+         this.navTreeSvc.setSideNavScrollLocation(target)
+      }, 300);
+   }
 
-    this.completionSubscription?.unsubscribe();
+   toggleNav() {
+      this.expandNav = !this.expandNav;
+   }
 
-    if (this.wheelListener) {
-      this.wheelListener();
-    }
-  }
+   /**
+    * Returns the text for the Requirements label.
+    */
+   requirementsLabel() {
+      return 'Requirements';
+   }
+
+   /**
+    * Fired when the sidenav's opened state changes.
+    * @param e
+    */
+   openStateChange(e) {
+      this.expandNav = e;
+   }
+
+   goHome() {
+      this.assessSvc.dropAssessment();
+      this.router.navigate(['/home']);
+   }
+
+   /**
+    * Asks the API for completion stats on just the current assessment.
+    */
+   loadCompletionStats() {
+      this.assessSvc.getAssessmentCompletion().subscribe((currentAssessment: any) => {
+         if (currentAssessment) {
+            this.completedQuestions = currentAssessment.completedCount || 0;
+            this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
+               (currentAssessment.totalDiagramQuestionsCount ?? 0) +
+               (currentAssessment.totalStandardQuestionsCount ?? 0);
+
+            if (this.totalQuestions > 0) {
+               this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
+            } else {
+               this.completionPercentage = 0;
+            }
+
+         } else {
+            this.completionPercentage = 0;
+            this.completedQuestions = 0;
+            this.totalQuestions = 0;
+         }
+      });
+   }
+
+   getProgressTooltip(): string {
+      if (this.totalQuestions === 0) return 'No questions available';
+      return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
+   }
+
+   ngOnDestroy() {
+      this.destroy$.next();
+      this.destroy$.complete();
+
+      this.completionSubscription?.unsubscribe();
+
+      if (this.wheelListener) {
+         this.wheelListener();
+      }
+   }
 }

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2025 Battelle Energy Alliance, LLC
+   Copyright 2026 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
     </h4>
 
     <p>{{statusText}}</p>
+    <p *ngIf="passwordHint" class="text-muted"><strong>Hint:</strong> {{passwordHint}}</p>
 
     <form>
 
@@ -42,24 +43,6 @@
 
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%"
             mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
-
-          <div>
-            <label mat-line class="ms-2 pt-1 pb-2" [for]="'pw' + i">Hint: <i>{{ getAssessmentHint(file.name)
-                }}</i></label>
-
-            <div class="input-container d-flex justify-content-center ms-1 me-1 mb-3">
-              <input [id]="'pw' + i" [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2"
-                name="password" placeholder="Password" [(ngModel)]="password" />
-              <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
-                matTooltip="Show password">
-                <i class="fas fa-eye"></i>
-              </div>
-              <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()"
-                matTooltip="Hide password">
-                <i class="fas fa-eye-slash"></i>
-              </div>
-            </div>
-          </div>
 
           <hr>
 

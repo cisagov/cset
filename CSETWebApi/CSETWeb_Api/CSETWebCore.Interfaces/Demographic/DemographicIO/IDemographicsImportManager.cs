@@ -1,0 +1,17 @@
+﻿//////////////////////////////// 
+// 
+//   Copyright 2026 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using System.Threading.Tasks;
+
+namespace CSETWebCore.Business.Demographic.Import
+{
+    public interface IDemographicsImportManager
+    {
+        Task ImportDemographics(byte[] zipFileFromDatabase, int? currentUserId, int assessmentid, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false);
+    }
+}
+

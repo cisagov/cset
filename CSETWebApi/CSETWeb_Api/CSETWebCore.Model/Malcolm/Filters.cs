@@ -1,4 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Malcolm

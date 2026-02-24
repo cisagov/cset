@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -49,16 +49,17 @@ namespace CSETWebCore.Business.Demographic
 
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
-            demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
             demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
-            demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
+            demographics.CriticalServiceDescription = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE-DESC");
+            demographics.CriticalServicePointOfContact = (int?)extBiz.GetX(assessmentId, "CRIT-SERVICE-POC");
             demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
             demographics.FacilitatorId = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
+            demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.Acknowledgement = (bool?)extBiz.GetX(assessmentId, Constants.Constants.ACK_SECTOR_UPDATED_PPD21) ?? false;
 
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
@@ -126,16 +127,17 @@ namespace CSETWebCore.Business.Demographic
             // Store values in DETAILS-DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
+            extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
+            extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
             extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "SELF-ASSESS", demographics.SelfAssessment);
             extBiz.SaveX(demographics.AssessmentId, "TECH-DOMAIN", demographics.TechDomain);
-            extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
-            extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
             extBiz.SaveX(demographics.AssessmentId, "SCOPED", demographics.IsScoped);
-            extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "CRIT-SERVICE", demographics.CriticalService);
+            extBiz.SaveX(demographics.AssessmentId, "CRIT-SERVICE-DESC", demographics.CriticalServiceDescription);
+            extBiz.SaveX(demographics.AssessmentId, "CRIT-SERVICE-POC", demographics.CriticalServicePointOfContact == 0 ? null : demographics.CriticalServicePointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "FACILITATOR", demographics.FacilitatorId == 0 ? null : demographics.FacilitatorId);
             extBiz.SaveX(demographics.AssessmentId, "ASSET-VALUE", assetValue?.OptionValue);
             extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);

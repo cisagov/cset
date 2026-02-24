@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -80,18 +80,17 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessment/import")]
         public async Task<IActionResult> ImportAssessment([FromHeader] string pwd)
         {
-            // should be multipart
             if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
             {
-                // unsupported media type
                 return StatusCode(415);
             }
-            var assessmentFile = Request.Form.Files[0];
 
+            var assessmentFile = Request.Form.Files[0];
             var currentUserId = _tokenManager.GetCurrentUserId();
             var accessKey = _tokenManager.GetAccessKey();
 
-            ZipEntry hint = null;
+            string passwordHint = null;
+
             try
             {
                 var formFiles = HttpContext.Request.Form.Files;
@@ -107,48 +106,54 @@ namespace CSETWebCore.Api.Controllers
                     file.CopyTo(target);
                     var bytes = target.ToArray();
 
-                    // Get the password hint, if there is one.
+                    // Get the password hint BEFORE attempting import
                     using (Stream fs = new MemoryStream(bytes))
                     {
-                        MemoryStream ms = new MemoryStream();
-
                         var zip = new ZipFile(fs);
 
                         foreach (ZipEntry entry in zip)
                         {
-                            if (entry.Name.Contains(".hint"))
+                            if (entry.Name.EndsWith(".hint", StringComparison.OrdinalIgnoreCase))
                             {
-                                hint = entry;
+                                // Extract just the hint part (remove .hint extension)
+                                passwordHint = Path.GetFileNameWithoutExtension(entry.Name);
+                                break;
                             }
                         }
                     }
 
-
                     // overwrite the assessment if instructed in the header
                     bool.TryParse(Request.Headers["x-cset-overwrite"], out bool overwrite);
-
 
                     await _importManager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd, overwrite);
                 }
             }
             catch (Exception e)
             {
-                var returnMessage = "";
-
                 if (e.Message == "No password available for encrypted stream")
                 {
-                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.Name;
-                    return StatusCode(423, returnMessage);
+                    // Return JSON instead of plain string
+                    return StatusCode(423, new
+                    {
+                        message = "File requires a password",
+                        hint = passwordHint ?? ""
+                    });
                 }
                 else if (e.Message == "The password did not match.")
                 {
-                    returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.Name;
-                    return StatusCode(406, returnMessage);
+                    // Return JSON instead of plain string
+                    return StatusCode(406, new
+                    {
+                        message = "Invalid password",
+                        hint = passwordHint ?? ""
+                    });
                 }
                 else if (e.Message == "Custom module not found")
                 {
-                    returnMessage = "Custom module not found";
-                    return StatusCode(404, returnMessage);
+                    return StatusCode(404, new
+                    {
+                        message = "Custom module not found"
+                    });
                 }
                 else
                 {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ import { FileItem, FileUploader } from '../modules/ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
+import { ThemeService } from '../services/theme.service';
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
 
@@ -283,7 +284,8 @@ export class ImportComponent implements OnInit, OnDestroy {
   constructor(
     private configSvc: ConfigService,
     private fileClient: FileUploadClientService,
-    private editorService: CodeEditorService
+    private editorService: CodeEditorService,
+    public themeSvc: ThemeService
   ) {
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
     Promise.all = function (values: any): Promise<any> {
@@ -344,33 +346,25 @@ export class ImportComponent implements OnInit, OnDestroy {
     if (this.uploader === undefined) {
       this.initializeUploader();
     }
-    this.configureMonacoEnvironment();
+    // Subscribe to theme changes to update Monaco editor theme
+    this.subscriptions.push(
+      this.themeSvc.theme$.subscribe(() => {
+        this.updateMonacoTheme();
+      })
+    );
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private configureMonacoEnvironment() {
-    // Configure Monaco Editor environment to load assets from correct path
-    (window as any).MonacoEnvironment = {
-      getWorkerUrl: function (moduleId: string, label: string) {
-        if (label === 'json') {
-          return './assets/monaco/vs/language/json/jsonWorker.js';
-        }
-        if (label === 'css' || label === 'scss' || label === 'less') {
-          return './assets/monaco/vs/language/css/cssWorker.js';
-        }
-        if (label === 'html' || label === 'handlebars' || label === 'razor') {
-          return './assets/monaco/vs/language/html/htmlWorker.js';
-        }
-        if (label === 'typescript' || label === 'javascript') {
-          return './assets/monaco/vs/language/typescript/tsWorker.js';
-        }
-        return './assets/monaco/vs/base/worker/workerMain.js';
-      }
-    };
+  private updateMonacoTheme() {
+    if (this.monaco?.editor) {
+      const theme = this.themeSvc.isDarkMode() ? 'vs-dark' : 'vs';
+      this.monaco.editor.setTheme(theme);
+    }
   }
+
 
   private initializeUploader() {
     this.referenceUrl = this.configSvc.refDocUrl;
@@ -430,6 +424,7 @@ export class ImportComponent implements OnInit, OnDestroy {
           if (t?.monaco) {
             this.monaco = t.monaco;
             this.registerXmlProviders(s);
+            this.updateMonacoTheme();
           } else {
             console.warn("Monaco not fully initialized, retrying...");
             // Retry initialization after a short delay
@@ -437,6 +432,7 @@ export class ImportComponent implements OnInit, OnDestroy {
               if ((window as any).monaco) {
                 this.monaco = (window as any).monaco;
                 this.registerXmlProviders(s);
+                this.updateMonacoTheme();
               }
             }, 1000);
           }

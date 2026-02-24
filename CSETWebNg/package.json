@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "12.4.0",
+  "version": "13.0.0",
   "license": "MIT",
   "main": "main-electron.js",
   "private": true,
@@ -11,9 +11,10 @@
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
-    "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
-    "build:electron": "npm run setup:electron-build-files && npx @electron/packager temp-electron \"CSET\" --out=electron-builds --arch=x64 --prune --asar --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" && shx rm -rf temp-electron",
-    "version:electron": "npx @electron/packager --version",
+    "start:electron": "npx electron .",
+    "start:electron-with-build": "ng build --configuration production --source-map=false --base-href ./ && npx electron .",
+    "build:electron": "npm run setup:electron-build-files && npx @electron/packager temp-electron \"CSET\" --out=electron-builds --arch=x64 --prune --asar --overwrite --icon=src/assets/icons/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" && shx rm -rf temp-electron",
+    "version:electron": "npx electron --version && @electron/packager --version",
     "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page,lodash} temp-electron/node_modules"
   },
   "dependencies": {

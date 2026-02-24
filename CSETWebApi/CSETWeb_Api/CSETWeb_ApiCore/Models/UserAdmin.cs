@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Api.Models
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.Api.Models
 {
     public class UserAdmin
     {

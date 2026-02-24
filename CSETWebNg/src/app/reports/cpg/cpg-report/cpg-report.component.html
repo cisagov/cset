@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2025 Battelle Energy Alliance, LLC
+   Copyright 2026 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,94 +21,95 @@
   SOFTWARE.
 -------------------------->
 <div class="light-mode-wrapper" data-theme="light" data-bs-theme="light">
-<div class="report-body mb-5" *transloco="let t">
+    <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-page [assessDetail]="info" [title]="'reports.core.cpg.report title' | transloco | uppercase" />
-
-
-    <div class="page-break">
-        <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
-        <p>
-            {{t('reports.core.cpg.report.p.a')}}
-        </p>
-
-        <!-- CPG 1.1 chart/table -->
-        <ng-container *ngIf="modelId == 11">
-            <app-cpg-domain-summary [distrib]="answerDistribByDomain?.distrib"></app-cpg-domain-summary>
-
-            <p>{{t('reports.core.cpg.report.p.2')}}</p>
-            <app-cpg-domain-summary-table [data]="answerDistribByDomain?.distrib"></app-cpg-domain-summary-table>
-        </ng-container>
+        <app-cover-page [assessDetail]="info" [title]="'reports.core.cpg.report title' | transloco | uppercase" />
 
 
-        <!-- CPG 2.0 chart/table -->
-        <ng-container *ngIf="modelId == 21">
-            <div style="margin-top: 4rem; margin-bottom: 4rem"
-                *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
-                <h4>{{t('reports.core.cpg.ot')}}</h4>
-                <app-cpg-domain-summary [distrib]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary>
+        <div class="page-break">
+            <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
+            <p>
+                {{t('reports.core.cpg.report.p.a')}}
+            </p>
+
+            <!-- CPG 1.1 chart/table -->
+            <ng-container *ngIf="modelId == 11">
+                <app-cpg-domain-summary [distrib]="answerDistribByDomain?.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary-table>
-            </div>
-
-            <div style="margin-top: 4rem; margin-bottom: 4rem"
-                *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
-                <h4>{{t('reports.core.cpg.it')}}</h4>
-                <app-cpg-domain-summary [distrib]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary>
-
-                <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
-            </div>
-        </ng-container>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomain?.distrib"></app-cpg-domain-summary-table>
+            </ng-container>
 
 
-        <!-- SSG chart/table -->
-        <ng-container *ngFor="let dssg of answerDistribsSsg">
-            <div style="margin-top: 4rem; margin-bottom: 4rem">
-                <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
-                <app-cpg-domain-summary [distrib]="dssg.distribution.distrib"></app-cpg-domain-summary>
+            <!-- CPG 2.0 chart/table -->
+            <ng-container *ngIf="modelId == 21">
+                <div style="margin-top: 4rem; margin-bottom: 4rem"
+                    *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+                    <h4>{{t('reports.core.cpg.ot')}}</h4>
+                    <app-cpg-domain-summary [distrib]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary>
 
-                <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="dssg.distribution.distrib"></app-cpg-domain-summary-table>
-            </div>
-        </ng-container>
-    </div>
+                    <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                    <app-cpg-domain-summary-table
+                        [data]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary-table>
+                </div>
+
+                <div style="margin-top: 4rem; margin-bottom: 4rem"
+                    *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+                    <h4>{{t('reports.core.cpg.it')}}</h4>
+                    <app-cpg-domain-summary [distrib]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary>
+
+                    <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                    <app-cpg-domain-summary-table
+                        [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
+                </div>
+            </ng-container>
 
 
-    <div class="page-break">
-        <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
-        <p class="mb-0">{{t('reports.core.cpg.report.p.b')}}</p>
+            <!-- SSG chart/table -->
+            <ng-container *ngFor="let dssg of answerDistribsSsg">
+                <div style="margin-top: 4rem; margin-bottom: 4rem">
+                    <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
+                    <app-cpg-domain-summary [distrib]="dssg.distribution.distrib"></app-cpg-domain-summary>
 
-        <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
+                    <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                    <app-cpg-domain-summary-table [data]="dssg.distribution.distrib"></app-cpg-domain-summary-table>
+                </div>
+            </ng-container>
+        </div>
 
-        <!-- heatmap - waiting for approval to enable this -->
-        <div *ngIf="true">
-            <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
-            <div class="d-flex flex-row">
-                <p style="width: 70%" class="me-4">
-                    {{ t('reports.core.heatmap.p1') }}
-                </p>
-                <app-key-display-1></app-key-display-1>
-            </div>
 
-            <div *ngFor="let d of heatmapModelCpg" class="mb-3">
-                <app-heatmap [scores]="[d]"></app-heatmap>
+        <div class="page-break">
+            <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
+            <p class="mb-0">{{t('reports.core.cpg.report.p.b')}}</p>
+
+            <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
+
+            <!-- heatmap - waiting for approval to enable this -->
+            <div *ngIf="true">
+                <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
+                <div class="d-flex flex-row">
+                    <p style="width: 70%" class="me-4">
+                        {{ t('reports.core.heatmap.p1') }}
+                    </p>
+                    <app-key-display-1></app-key-display-1>
+                </div>
+
+                <div *ngFor="let d of heatmapModelCpg" class="mb-3">
+                    <app-heatmap [scores]="[d]"></app-heatmap>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- a table for SSG answers, if applicable -->
-    <div *ngFor="let s of ssgBonusModelIds" [id]="'ssg-section-' + s">
-        <hr class="page-line">
-        <h1>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h1>
-        <p>{{t('reports.core.cpg.report.ssg.1')}}</p>
+        <!-- a table for SSG answers, if applicable -->
+        <div *ngFor="let s of ssgBonusModelIds" [id]="'ssg-section-' + s">
+            <hr class="page-line">
+            <h1>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h1>
+            <p>{{t('reports.core.cpg.report.ssg.1')}}</p>
 
-        <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
+            <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
 
-        <!-- heatmap - waiting for approval to enable this -->
-        <div *ngIf="true">
+            <!-- heat map -->
             <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
             <div class="d-flex flex-row">
                 <p style="width: 70%" class="me-4">
@@ -120,8 +121,8 @@
             <div *ngFor="let d of ssgHeatmaps[s]" class="mb-3">
                 <app-heatmap [scores]="[d]"></app-heatmap>
             </div>
+            
         </div>
-    </div>
 
-</div>
+    </div>
 </div>

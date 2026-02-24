@@ -1,3 +1,26 @@
+
+
+-- New home for sector/subsector info
+CREATE TABLE [dbo].[ASSESSMENT_SECTOR_SUBSECTOR] (
+	[AssessmentSectorSubsectorId]		[int]	 IDENTITY(1, 1) NOT NULL,
+	[Assessment_Id]						[int]	 NOT NULL,
+	[SectorId]							[int]	 NOT NULL,
+	[IndustryId]						[int]	 NULL,
+	[Sequence]							[int]	 NOT NULL,
+	CONSTRAINT [PK__ASSESSME__43AF4010758B5AA6] PRIMARY KEY CLUSTERED ([AssessmentSectorSubsectorId]),
+	CONSTRAINT [UQ_ASSESSMENT_SECTOR_SUBSECTOR] UNIQUE NONCLUSTERED ([Assessment_Id], [SectorId], [IndustryId]),
+	CONSTRAINT [UQ_Assessment_Sequence] UNIQUE NONCLUSTERED ([Assessment_Id], [Sequence])
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ASSESSMENT_SECTOR_SUBSECTOR] ADD CONSTRAINT [FK__ASSESSMEN__Asses__4CCB4BEB] FOREIGN KEY ([Assessment_Id]) REFERENCES [dbo].[ASSESSMENTS] ([Assessment_Id])
+GO
+ALTER TABLE [dbo].[ASSESSMENT_SECTOR_SUBSECTOR] ADD CONSTRAINT [FK__ASSESSMEN__Indus__4EB3945D] FOREIGN KEY ([IndustryId]) REFERENCES [dbo].[SECTOR_INDUSTRY] ([IndustryId])
+GO
+ALTER TABLE [dbo].[ASSESSMENT_SECTOR_SUBSECTOR] ADD CONSTRAINT [FK__ASSESSMEN__Secto__4DBF7024] FOREIGN KEY ([SectorId]) REFERENCES [dbo].[SECTOR] ([SectorId])
+GO
+
+
+
 /*
     Remove unused stored procedures from the database.
     These procedures are no longer referenced in the C# codebase.

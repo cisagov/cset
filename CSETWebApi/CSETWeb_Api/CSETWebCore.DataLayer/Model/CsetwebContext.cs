@@ -1856,6 +1856,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.HasKey(e => e.New_Question_Set_Id).HasName("PK_NEW_QUESTION_SETS_1");
 
+            entity.Property(e => e.New_Question_Set_Id).ValueGeneratedOnAdd();
+
             entity.ToTable(tb => tb.HasComment("A collection of NEW_QUESTION_SETS records"));
 
             entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");

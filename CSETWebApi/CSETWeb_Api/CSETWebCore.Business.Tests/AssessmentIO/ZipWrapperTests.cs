@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
 using CSETWebCore.Business.AssessmentIO;

@@ -23,20 +23,14 @@
   "assessment type": "Тип оцінки",
   "type": "Тип",
   "demographics": "Демографія",
-  "select type": "Виберіть тип",
   "sector": "Сектор",
-  "select sector": "виберіть сектор",
   "industry": "Індустрія",
-  "select industry": "виберіть галузь",
   "org name": "Назва організації",
   "org type": "Тип організації",
   "org poc": "Контактна особа організації.",
-  "select contact": "Вибрати контакт",
-  "select facilitator": "Вибрати координатора",
   "self assessment": "Самооцінка",
   "crit svc poc": "Контактна особа критичної послуги",
   "asset gross value": "Яка загальна вартість активу, який ви намагаєтеся захистити?",
-  "select gross value": "Виберіть значення",
   "not selected": "Не вибрано",
   "expected effort": "Яка відносна очікувана зусилля для цієї оцінки?",
   "select effort": "Вибрати зусилля",
@@ -667,7 +661,11 @@
       "encrypt": "Шифрувати Експорт Оцінки",
       "on": "Увімкнено",
       "off": "Вимкнено",
-      "admin": "Налаштування адміністратора"
+      "admin": "Налаштування адміністратора",
+      "light mode": "Світлий режим",
+      "switch to light mode": "Перемкнути на світлий режим",
+      "dark mode": "Темний режим",
+      "switch to dark mode": "Перемкнути на темний режим"
     }
   },
   "user profile": {
@@ -847,6 +845,21 @@
     },
     "cis": {
       "model short title": "CIS"
+    },
+    "crr": {
+      "display-name": "Огляд кіберстійкості (CRR)",
+      "model short title": "CRR"
+    },
+    "imr": {
+      "display-name": "Огляд управління інцидентами (IMR)",
+      "model short title": "IMR"
+    },
+    "vadr": {
+      "display-name": "Огляд перевіреного архітектурного дизайну CISA (VADR)",
+      "model short title": "VADR"
+    },
+    "mvra": {
+      "model short title": "MVRA"
     }
   },
   "aggregation": {

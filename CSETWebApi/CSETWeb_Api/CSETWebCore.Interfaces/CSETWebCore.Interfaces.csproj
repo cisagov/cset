@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>14</LangVersion>
+    <AssemblyVersion>13.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +31,5 @@
     <Folder Include="Dashboard\" />
     <Folder Include="Logging\" />
     <Folder Include="Version\" />
-    <Folder Include="Demographic\DemographicIO\" />
   </ItemGroup>
 </Project>

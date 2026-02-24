@@ -1,4 +1,10 @@
-﻿using CSETWebCore.DataLayer.Model;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2026 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,11 +105,13 @@ namespace CSETWebCore.Business.Demographic
 
 
                 // save the new ASSESSMENT_SECTOR_INDUSTRY record
-                var newRec = new ASSESSMENT_SECTOR_SUBSECTOR() { 
-                    Assessment_Id = assessmentId, 
-                    SectorId = (int)ddSector.IntValue, 
-                    IndustryId = resp.SubsectorId, 
-                    Sequence = 1 };
+                var newRec = new ASSESSMENT_SECTOR_SUBSECTOR()
+                {
+                    Assessment_Id = assessmentId,
+                    SectorId = (int)ddSector.IntValue,
+                    IndustryId = resp.SubsectorId,
+                    Sequence = 1
+                };
 
                 _context.Add(newRec);
 

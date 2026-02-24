@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -33,6 +33,25 @@ namespace CSETWebCore.Business.Question
         public CompletionCounter(CSETContext context)
         {
             _context = context;
+        }
+
+
+        /// <summary>
+        /// Recalculates and returns completion counts for a single assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public CompletionCounts GetAssessmentCompletion(int assessmentId)
+        {
+            var response = new List<CompletionCounts>();
+
+            var q = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId);
+            var myAssessments = q.ToList();
+
+            new CompletionCounter(_context).Count(assessmentId);
+            var counts = FillInMissingCounts(myAssessments, q);
+
+            return counts.First();
         }
 
 

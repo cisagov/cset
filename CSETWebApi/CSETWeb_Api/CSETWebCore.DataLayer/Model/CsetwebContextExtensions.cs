@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 // Replacement implementations for low-complexity stored procedures
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;

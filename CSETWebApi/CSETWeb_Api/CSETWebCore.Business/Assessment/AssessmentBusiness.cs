@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -270,6 +270,16 @@ namespace CSETWebCore.Business.Assessment
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// Returns a collection of answer counts for a user's assessments.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public CompletionCounts GetAssessmentCompletion(int assessmentId)
+        {
+            return new CompletionCounter(_context).GetAssessmentCompletion(assessmentId);
         }
 
 

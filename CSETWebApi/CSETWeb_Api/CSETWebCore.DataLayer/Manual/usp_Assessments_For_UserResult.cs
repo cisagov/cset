@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.DataLayer.Model
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_Assessments_For_UserResult
     {
