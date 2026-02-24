@@ -28,6 +28,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observation, Importance } from './observations.model';
 import { map as lodash_map, filter as lodash_filter } from 'lodash';
 import { ConfigService } from '../../../services/config.service';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-observations',
@@ -65,8 +66,8 @@ export class ObservationDetailComponent implements OnInit {
       this.importances = result;
     });
 
-    this.dialog.backdropClick().subscribe(() => {
-      this.save();
+    this.dialog.backdropClick().subscribe(async () => {
+      await this.save();
     });
 
     // makes 'Individuals Responsible' show up initially
@@ -93,15 +94,16 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  save() {
+  async save() {
     this.impliedSave = true;
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      this.observation.observation_Id = resp.observationId;
-      this.observation.answer_Id = resp.answerId;
-      this.dialog.close(true);
-    });
+    await this.refreshContacts();
+
+    this.observation.answer_Id = this.answerId;
+    this.observation.question_Id = this.questionId;
+
+    this.dialog.close({result: true, answerId: this.observation.answer_Id});
   }
 
   /**
@@ -129,25 +131,37 @@ export class ObservationDetailComponent implements OnInit {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
 
-    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      if (this.observation.observation_Id == 0 && resp.observationId) {
-        this.observation.observation_Id = resp.observationId;
-      }
-      if (this.observation.answer_Id == 0 && resp.answerId) {
-        this.observation.answer_Id = resp.answerId;
-      }
-      if (this.observation.question_Id == 0 && resp.questionId) {
-        this.observation.question_Id = resp.questionId;
-      }
-      
-      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
-        .subscribe((response: Observation) => {
-          this.observation = response;
-          this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-        });
-    });
+    const resp: any = await firstValueFrom(this.observationsSvc.saveObservation(this.observation));
+    if ((this.observation.observation_Id == null || this.observation.observation_Id == 0) && resp.observationId) {
+      this.observation.observation_Id = resp.observationId;
+    }
+    if ((this.observation.answer_Id == null ||this.observation.answer_Id == 0) && resp.answerId) {
+      this.observation.answer_Id = resp.answerId;
+    }
+    if ((this.observation.question_Id == null || this.observation.question_Id == 0) && resp.questionId) {
+      this.observation.question_Id = resp.questionId;
+    }
+
+    // the question type 
+    let tempQType = this.observation.question_Type;
+    
+    const response: Observation = await firstValueFrom(
+      this.observationsSvc.getObservation(
+        this.observation.answer_Id,
+        this.observation.observation_Id,
+        this.observation.question_Id,
+        this.observation.question_Type
+      )
+    );
+
+    this.observation = response;
+    this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
+      { 'selected': true }),
+      'Assessment_Contact_Id');
+
+    if (this.observation.question_Type == null) {
+      this.observation.question_Type = tempQType;
+    }
   }
 
   /**

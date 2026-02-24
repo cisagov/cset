@@ -13,6 +13,7 @@ using CSETWebCore.Model.Observations;
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -173,7 +174,15 @@ namespace CSETWebCore.Api.Controllers
 
             if (obs.AnswerLevel && obs.Answer_Id == null)
             {
-                var answerId = fm.BuildEmptyAnswer(assessmentId, obs);
+                var answerId = 0;
+                if (obs.Observation_Id != null && obs.Observation_Id != 0)
+                {
+                    answerId = (int)_context.FINDING.Where(x => x.Finding_Id == obs.Observation_Id).Select(x => x.Answer_Id).FirstOrDefault();
+                }
+                if (answerId == 0)
+                {
+                    answerId = fm.BuildEmptyAnswer(assessmentId, obs);
+                }
                 obs.Answer_Id = answerId;
             }
 
