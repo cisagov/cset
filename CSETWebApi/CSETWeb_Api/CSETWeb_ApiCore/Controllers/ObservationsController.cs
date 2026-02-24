@@ -175,7 +175,7 @@ namespace CSETWebCore.Api.Controllers
             if (obs.AnswerLevel && obs.Answer_Id == null)
             {
                 var answerId = 0;
-                if (obs.Observation_Id != null && obs.Observation_Id != 0)
+                if (obs.Observation_Id != 0)
                 {
                     answerId = (int)_context.FINDING.Where(x => x.Finding_Id == obs.Observation_Id).Select(x => x.Answer_Id).FirstOrDefault();
                 }
