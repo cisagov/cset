@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Dashboard.BarCharts
 {

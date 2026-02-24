@@ -1,3 +1,9 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using CSETWebCore.Business.AssessmentIO.Import;
 using SysVersion = System.Version;
 

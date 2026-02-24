@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -837,7 +837,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reports/CisaAssessorWorkflowValidateFields")]
+        [Route("api/reports/cisa-assessor-workflow-validate-fields")]
         public IActionResult CisaAssessorWorkflowValidateFields()
         {
             var assessmentId = _token.AssessmentForUser();

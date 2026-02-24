@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,6 +13,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 
@@ -67,6 +69,35 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         public GenericImporter(int assessmentId)
         {
             this._assessmentId = assessmentId;
+        }
+
+
+        /// <summary>
+        /// Validates that a SQL identifier (table or column name) contains only safe characters.
+        /// This prevents SQL injection and XPath injection by ensuring identifiers match expected patterns.
+        /// XML element/attribute names and SQL identifiers follow similar naming rules.
+        /// </summary>
+        /// <param name="identifier">The SQL/XML identifier to validate</param>
+        /// <param name="identifierType">The type of identifier (e.g., "table name", "column name")</param>
+        private void ValidateSqlIdentifier(string identifier, string identifierType)
+        {
+            if (string.IsNullOrWhiteSpace(identifier))
+            {
+                throw new ArgumentException($"Invalid {identifierType}: identifier cannot be null or empty");
+            }
+
+            // SQL/XML identifiers should only contain alphanumeric characters, underscores, and must start with a letter or underscore
+            // This regex matches valid SQL Server and XML identifier patterns, preventing injection attacks
+            if (!Regex.IsMatch(identifier, @"^[a-zA-Z_][a-zA-Z0-9_]*$"))
+            {
+                throw new SecurityException($"Invalid {identifierType}: '{identifier}' contains invalid characters that could enable SQL or XPath injection. Identifiers must start with a letter or underscore and contain only alphanumeric characters and underscores.");
+            }
+
+            // Additional length check - SQL Server and XML identifiers are limited to 128 characters
+            if (identifier.Length > 128)
+            {
+                throw new SecurityException($"Invalid {identifierType}: '{identifier}' exceeds maximum length of 128 characters");
+            }
         }
 
 
@@ -154,6 +185,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         {
             var tableName = xTable.Attributes["name"].Value;
 
+            // Validate table name to prevent SQL and XPath injection attacks (defense-in-depth)
+            ValidateSqlIdentifier(tableName, "table name");
+
             int oldIdentity = -1;
             int newIdentity = -1;
 
@@ -183,6 +217,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     var prop = jColumn as JProperty;
 
                     var colName = prop.Name;
+
+                    // Validate column name to prevent XPath injection attacks
+                    ValidateSqlIdentifier(colName, "column name");
 
                     // just in case a column no longer exists, don't try to set it
                     if (dt.Columns[colName] == null)
@@ -330,10 +367,19 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
         private bool CheckColumnValueExistence(string colName, string tableName, JToken jObj, DBIO dbio)
         {
-            string query = "SELECT [{0}]" +
-            "  FROM [{1}]" +
-            " where {0} = '{2}'";
-            DataTable dt = dbio.Select(string.Format(query, colName, tableName, jObj[colName]), null);
+            // Validate SQL identifiers to prevent SQL injection
+            ValidateSqlIdentifier(colName, "column name");
+            ValidateSqlIdentifier(tableName, "table name");
+
+            // Use parameterized query to prevent SQL injection
+            string query = string.Format("SELECT [{0}] FROM [{1}] WHERE [{0}] = @value", colName, tableName);
+
+            var parms = new Dictionary<string, object>
+            {
+                { "@value", jObj[colName]?.ToString() }
+            };
+
+            DataTable dt = dbio.Select(query, parms);
 
             if (dt.Rows.Count > 0)
             {

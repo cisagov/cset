@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -64,6 +64,11 @@ interface OrgTypes {
   text: string;
 }
 
+
+/**
+ * This is the 'old' analytics page and is currently not
+ * in the workflow.  It may be deleted at some point.
+ */
 @Component({
   selector: "app-assessment-comparison-analytics",
   templateUrl: "./assessment-comparison-analytics.component.html",

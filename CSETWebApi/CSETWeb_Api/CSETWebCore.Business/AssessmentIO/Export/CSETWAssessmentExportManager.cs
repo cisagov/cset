@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -624,10 +624,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     zipWrapper.AddEntry(exportFile.ModelObj.ModelName, exportFile.ModelObj.Json);
                 }
 
-                if (exportFile.PasswordObj != null)
-                {
-                    zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
-                }
+
+                zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
+
 
                 zipWrapper.Save();
                 zipWrapper.CloseStream();

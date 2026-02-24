@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@ import { ChartService } from '../../services/chart.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import Chart from 'chart.js/auto';
+import { concatMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-trend-analytics',
@@ -43,6 +45,8 @@ export class TrendAnalyticsComponent implements OnInit {
   chartTop5: Chart;
   chartBottom5: Chart;
   chartCategoryPercent: Chart;
+  selectAtLeastFiveCategories: boolean = false;
+  noCategoryData: boolean = false;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -63,28 +67,39 @@ export class TrendAnalyticsComponent implements OnInit {
 
   /**
    * Get the data from the API and build the charts for the page.
+   *
+   * Requests are serialized (not concurrent) because usp_GetTop5Areas writes to the
+   * ANSWER table as a side-effect, which deadlocks against concurrent reads from the
+   * same table (e.g. GetCombinedOveralls, Answer_Standards_InScope).
    */
   populateCharts() {
-    //const aggregationId = this.aggregationSvc.id();
     var aggId: number = +localStorage.getItem("aggregationId");
-    // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-      this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
-    });
 
-    // Top 5
-    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
-      this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
-    });
-
-    // Bottom 5
-    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
-      this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
-    });
-
-    // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+    of(null).pipe(
+      concatMap(() => this.aggregationSvc.getOverallComplianceScores()),
+      concatMap((x: any) => {
+        this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
+        return this.aggregationSvc.getTrendTop5(aggId);
+      }),
+      concatMap((x: any) => {
+        this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
+        if (this.chartTop5.config.data.datasets.length == 0) {
+          this.selectAtLeastFiveCategories = true;
+        }
+        return this.aggregationSvc.getTrendBottom5(aggId);
+      }),
+      concatMap((x: any) => {
+        this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
+        if (this.chartBottom5.config.data.datasets.length == 0) {
+          this.selectAtLeastFiveCategories = true;
+        }
+        return this.aggregationSvc.getCategoryPercentageComparisons();
+      })
+    ).subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      if (x.labels.length == 0) {
+        this.noCategoryData = true;
+      }
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }

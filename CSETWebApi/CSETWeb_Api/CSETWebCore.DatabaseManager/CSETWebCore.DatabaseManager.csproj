@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>14</LangVersion>
 	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <AssemblyVersion>13.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

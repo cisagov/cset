@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -147,7 +147,7 @@ export interface Demographic {
     criticalService?: string;
 
     // Critical Service POC
-    pointOfContact?: number;
+    criticalServicePointOfContact?: number;
 
     // An EDM-only field
     isScoped?: boolean;

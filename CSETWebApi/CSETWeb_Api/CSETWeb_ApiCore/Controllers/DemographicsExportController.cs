@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,7 +15,7 @@ using System;
 
 namespace CSETWebCore.Api.Controllers
 {
-    public class DemographicExportController : ControllerBase
+    public class DemographicsExportController : ControllerBase
     {
         private ITokenManager _token;
         private CSETContext _context;
@@ -27,7 +27,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public DemographicExportController(ITokenManager token, CSETContext context, IDemographicImportManager demographicImportManager)
+        public DemographicsExportController(ITokenManager token, CSETContext context, IDemographicsImportManager demographicImportManager)
         {
             _token = token;
             _context = context;

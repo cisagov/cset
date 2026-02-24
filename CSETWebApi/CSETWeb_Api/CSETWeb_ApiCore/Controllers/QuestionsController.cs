@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -127,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 LogManager.GetCurrentClassLogger().Error(exc);
                 return BadRequest(exc.Message);
-            }            
+            }
 
         }
 

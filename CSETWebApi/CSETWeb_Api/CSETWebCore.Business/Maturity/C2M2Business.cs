@@ -1,10 +1,9 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Helpers;
 using CSETWebCore.Model.C2M2.Charts;
 using CSETWebCore.Model.C2M2.Tables;
 using System.Collections.Generic;

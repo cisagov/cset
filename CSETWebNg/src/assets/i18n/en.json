@@ -4,7 +4,7 @@
   "export all": "Export All",
   "new assessment": "New Assessment",
   "status": "Status",
-  "actions": "Actions!",
+  "actions": "Actions",
   "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
   "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
   "last modified": "Last Modified",
@@ -28,30 +28,24 @@
   "type": "Type",
   "demographics": "Demographics",
   "select": "Select",
-  "select type": "Select Type",
   "sector": "Sector",
-  "select sector": "Select Sector",
   "subsector": "Subsector",
   "industry": "Industry",
-  "select industry": "Select Industry",
   "org name": "Name of Organization",
   "org type": "Organization Type",
   "org poc": "Organization Point of Contact",
-  "select contact": "Select Contact",
-  "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
   "sector changes": "Sector Changes",
   "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the 16-sector framework as defined in PPD-21. Previously selected subsectors are no longer applicable and should be re-selected.",
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",
-    "ot": "Cross-Sector Goals - Operational Technology (OT)",
-    "it": "Cross-Sector Goals - Information Technology (IT)",
+    "ot": "Operational Technology (OT)",
+    "it": "Information Technology (IT)",
     "ot+it": "Both OT and IT"
   },
   "crit svc poc": "Critical Service Point of Contact",
   "asset gross value": "What is the gross value of the asset you are trying to protect?",
-  "select gross value": "Select Value",
   "not selected": "Not Selected",
   "expected effort": "What is the relative expected effort for this assessment?",
   "select effort": "Select Effort",
@@ -1065,6 +1059,18 @@
     "cis": {
       "model short title": "CIS"
     },
+    "crr": {
+      "display-name": "Cyber Resilience Review (CRR)",
+      "model short title": "CRR"
+    },
+    "imr": {
+      "display-name": "Incident Management Review (IMR)",
+      "model short title": "IMR"
+    },
+    "vadr": {
+      "display-name": "CISA Validated Architecture Design Review (VADR)",
+      "model short title": "VADR"
+    },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
       "model short title": "CISA VADR",
@@ -1079,6 +1085,9 @@
         "desc-high": "This is what you would pick if you are shooting for a high level of maturity"
       },
       "addl observations 1": "Include any other observations that might be helpful in the assessment. They will be included in the report but are not related to any specific question."
+    },
+    "mvra": {
+      "model short title": "MVRA"
     }
   },
   "aggregation": {

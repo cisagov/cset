@@ -1,9 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Aggregation;
 
@@ -11,6 +13,7 @@ namespace CSETWebCore.Interfaces.Helpers
 {
     public interface ITrendDataProcessor
     {
-        void Process(CSETContext db, int aggregationID, LineChart response, string Type);
+        Task ProcessAsync(CSETContext db, int aggregationID, LineChart response, string type);
     }
+    
 }

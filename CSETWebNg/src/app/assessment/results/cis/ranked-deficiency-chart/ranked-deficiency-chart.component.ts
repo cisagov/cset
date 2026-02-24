@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ChartService } from '../../../../services/chart.service';
 import Chart from 'chart.js/auto';
 import { CisService } from '../../../../services/cis.service';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
     selector: 'app-ranked-deficiency-chart',
@@ -33,33 +35,61 @@ import { CisService } from '../../../../services/cis.service';
     standalone: false
 })
 
-export class RankedDeficiencyChartComponent implements AfterViewInit {
+export class RankedDeficiencyChartComponent implements AfterViewInit, OnDestroy {
 
   rankedChart: Chart;
   loading = true;
   hasBaseline: boolean = false;
+  private chartData: any;
+  private themeSubscription: Subscription;
 
-  constructor(public chartSvc: ChartService, public cisSvc: CisService) { }
+  constructor(
+    public chartSvc: ChartService,
+    public cisSvc: CisService,
+    private themeSvc: ThemeService
+  ) { }
 
   ngAfterViewInit(): void {
     this.setUpChart();
+
+    // Subscribe to theme changes to rebuild the chart
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      if (this.chartData) {
+        this.buildChart();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
   setUpChart() {
     if (this.cisSvc.hasBaseline()) {
       this.hasBaseline = true;
       this.cisSvc.getDeficiencyData().subscribe((data: any) => {
-        data.option = { options: false };
-        var opts = { scales: { x: { position: 'top', min: -100, max: 100 }, x1: { position: 'bottom', min: -100, max: 100 } } };
+        this.chartData = data;
+        this.chartData.option = { options: false };
         setTimeout(() => {
-          this.rankedChart = this.chartSvc.buildHorizBarChart('canvas-ranked-deficiency', data, false, false, opts, false);
+          this.buildChart();
           this.loading = false;
         }, 1000);
-
       });
     } else {
       this.hasBaseline = false;
       this.loading = false;
     }
+  }
+
+  private buildChart(): void {
+    const opts = {
+      scales: {
+        x: { position: 'top', min: -100, max: 100 },
+        x1: { position: 'bottom', min: -100, max: 100 }
+      }
+    };
+    this.rankedChart = this.chartSvc.buildHorizBarChart('canvas-ranked-deficiency', this.chartData, false, false, opts, false);
   }
 }

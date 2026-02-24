@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -262,13 +262,17 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
       modified = true;
     }
 
-    // set toggle visibility
+
+    // set Questions Mode / Requirements Mode toggle visibility
     this.showQuestionsToggle = this.setHasQuestions;
     this.showRequirementsToggle = this.setHasRequirements;
-    if (data.onlyMode) {
-      this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
-      this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
+
+    // if both aren't visible, show none
+    if (!(this.showQuestionsToggle && this.showRequirementsToggle)) {
+      this.showQuestionsToggle = false;
+      this.showRequirementsToggle = false;
     }
+
 
     // Clean filters back to defaults
     this.filterSvc.forceRefresh();

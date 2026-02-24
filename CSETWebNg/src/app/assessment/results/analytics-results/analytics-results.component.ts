@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
@@ -24,6 +47,8 @@ interface listSectors {
   optionValue: number;
   optionText: string;
 }
+
+
 @Component({
   selector: 'app-analytics-results',
   templateUrl: './analytics-results.component.html',
@@ -40,20 +65,16 @@ export class AnalyticsResultsComponent implements OnInit {
   currentUserData: number[] = [];
   labels: string[] = [];
   sectorsList: Sector[];
-  sectorTitle: string;
   showSector: boolean = true;
   sampleSize: number;
   allSectors: string = 'All Sectors';
 
-
-  @ViewChild('barCanvas') private barCanvas!: ElementRef<HTMLCanvasElement>;
-  private barChart!: Chart;
+  myColor = '#174792';
+  mySectors: any[];
 
   // result from API call
   scoreBarData: any;
 
-  // Toggle state
-  dataType: "mySector" | "allSectors" = "mySector";
 
   constructor(
     public navSvc: NavigationService,
@@ -65,68 +86,50 @@ export class AnalyticsResultsComponent implements OnInit {
     public tSvc: TranslocoService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.assessSvc.getAssessmentDetail().subscribe((resp: AssessmentDetail) => {
 
-      // TODO-3261 - how does multi-sector affect analytics?
-      this.sectorId = resp.sectorSubsectors[0]?.sectorId;
-
       this.modelId = resp.maturityModel.modelId;
-      if (this.sectorId == null) {
-        this.showSector = false;
-        this.dataType = "allSectors"
-      }
-      let isCISA = this.analyticsSvc.isCisaAssessorMode()
+      const isCISA = this.analyticsSvc.isCisaAssessorMode();
       if (isCISA) {
-        this.demoIodSvc.getDemographics().subscribe((resp: DemographicsIod) => {
-          resp.listSectors.forEach(sector => {
-            if (sector.optionValue == this.sectorId) {
-              this.sectorTitle = sector.optionText
-            }
-          });
-        })
-      } else {
-        this.demoSvc.getAllSectors().subscribe(
-          (data: Sector[]) => {
-            this.sectorsList = data;
-            this.sectorsList.forEach(sector => {
-              if (sector.sectorId == this.sectorId) {
-                this.sectorTitle = sector.sectorName
-              }
-            });
-          }
-        )
+        this.analyticsSvc.getSampleSizes().then((g: any[]) => {
+          this.mySectors = [...g];
+        });
+
+        // Fetch initial data after getting assessment details
+        this.getAnalyticsResults(0);
       }
-      // Fetch initial data after getting assessment details
-      this.getAnalyticsResults();
     });
   }
 
+  /**
+   * Handle the change of target sector by user
+   */
+  onChangeSectorSelection(event: any): void {
+    const targetSectorId = event.target.value;
+    this.getAnalyticsResults(targetSectorId);
+  }
 
-  // Get analytics results for specified sector 
-  private async getAnalyticsResults(allSectors?: boolean): Promise<void> {
+  /**
+   * Get analytics results for target sector (or all assessments)
+   */
+  private async getAnalyticsResults(sectorId?: number): Promise<void> {
     try {
+      this.scoreBarData = null;
       let result = null;
-      if (allSectors) {
+
+      if (sectorId == undefined || sectorId == 0) {
         result = await this.analyticsSvc.getAnalyticResults(this.modelId).toPromise();
       } else {
-        result = await this.analyticsSvc.getAnalyticResults(this.modelId, this.sectorId).toPromise();
+        result = await this.analyticsSvc.getAnalyticResults(this.modelId, sectorId).toPromise();
       }
+
       this.scoreBarData = result;
-      this.sampleSize = result.sampleSize;
     } catch (error) {
       console.error('Error fetching analytics results', error);
     }
   }
-
-  toggleData(event: any): void {
-    this.sampleSize = null;
-    this.dataType = event.value;
-    if (this.dataType === "allSectors") {
-      this.getAnalyticsResults(true);
-    } else {
-      this.getAnalyticsResults();
-    }
-  }
-
 }

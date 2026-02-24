@@ -29,6 +29,7 @@ SOFTWARE.
 //@use "~@ng-select/ng-select/themes/material.theme.css";
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
+@import '@kolkov/angular-editor/themes/default.scss';
 @import './styles.css';
 
 
@@ -158,4 +159,197 @@ progress::-webkit-progress-bar {
 
 .mat-raised-button:hover {
   background-color: #f5f5f5 !important;
+}
+
+// Angular Editor Dark Mode
+[data-bs-theme="dark"] {
+  --ae-toolbar-bg-color: #15191e;
+  --ae-button-bg-color: #15191e;
+  --ae-button-border: 1px solid #6b7280;
+  --ae-button-hover-bg-color: #002236;
+  --ae-button-active-bg-color: #002236;
+  --ae-button-active-hover-bg-color: #003247;
+  --ae-button-disabled-bg-color: #15191e;
+  --ae-picker-label-color: rgba(255, 255, 255, 0.70);
+  --ae-picker-icon-bg-color: #15191e;
+  --ae-picker-option-bg-color: #002236;
+  --ae-picker-option-active-bg-color: #003247;
+  --ae-picker-option-focused-bg-color: #003247;
+  --ae-picker-option-hover-bg-color: #004258;
+  --ae-text-area-border: 1px solid #6b7280;
+
+  .angular-editor-wrapper {
+    background-color: #002236 !important;
+    border: 1px solid #3a3f47 !important;
+  }
+
+  .angular-editor-toolbar {
+    background-color: #15191e !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+    border: 1px solid #3a3f47 !important;
+    border-bottom: 1px solid #3a3f47 !important;
+  }
+
+  .angular-editor-toolbar button,
+  .angular-editor-button,
+  .angular-editor-toolbar button *,
+  angular-editor .angular-editor-toolbar button,
+  angular-editor .angular-editor-toolbar button * {
+    color: rgba(255, 255, 255, 0.70) !important;
+    background-color: transparent !important;
+  }
+
+  // Ensure all toolbar buttons and their content are visible
+  .angular-editor-toolbar-set button,
+  .angular-editor-toolbar-set button * {
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // All icons in toolbar - comprehensive selectors
+  .angular-editor-toolbar svg,
+  .angular-editor-toolbar svg *,
+  .angular-editor-toolbar svg path,
+  .angular-editor-toolbar i,
+  .angular-editor-toolbar .fa,
+  .angular-editor-toolbar button svg,
+  .angular-editor-toolbar button svg *,
+  .angular-editor-toolbar button svg path,
+  .angular-editor-toolbar button i,
+  .angular-editor-toolbar button .fa,
+  .angular-editor-toolbar .angular-editor-toolbar-set button svg,
+  .angular-editor-toolbar .angular-editor-toolbar-set button svg *,
+  .angular-editor-toolbar .angular-editor-toolbar-set button svg path,
+  .angular-editor-toolbar .angular-editor-toolbar-set button i,
+  .angular-editor-toolbar .angular-editor-toolbar-set button .fa,
+  angular-editor .angular-editor-toolbar svg,
+  angular-editor .angular-editor-toolbar svg *,
+  angular-editor .angular-editor-toolbar svg path,
+  angular-editor .angular-editor-toolbar i,
+  angular-editor .angular-editor-toolbar .fa,
+  .angular-editor-toolbar [class^="fa-"],
+  .angular-editor-toolbar [class*=" fa-"],
+  .angular-editor-toolbar button *,
+  .angular-editor-toolbar input[type="color"] {
+    color: rgba(255, 255, 255, 0.70) !important;
+    fill: rgba(255, 255, 255, 0.70) !important;
+    stroke: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Color picker buttons - these might have nested inputs or divs
+  .angular-editor-toolbar button[title*="Text Color"],
+  .angular-editor-toolbar button[title*="Background Color"],
+  .angular-editor-toolbar button[title*="text color"],
+  .angular-editor-toolbar button[title*="background color"],
+  angular-editor button[title*="Text Color"],
+  angular-editor button[title*="Background Color"] {
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+  }
+
+  .angular-editor-toolbar button[title*="Text Color"] *,
+  .angular-editor-toolbar button[title*="Background Color"] *,
+  angular-editor button[title*="Text Color"] *,
+  angular-editor button[title*="Background Color"] * {
+    border-color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Indent and Outdent buttons - often use text/unicode instead of icons
+  .angular-editor-toolbar button[title*="Indent"],
+  .angular-editor-toolbar button[title*="Outdent"],
+  .angular-editor-toolbar button[title*="indent"],
+  .angular-editor-toolbar button[title*="outdent"],
+  angular-editor button[title*="Indent"],
+  angular-editor button[title*="Outdent"] {
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  .angular-editor-toolbar button[title*="Indent"] *,
+  .angular-editor-toolbar button[title*="Outdent"] *,
+  angular-editor button[title*="Indent"] *,
+  angular-editor button[title*="Outdent"] * {
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Dropdown selects and pickers
+  .angular-editor-toolbar select,
+  .angular-editor-toolbar .ae-picker-label,
+  .angular-editor-toolbar .ae-picker,
+  .angular-editor-toolbar .ae-picker-item,
+  .angular-editor-toolbar .ae-picker button,
+  .angular-editor-toolbar button.ae-picker-label,
+  .angular-editor-toolbar .ae-picker-label *,
+  .angular-editor-toolbar button.ae-picker-label *,
+  angular-editor .angular-editor-toolbar select,
+  angular-editor .angular-editor-toolbar button.ae-picker-label,
+  angular-editor .angular-editor-toolbar button.ae-picker-label *,
+  angular-editor .ae-picker-label,
+  angular-editor .ae-picker-label *,
+  select.ae-font,
+  select.ae-font-size {
+    background-color: #15191e !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+    border: 1px solid #6b7280 !important;
+  }
+
+  // Target dropdown SVG icons specifically
+  .angular-editor-toolbar .ae-picker-label svg,
+  .angular-editor-toolbar button.ae-picker-label svg,
+  angular-editor .ae-picker-label svg {
+    fill: rgba(255, 255, 255, 0.70) !important;
+    stroke: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Dropdown options container
+  .angular-editor-toolbar .ae-picker-options,
+  .ae-picker-options,
+  angular-editor .ae-picker-options {
+    background-color: #002236 !important;
+    border: 1px solid #6b7280 !important;
+  }
+
+  // Picker items and buttons
+  .angular-editor-toolbar .ae-picker-item button,
+  .ae-picker-item button,
+  angular-editor .ae-picker-item button,
+  .ae-picker-item {
+    background-color: #15191e !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Dropdown options
+  .angular-editor-toolbar select option,
+  angular-editor select option {
+    background-color: #002236 !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  // Specific overrides for any remaining white elements
+  .angular-editor-toolbar label,
+  .angular-editor-toolbar span,
+  angular-editor .angular-editor-toolbar label,
+  angular-editor .angular-editor-toolbar span {
+    color: rgba(255, 255, 255, 0.70) !important;
+    background-color: transparent !important;
+  }
+
+  // Nuclear option - override any white/light backgrounds in toolbar
+  .angular-editor-toolbar [style*="background"],
+  .angular-editor-toolbar [style*="background-color"],
+  angular-editor .angular-editor-toolbar [style*="background"] {
+    background-color: #15191e !important;
+  }
+
+  // Force all buttons, divs, spans in picker to be dark
+  .ae-picker *,
+  angular-editor .ae-picker * {
+    background-color: inherit !important;
+  }
+
+  .angular-editor-textarea {
+    background-color: #002236 !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  .angular-editor-placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
 }

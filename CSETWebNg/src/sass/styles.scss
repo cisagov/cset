@@ -27,6 +27,8 @@ SOFTWARE.
 @use "cset-font-styles.css";
 @use "cset2-font-styles.css";
 
+$orange-500:#f97316;
+
 *:not(font) {
   font-family: "Roboto", sans-serif;
 }
@@ -624,19 +626,19 @@ table.td-align-top td {
 
 .btn-mfr {
   background-color: $primary-50;
-  border-color: $gray-800;
-  color: $primary-color;
+  border-color: $orange-500;
+  color: $orange-500;
 }
 
 .btn-mfr:hover,
 .btn-mfr.answer-selected:hover {
-  background-color: $primary-700;
+  background-color: $orange-500;
   color: $white;
 }
 
 .btn-mfr.answer-selected {
-  background-color: $warn-color;
-  color: $gray-900;
+  background-color: $orange-500;;
+  color: $white;
 }
 
 .alt-text-required {
@@ -3026,6 +3028,78 @@ table.td-text-start td {
 
 .angular-editor-textarea {
   background-color: #fff !important;
+}
+
+// Angular Editor dark mode - Override CSS custom properties
+[data-bs-theme="dark"] {
+  --ae-toolbar-bg-color: #15191e;
+  --ae-button-bg-color: #15191e;
+  --ae-button-border: 1px solid #6b7280;
+  --ae-button-hover-bg-color: #002236;
+  --ae-button-active-bg-color: #002236;
+  --ae-button-active-hover-bg-color: #003247;
+  --ae-button-disabled-bg-color: #15191e;
+  --ae-picker-label-color: rgba(255, 255, 255, 0.70);
+  --ae-picker-icon-bg-color: #15191e;
+  --ae-picker-option-bg-color: #002236;
+  --ae-picker-option-active-bg-color: #003247;
+  --ae-picker-option-focused-bg-color: #003247;
+  --ae-picker-option-hover-bg-color: #004258;
+  --ae-text-area-border: 1px solid #6b7280;
+  --ae-toolbar-border-radius: 1px solid #6b7280;
+
+  .angular-editor-wrapper,
+  angular-editor .angular-editor-wrapper {
+    background-color: #002236 !important;
+    border: 1px solid #6b7280 !important;
+  }
+
+  .angular-editor-toolbar,
+  angular-editor .angular-editor-toolbar {
+    background-color: #15191e !important;
+    border-bottom: 1px solid #6b7280 !important;
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set button,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set button,
+  .angular-editor-toolbar .angular-editor-toolbar-set .angular-editor-button,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set .angular-editor-button {
+    background-color: #15191e !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+    border: 1px solid #6b7280 !important;
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set button:hover,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set button:hover {
+    background-color: #002236 !important;
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set button i,
+  .angular-editor-toolbar .angular-editor-toolbar-set button .fa,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set button i,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set button .fa {
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  .angular-editor-toolbar .angular-editor-toolbar-set select,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set select,
+  .angular-editor-toolbar .angular-editor-toolbar-set .ae-picker-label,
+  angular-editor .angular-editor-toolbar .angular-editor-toolbar-set .ae-picker-label {
+    background-color: #15191e !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+    border: 1px solid #6b7280 !important;
+  }
+
+  .angular-editor-textarea,
+  angular-editor .angular-editor-textarea {
+    background-color: #002236 !important;
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+
+  .angular-editor-placeholder,
+  angular-editor .angular-editor-placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
 }
 
 // @media (max-width: 576px) {

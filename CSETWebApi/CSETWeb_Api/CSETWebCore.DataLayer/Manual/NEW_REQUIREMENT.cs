@@ -1,4 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 

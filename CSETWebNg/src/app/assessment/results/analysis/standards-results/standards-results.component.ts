@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -73,9 +73,14 @@ export class StandardsResultsComponent implements OnInit {
     // Get the current theme colors for dark mode support
     const isDark = this.themeSvc.isDarkMode();
     const textColor = isDark ? '#ffffffdd' : '#000000dd';
-    
+
     Chart.defaults.color = textColor;
     Chart.defaults.borderColor = this.themeSvc.updateAlpha(textColor, .2);
+
+    x.dataSets.forEach(ds => {
+      ds.borderColor = 'transparent';
+      ds.borderWidth = 0;
+    });
 
     this.chart = new Chart('canvasStandardResult', {
       type: 'bar',

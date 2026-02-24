@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2025 Battelle Energy Alliance, LLC
+//   Copyright 2026 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ChartService } from '../../../../services/chart.service';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
     selector: 'app-cis-scoring-chart',
@@ -30,7 +32,7 @@ import { ChartService } from '../../../../services/chart.service';
     styleUrls: ['../../../../reports/reports.scss'],
     standalone: false
 })
-export class CisScoringChartComponent implements OnInit {
+export class CisScoringChartComponent implements OnInit, OnDestroy {
 
   @Input()
   g: any;
@@ -39,15 +41,18 @@ export class CisScoringChartComponent implements OnInit {
 
   chartScore: any;
 
+  private themeSubscription: Subscription;
+
   /**
-   * 
+   *
    */
   constructor(
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    private themeSvc: ThemeService
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.title = this.g.title;
@@ -55,19 +60,33 @@ export class CisScoringChartComponent implements OnInit {
       this.title = this.g.prefix + '. ' + this.g.title;
     }
 
+    setTimeout(() => {
+      this.buildChart();
+    }, 800);
 
-    let x = this.g.chart;
+    // Subscribe to theme changes to rebuild the chart
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      this.buildChart();
+    });
+  }
 
-    let opts = {
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+
+  private buildChart(): void {
+    const x = this.g.chart;
+
+    const opts = {
       scales: { y: { display: false } },
       plugins: {
         legend: { position: 'right' }
       }
     };
 
-    setTimeout(() => {
-      this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore-' + this.g.groupingId, x, true, true, opts);
-    }, 800);
+    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore-' + this.g.groupingId, x, true, true, opts);
   }
 
 }

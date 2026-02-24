@@ -1,10 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System.Collections.Generic;
+using System.Linq;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 
@@ -91,6 +92,9 @@ namespace CSETWebCore.Model.Nested
         public List<ReferenceDocLink> SourceDocuments { get; set; }
         public List<ReferenceDocLink> AdditionalDocuments { get; set; }
 
+
+        public List<QuestionProp> Properties { get; set; } = [];
+
         public List<string> CSF { get; set; } = new List<string>();
         public List<TTPReference> TTP { get; set; } = new List<TTPReference>();
 
@@ -103,11 +107,30 @@ namespace CSETWebCore.Model.Nested
         public bool HasObservation { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
-        public List<int> DocumentIds { get; set; } = new List<int>();
+        public List<int> DocumentIds { get; set; } = [];
 
         public string BaselineAnswerText { get; set; }
         public string BaselineAnswerMemo { get; set; }
+
+
+
+        public bool IsOT
+        {
+            get
+            {
+                return this.Properties.Any(x => x.Name == "IS-OT" && x.Value == "1");
+            }
+        }
+
+        public bool IsIT
+        {
+            get
+            {
+                return this.Properties.Any(x => x.Name == "IS-IT" && x.Value == "1");
+            }
+        }
     }
+
 
     public class Option
     {

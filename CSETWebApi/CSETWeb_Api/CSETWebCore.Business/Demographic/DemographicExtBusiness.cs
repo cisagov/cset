@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -46,7 +46,9 @@ namespace CSETWebCore.Business.Demographic
             d.AssessmentDate = assessment.Assessment_Date;
 
             d.OrganizationType = myDD.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
-            d.OrganizationName = info.Facility_Name;
+            d.OrganizationName = myDD.Find(z => z.DataItemName == "ORG-NAME")?.StringValue;
+
+            d.FacilityName = info.Facility_Name;
 
 
             // update sector if the assessment was built with the old HSPD-7 list
@@ -314,7 +316,7 @@ namespace CSETWebCore.Business.Demographic
             SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType, existingRecords);
             SaveString(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName, existingRecords);
             SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
-            
+
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
             SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);

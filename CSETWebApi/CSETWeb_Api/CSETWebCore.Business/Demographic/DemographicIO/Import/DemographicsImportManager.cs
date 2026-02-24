@@ -1,33 +1,42 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Business.Demographic.DemographicIO.Models;
 
 
 namespace CSETWebCore.Business.Demographic.Import
 {
-    public class DemographicImportManager : IDemographicImportManager
+    public class DemographicsImportManager : IDemographicsImportManager
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
         private IUtilities _utilities;
         private CSETContext _context;
 
+
+        /// <summary>
+        /// Some screen items stored in DETAILS_DEMOGRAPHICS are not presented on the UI as "demographics" 
+        /// and importing/overwriting their values could be confusing to the user.  
+        /// </summary>
+        private readonly List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public DemographicImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
+        public DemographicsImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
         {
             _token = token;
             _assessmentUtil = assessmentUtil;
@@ -42,7 +51,7 @@ namespace CSETWebCore.Business.Demographic.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, int assessmentId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
+        public async Task ImportDemographics(byte[] zipFileFromDatabase, int? currentUserId, int assessmentId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -68,8 +77,15 @@ namespace CSETWebCore.Business.Demographic.Import
             }
         }
 
+
+        /// <summary>
+        /// Load exported demographic data into the assessment.
+        /// </summary>
         private async Task LoadDemographicsData(int assessmentId, CSETContext context, UploadDemographicsModel model)
         {
+            var isAssessorWorkflow = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.AssessorMode ?? false;
+
+
             foreach (var serviceDemographics in model.jCIS_CSI_SERVICE_DEMOGRAPHICS)
             {
                 var dbServiceDemographics = context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -122,14 +138,42 @@ namespace CSETWebCore.Business.Demographic.Import
                 dbServiceComposition.Other_Defining_System_Description = serviceComposition.Other_Defining_System_Description;
                 dbServiceComposition.Primary_Defining_System = serviceComposition.Primary_Defining_System;
 
-
                 await context.SaveChangesAsync();
-
             }
+
+
+            // clear and rebuild sectors
+            var jASS = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).ToList();
+            _context.ASSESSMENT_SECTOR_SUBSECTOR.RemoveRange(jASS);
+            await context.SaveChangesAsync();
+
+            // import all sectors - but only take the first one if not in assessor workflow
+            foreach (var jSector in isAssessorWorkflow
+                ? model.jASSESSMENT_SECTOR_SUBSECTOR
+                : model.jASSESSMENT_SECTOR_SUBSECTOR.Take(1))
+            {
+                var dbASS = new ASSESSMENT_SECTOR_SUBSECTOR()
+                {
+                    Assessment_Id = assessmentId,
+                    SectorId = jSector.SectorId,
+                    IndustryId = jSector.IndustryId,
+                    Sequence = jSector.Sequence
+                };
+
+                context.ASSESSMENT_SECTOR_SUBSECTOR.Add(dbASS);
+            }
+
+            await context.SaveChangesAsync();
 
 
             foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
             {
+                // do not include some values - not considered part of a demographics export
+                if (_detailsDemographicsNotExported.Contains(jdd.DataItemName))
+                {
+                    continue;
+                }
+
                 var dd = context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == jdd.DataItemName).FirstOrDefault();
                 if (dd == null)
                 {
@@ -175,29 +219,6 @@ namespace CSETWebCore.Business.Demographic.Import
 
                 await context.SaveChangesAsync();
             }
-
-            foreach (var information in model.jORG_DETAILS)
-            {
-                var dinformation = context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-
-                // Creating new Service Composition record for this assessment
-                if (dinformation == null)
-                {
-                    dinformation = new INFORMATION()
-                    {
-                        Id = assessmentId,
-
-                    };
-                    context.INFORMATION.Add(dinformation);
-                    await context.SaveChangesAsync();
-                }
-                dinformation.Facility_Name = information.Facility_Name;
-                dinformation.City_Or_Site_Name = information.City_Or_Site_Name;
-                dinformation.State_Province_Or_Region = information.State_Province_Or_Region;
-
-                await context.SaveChangesAsync();
-            }
         }
-
     }
 }

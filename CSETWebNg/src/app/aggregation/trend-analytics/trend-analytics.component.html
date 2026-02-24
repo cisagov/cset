@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2025 Battelle Energy Alliance, LLC  
+   Copyright 2026 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 250px"
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,7 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel avail-h-minus d-flex justify-content-start flex-column flex-11a" style="--offset: 130px" *transloco="let t">
+<div class="white-panel avail-h-minus-offset d-flex justify-content-start flex-column flex-11a" style="--offset: 130px"
+  *transloco="let t">
   <div class="max-1200">
     <h3 class="mb-4">{{t('aggregation.trend.trend analytics')}}</h3>
 
@@ -61,9 +62,13 @@
           {{t('aggregation.compare.para 18')}}
         </p>
 
-        <div *ngIf="chartTop5 == null">
-          <div class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
+        <div *ngIf="selectAtLeastFiveCategories == true">
+          <div class="alert alert-info border-primary" role="alert"
+            style="margin: 2em auto; padding: 1.5em; text-align: center; font-weight: 500;">
+            <div style="font-size: 1.1em; margin-bottom: 0.5em;"><strong>Insufficient Data</strong></div>
+            <div>This chart requires answers from at least 5 question categories to generate meaningful trend data.
+              Please
+              complete more questions to view this visualization.</div>
           </div>
         </div>
 
@@ -81,9 +86,13 @@
           {{t('aggregation.compare.para 19')}}
         </p>
 
-        <div *ngIf="chartBottom5 == null">
-          <div class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
+        <div *ngIf="selectAtLeastFiveCategories == true">
+          <div class="alert alert-info border-primary" role="alert"
+            style="margin: 2em auto; padding: 1.5em; text-align: center; font-weight: 500;">
+            <div style="font-size: 1.1em; margin-bottom: 0.5em;"> <strong>Insufficient Data</strong></div>
+            <div>This chart requires answers from at least 5 question categories to generate meaningful trend data.
+              Please
+              complete more questions to view this visualization.</div>
           </div>
         </div>
 
@@ -101,6 +110,15 @@
         <div *ngIf="chartCategoryPercent == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+
+        <div *ngIf="noCategoryData == true">
+          <div class="alert alert-info border-primary" role="alert"
+            style="margin: 2em auto; padding: 1.5em; text-align: center; font-weight: 500;">
+            <div style="font-size: 1.1em; margin-bottom: 0.5em;"><strong>Insufficient Data</strong></div>
+            <div>No category data is available for this aggregation. Please complete questions across categories to
+              view this visualization.</div>
           </div>
         </div>
 

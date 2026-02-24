@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Document;
+﻿////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
+using CSETWebCore.Model.Document;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Reports

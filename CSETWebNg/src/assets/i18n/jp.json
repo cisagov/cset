@@ -25,19 +25,13 @@
      "assessment type": "評価タイプ",
      "type": "タイプ",
      "demographics": "人口統計",
-     "select type": "タイプを選択",
      "sector": "セクター",
-     "select sector": "セクターを選択",
      "industry": "業界",
-     "select industry": "業界を選択",
      "org name": "組織名",
      "org type": "組織タイプ",
      "org poc": "組織の連絡窓口",
-     "select contact": "連絡窓口を選択",
-     "select facilitator": "ファシリテーターを選択",
      "crit svc poc": "重要サービスの連絡窓口",
      "asset gross value": "保護しようとしている資産の総価値はどれくらいですか？",
-     "select gross value": "価値を選択",
      "not selected": "未選択",
      "expected effort": "この評価に対する相対的な予想努力はどれくらいですか？",
      "select effort": "努力を選択",
@@ -392,11 +386,15 @@
                "change password": "パスワードを変更する",
                "display language": "表示言語",
                "logout": "ログアウト",
-               "setting": "設定",
+               "settings": "設定",
                "encrypt": "評価エクスポートを暗号化する",
                "on": "の上",
                "off": "オフ",
-               "admin": "管理者設定"
+               "admin": "管理者設定",
+               "light mode": "ライトモード",
+               "switch to light mode": "ライトモードに切り替え",
+               "dark mode": "ダークモード",
+               "switch to dark mode": "ダークモードに切り替え"
           }
      },
      "tooltip": {
@@ -530,6 +528,21 @@
     },
     "cis": {
       "model short title": "CIS"
+    },
+    "crr": {
+      "display-name": "サイバーレジリエンスレビュー (CRR)",
+      "model short title": "CRR"
+    },
+    "imr": {
+      "display-name": "インシデント管理レビュー (IMR)",
+      "model short title": "IMR"
+    },
+    "vadr": {
+      "display-name": "CISA検証済みアーキテクチャ設計レビュー (VADR)",
+      "model short title": "VADR"
+    },
+    "mvra": {
+      "model short title": "MVRA"
     }
   }
 }

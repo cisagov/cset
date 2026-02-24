@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -147,25 +147,28 @@ namespace CSETWebCore.Business.Demographic
             var currentSecondaryDefiningSystems = _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).ToList();
 
             // Removing un selected secondary defining systems 
-            foreach (var item in currentSecondaryDefiningSystems)
+            if (serviceComposition.SecondaryDefiningSystems != null)
             {
-                if (!serviceComposition.SecondaryDefiningSystems.Contains(item.Defining_System_Id))
+                foreach (var item in currentSecondaryDefiningSystems)
                 {
-                    _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Remove(currentSecondaryDefiningSystems.Find(x => x.Defining_System_Id == item.Defining_System_Id));
+                    if (!serviceComposition.SecondaryDefiningSystems.Contains(item.Defining_System_Id))
+                    {
+                        _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Remove(currentSecondaryDefiningSystems.Find(x => x.Defining_System_Id == item.Defining_System_Id));
+                    }
                 }
-            }
 
-            // Adding newly selected secondary defining systems
-            foreach (var systemId in serviceComposition.SecondaryDefiningSystems)
-            {
-                if (!currentSecondaryDefiningSystems.Exists(x => x.Defining_System_Id == systemId))
+                // Adding newly selected secondary defining systems
+                foreach (var systemId in serviceComposition.SecondaryDefiningSystems)
                 {
-                    _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(
-                        new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
-                        {
-                            Assessment_Id = serviceComposition.AssessmentId,
-                            Defining_System_Id = systemId
-                        });
+                    if (!currentSecondaryDefiningSystems.Exists(x => x.Defining_System_Id == systemId))
+                    {
+                        _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(
+                            new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
+                            {
+                                Assessment_Id = serviceComposition.AssessmentId,
+                                Defining_System_Id = systemId
+                            });
+                    }
                 }
             }
 

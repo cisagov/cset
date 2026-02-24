@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -48,7 +48,7 @@ namespace CSETWebCore.Model.Assessment
         /// A list of sector/subsector pairs 
         /// </summary>
         public List<SectorSubsector> SectorSubsectors { get; set; }
-      
+
 
 
         // Selected features of the assessment

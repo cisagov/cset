@@ -1,18 +1,18 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2025 Battelle Energy Alliance, LLC  
+//   Copyright 2026 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic.DemographicIO;
+using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CSETWebCore.Business.Demographic.DemographicIO.Models;
-using CSETWebCore.Business.Demographic.DemographicIO;
-
 
 
 namespace CSETWebCore.Business.Demographic.Export
@@ -21,6 +21,17 @@ namespace CSETWebCore.Business.Demographic.Export
     {
         private readonly CSETContext _context;
 
+        /// <summary>
+        /// Some screen items stored in DETAILS_DEMOGRAPHICS are not presented on the UI as "demographics" 
+        /// and importing/overwriting their values could be confusing to the user.  
+        /// </summary>
+        private readonly List<string> _detailsDemographicsNotExported = new List<string>() { "ORG-POC", "SELF-ASSESS", "TECH-DOMAIN" };
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="context"></param>
         public DemographicsExportManager(CSETContext context)
         {
             this._context = context;
@@ -28,13 +39,17 @@ namespace CSETWebCore.Business.Demographic.Export
             SetupBindings();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void SetupBindings()
         {
             TinyMapper.Bind<CIS_CSI_SERVICE_COMPOSITION, jCIS_CSI_SERVICE_COMPOSITION>();
             TinyMapper.Bind<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS, jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
             TinyMapper.Bind<CIS_CSI_SERVICE_DEMOGRAPHICS, jCIS_CSI_SERVICE_DEMOGRAPHICS>();
             TinyMapper.Bind<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>();
-            TinyMapper.Bind<INFORMATION, jORG_DETAILS>();
+            TinyMapper.Bind<ASSESSMENT_SECTOR_SUBSECTOR, jASSESSMENT_SECTOR_SUBSECTOR>();
         }
 
 
@@ -65,18 +80,20 @@ namespace CSETWebCore.Business.Demographic.Export
 
             }
 
-            foreach (var item in _context.INFORMATION.Where(x => x.Id == assessmentId))
-            {
-                model.jORG_DETAILS.Add(TinyMapper.Map<INFORMATION, jORG_DETAILS>(item));
-            }
-
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
-                if (item.DataItemName == "ORG-POC")
+                // do not include some values - not considered part of a demographics export
+                if (_detailsDemographicsNotExported.Contains(item.DataItemName))
                 {
                     continue;
                 }
+
                 model.jDETAILS_DEMOGRAPHICS.Add(TinyMapper.Map<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>(item));
+            }
+
+            foreach (var item in _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence))
+            {
+                model.jASSESSMENT_SECTOR_SUBSECTOR.Add(TinyMapper.Map<ASSESSMENT_SECTOR_SUBSECTOR, jASSESSMENT_SECTOR_SUBSECTOR>(item));
             }
 
             return model;
