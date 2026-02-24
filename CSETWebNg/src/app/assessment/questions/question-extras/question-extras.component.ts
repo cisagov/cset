@@ -391,12 +391,14 @@ export class QuestionExtrasComponent implements OnInit {
     if (!obs) {
       obs = await this.buildEmptyObservation();
     }
-
     if (!obs.question_Id || obs.question_Id == 0){
       obs.question_Id = this.myQuestion.questionId;
     }
 
     obs.answerLevel = true;
+    if (obs.answer_Id == null || obs.answer_Id == 0) {
+      obs.answer_Id = this.myQuestion.answer_Id;
+    }
 
     this.dialog.open(ObservationDetailComponent, {
       data: obs,
@@ -438,7 +440,6 @@ export class QuestionExtrasComponent implements OnInit {
     if (obsToDelete.summary === null) {
       msg = this.tSvc.translate('observation.delete this observation confirm');
     }
-
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage = msg;
