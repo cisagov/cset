@@ -103,7 +103,7 @@ export class ObservationDetailComponent implements OnInit {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
 
-    this.dialog.close({result: true, answerId: this.observation.answer_Id});
+    this.dialog.close(true);
   }
 
   /**
