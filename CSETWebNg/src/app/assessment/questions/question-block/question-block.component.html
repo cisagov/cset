@@ -26,9 +26,8 @@
     <div class="subcat-header tw:dark:bg-bg-primary tw:dark:border-b-0" [class.flat-bottom]="mySubCategory.expanded">
       <div class="sub-head-1" (click)="mySubCategory.expanded = !mySubCategory.expanded"
         (keydown.Spacebar)="mySubCategory.expanded = !mySubCategory.expanded"
-        (keydown.Enter)="mySubCategory.expanded = !mySubCategory.expanded" 
-        [attr.aria-expanded]="mySubCategory.expanded" role="group"
-        tabindex="0">
+        (keydown.Enter)="mySubCategory.expanded = !mySubCategory.expanded" [attr.aria-expanded]="mySubCategory.expanded"
+        role="group" tabindex="0">
         <div class="sub-head-2">
           <span *ngIf="mySubCategory.subCategoryHeadingText != ''">{{ mySubCategory.subCategoryHeadingText }}</span>
           <span *ngIf="showQuestionIds" class="debug-highlight">{{mySubCategory.subCategoryId}}</span>
@@ -104,16 +103,24 @@
         <!-- Landscape ---------------------------------------------------------------------->
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div class="number-and-text">
-            <div style="font-weight: bold; margin-right: 1em; max-width: 25%;" [class.text-nowrap]="!q.displayNumber.includes(' ')">
+
+            <div *ngIf="titlePlacement == 'side'" class="mb-2 me-3 text-nowrap fw-bold" style="max-width: 25%;">
               {{ q.displayNumber }}
             </div>
 
             <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
-              <div style="width: 100%;list-style-type: none;">
-                <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
-                  (click)="questionTextClicked(q, $event)">
+              <div class="flex-column">
+
+                <div *ngIf="titlePlacement == 'top'" class="mb-2 mr-3 text-nowrap fw-bold">
+                  {{ q.displayNumber }}</div>
+
+                <div style="width: 100%; list-style-type: none;">
+                  <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
+                    (click)="questionTextClicked(q, $event)">
+                  </div>
+
+                  <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                 </div>
-                <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
               </div>
             </div>
           </div>
@@ -133,7 +140,7 @@
                 [matTooltip]="('tooltip.mfr-flag' | transloco)">
                 <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">
-                <span class="cset-icons-flag-dark fs-base"></span>
+                <span class="cset-icons-flag-dark fs-base mt-auto"></span>
               </label>
             </div>
 
@@ -155,8 +162,11 @@
 
         <!-- Handheld Portrait -------------------------------------------------->
         <div class="w-100" *ngIf="layoutSvc.hp">
-          <div class="">
-            <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
+          <div>
+
+            <div *ngIf="titleOnTop" class="mb-2 text-nowrap fw-bold">
+                  {{ q.displayNumber }}</div>
+
             <div class="w-100 mb-3">
               <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
                 (click)="questionTextClicked(q, $event)">
@@ -180,7 +190,7 @@
                 [class.answer-selected]="q.markForReview === true" [matTooltip]="('tooltip.mfr-flag' | transloco)">
                 <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">
-                <span class="cset-icons-flag-dark fs-base"></span>
+                <span class="cset-icons-flag-dark fs-base mt-auto"></span>
               </label>
             </div>
 

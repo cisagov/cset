@@ -384,7 +384,6 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
-import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { CriticalServiceComponent } from './assessment/prepare/csi/critical-service.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
@@ -842,7 +841,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         TopMenusComponent,
         LogoForReportsComponent,
         LogoForReportsComponent,
-        QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
         CriticalServiceComponent,
         CsiServiceDemographicsComponent,
