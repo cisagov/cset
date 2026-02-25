@@ -54,7 +54,7 @@
         </div>
         <div class="col-10">
           <div class="row">
-            <p class="text-1 font-weight-bold">
+            <p class="text-1 fw-bold">
               {{ func.function.Function.name }} ({{ func.function.Function.code }})
             </p>
           </div>
@@ -67,7 +67,7 @@
       <div *ngFor="let cat of func.cats; let i = index" class="row"
         [style.border-bottom]="i != (func.cats.length - 1) ? 'solid 0.5px black' : 'none'">
         <div class="col-4 text-1 py-1 px-0">
-          <div class="font-weight-bold">
+          <div class="fw-bold">
             {{ cat.parentCode }}.{{ cat.code }}
           </div>
           {{ cat.name }}

@@ -32,8 +32,8 @@
       or Serial Number.
     </div>
 
-    <p><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
-    <p><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
+    <p><span class="fw-bold">Vendor:</span> {{ vendor.name }}</p>
+    <p><span class="fw-bold">Product:</span> {{ product.name }}</p>
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="cve">CVE #</th>

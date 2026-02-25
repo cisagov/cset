@@ -163,8 +163,9 @@
         <div class="w-100" *ngIf="layoutSvc.hp">
           <div>
 
-            <div *ngIf="titleOnTop" class="mb-2 text-nowrap fw-bold">
-              {{ q.displayNumber }}</div>
+            <div class="mb-2 text-nowrap fw-bold">
+              {{ q.displayNumber }}
+            </div>
 
             <div class="w-100 mb-3">
               <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"

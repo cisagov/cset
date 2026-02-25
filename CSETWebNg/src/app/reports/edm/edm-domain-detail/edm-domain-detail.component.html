@@ -35,7 +35,7 @@
 <table *ngFor="let goal of domain?.subGroupings" class="w-100 cset-table">
     <tr>
         <td colspan="3">
-            <div class="font-weight-bold mb-3">
+            <div class="fw-bold mb-3">
                 {{goal?.title}}
             </div>
             <div [innerHTML]="reportSvc.scrubGlossaryMarkup(goal?.description)">
@@ -43,11 +43,11 @@
         </td>
     </tr>
     <tr *ngFor="let q of goal.questions">
-        <td colspan="2" class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.questionText)"
+        <td colspan="2" class="fw-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.questionText)"
             [class.ps-5]="!!q?.parentQuestionId">
         </td>
         <td *ngIf="!q?.isParentQuestion" [class]="answerCellClass(q?.answer)">
-            <div class="text-center font-weight-bold" style="width: 7rem">
+            <div class="text-center fw-bold" style="width: 7rem">
                 {{questionsSvc.answerDisplayLabel(3, q?.answer)}}
             </div>
         </td>
@@ -57,7 +57,7 @@
     </tr>
 
     <tr>
-        <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
+        <td colspan="3" class="fw-bold">Option(s) for Consideration</td>
     </tr>
     <tr *ngFor="let q of parentQuestions(goal.questions)">
         <td>{{getQuestionNumber(q)}}</td>
