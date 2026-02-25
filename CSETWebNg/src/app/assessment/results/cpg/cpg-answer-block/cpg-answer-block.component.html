@@ -21,19 +21,19 @@
   SOFTWARE. 
 -------------------------->
 <ng-content *transloco="let t">
-     <div class="text-nowrap" [class.font-weight-bold]="answer == 'Y'">
+     <div class="text-nowrap" [class.fw-bold]="answer == 'Y'">
           <i class="far fa-lg" [class.fa-check-square]="answer == 'Y'" [class.fa-square]="answer != 'Y'"></i>
           {{t('answer-options.labels.imp-cpg') | uppercase}}
      </div>
-     <div class="text-nowrap" [class.font-weight-bold]="answer == 'I'">
+     <div class="text-nowrap" [class.fw-bold]="answer == 'I'">
           <i class="far fa-lg" [class.fa-check-square]="answer == 'I'" [class.fa-square]="answer != 'I'"></i>
           {{t('answer-options.labels.prog-cpg') | uppercase}}
      </div>
-     <div class="text-nowrap" [class.font-weight-bold]="answer == 'S'">
+     <div class="text-nowrap" [class.fw-bold]="answer == 'S'">
           <i class="far fa-lg" [class.fa-check-square]="answer == 'S'" [class.fa-square]="answer != 'S'"></i>
           {{t('answer-options.labels.scoped-cpg') | uppercase}}
      </div>
-     <div class="text-nowrap" [class.font-weight-bold]="answer == 'N'">
+     <div class="text-nowrap" [class.fw-bold]="answer == 'N'">
           <i class="far fa-lg" [class.fa-check-square]="answer == 'N'" [class.fa-square]="answer != 'N'"></i>
           {{t('answer-options.labels.not-cpg') | uppercase}}
      </div>
