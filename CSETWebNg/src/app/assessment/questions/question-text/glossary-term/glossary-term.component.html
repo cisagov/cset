@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <ng-template #definitionHtml>
-   <span class="font-weight-bold">{{term}}</span> — <span [innerHTML]="definition | safe"></span>
+   <span class="fw-bold">{{term}}</span> — <span [innerHTML]="definition | safe"></span>
 </ng-template>
 
 <span [tooltip]="definitionHtml" contentType="template" class="glossary-term"
