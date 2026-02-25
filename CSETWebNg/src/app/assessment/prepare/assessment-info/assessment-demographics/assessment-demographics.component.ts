@@ -107,7 +107,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
-        
+
         this.refreshContacts();
         this.getOrganizationTypes();
     }
