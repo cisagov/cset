@@ -83,7 +83,7 @@
                         <div *ngIf="titlePlacement == 'top'" class="mb-2 mr-3 text-nowrap fw-bold">
                             {{ q.displayNumber }}</div>
 
-                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
+                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic fw-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
                         </div>
@@ -142,7 +142,7 @@
 
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         class="d-flex align-items-center mt-3 mb-2 text-nowrap">
-                        <span class="font-weight-bold">
+                        <span class="fw-bold">
                             {{ q.displayNumber }}
                         </span>
                         <span class="question-mat-level-name ms-4" *ngIf="showLevelIndicator(q)">
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="w-100 mb-3">
-                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
+                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic fw-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
                         </div>

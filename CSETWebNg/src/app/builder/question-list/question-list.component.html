@@ -87,7 +87,7 @@
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 me-3 w-100">
               <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
-                <div class="font-weight-bold me-2">{{q.displayNumber}}</div>
+                <div class="fw-bold me-2">{{q.displayNumber}}</div>
                 <div [innerHTML]="setBuilderSvc.formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">

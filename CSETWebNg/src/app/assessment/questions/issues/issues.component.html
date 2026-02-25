@@ -36,14 +36,14 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label id="titleLabel" for="title" class="form-label font-weight-bold">Title</label>
+          <label id="titleLabel" for="title" class="form-label fw-bold">Title</label>
           <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true"
             [(ngModel)]="observation.title">
         </div>
       </div>
       <div class="col">
         <div class="form-group">
-          <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
+          <label for="issueType" class="form-label fw-bold">Issue Type</label>
           <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper">
             (required)</span>
           <select name="issueType" id="issueType" class="form-select" [(ngModel)]="observation.type" required>
@@ -58,14 +58,14 @@
     <div class="row" *ngIf="observation.type !== 'Supplemental Fact'">
       <div class="col-6">
         <div class="form-group">
-          <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
+          <label for="riskArea" class="form-label fw-bold">Risk Area</label>
           <input id="riskArea" type="text" autocomplete="off" class="form-control" [disabled]="true"
             [(ngModel)]="observation.risk_Area">
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
-          <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
+          <label for="subriskArea" class="form-label fw-bold">Sub Risk</label>
           <input id="subRisk" type="text" autocomplete="off" class="form-control" [disabled]="true"
             [(ngModel)]="observation.sub_Risk">
         </div>
@@ -74,7 +74,7 @@
     <div class="row">
       <div class="col-12">
         <div *ngIf="this.actionItems != null" class="form-group">
-          <label for="description" class="form-label font-weight-bold">Description</label>
+          <label for="description" class="form-label fw-bold">Description</label>
           <textarea id="description" type="text" rows="5" autocomplete="off" class="form-control"
             [(ngModel)]="observation.description"></textarea>
         </div>
@@ -84,7 +84,7 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="suppGuide" class="form-label font-weight-bold">Supplemental Fact</label>
+            <label for="suppGuide" class="form-label fw-bold">Supplemental Fact</label>
             <textarea id="suppGuide" type="text" rows="10" autocomplete="off" class="form-control"
               [(ngModel)]="observation.supp_Guidance"></textarea>
           </div>
@@ -95,7 +95,7 @@
       <div *ngIf="this.observation.auto_Generated === 0">
         <div class="row">
           <div class="col-12">
-            <label for="manual-actions" class="form-label font-weight-bold">Action Required</label>
+            <label for="manual-actions" class="form-label fw-bold">Action Required</label>
             <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"
               [(ngModel)]="observation.actionItems"></textarea>
           </div>
@@ -133,14 +133,14 @@
       <div class="row">
         <div class="col-6">
           <span *ngIf="this.actionItems != null">
-            <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
+            <label for="regulatoryCitation" class="form-label fw-bold">Regulatory Citation</label>
             <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true"
               value="{{ this.actionItems[0]?.regulatory_Citation }}">
           </span>
         </div>
         <div class="col-6">
           <div class="form-group">
-            <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
+            <label for="additionalCitations" class="form-label fw-bold">Additional Citations</label>
             <input id="additionalCitations" type="text" autocomplete="off" class="form-control"
               [(ngModel)]="observation.citations">
           </div>
