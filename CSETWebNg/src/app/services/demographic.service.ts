@@ -109,6 +109,14 @@ export class DemographicService {
       });
   }
 
+  getJsonUploaded() {
+    return this.http.get<boolean>(this.apiUrl + 'json-uploaded');
+  }
+
+  saveJsonUploaded(value: boolean) {
+    return this.http.post(this.apiUrl + 'json-uploaded', value, headers);
+  }
+
   importDemographics(demographic: Demographic) {
     return this.http.post(this.apiUrl + 'import', JSON.stringify(demographic), headers)
       .subscribe(() => { });

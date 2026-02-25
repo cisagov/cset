@@ -241,6 +241,53 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Gets whether the JSON export has been uploaded to the external CISA system.
+        /// </summary>
+        [HttpGet]
+        [Route("api/demographics/json-uploaded")]
+        public async Task<IActionResult> GetJsonUploaded()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            var row = await _context.DETAILS_DEMOGRAPHICS
+                .AsNoTracking()
+                .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "JSON_UPLOADED")
+                .FirstOrDefaultAsync();
+            return Ok(row?.BoolValue ?? false);
+        }
+
+
+        /// <summary>
+        /// Persists whether the JSON export has been uploaded to the external CISA system.
+        /// </summary>
+        [HttpPost]
+        [Route("api/demographics/json-uploaded")]
+        public async Task<IActionResult> PostJsonUploaded([FromBody] bool value)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            var row = await _context.DETAILS_DEMOGRAPHICS
+                .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "JSON_UPLOADED")
+                .FirstOrDefaultAsync();
+
+            if (row == null)
+            {
+                _context.DETAILS_DEMOGRAPHICS.Add(new DETAILS_DEMOGRAPHICS
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = "JSON_UPLOADED",
+                    BoolValue = value
+                });
+            }
+            else
+            {
+                row.BoolValue = value;
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+
+        /// <summary>
         /// Delete a sector/subsector record from the assessment.
         /// </summary>
         /// <param name="seq"></param>
