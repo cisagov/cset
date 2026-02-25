@@ -15,5 +15,5 @@ namespace CSETWebCore.Interfaces.Helpers
     {
         Task ProcessAsync(CSETContext db, int aggregationID, LineChart response, string type);
     }
-    
+
 }
