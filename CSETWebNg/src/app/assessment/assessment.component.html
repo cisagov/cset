@@ -147,6 +147,19 @@
               <!-- Divider -->
               <div class="tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
+              <!-- CISA-only JSON upload indicator -->
+              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:flex tw:items-center tw:gap-2">
+                <input type="checkbox"
+                       id="jsonUploadedSwitch"
+                       class="tw:toggle"
+                       [(ngModel)]="jsonUploaded"
+                       (change)="saveJsonUploaded()">
+                <label for="jsonUploadedSwitch" class="tw:text-sm tw:font-medium tw:whitespace-nowrap">JSON export uploaded</label>
+              </div>
+
+              <!-- Divider -->
+              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
+
               <div class="tw:flex tw:items-center tw:gap-3">
                 <label for="assessmentDoneSwitch" class="tw:text-sm tw:font-medium tw:whitespace-nowrap">Mark Assessment Done</label>
                 <input

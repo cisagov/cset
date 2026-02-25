@@ -108,6 +108,7 @@ export class AssessmentComponent implements OnInit {
 
    assessmentAlias = this.tSvc.translate('titles.assessment');
    assessment: AssessmentDetail = {};
+   jsonUploaded: boolean = false;
 
    @Output() navSelected = new EventEmitter<string>();
    isSet: boolean;
@@ -130,7 +131,7 @@ export class AssessmentComponent implements OnInit {
       public navTreeSvc: NavTreeService,
       public layoutSvc: LayoutService,
       public tSvc: TranslocoService,
-      private configSvc: ConfigService,
+      public configSvc: ConfigService,
       private appRef: ApplicationRef,
       private completionSvc: CompletionService,
       private demoSvc: DemographicService,
@@ -181,6 +182,12 @@ export class AssessmentComponent implements OnInit {
          this.getAssessmentDetail();
          this.loadCompletionStats();
 
+         if (this.configSvc.userIsCisaAssessor) {
+            this.demoSvc.getJsonUploaded().subscribe((value: boolean) => {
+               this.jsonUploaded = value;
+            });
+         }
+
          this.assessSvc.completionRefreshRequested$.subscribe((stats) => {
             if (stats) {
                this.completedQuestions = stats.completedCount;
@@ -209,6 +216,10 @@ export class AssessmentComponent implements OnInit {
          this.assessment = data;
          this.assessSvc.assessment = data;
       });
+   }
+
+   saveJsonUploaded() {
+      this.demoSvc.saveJsonUploaded(this.jsonUploaded).subscribe();
    }
 
    setAssessmentDone() {
