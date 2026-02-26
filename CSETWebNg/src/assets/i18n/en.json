@@ -1172,7 +1172,12 @@
     "done": "Done",
     "favorites": "Favorites"
   },
-  "categories": "Categories",
-  "all assessments": "All Assessments",
-  "favorites": "Favorites"
+  "gallery": {
+    "categories": "Categories",
+    "all assessments": "All Assessments",
+    "favorites": "Favorites",
+    "items singular": "{{count}} item",
+    "items plural": "{{count}} items",
+    "click to start": "Click on a card to create a new assessment.  Click the information icon in the card footer to see additional detail."
+  }
 }
