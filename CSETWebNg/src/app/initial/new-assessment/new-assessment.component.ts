@@ -157,7 +157,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy
   }
   getSelectedCategoryTitle(): string {
     if (this.selectedCategory === 'favorites') {
-      return this.tSvc.translate('favorites');
+      return this.tSvc.translate('gallery.favorites');
     }
 
     if (this.selectedCategoryId !== null) {
@@ -165,7 +165,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit , OnDestroy
       return selectedRow ? selectedRow.group_Title : '';
     }
 
-    return this.tSvc.translate('all assessments');
+    return this.tSvc.translate('gallery.all assessments');
   }
   getCategoryIcon(categoryTitle: string): string {
     const iconMap: { [key: string]: string } = {
