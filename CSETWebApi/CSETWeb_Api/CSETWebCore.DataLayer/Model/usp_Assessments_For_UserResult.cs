@@ -30,5 +30,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Done { get; set; }
         public bool? Favorite { get; set; }
         public int? UserId { get; set; }
+        public bool JsonUploaded { get; set; }
     }
 }
