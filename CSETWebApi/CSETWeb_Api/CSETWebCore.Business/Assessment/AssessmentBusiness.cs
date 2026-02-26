@@ -222,6 +222,18 @@ namespace CSETWebCore.Business.Assessment
                 x.lastName = result.LastName;
             });
 
+            // Batch-fetch JSON_UPLOADED flags for all assessments in one query
+            var assessmentIds = list.Select(x => x.AssessmentId).ToList();
+            var jsonUploadedMap = _context.DETAILS_DEMOGRAPHICS
+                .AsNoTracking()
+                .Where(x => assessmentIds.Contains(x.Assessment_Id) && x.DataItemName == "JSON_UPLOADED")
+                .ToDictionary(x => x.Assessment_Id, x => x.BoolValue ?? false);
+
+            list.ForEach(x =>
+            {
+                x.JsonUploaded = jsonUploadedMap.TryGetValue(x.AssessmentId, out bool val) ? val : false;
+            });
+
             return list;
         }
 
