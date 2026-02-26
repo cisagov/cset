@@ -50,6 +50,7 @@ import { DateTime } from 'luxon';
 import { TranslocoService } from '@jsverse/transloco';
 import { DateAdapter } from '@angular/material/core';
 import { ConversionService } from '../../services/conversion.service';
+import { DemographicService } from '../../services/demographic.service';
 import { FileExportService } from '../../services/file-export.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { HostListener } from '@angular/core';
@@ -79,6 +80,7 @@ interface UserAssessment {
   favorite?: boolean;
   firstName?: string;
   lastName?: string;
+  jsonUploaded?: boolean;
 }
 
 @Component({
@@ -137,7 +139,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public reportSvc: ReportService,
-    public conversionSvc: ConversionService
+    public conversionSvc: ConversionService,
+    private demoSvc: DemographicService
   ) {
   }
 
@@ -302,7 +305,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: this.showColumn('export json') ? 345 : 200,
+        width: this.showColumn('export json') ? 470 : 200,
         pinned: 'right'
       }
     ];
@@ -717,7 +720,21 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     `;
     }
 
-    return `<div class="tw:flex tw:h-full tw:gap-1">${buttons}</div>`;
+    let jsonIndicator = '';
+    if (this.showColumn('export json')) {
+      const uploaded = !!assessment.jsonUploaded;
+      const title = uploaded ? 'JSON export has been uploaded' : 'JSON export not yet uploaded';
+      jsonIndicator = `
+      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:pl-2 tw:ml-1" title="${title}">
+        <input type="checkbox" ${uploaded ? 'checked' : ''}
+               data-action="toggleJsonUploaded"
+               data-assessment-id="${assessmentId}"
+               style="width:14px;height:14px;flex-shrink:0;cursor:pointer;">
+      </div>
+    `;
+    }
+
+    return `<div class="tw:flex tw:items-center tw:h-full tw:gap-1">${buttons}${jsonIndicator}</div>`;
   }
 
   /**
@@ -792,6 +809,14 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       case 'exportJson':
         this.clickDownloadLink(assessmentId, true);
         break;
+
+      case 'toggleJsonUploaded':
+        const newValue = (actionElement as HTMLInputElement).checked;
+        const assessmentToToggle = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
+        if (assessmentToToggle) {
+          this.toggleJsonUploaded(assessmentToToggle, newValue);
+        }
+        break;
     }
   }
 
@@ -819,6 +844,34 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  toggleJsonUploaded(assessment: UserAssessment, newValue: boolean): void {
+    // Optimistically update so any intermediate grid re-renders show the correct state
+    assessment.jsonUploaded = newValue;
+
+    this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
+      this.demoSvc.saveJsonUploaded(newValue).subscribe({
+        next: () => {
+          if (this.gridApi && !this.gridApi.isDestroyed()) {
+            try {
+              this.gridApi.setGridOption('rowData', this.filteredAssessments);
+            } catch (error) {
+              console.error('Error refreshing grid cells:', error);
+            }
+          }
+        },
+        error: (error) => {
+          console.error('Failed to update JSON uploaded status:', error);
+          // Revert the optimistic update on failure
+          assessment.jsonUploaded = !newValue;
+          if (this.gridApi && !this.gridApi.isDestroyed()) {
+            this.gridApi.setGridOption('rowData', this.filteredAssessments);
+          }
+        }
+      });
+    });
+  }
+
   private calculateGridHeight(): void {
     if (typeof window === 'undefined') return;
 
