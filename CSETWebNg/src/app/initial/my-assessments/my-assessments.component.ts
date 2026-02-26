@@ -305,7 +305,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: this.showColumn('export json') ? 470 : 200,
+        width: this.showColumn('export json') ? 530 : 200,
         pinned: 'right'
       }
     ];
@@ -723,13 +723,13 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     let jsonIndicator = '';
     if (this.showColumn('export json')) {
       const uploaded = !!assessment.jsonUploaded;
-      const title = uploaded ? 'JSON export has been uploaded' : 'JSON export not yet uploaded';
       jsonIndicator = `
-      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:pl-2 tw:ml-1" title="${title}">
-        <input type="checkbox" ${uploaded ? 'checked' : ''}
+      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:pl-2 tw:ml-1" title="Check to indicate that the JSON file has been submitted to CISA">
+        <input type="checkbox" id="json-uploaded-${assessmentId}" ${uploaded ? 'checked' : ''}
+               class="checkbox-custom"
                data-action="toggleJsonUploaded"
-               data-assessment-id="${assessmentId}"
-               style="width:14px;height:14px;flex-shrink:0;cursor:pointer;">
+               data-assessment-id="${assessmentId}">
+        <label class="checkbox-custom-label tw:my-0 tw:items-center" for="json-uploaded-${assessmentId}">Submitted</label>
       </div>
     `;
     }
