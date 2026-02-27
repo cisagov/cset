@@ -34,6 +34,7 @@ import { QuestionFiltersComponent } from '../../../dialogs/question-filters/ques
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
 import { lastValueFrom } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-diagram-questions',
@@ -48,6 +49,8 @@ export class DiagramQuestionsComponent implements OnInit {
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
+  msgUnansweredEqualsNo = '';
+
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
@@ -56,6 +59,7 @@ export class DiagramQuestionsComponent implements OnInit {
     public completionSvc: CompletionService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
+    public tSvc: TranslocoService,
     private dialog: MatDialog
   ) {
     if (this.assessSvc.assessment == null) {
@@ -91,6 +95,9 @@ export class DiagramQuestionsComponent implements OnInit {
    */
   async loadQuestions() {
     try {
+      // set the message with the current "no" answer value.
+      this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
+
       const response: QuestionResponse = await lastValueFrom(this.questionsSvc.getComponentQuestionsList());
 
       this.questionsSvc.questions = response;
