@@ -181,10 +181,10 @@
           "26b": "<b>Not</b> - indicates the contractor has <b>NOT MET</b> all applicable objectives for the requirement.",
           "26c": "<b>N/A</b> - the requirement is <b>NOT APPLICABLE</b> to the contractor.",
           "27": "SPRS Score",
-          "28": "A NIST SPRS score is calculated for assessments completed at Level 2. For more information on the scoring methodology, please view: <a href=\"https://www.federalregister.gov/documents/2024/10/15/2024-22905/cybersecurity-maturity-model-certification-cmmc-program#sectno-reference-170.24\" target=\"_blank\">32 CFR Part 170 §170.24</a>.",
+          "28": "A NIST SPRS score is calculated for assessments completed at Level 2. For more information on the scoring methodology, please view: <a href=\"https://www.federalregister.gov/documents/2024/10/15/2024-22905/cybersecurity-maturity-model-certification-cmmc-program#sectno-reference-170.24\" target=\"_blank\" rel=\"noopener noreferrer\">32 CFR Part 170 §170.24</a>.",
           "29": "Additional Resources",
           "30": "Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.",
-          "31": "Please visit <a href=\"https://dodcio.defense.gov/cmmc/Resources-Documentation/\" target=\"_blank\">https://dodcio.defense.gov/cmmc/Resources-Documentation/</a> for more information, including CMMC Assessment Guides and Scoping Guidance for each level."
+          "31": "Please visit <a href=\"https://dodcio.defense.gov/cmmc/Resources-Documentation/\" target=\"_blank\" rel=\"noopener noreferrer\">https://dodcio.defense.gov/cmmc/Resources-Documentation/</a> for more information, including CMMC Assessment Guides and Scoping Guidance for each level."
      },
      "mvra": {
           "title": "Minimum Viable Resilience Assessment (MVRA) Tutorial",
