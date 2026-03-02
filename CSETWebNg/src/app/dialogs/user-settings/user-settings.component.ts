@@ -85,6 +85,7 @@ export class UserSettingsComponent implements OnInit {
 
     prom.then(() => {
       this.tSvc.setActiveLang(this.langSelection);
+      localStorage.setItem('cset-language', this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         this.dateAdapter.setLocale(this.langSelection);
       });

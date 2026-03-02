@@ -45,7 +45,7 @@ import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { FooterService } from './services/footer.service';
-import { translate } from '@jsverse/transloco';
+import { translate, TranslocoService } from '@jsverse/transloco';
 import { ThemeService } from './services/theme.service';
 
 
@@ -79,7 +79,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private _hotkeysService: HotkeysService,
     private footerSvc: FooterService,
     private themeService: ThemeService,
-    storageManager: LocalStoreManager
+    storageManager: LocalStoreManager,
+    private tSvc: TranslocoService
   ) {
     storageManager.initialiseStorageSyncListener();
     // Initialize theme service and watch for system theme changes
@@ -88,6 +89,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    const savedLanguage = localStorage.getItem('cset-language');
+    if (savedLanguage) {
+      this.tSvc.setActiveLang(savedLanguage);
+    }
     this.docUrl = this.configSvc.docUrl;
 
     if (localStorage.getItem("returnPath")) {
