@@ -27,6 +27,7 @@ const clientCode = config.behaviors.clientCode;
 const appName = config.behaviors.defaultTitle;
 
 let mainWindow = null;
+let apiProcess = null;
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
@@ -412,10 +413,13 @@ function createWindow() {
   });
 
   // Emitted when the window is going to be closed
-  mainWindow.on('close', () => {
-    // Clear cache & local storage before the window is closed
-    session.defaultSession.clearCache();
-    session.defaultSession.clearStorageData();
+  mainWindow.on('close', async (event) => {
+    // Prevent the window from closing until cache and storage are cleared
+    event.preventDefault();
+    await session.defaultSession.clearCache();
+    await session.defaultSession.clearStorageData();
+    // Use destroy() to avoid re-triggering the close event
+    mainWindow.destroy();
   });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
@@ -531,11 +535,24 @@ app.on('window-all-closed', () => {
   }
 });
 
+function killApiProcess() {
+  if (!apiProcess) return;
+  log.info('Terminating API process (pid ' + apiProcess.pid + ')');
+  try {
+    apiProcess.kill();
+  } catch (e) {
+    log.error('Failed to kill API process:', e);
+  }
+  apiProcess = null;
+}
+
+app.on('will-quit', killApiProcess);
+
 function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = { cwd: exeDir };
   let args = ['--urls', config.api.protocol + '://' + config.api.host + ':' + port];
-  let apiProcess = child(exe, args, options, (error) => {
+  apiProcess = child(exe, args, options, (error) => {
     if (error) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
       log.error(error);
