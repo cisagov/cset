@@ -521,6 +521,16 @@
   .gridline-path {
     stroke: var(--border-color) !important;
   }
+
+  // Canvas elements (Chart.js) should have transparent background to inherit theme
+  canvas {
+    background-color: transparent !important;
+  }
+
+  // Sticky header backgrounds in charts and analytics
+  .sticky-sal {
+    background-color: var(--bg-secondary) !important;
+  }
 }
 
 /* Score Ranges Component - Dark Mode Text */
