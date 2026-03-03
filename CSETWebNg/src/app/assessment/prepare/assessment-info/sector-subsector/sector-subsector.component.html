@@ -27,7 +27,7 @@
 
                     <div class="col">
                          <label for="sector-{{i}}" class="form-label">{{ t('sector') }}</label>
-                         <select [ngClass]="{ 'is-invalid' : !ssPair.sectorId}" class="form-select" id="sector-{{i}}"
+                         <select [ngClass]="{ 'is-invalid' : required && !ssPair.sectorId}" class="form-select" id="sector-{{i}}"
                               tabindex="0" name="sector-{{i}}" [(ngModel)]="ssPair.sectorId"
                               (ngModelChange)="onChangeSector($event, ssPair)">
                               <option [ngValue]="null">-- {{ t('select') }} --</option>
@@ -42,7 +42,7 @@
                          <label for="subsector-{{i}}" class="form-label">{{ t('subsector') }}</label>
                          <div class="row">
                               <div [class]="(sectorList.length > 1) ? 'col-11' : 'col-12'">
-                                   <select [ngClass]="{ 'is-invalid' : !ssPair.subsectorId }" class="form-select"
+                                   <select [ngClass]="{ 'is-invalid' : required && !ssPair.subsectorId }" class="form-select"
                                         id="subsector-{{i}}" tabindex="0" name="subsector-{{i}}"
                                         [(ngModel)]="ssPair.subsectorId"
                                         (ngModelChange)="onChangeSector($event, ssPair)">
