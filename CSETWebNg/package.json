@@ -52,7 +52,7 @@
     "chart.js": "^4.5.1",
     "daisyui": "^5.5.14",
     "dompurify": "^3.3.1",
-    "electron-find-on-page": "^1.0.1",
+    "electron-find-on-page": "^1.1.0",
     "electron-log": "^5.4.3",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
