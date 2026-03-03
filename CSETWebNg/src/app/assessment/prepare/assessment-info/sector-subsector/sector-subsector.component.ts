@@ -48,6 +48,12 @@ export class SectorSubsectorComponent implements OnInit, OnChanges {
   @Input()
   multi: boolean = true;
 
+  /**
+   * Turn on required field validation if desired.
+   */
+  @Input()
+  required: boolean = true;
+
   sectorList: SectorSub[];
 
 
