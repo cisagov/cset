@@ -15,9 +15,9 @@ RUN ng build \
 
 FROM nginx:alpine
 
-# Angular's application builder outputs the browser bundle under dist/browser.
+# Angular's application builder outputs the browser bundle under dist.
 # Copy that folder so index.html sits at Nginx's web root (otherwise Nginx serves its default page).
-COPY --from=build /var/www/dist/browser/ /usr/share/nginx/html
+COPY --from=build /var/www/dist/ /usr/share/nginx/html
 COPY ./etc/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy entrypoint script for runtime config injection (API_PORT, API_HOST)
