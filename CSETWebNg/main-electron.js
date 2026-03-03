@@ -310,7 +310,7 @@ function createWindow() {
                 title: 'Find Text',
                 label: 'Find:',
                 type: 'input',
-                icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+                icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
                 alwaysOnTop: true,
                 inputAttrs: {
                   required: true
