@@ -99,8 +99,8 @@ function setupSpellCheckContextMenu(webContents) {
  */
 function createBrowserWindowOptions(overrides = {}) {
   return merge({
-    width: 1000,
-    height: 800,
+    width: 900,
+    height: 700,
     icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
     title: appName,
     webPreferences: {
@@ -203,7 +203,7 @@ function createWindow() {
   session.defaultSession.setSpellCheckerLanguages(['en-US']);
 
   // Create the browser window
-  mainWindow = createBrowserWindow();
+  mainWindow = createBrowserWindow({ width: 1000, height: 800 });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
   let defaultMenu = Menu.getApplicationMenu();
