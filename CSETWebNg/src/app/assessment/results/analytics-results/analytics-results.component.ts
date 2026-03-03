@@ -94,14 +94,14 @@ export class AnalyticsResultsComponent implements OnInit {
 
       this.modelId = resp.maturityModel.modelId;
       const isCISA = this.analyticsSvc.isCisaAssessorMode();
-      if (isCISA) {
-        this.analyticsSvc.getSampleSizes().then((g: any[]) => {
-          this.mySectors = [...g];
-        });
 
-        // Fetch initial data after getting assessment details
-        this.getAnalyticsResults(0);
-      }
+      this.analyticsSvc.getSampleSizes().then((g: any[]) => {
+        this.mySectors = [...g];
+      });
+
+      // Fetch initial data after getting assessment details
+      this.getAnalyticsResults(0);
+
     });
   }
 
