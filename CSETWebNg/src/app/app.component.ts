@@ -100,6 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.hasPath(localStorage.getItem("returnPath"));
       }
     }
+    this.setupElectronPrintToPdf();
     this.setupShortCutKeys();
   }
 
@@ -108,6 +109,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.isFooterOpen();
     }, 200);
+  }
+
+  setupElectronPrintToPdf() {
+    if (this.configSvc.isRunningInElectron) {
+      // Intercept the default window.print() method and instead
+      // send a message to the electron process to handle the print request
+      window.print = () => {
+        (window as any).electronApi.printToPdf();
+      };
+    }
   }
 
   hasPath(rpath: string) {

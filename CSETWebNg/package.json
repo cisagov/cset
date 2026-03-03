@@ -15,7 +15,7 @@
     "start:electron-with-build": "ng build --configuration production --source-map=false --base-href ./ && npx electron .",
     "build:electron": "npm run setup:electron-build-files && npx @electron/packager temp-electron \"CSET\" --out=electron-builds --arch=x64 --prune --asar --overwrite --icon=src/assets/icons/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" && shx rm -rf temp-electron",
     "version:electron": "npx electron --version && @electron/packager --version",
-    "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page,lodash} temp-electron/node_modules"
+    "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,main-electron-preload.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page,lodash} temp-electron/node_modules"
   },
   "dependencies": {
     "@angular-devkit/schematics": "^20.3.14",

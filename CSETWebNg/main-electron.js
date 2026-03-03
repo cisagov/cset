@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
+const { app, ipcMain, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -133,6 +133,15 @@ async function saveWindowAsPDF(window) {
   }
 }
 
+// listen for the 'print-to-pdf' event from the renderer process
+ipcMain.on('print-to-pdf', () => {
+  const focusedWindow = BrowserWindow.getFocusedWindow();
+  if (focusedWindow) {
+    saveWindowAsPDF(focusedWindow);
+  }
+});
+
+
 function createWindow() {
   // Configure spell checker languages
   session.defaultSession.setSpellCheckerLanguages(['en-US']);
@@ -142,10 +151,11 @@ function createWindow() {
     width: 1000,
     height: 800,
     webPreferences: {
-       nodeIntegration: false,
-       webSecurity: true,
-       contextIsolation: true,
-       spellcheck: true
+      preload: path.join(__dirname, 'main-electron-preload.js'),
+      nodeIntegration: false,
+      webSecurity: true,
+      contextIsolation: true,
+      spellcheck: true
     },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
     title: appName
@@ -374,6 +384,7 @@ function createWindow() {
         width: 1000,
         height: 800,
         webPreferences: {
+          preload: path.join(__dirname, 'main-electron-preload.js'),
           nodeIntegration: false,
           webSecurity: true,
           contextIsolation: true,
@@ -407,6 +418,7 @@ function createWindow() {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         webPreferences: {
+          preload: path.join(__dirname, 'main-electron-preload.js'),
           nodeIntegration: false,
           webSecurity: true,
           contextIsolation: true,
