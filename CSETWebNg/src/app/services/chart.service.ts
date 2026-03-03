@@ -428,12 +428,13 @@ export class ChartService {
     const axisBorderColor = isDark
       ? this.themeSvc.updateAlpha('#ffffff', 0.45)
       : 'rgba(0, 0, 0, 0.3)';
-    const backgroundColor = isDark ? '#002236' : '#ffffff';
 
-    // Plugin to set canvas background color
+    // Plugin to set canvas background color - checks theme dynamically
     const backgroundColorPlugin = {
       id: 'customCanvasBackgroundColor',
       beforeDraw: (chart) => {
+        const isDarkNow = this.themeSvc.isDarkMode();
+        const backgroundColor = isDarkNow ? '#002236' : '#f9fafb';
         const ctx = chart.canvas.getContext('2d');
         ctx.save();
         ctx.globalCompositeOperation = 'destination-over';
