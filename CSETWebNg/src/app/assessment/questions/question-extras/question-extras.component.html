@@ -430,7 +430,7 @@
                             </button>
                         </td>
                         <td class="py-2">
-                            <button class="icon-button text-danger fs-base cursor-pointer" aria-label="Delete"
+                            <button class="icon-button fs-base cursor-pointer" [style.color]="getDeleteButtonColor() + ' !important'" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
                                 <span class="me-1 cset-icons-trash-can"></span>
                             </button>
