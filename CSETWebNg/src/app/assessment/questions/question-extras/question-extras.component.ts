@@ -42,6 +42,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { FileExportService } from '../../../services/file-export.service';
 import { firstValueFrom } from 'rxjs';
 import { ResourceLibraryService } from './../../../services/resource-library.service';
+import { ThemeService } from '../../../services/theme.service';
 
 
 @Component({
@@ -95,9 +96,14 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
-    private resourceLibSvc: ResourceLibraryService
+    private resourceLibSvc: ResourceLibraryService,
+    public themeSvc: ThemeService
   ) {
     this.msgNoSupplemental = `(${this.tSvc.translate('extras.no supplemental available')})`;
+  }
+
+  getDeleteButtonColor(): string {
+    return this.themeSvc.isDarkMode() ? '#ff6b6b' : '#dc3545';
   }
 
 
