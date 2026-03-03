@@ -902,7 +902,6 @@ Sidebar.prototype.addSearchPalette = function (expand) {
     });
 
     mxEvent.addListener(cross, 'click', function () {
-        console.log('sidebar :899');
         if (cross.getAttribute('src') == Dialog.prototype.closeImage) {
             cross.setAttribute('src', Sidebar.prototype.searchImage);
             cross.setAttribute('title', mxResources.get('search'));
@@ -956,7 +955,6 @@ Sidebar.prototype.addSearchPalette = function (expand) {
                             if (center.parentNode != null) {
                                 center.parentNode.removeChild(center);
                             }
-
 
                             for (var i = 0; i < results.length; i++) {
                                 (mxUtils.bind(this, function (result) {
