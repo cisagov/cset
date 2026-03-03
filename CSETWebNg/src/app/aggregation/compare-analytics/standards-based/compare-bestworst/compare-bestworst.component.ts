@@ -21,10 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 import { ChartService } from '../../../../services/chart.service';
+import { ThemeService } from '../../../../services/theme.service';
 import Chart from 'chart.js/auto';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-compare-bestworst',
@@ -33,20 +35,35 @@ import Chart from 'chart.js/auto';
     host: { class: 'd-flex flex-column flex-11a' },
     standalone: false
 })
-export class CompareBestworstComponent implements OnInit {
+export class CompareBestworstComponent implements OnInit, OnDestroy {
 
   categories: any;
 
   currentCategory: any;
   chartAnswerBreakdown: Chart;
+  private themeSubscription: Subscription;
 
   constructor(
     public aggregationSvc: AggregationService,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    private themeSvc: ThemeService
   ) { }
 
   ngOnInit() {
     this.loadPage();
+
+    // Subscribe to theme changes and recreate chart
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      if (this.currentCategory) {
+        this.selectCategory(this.currentCategory);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
   loadPage() {
