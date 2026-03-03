@@ -446,8 +446,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   }
 
   buildGiantDonutChart() {
-    let htmlToPdfmake = require('html-to-pdfmake');
-
     let milOneHtmlMakeObjects = [];
     let milTwoHtmlMakeObjects = [];
     let milThreeHtmlMakeObjects = [];
@@ -866,7 +864,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
 
 
   buildDonutChart(num: number, objectives: any, position: number) {
-    let htmlToPdfmake = require('html-to-pdfmake');
     let htmlMakeObjects = [];
     let donutChartArray = [];
     let innerNumValues = [];
