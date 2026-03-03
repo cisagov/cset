@@ -118,7 +118,7 @@ export class ConfigService {
    */
   async loadConfig() {
     if (!this.initialized) {
-      this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
+      this.isRunningInElectron = !!(window as any).electronApi;
 
       const obs = this.http.get('assets/settings/config.json');
       const prom = firstValueFrom(obs);
@@ -216,7 +216,7 @@ export class ConfigService {
     this.analyticsUrl = this.buildUrl(this.config.analytics);
     if (!!this.analyticsUrl) {
       this.analyticsUrl = this.analyticsUrl + '/';
-    } 
+    }
 
 
     // configure the reference document URL if the "library" property is defined
@@ -244,7 +244,7 @@ export class ConfigService {
     this.initialized = true;
   }
 
-  /** 
+  /**
    * Combines the elements provided to create a URL string
    */
   buildUrl(configGroup: any) {
@@ -262,7 +262,7 @@ export class ConfigService {
   }
 
   /**
-   * 
+   *
    */
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
@@ -330,7 +330,7 @@ export class ConfigService {
 
   /**
    * Returns a boolean indicating if the app is configured to show
-   * assessment upgrade conversion. 
+   * assessment upgrade conversion.
    */
   showAssessmentUpgrade() {
     return this.config.debug.showAssessmentUpgrade;
