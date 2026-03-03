@@ -98,7 +98,7 @@ function setupSpellCheckContextMenu(webContents) {
  * @param {Object} overrides - Additional options to merge in
  */
 function createBrowserWindowOptions(overrides = {}) {
-  return {
+  return merge({
     width: 1000,
     height: 800,
     icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
@@ -109,9 +109,8 @@ function createBrowserWindowOptions(overrides = {}) {
       contextIsolation: true,
       webSecurity: true,
       spellcheck: true
-    },
-    ...overrides
-  };
+    }
+  }, overrides);
 }
 
 /**
