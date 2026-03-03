@@ -94,6 +94,63 @@ function setupSpellCheckContextMenu(webContents) {
 }
 
 /**
+ * Returns BrowserWindow options merged with the app's common defaults (icon, title, webPreferences)
+ * @param {Object} overrides - Additional options to merge in
+ */
+function createBrowserWindowOptions(overrides = {}) {
+  return {
+    width: 1000,
+    height: 800,
+    icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
+    title: appName,
+    webPreferences: {
+      preload: path.join(__dirname, 'main-electron-preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      webSecurity: true,
+      spellcheck: true
+    },
+    ...overrides
+  };
+}
+
+/**
+ * Creates a BrowserWindow with the app's common defaults
+ * @param {Object} overrides - Additional options to merge in
+ */
+function createBrowserWindow(overrides = {}) {
+  return new BrowserWindow(createBrowserWindowOptions(overrides));
+}
+
+/**
+ * Setup a child window with spell check, window open handling, and recursive child setup
+ * @param {BrowserWindow} childWindow - The child window to configure
+ */
+function setupChildWindow(childWindow) {
+  setupSpellCheckContextMenu(childWindow.webContents);
+
+  childWindow.webContents.setWindowOpenHandler((details) => {
+    if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
+      shell.openExternal(details.url);
+      return { action: 'deny' };
+    }
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: createBrowserWindowOptions({ parent: mainWindow })
+    };
+  });
+
+  childWindow.webContents.on('did-create-window', (grandchild) => {
+    setupChildWindow(grandchild);
+  });
+
+  childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    log.error(errorDescription);
+    childWindow.close();
+  });
+}
+
+/**
  * Save a BrowserWindow as PDF
  * @param {BrowserWindow} window - The window to save as PDF
  */
@@ -147,19 +204,7 @@ function createWindow() {
   session.defaultSession.setSpellCheckerLanguages(['en-US']);
 
   // Create the browser window
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    webPreferences: {
-      preload: path.join(__dirname, 'main-electron-preload.js'),
-      nodeIntegration: false,
-      webSecurity: true,
-      contextIsolation: true,
-      spellcheck: true
-    },
-    icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName
-  });
+  mainWindow = createBrowserWindow();
 
   // Default Electron application menu is immutable; have to create new one and modify from there
   let defaultMenu = Menu.getApplicationMenu();
@@ -267,7 +312,6 @@ function createWindow() {
                 type: 'input',
                 icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
                 alwaysOnTop: true,
-                height: 190,
                 inputAttrs: {
                   required: true
                 },
@@ -379,20 +423,7 @@ function createWindow() {
   mainWindow.webContents.setWindowOpenHandler((details) => {
     // trying to load url in form of index.html?returnPath=report/
     if (details.url.includes('index.html?returnPath=report')) {
-      let childWindow = new BrowserWindow({
-        parent: mainWindow,
-        width: 1000,
-        height: 800,
-        webPreferences: {
-          preload: path.join(__dirname, 'main-electron-preload.js'),
-          nodeIntegration: false,
-          webSecurity: true,
-          contextIsolation: true,
-          spellcheck: true
-        },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      });
+      let childWindow = createBrowserWindow({ parent: mainWindow });
 
       const newPath = details.url.substring(details.url.indexOf('index.html'));
       const newUrl = 'file:///' + __dirname + '/dist/' + newPath;
@@ -400,53 +431,7 @@ function createWindow() {
       log.info('Navigated to ' + newUrl);
       childWindow.loadURL(newUrl);
 
-      // Setup spell check context menu for child window
-      setupSpellCheckContextMenu(childWindow.webContents);
-
-      // Setup external links in child windows
-      childWindow.webContents.setWindowOpenHandler((details) => {
-        if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
-          shell.openExternal(details.url);
-          return { action: 'deny' };
-        }
-      });
-
-      return { action: 'deny' };
-
-      // navigating to help section; prevent additional popup windows
-    } else if (details.url.includes('htmlhelp')) {
-      let childWindow = new BrowserWindow({
-        parent: mainWindow,
-        webPreferences: {
-          preload: path.join(__dirname, 'main-electron-preload.js'),
-          nodeIntegration: false,
-          webSecurity: true,
-          contextIsolation: true,
-          spellcheck: true
-        },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      });
-
-      childWindow.loadURL(details.url);
-
-      // Setup spell check context menu for child window
-      setupSpellCheckContextMenu(childWindow.webContents);
-
-      // Setup external links in child windows
-      childWindow.webContents.setWindowOpenHandler((details) => {
-        if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
-          shell.openExternal(details.url);
-          return { action: 'deny' };
-        } else {
-          childWindow.loadURL(newUrl);
-          return { action: 'deny' ,
-            overrideBrowserWindowOptions: {
-              title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-            }
-          };
-        }
-      });
+      setupChildWindow(childWindow);
 
       return { action: 'deny' };
 
@@ -458,20 +443,12 @@ function createWindow() {
 
     return {
       action: 'allow',
-      overrideBrowserWindowOptions: {
-        parent: mainWindow,
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      }
+      overrideBrowserWindowOptions: createBrowserWindowOptions({ parent: mainWindow })
     };
   });
 
   mainWindow.webContents.on('did-create-window', (childWindow) => {
-    // Child windows that fail to load url are closed
-    childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
-      log.error(errorDescription);
-      childWindow.close();
-    });
+    setupChildWindow(childWindow);
   });
 
   // Load landing page if any window in app fails to load
@@ -503,23 +480,22 @@ function createWindow() {
   });
 
   mainWindow.webContents.debugger.on('message', (event, method, params) => {
-    if (method === 'Network.responseReceived') {
+    // log errors
+    if (method === 'Network.responseReceived' && params.response.status >= 400) {
       mainWindow.webContents.debugger
         .sendCommand('Network.getResponseBody', { requestId: params.requestId })
         .then((body) => {
-          if (params.response.url.toString().substring(0, 4) != 'file') {
-            log.info(
-              'REQUEST AT:',
-              params.response.url,
-              'RETURNED STATUS CODE',
-              params.response.status,
-              '\nRESPONSE BODY:',
-              body
-            );
-          }
+          log.error(
+            'REQUEST AT:',
+            params.response.url,
+            'RETURNED STATUS CODE',
+            params.response.status,
+            '\nRESPONSE BODY:',
+            body
+          );
         })
-        .catch(() => {
-          // Errors here being caused by traffic before api connection is established, so they are irrelevant
+        .catch((e) => {
+          log.error(e);
         });
     }
   });
