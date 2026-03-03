@@ -25,27 +25,23 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ObservationsService } from '../../../../services/observations.service';
 import { ReportService } from '../../../../services/report.service';
-
+import reportListdata from './report-list.json';
 
 @Component({
     selector: 'app-report-list-common',
     templateUrl: './report-list-common.component.html',
     standalone: false
 })
-
 export class ReportListCommonComponent implements OnChanges {
   @Input() sectionId: string;
 
-  jsonData: any;
+  jsonData: any = reportListdata;;
   reportList: any[] = [];
 
   constructor(public assessSvc: AssessmentService,
     public observationsSvc: ObservationsService,
     public reportSvc: ReportService
-  ) {
-    // Load JSON data 
-    this.jsonData = require('./report-list.json');
-  }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['sectionId']) {

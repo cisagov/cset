@@ -141,7 +141,12 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: { nodeIntegration: true, webSecurity: false, spellcheck: true },
+    webPreferences: {
+       nodeIntegration: false,
+       webSecurity: true,
+       contextIsolation: true,
+       spellcheck: true
+    },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
     title: appName
   });
@@ -368,7 +373,12 @@ function createWindow() {
         parent: mainWindow,
         width: 1000,
         height: 800,
-        webPreferences: { nodeIntegration: true, spellcheck: true },
+        webPreferences: {
+          nodeIntegration: false,
+          webSecurity: true,
+          contextIsolation: true,
+          spellcheck: true
+        },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });
@@ -396,7 +406,12 @@ function createWindow() {
     } else if (details.url.includes('htmlhelp')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
-        webPreferences: { nodeIntegration: true, spellcheck: true },
+        webPreferences: {
+          nodeIntegration: false,
+          webSecurity: true,
+          contextIsolation: true,
+          spellcheck: true
+        },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });

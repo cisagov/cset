@@ -26,7 +26,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { strict } from 'assert';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
 import { AnalyticsloginComponent } from '../analysis/analytics-login/analytics-login.component';
