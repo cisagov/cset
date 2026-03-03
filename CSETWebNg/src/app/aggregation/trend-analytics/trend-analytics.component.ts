@@ -105,7 +105,7 @@ export class TrendAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    const url = '/report/' + reportType;
+    const url = '/index.html?returnPath=report/' + reportType;
     window.open(url, "_blank");
   };
 }
