@@ -621,8 +621,11 @@
     {
       "value": "uk",
       "name": "українська"
-    },
+    }
+  ],
+  "futureLanguageOptions": [
     {
+      "note": "Japanese is roughly supported in the UI only, but no assessments have been translated",
       "value": "jp",
       "name": "日本語"
     }
