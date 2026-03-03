@@ -80,12 +80,22 @@ export class LocalStoreManager {
   }
 
   public clearInstanceSessionStorage() {
+    // Preserve theme preference
+    const savedTheme = localStorage.getItem('cset-theme');
     localStorage.clear();
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
     this.syncKeys = [];
   }
 
   public clearLocalStorage() {
+    // Preserve theme preference
+    const savedTheme = localStorage.getItem('cset-theme');
     localStorage.clear();
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
   }
 
   public saveSessionData(data: any, key = LocalStoreManager.DBKEY_USER_DATA) {
