@@ -180,7 +180,12 @@ export class AuthenticationService {
    * @param password
    */
   login(email: string, password: string) {
+    // Preserve theme preference
+    const savedTheme = localStorage.getItem('cset-theme');
     localStorage.clear();
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
     localStorage.setItem('email', email);
 
     // set the scope (application)

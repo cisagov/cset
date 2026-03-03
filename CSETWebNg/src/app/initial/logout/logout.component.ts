@@ -36,7 +36,12 @@ export class LogoutComponent implements OnInit {
   ) {
     const savedLang = localStorage.getItem('cset-language');
     // remove user from session storage to log user out
+    // Preserve theme preference
+    const savedTheme = localStorage.getItem('cset-theme');
     localStorage.clear();
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
     sessionStorage.removeItem('cset-assessments-page');
     if(savedLang) {
       localStorage.setItem('cset-language', savedLang);
