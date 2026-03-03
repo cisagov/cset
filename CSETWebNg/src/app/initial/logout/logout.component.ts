@@ -35,7 +35,12 @@ export class LogoutComponent implements OnInit {
     private router: Router
   ) {
     // remove user from session storage to log user out
+    // Preserve theme preference
+    const savedTheme = localStorage.getItem('cset-theme');
     localStorage.clear();
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
     sessionStorage.removeItem('cset-assessments-page');
     this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
   }

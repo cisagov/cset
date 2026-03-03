@@ -74,7 +74,12 @@ export class JwtInterceptor implements HttpInterceptor {
             }
 
             const userToken = localStorage.getItem('userToken')
+            // Preserve theme preference
+            const savedTheme = localStorage.getItem('cset-theme');
             localStorage.clear();
+            if (savedTheme) {
+              localStorage.setItem('cset-theme', savedTheme);
+            }
             this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
 
             return of({});
