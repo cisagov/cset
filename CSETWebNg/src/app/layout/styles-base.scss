@@ -84,6 +84,7 @@ $primary-900: map.get($primary, 900); // Main Dark Primary
 
 $primary-color: $primary-900;
 $secondary-color: map.get($primary, 450);
+$orange-500:#f97316;
 
 
 $link-color-dark: #1a53ff; //$primary-350;
@@ -833,19 +834,19 @@ table.td-align-top td {
 
 .btn-mfr {
   background-color: $primary-50;
-  border-color: $gray-800;
-  color: $primary-color;
+  border-color: $orange-500;
+  color: $orange-500;
 }
 
 .btn-mfr:hover,
 .btn-mfr.answer-selected:hover {
-  background-color: $primary-700;
+  background-color: $orange-500;
   color: $white;
 }
 
 .btn-mfr.answer-selected {
-  background-color: $orange-500;
-  color: $gray-900;
+  background-color: $orange-500;;
+  color: $white;
 }
 
 .alt-text-required {
