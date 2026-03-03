@@ -40,7 +40,6 @@ export class ComponentOverrideComponent {
   questions: any[] = [];
   loading: boolean = true;
   questionChanged: boolean;
-  private _timeoutId: NodeJS.Timeout;
 
   /**
    * Constructor.
@@ -66,8 +65,8 @@ export class ComponentOverrideComponent {
   }
 
   /**
- * 
- * @param ans 
+ *
+ * @param ans
  */
   showThisOption(ans: string) {
     if (!this.questionsSvc.questions) {
@@ -76,12 +75,12 @@ export class ComponentOverrideComponent {
     return this.questionsSvc.questions?.answerOptions.indexOf(ans) >= 0;
   }
 
-  storeAnswer(q: any, newAnswerValue: string) {    
+  storeAnswer(q: any, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
-    
+
     if (!!newAnswerValue) {
       q.answer_Text = newAnswerValue;
     }
@@ -127,7 +126,7 @@ export class ComponentOverrideComponent {
   close() {
     return this.dialog.close(this.questionChanged);
   }
-  
+
   applyHeight() {
     const styles = { 'max-height': window.screen.availHeight };
     return styles;

@@ -50,8 +50,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
-  private _timeoutId: NodeJS.Timeout;
-
   percentAnswered = 0;
   modelAnswerOptions: string[] = [];
 
