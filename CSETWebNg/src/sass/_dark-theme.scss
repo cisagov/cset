@@ -526,6 +526,11 @@
   .sticky-sal {
     background-color: var(--bg-secondary) !important;
   }
+
+  // Observation delete button should be red in dark mode
+  button[aria-label="Delete"] {
+    color: #ff6b6b !important;
+  }
 }
 
 /* Score Ranges Component - Dark Mode Text */

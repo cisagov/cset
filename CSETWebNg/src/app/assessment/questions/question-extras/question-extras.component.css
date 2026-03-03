@@ -103,3 +103,23 @@ SOFTWARE.
 .supplemental ul {
     padding-inline-start: 1rem;
 }
+
+/* Hover styles for observation edit/delete buttons */
+button[aria-label="Edit"]:hover {
+    color: #0273ba !important;
+}
+
+button[aria-label="Delete"] {
+    color: #dc3545 !important;
+}
+
+button[aria-label="Delete"]:hover {
+    opacity: 0.8;
+}
+
+/* Dark mode support for delete button */
+.dark-theme button[aria-label="Delete"],
+[data-theme="dark"] button[aria-label="Delete"],
+[data-bs-theme="dark"] button[aria-label="Delete"] {
+    color: #ff6b6b !important;
+}

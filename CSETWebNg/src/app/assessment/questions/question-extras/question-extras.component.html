@@ -424,13 +424,13 @@
                             {{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}
                         </td>
                         <td class="py-2">
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                            <button class="icon-button fs-base cursor-pointer" style="color: #004D73 !important;" aria-label="Edit"
                                 (click)="editObservation(obs.observation_Id)">
                                 <span class="me-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td class="py-2">
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                            <button class="icon-button fs-base cursor-pointer" [style.color]="getDeleteButtonColor() + ' !important'" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
                                 <span class="me-1 cset-icons-trash-can"></span>
                             </button>
