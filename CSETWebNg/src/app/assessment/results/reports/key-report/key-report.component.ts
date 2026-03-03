@@ -29,6 +29,9 @@ import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
 import { ActivatedRoute } from '@angular/router';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.addVirtualFileSystem(pdfFonts);
 
 @Component({
     selector: 'app-key-report',
@@ -56,9 +59,6 @@ export class KeyReportComponent {
   }
 
   generatePdf() {
-    let pdfMake = require('pdfmake/build/pdfmake.js');
-    let pdfFonts = require('pdfmake/build/vfs_fonts.js');
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
     const authKey = this.auth.accessKey();
 
 
