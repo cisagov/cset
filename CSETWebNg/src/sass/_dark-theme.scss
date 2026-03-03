@@ -521,6 +521,11 @@
   .gridline-path {
     stroke: var(--border-color) !important;
   }
+
+  // Sticky header backgrounds in charts and analytics
+  .sticky-sal {
+    background-color: var(--bg-secondary) !important;
+  }
 }
 
 /* Score Ranges Component - Dark Mode Text */
