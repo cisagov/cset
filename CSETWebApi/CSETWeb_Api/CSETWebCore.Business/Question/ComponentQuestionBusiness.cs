@@ -32,9 +32,9 @@ namespace CSETWebCore.Business.Question
         public List<SubCategoryAnswersPlus> SubCatAnswers;
 
         /// <summary>
-        /// Dictionary for O(1) lookup of answers by Question_Or_Requirement_Id
+        /// Dictionary for O(1) lookup of answers by Question_Or_Requirement_Id plus GUID
         /// </summary>
-        private Dictionary<int, FullAnswer> _answersByQuestionId = new Dictionary<int, FullAnswer>();
+        private Dictionary<string, FullAnswer> _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
 
         /// <summary>
         /// Dictionary for O(1) lookup of SubCatAnswers by HeadingId
@@ -319,7 +319,7 @@ namespace CSETWebCore.Business.Question
 
             if (!answers.Any())
             {
-                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
                 return;
             }
 
@@ -342,8 +342,8 @@ namespace CSETWebCore.Business.Question
                 .ToDictionaryAsync(x => x.AnswerId, x => x.Count);
 
             // 4. Build O(1) lookup dictionary with computed status
-            _answersByQuestionId = answers.ToDictionary(
-                a => a.Question_Or_Requirement_Id,
+            _answersByQuestionIdAndGuid = answers.ToDictionary(
+                a => $"{a.Question_Or_Requirement_Id}{a.Component_Guid}",
                 a =>
                 {
                     documentCounts.TryGetValue(a.Answer_Id, out var docCount);
@@ -384,7 +384,7 @@ namespace CSETWebCore.Business.Question
 
             if (!answers.Any())
             {
-                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
                 return;
             }
 
@@ -407,8 +407,8 @@ namespace CSETWebCore.Business.Question
                 .ToDictionary(x => x.AnswerId, x => x.Count);
 
             // 4. Build O(1) lookup dictionary with computed status
-            _answersByQuestionId = answers.ToDictionary(
-                a => a.Question_Or_Requirement_Id,
+            _answersByQuestionIdAndGuid = answers.ToDictionary(
+                a => $"{a.Question_Or_Requirement_Id}{a.Component_Guid}",
                 a =>
                 {
                     documentCounts.TryGetValue(a.Answer_Id, out var docCount);
@@ -768,7 +768,8 @@ namespace CSETWebCore.Business.Question
                 };
 
                 // O(1) dictionary lookup instead of O(N) linear search
-                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
+                var k = $"{qa.QuestionId}{qa.ComponentGuid}";
+                _answersByQuestionIdAndGuid.TryGetValue(k, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -865,7 +866,8 @@ namespace CSETWebCore.Business.Question
                 };
 
                 // O(1) dictionary lookup instead of O(N) linear search
-                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
+                var k = $"{qa.QuestionId}{qa.ComponentGuid}";
+                _answersByQuestionIdAndGuid.TryGetValue(k, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
