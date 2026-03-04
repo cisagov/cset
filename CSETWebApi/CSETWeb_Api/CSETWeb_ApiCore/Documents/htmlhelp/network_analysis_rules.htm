@@ -318,7 +318,7 @@
 <div class="p">&#160;</div>
 <div class="p"><span class="de_56F4564E24">The following information describes the network analysis rules and includes examples of the corresponding network warnings found in the </span><a class="local_link" href="diagramming_tool.htm"><span class="de_AC776ED092">diagramming tool</span></a><span class="de_56F4564E24">.</span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 1</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 1</span></h2></div>
 <div class="p"><span class="de_56F4564E24">There must be a firewall or other border protection devices (data diode) between different network enclaves (zones).&#160; </span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones. A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.&quot;</span></div>
@@ -328,7 +328,7 @@
 <div class="p">&#160;</div>
 <div class="p"><span class="de_56F4564E24">Segmenting a network into separate enclaves prevents either an internal or external threat attacker from moving freely through the network. Organizations that implement a secure network design will find that the added cost and complexity of segmentation is more than offset by a reduction in number and severity of incidents. The effort extended in learning, classifying, and segmenting the network helps your network administrators and architects to better understand the network, both from a performance and security perspective. This adds value and strengthens all of the organization’s controls.</span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 2</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 2</span></h2></div>
 <div class="p"><span class="de_56F4564E24">Firewalls should have an associated IPS or IDS to monitor traffic and confirm firewall configuration.</span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;The subnet, “Subnet Name”, should have an IDS (Intrusion Detection System) or IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, “Firewall Name”, is correct and that malware has not been able to penetrate past the firewall.</span><span class="de_9640FB32D8">&quot;</span></div>
@@ -336,7 +336,7 @@
 <div class="p"><span class="de_56F4564E24"><strong>Additional Description</strong></span></div>
 <div class="p"><span class="de_56F4564E24">There are two common types of IDS systems: Host based and Network based. Host Intrusion Detection Systems (HIDS) are installed on the host and watch network traffic and system information for indicators of intrusion. Network Intrusion Detection Systems (NIDS) only monitor network traffic. This rule refers to NIDS. Intrusion Prevention Systems (IPS) are based on the same principles and techniques as an IDS but adds the additional functionality of responding to network intrusions </span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 3</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 3</span></h2></div>
 <div class="p"><span class="de_56F4564E24">Separating enclaves (zones) strictly by VLANs does not necessarily protect traffic between VLANS. &#160; </span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;The separate subnets handled by the VLAN component, {0}, carry traffic of different SALs. The incorrect configuration of the component, or the possible compromise of the component, allow the critical traffic to be visible on the less protected network segment.&quot;</span></div>
@@ -344,7 +344,7 @@
 <div class="p"><span class="de_56F4564E24"><strong>Additional Description</strong></span></div>
 <div class="p"><span class="de_56F4564E24">See the following article for additional discussion: </span><a href="https://www.nsa.gov/Portals/70/documents/resources/everyone/csfc/capability-packages/MSCCPv1.1_20180626.pdf"><span class="de_AC776ED092">Multi-site Connectivity Capability Package V1.1</span></a><span class="de_56F4564E24">.</span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 4</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 4</span></h2></div>
 <div class="p"><span class="de_56F4564E24">No multi-homed devices. Multiple interfaces in a component may acts as a bridge between the different enclaves. </span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;The component, {0}, has multiple interfaces where the subnets of those interfaces carry traffic of different SALs. If the component is compromised, the critical traffic could be visible from the less protected network.&quot;</span></div>
@@ -352,7 +352,7 @@
 <div class="p"><span class="de_56F4564E24"><strong>Additional Description</strong></span></div>
 <div class="p"><span class="de_56F4564E24">This bridges networks by allowing multi-homed devices to bypass your security controls and allows an attacker to freely pivot from one network to another. A multi-homed device is any device with multiple network cards or interfaces. &#160; </span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 5</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 5</span></h2></div>
 <div class="p"><span class="de_56F4564E24">No backdoor modems or unprotected third-party connections.</span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">“The path identified by the components, {0} and {1}, appears to connect on one side to an external network. A firewall to filter the traffic to and from the external network is recommended to protect the facility's network. Note that a 'Web' component, 'Vendor' component, or 'Partner' component are all assumed to interface with an external network. In addition, a modem with a single connection is assumed to allow a connection from outside the facility's network.&quot;</span></div>
@@ -360,7 +360,7 @@
 <div class="p"><span class="de_56F4564E24"><strong>Additional Description</strong></span></div>
 <div class="p"><span class="de_56F4564E24">A backdoor connection is a modem or other connection that bypasses all the regular security checks when accessing the system through the regularly recognized means. Attackers find and use these connections to access your system. These backdoor connections should either be eliminated or require the same level of security access and control as any other external connection. </span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 6</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 6</span></h2></div>
 <div class="p"><span class="de_56F4564E24">No open untrusted links. Either firewall it off or wrap in VPN or Encrypted Tunnel. </span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;The path between the components, {0} and {1}, is untrusted. Because malicious traffic may be introduced onto the link, a firewall to filter the traffic on both sides of untrusted link is recommended.&quot;</span></div>
@@ -368,7 +368,7 @@
 <div class="p"><span class="de_56F4564E24"><strong>Additional Description</strong></span></div>
 <div class="p"><span class="de_56F4564E24">An untrusted link is any link that may have potential public access. This can be a line that has open physical access, or it can be a connection that crosses the internet unencrypted. Attackers can use this open access to see the data in the connection or change the information to compromise your system. </span></div>
 <div class="p">&#160;</div>
-<div class="p h2"><h2>Rule 7</h2></div>
+<div class="p h2"><h2><span class="de_F79DA80783">Rule 7</span></h2></div>
 <div class="p"><span class="de_56F4564E24">Correct Data Flow on Unidirectional devices. </span></div>
 <div class="p">&#160;</div>
 <div class="p"><span class="de_CCD88D350B">&quot;Data flow between two distinct SAL zones via a unidirectional {0} must only flow from a higher SAL to a lower SAL. Example Control or SCADA network SAL High to Corporate Network SAL Low, but not SAL Low to SAL High.&quot;</span></div>
@@ -382,15 +382,15 @@
 <div class="p">&#160;</div>
 <div class="p"><span class="de_D89D5AD54F">After years of development the use of data diodes has increased creating two variations: </span></div>
 <div class="p">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-949" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-949;">
-<div class="p de_0711D341CE"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="de_56F4564E24">Data Diode</span><span class="de_D89D5AD54F">: Network appliance or device allowing raw data to travel only in one direction, used in guaranteeing information security or protection of critical digital systems, such as industrial control systems, from inbound cyber attacks. </span></div>
-</li><li class="list-element list-counter-949" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p de_0711D341CE"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="de_56F4564E24">Unidirectional Gateway</span><span class="de_D89D5AD54F">: Combination of hardware and software running in proxy computers in the source and destination networks. The hardware, a data diode, enforces physical unidirectionality and the software replicates databases and emulates protocol servers to handle bi-directional communication. The unidirectional gateway is capable of transferring multiple protocols and data types simultaneously. It contains a broader range of </span><span class="de_56F4564E24">cybersecurity</span><span class="de_D89D5AD54F"> features like, </span><span class="de_56F4564E24">secure boot</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">certificate management</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">data integrity</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">forward error correction</span><span class="de_D89D5AD54F"> (FEC), secure communication via </span><span class="de_56F4564E24">TLS</span><span class="de_D89D5AD54F">, among others. A unique characteristic is that data is transferred deterministically (to predetermined locations) with a protocol &quot;break&quot; that allows the data to be transferred through the data diode.</span></div>
+<ul class="de_list"><li class="list-element list-counter-41101323-049a-48ed-8ede-4a8582cb77a7-0" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-41101323-049a-48ed-8ede-4a8582cb77a7-0;">
+<div class="p de_3308280385"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="de_56F4564E24">Data Diode</span><span class="de_D89D5AD54F">: Network appliance or device allowing raw data to travel only in one direction, used in guaranteeing information security or protection of critical digital systems, such as industrial control systems, from inbound cyber attacks. </span></div>
+</li><li class="list-element list-counter-41101323-049a-48ed-8ede-4a8582cb77a7-0" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<div class="p de_3308280385"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="de_56F4564E24">Unidirectional Gateway</span><span class="de_D89D5AD54F">: Combination of hardware and software running in proxy computers in the source and destination networks. The hardware, a data diode, enforces physical unidirectionality and the software replicates databases and emulates protocol servers to handle bi-directional communication. The unidirectional gateway is capable of transferring multiple protocols and data types simultaneously. It contains a broader range of </span><span class="de_56F4564E24">cybersecurity</span><span class="de_D89D5AD54F"> features like, </span><span class="de_56F4564E24">secure boot</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">certificate management</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">data integrity</span><span class="de_D89D5AD54F">, </span><span class="de_56F4564E24">forward error correction</span><span class="de_D89D5AD54F"> (FEC), secure communication via </span><span class="de_56F4564E24">TLS</span><span class="de_D89D5AD54F">, among others. A unique characteristic is that data is transferred deterministically (to predetermined locations) with a protocol &quot;break&quot; that allows the data to be transferred through the data diode.</span></div>
 <div class="p">&#160;</div>
 </li></ul><div class="p"><span class="de_D89D5AD54F">Data diodes are commonly found in high security military and government environments, and are now becoming widely spread in sectors like </span><span class="de_56F4564E24">oil &amp; gas</span><span class="de_D89D5AD54F">, water/wastewater, </span><span class="de_56F4564E24">airplanes</span><span class="de_D89D5AD54F"> (between flight control units and in-flight entertainment systems), </span><span class="de_56F4564E24">manufacturing</span><span class="de_D89D5AD54F"> and </span><span class="de_56F4564E24">cloud</span><span class="de_D89D5AD54F"> connectivity for </span><span class="de_56F4564E24">industrial IoT</span><span class="de_D89D5AD54F">. New regulation have increased demand and with increased capacity, major technology vendors have lowered the cost of the core technology.</span></div>
 </div>                                    			
                 			                <h6 class="b-article__generatorCopyright">
-                    <a class="b-link b-article__generatorCopyrightLink" href="https://www.drexplain.com" target="_blank" rel="nofollow">Made with help of Dr.Explain</a>
+                    <a class="b-link b-article__generatorCopyrightLink" href="https://www.drexplain.com" target="_blank" rel="nofollow">Made by Dr.Explain, documentation tool</a>
                 </h6>
                 </div>
 <!-- Root element of PhotoSwipe. Must have class pswp. -->
