@@ -308,7 +308,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
 
             }
-            catch (ZipException ex)
+            catch (ZipException)
             {
                 throw;
             }
