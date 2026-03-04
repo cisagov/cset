@@ -52,6 +52,7 @@ export class ComponentOverrideComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClosed().subscribe(() => this.broadcastQuestionOverride());
 
+    this.questions = null;
     this.questionsSvc.getOverrideQuestions(data.myQuestion.questionId,
       data.component_Symbol_Id).subscribe((x: any) => {
         this.questions = x;
