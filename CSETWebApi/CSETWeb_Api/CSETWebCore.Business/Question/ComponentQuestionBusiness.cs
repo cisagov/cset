@@ -895,16 +895,13 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
         {
-            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
-
-            var questionlist = _context.Answer_Components_Exploded
+            return _context.Answer_Components_Exploded
                 .AsNoTracking()
                 .Where(c => c.Assessment_Id == assessmentId
                     && c.Question_Id == question_id
                     && c.Component_Symbol_Id == Component_Symbol_Id)
-                .Select(c => new usp_getExplodedComponent
+                .Select(c => new Answer_Components_Exploded_ForJSON
                 {
-                    UniqueKey = c.UniqueKey,
                     Assessment_Id = c.Assessment_Id,
                     Answer_Id = c.Answer_Id,
                     Question_Id = c.Question_Id,
@@ -914,29 +911,14 @@ namespace CSETWebCore.Business.Question
                     Question_Number = c.Question_Number,
                     QuestionText = c.QuestionText,
                     ComponentName = c.ComponentName,
-                    Component_Symbol_Id = c.Component_Symbol_Id,
                     Is_Component = c.Is_Component,
-                    Component_GUID = c.Component_Guid,
-                    Layer_Id = c.Layer_Id,
-                    LayerName = c.LayerName,
-                    Container_Id = c.Container_Id,
+                    Component_GUID = c.Component_Guid.ToString(),
                     ZoneName = c.ZoneName,
                     SAL = c.SAL,
-                    Mark_For_Review = c.Mark_For_Review,
+                    Mark_For_Review = c.Mark_For_Review ?? false,
                     Feedback = c.FeedBack
                 })
                 .ToList();
-
-            foreach (var question in questionlist)
-            {
-                Answer_Components_Exploded_ForJSON tmp = null;
-                TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
-                tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                tmp.Component_GUID = question.Component_GUID.ToString();
-                rlist.Add(tmp);
-            }
-
-            return rlist;
         }
 
 
