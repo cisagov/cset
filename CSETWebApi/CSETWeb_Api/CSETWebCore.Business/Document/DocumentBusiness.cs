@@ -52,30 +52,16 @@ namespace CSETWebCore.Business.Document
         /// <returns></returns>
         public List<Model.Document.Document> GetDocumentsForAnswer(int answerId)
         {
-            List<Model.Document.Document> list = new List<Model.Document.Document>();
-
-            var files = _context.ANSWER
-                .Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs(_context).ToList();
-
-            if (files == null)
-            {
-                return list;
-            }
-
-            foreach (var file in files)
-            {
-                Model.Document.Document doc = new Model.Document.Document()
-                {
-                    Document_Id = file.Document_Id,
-                    Title = file.Title,
-                    FileName = file.Name,
-                    IsShared = file.IsGlobal
-                };
-
-                list.Add(doc);
-            }
-
-            return list;
+            return (from da in _context.DOCUMENT_ANSWERS
+                    join df in _context.DOCUMENT_FILE on da.Document_Id equals df.Document_Id
+                    where da.Answer_Id == answerId
+                    select new Model.Document.Document()
+                    {
+                        Document_Id = df.Document_Id,
+                        Title = df.Title,
+                        FileName = df.Name,
+                        IsShared = df.IsGlobal
+                    }).ToList();
         }
 
 
