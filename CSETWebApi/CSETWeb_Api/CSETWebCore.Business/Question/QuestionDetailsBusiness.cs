@@ -14,7 +14,6 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +67,7 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public QuestionDetails GetQuestionDetails(int? questionId, int assessmentId, string questionType)
         {
-            if (_context.MATURITY_QUESTION_TYPES.ToList().Exists(x => x.Mat_Question_Type.Equals(questionType, StringComparison.OrdinalIgnoreCase)))
+            if (_context.MATURITY_QUESTION_TYPES.Any(x => x.Mat_Question_Type == questionType))
             {
                 questionType = "Maturity";
             }
@@ -229,41 +228,14 @@ namespace CSETWebCore.Business.Question
             }
             else if (question.IsComponent)
             {
-                var exploded = _context.Answer_Components_Exploded
-                    .AsNoTracking()
-                    .Where(c => c.Assessment_Id == assessment_id)
-                    .Select(c => new usp_getExplodedComponent
-                    {
-                        UniqueKey = c.UniqueKey,
-                        Assessment_Id = c.Assessment_Id,
-                        Answer_Id = c.Answer_Id,
-                        Question_Id = c.Question_Id,
-                        Answer_Text = c.Answer_Text,
-                        Comment = c.Comment,
-                        Alternate_Justification = c.Alternate_Justification,
-                        Question_Number = c.Question_Number,
-                        QuestionText = c.QuestionText,
-                        ComponentName = c.ComponentName,
-                        Component_Symbol_Id = c.Component_Symbol_Id,
-                        Is_Component = c.Is_Component,
-                        Component_GUID = c.Component_Guid,
-                        Layer_Id = c.Layer_Id,
-                        LayerName = c.LayerName,
-                        Container_Id = c.Container_Id,
-                        ZoneName = c.ZoneName,
-                        SAL = c.SAL,
-                        Mark_For_Review = c.Mark_For_Review,
-                        Feedback = c.FeedBack
-                    })
-                    .ToList();
-
-                var stuff = from a in exploded
-                            join l in _context.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
-                            where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
-                            select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };
+                var stuff = (from c in _context.Answer_Components_Exploded.AsNoTracking()
+                             join l in _context.UNIVERSAL_SAL_LEVEL on c.SAL equals l.Full_Name_Sal
+                             where c.Assessment_Id == assessment_id && c.Question_Id == question.Question_or_Requirement_ID
+                             select new { c.Component_Symbol_Id, c.SAL, l.Sal_Level_Order })
+                            .ToList();
 
                 Dictionary<int, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<int, ComponentTypeSalData>();
-                foreach (var item in stuff.ToList())
+                foreach (var item in stuff)
                 {
                     ComponentTypeSalData salData;
 
@@ -285,8 +257,12 @@ namespace CSETWebCore.Business.Question
                     }
                 }
                 if (response.SymbolInfo == null)
+                {
+                    var neededIds = dictionaryComponentTypes.Keys.ToList();
                     response.SymbolInfo = _context.COMPONENT_SYMBOLS
-                    .ToDictionary(x => x.Component_Symbol_Id, data => data);
+                        .Where(x => neededIds.Contains(x.Component_Symbol_Id))
+                        .ToDictionary(x => x.Component_Symbol_Id, data => data);
+                }
 
 
                 //select component_type, ComponentName, SAL from Answer_Components_Exploded

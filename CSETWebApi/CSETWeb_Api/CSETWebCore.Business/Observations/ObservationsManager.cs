@@ -127,10 +127,51 @@ namespace CSETWebCore.Business.Observations
                 throw new ArgumentException("Cannot save an Observation with both assessment and answer IDs");
             }
 
+            if (list.Count == 0)
+            {
+                return new List<Observation>();
+            }
 
             // get a list of all the questions for the list of FINDING
             var dictTitles = GetQuestionTitlesForObservations(list);
 
+
+            // Batch-load answer-to-assessment mappings for findings that need them
+            Dictionary<int, int> answerAssessmentMap = new Dictionary<int, int>();
+            if (assessmentId == null)
+            {
+                var answerIds = list.Where(o => o.Answer_Id != null).Select(o => (int)o.Answer_Id).Distinct().ToList();
+                if (answerIds.Count > 0)
+                {
+                    answerAssessmentMap = _context.ANSWER
+                        .Where(a => answerIds.Contains(a.Answer_Id))
+                        .ToDictionary(a => a.Answer_Id, a => a.Assessment_Id);
+                }
+            }
+
+            // Batch-load assessment contacts for all relevant assessments
+            var allAssessmentIds = new HashSet<int>();
+            if (assessmentId != null)
+            {
+                allAssessmentIds.Add((int)assessmentId);
+            }
+            else
+            {
+                foreach (var aid in answerAssessmentMap.Values)
+                {
+                    allAssessmentIds.Add(aid);
+                }
+            }
+
+            var contactsByAssessment = new Dictionary<int, List<ASSESSMENT_CONTACTS>>();
+            if (allAssessmentIds.Count > 0)
+            {
+                contactsByAssessment = _context.ASSESSMENT_CONTACTS
+                    .Where(x => allAssessmentIds.Contains(x.Assessment_Id))
+                    .ToList()
+                    .GroupBy(x => x.Assessment_Id)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+            }
 
             List<Observation> observations = new List<Observation>();
 
@@ -166,26 +207,28 @@ namespace CSETWebCore.Business.Observations
                     obs.Importance = TinyMapper.Map<IMPORTANCE, Importance>(o.Importance);
                 }
 
-                // grabs all contacts attached to this assessment to allow the user to assign new Individuals Responsible
-                int assessIdForContacts = (int)(assessmentId != null ? obs.Assessment_Id :
-                    _context.ANSWER.Where(x => x.Answer_Id == obs.Answer_Id).Select(x => x.Assessment_Id).FirstOrDefault());
+                // Look up assessment ID for contacts from batch-loaded data
+                int assessIdForContacts = assessmentId != null
+                    ? (int)obs.Assessment_Id
+                    : (obs.Answer_Id != null && answerAssessmentMap.TryGetValue((int)obs.Answer_Id, out var mappedId) ? mappedId : 0);
 
-                List<ASSESSMENT_CONTACTS> contactsInThisAssess = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessIdForContacts).ToList();
-
-                foreach (ASSESSMENT_CONTACTS ac in contactsInThisAssess)
+                if (contactsByAssessment.TryGetValue(assessIdForContacts, out var contactsInThisAssess))
                 {
-                    FINDING_CONTACT fc = o.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == ac.Assessment_Contact_Id).FirstOrDefault();
-                    if (fc == null)
+                    foreach (ASSESSMENT_CONTACTS ac in contactsInThisAssess)
                     {
-                        fc = new FINDING_CONTACT();
-                    }
+                        FINDING_CONTACT fc = o.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == ac.Assessment_Contact_Id).FirstOrDefault();
+                        if (fc == null)
+                        {
+                            fc = new FINDING_CONTACT();
+                        }
 
-                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
-                    webFc.Assessment_Contact_Id = ac.Assessment_Contact_Id;
-                    webFc.Observation_Id = o?.Finding_Id ?? 0;
-                    webFc.Selected = (fc.Finding_Id > 0);
-                    webFc.Name = $"{ac.PrimaryEmail} -- {ac.FirstName} {ac.LastName}".Trim();
-                    obs.Observation_Contacts.Add(webFc);
+                        ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+                        webFc.Assessment_Contact_Id = ac.Assessment_Contact_Id;
+                        webFc.Observation_Id = o?.Finding_Id ?? 0;
+                        webFc.Selected = (fc.Finding_Id > 0);
+                        webFc.Name = $"{ac.PrimaryEmail} -- {ac.FirstName} {ac.LastName}".Trim();
+                        obs.Observation_Contacts.Add(webFc);
+                    }
                 }
 
                 observations.Add(obs);
