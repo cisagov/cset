@@ -65,7 +65,7 @@
         <label class="form-label">Most important</label>
         <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
           name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
-          (change)="updateDemographics()">
+          (change)="updateDemographicsIod()">
           <option [ngValue]="null">-- {{t('select')}} --</option>
           <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
             [selected]="i.optionValue === iodDemographics.disruptedSector1">
@@ -76,7 +76,7 @@
         <label class="form-label">Second most important</label>
         <select [ngClass]="{ 'is-invalid' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
           name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
-          (change)="updateDemographics()">
+          (change)="updateDemographicsIod()">
           <option [ngValue]="null">-- {{t('select')}} --</option>
           <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
             [selected]="i.optionValue === iodDemographics.disruptedSector2">
@@ -89,12 +89,12 @@
     <div class="mb-3">
       <label class="form-label me-2" for="multisiteService">Multi-site Service?</label>
       <input type="checkbox" name="multisiteService" id="multisiteService" class="tw:toggle"
-        [(ngModel)]="csiServiceDemographic.multiSite"
-        (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; updateServiceComp()">
+        [(ngModel)]="csiServiceDemographics.multiSite"
+        (ngModelChange)="csiServiceDemographics.multiSiteDescription = null; updateServiceDemographic()">
 
       <input class="form-control" tabindex="0" maxlength="150" name="multiSiteDescription" type="text"
-        placeholder="Multi-site Service Description" [(ngModel)]="csiServiceDemographic.multiSiteDescription"
-        (change)="updateServiceComp()" [disabled]="!csiServiceDemographic.multiSite" />
+        placeholder="Multi-site Service Description" [(ngModel)]="csiServiceDemographics.multiSiteDescription"
+        (change)="updateServiceDemographic()" [disabled]="!csiServiceDemographics.multiSite" />
     </div>
 
   </div>
