@@ -490,11 +490,16 @@ namespace CSETWebCore.Business.Question
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
-
                 foreach (COMPONENT_QUESTIONS componentType in _context.COMPONENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID))
                 {
                     bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
-                    COMPONENT_SYMBOLS componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
+
+                    var found = info.DictionaryComponentInfo.TryGetValue(componentType.Component_Symbol_Id, out COMPONENT_SYMBOLS componentTypeData);
+                    if (!found)
+                    {
+                        continue;
+                    }
+
                     tmpList.Add(new ComponentOverrideLinkInfo()
                     {
                         Component_Symbol_Id = componentTypeData.Component_Symbol_Id,

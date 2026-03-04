@@ -82,6 +82,13 @@
               </div>
             </td>
           </tr>
+          <tr *ngIf="questions.length == 0">
+            <td colspan="2">
+              <div class="spinner-container" style="margin: 2em auto 0 auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
