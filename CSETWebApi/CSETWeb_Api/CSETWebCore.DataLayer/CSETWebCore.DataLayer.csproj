@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="Snickler.EFCore" Version="3.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.4" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.11" />
   </ItemGroup>
 
 </Project>
