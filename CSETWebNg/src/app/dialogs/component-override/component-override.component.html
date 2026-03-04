@@ -50,7 +50,8 @@
           <tr>
             <th colspan="2">Specific Component Name</th>
           </tr>
-          <tr *ngFor="let q of questions; let i = index">
+          @for(q of questions; track i) {
+          <tr>
             <td>{{ utilitiesSvc.removeHtmlTags(q.componentName) }}</td>
             <td>
               <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
@@ -82,13 +83,16 @@
               </div>
             </td>
           </tr>
-          <tr *ngIf="questions.length == 0">
+          }
+          @empty {
+          <tr *ngIf="!questions">
             <td colspan="2">
               <div class="spinner-container" style="margin: 2em auto 0 auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
               </div>
             </td>
           </tr>
+          }
         </table>
       </div>
     </div>
