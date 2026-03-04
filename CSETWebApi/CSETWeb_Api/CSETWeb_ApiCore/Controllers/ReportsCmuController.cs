@@ -107,9 +107,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         private IActionResult SecureHtmlContent(string content)
         {
-            Response.Headers.Add("X-Content-Type-Options", "nosniff");
-            Response.Headers.Add("X-Frame-Options", "DENY");
-            Response.Headers.Add("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'");
+            Response.Headers["X-Content-Type-Options"] = "nosniff";
+            Response.Headers["X-Frame-Options"] = "DENY";
+            Response.Headers["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'";
             return Content(content, "text/html; charset=utf-8");
         }
 
@@ -119,8 +119,8 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         private IActionResult SecureSvgContent(string content)
         {
-            Response.Headers.Add("X-Content-Type-Options", "nosniff");
-            Response.Headers.Add("Content-Security-Policy", "default-src 'none'");
+            Response.Headers["X-Content-Type-Options"] = "nosniff";
+            Response.Headers["Content-Security-Policy"] = "default-src 'none'";
             return Content(content, "image/svg+xml; charset=utf-8");
         }
 
