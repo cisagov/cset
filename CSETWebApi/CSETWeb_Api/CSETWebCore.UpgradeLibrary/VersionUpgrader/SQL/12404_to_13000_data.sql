@@ -2322,10 +2322,2514 @@ DELETE FROM [dbo].[MATURITY_QUESTION_PROPS] WHERE [Mat_Question_Id] = 1548 AND [
 DELETE FROM [dbo].[MATURITY_QUESTION_PROPS] WHERE [Mat_Question_Id] = 1548 AND [PropertyName] = 'OBS-VULNERABILITY'
 PRINT(N'Operation applied to 12 rows out of 12')
 
+PRINT(N'Delete rows from [dbo].[REQUIREMENT_REFERENCES]')
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1197 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1197 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1197 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1197 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1199 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1199 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1199 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1233 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'PE-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.13.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1236 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.19.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1237 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1241 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.1.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1241 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.1.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1242 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 509 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 525 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2098 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2144 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2436 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1243 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IA-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1262 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1262 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1282 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1282 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1309 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.2.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1309 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1309 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1309 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2105 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2106 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2108 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2434 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1323 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1353 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'RA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1364 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-12_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1370 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1381 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1381 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1381 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.17'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1381 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1384 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1384 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1384 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1384 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.25'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1391 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1396 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1396 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1396 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1396 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1396 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1397 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1397 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1397 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1397 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1397 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1398 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1406 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1406 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.22'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1407 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.22'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1407 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1407 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.24'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1416 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1416 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1419 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1419 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1423 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1423 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1423 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1423 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.22'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1423 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.23'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 525 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2098 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2144 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.28'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2436 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1424 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IA-4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 509 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 525 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 674 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2098 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2144 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PL-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PL-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2436 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1425 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IA-5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1426 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1426 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1449 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.5.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1449 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1449 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1449 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1449 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1452 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.5.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1452 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.24'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1452 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1452 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1467 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.1.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1467 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.13.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1467 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1469 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.2.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1469 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1469 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1469 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1475 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1478 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1478 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1478 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1483 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'MA-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.4.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1484 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'MA-5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1485 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'PE-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1503 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1503 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1503 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1503 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1509 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1509 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1509 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1509 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1530 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1530 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1530 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1530 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 514 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AT-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IR-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1534 AND [Gen_File_Id] = 2524 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 673 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2061 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AT-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1540 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IR-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2117 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1554 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IR-4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1557 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2117 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1560 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2096 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-14_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-11_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2208 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1568 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CP-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1574 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1574 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1574 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 514 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CP-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1582 AND [Gen_File_Id] = 2524 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CA-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CA-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-10_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-24_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2208 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.17'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1584 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CP-10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1614 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1614 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1614 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1614 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1623 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1623 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1623 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1631 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1637 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1665 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1665 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1665 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1665 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1665 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1678 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1678 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1678 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1715 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1715 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1725 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.13.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1725 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1725 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1728 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1732 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2117 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2123 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1733 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IR-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 507 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2128 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1734 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-10_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-20_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SA-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1739 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1741 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1741 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1741 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1741 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1741 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.1.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1742 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1743 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1745 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1745 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 509 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 525 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 674 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2098 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2144 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2151 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-14_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-18_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.4.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2436 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1746 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IA-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 669 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-11_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1748 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 511 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-20_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-22_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PL-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.22'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.23'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.27'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.28'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.29'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.31'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1750 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1752 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1752 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1752 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1757 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1757 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1759 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1759 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'RA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1761 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.33'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1764 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1766 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1766 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1766 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1772 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1772 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1776 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1776 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1776 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1776 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1777 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1777 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1777 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1778 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1778 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1778 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1778 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1778 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'PE-7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1780 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 525 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2092 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2098 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2100 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2144 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PE-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'PS-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.5.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2436 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1783 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'PE-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1784 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.11.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1785 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CM-8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IR-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.8.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1786 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'IR-7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2208 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1796 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CP-6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CP-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MP-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2208 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1797 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'CP-9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1810 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1810 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1810 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1810 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.27'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1811 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1811 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1811 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1811 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.27'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1815 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 670 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1816 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1817 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1817 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1818 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.2.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1820 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AU-7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1822 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.9.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1822 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.17'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1822 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1822 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1822 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1823 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.10.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1823 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1823 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1823 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 508 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-16_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-18_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-20_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-21_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-22_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AU-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'MA-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SA-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SI-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1826 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1827 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1827 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1827 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1827 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1828 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-14_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1828 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1828 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1828 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1828 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 671 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 681 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2114 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2127 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-18_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-20_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-6_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-3_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'IA-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-13_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-9_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.17'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.24'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.26'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.24'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2464 AND [Source] = 0 AND [Section_Ref] = N' '
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-17'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1829 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1833 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.32'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.1.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.13.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1837 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.22'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.23'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.24'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.26'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.28'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.29'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.2.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.3.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1840 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1842 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.16'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1842 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.23'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-17_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-19_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-1_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-21_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-22_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'AC-4_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'CM-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SA-8_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-18_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-2_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-5_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2172 AND [Source] = 0 AND [Section_Ref] = N'SC-7_R3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1846 AND [Gen_File_Id] = 2472 AND [Source] = 0 AND [Section_Ref] = N'AC-4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.26'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.28'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.29'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1848 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1849 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.5.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1849 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1850 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.5.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1850 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1850 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1851 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1851 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1853 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1853 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1855 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.3.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1855 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.10.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.12.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.15.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.14'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.9'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1856 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.19'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.19.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.20'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.4.21'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.10'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1858 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.3.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.14.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.16.15'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.17.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.6.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.7'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.8'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.18'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1862 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.9.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1864 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.13.1'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1864 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1864 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.11'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1864 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.18.12'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1864 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.7.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1865 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'B.1.13'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1865 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.13.3'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1865 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.13.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1867 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.5'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1867 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.11.6'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1867 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.4'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1867 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.8.27'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1871 AND [Gen_File_Id] = 2340 AND [Source] = 1 AND [Section_Ref] = N'C.12.2'
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 1871 AND [Gen_File_Id] = 2352 AND [Source] = 0 AND [Section_Ref] = N'2.5.12'
+PRINT(N'Operation applied to 876 rows out of 876')
+
+PRINT(N'Delete rows from [dbo].[REQUIREMENT_QUESTIONS_SETS]')
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 9 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 20 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 23 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 27 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 30 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 31 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 32 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 35 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 37 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 38 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 39 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 40 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 50 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 54 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 55 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 56 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 59 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 61 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 62 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 63 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 68 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 86 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 92 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 93 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 94 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 95 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 96 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 97 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 99 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 100 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 101 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 102 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 103 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 115 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 116 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 117 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 119 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 120 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 130 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 135 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 140 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 174 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 175 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 176 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 181 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 187 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 190 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 196 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 197 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 199 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 203 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 204 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 206 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 207 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 208 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 209 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 210 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 211 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 212 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 214 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 215 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 217 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 218 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 219 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 221 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 222 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 224 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 228 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 231 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 232 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 233 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 234 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 236 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 242 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 248 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 249 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 251 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 252 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 253 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 256 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 257 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 258 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 261 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 262 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 264 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 265 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 267 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 268 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 269 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 272 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 276 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 277 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 278 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 279 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 280 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 288 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 294 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 296 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 297 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 298 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 300 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 309 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 310 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 313 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 316 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 319 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 320 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 324 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 325 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 326 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 327 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 328 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 329 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 336 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 338 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 347 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 350 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 360 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 361 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 362 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 363 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 385 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 389 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 391 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 395 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 397 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 400 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 401 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 407 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 420 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 421 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 426 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 427 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 428 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 431 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 439 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 440 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 441 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 442 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 443 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 447 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 448 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 450 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 451 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 452 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 453 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 454 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 457 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 459 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 460 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 461 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 462 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 463 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 464 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 465 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 466 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 467 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 468 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 470 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 483 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 487 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 488 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 489 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 490 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 491 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 492 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 493 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 503 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 529 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 530 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 531 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 532 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 533 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 534 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 535 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 536 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 537 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 538 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 540 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 542 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 543 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 544 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 553 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 554 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 558 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 560 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 561 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 562 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 576 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 578 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 582 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 583 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 585 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 587 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 588 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 589 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 590 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 592 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 593 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 594 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 596 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 601 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 603 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 605 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 606 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 607 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 608 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 609 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 611 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 612 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 613 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 614 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 616 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 617 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 618 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 619 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 620 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 621 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 630 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 631 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 632 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 633 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 634 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 635 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 636 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 637 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 638 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 639 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 640 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 641 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 643 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 644 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 645 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 646 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 658 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 659 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 660 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 661 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 662 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 663 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 664 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 669 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 674 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 682 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 683 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 685 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 686 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 687 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 708 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 710 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 711 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 718 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 723 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 724 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 725 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 728 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 729 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 730 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 731 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 732 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 734 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 736 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 737 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 738 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 739 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 772 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 773 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 774 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 776 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 777 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 778 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 779 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 780 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 781 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 783 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 784 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 788 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 789 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 790 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 794 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 795 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 797 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 799 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 820 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 825 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 826 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 827 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 828 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 829 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 830 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 831 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 832 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 833 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 834 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 835 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 836 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 837 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 840 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 841 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 842 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 843 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 844 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 846 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 847 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 848 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 849 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 850 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 851 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 853 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 854 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 855 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 856 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 857 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 858 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 859 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 860 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 861 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 862 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 863 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 864 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 865 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 866 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 867 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 868 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 869 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 870 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 871 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 872 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 873 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 874 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 875 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 876 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 877 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 878 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 879 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 880 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 881 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 882 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 883 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 884 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 885 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 886 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 887 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 888 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 889 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 890 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 891 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 892 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 893 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 894 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 895 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 896 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 897 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 898 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 899 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 900 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 901 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 902 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 903 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 904 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 905 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 906 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 907 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 908 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 909 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 910 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 911 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 912 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 913 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 914 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 915 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 917 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 918 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 919 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 920 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 921 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 922 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 923 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 924 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 925 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 926 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 927 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 928 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 929 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 930 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 931 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 932 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 933 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 934 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 935 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 936 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 937 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 938 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 939 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 940 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 946 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 947 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 948 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 949 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 950 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 951 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 952 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 953 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 954 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 955 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 956 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 957 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 958 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 959 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 960 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 961 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 962 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 963 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 964 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 965 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 966 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 967 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 968 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 969 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 970 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 971 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 972 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 973 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 974 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 975 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 976 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 977 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 978 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 979 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 980 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 981 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 982 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 983 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 984 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 985 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 986 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 987 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 988 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 989 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 990 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 991 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 992 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 993 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 994 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 995 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 996 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 997 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 998 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 999 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1000 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1001 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1002 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1003 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1004 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1005 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1006 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1007 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1008 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1009 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1010 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1011 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1012 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1013 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1014 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1015 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1016 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1017 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1018 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1019 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1020 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1021 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1022 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1023 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1024 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1025 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1026 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1027 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1028 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1029 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1030 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1031 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1032 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1033 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1034 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1035 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1036 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1037 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1039 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1040 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1041 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1042 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1043 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1044 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1045 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1046 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1047 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1048 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1049 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1050 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1051 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1052 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1053 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1054 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1055 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1056 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1057 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1058 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1059 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1060 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1061 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1062 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1063 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1064 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1065 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1066 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1067 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1068 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1069 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1070 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1071 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1072 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1073 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1074 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1075 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1076 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1077 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1078 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1079 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1080 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1081 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1082 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1083 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1084 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1085 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1086 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1087 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1088 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1089 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1090 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1094 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1095 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1097 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1098 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1099 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1100 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1101 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1102 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1103 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1104 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1106 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1107 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1108 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1109 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1110 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1111 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1112 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1114 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1115 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1116 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1117 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1118 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1119 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1120 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1122 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1123 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1124 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1126 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1127 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1128 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1129 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1130 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1131 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1132 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1133 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1134 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1135 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1136 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1137 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1138 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1139 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1140 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1141 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1142 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1143 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1144 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1145 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1146 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1147 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1148 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1149 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1150 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1151 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1152 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1153 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1154 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1155 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1156 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1157 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1158 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1159 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1160 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1161 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1162 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1163 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1164 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1165 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1166 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1167 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1168 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1169 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1170 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1171 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1172 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1173 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1174 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1175 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1176 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1177 AND [Set_Name] = N'Nrc_571'
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1178 AND [Set_Name] = N'Nrc_571'
+PRINT(N'Operation applied to 619 rows out of 619')
+
+PRINT(N'Delete rows from [dbo].[REQUIREMENT_LEVELS]')
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1197 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1199 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1233 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1236 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1237 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1241 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1242 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1243 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1262 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1282 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1285 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1309 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1323 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1353 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1364 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1370 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1381 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1384 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1388 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1391 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1396 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1397 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1398 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1406 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1407 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1416 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1419 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1423 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1424 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1425 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1426 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1449 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1452 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1467 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1469 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1475 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1478 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1483 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1484 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1485 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1503 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1509 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1530 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1534 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1540 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1554 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1557 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1560 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1568 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1574 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1582 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1584 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1614 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1623 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1631 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1637 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1665 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1678 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1715 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1725 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1728 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1732 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1733 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1734 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1739 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1741 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1742 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1743 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1745 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1746 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1748 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1750 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1752 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1757 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1759 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1761 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1764 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1766 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1772 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1776 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1777 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1778 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1780 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1783 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1784 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1785 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1786 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1796 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1797 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1810 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1811 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1815 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1816 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1817 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1818 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1820 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1822 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1823 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1826 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1827 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1828 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1829 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1833 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1837 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1840 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1842 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1846 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1848 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1849 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1850 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1851 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1853 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1855 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1856 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1858 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1862 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1864 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1865 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1867 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1871 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31499 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31499 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31500 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31500 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31500 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31501 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31502 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31502 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31502 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31502 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31503 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31503 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31503 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31504 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31504 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31504 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31505 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31505 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31505 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31506 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31506 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31507 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31508 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31508 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31508 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31509 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31509 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31509 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31510 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31510 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31511 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31512 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31512 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31512 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31513 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31513 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31513 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31514 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31515 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31516 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31516 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31516 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31517 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31517 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31517 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31518 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31518 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31518 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31519 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31520 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31520 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31520 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31521 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31521 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31522 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31522 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31522 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31523 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31523 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31524 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31524 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31524 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31525 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31525 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31526 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31526 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31526 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31527 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31527 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31527 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31528 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31529 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31529 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31530 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31531 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31532 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31532 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31532 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31533 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31533 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31533 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31534 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31534 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31534 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31535 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31535 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31535 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31536 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31536 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31536 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31537 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31538 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31539 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31539 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31539 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31540 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31540 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31541 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31541 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31542 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31543 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31544 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31544 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31544 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31545 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31546 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31546 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31547 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31547 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31548 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31548 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31549 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31549 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+PRINT(N'Operation applied to 233 rows out of 233')
+
+PRINT(N'Delete rows from [dbo].[PARAMETER_REQUIREMENTS]')
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1197 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1199 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1199 AND [Parameter_Id] = 663
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1199 AND [Parameter_Id] = 664
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1233 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1233 AND [Parameter_Id] = 665
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1233 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1236 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1236 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1237 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1237 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1241 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1241 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1241 AND [Parameter_Id] = 667
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1242 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1242 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1243 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1243 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1262 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1282 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1285 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1285 AND [Parameter_Id] = 668
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1323 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1353 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1364 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1364 AND [Parameter_Id] = 669
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1370 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1381 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1384 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1388 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1391 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1396 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1396 AND [Parameter_Id] = 670
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1397 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1398 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1406 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1407 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1416 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1419 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1419 AND [Parameter_Id] = 671
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1423 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1424 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1424 AND [Parameter_Id] = 672
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1425 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1425 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1426 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1449 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1452 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1467 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1467 AND [Parameter_Id] = 673
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1467 AND [Parameter_Id] = 674
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1469 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1475 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1478 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1478 AND [Parameter_Id] = 665
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1478 AND [Parameter_Id] = 675
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1483 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1483 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1484 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1484 AND [Parameter_Id] = 676
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1484 AND [Parameter_Id] = 2563
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1485 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1503 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1509 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1530 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1530 AND [Parameter_Id] = 674
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1534 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1534 AND [Parameter_Id] = 677
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1540 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1540 AND [Parameter_Id] = 677
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1554 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1554 AND [Parameter_Id] = 678
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1557 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1560 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1560 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1568 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1574 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1582 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1582 AND [Parameter_Id] = 677
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1582 AND [Parameter_Id] = 679
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1584 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1614 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1623 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1631 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1637 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1637 AND [Parameter_Id] = 680
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1665 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1678 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1715 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1715 AND [Parameter_Id] = 681
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1715 AND [Parameter_Id] = 682
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1725 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1728 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1728 AND [Parameter_Id] = 665
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1728 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1728 AND [Parameter_Id] = 683
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1732 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1732 AND [Parameter_Id] = 684
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1732 AND [Parameter_Id] = 685
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1732 AND [Parameter_Id] = 686
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1732 AND [Parameter_Id] = 687
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1733 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1733 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1733 AND [Parameter_Id] = 688
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1734 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1734 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1739 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1739 AND [Parameter_Id] = 669
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1739 AND [Parameter_Id] = 689
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1741 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1742 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1743 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1745 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1746 AND [Parameter_Id] = 666
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1746 AND [Parameter_Id] = 672
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1748 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1748 AND [Parameter_Id] = 690
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1750 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1752 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1759 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1761 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1761 AND [Parameter_Id] = 691
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1761 AND [Parameter_Id] = 692
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1764 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1766 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1772 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1776 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1777 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1778 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1780 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1780 AND [Parameter_Id] = 693
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1783 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1784 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1784 AND [Parameter_Id] = 674
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1784 AND [Parameter_Id] = 693
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1784 AND [Parameter_Id] = 694
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1785 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1785 AND [Parameter_Id] = 695
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1786 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1796 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1797 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1797 AND [Parameter_Id] = 691
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1810 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1811 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1815 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1816 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1817 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1817 AND [Parameter_Id] = 696
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1818 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1820 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1822 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1822 AND [Parameter_Id] = 677
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1822 AND [Parameter_Id] = 697
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1823 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1826 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1827 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1828 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1829 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1829 AND [Parameter_Id] = 698
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1833 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1833 AND [Parameter_Id] = 699
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1837 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1840 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1842 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1846 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1848 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1849 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1850 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1850 AND [Parameter_Id] = 700
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1851 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1853 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1853 AND [Parameter_Id] = 674
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1855 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1856 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1858 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1862 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1864 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1864 AND [Parameter_Id] = 691
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1864 AND [Parameter_Id] = 701
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1864 AND [Parameter_Id] = 702
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1865 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1867 AND [Parameter_Id] = 662
+DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1871 AND [Parameter_Id] = 662
+PRINT(N'Operation applied to 183 rows out of 183')
+
 PRINT(N'Delete rows from [dbo].[MATURITY_QUESTIONS]')
 DELETE FROM [dbo].[MATURITY_QUESTIONS] WHERE [Mat_Question_Id] = 1547
 DELETE FROM [dbo].[MATURITY_QUESTIONS] WHERE [Mat_Question_Id] = 1548
 PRINT(N'Operation applied to 2 rows out of 2')
+
+PRINT(N'Delete rows from [dbo].[NEW_REQUIREMENT]')
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1197
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1199
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1233
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1236
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1237
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1241
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1242
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1243
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1262
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1282
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1285
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1309
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1323
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1353
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1364
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1370
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1381
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1384
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1388
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1391
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1396
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1397
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1398
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1406
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1407
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1416
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1419
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1423
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1424
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1425
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1426
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1449
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1452
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1467
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1469
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1475
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1478
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1483
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1484
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1485
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1503
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1509
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1530
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1534
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1540
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1554
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1557
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1560
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1568
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1574
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1582
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1584
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1614
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1623
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1631
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1637
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1665
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1678
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1715
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1725
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1728
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1732
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1733
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1734
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1739
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1741
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1742
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1743
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1745
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1746
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1748
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1750
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1752
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1757
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1759
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1761
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1764
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1766
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1772
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1776
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1777
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1778
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1780
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1783
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1784
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1785
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1786
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1796
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1797
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1810
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1811
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1815
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1816
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1817
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1818
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1820
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1822
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1823
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1826
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1827
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1828
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1829
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1833
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1837
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1840
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1842
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1846
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1848
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1849
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1850
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1851
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1853
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1855
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1856
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1858
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1862
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1864
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1865
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1867
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 1871
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 23808
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 23969
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31499
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31500
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31501
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31502
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31503
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31504
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31505
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31506
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31507
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31508
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31509
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31510
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31511
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31512
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31513
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31514
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31515
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31516
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31517
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31518
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31519
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31520
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31521
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31522
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31523
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31524
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31525
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31526
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31527
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31528
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31529
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31530
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31531
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31532
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31533
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31534
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31535
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31536
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31537
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31538
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31539
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31540
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31541
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31542
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31543
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31544
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31545
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31546
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31547
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31548
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 31549
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36356
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36357
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36358
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36359
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36360
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36361
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36362
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36363
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36364
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36365
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36366
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36367
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36368
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36369
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36370
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36371
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36372
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36373
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36374
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36375
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36376
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36377
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36378
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36379
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36380
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36381
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36382
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36383
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36384
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36385
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36386
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36387
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36388
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36389
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36390
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36391
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36392
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36393
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36394
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36395
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36396
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36397
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36398
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36399
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36400
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36401
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36402
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36509
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36510
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36511
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36512
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36513
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36514
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36515
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36516
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36517
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36518
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36519
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36520
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36521
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36522
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36523
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36524
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36525
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36526
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36527
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36528
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36529
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36530
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36531
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36532
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36533
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36534
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36535
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36536
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36537
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36538
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36539
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36540
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36541
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36542
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36543
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36544
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36545
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36546
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36547
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36548
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36549
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36550
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36551
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36552
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36553
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36554
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36555
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36556
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36557
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36558
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36559
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36560
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36561
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36562
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36563
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36564
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36565
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36566
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36567
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36568
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36569
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36570
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36571
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36572
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36573
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36574
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36575
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36576
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36577
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36578
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36579
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36580
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36581
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36582
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36583
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36584
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36585
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36586
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36587
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36588
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36589
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36590
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36591
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36592
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36593
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36594
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36595
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36596
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36597
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36598
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36599
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36600
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36601
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36602
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36603
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36604
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36605
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36606
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36607
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36608
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36609
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36610
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36611
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36612
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36613
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36614
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36615
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36616
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36617
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36618
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36619
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36620
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36621
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36622
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36623
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36624
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36625
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36626
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36627
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36628
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36629
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36630
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36631
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36632
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36633
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36634
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36635
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36636
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36637
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36638
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36639
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36640
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36641
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36642
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36643
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36644
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36645
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36646
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36647
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36648
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36649
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36650
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36651
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36652
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36653
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36654
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36655
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36656
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36657
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36658
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36659
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36660
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36661
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36662
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36663
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36664
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36665
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36666
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36667
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36668
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36669
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36670
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36671
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36672
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36673
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36674
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36675
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36676
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36677
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36678
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36679
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36680
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36681
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36682
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36683
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36684
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36685
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36686
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36687
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36688
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36689
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36690
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36691
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36692
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36693
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36694
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36695
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36696
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36697
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36698
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36699
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36700
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36701
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36702
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36703
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36704
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36705
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36706
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36707
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36708
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36709
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36710
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36711
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36712
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36713
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36714
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36715
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36716
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36717
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36718
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36719
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36720
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36721
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36722
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36723
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36724
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36725
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36726
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36727
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36728
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36729
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36730
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36731
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36732
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36733
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36734
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36735
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36736
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36737
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36738
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36739
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36740
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36741
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36742
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36743
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36744
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36745
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36746
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36747
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36748
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36749
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36750
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36751
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36752
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36753
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36754
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36755
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36756
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36757
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36758
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36759
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36760
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36761
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36762
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36763
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36764
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36765
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36766
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36767
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36768
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36769
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36770
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36771
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36772
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36773
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36774
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36775
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36776
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36777
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36778
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36779
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36780
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36781
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36782
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36783
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36784
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36785
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36786
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36787
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36788
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36789
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36790
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36791
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36792
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36793
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36794
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36795
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36796
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36797
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36798
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36799
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36800
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36801
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36802
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36803
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36804
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36805
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36806
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36807
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36808
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36809
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36810
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36811
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36812
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36813
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36814
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36815
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36816
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36817
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36818
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36819
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36820
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36821
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36822
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36823
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36824
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36825
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36826
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36827
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36828
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36829
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36830
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36831
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36832
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36833
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36834
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36835
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36836
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36837
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36838
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36839
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36840
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36841
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36842
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36843
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36844
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36845
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36846
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36847
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36848
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36849
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36850
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36851
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36852
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36853
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36854
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36855
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36856
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36857
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36858
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36859
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36860
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36861
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36862
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36863
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36864
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36865
+DELETE FROM [dbo].[NEW_REQUIREMENT] WHERE [Requirement_Id] = 36866
+PRINT(N'Operation applied to 578 rows out of 578')
 
 PRINT(N'Delete rows from [dbo].[GALLERY_GROUP_DETAILS]')
 DELETE FROM [dbo].[GALLERY_GROUP_DETAILS] WHERE [Group_Detail_Id] = 2
@@ -4787,125 +7291,6 @@ UPDATE [dbo].[MATURITY_QUESTIONS] SET [Sequence]=1, [Scope]=N'Organizational ass
 PRINT(N'Operation applied to 382 rows out of 382')
 
 PRINT(N'Update rows in [dbo].[NEW_REQUIREMENT]')
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} employs electronic means to monitor CDA access to ensure that only authorized systems and services are used.' WHERE [Requirement_Id] = 1197
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} applies configuration settings for CDAs by (1) documenting and employing automated mechanisms to {{centrally}} manage, apply, and verify configuration settings, (2) documenting and employing {{automated mechanisms/manual mechanisms}} to respond to unauthorized changes to {{Licensee/Applicant}}-defined configuration settings.' WHERE [Requirement_Id] = 1199
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'For those CDAs located outside of the {{Site}} protected area, {{Licensee/Applicant}} developed, implemented, and {{annually}} reviews and updates the following: (1) a formal, documented physical and environmental protection policy that addresses the following: (a) the purpose of the physical security program as it relates to protecting the CDAs, (b) the scope of the physical security program as it applies to the organization''s staff and third-party contractors, and (c) the roles, responsibilities, and management accountability structure of the physical security program to ensure compliance with the (2) formal, documented procedures to facilitate the implementation of the physical and environmental protection policy and associated physical and operational environmental protection security controls.' WHERE [Requirement_Id] = 1233
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following: (1) a formal, documented CDA system and communications protection policy that addresses the purpose, scope, roles, responsibilities, management commitments, and internal coordination of the system, and (2) formal, documented procedures that facilitate the implementation of the CDA system and communications protection policy and associated CDA system and communications protection security controls.' WHERE [Requirement_Id] = 1236
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following: (1) a formal, documented system and information integrity policy that addresses purpose, scope, roles, responsibilities, management commitment, coordination among {{Licensee/Applicant}} entities, and compliance, and (2) formal, documented procedures to facilitate the implementation of CDAs and an information integrity policy and associated system and information integrity controls.' WHERE [Requirement_Id] = 1237
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following: (1) a formal, documented media protection policy that addresses purpose, scope, roles, responsibilities, management commitment, coordination among {{Site/Licensee/Applicant}} entities, and compliance for each information category, as defined by the site policies, and ensures that any media which can provide information to assist an adversary is marked at a minimum to identify the sensitive nature of the media, and (2) a formal, documented procedure to facilitate the implementation of the media protection policy and all associated media protection controls, including the methodology that defines the purpose, scope, roles, responsibilities, and management commitments in the areas of media receipt, storage, handling, sanitization, removal, reuse, and disposal necessary to provide high assurance that the risk of unauthorized disclosure of information that could be used in a cyberattack to adversely impact the "safety, security, and emergency preparedness" (SSEP) functions of the nuclear facility is prevented.' WHERE [Requirement_Id] = 1241
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates a formal, documented, "critical digital asset" (CDA) access control policy which addresses the purpose, scope, roles, responsibilities, management commitments, and internal coordination of such policy. {{Licensee/Applicant}} has also developed formal, documented procedures to facilitate the implementation of the access control policy and associated access security controls.' WHERE [Requirement_Id] = 1242
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following: (1) a formal, documented identification and authentication policy, which addresses purpose, scope, roles, responsibilities, management commitments, and internal coordination, to positively identify potential network users, hosts, applications, services, and resources using a combination of identification factors or credentials, and (2) formal, documented procedures that facilitate the implementation of the identification and authentication policy and associated identification and authentication controls.' WHERE [Requirement_Id] = 1243
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) screening, enforcing, and documenting security controls for third-party personnel (including service contractors and other organizations providing control system operation and maintenance, development, information technology services, outsourced applications, and network and security management) and monitoring service provider behavior and compliance, and (2) explicitly including personnel security controls in acquisition-related contract and agreement documents.' WHERE [Requirement_Id] = 1262
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) implementing identification and authentication technology to uniquely identify and authenticate individuals and processes acting on behalf of users interacting with CDA and ensuring that CDAs, security boundary devices, physical controls of the operating environment, and individuals interacting with CDAs, are uniquely identified and authenticated and that all processes acting on behalf of users are equally authenticated and identified, (2) ensuring that the authentication technology employs strong multifactor authentication using protected processing levels.' WHERE [Requirement_Id] = 1282
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures that CDAs authenticate cryptographic modules in accordance with {{Federal Information Processing Standards (FIPS)140-2 Security Requirements for Cryptographic Modules}}.' WHERE [Requirement_Id] = 1285
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}}''s reviewing official grants unescorted access authorization to those individuals who have access, extensive knowledge, or administrative control of CDAs or communication systems that can adversely impact CDAs or safety, security, and emergency preparedness functions before they gain access to those systems, in accordance with Title 10 of the Code of Federal Regulations (10 CFR) 73.56, "Personnel Access Authorization Requirements for Nuclear Power Plants."' WHERE [Requirement_Id] = 1309
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} applies configuration settings for CDAs by (1) documenting the most restrictive mode, (2) evaluating operational requirements, and (3) enforcing and documenting the most restrictive operational configuration settings based upon explicit operational requirements. This is achieved by the following: (1) establishing and documenting configuration settings for CDAs that reflect the most restrictive mode, (2) documenting and approving any exceptions from the most restrictive mode configuration settings for individual components within CDAs based upon explicit operational requirements, (3) enforcing the configuration settings in CDAs and monitoring and controlling changes to the configuration settings in accordance with {{Licensee/Applicant}} policies and procedures.' WHERE [Requirement_Id] = 1323
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures that for situations in which (1) third-party security solutions are not allowed because of vendor license and service agreements and (2) loss of service support would occur if third-party applications were to be installed without vendor acknowledgement or approval.' WHERE [Requirement_Id] = 1353
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: reviewing and analyzing the CDA audit records {{no less frequently than once every 30 days}} for indications of inappropriate or unusual activity and reporting findings to designated {{Licensee/Applicant}} official, (1) adjusting the level of audit review, analysis, and reporting within the CDAs when there is a change in threat or risk to {{Licensee/Applicant}} safety, security, and emergency preparedness functions based on credible sources of information as designated by {{Licensee/Applicant}} or the NRC, and (2) employing automated mechanisms on CDAs to integrate audit review, analysis, and reporting into {{Licensee/Applicant}} processes for investigation and response to suspicious activities.' WHERE [Requirement_Id] = 1364
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} security architecture provides the following: (1) audit record generation capability for the auditable events on CDAs, (2) audit record generation capability and the capability for authorized users to select which auditable events are to be audited by specific components of CDAs, (3) audit records for the selected list of auditable events on CDAs, and (4) the capability to compile audit records from multiple components within CDAs into a site wide (logical or physical) audit trail that is time correlated to within {{Licensee/Applicant}} defined level of tolerance for the relationship between time stamps of individual records in the audit trail.' WHERE [Requirement_Id] = 1370
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures the following: (1) A "system use notification" message is displayed before granting system access informing potential users of the following: (a) The user is accessing a restricted system. (b) System usage is monitored, recorded, and subject to audit. (c) Unauthorized use of CDA is prohibited and subject to criminal and civil penalties. The use of CDAs indicates consent to monitoring and recording. (2) The CDA system use notification message provides privacy and security notices. (3) The CDA system use notification message is approved before its use. (4) The CDA system use notification message remains on the screen until the user takes explicit actions to log on to the CDA. (5) Physical notices are installed in those instances in which a CDA cannot support system use notifications.' WHERE [Requirement_Id] = 1381
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1)documenting, supervising, and reviewing the activities of users with respect to the enforcement and usage of access controls, and (2) employing automated mechanisms within CDAs to support and facilitate the review of user activities.' WHERE [Requirement_Id] = 1384
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: - documenting and implementing additional precautions to protect networks and bus communications from unauthorized access when protocols lack security controls, - prohibiting the protocols from initiating commands except within the same boundary, and - prohibiting these protocols from initiating commands that could change the state of the CDA from a more secured posture to a less secured posture.' WHERE [Requirement_Id] = 1388
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) establishing and documenting usage restrictions and implementation guidance for controlled portable and mobile devices, (2) authorizing, monitoring, and controlling device access to CDAs, (3) enforcing and documenting that mobile device security and integrity are maintained at a level consistent with the CDA they support, and (4) enforcing and documenting that mobile devices are only used in one security level and that mobile devices are not moved between security levels.' WHERE [Requirement_Id] = 1391
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures the following: (1) CDAs provide a warning when allocated audit record storage volume reaches a defined percentage of maximum audit record storage capacity, which is based on {{the function of how quickly storage capacity is consumed and what the organization''s resources and response times are}} and documented. (2) Justification and details for alternate compensating security controls are documented for those instances in which a CDA cannot respond to audit processing failures. (3) Responses to audit failures by the {{Licensee/Applicant}} include the use of an external system to provide these capabilities. (4) If audit processing capabilities fail for a CDA or security boundary device, the following occurs: (a) Alerts are sent to designated {{Licensee/Applicant}} officials in the event of an audit processing failure. (b) Auditing failures are treated as a failure of the CDA or security boundary device and {{Licensee/Applicant}} will take action in accordance with the technical specification. (c) CDAs with auditing failures take the following additional actions: 1). Shut down the CDA. 2). Failover to a redundant CDA where necessary to prevent adverse impact to safety, security, or emergency preparedness functions. 3). Overwrite only the oldest audit records. 4). Stop generating audit records.' WHERE [Requirement_Id] = 1396
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} CDAs use a time source protected at an equal or greater level than the CDAs or an internal system clocks to generate time stamps for audit records, and {{Licensee/Applicant}} synchronizes the time on all CDAs. {{Licensee/Applicant}} synchronizes the time of all CDAs from a dedicated source protected at an equal or greater level than the CDA existing on the security network, attached directly to the CDA or via SNTP and a trusted key management process. {{Licensee/Applicant}} implements only methods of time synchronization that do not introduce a vulnerability to cyberattack and/or common-mode failure.' WHERE [Requirement_Id] = 1397
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) protecting audit information and audit tools from unauthorized access, modification, and deletion in a manner consistent with the CDA sources, and (2) ensuring that all audit information is protected at the same level as the device sources.' WHERE [Requirement_Id] = 1398
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring systems that provide name/address resolution to supply additional data origin and integrity artifacts along with the authoritative data returned in response to resolution queries, and (2) configuring systems that provide name/address resolution to CDAs, when operating as part of a distributed, hierarchical namespace, to provide the means to indicate the security status of child subspaces and, if the child supports secure resolution services, enabled verification of a chain of trust among parent and child domains.' WHERE [Requirement_Id] = 1406
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) CDAs fail in a known-state to ensure that SSEP functions are not adversely impacted by the CDAs failure, and (2) to prevent a loss of confidentiality, integrity, or availability in the event of a failure of the CDA or a component of the CDA.' WHERE [Requirement_Id] = 1407
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) implementing secure domain-based authentication, as well as the following: (a) maintaining domain controllers within the given security level they are meant to service, (b) physically and logically securing domain controllers to prevent unauthorized access and manipulation, (c) prohibiting domain trust relationships between domains that exist at different security levels, (d) prohibiting domain authentication protocols from being passed between boundaries, and (e) implementing role-based access control where possible to restrict user privileges to only those required to perform the task, and (2) where domain-based authentication is not used, {{Licensee/Applicant}} is responsible for the following: (a) documenting and justifying the reason for not implementing secure domain-based authentication, (b) implementing localized authentication when feasible, (c) implementing the strongest possible challenge-response authentication mechanism within a scenario, as supported by the application, and (d) implementing role-based access control where possible to restrict user privileges to only those required to perform the task.' WHERE [Requirement_Id] = 1416
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures that, where used, passwords meet the following requirements: (1) The length, strength, and complexity of passwords balance security and operational ease of access within the capabilities of the CDA. (2) Passwords have length and complexity commensurate with the required security. (3) Passwords are changed every {{describe the periods for each class of system, for example 30 days for workstations, 3 months for CDAs in the vital area, etc. 90 days}}. (4) Passwords cannot be found in a dictionary and do not contain predictable sequences of numbers or letters. (5) Copies of master passwords are stored in a secure location with limited access. (6) Authority to change master passwords is limited to authorized personnel.' WHERE [Requirement_Id] = 1419
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) ensuring that, for those situations in which a human machine interaction (HMI) for a CDA cannot support authentication because of operational requirements, adequate physical security controls exist that require that operators are both authorized and properly identified and are monitored so that operator actions are audited and recorded, (2) controlling access to non-authenticated human machine interactions (NHMI) so as to not hamper HMI while maintaining security of the NHMI and ensuring that access to the NHMI is limited to only authorized personnel, (3) verifying that SSEP functions are not adversely affected by authentication, session lock, or session termination controls, and (4) implementing auditing capability on NHMIs to ensure that all operator activity is recorded and monitored by authorized and qualified personnel and maintaining historical records to provide for auditing requirements.' WHERE [Requirement_Id] = 1423
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} manages and documents user identifiers by performing all of the following: (1) uniquely identifying each user, (2) verifying the identity of each user, (3) receiving authorization to issue a user identifier from an organization official, (4) issuing the user identifier to the intended party, (5) disabling the user identifier after a maximum of {{30 days}} of inactivity, and (6) archiving user identifiers consistent with records retention for the access authorization program.' WHERE [Requirement_Id] = 1424
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} manages CDA authenticators by performing all of the following: (1) defining initial authenticator content, such as defining password length and composition, tokens, keys, and other means of authenticating, (2) establishing administrative procedures for initial authenticator distribution; lost, compromised, or damaged authenticators; and revoking authenticators, (3) changing default authenticators upon CDA installation, and (4) changing/refreshing authenticators {{annually}}.' WHERE [Requirement_Id] = 1425
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) ensuring that CDAs obscure feedback of authentication information during the authentication process to protect the information from possible exploitation or use by unauthorized individuals, and (2) ensuring that CDAs and feedback from CDA do not provide information that would allow an unauthorized user to compromise the authentication mechanism.' WHERE [Requirement_Id] = 1426
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents the following requirements: (1) Configure the host intrusion detection system (HIDS) to include attributes, such as static file names, dynamic file name patterns, system and user accounts, execution of unauthorized code, host utilization, and process permissions, to enable the system to detect cyberattacks up to and including the DBT. (2) Configure HIDS to log system and user account connections in such a way that the user or security personnel are alerted if an abnormal situation occurs. (3) Configure the HIDS in a manner that does not adversely impact the CDA safety, security, and emergency preparedness functions. (4) Configure security logging storage devices as "append only" to prevent alteration of records on those storage devices. (5) Perform rules updates and patches to the HIDS as security issues are identified to maintain the established level of system security. {{Licensee/Applicant}} secures HIDS configuration documents to ensure that only authorized personnel may access them.' WHERE [Requirement_Id] = 1449
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents the following requirements: (1) Configure CDAs with the lowest privilege, data, commands, file, and account access. (2) Configure the system services to execute at the lowest privilege level possible for that service and document the configuration. (3) Document the changing or disabling of access to files and functions. (4) Validate that baseline permission and security settings are not altered after modifications or upgrades.' WHERE [Requirement_Id] = 1452
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} sanitizes CDA media, both digital and non-digital, before disposal or release for reuse. {{Licensee/Applicant}} {{follows the guidance in NIST SP 800-88}} to sanitize CDA media. The information is destroyed by a method that precludes reconstruction by means available to the DBT adversaries. {{Licensee/Applicant}} identifies CDA media requiring sanitization and the appropriate techniques and procedures to be used in the process; sanitizes identified CDA media, both paper and digital, before disposal or release for reuse; and implements this control so that media sanitization is consistent. {{Licensee/Applicant}} tracks, documents, and verifies media sanitization and disposal actions and performs {{quarterly}} tests on sanitized data to ensure that equipment and procedures are functioning properly.' WHERE [Requirement_Id] = 1467
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}}, upon termination or transfer of an individual''s employment, follows the access authorization program established under 10 CFR 73.56 and promptly performs the following actions: (1) terminates all CDA and system access, (2) conducts exit interviews, (3) informs appropriate personnel of status change or termination, (4) retrieves all security-related organizational property, and (5) retains access to organizational information and CDAs formerly controlled by terminated individual.' WHERE [Requirement_Id] = 1469
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} established, implemented, and documented procedures for the following purposes: (1) identifying the security alerts and vulnerability assessment process, (2) communicating vulnerability information, (3) correcting the flaw expeditiously utilizing the configuration management process, (4) correcting security flaws in CDAs, and (5) performing vulnerability scans and assessments of the CDA to validate that the flaw has been eliminated before the CDA is put into production. Before implementing corrections, {{Licensee/Applicant}} documents and tests software updates related to flaw remediation to determine the effectiveness and potential side effects on CDAs. The {{Licensee/Applicant}} captures flaw remediation information in its Corrective Action Program.' WHERE [Requirement_Id] = 1475
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) receiving timely security alerts, bulletins, advisories, and directives from credible external organizations as designated by the NRC and the {{Licensee/Applicant}} on an ongoing basis, such as third-party security alert notification services and vendor security alert lists, and maintaining a copy of these documents, (2) independently evaluating and determining the need, severity, methods, and timeframes for implementing security directives consistent with the security controls for the CDA (Section 3.1 of Appendix A to Regulatory Guide (RG) 5.71), and (3) within established timeframes set by the licensee or as directed by the NRC, {{Licensee/Applicant}}: (a) generates and documents internal security alerts, advisories, and directives as necessary, (b) disseminates and documents security alerts, advisories, and directives to designated personnel for action and tracks their status and completion, (c) implements and documents security directives in accordance with established timeframes or implements an alternate security measure, (d) implements and documents any required mitigation measures in accordance with the {{configuration management process}}, and (e) employs automated or other mechanisms (e.g., e-mail lists) to make security alert and advisory information available to {{Site}}, as needed.' WHERE [Requirement_Id] = 1478
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews the following: (1) a formal, documented CDA maintenance policy that addresses purpose, scope, roles, responsibilities, management commitment, coordination among {{Licensee/Applicant}} entities, associated CDA maintenance controls, and compliance, (2) formal, documented procedures to facilitate the implementation of the CDA maintenance policy and associated maintenance controls, and (3) the system maintenance policy and procedures which cover assets located in all security boundaries, including the following: (a) owner-controlled area: the outermost protected area boundary for a plant that is outside the plant''s security area, (b) protected area: an area within the boundaries of a nuclear facility that is encompassed by physical barriers and to which access is controlled (see 10 CFR 73.2, "Definitions"), (c) vital areas: areas containing any equipment, system, device, or material, the failure, destruction, or release of which could directly or indirectly endanger the public health and safety by exposure to radiation. Vital areas may also contain equipment or systems which would be required to function to protect public health and safety following such failure, destruction, or release, and (d) public access area: locations outside the physical control of the plant.' WHERE [Requirement_Id] = 1483
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) maintaining and documenting a current list of authorized maintenance personnel consistent with its access authorization program and insider mitigation program, and (2) implementing and documenting {{automated mechanism or non-automated mechanism}} to detect unauthorized use or execution of commands by an escorted individual, or designating and documenting {{Licensee/Applicant}} personnel with required access authorization and knowledge necessary to supervise escorted personnel interacting with CDAs.' WHERE [Requirement_Id] = 1484
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) developing and maintaining a list of, and issuing authorization credentials (e.g., badges, identification cards, smart cards) to, personnel with authorized access to facilities containing CDAs and security boundary systems, and (2) designating officials within the organization to review and approve the above access lists and authorization credentials, consistent with the access authorization program.' WHERE [Requirement_Id] = 1485
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} implements and documents a defensive strategy, as well as the following: (1) allocates the highest degree (i.e., Level 4) of cyber security protection to CDAs that carry out safety, important to safety, and security functions and protects those CDAs from lower defensive levels, (2) prevents remote access to CDAs located in the highest defensive level, (3) prevents spoofing of addresses from one security level to another, (4) only one-way data flow is allowed from Level 4 to Level 3 and from Level 3 to Level 2, (5) initiation of communications from digital assets at lower security levels to digital assets at higher security levels is prohibited, (6) bi-directional (2-way) communication between CDAs in Level 4 is only conducted within a security Level 4, (7) any non-safety system that has bi-directional communication to a safety system is afforded the same level of protection as the safety system, (8) provides intrusion prevention and detection capabilities within and at the boundaries between security levels, (9) ensures for defense-in-depth levels using bi-directional (2 way) communication that data flow from one level to other levels occurs only through a device that enforces the security policy between each level and detects, prevents, delays, mitigates, and recovers from a cyber-attack coming from the lower security level, and (10) moves data, software, firmware, and devices from lower levels of security to higher levels of security using a documented validation process or procedure which is trustworthy at or above the trust level of the device on which the data, code, information, or device will be installed or connected with to ensure that the data, software, firmware, or devices are free from known malicious code, Trojan viruses, worms, and other passive attacks. CDAs that provide safety, important-to-safety, security, or control functions are allocated defensive Level 4 protection. CDAs that provide data acquisition functions are allocated at least defensive Level 3 protection.' WHERE [Requirement_Id] = 1503
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} implements and documents security boundary control devices between higher security levels and lower security levels that include the following elements: (1) physically and logically secures and hardens CDAs to prevent unauthorized access or manipulation, (2) employs secure management communications and encryption in accordance with Appendix B to RG 5.71, (3) provides logging and alert capabilities, (4) provides intrusion detection and prevention capabilities, (5) detects and prevents malware from moving between boundaries, (6) possesses the ability to perform more than stateful inspection with respect to the protocols used in communication across the boundary, such as through a bastion host or application proxy.' WHERE [Requirement_Id] = 1509
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} implements and documents security boundary control devices between higher security levels and lower security levels that except in the case of data diodes, contains a rule set that at a minimum: (a) is configured to deny traffic, except that which is explicitly authorized, (b) provides protocol, source, and destination filtering such as IP addresses, MAC addresses, TCP ports, and UDP ports, bases blocking on source and destination address pairs, services, and ports where the protocol supports this, (c) does not permit either incoming or outgoing traffic by default, (d) is managed either through a direct connection to the firewall from a management device, such as a laptop, or through a dedicated interface connected to a site centric security network, (e) does not permit direct communication to the firewall from any of the managed interfaces, (f) records information relative to accepted and rejected connections, traffic monitoring, analysis, and intrusion detection, (g) forwards logs to a centralized logging server, (h) enforces destination authorization and restricts users by allowing them to reach only the CDAs necessary for their function, (i) records information flow for traffic monitoring, analysis, and intrusion detection, (j) is deployed and maintained by authorized personnel adequately trained in the technologies used, (k) documents and designs with minimal connections that permit acquisition and control networks to be severed from corporate networks, should that decision be made, in times of serious cyber incidents or when directed by authorized personnel who are designated to do so, (l) is evaluated, analyzed, and tested before deployment and routinely upon modification of the rule set and updates to the operational software and firmware required to operate the firewall, (m) receives time synchronization from a trusted and dedicated source existing on the security network, attached directly to the CDA or via SNTP and a trusted key management process, (n) synchronizes time with CDAs to provide for event correlation, (o) is capable of forwarding logging information in a standard format to a secure logging server or uses an external device to provide this logging (as in the case of a data diode), (p) routinely reviews logs by personnel that are appropriately trained in such analysis to detect malicious or anomalous activity, (q) is updated {{quarterly}}, (r) uses only physically and logically secured and hardened computing devices and flow control to prevent unauthorized access or manipulation of data streams, (s) allows no information of any kind, including handshaking protocols, to be transferred directly from networks, systems, or CDAs existing at a lower security level to networks, systems, or CDAs existing at Level 4, and (t) employs measures to prevent viruses or other malicious or unwanted programs from propagating information between security levels.' WHERE [Requirement_Id] = 1530
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) training personnel in their incident response roles and responsibilities with respect to the CDAs and providing refresher training {{at least annually}}, (2) incorporating simulated events into incident response training to facilitate effective response by personnel in crisis situations, and (3) documenting incident response training exercises and acknowledgements that personnel are qualified and trained.' WHERE [Requirement_Id] = 1534
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) testing and conducting drills of the incident response capability for CDAs {{at least annually}}, (2) using {{Licensee/Applicant}}-defined tests or drills or both to update the incident response capability to maintain its effectiveness, (3) documenting the results of testing and drills, (4) providing incident response testing and drills procedures, (5) employing automated mechanisms to thoroughly and effectively test or drill the incident response capability, and (6) performing and documenting announced and unannounced tests and drills.' WHERE [Requirement_Id] = 1540
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) implementing and documenting an ongoing incident handling capability for security incidents that includes preparation, detection and analysis, containment, eradication, and recovery {{rolled into existing incident handling program}}, (2) incorporating lessons learned from ongoing incident handling activities into incident response procedures and implementing the procedures accordingly, (3) forming an integrated cyber security incident response team (CSIRT), (4) in the event of an unplanned incident that reduces the number of required cyber security personnel, compensating, by using other trained and qualified onsite cyber security personnel or calling in off-duty personnel within 2 hours from the time of discovery, (5) providing the team with the technical skills and authority to effectively respond to a potential cyber security event, (6) developing and documenting processes, procedures, and controls that the team will employ upon the discovery or identification of a potential or actual cyber security attack, and (7) documenting and defining response to the following: (a) identification of what constitutes a cyber security incident, (b) identification of threat level classification for incidents, (c) description of actions to be taken for each component of the Incident Response &Recovery (IR&R) process, (d) description of individual postulated classes or categories of incidents or attacks, as analyzed during attack vector analysis, and indicators and potential or planned methods of mitigation, (e) identification of defensive strategies that would assist in identifying and containing a cyberattack, (f) description of the CSIRT incident notification process, (g) description of incident documentation requirements, (h) establishment of coordinated and secure communication methods to be used between local and remote CSIRT members and outside agencies, and (i) description of response escalation requirements. Incident data collected includes the following: (1) incident title, (2) date of incident, (3) reliability of report, (4) type of incident (e.g., accident, virus), (5) entry point (e.g., Internet, wireless, modem), (6) perpetrator, (7) type of system, hardware and software impacted, (8) brief description of incident, (9) impact on organization, (10) measures to prevent recurrence, and (11) references.' WHERE [Requirement_Id] = 1554
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'The {{Licensee/Applicant}} CSIRT consists of individuals with knowledge and experience in the following areas: (1) Information and digital system technology - This covers the areas of cyber security, software development and application, computer system administration, and computer networking. In particular, knowledge is required of the digital systems involved in plant operations, including digital instrumentation and control systems, and those involved in plant business systems. In the plant operations area, this includes programmable logic controllers, control systems, and distributed control systems. In the business area, this includes computer systems and databases containing information used to design, operate, and maintain CDAs. In the networking arena, knowledge is required of both plant and corporate-wide networks. An experienced and highly skilled cyber security staff member might have expertise in all of these areas. Nuclear facility operations, engineering, and safety - This includes knowledge of overall facility operations and plant technical specifications. Staff representing this technical area must be able to trace the impact of a vulnerability or series of vulnerabilities in a CDA (or connected digital asset) outward through plant subsystems and systems so that the overall impact on safety, security, and emergency preparedness of the plant can be evaluated. (2) Physical and operational security - This includes in-depth knowledge of the plant''s physical and operational security program. In addition to the above requirements, specialized in-depth cyber security skills are required to perform the electronic validation testing and optional scanning activities. (3) {{Licensee/Applicant}} may not have onsite personnel trained and experienced in all arenas. If this expertise is not available on site, corporate-level cyber security personnel, an independent cyber security organization, or other sources of the necessary validation expertise are considered. In addition, individuals with the following roles join the CSIRT on an as-needed basis (depending on the incident): (a) site security (physical), (b) senior plant management, (c) corporate public relations, and (d) corporate legal.' WHERE [Requirement_Id] = 1557
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed an incident response plan that: (1) describes the structure and organization of the cyber incident response capability, (2) provides a high-level approach for how the cyber incident response capability fits into the overall organization, (3) defines reportable cyber incidents consistent with Regulatory Position C.8.6, (4) provides metrics for measuring the cyber incident response capability within the organization, (5) defines the resources and management support needed to effectively maintain and mature an incident response capability, and (6) is reviewed and approved by the Cyber Security Program Sponsor. {{Licensee/Applicant}} distributes copies of the incident response plan plant personnel including incident response personnel, reviews the incident response plan {{annually}}, revises the incident response plan to address changes or problems encountered during plan implementation, execution, or testing, and communicates incident response plan changes to plant personnel including incident response personnel.' WHERE [Requirement_Id] = 1560
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}}''s contingency plan includes the following: (1) required response to events or conditions of varying duration and severity that would activate the recovery plan, (2) procedures for operating the CDAs in manual mode with external electronic connections severed until secure conditions can be restored, (3) roles and responsibilities of responders, (4) processes and procedures for the backup and secure storage of information, (5) complete and up-to-date logical diagrams depicting network connectivity, (6) current configuration information for components, (7) personnel list (according to title or function or both) for authorized physical and cyber access to the CDA, (8) communication procedure and list of personnel (according to title or function or both) to contact in the case of an emergency, and (9) documented requirements for the replacement of components.' WHERE [Requirement_Id] = 1568
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) implementing a cyber security contingency plan to maintain the SSEP functions by developing and disseminating roles, responsibilities, assigned individuals with contact information, and activities associated with determining the effects of CDAs after a compromise, disruption or failure and restoring those CDAs, (2) coordinating contingency plan development with {{Licensee/Applicant}} organizations responsible for related plans (e.g., emergency plan, physical security plan) and requirements (e.g., technical specifications), (3) maintaining the necessary resources and capacity to ensure that necessary information processing, telecommunications, and environmental support exist during crisis situations, (4) documenting the resources needed to ensure that the capacity necessary for information processing, telecommunications, and environmental support exists during crisis situations, and (5) deploying CDAs such that, in the event of a loss of processing within a CDA or a loss of communication with operational facilities, CDAs will execute predetermined actions.' WHERE [Requirement_Id] = 1574
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) training personnel in their contingency roles and responsibilities with respect to the CDAs and providing refresher training {{at least annually}} or consistent with the {{Licensee/Applicant''s}} overall contingency program, whichever period is shorter, (2) maintaining training procedures and documenting training records of individuals, (3) including training drills to familiarize contingency personnel with the facility, CDAs, and available resources and evaluating the site''s capabilities to support contingency operations, (4) employing automated mechanisms to thoroughly and effectively test/drill the contingency plan by providing more complete coverage of contingency issues, and (5) selecting realistic test/drill scenarios and environments, effectively stressing the CDAs.' WHERE [Requirement_Id] = 1582
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} employs mechanisms with supporting procedures that allow CDAs to be recovered and reconstituted to a known secure state following a disruption or failure and only when initiated by authorized personnel. {{Licensee/Applicant}} performs regression testing before returning to normal operations to ensure that CDA are performing correctly.' WHERE [Requirement_Id] = 1584
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents requirements for training to provide the following: (1) cyber security awareness training for {{Licensee/Applicant}} employees and contractors which addresses the following: (a) the site-specific objectives, management expectations, programmatic authority, roles and responsibilities, policies, procedures, and consequences for noncompliance with the cyber security program, (b) general attack methodologies, including social engineering techniques and appropriate and inappropriate cyber security practices, (c) attack indicators, such as the following: 1. unusually heavy network traffic, 2. out of disk space or significantly reduced free disk space, 3. unusually high CPU usage, 4. creation of new user accounts, 5. attempted or actual use of administrator-level accounts, 6. locked-out accounts, 7. account in-use when the user is not at work, 8. cleared log files, 9. full log files with unusually large number of events, 10. antivirus or IDS alerts, 11. disabled antivirus software and other security controls, 12. unexpected patch changes, 13. machines connecting to outside IP addresses, 14. requests for information about the system (social engineering attempts), 15. unexpected changes in configuration settings, 16. unexpected system shutdown, 17. unusual activity from control devices, 18. loss of signal from control devices, and 19. unusual equipment in secure areas, (d) organizational contacts to whom to report suspicious activity, incidents, and violations of cyber security policies, procedures, or practices, (e) an explanation as to why access and control methods are required, (f) measures users can employ to reduce risks, and (g) the impact on the organization if the control methods are not incorporated.' WHERE [Requirement_Id] = 1614
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents training programs for personnel performing, verifying, or managing activities within the scope of the program to ensure that suitable proficiency is achieved and maintained. {{Licensee/Applicant}} individuals that have cyber security responsibilities related to programs, processes, procedures, or individuals that are involved in the design, modification, and maintenance of CDAs, will receive technical training. {{Licensee/Applicant}} establishes, implements, and documents requirements to do the following: provide cyber security-related technical training to individuals: (a) before authorizing access to CDAs or performing assigned duties, (b) when required by policy or procedure changes and plant modifications, and (c) annually or at an interval as defined by the {{Licensee/Applicant}}, whichever is shorter, to mitigate risk and to ensure personnel maintain competency, and (1) provide cyber security-related technical training on applicable cyber security concepts and practices to those individuals whose roles and responsibilities involve designing, installing, operating, maintaining, or administering (e.g., serving as a system administrator) CDAs or associated networks which addresses the following: (a) knowledge of specific cyber security and engineering procedures, practices, and technologies, including implementation methods and design requirements, which apply to the assets they may encounter as part of their job and (b) general information on cyber vulnerabilities, potential consequences to CDAs and networks of successful cyberattacks, and cyber security risk reduction methods. {{Licensee/Applicant}} provides system managers, cyber security specialists, system owners, network administrators, and other personnel having access to system-level software with security-related technical training to perform their assigned duties.' WHERE [Requirement_Id] = 1623
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} individuals who have programmatic and procedural cyber security authority and require the necessary skills and knowledge to execute capabilities expected of a cyber security specialist receive specialized cyber security training in order to design, execute, and manage the cyber defensive strategy effectively. {{Licensee/Applicant}} establishes, implements, and documents requirements for advanced training for individuals who are designated security experts or specialists, including the cyber security specialists with roles and responsibilities for cyber security, incident response, and the execution and management of defense-in-depth protective strategies. Advanced training addresses the following: (1) achievement and maintenance of the necessary up-to-date skills and knowledge in core competencies of data security, operation system security, application security, network security, security controls, intrusion analysis, incident management and response, digital forensics, penetration testing, and plant system functionality and operations, (2) competency in the use of tools and techniques to physically and logically harden CDAs and networks to reduce vulnerabilities to cyberattack, (3) the provision of cyber security guidance, assistance, and training for other staff members, (4) the review of programmatic and system-specific cyber security plans and practices, (5) assessment of CDAs, networks, and assets for compliance with cyber security policies, and (6) design, acquisition, installation, operation, maintenance, or administration of security controls.' WHERE [Requirement_Id] = 1631
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} develops, implements, and documents a cross-functional cyber security team (CST). {{Licensee/Applicant}} develops, implements, and documents a program to share expertise and varied domain knowledge between members of the CST. {{Licensee/Applicant}}''s CST includes, at a minimum, a member of the organization''s information technology staff, an instrumentation and control system engineer, a control system operator, a subject matter expert in cyber security, and a member of the management staff. {{Licensee/Applicant}}''s cyber security subject matter experts'' skills include network architecture and design, security processes and practices, and secure infrastructure design and operation. {{Licensee/Applicant}}''s CST also includes the control system vendor or system integrator, as needed. {{Licensee/Applicant}}''s CST reports {{directly to organizational structure how and who}}.' WHERE [Requirement_Id] = 1637
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} creates, documents, and staffs the following positions (roles) with appropriately qualified personnel: Role: Cyber Security Sponsor Requirements: member of senior site management Responsibilities: (1) overall responsibility and accountability for the cyber security program, and (2) provides resources required for the development, implementation and sustenance of the cyber security program. Role: Cyber Security Program Manager Responsibilities: (1) provides oversight of the plant cyber security operations, (2) functions as a single point of contact for issues related to site cyber security, (3) provides oversight and direction on issues regarding nuclear plant cyber security, (4) initiates and coordinates CSIRT functions as required, (5) coordinates with the NRC as required during cyber security events, (6) oversees and approves the development and implementation of a cyber security plan, (7) ensures and approves the development and operation of the cyber security education, awareness, and training program, and (8) oversees and approves the development and implementation of cyber security policies and procedures. Role: Cyber Security Specialist Responsibilities: (1) protects CDAs from cyber threat, (2) understands the cyber security implications surrounding the overall architecture of plant networks, control systems, safety systems, operating systems, hardware platforms, plant specific applications, and the services and protocols upon which those applications rely, (3) performs cyber security evaluations of digital plant systems, (4) conducts security audits, network scans, and penetration tests against CDAs as necessary, (5) conducts cyber security investigations involving compromise of CDAs, (6) preserves evidence collected during cyber security investigations to prevent loss of evidentiary value, and (7) maintains expert skill and knowledge level in the area of cyber security. Role: Cyber Security Incident Response Team Requirements: (1) personnel have knowledge of cyber forensics and (2) functions in accordance with the incident response plan Responsibilities: (1) initiates emergency action when required to safeguard CDAs from compromise and to assist with the eventual recovery of compromised systems, (2) contains and mitigates incidents involving critical and other support systems, and (3) restores compromised CDAs.' WHERE [Requirement_Id] = 1665
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents and implements a program to ensure that new acquisitions contain security design information, capabilities or both to implement security controls in Appendix B to RG 5.71. Such security capabilities include the following: (1) being cognizant of evolving cyber security threats and vulnerabilities, (2) being cognizant of advancements in cyber security protective strategies and security controls, (3) conducting analyses of the effects that each advancement could have on the security, safety, and operation of critical assets, systems, CDAs, and networks and implementing these advancements in a timely manner, and (4) replacing legacy systems as they reach end of life with systems that incorporate security capabilities. {{Licensee/Applicant}} establishes timeframes to minimize the time it takes to deploy new and more effective protective strategies and security controls.' WHERE [Requirement_Id] = 1678
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} verifies and validates the results of the developer''s security testing in conducted in accordance with Section 12.5 above. {{Licensee/Applicant}} is responsible for the following: (1) testing CDA (e.g., offline on a comparable CDA) security devices, security controls, and software to ensure that they do not compromise the CDA or the operation of an interconnected CDA operation before installation, (2) testing to ensure that CDAs do not provide a pathway to compromise the CDA or other CDAs, (3) implementation of the security controls in Appendices B and C to RG 5.71 in accordance with the process described in Section 3.1.6 of Appendix A to RG 5.71, (4) testing of the security controls for effectiveness, as described in Section 4.1.2 of Appendix A to RG 5.71, (5) performance of vulnerability scans, in accordance with Section 4.1.3 of Appendix A to RG 5.71 and Section 13.1 of this plan, against the CDA in its integrated state and correction, elimination, or discussion of discovered vulnerabilities, (6) installation and testing of the CDA in the target environment, and (7) performance of an acceptance review and test of the CDA security features. {{Licensee/Applicant}} documents the following: (1) Security controls implemented in accordance with Appendix B of RG 5.71. (2) Verification of the effectiveness of the security controls implemented in accordance with Appendix C. (3) Security design features developed to address the identified security requirements for the CDA (if any), in addition to the security controls implemented in accordance with Appendix B to 5.7.1. For each security feature or configuration to be implemented, the documentation includes a description of the feature, its method of implementation, and any configurable options associated with the feature are provided. Each security feature designed into the system is traceable to its corresponding security requirement. The security reviews of the implemented design by the cyber security organization responsible for the protection of the critical assets/systems/networks are documented. The review ensures that the security design configuration item transformations from the requirements implemented are correct, accurate, and complete. {{Licensee/Applicant}} requires {{annual}} audits of CDAs to verify the following: (1) The security controls present during testing remain in place and are functioning correctly in the production system. (2) CDAs are free from known vulnerabilities and security compromises and continue to provide information on the nature and extent of compromises, should they occur. (3) The change management {{process/program}} is functioning effectively and is recording configuration changes appropriately.' WHERE [Requirement_Id] = 1715
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Protection and mitigation of risk are achieved by implementing: (1) the defense-in-depth strategies discussed in Section 3.2 of RG 5.71, (2) the security controls described in Appendices B and C to RG 5.71, and (3) digital equipment and software cyberattack detection, prevention, and recovery techniques and tools to the systems, structures, and components within the scope of the rule and (4) Section 4 of Appendix A of RG 5.71. {{Licensee/Applicant}} has the detailed information on how these requirements are implemented to achieve the high assurance objectives of security controls specified in this plan. The detailed information is available for NRC inspections and audits.' WHERE [Requirement_Id] = 1725
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} develops, disseminates, and {{annually}} reviews and updates a formal, documented configuration management policy and implementing procedures that address the purpose, scope, roles, responsibilities, management commitment, {{coordination among [Licensee/Applicant] entities}}, associated configuration management controls, and compliance. {{Licensee/Applicant}} documents its configuration management policy as a part of the {{Site}} configuration management plan and includes hardware configurations, software configurations, and access permissions. Changes to hardware or software are documented and accessed in accordance with these policies and implementing procedures. The structured configuration management process evaluates and controls changes to CDAs to ensure that CDAs remains secure. Before any change is implemented, {{Licensee/Applicant}} confirms that new vulnerabilities are not introduced.' WHERE [Requirement_Id] = 1728
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Measures necessary to deny, deter, and detect cyberattacks are implemented by {{system, CDA, network protective devices}} and align with the {{Licensee/Applicant}} defensive strategy. {{Licensee/Applicant}} establishes, implements, and documents security controls to deny, deter, and detect adverse threats and conditions to CDAs that may be susceptible to cyberattacks. Security controls employed counteract postulated threats. {{Licensee/Applicant}} establishes, implements, and documents the methods used to respond to incidents and to escalate cyber security events to the {{Site/Licensee}}''s incident response personnel, appropriate law enforcement authorities, or the NRC. The {{Licensee/Applicant}}''s Corrective Action Program evaluates, tracks, manages, provides corrective action and documents cyberattacks. {{Licensee/Applicant}} procedures that govern response to cyber events direct timely identification, detection, and response to cyberattacks. When there is a reasonable suspicion of a cyberattack, response instructions direct notification to the {{shift superintendent operations, site security superintendent, manager nuclear information technology, cyber security incident response team}} and other emergency response actions. {{Licensee/Applicant}} procedures direct containment activities. These measures include (but are not limited to) activities necessary for the following: (1) assist operations in conducting an operability determination, (2) isolate the affected CDA with approval by {{shift superintendent operations}}, if possible, and (3) verify that surrounding or interconnected CDAs, networks, and support systems are not contaminated, degraded, or compromised. Eradication activities identify the attack and the compromised pathway. {{Licensee/Applicant}} patches, cleans, reimages, or replaces the CDA using disaster recovery procedures. {{Licensee/Applicant}} governing procedures direct measures necessary to mitigate the consequences of cyberattacks. Recovery activities include, but are not limited to, functional recovery tests, security function and requirements tests, restoration to an operational state, verification of operability, and return to active service. Systems, networks, or equipment affected by cyberattacks are restored and returned to operation as directed by {{Licensee/Applicant}} procedures. {{Licensee/Applicant}} conducts post incident analysis in accordance with its Corrective Action Program. {{Licensee/Applicant}} reports cyberattacks to the NRC as directed by {{Licensee/Applicant}} procedures, in accordance with the requirements of Appendix G, "Reportable Safeguards Events," to 10 CFR Part 73 and as further described in Regulatory Position C.8.6.' WHERE [Requirement_Id] = 1732
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following: (1) a formal, documented incident response policy that addresses purpose, scope, roles, responsibilities, management commitment, coordination among {{Licensee/Applicant}} entities, and compliance, (2) formal, documented procedures to facilitate the implementation of the incident response policy and associated incident response controls that establish procedures for the following: (a) notifying staff and operators, determining whether unexpected indications or fault conditions could be the result of a cyberattack in progress, (b) in the event that the cyberattack was the result of previous activities that have lain dormant within a CDA, using the Corrective Action Program to perform an analysis to identify entry mechanisms and take steps to close down the vulnerability, and (c) establishing a disaster recovery plan that specifically permits rapid recovery from a cyberattack, including system backups which allow rapid reconstruction of the CDA, and (3) recovery plans that are exercised to ensure that they are effective and that personnel are sufficiently familiar with how to employ them in accordance with {{disaster recovery plans, business continuity or emergency plans}} and that changes made are based on lessons learned from exercises and drills and actual incidents and events. {{Licensee/Applicant}} includes stakeholders in the development of incident response policies, procedures, and plans, including the following groups: (1) physical security, (2) cyber security team, (3) operations, (4) engineering, (5) information technology, (6) human resources, (7) system support vendors, (8) management, and (9) legal.' WHERE [Requirement_Id] = 1733
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} developed, disseminated, and {{annually}} reviews and updates the following while using an independent party for the audit reviews: (1) a formal, documented audit and accountability policy that addresses the purpose, scope, roles, responsibilities, management commitments, and internal coordination of the policy, and (2) formal, documented procedures that facilitate the implementation of the audit and accountability policy and associated audit and accountability security controls.' WHERE [Requirement_Id] = 1734
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) managing and documenting CDA accounts, including authorizing, establishing, activating, modifying, reviewing, disabling, and removing accounts, (2) reviewing CDA accounts in a manner consistent with the access control list provided in the {{design control package, access control program, cyber security procedures}} and initiating required actions on CDA accounts {{no less frequently than once every 30 days}}, (3) requiring access rights to be job function based, (4) conducting reviews when as individuals job function changes to ensure that rights remain limited to the individuals job function, (5) reviewing and documenting CDA accounts at a maximum interval consistent with the most recent version of Nuclear Energy Institute (NEI) 03-12, "Security Plan, Training and Qualification Plan, and Safeguards Contingency Plan," endorsed by the U.S. Nuclear Regulatory Commission (NRC), and (6) employing automated mechanisms that support CDA account management functions and enable CDA to automatically: (a) terminate temporary, guest, and emergency accounts {{no less frequently than once every 30 days}}, (b) disable inactive accounts {{no less frequently than once every 30 days}}, (c) create and protect audit records for account creation, deletion, and modification, (d) document and notify system administrators of all account creation, deletion, and modification activities so that system administrators are aware of any account modifications and can investigate potential cyberattacks in a timely manner.' WHERE [Requirement_Id] = 1739
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) establishing and documenting divisions of responsibility and separating functions as needed to eliminate conflicts of interest and to ensure independence in the responsibilities and functions of individuals, (2) enforcing separation of CDA functions through assigned access authorizations, (3) implementing alternative controls and documenting the justification for alternative controls and countermeasures for increased auditing for those situations in which a CDA cannot support the differentiation of roles and a single individual must perform all roles within the CDA, and (4) restricts security functions to the least amount of users necessary to ensure the security of CDAs.' WHERE [Requirement_Id] = 1741
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'The access control policy addresses the following: (1) access control rights (i.e., which individuals and processes can access what resources) and access control privileges (i.e., what these individuals and processes can do with the resources accessed), (2) management of CDAs (i.e., establishing, activating, modifying, reviewing, disabling, and removing accounts), (3) protection of password/key databases to prevent unauthorized access to master user and password lists, (4) auditing of CDAs {{annually}} or immediately upon changes in personnel responsibilities or major changes in system configurations or functionality, and (5) separation of duties (i.e., through assigned access authorizations).' WHERE [Requirement_Id] = 1742
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1)assigning the most restrictive set of rights and privileges or access needed by users for the performance of specified tasks, (2) configuring CDAs to enforce the most restrictive set of rights and privileges or access needed by users.' WHERE [Requirement_Id] = 1743
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1)identifying and documenting specific user actions that can be performed on CDAs during normal and emergency conditions without identification or authentication, and (2) permitting actions to be performed without identification and authentication only to the extent necessary to accomplish mission objectives, without adversely affecting safety, security, and emergency preparedness (SSEP) functions, and in a manner consistent with NRC regulations.' WHERE [Requirement_Id] = 1745
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'The identification and authentication policy and procedures provide guidance on managing both user identifiers and CDA authenticators. These items include the following: (1) uniquely identifying each user, and processes acting on behalf of a user, (2) verifying the identity of each user, and processes acting on behalf of a user, (3) receiving authorization to issue a user identifier from an appropriate authorized representative, (4) ensuring that the user identifier is issued to the intended party, (5) disabling user identifier after a maximum of {{30 days}} of inactivity, (6) disabling user identifier immediately upon termination of users need for access, (7) archiving user identifiers, (8) defining initial authenticator content, (9) establishing administrative procedures for initial authenticator distribution; lost, compromised, or damaged authenticators; and revoking authenticators, (10) changing default authenticators upon control system installation, and (11) changing/refreshing authenticators {{annually}}.' WHERE [Requirement_Id] = 1746
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} configures CDAs to do the following: (1) initiate a session lock after {{within 30 minutes of inactivity}}, (2) provide the capability for users to directly initiate session lock mechanisms, (3) maintain the session lock on a CDA until the user reestablishes access using identification and authentication procedures.' WHERE [Requirement_Id] = 1748
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) ensuring that external systems cannot be accessed from higher levels, such as Levels 4 and 3, (2) prohibiting external systems from accessing CDAs in Levels 3 and 4, and (3) prohibiting users from using an external system to access CDAs or to process, store, or transmit organization-controlled information except in situations in which {{Licensee/Applicant}} verifies the implementation of equivalent security measures on the external system.' WHERE [Requirement_Id] = 1750
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) establishing usage restrictions and implementation guidance for mobile code technologies based on their potential to cause damage to CDAs if used maliciously, and (2) authorizing, monitoring, and controlling the use of mobile code within the CDAs.' WHERE [Requirement_Id] = 1752
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring CDAs to prevent unauthorized and unintended information transfer via shared system resources, and (2) using physically separate network devices to create and maintain logical separation of Levels 3 and 4 from each other and from all other levels.' WHERE [Requirement_Id] = 1759
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} configures and documents CDA configuration settings to provide only essential capabilities and specifically prohibits, protects, and restricts the use of insecure functions, ports, protocols and services. {{Licensee/Applicant}} reviews CDAs {{monthly}} to identify and eliminate unnecessary functions, ports, protocols, and services. {{Licensee/Applicant}} documents and employs automated mechanisms to prevent program execution. {{Licensee/Applicant}} uses {{white-lists, black-lists, gray-lists}} application control technologies.' WHERE [Requirement_Id] = 1761
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring CDAs to protect the integrity of transmitted information, (2) employing cryptographic mechanisms to recognize changes to information during transmission and upon receipt, unless otherwise protected by alternative physical measures, (3) implementing mechanisms to prevent "man-in-the-middle" (MITM) attacks via the following methods: (a) Media Access Control Address Locking - {{Licensee/Applicant}} locks devices and ports via address locking to prevent MITM attacks and rogue devices from being added to the network (b) Network Access Control - {{Licensee/Applicant}} implements network access control to prevent MITM attacks and rogue devices from being added to the network, (4) implementing monitoring to detect MITM and address resolution protocol poisoning.' WHERE [Requirement_Id] = 1764
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring the CDAs to protect the confidentiality of transmitted information, (2) employing cryptographic mechanisms to prevent unauthorized disclosure of information during transmission and receipt unless otherwise protected by alternative physical measures.' WHERE [Requirement_Id] = 1766
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for ensuring the following: (1) The capability to input information to CDAs is restricted to only authorized sources. (2) Information is checked automatically for accuracy, completeness, validity, and authenticity as close to the point of origin as possible. Rules for checking the valid syntax of CDA inputs (e.g., character set, length, numerical range, acceptable values) are documented and in place to verify that inputs match specified definitions for format and content. Inputs passed to interpreters are prescreened to prevent the content from being unintentionally interpreted as commands.' WHERE [Requirement_Id] = 1772
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents and implements controls for CDAs to ensure the following: (1) Error conditions are identified. (2) Generated error messages provide information necessary for corrective actions without revealing potentially harmful information that could be exploited by adversaries. (3) Error messages are revealed only to authorized personnel. (4) Inclusion of sensitive information, such as passwords, in error logs or associated administrative messages is prohibited.' WHERE [Requirement_Id] = 1776
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) monitoring and documenting physical access to CDAs and security boundaries to detect and respond to physical security incidents, (2) reviewing physical access logs, (3) coordinating results of reviews and investigations with {{Licensee/Applicant}}''s incident response personnel, (4) monitoring real-time physical intrusion alarms and surveillance equipment, (5) employing automated mechanisms to assess and recognize potential intrusions and initiates appropriate response actions, and (6) providing adequate lighting for access monitoring devices (e.g., cameras).' WHERE [Requirement_Id] = 1777
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) controlling and documenting visitor physical access to CDAs by verifying the identity and confirming access authorization of these individuals prior to entry, and (2) escorting visitors and monitoring visitor activity to prevent adverse impact to SSEP functions.' WHERE [Requirement_Id] = 1778
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) authorizing and documenting changes to CDAs (2) retaining and reviewing records of CDA configuration changes and audit activities associated with CDA configuration changes and employing {{manual/automated}} mechanisms to: (a) document changes to CDAs, (b) notify designated approval authorities, and (c) prohibit implementation of changes until designated approvals are received and documented.' WHERE [Requirement_Id] = 1780
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) controlling all physical access points (including designated entry and exit points) to locations where CDAs reside and verifying individual access authorization before granting access to these areas, (2) approving individual access privileges and enforcing physical and logical access restrictions associated with changes to CDAs, (3) controlling logical access through the use of electronic devices and software, (4) generating, retaining, and reviewing records pertaining to access restrictions, (5) ensuring that only qualified and authorized individuals obtain access to CDAs, and (6) controlling physical access to the CDAs independent of the physical access controls for the facility.' WHERE [Requirement_Id] = 1783
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} develops, documents, and maintains a current baseline configuration of CDAs and their connections including the interface characteristics, security requirements, and the nature of the information communicated.. As a part of the configuration management process, {{Licensee/Applicant}} employs {{manual/automated}} mechanisms to maintain an up-to-date, complete, accurate, and readily available baseline configuration of each CDA. {{Licensee/Applicant}} documents the up-to-date baseline configurations and audits the configurations {{quarterly}}. Baseline configurations include {{but are not limited to}} a current list of all components (e.g., hardware, software), configuration of peripherals, version releases of current software, and switch settings of machine components. For each CDA, {{Licensee/Applicant}} maintains a log of configuration changes made, the name of the person who implemented the change, the date of the change, the purpose of the change, and any observations made during the course of the change. {{Licensee/Applicant}} documents and maintains baseline configurations for development and test environments that are managed separately from the operational/production baseline configuration. {{Licensee/Applicant}} employs a "deny-all, permit-by-exception" authorization policy to identify and authorize software permitted on {{Licensee/Applicant}} CDAs (i.e., white lists of authorized software). After authorized changes are implemented, {{Licensee/Applicant}} verifies that security features still function properly and that adequate cyber security levels are maintained. Individuals authorized to modify CDA configurations are properly trained and qualified to perform the modifications. {{Licensee/Applicant}} defines the minimum physical and logical access for the modifications.' WHERE [Requirement_Id] = 1784
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} develops, documents, and maintains an inventory of the components of CDAs that has the following attributes: (1) accurately reflects the current system configuration, (2) ensures that the location (logical and physical) of each component is consistent with the authorized boundary of the CDA, (3) provides the proper level of granularity deemed necessary for tracking and reporting and for effective property accountability, (4) updates the inventory of system components as an integral part of component installations and system updates, (5) employs automated mechanisms to maintain an up-to-date, complete, accurate, and readily available inventory of system components, (6) employs automated mechanisms to detect the addition of unauthorized components or devices into the environment and disables access by such components or devices or notifies designated {{Licensee/Applicant}} officials, and (7) documents the {{names or roles}} of the individuals responsible for administering those components.' WHERE [Requirement_Id] = 1785
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} provides competent and trained incident response support personnel who are available year round, 24 hours per day to offer advice and assistance to users of CDAs in response to and reporting of cyber security incidents. The support resource is an integral part of {{Licensee/Applicant}}''s incident response capability. {{Licensee/Applicant}} employs mechanisms to increase the availability of incident response-related information and support. ' WHERE [Requirement_Id] = 1786
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} identifies and documents alternate storage locations and initiates necessary agreements to permit the storage of CDA backup information. The frequency of CDA backups and the transfer rate of backup information to the alternate storage locations are consistent with {{Licensee/Applicant}}''s recovery time objectives and recovery plan objectives. {{Licensee/Applicant}} is responsible for the following: (1) identifying an alternate storage location that is geographically separated from the primary storage location so as not to be susceptible to a common hazard, (2) configuring the alternate storage location to facilitate recovery of operation, and (3) identifying and documenting potential accessibility problems to the alternate storage location in the event of a wide area disruption or disaster and implementing explicit mitigation actions.' WHERE [Requirement_Id] = 1796
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) conducting backups of user-level and system-level information, (2) backing up CDAs at an interval identified for the CDA or based on trigger events, (3) protecting backup information at the storage location, (4) testing and documenting backup information {{monthly}} to verify media reliability and information integrity, (5) using backup information in the restoration of CDA functions as part of contingency plan testing, (6) protecting system backup information from unauthorized modification, (7) storing backup copies of the operating system and other critical CDA software in a separate facility or in a fire-rated container that is not collocated with the operational software, and (8) establishing and documenting the timeframe in which data or the CDA must be restored and the frequency at which critical data and configurations are changing.' WHERE [Requirement_Id] = 1797
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents and requires that system developers and integrators of acquired CDAs create, implement, and document a security test and evaluation plan to ensure that the acquired products meet all specified security requirements and developers cyber security program maintains the integrity of the acquired system until the product is delivered to the {{Licensee/Applicant}} by implementing equivalent security controls as described in RG 5.71 to prevent tampering and to provide high assurance that the integrity of the developed CDA is maintained until delivered to the licensee. {{Licensee/Applicant}} requires that CDA developers/integrators: (1) perform configuration management during CDA design, development, implementation, and operation, (2) manage and control changes to the CDA, (3) implement only {{Licensee/Applicant}} approved changes, (4) document approved changes to the CDA, and (5) track security flaws and flaw resolution.' WHERE [Requirement_Id] = 1810
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} requires the developer to perform and document that security requirements are verified and validated and that security controls implemented in the product and used to meet the requirements of this plan are tested to ensure they are effective per section A.4.1.2. {{Licensee/Applicant}} requires documentation of all of the following activities: (1) system design transformed into code, database structures, and related machine executable representations, (2) hardware and software configuration and setup, (3) software coding practices and testing, (4) communication configuration and setup (including the incorporation of reused software and commercial off-the-shelf products), (5) The results of unit tests performed to ensure that the code was developed correctly and accurately and completely reflects the security design configuration transformations from the requirements, (6) details of the implementation of each required security feature within the developed code base. The listing includes reference the coded functions and modules within the code base that were developed to implement the security features, (7) security configurations implemented to meet security design features specified in the requirements, (8) operating system security configurations implemented to meet security design features specified in the requirements are documented, (9) For programming languages that support static analysis source code scanners, results of the following are documented: (a) the static source code vulnerability analysis performed to inspect the developed code for potential security defects, poor programming practices, hidden functions, and vulnerable features within the code during the implementation of the code base and methods applied to eliminate these vulnerabilities, (b) the security defect tracking metrics used to capture and track the identification, type, classification, cause, and remediation of security defects found within the code, and (c) the defects encountered during the translation of the design features specified in the requirements into code. (10) For all programming languages, the results of the following are documented: (a) a dynamic source code vulnerability analysis performed to inspect the developed code for potential security defects, poor programming practices, hidden functions, and vulnerable features within the code during the implementation of the code base and methods applied to eliminate these vulnerabilities, (b) the security defect tracking metrics used to capture and track the identification, type, classification, cause, and remediation of security defects found within the code, and (c) the defects encountered during the translation of the design features specified in the requirements into code.' WHERE [Requirement_Id] = 1811
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} protects the availability of CDAs through compliance with technical specifications, preventive maintenance programs, maintenance rule programs, security plans, emergency plans, or the corrective action program. Where these programs do not apply, the availability of CDAs is provided by the following means: (1) substitution of components, when needed, and a mechanism to exchange active and standby roles of the components, and (2) consideration of the mean time to failure for components in specific environments of operation (3) having adequate inventory of essential spare parts.' WHERE [Requirement_Id] = 1815
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) determining and documenting with SSEP functions those CDAs related events that require auditing, (2) defining the list of auditable events and frequency of auditing for each identified auditable event, (3) at a minimum, auditing all CDA connections, user login/logouts, configuration/software/firmware changes, audit setting changes, privileged access, privileged commands, and any modifications of the security functions of CDAs.' WHERE [Requirement_Id] = 1816
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) reviewing and updating the list of defined auditable events {{no less frequently than once a year}}, (2) including execution of privileged functions in the list of events to be audited by the CDAs, (3) preventing CDAs from purging audit event records on restart, (4) coordinating security audit functions within the facility to enhance mutual support and to help guide the selection of auditable events, configuring all CDAs so that auditable events are adequate to support after-the-fact investigations of security incidents, and (5) adjusting the events to be audited within the CDAs based on current threat information and effectiveness analysis described in Section 4.1.2 of Appendix A to RG 5.71.' WHERE [Requirement_Id] = 1817
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) ensuring that CDAs produce audit records that contain sufficient information to establish what events occurred, when the events occurred, where the events occurred, the sources of the events, and the outcomes of the events; (2) ensuring that CDAs provide the capability to include additional, more detailed information in the audit records for audit events identified by type, location, or subject; and (3) implementing architecture that provides the capability to centrally manage the content of audit records generated by individual components throughout CDAs, and to prevent CDAs from altering or destroying audit records.' WHERE [Requirement_Id] = 1818
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} has configured and deployed all CDA to do the following: (1) provide CDA audit reduction and report generation capability, and (2) provide the capability to automatically process audit records for events of interest based upon selectable event criteria. {{Licensee/Applicant}} documents the justification and details for alternate compensating security controls for situations in which a CDA cannot support auditing reduction and report generation by providing this capability through a separate system.' WHERE [Requirement_Id] = 1820
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for taking the following actions: (1) tests and/or exercises and documents the contingency plan {{at least annually}} to verify its effectiveness and the organization''s readiness to execute this plan, (2) reviews the contingency plan test and exercise results and initiates appropriate corrective actions, (3) coordinates contingency plan testing and/or exercises with {{Licensee/Applicant}} elements responsible for related plans, (4) tests and/or exercises and documents the contingency plan at emergency and/or backup sites to familiarize contingency personnel with these facilities and their available resources and to evaluate the {{Site''s}} capabilities to support contingency operations, (5) employs automated mechanisms to thoroughly and effectively test/exercise the contingency plan by providing a more complete coverage of contingency issues and selecting more realistic test/exercise scenarios and environments, (6) includes recovery and reconstitution of CDAs as part of contingency plan testing, (7) establishes and documents alternate controls when the contingency plan cannot be tested or exercised on production CDAs because of the potential for a significant adverse impact on safety, security, performance, or reliability of the site or CDA, and (8) uses scheduled and unscheduled system maintenance activities, including responding to CDA component and system failures, as an opportunity to test or exercise the contingency plan.' WHERE [Requirement_Id] = 1822
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}}''s cyber security awareness training is designed to increase an individual''s sensitivity to cyber threats and vulnerabilities and their recognition of the need to protect data and information. Policy-level awareness training provides employees and contractors with the ability to understand security policies so that the program is effectively implemented. Individual users must understand their responsibility for adherence to applicable policies and standards. {{Licensee/Applicant}} establishes, implements, and documents requirements for the following: (1) Training programs provide basic cyber security awareness training for facility personnel. Refresher or continuous training provides updates on new threats and technology. (2) Cyber security awareness is provided by displaying posters, offering security-messaged items, generating e-mail advisories and notices, and displaying logon screen messages. (3) Training includes practical exercises to simulate actual cyber incidents, recovery plans, response plans and adversary attacks. {{Licensee/Applicant}} develops and documents the content of cyber security training based on the following: (1) assigned roles and responsibilities, (2) specific requirements identified by the defensive strategy, and (3) CDAs to which personnel have authorized access.' WHERE [Requirement_Id] = 1823
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) enforcing assigned authorizations for controlling access to CDAs in accordance with established policies and procedures, (2) assigning all user rights and privileges on the CDA consistent with the user authorizations, (3) defining and documenting privileged functions and security-relevant information for the CDAs, (4) authorizing personnel access to privileged functions and security-relevant information consistent with established policies and procedures, (5) restricting access to privileged functions (deployed in hardware, software, and firmware) and security-relevant information to authorized personnel (e.g., security administrators), (6) defining and documenting privileged functions for CDAs, (7) requiring dual authorization for critical privileged functions and the creation of any privileged access for users, and (8) ensuring and documenting that access enforcement mechanisms do not adversely impact the operational performance of CDAs and employing alternate compensating security controls when access enforcement cannot be used.' WHERE [Requirement_Id] = 1826
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) upon successful logon, configuring CDA to display the date and time of the last logon and the number of unsuccessful logon attempts since the last successful logon, and (2) requiring all end users to report any suspicious activity to the Cyber Security Program manager.' WHERE [Requirement_Id] = 1827
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} ensures the following: (1) Security controls are implemented to limit the number of invalid access attempts by a user. The access control policy documents this requirement. The number of failed login attempts in a specified time period may vary by CDA. For example, more than three invalid attempts within a 1-hour time period will automatically lock out the account. The {{Licensee/Applicant}} system enforces the lock out mode automatically. (2) The access control policy includes a requirement that only authorized individuals, who are not the user, can unlock accounts once the maximum number of unsuccessful login attempts has been exceeded.' WHERE [Requirement_Id] = 1828
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) only allowing wireless access through a boundary security control device and treating wireless connections as outside of the security boundary, (2) prohibiting the use of wireless technologies for CDAs associated with safety-related and important-to-safety functions, (3) disabling wireless capabilities when not utilized, (4) establishing usage restrictions and implementation guidance for wireless technologies, (5) documenting, justifying, authorizing, monitoring, and controlling wireless access to CDAs and ensuring that the wireless access restrictions are consistent with defensive strategies and defensive models, as articulated in RG 5.71, and (6) conducting scans {{no less frequently than once every week}} for unauthorized wireless access points, in accordance with this document, and disabling access points if unauthorized access points are discovered.' WHERE [Requirement_Id] = 1829
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring CDAs to separate applications into user functionality (including user interface services) and CDA management functionality, (2) configuring CDAs to isolate security functions from non-security functions, which is accomplished through {{partitions, domains, etc.}}, including control of access to and integrity of the hardware, software, and firmware that perform these security functions, (3) configuring CDAs to employ underlying hardware separation mechanisms to facilitate security function isolation, (4) configuring CDAs to isolate critical security functions (i.e., functions enforcing access and information flow control) from both non-security functions and other security functions, (5) configuring CDAs to minimize the number of non-security functions included within the isolation boundary containing security functions, (6) configuring CDA security functions as independent modules that avoid unnecessary interactions between modules, (7) configuring CDA security functions as a layered structure minimizing interactions between levels of the design and avoiding any dependence by lower levels on the functionality or correctness of higher levels, and implementing alternative controls and documenting the justification for alternative controls or countermeasures for situations in which a CDA cannot support security function isolation and taking all of the following actions: (a) physically restrict access to the CDA, (b) monitor and record physical access to the CDA to detect and respond to intrusions in a timely manner, (c) use auditing/validation measures (e.g., security guard rounds, periodic monitoring of tamper seals) to detect unauthorized access and modifications to the CDAs, (d) ensure that individuals who have access to the CDAs are qualified, and (e) ensure that those individuals are trustworthy and reliable in accordance with 10 CFR 73.56.' WHERE [Requirement_Id] = 1833
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents and restricts access to "critical digital asset" (CDA) media to authorized individuals only. CDA media includes both digital media (e.g., diskettes, magnetic tapes, external or removable hard drives, flash/thumb drives, compact disks, and digital video disks) and non-digital media (e.g., paper, microfilm). {{Licensee/Applicant}} restricts access to any security information on mobile computing and communications devices with information storage capability (e.g., notebook computers, personal digital assistants, cellular telephones) to authorized individuals only. {{Licensee/Applicant}} employs automated mechanisms to restrict access to media storage areas and audits access attempts and accesses granted.' WHERE [Requirement_Id] = 1837
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring CDAs to prohibit remote activation of collaborative computing mechanisms and providing an explicit indication of use to the local user, and (2) configuring CDAs to provide physical disconnection of cameras and microphones in a manner that supports ease of use, except when these technologies are used to control and monitor the CDA for security purposes.' WHERE [Requirement_Id] = 1840
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring the systems that serve name/address resolution service for CDAs to perform data origin authentication and data integrity verification on the resolution response they receive from authoritative sources, and (2) configuring CDAs so that, upon receipt of data, they perform data origin authentication and data integrity verification on resolution responses whether or not the CDAs explicitly request this service.' WHERE [Requirement_Id] = 1842
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) enforcing and documenting assigned authorizations for controlling the flow of information, in near-real time, within CDAs and between interconnected systems in accordance with the established defensive strategy, (2) maintaining documentation that demonstrates that {{Licensee/Applicant}} has analyzed and addressed the types of permissible and impermissible flow of information between CDAs, security boundary devices, and boundaries and the required level of authorization to allow information flow as defined in the defensive strategy, (3) implementing and documenting information flow control enforcement using protected processing level (e.g., domain type-enforcement) as a basis for flow control decisions, (4) implementing near-real time capabilities to detect, deter, prevent, and respond to illegal or unauthorized information flows, (5) preventing encrypted data from bypassing content-checking mechanisms, (6) implementing one-way data flows using hardware mechanisms, (7) implementing dynamic information flow control based on policy that allows or disallows information flows based on changing conditions or operational considerations, and (8) configuring CDAs such that user credentials are not transmitted in clear text and documenting this requirement in the access control policy.' WHERE [Requirement_Id] = 1846
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents the following requirements: (1) Disable, through software or physical disconnection, unneeded networks, wireless and communication ports and removable media drives or provided engineered barriers. (2) Password protect the BIOS from unauthorized changes. (3) Document mitigation measures in cases for which password protection of the BIOS is not technically feasible. (4) Document the hardware configuration. (5) Use network devices to limit access to and from specific locations, where appropriate. (6) Allow system administrators the ability to re-enable devices if the devices are disabled by software and document the configuration. (7) Verify that replacement devices are configured in a manner that is equal to or better than the original.' WHERE [Requirement_Id] = 1848
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents all required applications, utilities, system services, scripts, configuration files, databases, and other software and the appropriate configurations, including revisions or patch levels, for each of the computer systems associated with the CDAs. {{Licensee/Applicant}} maintains a list of services required for CDAs. The listing includes all necessary ports and services required for normal and emergency operations. The listing also includes an explanation or cross reference to justify why each service is necessary for operation. Only those services and programs that are necessary for operation are allowed. {{Licensee/Applicant}} verifies and documents that all CDAs are patched or mitigated in accordance with the Flaw Remediation security controls in C 3.2. {{Licensee/Applicant}} documents the remediation period appropriate for software and service updates or workarounds to mitigate all vulnerabilities associated with the product and to maintain the established level of security. {{Licensee/Applicant}} documents the operating system and software patches as CDAs evolve to allow traceability and verifies that no extra services are reinstalled or reactivated. {{Licensee/Applicant}} removes or disables software components that are not required for the operation and maintenance of the CDA before incorporating the CDA into the production environment. {{Licensee/Applicant}} documents components that were removed or disabled. The software removed or disabled includes, but is not limited to the following: (1) device drivers for network devices not delivered, (2) device drivers for unused peripherals, (3) messaging services (e.g., MSN, AOL IM), (4) servers or clients for unused services, (5) software compilers in all user workstations and servers except for development workstations and servers, (6) software compilers for languages that are not used in the control system, (7) unused networking and communications protocols, (8) unused administrative utilities, diagnostics, network management, and system management functions, (9) backups of files, databases, and programs used only during system development, (10) all unused data and configuration files, (11) sample programs and scripts, (12) unused document processing utilities (e.g., Microsoft Word, Excel, Power Point, Adobe Acrobat, OpenOffice), (13) unused removable media support, and (14) games.' WHERE [Requirement_Id] = 1849
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} establishes, implements, and documents the following: (1) the patch management program, update process, and individuals responsible for installation, (2) notification of vulnerabilities affecting CDAs to be conducted {{within 4 hours of receipt of the vulnerability information}}, (3) notification to authorized personnel of patches affecting cyber security, (4) the authorization of updates or workarounds to the baseline before implementation, (5) the patch management process for the CDA after installation, including policies, procedures, and programs relating to mitigation strategies for instances in which the vendor of the CDA informs {{Licensee/Applicant}} not to apply released patches, and (6) the level of support for testing patch releases. {{Licensee/Applicant}} establishes, implements, and tests the following: (1) received cyber security updates on a nonproduction system/device for testing and validation before installing on production systems, and (2) all updates for security impact. {{Licensee/Applicant}} ensures that the nonproduction system/device accurately replicate the production CDA.' WHERE [Requirement_Id] = 1850
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'If technically feasible, CDAs provide automated support for the management of distributed security testing and {{Licensee/Applicant}} documents the results of this testing.' WHERE [Requirement_Id] = 1851
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) detecting and documenting unauthorized changes to software and information, (2) employing hardware access controls (e.g., hardwired switches), where technically feasible, to prevent unauthorized software changes, (3) reassessing and documenting the integrity, operation, and functions of software and information by performing regular integrity, operation, and functional scans consistent with manufacturer or vendor recommendations, {{quarterly}} or as defined in NEI 03-12 or as required by NRC regulation, whichever is more frequent, (4) employing and documenting automated tools, where technically feasible, that provide notification to designated individuals upon discovering discrepancies during integrity verification, (5) employing and documenting centrally managed integrity verification tools, (6) requiring the use of physical tamper evident packaging or seals for system components, (7) requiring, when tamper evident packaging is used, that seals be inspected on a regular basis, and (8) ensuring and documenting that the use of integrity verification applications does not adversely impact the operational performance of the CDA and applying alternate controls when integrity verification applications cannot be used.' WHERE [Requirement_Id] = 1853
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) configuring CDAs to protect against or limit the effects of denial of service attacks, (2) configuring CDAs to restrict the ability of users to launch denial of service attacks against other CDAs or networks, and (3) configuring CDAs to manage excess capacity, bandwidth, or other redundancy to limit the effects of information-flooding and saturation types of denial-of-service attacks.' WHERE [Requirement_Id] = 1855
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} established, deployed, and documents real-time malicious code protection mechanisms at security boundary device entry and exit points, CDAs (if applicable), workstations, servers, and mobile computing devices (i.e., calibrators) on the network to detect and eradicate malicious code resulting from the following: (1) data communication between systems, CDAs, removable media, or other common means, and (2) exploitation of CDA vulnerabilities. {{Licensee/Applicant}} documents and updates malicious code protection mechanisms (including signature definitions) whenever new releases are available in accordance with the {{Licensee/Applicant}}''s configuration management policy and procedures. {{Licensee/Applicant}} documents and configures malicious code protection mechanisms to ensure the following: (1) Scans are performed of security boundary devices, CDAs (if applicable), workstations, servers, and mobile computing devices weekly and real-time scans of files from external sources are performed as the files are downloaded, opened, or executed. (2) Infected files are disinfected and quarantined. {{Licensee/Applicant}} documents and employs malicious code protection software products from multiple vendors as part of a defense-in-depth strategy and addresses the receipt of false positives during malicious code detection and eradication and the resulting potential impact on the availability of the CDA. {{Licensee/Applicant}} centrally manages malicious code protection mechanisms to achieve the following: (1) The CDAs prevent users from circumventing malicious code protection capabilities. (2) The CDAs update malicious code protection mechanisms only when directed by a privileged user. {{Licensee/Applicant}} does not allow users to introduce unauthorized removable media into the CDAs. {{Licensee/Applicant}} disables all media interfaces (e.g., USB ports) that are not required for the operation of the CDA. {{Licensee/Applicant}} documents and implements malicious code protection mechanisms to identify data containing malicious code and responds accordingly when CDAs encounter data not explicitly allowed by the security policy.' WHERE [Requirement_Id] = 1856
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}}''s system and information integrity procedures contain the following attributes: (1) detects malicious or suspicious access control or networking anomalies occurring at established defensive level boundaries and within security levels, (2) alerts appropriate staff to the detected malicious or suspicious activity using a secure communications mechanism that is protected from the network being monitored, (3) isolates and contains malicious activity, (4) neutralizes malicious activity, (5) centralizes logging of cyber security events to support correlations, (6) provides for secure monitoring and management of security mechanisms, (7) provides time synchronization for all security-related devices, and (8) provides high assurance that the physical and logical security of the monitoring network (or systems/CDAs) matches or exceeds, and differs from, the systems/CDAs or networks being monitored.' WHERE [Requirement_Id] = 1858
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) monitoring events on the CDAs, (2) detecting CDAs attacks, (3) detecting and blocking unauthorized connections, (4) retaining event logs in accordance with information retention requirements, (5) identifying unauthorized use of the CDAs, and (6) monitoring devices that are deployed to provide visibility across CDAs for the following capabilities: (a) to collect information to detect attacks, unauthorized behavior and access, and authorized access, and (b) to track specific types of transactions of interest to {{Licensee/Applicant}}. {{Licensee/Applicant}} heightens the level of monitoring activity whenever {{Licensee/Applicant}} or the U.S. Nuclear Regulatory Commission (NRC) determines that there is an indication of increased risk to the safety, security, or emergency operations of the site. {{Licensee/Applicant}} documents, interconnects, and configures individual intrusion detection tools into a plant wide intrusion detection system using common protocols. {{Licensee/Applicant}} tests cyber intrusion detection and prevention systems consistent with the timeframe defined in Nuclear Energy Institute (NEI) 03-12, Section 20.1, for intrusion detection systems, and before being placed back in service after each repair or inoperative state. {{Licensee/Applicant}} documents and employs automated tools to support near-real-time analysis of events. {{Licensee/Applicant}} documents and employs automated tools to integrate intrusion detection tools into access control and flow control mechanisms for rapid response to attacks by enabling reconfiguration of these mechanisms in support of attack isolation and elimination. {{Licensee/Applicant}} monitors, logs, and documents inbound and outbound communications for unusual or unauthorized activities or conditions. Monitoring capabilities provide real-time alerts when indications of compromise or potential compromise occur. {{Licensee/Applicant}} prevents users from circumventing intrusion detection and prevention capabilities. {{Licensee/Applicant}} notifies and documents incident response personnel of suspicious events and takes the least-disruptive actions to SSEP functions to investigate and terminate suspicious events. {{Licensee/Applicant}} documents and protects information obtained from intrusion monitoring tools from unauthorized access, modification, and deletion. {{Licensee/Applicant}} uses competent cyber security personnel to randomly test and document intrusion monitoring tools. {{Licensee/Applicant}} documents and makes provisions to ensure that encrypted traffic is visible to monitoring tools. {{Licensee/Applicant}} analyzes and documents outbound communications traffic at the external boundary of CDAs (i.e., system perimeter) and, at selected interior points within the CDAs infrastructure to discover anomalies. {{Licensee/Applicant}} ensures and documents that the use of monitoring tools and techniques does not adversely impact the functional performance of CDAs and that, where monitoring tools and techniques cannot be used, adequate alternate controls are in place to compensate.' WHERE [Requirement_Id] = 1862
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} does the following: (1) Perform assessments and scans for vulnerabilities in CDAs {{no less frequently than once a quarter}} and at random intervals in accordance with Section 4.1.3 of Appendix A to RG 5.71 and when new potential CDA vulnerabilities are reported or identified. (2) Employ vulnerability scanning tools and techniques that promote interoperability among tools and automating parts of the vulnerability management process by: (a) enumerating platforms, software flaws, and improper configurations, (b) formatting and making transparent checklists and test procedures, and (c) measuring vulnerability impacts. (3) Analyze vulnerability scan reports and remediate vulnerabilities within a time period that will provide high assurance that CDAs are protected from cyberattacks up to and including the DBT. (4) Eliminate similar vulnerabilities in other CDAs. (5) Employ vulnerability scanning tools that include the capability to update the list of cyber vulnerabilities scanned and update the list of CDA vulnerabilities scanned {{monthly}} and when new vulnerabilities are identified and reported. (6) Employ vulnerability scanning procedures that maximize the breadth and depth of coverage (i.e., CDA components scanned and vulnerabilities checked). (7) Discern and document what information associated with the CDA is discoverable by adversaries. (8) Perform security testing to determine the level of difficulty in circumventing the security controls of the CDA. {{Testing methods include penetration testing, malicious user testing, and independent verification and validation}}. (9) Include privileged access authorization to CDAs for selected vulnerability scanning activities to facilitate more thorough scanning. (10) Employ automated mechanisms to compare the results of vulnerability scans over time to determine trends in CDA vulnerabilities and mitigation/flaw remediation activities. (11) Employ automated mechanisms to detect and notify authorized personnel of the presence of unauthorized software on CDAs. (12) Ensure that SSEP functions are not adversely impacted by the scanning process. Where this may occur, CDAs are removed from service or replicated (to the extent feasible) before scanning is conducted or be scheduled to occur during planned CDA outages whenever possible. Where {{Licensee/Applicant}} cannot conduct vulnerability scanning on a production CDA because of the potential for an adverse impact on SSEP functions, alternate controls (e.g., providing a replicated system or CDA to conduct scanning) are employed. The {{Licensee/Applicant}} reviews historic audit logs to determine if a vulnerability identified in the CDA has been previously exploited.' WHERE [Requirement_Id] = 1864
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) identifying and implementing standard naming conventions for identification of special dissemination, handling, or distribution instructions in compliance with a policy and set of procedures to ensure that sensitive information is protected from inadvertent disclosure and 10 CFR 73.21, "Protection of Safeguards Information: Performance Requirements," and (2) ensuring that CDAs are configured to mark hard and soft copy output using standard naming conventions to identify any special dissemination, handling, or distribution instructions (e.g., Security Related Information).' WHERE [Requirement_Id] = 1865
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} documents and requires that system developers and integrators of acquired CDAs create, implement, and document a security test and evaluation plan to ensure that the acquired products meet all specified security requirements that the products are free from known, testable vulnerabilities and malicious code by identifying and eliminating these following vulnerabilities and other vulnerabilities that may change with new technology: (1) weak, unproven, or nonstandard cryptographic modules, insecure network protocols for sensitive communications, (2) known insecure software components or libraries, (3) known vulnerabilities, (4) insecure configuration files or options that act to control features of the application, (5) inadequate or inappropriate use of access control mechanisms to control access to system resources, (6) inappropriate privileges being granted to users, processes, or applications, (7) weak authentication mechanisms, (8) improperly or failing to validate input and output data, (9) insecure or inadequate logging of system errors or security-related information, (10) inadequately bounded buffers, (11) format string vulnerabilities, (12) privilege escalation vulnerabilities, (13) unsafe database transactions, (14) unsafe use of native function calls, (15) hidden functions and vulnerable features embedded in the code, (16) implemented security features do not themselves act to increase the risk of security vulnerabilities, increase susceptibility to cyberattack, or reduce the reliability of design-basis functions. (17) use of unsupported or undocumented methods or functions, and (18) use of undocumented code or malicious functions that might allow either unauthorized access or use of the system or the system to behave beyond the system requirements.' WHERE [Requirement_Id] = 1867
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} protects against supply chain threats and vulnerability by employing the following list of measures to protect against supply chain threats to maintain the integrity of the CDAs that are acquired: (1) establishment of trusted distribution paths, (2) validation of vendors, and (3) requiring tamper proof products or tamper evident seals on acquired products. {{Licensee/Applicant}} performs an analysis for each product acquisition to determine that the product provides the security requirements necessary to address the security controls in Appendixes B and C to RG 5.71. {{Licensee/Applicant}} uses heterogeneity to mitigate vulnerabilities associated with the use of a single vendor''s product.' WHERE [Requirement_Id] = 1871
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'{{Licensee/Applicant}} is responsible for the following: (1) approving, monitoring, and documenting the use of CDA maintenance tools, (2) inspecting and documenting maintenance tools (e.g., diagnostic and test equipment and mobile devices, such as laptops) carried into a facility by maintenance personnel for obvious improper modifications, (3) checking and documenting all media and mobile devices, such as laptops, containing diagnostic, CDA, and system and test programs or software for malicious code before the media or mobile device is used in or on a CDA, (4) controlling, preventing and documenting the unauthorized removal of maintenance equipment by one of the following: (a) verifying that there is no {{Licensee/Applicant}} information contained on the equipment and validating the integrity of the device before reintroduction into the facility, (b) sanitizing or destroying the equipment, (c) retaining the equipment within the facility, and (d) obtaining approval from an authority explicitly authorizing removal of the equipment from the facility, and (5) employing {{automated/manual}} mechanisms to restrict the use of maintenance tools to authorized personnel only and employing manual mechanisms only when CDAs or support equipment (e.g., laptops) cannot support automated mechanisms.' WHERE [Requirement_Id] = 1872
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'<ol type="a"> <li>Develop, document, and disseminate to {{Assignment: organization-defined personnel or roles}}: <ol> <li>{{Selection (one or more): Organization-level; Mission/business process-level; System-level}} access control policy that: <ol type="a"> <li>Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and</li> <li>Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and</li> </ol> </li> <li>Procedures to facilitate the implementation of the access control policy and the associated access controls;</li> </ol> </li> <li>Designate an {{Assignment: organization-defined official}} to manage the development, documentation, and dissemination of the access control policy and procedures; and</li> <li>Review and update the current access control: <ol> <li>Policy {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}; and</li> <li>Procedures {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}.</li> </ol> </li> </ol>' WHERE [Requirement_Id] = 3900
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'<ol type="a"> <li>Define and document the types of accounts allowed and specifically prohibited for use within the system;</li> <li>Assign account managers;</li> <li>Require {{Assignment: organization-defined prerequisites and criteria}} for group and role membership;</li> <li>Specify: <ol> <li>Authorized users of the system;</li> <li>Group and role membership; and</li> <li>Access authorizations (i.e., privileges) and {{Assignment: organization-defined attributes (as required)}} for each account;</li> </ol> </li> <li>Require approvals by {{Assignment: organization-defined personnel or roles}} for requests to create accounts;</li> <li>Create, enable, modify, disable, and remove accounts in accordance with {{Assignment: organization-defined policy, procedures, prerequisites, and criteria}};</li> <li>Monitor the use of accounts;</li> <li>Notify account managers and {{Assignment: organization-defined personnel or roles}} within: <ol> <li>{{Assignment: organization-defined time period}} when accounts are no longer required;</li> <li>{{Assignment: organization-defined time period}} when users are terminated or transferred; and</li> <li>{{Assignment: organization-defined time period}} when system usage or need-to-know changes for an individual;</li> </ol> </li> <li>Authorize access to the system based on: <ol> <li>A valid access authorization;</li> <li>Intended system usage; and</li> <li>{{Assignment: organization-defined attributes (as required)}};</li> </ol> </li> <li>Review accounts for compliance with account management requirements {{Assignment: organization-defined frequency}};</li> <li>Establish and implement a process for changing shared or group account authenticators (if deployed) when individuals are removed from the group; and</li> <li>Align account management processes with personnel termination and transfer processes.</li> </ol>' WHERE [Requirement_Id] = 3901
@@ -12015,31 +14400,6 @@ UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'<p>Maintain configuratio
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Scan for counterfeit system components {{Assignment: organization-defined frequency}}.' WHERE [Requirement_Id] = 31050
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'<p>Dispose of {{Assignment: organization-defined data, documentation, tools, or system components}} using the following techniques and methods: {{Assignment: organization-defined techniques and methods}}.</p>
 ' WHERE [Requirement_Id] = 31051
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Provide basic security and privacy awareness training to system users (including managers, senior executives, and contractors): a. As part of initial training for new users; b. When required by system changes; and c. [Assignment: organization-defined frequency] thereafter.' WHERE [Requirement_Id] = 31510
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Provide role-based security and privacy training to personnel with the following roles and responsibilities: [Assignment: organization-defined roles and responsibilities]: a. Before authorizing access to the system or performing assigned duties; b. When required by system changes; and c. [Assignment: organization-defined frequency] thereafter.' WHERE [Requirement_Id] = 31512
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Review and analyze system audit records [Assignment: organization-defined frequency] for indications of [Assignment: organization-defined inappropriate or unusual activity]; b. Report findings to [Assignment: organization-defined personnel or roles]; and c. Adjust the level of audit review, analysis, and reporting within the system when there is a change in risk based on law enforcement information, intelligence information, or other credible sources of information.' WHERE [Requirement_Id] = 31513
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Authorize connections from the system to other systems using Interconnection Security Agreements; b. Document, for each interconnection, the interface characteristics, security and privacy requirements, and the nature of the information communicated; and c. Review and update Interconnection Security Agreements [Assignment: organization-defined frequency].' WHERE [Requirement_Id] = 31516
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop and document an inventory of system components that: 1. Accurately reflects the current system; 2. Includes all components within the authorization boundary of the system; 3. Is at the level of granularity deemed necessary for tracking and reporting; and 4. Includes [Assignment: organization-defined information deemed necessary to achieve effective system component accountability]; and b. Review and update the system component inventory [Assignment: organization-defined frequency].' WHERE [Requirement_Id] = 31517
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop a contingency plan for the system that: 1. Identifies essential missions and business functions and associated contingency requirements; 2. Provides recovery objectives, restoration priorities, and metrics; 3. Addresses contingency roles, responsibilities, assigned individuals with contact information; 4. Addresses maintaining essential missions and business functions despite a system disruption, compromise, or failure; 5. Addresses eventual, full system restoration without deterioration of the security and privacy controls originally planned and implemented; and 6. Is reviewed and approved by [Assignment: organization-defined personnel or roles]; b. Distributes copies of the contingency plan to [Assignment: organization-defined key contingency personnel (identified by name and/or by role) and organizational elements]; c. Coordinates contingency planning activities with incident handling activities; d. Reviews the contingency plan for the system [Assignment: organization-defined frequency]; e. Updates the contingency plan to address changes to the organization, system, or environment of operation and problems encountered during contingency plan implementation, execution, or testing; f. Communicates contingency plan changes to [Assignment: organization-defined key contingency personnel (identified by name and/or by role) and organizational elements]; and g. Protects the contingency plan from unauthorized disclosure and modification.' WHERE [Requirement_Id] = 31518
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Test the contingency plan for the system [Assignment: organization-defined frequency] using [Assignment: organization-defined tests] to determine the effectiveness of the plan and the organizational readiness to execute the plan; b. Review the contingency plan test results; and c. Initiate corrective actions, if needed.' WHERE [Requirement_Id] = 31520
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Establish an alternate processing site including necessary agreements to permit the transfer and resumption of [Assignment: organization-defined system operations] for essential missions and business functions within [Assignment: organization-defined time-period consistent with recovery time and recovery point objectives] when the primary processing capabilities are unavailable; b. Make available at the alternate processing site, the equipment and supplies required to transfer and resume operations or put contracts in place to support delivery to the site within the organization-defined time-period for transfer and resumption; and c. Provide information security and privacy safeguards at the alternate processing site that are equivalent to those at the primary site.' WHERE [Requirement_Id] = 31521
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Conduct backups of user-level information contained in the system [Assignment: organization-defined frequency consistent with recovery time and recovery point objectives]; b. Conduct backups of system-level information contained in the system [Assignment: organization-defined frequency consistent with recovery time and recovery point objectives]; c. Conduct backups of system documentation including security-related documentation [Assignment: organization-defined frequency consistent with recovery time and recovery point objectives]; and d. Protect the confidentiality, integrity, and availability of backup information at storage locations.' WHERE [Requirement_Id] = 31522
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Provide incident response training to system users consistent with assigned roles and responsibilities: a. Within [Assignment: organization-defined time-period] of assuming an incident response role or responsibility; b. When required by system changes; and c. [Assignment: organization-defined frequency] thereafter.' WHERE [Requirement_Id] = 31524
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop an incident response plan that: 1. Provides the organization with a roadmap for implementing its incident response capability; 2. Describes the structure and organization of the incident response capability; 3. Provides a high-level approach for how the incident response capability fits into the overall organization; 4. Meets the unique requirements of the organization, which relate to mission, size, structure, and functions; 5. Defines reportable incidents; 6. Provides metrics for measuring the incident response capability within the organization; 7. Defines the resources and management support needed to effectively maintain and mature an incident response capability; 8. Is reviewed and approved by [Assignment: organization-defined personnel or roles] [Assignment: organization-defined frequency]; and 9. Explicitly designates responsibility for incident response to [Assignment: organization-defined entities, personnel, or roles]. b. Distribute copies of the incident response plan to [Assignment: organization-defined incident response personnel (identified by name and/or by role) and organizational elements]; c. Update the incident response plan to address system and organizational changes or problems encountered during plan implementation, execution, or testing; d. Communicate incident response plan changes to [Assignment: organization-defined incident response personnel (identified by name and/or by role) and organizational elements]; and e. Protect the incident response plan from unauthorized disclosure and modification.' WHERE [Requirement_Id] = 31526
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Schedule, document, and review records of maintenance, repair, or replacement on system components in accordance with manufacturer or vendor specifications and/or organizational requirements; b. Approve and monitor all maintenance activities, whether performed on site or remotely and whether the system or system components are serviced on site or removed to another location; c. Require that [Assignment: organization-defined personnel or roles] explicitly approve the removal of the system or system components from organizational facilities for off-site maintenance, repair, or replacement; d. Sanitize equipment to remove all information from associated media prior to removal from organizational facilities for off-site maintenance, repair, or replacement; e. Check all potentially impacted security and privacy controls to verify that the controls are still functioning properly following maintenance, repair, or replacement actions; and f. Include [Assignment: organization-defined maintenance-related information] in organizational maintenance records.' WHERE [Requirement_Id] = 31527
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop, approve, and maintain a list of individuals with authorized access to the facility where the system resides; b. Issue authorization credentials for facility access; c. Review the access list detailing authorized facility access by individuals [Assignment: organization-defined frequency]; and d. Remove individuals from the facility access list when access is no longer required' WHERE [Requirement_Id] = 31528
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop a Concept of Operations (CONOPS) for the system describing how the organization intends to operate the system from the perspective of information security and privacy; and b. Review and update the CONOPS [Assignment: organization-defined frequency].' WHERE [Requirement_Id] = 31530
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop security and privacy architectures for the system that: 1. Describe the requirements and approach to be taken for protecting the confidentiality, integrity, and availability of organizational information; 2. Describe the requirements and approach to be taken for processing personally identifiable information to minimize privacy risk to individuals; 3. Describe how the architectures are integrated into and support the enterprise architecture; and 4. Describe any assumptions about, and dependencies on, external systems and services; b. Review and update the architectures [Assignment: organization-defined frequency] to reflect changes in the enterprise architecture; and c. Reflect planned architecture changes in security and privacy plans, Concept of Operations (CONOPS), criticality analysis, organizational procedures, and procurements and acquisitions.' WHERE [Requirement_Id] = 31531
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Establish personnel security requirements including security roles and responsibilities for external providers; b. Require external providers to comply with personnel security policies and procedures established by the organization; c. Document personnel security requirements; d. Require external providers to notify [Assignment: organization-defined personnel or roles] of any personnel transfers or terminations of external personnel who possess organizational credentials and/or badges, or who have system privileges within [Assignment: organization-defined time-period]; and e. Monitor provider compliance.' WHERE [Requirement_Id] = 31532
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Conduct a risk assessment, including the likelihood and magnitude of harm, from: 1. The unauthorized access, use, disclosure, disruption, modification, or destruction of the system, the information it processes, stores, or transmits, and any related information; and 2. Privacy-related problems for individuals arising from the intentional processing of personally identifiable information; b. Integrate risk assessment results and risk management decisions from the organization and missions/business process perspectives with system-level risk assessments; c. Document risk assessment results in [Selection: security and privacy plans; risk assessment report; [Assignment: organization-defined document]]; d. Review risk assessment results [Assignment: organization-defined frequency]; e. Disseminate risk assessment results to [Assignment: organization-defined personnel or roles]; and f. Update the risk assessment [Assignment: organization-defined frequency] or when there are significant changes to the system, its environment of operation, or other conditions that may impact the security or privacy state of the system.' WHERE [Requirement_Id] = 31534
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Scan for vulnerabilities in the system and hosted applications [Assignment: organization-defined frequency and/or randomly in accordance with organization-defined process] and when new vulnerabilities potentially affecting the system are identified and reported; b. Employ vulnerability scanning tools and techniques that facilitate interoperability among tools and automate parts of the vulnerability management process by using standards for: 1. Enumerating platforms, software flaws, and improper configurations; 2. Formatting checklists and test procedures; and 3. Measuring vulnerability impact; c. Analyze vulnerability scan reports and results from control assessments; d. Remediate legitimate vulnerabilities [Assignment: organization-defined response times] in accordance with an organizational assessment of risk; e. Share information obtained from the vulnerability scanning process and control assessments with [Assignment: organization-defined personnel or roles] to help eliminate similar vulnerabilities in other systems; and f. Employ vulnerability scanning tools that include the capability to readily update the vulnerabilities to be scanned.' WHERE [Requirement_Id] = 31535
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Require that providers of external system services comply with organizational security and privacy requirements and employ [Assignment: organization-defined security and privacy controls]; b. Define and document organizational oversight and user roles and responsibilities with regard to external system services; and c. Employ [Assignment: organization-defined processes, methods, and techniques] to monitor security and privacy control compliance by external service providers on an ongoing basis.' WHERE [Requirement_Id] = 31536
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'(a) Employ [Assignment: organization-defined monitoring tools] to detect indicators of denial of service attacks against the system; and (b) Monitor [Assignment: organization-defined system resources] to determine if sufficient resources exist to prevent effective denial of service attacks.' WHERE [Requirement_Id] = 31538
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Monitor and control communications at the external boundary of the system and at key internal boundaries within the system; b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.' WHERE [Requirement_Id] = 31539
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'[Selection: Physically or Logically] disable or remove [Assignment: organization-defined connection ports or input/output devices] on [Assignment: organization-defined systems or system components].' WHERE [Requirement_Id] = 31543
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Monitor the system to detect: 1. Attacks and indicators of potential attacks in accordance with [Assignment: organization-defined monitoring objectives]; and 2. Unauthorized local, network, and remote connections; b. Identify unauthorized use of the system through [Assignment: organization-defined techniques and methods]; c. Invoke internal monitoring capabilities or deploy monitoring devices: 1. Strategically within the system to collect organization-determined essential information; and 2. At ad hoc locations within the system to track specific types of transactions of interest to the organization; d. Protect information obtained from intrusion-monitoring tools from unauthorized access, modification, and deletion; e. Adjust the level of system monitoring activity when there is a change in risk to organizational operations and assets, individuals, other organizations, or the Nation; f. Obtain legal opinion regarding system monitoring activities; and g. Provide [Assignment: organization-defined system monitoring information] to [Assignment: organization-defined personnel or roles] [Selection (one or more): as needed; [Assignment: organization-defined frequency]].' WHERE [Requirement_Id] = 31544
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop a plan for managing supply chain risks associated with the research and development, design, manufacturing, acquisition, delivery, integration, operations and maintenance, and disposal of the following systems, system components or system services: [Assignment: organization-defined systems, system components, or system services]; b. Review and update the supply chain risk management plan [Assignment: organization-defined frequency] or as required, to address threat, organizational or environmental changes; and c. Protect the supply chain risk management plan from unauthorized disclosure and modification.' WHERE [Requirement_Id] = 31545
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Employ hardware-based, write-protect for [Assignment: organization-defined system firmware components]; and b. Implement specific procedures for [Assignment: organization-defined authorized individuals] to manually disable hardware write-protect for firmware modifications and re-enable the write-protect prior to returning to operational mode.' WHERE [Requirement_Id] = 31549
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Define and document the types of system accounts allowed for use within the system in support of organizational missions and business functions; b. Assign account managers for system accounts; c. Establish conditions for group and role membership; d. Specify authorized users of the system, group and role membership, and access authorizations (i.e., privileges) and other attributes (as required) for each account; e. Require approvals by [Assignment: organization-defined personnel or roles] for requests to create system accounts; f. Create, enable, modify, disable, and remove system accounts in accordance with [Assignment: organization-defined policy, procedures, and conditions]; g. Monitor the use of system accounts; h. Notify account managers within [Assignment: organization-defined time-period for each situation]: 1. When accounts are no longer required; 2. When users are terminated or transferred; and 3. When individual system usage or need-to-know changes for an individual; i. Authorize access to the system based on: 1. A valid access authorization; 2. Intended system usage; and 3. Other attributes as required by the organization or associated missions and business functions; j. Review accounts for compliance with account management requirements [Assignment: organization-defined frequency]; k. Establish a process for reissuing shared/group account credentials (if deployed) when individuals are removed from the group; and l. Align account management processes with personnel termination and transfer processes.' WHERE [Requirement_Id] = 31551
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Provide basic security and privacy awareness training to system users (including managers, senior executives, and contractors): a. As part of initial training for new users; b. When required by system changes; and c. [Assignment: organization-defined frequency] thereafter.' WHERE [Requirement_Id] = 31565
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Provide role-based security and privacy training to personnel with the following roles and responsibilities: [Assignment: organization-defined roles and responsibilities]: a. Before authorizing access to the system or performing assigned duties; b. When required by system changes; and c. [Assignment: organization-defined frequency] thereafter.' WHERE [Requirement_Id] = 31567
@@ -12067,19 +14427,6 @@ UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Monitor the system to
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop a plan for managing supply chain risks associated with the research and development, design, manufacturing, acquisition, delivery, integration, operations and maintenance, and disposal of the following systems, system components or system services: [Assignment: organization-defined systems, system components, or system services]; b. Review and update the supply chain risk management plan [Assignment: organization-defined frequency] or as required, to address threat, organizational or environmental changes; and c. Protect the supply chain risk management plan from unauthorized disclosure and modification.' WHERE [Requirement_Id] = 31600
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Employ hardware-based, write-protect for [Assignment: organization-defined system firmware components]; and b. Implement specific procedures for [Assignment: organization-defined authorized individuals] to manually disable hardware write-protect for firmware modifications and re-enable the write-protect prior to returning to operational mode.' WHERE [Requirement_Id] = 31604
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Is there a method in place where notifications are recieved about cyber threats that are actively targeting other organizations (such as joining an information sharing and analysis organization (ISAO) or information sharing and analysis center(ISAC))? Establish a method to receive notifications about cyber threats that are actively targeting other organizations. The most effective way to do this is to join an information sharing and analysis organization (ISAO) or information sharing and analysis center (ISAC). Participating in an appropriate ISAO or ISAC is a great way to manage incident response. As directed by Executive Order 13691, when a member organization provides an ISAO with information about cyber-related breaches, interference, compromise, or incapacitation, the ISAO must: • protect the individuals’ privacy and civil liberties, • preserve business confidentiality, and • safeguard the information being shared. ISAOs and ISACs establish communities of professionals who are prepared to respond to the same cyber threats. By joining such a community, security and IT professionals bridge knowledge gaps with information provided by their peers via the ISAC/ISAO. ISACs and ISAOs tend to focus on a specific vertical (such as the Health Information Sharing and Analysis Center [H-ISAC] within the health care sector) or community (such as the Population Health ISAO). In all cases, the primary function of these associations is to establish and maintain channels for sharing cyber intelligence. Threats Mitigated 1. Phishing attack 2. Ransomware attack 3. Loss or theft of equipment 4. Insider, accidental or intentional data loss 5. Attacks against connected medical devices that may affect patient safety' WHERE [Requirement_Id] = 36327
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'A process shall be employed for analyzing security-related issues in the product to include: a) assessing their impact with respect to: 1) the actual security context in which they were discovered; 2) the product’s security context (see Clause 6, Practice 2 – Specification of security requirements); and 3) the product’s defense in depth strategy (see Clause 7, Practice 3 – Secure by design); b) severity as defined by a vulnerability scoring system (for example, CVSS); c) identifying all other products/product versions containing the security-related issue (if any); d) identifying the root causes of the issue; and e) identifying related security issues. For root cause analysis, a methodical approach such as that described in IEC 62740 [23] may be employed.' WHERE [Requirement_Id] = 36387
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Enforce a limit of [Assignment: organization-defined number] consecutive invalid logon attempts by a user during a [Assignment: organization-defined time period]; and b. Automatically [Selection (one or more): lock the account or node for an [Assignment: organization-defined time period]; lock the account or node until released by an administrator; delay next logon prompt per [Assignment: organization-defined delay algorithm]; notify system administrator; take other [Assignment: organization-defined action]] when the maximum number of unsuccessful attempts is exceeded.' WHERE [Requirement_Id] = 36509
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Is there a method in place where notifications are recieved about cyber threats that are actively targeting other organizations (such as joining an information sharing and analysis organization (ISAO) or information sharing and analysis center(ISAC))? Establish a method to receive notifications about cyber threats that are actively targeting other organizations. The most effective way to do this is to join an information sharing and analysis organization (ISAO) or information sharing and analysis center (ISAC). Participating in an appropriate ISAO or ISAC is a great way to manage incident response. As directed by Executive Order 13691, when a member organization provides an ISAO with information about cyber-related breaches, interference, compromise, or incapacitation, the ISAO must: • protect the individuals’ privacy and civil liberties, • preserve business confidentiality, and • safeguard the information being shared. ISAOs and ISACs establish communities of professionals who are prepared to respond to the same cyber threats. By joining such a community, security and IT professionals bridge knowledge gaps with information provided by their peers via the ISAC/ISAO. ISACs and ISAOs tend to focus on a specific vertical (such as the Health Information Sharing and Analysis Center [H-ISAC] within the health care sector) or community (such as the Population Health ISAO). In all cases, the primary function of these associations is to establish and maintain channels for sharing cyber intelligence. Threats Mitigated 1. Phishing attack 2. Ransomware attack 3. Loss or theft of equipment 4. Insider, accidental or intentional data loss 5. Attacks against connected medical devices that may affect patient safety' WHERE [Requirement_Id] = 36545
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R1. Each Responsible Entity shall implement a process that considers each of the following assets for purposes of parts 1.1 through 1.3: [Violation Risk Factor: High] [Time Horizon: Operations Planning] i. Control Centers and backup Control Centers; ii. Transmission stations and substations; iii. Generation resources; iv. Systems and facilities critical to system restoration, including Blackstart Resources and Cranking Paths and initial switching requirements; v. Special Protection Systems that support the reliable operation of the Bulk Electric System; and vi. For Distribution Providers, Protection Systems specified in Applicability section 4.2.1 above.' WHERE [Requirement_Id] = 36575
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R2. The Responsible Entity shall: [Violation Risk Factor: Lower] [Time Horizon: Operations Planning] 2.1 Review the identifications in Requirement R1 and its parts (and update them if there are changes identified) at least once every 15 calendar months, even if it has no identified items in Requirement R1, 2.2 Have its CIP Senior Manager or delegate approve the identifications required by Requirement R1 at least once every 15 calendar months, even if it has no identified items in Requirement R1.' WHERE [Requirement_Id] = 36579
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R1. Each Responsible Entity shall review and obtain CIP Senior Manager approval at least once every 15 calendar months for one or more documented cyber security policies that collectively address the following topics: [Violation Risk Factor: Medium] [Time Horizon: Operations Planning] 1.1 For its high impact and medium impact BES Cyber Systems, if any: 1.1.1. Personnel and training (CIP-004); 1.1.2. Electronic Security Perimeters (CIP-005) including Interactive Remote Access; 1.1.3. Physical security of BES Cyber Systems (CIP-006); 1.1.4. System security management (CIP-007); 1.1.5. Incident reporting and response planning (CIP-008); 1.1.6. Recovery plans for BES Cyber Systems (CIP-009); 1.1.7. Configuration change management and vulnerability assessments (CIP-010); 1.1.8. Information protection (CIP-011); and 1.1.9. Declaring and responding to CIP Exceptional Circumstances. 1.2 For its assets identified in CIP-002 containing low impact BES Cyber Systems, if any: 1.2.1. Cyber security awareness; 1.2.2. Physical security controls; 1.2.3. Electronic access controls for Low Impact External Routable Connectivity (LERC) and Dial-up Connectivity; and 1.2.4. Cyber Security Incident response' WHERE [Requirement_Id] = 36580
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R2. Each Responsible Entity with at least one asset identified in CIP-002 containing low impact BES Cyber Systems shall implement one or more documented cyber security plan(s) for its low impact BES Cyber Systems that include the sections in Attachment 1. [Violation Risk Factor: Lower] [Time Horizon: Operations Planning] Note: An inventory, list, or discrete identification of low impact BES Cyber Systems or their BES Cyber Assets is not required. Lists of authorized users are not required.' WHERE [Requirement_Id] = 36581
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R3. Each Responsible Entity shall implement one or more documented personnel risk assessment program(s) to attain and retain authorized electronic or authorized unescorted physical access to BES Cyber Systems that collectively include each of the applicable requirement parts in CIP-004-6 Table R3 – Personnel Risk Assessment Program. [Violation Risk Factor: Medium] [Time Horizon: Operations Planning]. 3.1 Process to confirm identity. 3.2 Process to perform a seven year criminal history records check as part of each personnel risk assessment that includes: 3.2.1. current residence, regardless of duration; and 3.2.2. other locations where, during the seven years immediately prior to the date of the criminal history records check, the subject has resided for six consecutive months or more. If it is not possible to perform a full seven year criminal history records check, conduct as much of the seven year criminal history records check as possible and document the reason the full seven year criminal history records check could not be performed.' WHERE [Requirement_Id] = 36590
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R1. Each Responsible Entity shall implement a process that considers each of the following assets for purposes of parts 1.1 through 1.3: [Violation Risk Factor: High] [Time Horizon: Operations Planning] i. Control Centers and backup Control Centers; ii. Transmission stations and substations; iii. Generation resources; iv. Systems and facilities critical to system restoration, including Blackstart Resources and Cranking Paths and initial switching requirements; v. Special Protection Systems that support the reliable operation of the Bulk Electric System; and vi. For Distribution Providers, Protection Systems specified in Applicability section 4.2.1 above.' WHERE [Requirement_Id] = 36721
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R2. The Responsible Entity shall: [Violation Risk Factor: Lower] [Time Horizon: Operations Planning] 2.1 Review the identifications in Requirement R1 and its parts (and update them if there are changes identified) at least once every 15 calendar months, even if it has no identified items in Requirement R1, 2.2 Have its CIP Senior Manager or delegate approve the identifications required by Requirement R1 at least once every 15 calendar months, even if it has no identified items in Requirement R1.' WHERE [Requirement_Id] = 36725
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R1. Each Responsible Entity shall review and obtain CIP Senior Manager approval at least once every 15 calendar months for one or more documented cyber security policies that collectively address the following topics: [Violation Risk Factor: Medium] [Time Horizon: Operations Planning] 1.1 For its high impact and medium impact BES Cyber Systems, if any: 1.1.1. Personnel and training (CIP-004); 1.1.2. Electronic Security Perimeters (CIP-005) including Interactive Remote Access; 1.1.3. Physical security of BES Cyber Systems (CIP-006); 1.1.4. System security management (CIP-007); 1.1.5. Incident reporting and response planning (CIP-008); 1.1.6. Recovery plans for BES Cyber Systems (CIP-009); 1.1.7. Configuration change management and vulnerability assessments (CIP-010); 1.1.8. Information protection (CIP-011); and 1.1.9. Declaring and responding to CIP Exceptional Circumstances. 1.2 For its assets identified in CIP-002 containing low impact BES Cyber Systems, if any: 1.2.1. Cyber security awareness; 1.2.2. Physical security controls; 1.2.3. Electronic access controls for Low Impact External Routable Connectivity (LERC) and Dial-up Connectivity; and 1.2.4. Cyber Security Incident response' WHERE [Requirement_Id] = 36726
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R2. Each Responsible Entity with at least one asset identified in CIP-002 containing low impact BES Cyber Systems shall implement one or more documented cyber security plan(s) for its low impact BES Cyber Systems that include the sections in Attachment 1. [Violation Risk Factor: Lower] [Time Horizon: Operations Planning] Note: An inventory, list, or discrete identification of low impact BES Cyber Systems or their BES Cyber Assets is not required. Lists of authorized users are not required.' WHERE [Requirement_Id] = 36727
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'R3. Each Responsible Entity shall implement one or more documented personnel risk assessment program(s) to attain and retain authorized electronic or authorized unescorted physical access to BES Cyber Systems that collectively include each of the applicable requirement parts in CIP-004-6 Table R3 – Personnel Risk Assessment Program. [Violation Risk Factor: Medium] [Time Horizon: Operations Planning]. 3.1 Process to confirm identity. 3.2 Process to perform a seven year criminal history records check as part of each personnel risk assessment that includes: 3.2.1. current residence, regardless of duration; and 3.2.2. other locations where, during the seven years immediately prior to the date of the criminal history records check, the subject has resided for six consecutive months or more. If it is not possible to perform a full seven year criminal history records check, conduct as much of the seven year criminal history records check as possible and document the reason the full seven year criminal history records check could not be performed.' WHERE [Requirement_Id] = 36736
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'OT Discussion: The policy specifically addresses the unique properties and requirements of OT and the relationship to non-OT systems. OT access by vendors and maintenance staff can occur over a large facility footprint or geographic area and into unobserved spaces, such as mechanical or electrical rooms, ceilings, floors, field substations, switch and valve vaults, and pump stations. a. Develop, document, and disseminate to {{Assignment: organization-defined personnel or roles}}: 1. {{Selection (one or more): Organization-level; Mission/business process-level; System level}} access control policy that: (a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and (b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and 2. Procedures to facilitate the implementation of the access control policy and the associated access controls; b. Designate an {{Assignment: organization-defined official}} to manage the development, documentation, and dissemination of the access control policy and procedures; and c. Review and update the current access control: 1. Policy {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}; and 2. Procedures {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}. a. Develop, document, and disseminate to {{Assignment: organization-defined personnel or roles}}: 1. {{Selection (one or more): Organization-level; Mission/business process-level; System level}} access control policy that: (a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and (b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and 2. Procedures to facilitate the implementation of the access control policy and the associated access controls; b. Designate an {{Assignment: organization-defined official}} to manage the development, documentation, and dissemination of the access control policy and procedures; and c. Review and update the current access control: 1. Policy {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}; and 2. Procedures {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}. ' WHERE [Requirement_Id] = 37052
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'OT Discussion: In OT systems, physical security, personnel security, intrusion detection, or auditing measures may support this control objective. a. Define and document the types of accounts allowed and specifically prohibited for use within the system; b. Assign account managers; c. Require {{Assignment: organization-defined prerequisites and criteria}} for group and role membership; d. Specify: 1. Authorized users of the system; 2. Group and role membership; and 3. Access authorizations (i.e., privileges) and {{Assignment: organization-defined attributes (as required)}} for each account; e. Require approvals by {{Assignment: organization-defined personnel or roles}} for requests to create accounts; f. Create, enable, modify, disable, and remove accounts in accordance with {{Assignment: organization-defined policy, procedures, prerequisites, and criteria}}; g. Monitor the use of accounts; h. Notify account managers and {{Assignment: organization-defined personnel or roles}} within: 1. {{Assignment: organization-defined time period}} when accounts are no longer required; 2. {{Assignment: organization-defined time period}} when users are terminated or transferred; and 3. {{Assignment: organization-defined time period}} when system usage or need-to-know changes for an individual; i. Authorize access to the system based on: 1. A valid access authorization; 2. Intended system usage; and 3. {{Assignment: organization-defined attributes (as required)}}; j. Review accounts for compliance with account management requirements {{Assignment: organization-defined frequency}}; k. Establish and implement a process for changing shared or group account authenticators (if deployed) when individuals are removed from the group; and l. Align account management processes with personnel termination and transfer processes.' WHERE [Requirement_Id] = 37053
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'OT Discussion: When the OT (e.g., field devices) cannot support temporary or emergency accounts, this enhancement does not apply. Example compensating controls include employing nonautomated mechanisms or procedures. Automatically {{Selection: remove; disable}} temporary and emergency accounts after {{Assignment: organization-defined time period for each type of account}}.' WHERE [Requirement_Id] = 37054
@@ -12712,7 +15059,7 @@ UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Employ the following Ope
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Establish agreements and procedures with entities involved in the supply chain for the system, system component, or system service for the notification of supply chain compromises; and the sharing of results from assessments, audits or other sources that can assist the mitigation and resolution of supply chain risks or improve its processes. <br>{{Implementation Statement}}<br> Related Controls: IR-4, IR-6, IR-8 ' WHERE [Requirement_Id] = 38024
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Implement a tamper protection program for the system, system component, or system service. <br>{{a: Implementation Statement}}<br> Related Controls: PE-3, PM-30, SA-15, SI-4, SI-7, SR-3, SR-4, SR-5, SR-10, SR-11 b. Security Controls Enhancement(s): <br>{{b: Implementation Statement}}<br> ' WHERE [Requirement_Id] = 38025
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Employ anti-tamper technologies, tools, and techniques throughout the system development life cycle. <br>{{Implementation Statement}}<br> Related Controls: SA-3 ' WHERE [Requirement_Id] = 38026
-PRINT(N'Operation applied to 5270 rows out of 5270')
+PRINT(N'Operation applied to 5113 rows out of 5113')
 
 PRINT(N'Update rows in [dbo].[NEW_QUESTION]')
 UPDATE [dbo].[NEW_QUESTION] SET [Original_Set_Name]=N'C800_53_R5_V2' WHERE [Question_Id] = 1
@@ -16335,6 +18682,165 @@ INSERT INTO [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS] ([Option_Id], [DataItemName], [
 SET IDENTITY_INSERT [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS] OFF
 PRINT(N'Operation applied to 14 rows out of 14')
 
+PRINT(N'Add rows to [dbo].[DIAGRAM_CONTAINER]')
+SET IDENTITY_INSERT [dbo].[DIAGRAM_CONTAINER] ON
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23567, N'Layer', N'Main Layer', 1, N'1', 101379, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23570, N'Layer', N'Main Layer', 1, N'1', 101471, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23571, N'Zone', N'Wind Turbine Generators Virtual Machines-High', 0, N'5', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23572, N'Zone', N'Security VLAN-Moderate', 0, N'2', 101471, N'Moderate', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23573, N'Zone', N'Jump Host VLAN-Moderate', 0, N'3', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23574, N'Zone', N'SCADA VLAN-High', 0, N'4', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23575, N'Zone', N'Internet Sites-Low', 0, N'kq5FGfvMyonBIMvHzh2S-187', 101471, N'Low', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23576, N'Zone', N'Wind Site O/O-High', 0, N'kq5FGfvMyonBIMvHzh2S-199', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23577, N'Zone', N'Grid Operator-High-High', 0, N'bi1JvaAtu-6lTVzKTB_4-164', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23578, N'Zone', N'OEM Monitoring/Prognostics-High', 0, N'bi1JvaAtu-6lTVzKTB_4-178', 101471, N'High', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23579, N'Zone', N'Non-Critical VLAN-Low', 0, N'MSz8OllPPVoPWrnuEWKm-203', 101471, N'Low', 23570, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23580, N'Layer', N'Main Layer', 1, N'1', 101569, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23581, N'Zone', N'Corporate-Low', 0, N'2', 101569, N'Low', 23580, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23582, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 101569, N'High', 23580, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23583, N'Layer', N'Main Layer', 1, N'1', 101578, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23584, N'Zone', N'Corporate-Low', 0, N'2', 101578, N'Low', 23583, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23585, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101578, N'High', 23583, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23586, N'Layer', N'Main Layer', 1, N'1', 101577, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23587, N'Zone', N'Corporate-Low', 0, N'2', 101577, N'Low', 23586, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23588, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101577, N'High', 23586, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23589, N'Layer', N'Main Layer', 1, N'1', 101906, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23594, N'Layer', N'Main Layer', 1, N'1', 101944, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23599, N'Layer', N'Main Layer', 1, N'1', 101976, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23600, N'Zone', N'Corporate-Low', 0, N'2', 101976, N'Low', 23599, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23601, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101976, N'High', 23599, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23602, N'Layer', N'Main Layer', 1, N'1', 101983, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23603, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 101983, N'Moderate', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23604, N'Zone', N'Corporate', 0, N'3', 101983, N'Low', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23607, N'Layer', N'Main Layer', 1, N'1', 101986, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23608, N'Zone', N'Squirrel County-Moderate', 1, N'5', 101986, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23609, N'Zone', N'External Radio-Moderate', 1, N'6', 101986, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23610, N'Zone', N'Moose County-Moderate', 1, N'4', 101986, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23611, N'Zone', N'Corporate-Low', 1, N'2', 101986, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23612, N'Zone', N'Main Radio Network-Moderate', 1, N'3', 101986, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23613, N'Layer', N'Main Layer', 1, N'1', 102011, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23614, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102011, N'Moderate', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23615, N'Zone', N'Corporate', 0, N'3', 102011, N'Low', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23616, N'Zone', N'SCADA', 0, N'4', 102011, N'High', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23617, N'Zone', N'Substation', 0, N'5', 102011, N'Moderate', 23589, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23618, N'Layer', N'Main Layer', 1, N'1', 102058, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23619, N'Zone', N'Corporate-Low', 1, N'3', 102058, N'Low', 6160, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23620, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102058, N'Moderate', 6160, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23621, N'Layer', N'Main Layer', 1, N'1', 102059, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23622, N'Zone', N'Corporate-Low', 1, N'3', 102059, N'Low', 6160, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23623, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102059, N'Moderate', 6160, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23624, N'Layer', N'Main Layer', 1, N'1', 102061, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23625, N'Zone', N'Corporate-Low', 1, N'3', 102061, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23626, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102061, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23627, N'Layer', N'Main Layer', 1, N'1', 102063, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23628, N'Zone', N'Squirrel County-Moderate', 1, N'5', 102063, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23629, N'Zone', N'External Radio-Moderate', 1, N'6', 102063, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23630, N'Zone', N'Moose County-Moderate', 1, N'4', 102063, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23631, N'Zone', N'Corporate-Low', 1, N'2', 102063, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23632, N'Zone', N'Main Radio Network-Moderate', 1, N'3', 102063, N'Moderate', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23633, N'Layer', N'Main Layer', 1, N'1', 102065, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23634, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102065, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23635, N'Zone', N'Corporate-Low', 1, N'2', 102065, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23636, N'Layer', N'Main Layer', 1, N'1', 102079, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23637, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102079, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23638, N'Zone', N'Corporate-Low', 1, N'2', 102079, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23639, N'Layer', N'Main Layer', 1, N'1', 102080, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23640, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102080, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23641, N'Zone', N'Corporate-Low', 1, N'2', 102080, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23642, N'Layer', N'Main Layer', 1, N'1', 102090, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23643, N'Zone', N'Dispatcher Training Simulator-Moderate', 0, N'2', 102090, N'Moderate', 23642, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23644, N'Zone', N'Corporate-Low', 0, N'3', 102090, N'Low', 23642, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23645, N'Zone', N'SCADA-High', 0, N'4', 102090, N'High', 23642, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23646, N'Zone', N'Substation-Moderate', 0, N'5', 102090, N'Moderate', 23642, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23647, N'Layer', N'Main Layer', 1, N'1', 102092, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23649, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 102092, N'High', 23647, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23650, N'Layer', N'Main Layer', 1, N'1', 102103, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23651, N'Zone', N'SCADA', 0, N'4', 101983, N'High', 23602, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23652, N'Zone', N'PV Assets-Low', 0, N'8v38cvMF-3BwVDTpNylR-148', 101983, N'Low', 23602, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23653, N'Layer', N'Main Layer', 1, N'1', 102009, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23654, N'Zone', N'Corporate-Low', 0, N'2', 102009, N'Low', 23653, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23655, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102009, N'High', 23653, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23658, N'Layer', N'Main Layer', 1, N'1', 102136, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23659, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102136, N'Moderate', 23658, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23660, N'Zone', N'Corporate', 0, N'3', 102136, N'Low', 23658, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23661, N'Zone', N'SCADA', 0, N'4', 102136, N'High', 23658, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23662, N'Zone', N'Substation', 0, N'5', 102136, N'Moderate', 23658, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23663, N'Layer', N'Main Layer', 1, N'1', 102137, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23664, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102137, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23665, N'Zone', N'Corporate-Low', 1, N'2', 102137, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23666, N'Layer', N'Main Layer', 1, N'1', 102138, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23667, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102138, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23668, N'Zone', N'Corporate-Low', 1, N'2', 102138, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23669, N'Layer', N'Main Layer', 1, N'1', 102139, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23670, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102139, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23671, N'Zone', N'Corporate-Low', 1, N'2', 102139, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23672, N'Layer', N'Main Layer', 1, N'1', 102140, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23673, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102140, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23674, N'Zone', N'Corporate-Low', 1, N'2', 102140, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23675, N'Layer', N'Main Layer', 1, N'1', 102141, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23676, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102141, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23677, N'Zone', N'Corporate-Low', 1, N'2', 102141, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23678, N'Layer', N'Main Layer', 1, N'1', 102142, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23679, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102142, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23680, N'Zone', N'Corporate-Low', 1, N'2', 102142, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23681, N'Layer', N'Main Layer', 1, N'1', 102143, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23682, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102143, N'High', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23683, N'Zone', N'Corporate-Low', 1, N'2', 102143, N'Low', 1, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23684, N'Zone', N'Corporate-Low', 0, N'2', 102092, N'Low', 23647, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23685, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 101379, N'Moderate', 23567, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23686, N'Zone', N'Corporate', 0, N'3', 101379, N'Low', 23567, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23687, N'Zone', N'SCADA', 0, N'4', 101379, N'High', 23567, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23688, N'Zone', N'Substation', 0, N'5', 101379, N'Moderate', 23567, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23689, N'Layer', N'Main Layer', 1, N'1', 102153, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23690, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102153, N'Moderate', 23689, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23691, N'Zone', N'Corporate', 0, N'3', 102153, N'Low', 23689, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23692, N'Zone', N'SCADA', 0, N'4', 102153, N'High', 23689, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23693, N'Zone', N'Substation', 0, N'5', 102153, N'Moderate', 23689, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23694, N'Layer', N'Main Layer', 1, N'1', 102184, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23695, N'Zone', N'Corporate-Low', 0, N'2', 102184, N'Low', 23694, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23696, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102184, N'High', 23694, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23697, N'Layer', N'Main Layer', 1, N'1', 102197, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23698, N'Zone', N'Corporate-Low', 0, N'2', 102197, N'Low', 23697, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23699, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102197, N'High', 23697, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23700, N'Layer', N'Main Layer', 1, N'1', 102199, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23701, N'Zone', N'Corporate-Low', 0, N'2', 102199, N'Low', 23700, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23702, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102199, N'High', 23700, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23703, N'Layer', N'Main Layer', 1, N'1', 102007, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23704, N'Zone', N'Corporate-Low', 0, N'2', 102007, N'Low', 23703, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23705, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102007, N'High', 23703, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23706, N'Layer', N'Main Layer', 1, N'1', 102237, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23707, N'Zone', N'Corporate-Low', 0, N'2', 102237, N'Low', 23706, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23708, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 102237, N'High', 23706, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23715, N'Layer', N'Main Layer', 1, N'1', 102257, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23716, N'Zone', N'Security VLAN-Moderate', 0, N'2', 102257, N'Moderate', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23719, N'Zone', N'Wind Turbine Generators Virtual Machines-High', 0, N'5', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23720, N'Zone', N'External Radio-Moderate', 0, N'6', 102257, N'Moderate', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23721, N'Zone', N'Elevator Control System-Moderate', 0, N'7', 102257, N'Moderate', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23722, N'Zone', N'Heating, Ventilation, and Air-Conditioning System-Moderate', 0, N'8', 102257, N'Moderate', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23723, N'Zone', N'Internet Sites-Low', 0, N'kq5FGfvMyonBIMvHzh2S-187', 102257, N'Low', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23724, N'Zone', N'Wind Site O/O-High', 0, N'kq5FGfvMyonBIMvHzh2S-199', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23725, N'Zone', N'Grid Operator-High-High', 0, N'bi1JvaAtu-6lTVzKTB_4-164', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23726, N'Zone', N'OEM Monitoring/Prognostics-High', 0, N'bi1JvaAtu-6lTVzKTB_4-178', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23727, N'Zone', N'Non-Critical VLAN-Low', 0, N'MSz8OllPPVoPWrnuEWKm-203', 102257, N'Low', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23728, N'Zone', N'Grid Operator-High', 0, N'8v38cvMF-3BwVDTpNylR-146', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23729, N'Zone', N'PV Vendor/OEM-High', 0, N'8v38cvMF-3BwVDTpNylR-147', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23731, N'Zone', N'Utility DMZ-High', 0, N'5u88hDStEY-TeIxjajJq-145', 102257, N'High', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23734, N'Zone', N'Zone-12', 0, N'68jnyubRb4rfnVFpDGRR-7', 102257, N'Low', 23715, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23735, N'Layer', N'Main Layer', 1, N'1', 102258, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23736, N'Zone', N'Corporate-Low', 0, N'2', 102258, N'Low', 23735, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23737, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102258, N'High', 23735, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23738, N'Layer', N'Main Layer', 1, N'1', 102260, N'L', 0, NULL)
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23739, N'Zone', N'Corporate-Low', 0, N'2', 102260, N'Low', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23740, N'Zone', N'Closed Circuit Camera System-High', 0, N'3', 102260, N'High', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23741, N'Zone', N'Access Control Systems (Badges and Door Locks)-Moderate', 0, N'4', 102260, N'Moderate', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23742, N'Zone', N'Fire Supression-High', 0, N'5', 102260, N'High', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23743, N'Zone', N'Power/Lighting Control Systems-Moderate', 0, N'6', 102260, N'Moderate', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23744, N'Zone', N'Elevator Control System-Moderate', 0, N'7', 102260, N'Moderate', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23745, N'Zone', N'Heating, Ventilation, and Air-Conditioning System-Moderate', 0, N'8', 102260, N'Moderate', 23738, N'1')
+INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23746, N'Layer', N'Main Layer', 1, N'1', 102268, N'L', 0, NULL)
+SET IDENTITY_INSERT [dbo].[DIAGRAM_CONTAINER] OFF
+PRINT(N'Operation applied to 154 rows out of 154')
+
 PRINT(N'Add rows to [dbo].[FILE_REF_KEYS]')
 INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'INL/RPT-25-88240')
 INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'PCIDSS 4.0.1')
@@ -17100,9 +19606,10 @@ PRINT(N'Operation applied to 4 rows out of 4')
 PRINT(N'Add rows to [dbo].[SETS]')
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'AWWA 4.0', N'American Water Works Association v4.0', N'AWWA 4.0', 1, 0, NULL, NULL, 0, NULL, NULL, 1, 1, 0, N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', 0, NULL, 0, NULL, 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'C800_53_R520', N'NIST Special Publication 800-53 Revision 5.2.0', N'SP800-53 R5.2', 1, 0, NULL, 4, 1, NULL, NULL, 1, 1, 0, N'This publication provides a catalog of security and privacy controls for information systems and organizations to protect organizational operations and assets, individuals, other organizations, and the Nation from a diverse set of threats and risks, including hostile attacks, human errors, natural disasters, structural failures, foreign intelligence entities, and privacy risks. The controls are flexible and customizable and implemented as part of an organization-wide process to manage risk. The controls address diverse requirements derived from mission and business needs, laws, executive orders, directives, regulations, policies, standards, and guidelines.', 0, NULL, 0, NULL, 0, 1)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'EV_Charging_Infrastructure', N'EV Charging Infrastructure Assessment & Evaluation Module 42', N'EV Charging Infrastructure', 1, 0, NULL, 12, 0, NULL, NULL, 1, 1, 0, N'Custom - This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', 0, NULL, 1, NULL, 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'NIST800_171_R3', N'NIST SP 800-171 Revision 3: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations', N'SP800-171 Rev. 3', 1, 0, NULL, 10, 4, NULL, NULL, 1, 1, 0, N'This publication provides agencies with recommended security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when the information is resident in nonfederal systems and organizations; when the nonfederal organization is not collecting or maintaining information on behalf of a federal agency or using or operating a system on behalf of an agency; and where there are no specific safeguarding requirements for protecting the confidentiality of CUI prescribed by the authorizing law, regulation, or governmentwide policy for the CUI category listed in the CUI Registry. The requirements apply to all components of nonfederal systems and organizations that process, store, and/or transmit CUI, or that provide protection for such components.', 0, NULL, 0, NULL, 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'PCIDSS_4.0.1', N'Payment Card Industry Data Security Standard (PCI DSS) v4.0.1', N'PCIDSS 4.0.1', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, N'This document, PCI Data Security Standard Requirements and Security Assessment Procedures, combines the 12 PCI DSS requirements and corresponding testing procedures into a security assessment tool. It is designed for use during PCI DSS compliance assessments as part of an entity’s validation process.', 0, NULL, 0, '2024-06-11 00:00:00.000', 0, 1)
-PRINT(N'Operation applied to 4 rows out of 4')
+PRINT(N'Operation applied to 5 rows out of 5')
 
 PRINT(N'Add rows to [dbo].[STANDARD_CATEGORY]')
 INSERT INTO [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Authentication and Access Control')
@@ -22103,6 +24610,88 @@ INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Req
 <div class="sub-header-2">Good Practice</div>
 <p>If PAN was found outside the CDE, analysis should be performed to 1) determine whether it was saved independently of other data or with sensitive authentication data, 2) identify the source of the data, and 3) identify the control gaps that resulted in the data being outside the CDE.</p>
 <p>Entities should consider whether there are contributory factors, such as business processes, user behavior, improper system configurations, etc. that caused the PAN to be stored in an unexpected location. If such contributory factors are present, they should be addressed per this Requirement to prevent recurrence.</p>', N'Requirement 12: Support Information Security with Organizational Policies and Programs', N'Suspected and confirmed security incidents that could impact the CDE are responded to immediately.', NULL, NULL, N'PCIDSS_4.0.1', NULL, NULL, NULL, 94, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8260, N'TLS 1.2 Fallback', N'Does charger fall back to TLS 1.2 if TLS 1.3 cannot be negotiated?', NULL, N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 51, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8261, N'TLS 1.3 Support', N'Does the charger establishes a TLS 1.3 session when initiating a connection to a server?', NULL, N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 58, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8262, N'Enforce Minimum TLS 1.2 Support', N'Does the charger enforce a minimum TLS version of 1.2?', NULL, N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 52, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8263, N'TLS Ciphers', N'Are cipher suites recommended in RFC 9325 accepted, and that any non-compliant suites are rejected?', NULL, N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 73, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8264, N'Certificate SAN Mismatch', N'When the presented certificate''s Subject Alternative Name (SAN) does not match the connection URL, does a TLS connection fail to establish and is the condition is logged?', NULL, N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 42, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8265, N'Certificate Provisioning', N'Does the charger support secure and standards-compliant X.509 certificate provisioning using a CSR process?', N'<span>The charger should generate a CSR&#10;internally&#8212;without exposing the private key&#8212;and correctly install and associate&#10;a signed certificate issued by a trusted CA.</span>', N'TLS', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 74, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8266, N'Survey Network Surface', N'Are only expected ISO 15118 and OCPP-related ports available, and no additional open ports as potential unintended attack surface?', N'<span>This requirement intent is to identify and document all network-accessible&#10;services exposed by the charger.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 11, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8267, N'Interface Isolation Enforcement', N'Does the charger NOT leak infrastructure interface information onto the EV interface?', NULL, N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 23, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8268, N'IPv6 Router Advertisement Single Prefix', N'Does the charger announce at most a single IPv6 prefix for SLAAC or DHCPv6, and that this prefix is limited strictly to the EV-EVSE interface?', N'<span>The charger must convey the prefix in ICMPv6&#10;Router Advertisement (Type 134) messages using the Prefix Information Option.&#10;No additional prefixes or duplicate announcements shall be observed, ensuring&#10;the EVSE does not introduce extraneous prefixes beyond the EV&#8211;EVSE link.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 36, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8269, N'Auto Address Configuration Host Behavior Prohibition', N'Does the charger not configure or accept IPv6 addresses on the EV-EVSE interface?', N'<span>The charger must not originate Router&#10;Solicitations (ICMPv6 Type 133) or derive an IPv6 address from prefixes&#10;advertised by the EV. This ensures the EV cannot influence the charger&#8217;s&#10;addressing or routing table.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 18, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8270, N'Inter-Interface Isolation', N'Does the charger not route network traffic between the EV-EVSE interface and its infrastructure interface?', N'<p class="MsoNormal"><span>The charger must not forward packets or act as an&#10;intermediary network device; traffic should be terminated or dropped at the&#10;interface boundary.</span></p>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 24, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8271, N'Inter-Interface Switching Isolation', N'Does the charger not switch Layer 2 traffic between the EV interface and its infrastructure interface?', N'<span>The charger must not bridge frames or act as a&#10;switching device; all traffic should be terminated or dropped at the EV&#8211; EVSE&#10;boundary.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 37, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8272, N'Multi Charging Port Isolation', N'Is traffic from one connected EV not able to reach another connected EV?', N'<span>The charger should enforce strict isolation&#10;between its charging ports and does not forward or switch traffic between EV&#10;interfaces.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 31, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8273, N'ARP/NDP Response Isolation Test', N'Does the charger not respond to ARP (IPv4) or NDP (IPv6) requests for infrastructure-facing IP addresses when such requests originate from the EV-EVSE interface?', N'<span>This requirement ensures Layer 2/Neighbor Discovery&#10;isolation between EV and infrastructure networks.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 19, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8274, N'Infrastructure Address Isolation', N'Are no infrastructure-facing services discovered on the charger when scanned from the EV-EVSE interface?', N'Test for this requirement&#160;<span>by performing a TCP/UDP service enumeration of&#10;the charger&#8217;s infrastructure interface IPv4 address using a network scanning&#10;tool such as nmap.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 25, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8275, N'TLS Certificate Presentation Verification', N'Can the ISO 15118-2 server be configured with a certificate specific to ISO 15118-2?', NULL, N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 67, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8276, N'Secure TLS Validation', N'Does the server not support, nor present weak SSL/TLS protocols, nor outdated protocol versions?', N'<span>Only secure and current versions, such as TLS&#10;1.2 or TLS 1.3, are enabled, while insecure versions like SSL 2.0, SSL 3.0, TLS&#10;1.0, and TLS 1.1 are explicitly disabled.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 26, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8277, N'TLS Session Key Exposure', N'Are the TLS session keys protected and the diagnostic feature correctly configured?', N'<span>Many EV charger vendors offer a diagnostic&#10;feature that exports ISO 1518 TLS session keys in a UDP packet, enabling tools&#10;such as Wireshark to decrypt encrypted traffic for troubleshooting purposes.</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 2, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8278, N'Secure PnC (Authorization)', N'Does the EV charging station correctly handle a complete and secure Plug and Charge session using a valid contract certificate?', N'<p class="MsoNormal"><span>This requirement includes compliance with ISO 15118&#8211;2 security&#10;requirements, including proper TLS handshake, certificate validation, and&#10;communication with the CSMS.</span></p>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 20, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8279, N'Insecure (algorithm) contract certificate', N'Does the SECC not use a contract certificate that supports insecure algorithms and that if this is not met, the session or authorization fails, preventing charging?', NULL, N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 53, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8280, N'Invalid Trust', N'Does the charging station correctly reject a contract certificate that is not signed by a trusted Certificate Authority (CA)?', N'<span>Specifically, this ensures that the charger&#10;enforces trust chain validation against the recognized list of CAs defined in&#10;the SAE Certificate Trust List (CTL).</span>', N'EV Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 3, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8281, N'Survey Network Surface', N'After surveying the Network Surface, are only necessary and documented EV charging stations (EVCS) management and provisioning service ports exposed?', N'<p class="MsoNormal"><span>EV chargers may expose network services that are&#10;not essential to their functionality. Evaluate open ports and assess whether&#10;the exposed services are operationally necessary or intended for authorized&#10;operator access.</span></p>', N'Infrastructure Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 4, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8282, N'Deferred Authorization is Disabled by Default', N'Is Deferred Authorization Disabled by default?', N'<span>With deferred authorization disabled (often&#10;referred to as &#34;local fallback&#34; or &#34;standalone mode&#34;)&#10;charging must not proceed, if communication between the EVCS and the management&#10;system is lost.</span>', N'Infrastructure Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 32, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8283, N'Offline Authorization—Deferred Authorization of RFID', N'When EVCS-to-CSMS communication is restored and the asynchronization authorization result for charging is denied, is power flow interrupted?', NULL, N'Infrastructure Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 76, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8284, N'Deferred Authorization – CSMS Priority over cached tokens', N'When communication with the CSMS is available, does the charger prefer the CSMS over tokens cached in the LAL?', N'<span>When authorization is deferred due to loss of&#10;connectivity to the CSMS, the token may be cached.</span>', N'Infrastructure Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 59, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8285, N'Network Surface', N'Is MQTT disabled by default, therefore, not active or externally accessible?', NULL, N'Integration', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 12, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8286, N'Network Surface Re-enumeration', N'Does the network attack surface remain consistent after enabling MQTT?', N'<span>No additional or unintended ports are exposed on&#10;either the EV-facing or infrastructure-facing interfaces following&#10;re-enumeration, and that MQTT services remain properly constrained to their&#10;expected network footprint.</span>', N'Integration', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 68, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8287, N'TLS Configuration Validation', N'Does the MQTT broker enforce secure TLS configurations?', N'', N'Integration', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 69, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8288, N'Credentialed Access Verification', N'Can only credentialed users establish a secure connection to the MQTT broker, and that all provisioned usernames and passwords function as intended?', N'<span>This ensures that the MQTT broker enforces&#10;strict authentication by rejecting all anonymous connection attempts.<br>&#10;It validates that a username and password are required to establish a&#10;connection and that unauthenticated access is explicitly denied.<br>&#10;This helps ensure that unauthorized entities cannot access or interact with the&#10;messaging system.</span>', N'Integration', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 60, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8289, N'Network Service Survey', N'Is Modbus disabled by default?', N'<span>This ensures the protocol is not unintentionally&#10;exposed to the network, reducing the risk of unauthorized access or control.</span>', N'Integration', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 27, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8290, N'Secure TLS', N'Can the charger successfully establish a secure TLS connection with the CSMS, demonstrating support for the protocol and its associated security parameters?', N'<span>Three versions of the OCPP are widely deployed:&#10;OCPP 1.6j, OCPP 2.0.1, and OCPP 2.1. Additionally, security extensions can be&#10;applied to OCPP 1.6j.</span>', N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 38, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8291, N'OCPP 2.0.1 Support', N'Can the EVCS successfully establish a secure connection with the CSMS using OCPP 2.0.1, demonstrating support for the protocol and its associated security profile?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 43, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8292, N'OCPP 1.6j and Security Extension Support', N'Can the charger operate using OCPP 1.6j/Security Extension, which uses a secure TLS connection with WebSockets?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 6, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8293, N'Disallow OCPP Version Degradation', N'If the charger enforces the use of OCPP 2.0.1 and does not permit version degradation by offering or accepting OCPP 1.6., does the charge maintain the intended security level? and does not fall back to weaker protocol versions?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 39, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8294, N'OCPP 2.0.1 Security Profile Enforcement', N'When configured for an insecure security profile (0 or 1), does the charger provide clear warnings or lockouts to inform the operator that the selected configuration does not meet secure deployment requirements?', N'<span>OCPP 2.0.1 supports multiple security profiles,&#10;ranging from Profile 0 (no security) to Profile 3 (mutual TLS with strong&#10;certificate handling).</span>', N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 44, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8295, N'CSMS Root Certificate Authority Is Prioritized', N'Does the charger prioritizes the configured CSMS certificate authority (CSMSRootCertificate) over the ISO 15118 V2G root certificate (V2GRootCertificate) and over general WebPKI certificate authorities?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 70, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8296, N'Charging Station Certificate Usage', N'Does the charger use ChargingStationCertificate when the CSMS is configured to support OCPP 2.0.1 Security Profile 3.?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 45, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8297, N'Secure Transfer Protocols Are Enabled By Default', N'Does the charger supports only secure file transfer protocols by default, ensuring that diagnostic and security data is transmitted with confidentiality and integrity, and that any insecure protocols require explicit opt-in for legacy or controlled use?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 33, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8298, N'Unadvertised File Transfer Protocols', N'Does the charger enforces protocol restrictions by rejecting file transfer requests over unadvertised or insecure protocols, thereby preventing the use of unauthorized channels and ensuring only approved secure transport methods are accepted?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 40, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8299, N'Trusted CA – Successful File Transfer', N'Does the file transfer succeed when the file server certificate is anchored to the CSMSRootCertificate?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 71, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8300, N'Untrusted CA – Rejection', N'Does the charger verify the certificate it receives from the CSMS during a log request and properly handle a log request when the CA is not preconfigured or trusted?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 7, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8301, N'Firmware Updates Disabled by Default', N'Are firmware updates via OCPP disabled, and can only be enabled through explicit operator action?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 1, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8302, N'Enforcement of Signature Presence in Firmware Update Requests', N'Does the charger support enforcing the presence and validation of a signature in FirmwareUpdate requests?', N'<span>The signature field in the FirmwareUpdate&#10;request is optional.</span>', N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 13, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8303, N'Centralized Identity and Sign-On Integration', N'Does the operator management interfaces support integration with a centralized sign-on framework (for example, OIDC) rather than using locally configured accounts and shared credentials?', N'<span>Relying on a single shared username and password&#10;is neither scalable nor secure because it obscures accountability, complicates&#10;credential rotation, and increases the risk of unauthorized access. To support&#10;fleet-wide operations, chargers must be capable of integrating with a central&#10;identity and policy management framework that eliminates shared passwords and&#10;enables consistent, auditable operator access.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 46, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8304, N'Network Survey Review', N'Is the default port (TCP/22; alternatively, TCP/2222) closed if SSH is not intended for use by an operator or the end customer?', N'<span>Additionally, this case verifies that SSH is not&#10;in use on unintended ports.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 75, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8305, N'Establish SSH Connection', N'Can a successful SSH2 connection can be established between the tester and charger?', N'<span>It is important to note that OpenSSH disables&#10;protocol 1 (SSH version 1) by default and testing that SSH1 connections are&#10;rejected is a formality as version 2 should be forced by OpenSSH.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 61, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8306, N'Legacy SSH Versions Not Supported', N'Does the SSH service on the charger only supports SSH2 and that legacy versions, such as SSH1, are not advertised?', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 62, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8307, N'Secure Cryptographic Methods', N'Does the key exchange between the charger and test host use secure cryptographic methods and secure ciphers?', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 47, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8308, N'Public-Key Authentication Functionality', N'Does the mechanisms used to authenticate to a charger when connecting via SSH operate as intended? i.e. successful for a valid key, and unsuccessful for an invalid key.', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 41, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8309, N'Login Grace Time Functionality', N'Does the login grace time functions properly when a SSH connection is being established between a user and a charger?', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 54, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8310, N'Reject Empty Passwords', N'Are empty passwords disallowed?', N'<span>Empty passwords should be disabled in SSH by&#10;default, preventing clients from logging in without authentication.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 72, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8311, N'Reject Root Login', N'Are users able to log in directly as root?', N'<span>Disabling direct root access deters automated&#10;attacks, enforces least privilege, and limits impact if an account is&#10;compromised.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 5, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8312, N'Limit Failed Logins', N'Does the charger limits authentication attempts over SSH?', N'<span>Limiting attempts reduces brute force risk by&#10;capping failed logins during a connection or within a time window.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 63, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8313, N'Port Forwarding Disabled', N'Is SSH remote port forwarding disabled?', N'<span>Remote port forwarding allows traffic from a&#10;port on the SSH server to be tunneled back to the client, which could expose&#10;internal services and bypass network controls.</span>', N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 78, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8314, N'Inactivity Timeout', N'Does management SSH sessions terminate automatically after a period of inactivity?', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 79, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8315, N'Login Security Event Notification', N'Is an OCPP 2.0.1 SecurityEventNotification generated upon an operator management login?', NULL, N'Operator Management', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 64, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8316, N'OpenADR', N'If OpenADR is utilized by the EV charge station, is the OpenADR communications encrypted?', N'<div>Information within the OpenADR packets should not be visible without the corresponding&#160;<span>key(s) for decryption.</span></div>', N'OpenADR', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 14, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8317, N'OCPP', N'Is OCPP traffic encrypted?', NULL, N'OCPP', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 15, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8318, N'MQTT', N'If the EV charge station utilizes MQTT, is the MQTT traffic encrypted?', NULL, N'Infrastructure Interface', N'Communications, Networking, & Energy Management', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 28, 9, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8319, N'Fault Injection Protection', N'Does the system have means for robustness against Fault Injection by protection of critical data and decisions? Measurement by code review and/or testing.', NULL, N'Side-Channel Attack Resistance', N'Physical Access ', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 48, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8320, N'Timing Attack', N'Does the system have timing attack resistance mitigations. Time constant password checking (including JTAG), encryption, and cryptographic signature generation. Measurement by code review and/or testing?', NULL, N'Side-Channel Attack Resistance', N'Physical Access ', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 49, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8321, N'Fault Injection Resistance Features', N'Does the system have fault injection or timing attack resistance features? Measurements include error detection and correction methods, checksums, signature verifications, and watchdog timers?', NULL, N'Side-Channel Attack Resistance', N'Physical Access ', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 50, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8322, N'Trusted Platform Module', N'Is Trusted Platform Module (TPM) in use? Measurements include use with secure boot, encrypted storage or key management.', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 55, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8323, N'Hardware Security Module', N'Is Hardware Security Module (HSM) in use? Measurements include proper implementation of cryptographic keys and key management for secure communications (e.g. PKI, etc.).', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 56, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8324, N'Encrypted Memory', N'Is Memory (storage) encrypted with unique keys (not a global key)? Measurements include full encryption of mass storage devices and firmware flash memory.', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 21, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8325, N'Network data encryption', N'Is network transmitted data properly encrypted? Measurements include the use of SSL/TLS and proper public and private key management.', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 8, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8326, N'Process isolation', N'Is process isolation utilized, such as containers? Measurements include services running without root/system level access, sandboxed in a virtual environment, or running in a dedicated chroot environment.', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 29, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8327, N'Trusted Execution', N'Does the system use trusted execution or containerized processes? Measurements include the use of containers or other virtual environments to isolate critical processes.', NULL, N'Hardware Based Security Features', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 30, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8328, N'Authentication mechanism', N'Does the system have authentication mechanism(s) of allowed users (RFID, Bluetooth, NFC, etc.)? Measurements include the use of authentication service, such as OCPP, to validate authorized access of system services.', NULL, N'Authentication and Access Control', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 57, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8329, N'Logging access attempts', N'Does the system log all access attempts? Measurements include the use of remote logging of activities on the system, such as OCPP or remote syslog?', NULL, N'Authentication and Access Control', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 65, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8330, N'Securely implemented authentication protocols', N'Are authentication protocols, such as OCPP, securely implemented (TLS, etc.)? Measurements include the use of secure connectivity methods for remote management of the device.', NULL, N'Authentication and Access Control', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 66, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8331, N'Tampering evidence', N'Does the EVSE have tamper resistant or tamper evident enclosure. Measurements include locking
+devices, tamper evident seals, and intrusion notifications (door switches).', NULL, N'Physical and Anti-Tampering Protection', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 9, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8332, N'Chip Security - Decapsulation', N'Do all processors have chip decapsulation countermeasures? Measurements include epoxy coatings, optical coatings to prevent IR or X-ray imaging, etc.', NULL, N'Physical and Anti-Tampering Protection', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 80, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8333, N'Chip Security - Self Destruct', N'Do all chips / processors have self-destruct mechanisms during attempt to removal or modification? Measurements include volatile memory, e-fuses and electronic pulse generation.', NULL, N'Physical and Anti-Tampering Protection', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 81, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8334, N'Hardware components labels', N'Are the hardware components labeled which enables Bill of Material (BOM) reverse engineering? (part #, version #, etc.)', N'Use of the BOM by the attacker may enable reverse engineering or identification of known vulnerabilities. Measurements include the removal of component identification to reduce the ease of reverse engineering of the device hardware.', N'Physical and Anti-Tampering Protection', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 77, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8335, N'Rogue Device Detection', N'Is rogue device detection implemented in the system? Measurements include secure boot, firmware verification, and restriction of allowed USB devices.', NULL, N'Physical and Anti-Tampering Protection', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 34, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8336, N'Secure boot', N'Is secure boot implemented? Measurements include secure boot loaders and firmware verification.', NULL, N'Firmware and Boot Integrity', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 16, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8337, N'Secure Firmware Updates', N'Are secure firmware updates implemented? Measurements include over-the-air updates, roll-back protection, and signed/encrypted firmware.', NULL, N'Firmware and Boot Integrity', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 22, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8338, N'Signed firmware', N'Are signed firmware images used? Measurements include restriction of firmware to only images that are cryptographically signed and verified.', NULL, N'Firmware and Boot Integrity', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 17, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8339, N'Debug Ports Protected', N'Are all debug ports (JTAG, SWD, UART, etc.) protected or unpopulated? Measurements include the presence of headers on a populated circuit board and the ability to query the JTAG chain.', NULL, N'Firmware and Boot Integrity', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 10, 33, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (8340, N'Debug Ports Disabled', N'Are all debug ports (JTAG, SWD, UART, etc.) disabled? Measurements include JTAG disabled by the microchip or an e-fuse in the chain.', NULL, N'Firmware and Boot Integrity', N'Physical Access', 0, NULL, N'EV_Charging_Infrastructure', NULL, NULL, 35, 33, NULL, NULL)
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (12801, N'AC-01', N'<ol type="a">    <li>Develop, document, and disseminate to {{Assignment: organization-defined personnel or roles}}:      <ol type="1">        <li>{{Selection (one or more): Organization-level; Mission/business process-level; System level}} access control policy that:          <ol type="a">            <li>Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and</li>            <li>Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and</li>          </ol>        </li>        <li>Procedures to facilitate the implementation of the access control policy and the associated access controls;</li>      </ol>    </li>    <li>Designate an {{Assignment: organization-defined official}} to manage the development, documentation, and dissemination of the access control policy and procedures; and</li>    <li>Review and update the current access control:      <ol type="1">        <li>Policy {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}; and</li>        <li>Procedures {{Assignment: organization-defined frequency}} and following {{Assignment: organization-defined events}}.</li>      </ol>    </li>  </ol>', N'Access control policy and procedures address the controls in the AC family that are&#10;implemented within systems and organizations. The risk management strategy is an important&#10;factor in establishing such policies and procedures. Policies and procedures contribute to security&#10;and privacy assurance. Therefore, it is important that security and privacy programs collaborate&#10;on the development of access control policy and procedures. Security and privacy program&#10;policies and procedures at the organization level are preferable, in general, and may obviate the&#10;need for mission- or system-specific policies and procedures. The policy can be included as part&#10;of the general security and privacy policy or be represented by multiple policies reflecting the&#10;complex nature of organizations. Procedures can be established for security and privacy&#10;programs, for mission or business processes, and for systems, if needed. Procedures describe&#10;how the policies or controls are implemented and can be directed at the individual or role that is&#10;the object of the procedure. Procedures can be documented in system security and privacy plans&#10;or in one or more separate documents. Events that may precipitate an update to access control&#10;policy and procedures include assessment or audit findings, security incidents or breaches, or&#10;changes in laws, executive orders, directives, regulations, policies, standards, and guidelines.&#10;Simply restating controls does not constitute an organizational policy or procedure.', N'Access Control', N'Policy and Procedures', NULL, NULL, N'C800_53_R520', NULL, NULL, NULL, 4, NULL, NULL)
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (12802, N'AC-02', N'<ol type="a">
 <li>Define and document the types of accounts allowed and specifically prohibited for use within the system;</li>
@@ -25351,7 +27940,7 @@ INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Req
 <li>Develop actions to address the root cause of the issue or failure;</li>
 <li>Implement the actions and monitor the implementation for effectiveness.</li></ol>', N'<p>Root cause analysis includes a wide range of approaches, tools, and techniques to systematically identify the underlying causes of issues or failures in systems and systems components (i.e., hardware, software, and firmware). Organizations consider the severity of the incident to determine what root cause analysis method should be used and how quickly to implement remediation actions. The root cause analysis includes a timeline, missed warning signs, key decisions, gaps, mitigations, and verification of effectiveness. The actions identified to address the source of the issue are implemented and integrated into applicable organizational policies, procedures, and control implementations.</p>', N'System and Information Integrity', N'Flaw Remediation', NULL, NULL, N'C800_53_R520', NULL, NULL, NULL, 73, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[NEW_REQUIREMENT] OFF
-PRINT(N'Operation applied to 1467 rows out of 1467')
+PRINT(N'Operation applied to 1548 rows out of 1548')
 
 PRINT(N'Add rows to [dbo].[GEN_FILE_LIB_PATH_CORL]')
 INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3972, 420)
@@ -27916,7 +30505,6 @@ SET IDENTITY_INSERT [dbo].[NEW_QUESTION_SETS] OFF
 PRINT(N'Operation applied to 2476 rows out of 2476')
 
 PRINT(N'Add rows to [dbo].[PARAMETER_REQUIREMENTS]')
-INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (1309, 662, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4200, 706, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4200, 1129, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4204, 710, NULL)
@@ -31412,7 +34000,7 @@ INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [I
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31050, 1603, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31051, 2073, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31051, 2131, NULL)
-PRINT(N'Operation applied to 3496 rows out of 3496')
+PRINT(N'Operation applied to 3495 rows out of 3495')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_LEVELS]')
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (349, N'H', N'NST', NULL)
@@ -33216,6 +35804,215 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8250, N'L', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8250, N'M', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8250, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8260, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8261, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8262, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8263, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8263, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8264, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8264, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8265, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8266, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8266, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8266, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8266, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8267, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8267, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8268, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8268, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8269, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8269, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8269, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8270, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8270, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8271, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8271, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8272, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8272, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8273, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8273, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8273, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8274, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8274, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8275, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8276, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8276, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8276, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8276, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8277, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8277, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8277, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8277, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8278, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8278, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8278, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8279, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8280, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8280, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8280, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8280, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8281, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8281, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8281, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8281, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8282, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8282, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8282, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8283, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8283, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8283, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8284, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8284, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8285, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8285, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8285, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8285, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8286, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8286, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8286, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8287, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8287, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8288, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8288, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8289, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8289, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8289, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8289, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8290, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8290, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8291, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8291, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8292, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8292, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8292, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8292, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8293, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8293, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8293, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8294, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8294, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8294, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8294, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8295, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8296, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8296, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8297, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8297, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8297, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8297, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8298, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8298, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8299, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8300, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8300, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8300, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8300, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8301, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8301, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8301, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8301, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8302, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8302, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8302, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8302, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8303, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8304, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8304, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8304, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8304, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8305, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8305, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8305, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8306, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8306, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8306, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8307, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8308, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8308, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8308, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8309, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8309, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8309, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8310, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8310, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8310, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8310, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8311, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8311, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8311, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8311, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8312, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8312, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8312, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8312, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8313, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8313, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8314, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8314, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8315, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8315, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8315, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8316, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8316, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8316, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8316, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8317, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8317, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8317, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8317, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8318, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8318, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8319, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8320, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8321, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8322, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8322, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8323, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8324, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8324, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8324, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8325, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8325, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8325, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8325, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8326, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8326, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8327, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8327, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8328, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8328, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8329, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8329, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8329, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8329, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8330, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8331, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8331, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8331, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8331, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8332, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8333, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8334, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8335, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8335, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8336, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8336, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8336, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8336, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8337, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8337, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8337, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8338, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8338, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8338, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8338, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8339, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8339, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8339, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8340, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8340, N'L', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8340, N'M', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (8340, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (12801, N'H', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (12801, N'L', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (12801, N'M', N'NST', NULL)
@@ -34962,7 +37759,7 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13808, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13809, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13810, N'VH', N'NST', NULL)
-PRINT(N'Operation applied to 3547 rows out of 3547')
+PRINT(N'Operation applied to 3756 rows out of 3756')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_QUESTIONS_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1, N'C800_53_R520', 13437)
@@ -38047,6 +40844,88 @@ INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [So
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8248, 3870, 1, N'12.10.5', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8249, 3870, 1, N'12.10.6', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8250, 3870, 1, N'12.10.7', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8260, 3990, 1, N'02-TLS-01.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8261, 3990, 1, N'02-TLS-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8262, 3990, 1, N'02-TLS-01.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8263, 3990, 1, N'02-TLS-01.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8264, 3990, 1, N'02-TLS-01.05', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8265, 3990, 1, N'02-TLS-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8266, 3990, 1, N'02-EV-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8267, 3990, 1, N'02-EV-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8268, 3990, 1, N'02-EV-02.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8269, 3990, 1, N'02-EV-02.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8270, 3990, 1, N'02-EV-02.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8271, 3990, 1, N'02-EV-02.05', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8272, 3990, 1, N'02-EV-02.06', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8273, 3990, 1, N'02-EV-02.07', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8274, 3990, 1, N'02-EV-02.08', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8275, 3990, 1, N'02-EV-03.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8276, 3990, 1, N'02-EV-03.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8277, 3990, 1, N'02-EV-03.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8278, 3990, 1, N'02-EV-04.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8279, 3990, 1, N'02-EV-04.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8280, 3990, 1, N'02-EV-04.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8281, 3990, 1, N'02-INF-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8282, 3990, 1, N'02-INF-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8283, 3990, 1, N'02-INF-02.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8284, 3990, 1, N'02-INF-02.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8285, 3990, 1, N'02-INT-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8286, 3990, 1, N'02-INT-01.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8287, 3990, 1, N'02-INT-01.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8288, 3990, 1, N'02-INT-01.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8289, 3990, 1, N'02-INT-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8290, 3990, 1, N'02-OCPP-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8290, 3990, 1, N'Appendix-F', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8291, 3990, 1, N'02-OCPP-01.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8292, 3990, 1, N'02-OCPP-01.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8293, 3990, 1, N'02-OCPP-01.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8294, 3990, 1, N'02-OCPP-01.05', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8295, 3990, 1, N'02-OCPP-01.06', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8296, 3990, 1, N'02-OCPP-01.07', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8297, 3990, 1, N'02-OCPP-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8298, 3990, 1, N'02-OCPP-02.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8299, 3990, 1, N'02-OCPP-02.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8300, 3990, 1, N'02-OCPP-02.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8301, 3990, 1, N'02-OCPP-03.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8302, 3990, 1, N'02-OCPP-03.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8303, 3990, 1, N'02-OM-01.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8304, 3990, 1, N'02-OM-02.01', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8305, 3990, 1, N'02-OM-02.02', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8306, 3990, 1, N'02-OM-02.03', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8307, 3990, 1, N'02-OM-02.04', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8308, 3990, 1, N'02-OM-02.05', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8309, 3990, 1, N'02-OM-02.07', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8310, 3990, 1, N'02-OM-02.08', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8311, 3990, 1, N'02-OM-02.09', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8312, 3990, 1, N'02-OM-02.10', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8313, 3990, 1, N'02-OM-02.11', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8314, 3990, 1, N'02-OM-02.12', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8315, 3990, 1, N'02-OM-02.13', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8316, 3990, 1, N'3.3.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8317, 3990, 1, N'3.3.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8318, 3990, 1, N'3.3.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8319, 3990, 1, N'1.3.4.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8320, 3990, 1, N'1.3.4.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8321, 3990, 1, N'1.3.4.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8322, 3990, 1, N'1.3.2.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8323, 3990, 1, N'1.3.2.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8324, 3990, 1, N'1.3.2.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8325, 3990, 1, N'1.3.2.4', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8326, 3990, 1, N'1.3.2.5', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8327, 3990, 1, N'1.3.2.6', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8328, 3990, 1, N'1.3.5.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8329, 3990, 1, N'1.3.5.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8330, 3990, 1, N'1.3.5.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8331, 3990, 1, N'1.3.1.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8332, 3990, 1, N'1.3.1.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8333, 3990, 1, N'1.3.1.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8334, 3990, 1, N'1.3.1.4', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8335, 3990, 1, N'1.3.1.5', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8336, 3990, 1, N'1.3.3.1', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8337, 3990, 1, N'1.3.3.2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8338, 3990, 1, N'1.3.3.3', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8339, 3990, 1, N'1.3.3.4', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (8340, 3990, 1, N'1.3.3.5', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (12801, 668, 0, N'', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (12801, 3920, 0, N'', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (12801, 3968, 1, N'AC-1', 45, N'', NULL)
@@ -45865,7 +48744,7 @@ INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [So
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (13810, 3968, 1, N'SR-1', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (13810, 3968, 1, N'SR-8', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (36508, 692, 1, N'', NULL, NULL, NULL)
-PRINT(N'Operation applied to 8422 rows out of 8422')
+PRINT(N'Operation applied to 8504 rows out of 8504')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (349, N'AWWA 4.0', 34)
@@ -46325,6 +49204,87 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8248, N'PCIDSS_4.0.1', 247)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8249, N'PCIDSS_4.0.1', 248)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8250, N'PCIDSS_4.0.1', 249)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8260, N'EV_Charging_Infrastructure', 1)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8261, N'EV_Charging_Infrastructure', 2)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8262, N'EV_Charging_Infrastructure', 3)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8263, N'EV_Charging_Infrastructure', 4)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8264, N'EV_Charging_Infrastructure', 5)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8265, N'EV_Charging_Infrastructure', 6)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8266, N'EV_Charging_Infrastructure', 7)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8267, N'EV_Charging_Infrastructure', 8)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8268, N'EV_Charging_Infrastructure', 9)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8269, N'EV_Charging_Infrastructure', 10)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8270, N'EV_Charging_Infrastructure', 11)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8271, N'EV_Charging_Infrastructure', 12)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8272, N'EV_Charging_Infrastructure', 13)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8273, N'EV_Charging_Infrastructure', 14)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8274, N'EV_Charging_Infrastructure', 15)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8275, N'EV_Charging_Infrastructure', 16)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8276, N'EV_Charging_Infrastructure', 17)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8277, N'EV_Charging_Infrastructure', 18)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8278, N'EV_Charging_Infrastructure', 19)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8279, N'EV_Charging_Infrastructure', 20)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8280, N'EV_Charging_Infrastructure', 21)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8281, N'EV_Charging_Infrastructure', 22)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8282, N'EV_Charging_Infrastructure', 23)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8283, N'EV_Charging_Infrastructure', 24)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8284, N'EV_Charging_Infrastructure', 25)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8285, N'EV_Charging_Infrastructure', 26)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8286, N'EV_Charging_Infrastructure', 27)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8287, N'EV_Charging_Infrastructure', 28)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8288, N'EV_Charging_Infrastructure', 29)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8289, N'EV_Charging_Infrastructure', 30)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8290, N'EV_Charging_Infrastructure', 31)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8291, N'EV_Charging_Infrastructure', 32)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8292, N'EV_Charging_Infrastructure', 33)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8293, N'EV_Charging_Infrastructure', 34)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8294, N'EV_Charging_Infrastructure', 35)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8295, N'EV_Charging_Infrastructure', 36)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8296, N'EV_Charging_Infrastructure', 37)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8297, N'EV_Charging_Infrastructure', 38)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8298, N'EV_Charging_Infrastructure', 39)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8299, N'EV_Charging_Infrastructure', 40)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8300, N'EV_Charging_Infrastructure', 41)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8301, N'EV_Charging_Infrastructure', 42)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8302, N'EV_Charging_Infrastructure', 43)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8303, N'EV_Charging_Infrastructure', 44)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8304, N'EV_Charging_Infrastructure', 45)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8305, N'EV_Charging_Infrastructure', 46)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8306, N'EV_Charging_Infrastructure', 47)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8307, N'EV_Charging_Infrastructure', 48)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8308, N'EV_Charging_Infrastructure', 49)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8309, N'EV_Charging_Infrastructure', 50)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8310, N'EV_Charging_Infrastructure', 51)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8311, N'EV_Charging_Infrastructure', 52)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8312, N'EV_Charging_Infrastructure', 53)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8313, N'EV_Charging_Infrastructure', 54)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8314, N'EV_Charging_Infrastructure', 55)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8315, N'EV_Charging_Infrastructure', 56)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8316, N'EV_Charging_Infrastructure', 57)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8317, N'EV_Charging_Infrastructure', 58)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8318, N'EV_Charging_Infrastructure', 59)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8319, N'EV_Charging_Infrastructure', 60)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8320, N'EV_Charging_Infrastructure', 61)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8321, N'EV_Charging_Infrastructure', 62)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8322, N'EV_Charging_Infrastructure', 63)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8323, N'EV_Charging_Infrastructure', 64)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8324, N'EV_Charging_Infrastructure', 65)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8325, N'EV_Charging_Infrastructure', 66)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8326, N'EV_Charging_Infrastructure', 67)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8327, N'EV_Charging_Infrastructure', 68)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8328, N'EV_Charging_Infrastructure', 69)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8329, N'EV_Charging_Infrastructure', 70)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8330, N'EV_Charging_Infrastructure', 71)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8331, N'EV_Charging_Infrastructure', 72)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8332, N'EV_Charging_Infrastructure', 73)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8333, N'EV_Charging_Infrastructure', 74)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8334, N'EV_Charging_Infrastructure', 75)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8335, N'EV_Charging_Infrastructure', 76)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8336, N'EV_Charging_Infrastructure', 77)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8337, N'EV_Charging_Infrastructure', 78)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8338, N'EV_Charging_Infrastructure', 79)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8339, N'EV_Charging_Infrastructure', 80)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8340, N'EV_Charging_Infrastructure', 81)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (12801, N'C800_53_R520', 1)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (12802, N'C800_53_R520', 2)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (12803, N'C800_53_R520', 3)
@@ -47335,7 +50295,7 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13808, N'C800_53_R520', 726)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13809, N'C800_53_R520', 742)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13810, N'C800_53_R520', 889)
-PRINT(N'Operation applied to 1467 rows out of 1467')
+PRINT(N'Operation applied to 1548 rows out of 1548')
 
 PRINT(N'Add rows to [dbo].[MATURITY_QUESTION_PROPS]')
 INSERT INTO [dbo].[MATURITY_QUESTION_PROPS] ([Mat_Question_Id], [PropertyName], [PropertyValue]) VALUES (8574, 'IS-IT', N'1')
