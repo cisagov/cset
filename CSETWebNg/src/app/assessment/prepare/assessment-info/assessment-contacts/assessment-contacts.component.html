@@ -24,22 +24,31 @@
   <div *ngIf="contacts">
     <h4>{{ t('contacts') }}</h4>
     <div class="list-group">
-      <app-contact-item [contact]="contact" [contactsList]="contacts" [impliedSave]="impliedSave" *ngFor="let contact of contacts; let i = index"
+      @for(contact of contacts; track $index; let i = $index) {
+      <app-contact-item [contact]="contact" [contactsList]="contacts" [impliedSave]="impliedSave"
         (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)"
         (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)" (rolesChangedEvent)="refreshContacts()">
       </app-contact-item>
-      <span class="mt-2 btn-group" *ngIf="showControls()">
+      }
+      
+      @if(showControls()) {
+      <span class="mt-2 btn-group">
         <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
           <span class="cset-icons-plus fs-base me-2"></span>
           <span>{{ t('add contact') }}</span>
         </button>
-        <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email
+        @if(false) {
+        <button class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email
           contacts') }}</button>
+        }
       </span>
-      <div *ngIf="!showControls()" class="text-info small">
+      }
+      @else {
+      <div class="text-info small">
         <p>{{ t('not authorized message') }}</p>
         <p>{{ t('contact an administrator message') }}</p>
       </div>
+      }
     </div>
   </div>
 </div>
