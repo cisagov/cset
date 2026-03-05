@@ -443,9 +443,10 @@ namespace CSETWebCore.Business.Contact
             var ac = (from cc in _context.ASSESSMENT_CONTACTS
                       where cc.Assessment_Contact_Id == assessmentContactId
                       select cc).FirstOrDefault();
-            if (ac == null)
-                throw new Exception("User does not exist");
-            _context.ASSESSMENT_CONTACTS.Remove(ac);
+            if (ac != null)
+            {
+                _context.ASSESSMENT_CONTACTS.Remove(ac);
+            }
 
 
             // Remove any related FINDING_CONTACT records

@@ -36,6 +36,7 @@ import { ConfigService } from "../../../../services/config.service";
 import { EmailService } from "../../../../services/email.service";
 import { LayoutService } from "../../../../services/layout.service";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
+import { ContactsService } from "../../../../services/contacts.service";
 
 @Component({
   selector: "app-assessment-contacts",
@@ -45,7 +46,6 @@ import { ContactItemComponent } from "./contact-item/contact-item.component";
   standalone: false
 })
 export class AssessmentContactsComponent implements OnInit {
-  @Output() triggerChange = new EventEmitter();
   @Input() impliedSave: boolean = false;
 
   contacts: EditableUser[] = [];
@@ -61,6 +61,7 @@ export class AssessmentContactsComponent implements OnInit {
 
 
   constructor(
+    private contactsSvc: ContactsService,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService,
     private emailSvc: EmailService,
@@ -79,9 +80,14 @@ export class AssessmentContactsComponent implements OnInit {
         // Then fetch contacts
         return this.assessSvc.getAssessmentContacts();
       }).then((data: AssessmentContactsResponse) => {
+        this.contacts = [];
         for (const c of data.contactList) {
           this.contacts.push(new EditableUser(c));
         }
+
+        // broadcast the up-to-date list of contacts
+        this.contactsSvc.contactsUpdated(this.contacts);
+
         this.userRole = data.currentUserRole;
         this.userEmail = this.auth.email();
 
@@ -90,14 +96,6 @@ export class AssessmentContactsComponent implements OnInit {
       }).catch(error => {
         console.error('Error loading contacts:', error);
       });
-    }
-  }
-
-  changeOccurred() {
-    // emitting this when impliedSave is true will cause 
-    // the observation to save twice and make a duplicate
-    if (!this.impliedSave) {
-      this.triggerChange.next("Initialized");
     }
   }
 
@@ -187,7 +185,7 @@ export class AssessmentContactsComponent implements OnInit {
         contact.contactId = returnContact.contactId;
 
         this.sortContactsWithCreatorFirst();
-        this.changeOccurred();
+        this.refreshContacts();
       },
       error => {
         this.dialog
@@ -217,33 +215,28 @@ export class AssessmentContactsComponent implements OnInit {
     if (this.adding && contact.isNew) {
       this.contacts.splice(indx, 1);
       this.adding = false;
-      this.changeOccurred();
+      this.refreshContacts();
       return;
     }
+
     this.adding = false;
     if (contact.firstName === undefined
       || contact.lastName === undefined
       || contact.primaryEmail === undefined
     ) {
       this.dropContact(contact);
-      this.changeOccurred();
+      this.refreshContacts();
       return;
     }
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
-      // "Are you sure you want to remove " +
-      // contact.firstName +
-      // " " +
-      // contact.lastName +
-      // " from this assessment?";
-
       this.tSvc.translate('dialogs.remove contact', { firstName: contact.firstName, lastName: contact.lastName });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dropContact(contact);
-        this.changeOccurred();
+        this.refreshContacts();
       }
     });
   }
@@ -284,7 +277,7 @@ export class AssessmentContactsComponent implements OnInit {
             }
             this.contactItems.forEach(x => x.enableMyControls = true);
             this.sortContactsWithCreatorFirst();
-            this.changeOccurred();
+            this.refreshContacts();
           },
           error: (error) => {
             console.error(error);
@@ -293,8 +286,10 @@ export class AssessmentContactsComponent implements OnInit {
       });
   }
 
+  /**
+   * Calls ngOnInit to rebuild and broadcast the new list.
+   */
   refreshContacts() {
-    this.contacts = [] as EditableUser[];
     this.ngOnInit();
   }
 
@@ -310,9 +305,9 @@ export class AssessmentContactsComponent implements OnInit {
 
     // update the API
     this.assessSvc.removeContact(contact.assessmentContactId).subscribe(
-      (response: { ContactList: User[] }) => {
+      (response: { contactList: User[] }) => {
         this.sortContactsWithCreatorFirst();
-        this.changeOccurred();
+        this.refreshContacts();
       },
       error => {
         this.dialog
