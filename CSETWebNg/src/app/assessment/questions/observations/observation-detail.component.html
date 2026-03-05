@@ -76,24 +76,28 @@
     </div>
 
 
-    <!-- interested parties -->
-    <div class="form-group" *ngIf="showContacts()">
+    <!-- individuals responsible -->
+    @if(showContacts) {
+    <div class="form-group">
       <div class="d-flex justify-content-between align-items-center flex-11a">
         <label for="contacts" class="form-label">{{ t('observation.individuals responsible') }}</label>
         <button class="btn-link fs-smaller" (click)="clearMulti()">{{ t('observation.clear selections') }}</button>
       </div>
 
       <div class="ps-3 pb-5">
-        <div *ngFor="let contact of observation.observation_Contacts; let i = index" class="py-1">
-          <input class="checkbox-custom d-none" type="checkbox" id="contact_{{i}}"
-            (change)="updateContact(contact, i)" [(ngModel)]="contact.selected">
+        @for(contact of observation.observation_Contacts; track $index; let i = $index) {
+        <div class="py-1">
+          <input class="checkbox-custom d-none" type="checkbox" id="contact_{{i}}" 
+            [(ngModel)]="contact.selected"
+            (change)="updateContact(contact, i)">
           <label for="contact_{{i}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
+        }
       </div>
 
-      <app-assessment-contacts (triggerChange)="refreshContacts()" [impliedSave]="impliedSave"
-        class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+      <app-assessment-contacts [impliedSave]="impliedSave" class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
     </div>
+    }
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0 mt-3 d-flex justify-content-between flex-00a">

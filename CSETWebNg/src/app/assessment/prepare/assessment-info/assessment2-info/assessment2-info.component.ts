@@ -27,17 +27,25 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentDemographicsComponent } from '../assessment-demographics/assessment-demographics.component';
+import { TutorialEdmComponent } from '../../maturity/tutorial-edm/tutorial-edm.component';
+import { User } from '../../../../models/user.model';
+import { ContactsService } from '../../../../services/contacts.service';
 
 
 @Component({
-    selector: 'app-assessment2-info',
-    templateUrl: './assessment2-info.component.html',
-    standalone: false
+  selector: 'app-assessment2-info',
+  templateUrl: './assessment2-info.component.html',
+  standalone: false
 })
 export class Assessment2InfoComponent implements OnInit {
 
+  showContacts = true;
+
+  contacts: User[];
+
   constructor(
     public assessSvc: AssessmentService,
+    public contactsSvc: ContactsService,
     public navSvc: NavigationService,
     private demoSvc: DemographicService,
     public configSvc: ConfigService
@@ -47,6 +55,21 @@ export class Assessment2InfoComponent implements OnInit {
 
   ngOnInit() {
     this.demoSvc.id = (this.assessSvc.id());
+
+
+    // when the contacts list changes, update the local list
+    this.contactsSvc.contactsUpdated$.subscribe((contacts: User[]) => {
+      this.contacts = structuredClone(contacts);
+    });
+
+    // Anonymous access mode does not show contacts.  Otherwise
+    // defer to the skin's behavior.
+    if (this.configSvc.config.isRunningAnonymous ?? false) {
+      this.showContacts = false;
+    }
+    if (this.configSvc.behaviors?.showContacts ?? true) {
+      this.showContacts = true;
+    }
   }
 
   /**
@@ -54,17 +77,5 @@ export class Assessment2InfoComponent implements OnInit {
    */
   contactsUpdated() {
     this.demographics?.refreshContacts();
-  }
-
-  /**
-   * Anonymous access mode does not show contacts.  Otherwise
-   * defer to the skin's behavior.
-   */
-  showContacts() {
-    if (this.configSvc.config.isRunningAnonymous ?? false) {
-      return false;
-    }
-
-    return this.configSvc.behaviors?.showContacts ?? true;
   }
 }
