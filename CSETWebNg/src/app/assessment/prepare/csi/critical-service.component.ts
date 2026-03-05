@@ -48,7 +48,7 @@ export class CriticalServiceComponent implements OnInit {
   demographics: any = {};
   iodDemographics: any = {};
 
-  csiServiceDemographic: CsiServiceDemographic = {};
+  csiServiceDemographics: CsiServiceDemographic = {};
   serviceComposition: any = {};
   contacts: User[];
 
@@ -74,7 +74,7 @@ export class CriticalServiceComponent implements OnInit {
     });
 
     this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
-      this.csiServiceDemographic = result;
+      this.csiServiceDemographics = result;
     });
 
     this.refreshContacts();
@@ -82,6 +82,10 @@ export class CriticalServiceComponent implements OnInit {
 
   updateServiceComp(): void {
     this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
+  }
+
+  updateServiceDemographic(): void {
+    this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographics);
   }
 
   updateDemographics() {
