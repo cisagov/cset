@@ -53911,5 +53911,9 @@ PRINT(N'Operation applied to 2319 rows out of 2319')
 
 PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]
+
+PRINT(N'Setting existing user in USERS table IsLocalAccount column as true in the db')
+UPDATE USERS SET IsLocalAccount = 1 WHERE (SELECT COUNT(*) FROM USERS) = 1 AND PrimaryEmail NOT LIKE '%@%';
+
 COMMIT TRANSACTION
 GO
