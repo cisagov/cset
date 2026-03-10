@@ -42,8 +42,16 @@
               <table class="legend-table mt-2 mb-4 ms-4 p-2" style="border: 1px solid #ddd; width: 50%">
                 <tr>
                   <td>
-                    <svg width="8" height="8">
-                      <circle cy="4" cx="4" r="4" [attr.fill]="myColor" />
+                    <svg height="10" width="22">
+                      <rect x="0" y="0" width="22" height="10" [attr.fill]="rangeBarFill"></rect>
+                    </svg>
+                  </td>
+                  <td><span style="font-size: .8rem">{{t('analytics.score range')}}</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <svg width="12" height="12">
+                      <circle cy="6" cx="6" r="5" [attr.fill]="dotFill" [attr.stroke]="dotStroke" />
                     </svg>
                   </td>
                   <td><span style="font-size: .8rem">{{t('analytics.current score')}}</span></td>
@@ -54,22 +62,7 @@
                   </td>
                   <td><span style="font-size: .8rem">{{t('analytics.vertical bar')}}</span></td>
                 </tr>
-                <tr>
-                  <td>
-                    <svg width="8" height="8">
-                      <circle cy="4" cx="4" r="4" fill="#4682B4" />
-                    </svg>
-                  </td>
-                  <td><span style="font-size: .8rem">{{t('analytics.max')}}</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <svg width="8" height="8">
-                      <circle cy="4" cx="4" r="4" fill="#F28C28" />
-                    </svg>
-                  </td>
-                  <td><span style="font-size: .8rem">{{t('analytics.min')}}</span></td>
-                </tr>
+
               </table>
 
 
@@ -79,8 +72,8 @@
                 </div>
               </div>
 
-              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="600" [data]="scoreBarData"
-                [myColor]="myColor"></app-score-ranges>
+              <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="600" [data]="scoreBarData" [dotFill]="dotFill"
+                [dotStroke]="dotStroke"></app-score-ranges>
 
             </mat-card>
 

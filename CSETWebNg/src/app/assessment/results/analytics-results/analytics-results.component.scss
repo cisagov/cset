@@ -25,3 +25,11 @@
 .legend-table svg {
   display: inline-block;
 }
+
+.legend-table tr:first-child td {
+  padding-top: .5rem;
+}
+
+.legend-table tr:last-child td {
+  padding-bottom: .5rem;
+}
