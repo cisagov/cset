@@ -34,6 +34,7 @@ import { UploadDemographicsComponent } from "../../../../dialogs/import demograp
 import { ConstantsService } from '../../../../services/constants.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
+import { ContactsService } from '../../../../services/contacts.service';
 
 
 
@@ -79,6 +80,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
+        public contactsSvc: ContactsService,
         private c: ConstantsService,
         public configSvc: ConfigService,
         public dialog: MatDialog,
@@ -89,7 +91,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
                 this.assetValues = data;
-
             },
             error => {
                 console.error('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
@@ -107,9 +108,14 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
-        
+
         this.refreshContacts();
         this.getOrganizationTypes();
+
+        // when the contacts list changes, update the local list
+        this.contactsSvc.contactsUpdated$.subscribe((contacts: User[]) => {
+            this.contacts = structuredClone(contacts);
+        });
     }
 
     /**

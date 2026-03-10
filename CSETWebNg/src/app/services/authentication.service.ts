@@ -219,7 +219,7 @@ export class AuthenticationService {
           this.storeUserData(user);
 
           this.tSvc.setActiveLang(user.lang);
-
+          localStorage.setItem('cset-language', user.lang);
           this.isAuthenticated = true;
           return this.configureCisaAssessorWorkflow(user);
         })
@@ -227,7 +227,7 @@ export class AuthenticationService {
   }
 
   /**
-   * 
+   *
    */
   logout() {
     this.isAuthenticated = false;

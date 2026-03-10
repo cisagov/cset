@@ -46,6 +46,7 @@ namespace CSETWebCore.Business.Demographic
 
             // create composite list of properties for all three pages
             List<PropertyInfo> demoExtProperties = typeof(DemographicExt).GetProperties().ToList();
+            // TODO-3487 - include sector/subsector - need at least one pair
             List<PropertyInfo> cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties().ToList();
             List<PropertyInfo> cisServiceCompProperties = typeof(CisServiceComposition).GetProperties().ToList();
             var allProperties = demoExtProperties.Concat(cisServiceDemoProperties).Concat(cisServiceCompProperties).ToList();
@@ -89,6 +90,17 @@ namespace CSETWebCore.Business.Demographic
                     continue;
                 }
 
+                // special case for sector/subsector
+                if (field.Key == "SectorSubsectors")
+                {
+                    var ss = (List<SectorSubsector>)propertyValue;
+                    if (ss.All(x => x.SectorId == null && x.SubsectorId == null)
+                        || ss.Any(x => x.SectorId != null && x.SubsectorId == null))
+                    {
+                        invalidFields.Add(field.Value);
+                        continue;
+                    }
+                }
 
                 if (propertyValue == null)
                 {

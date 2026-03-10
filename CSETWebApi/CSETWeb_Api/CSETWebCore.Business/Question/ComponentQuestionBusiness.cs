@@ -32,9 +32,9 @@ namespace CSETWebCore.Business.Question
         public List<SubCategoryAnswersPlus> SubCatAnswers;
 
         /// <summary>
-        /// Dictionary for O(1) lookup of answers by Question_Or_Requirement_Id
+        /// Dictionary for O(1) lookup of answers by Question_Or_Requirement_Id plus GUID
         /// </summary>
-        private Dictionary<int, FullAnswer> _answersByQuestionId = new Dictionary<int, FullAnswer>();
+        private Dictionary<string, FullAnswer> _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
 
         /// <summary>
         /// Dictionary for O(1) lookup of SubCatAnswers by HeadingId
@@ -77,46 +77,93 @@ namespace CSETWebCore.Business.Question
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
 
-            var list2 = _context.Answer_Components_Default
+            // Get component defaults using scoped SQL to avoid cross-assessment view scan
+            FormattableString defaultSql = $"""
+                SELECT
+                    ISNULL(CONVERT(int, ROW_NUMBER() OVER (ORDER BY q.Question_id)), 0) AS UniqueKey,
+                    a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text,
+                    CONVERT(nvarchar(1000), a.Comment) AS Comment,
+                    CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification,
+                    a.Question_Number, q.Simple_Question AS QuestionText,
+                    h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
+                    h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
+                    a.FeedBack, a.Is_Component, a.Component_Guid,
+                    dbo.convert_sal(ss.Selected_Sal_Level) AS SAL,
+                    a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,
+                    q.heading_pair_id, h.Sub_Heading_Question_Description,
+                    q.Simple_Question, a.Reviewed,
+                    CAST(NULL AS nvarchar) AS label,
+                    CAST(NULL AS nvarchar) AS ComponentName,
+                    CAST(NULL AS nvarchar) AS Symbol_Name,
+                    0 AS Component_Symbol_id
+                FROM STANDARD_SELECTION ss
+                JOIN (
+                    SELECT DISTINCT q.question_id, adc.assessment_id
+                    FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                    JOIN component_questions q ON adc.Component_Symbol_Id = q.Component_Symbol_Id
+                    JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                    JOIN new_question nq ON q.question_id = nq.question_id
+                    JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
+                    JOIN DIAGRAM_CONTAINER l ON adc.Layer_id = l.Container_Id
+                    LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
+                    JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
+                        AND nql.Universal_Sal_Level = dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                    WHERE l.visible = 1 AND adc.Assessment_Id = {assessmentId}
+                ) AS f ON ss.assessment_id = f.assessment_id
+                JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
+                JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
+                JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
+                JOIN Answer_Components a ON f.Question_Id = a.Question_Or_Requirement_Id
+                    AND f.assessment_id = a.assessment_id
+                WHERE a.component_guid = '00000000-0000-0000-0000-000000000000'
+                    AND a.Assessment_Id = {assessmentId}
+                ORDER BY h.Question_Group_Heading, h.Universal_Sub_Category
+                """;
+
+            var rawDefaults = _context.Answer_Components_Default
+                .FromSqlInterpolated(defaultSql)
                 .AsNoTracking()
-                .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Question_Group_Heading)
-                .ThenBy(x => x.Universal_Sub_Category)
-                .Select(x => new Answer_Components_Base
-                {
-                    UniqueKey = x.UniqueKey,
-                    Assessment_Id = x.Assessment_Id,
-                    Answer_Id = x.Answer_Id,
-                    Question_Id = x.Question_Id,
-                    Answer_Text = x.Answer_Text,
-                    Comment = x.Comment,
-                    Alternate_Justification = x.Alternate_Justification,
-                    Question_Number = x.Question_Number,
-                    QuestionText = x.QuestionText,
-                    Question_Group_Heading = x.Question_Group_Heading,
-                    GroupHeadingId = x.GroupHeadingId,
-                    Universal_Sub_Category = x.Universal_Sub_Category,
-                    SubCategoryId = x.SubCategoryId,
-                    FeedBack = x.FeedBack,
-                    Is_Component = x.Is_Component ?? false,
-                    Component_Guid = x.Component_Guid,
-                    SAL = x.SAL,
-                    Mark_For_Review = x.Mark_For_Review,
-                    Is_Requirement = x.Is_Requirement ?? false,
-                    Is_Framework = x.Is_Framework ?? false,
-                    heading_pair_id = x.heading_pair_id,
-                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
-                    Simple_Question = x.Simple_Question,
-                    Reviewed = x.Reviewed,
-                    Label = x.label,
-                    ComponentName = x.ComponentName,
-                    Symbol_Name = x.Symbol_Name,
-                    Component_Symbol_Id = x.Component_Symbol_id
-                })
                 .ToList();
+
+            var list2 = rawDefaults.Select(x => new Answer_Components_Base
+            {
+                UniqueKey = x.UniqueKey,
+                Assessment_Id = x.Assessment_Id,
+                Answer_Id = x.Answer_Id,
+                Question_Id = x.Question_Id,
+                Answer_Text = x.Answer_Text,
+                Comment = x.Comment,
+                Alternate_Justification = x.Alternate_Justification,
+                Question_Number = x.Question_Number,
+                QuestionText = x.QuestionText,
+                Question_Group_Heading = x.Question_Group_Heading,
+                GroupHeadingId = x.GroupHeadingId,
+                Universal_Sub_Category = x.Universal_Sub_Category,
+                SubCategoryId = x.SubCategoryId,
+                FeedBack = x.FeedBack,
+                Is_Component = x.Is_Component ?? false,
+                Component_Guid = x.Component_Guid,
+                SAL = x.SAL,
+                Mark_For_Review = x.Mark_For_Review,
+                Is_Requirement = x.Is_Requirement ?? false,
+                Is_Framework = x.Is_Framework ?? false,
+                heading_pair_id = x.heading_pair_id,
+                Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                Simple_Question = x.Simple_Question,
+                Reviewed = x.Reviewed,
+                Label = x.label,
+                ComponentName = x.ComponentName,
+                Symbol_Name = x.Symbol_Name,
+                Component_Symbol_Id = x.Component_Symbol_id
+            }).ToList();
 
             // Get all answers for the assessment and build O(1) lookup dictionary
             LoadAnswersOptimized(assessmentId);
+
+            // Populate SubCatAnswers for subcategory header answer display
+            _questionRequirement.AssessmentId = assessmentId;
+            _questionRequirement.InitializeSubCategoryAnswers();
+            SubCatAnswers = _questionRequirement.SubCatAnswers;
 
             // Build SubCatAnswers dictionary for O(1) lookups
             if (SubCatAnswers != null)
@@ -154,47 +201,93 @@ namespace CSETWebCore.Business.Question
                 _context.FillNetworkDiagramQuestions(assessmentId);
             }
 
-            // Get component defaults (single query)
-            var list2 = await _context.Answer_Components_Default
+            // Get component defaults using scoped SQL to avoid cross-assessment view scan
+            FormattableString defaultSql = $"""
+                SELECT
+                    ISNULL(CONVERT(int, ROW_NUMBER() OVER (ORDER BY q.Question_id)), 0) AS UniqueKey,
+                    a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text,
+                    CONVERT(nvarchar(1000), a.Comment) AS Comment,
+                    CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification,
+                    a.Question_Number, q.Simple_Question AS QuestionText,
+                    h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
+                    h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
+                    a.FeedBack, a.Is_Component, a.Component_Guid,
+                    dbo.convert_sal(ss.Selected_Sal_Level) AS SAL,
+                    a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,
+                    q.heading_pair_id, h.Sub_Heading_Question_Description,
+                    q.Simple_Question, a.Reviewed,
+                    CAST(NULL AS nvarchar) AS label,
+                    CAST(NULL AS nvarchar) AS ComponentName,
+                    CAST(NULL AS nvarchar) AS Symbol_Name,
+                    0 AS Component_Symbol_id
+                FROM STANDARD_SELECTION ss
+                JOIN (
+                    SELECT DISTINCT q.question_id, adc.assessment_id
+                    FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                    JOIN component_questions q ON adc.Component_Symbol_Id = q.Component_Symbol_Id
+                    JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                    JOIN new_question nq ON q.question_id = nq.question_id
+                    JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
+                    JOIN DIAGRAM_CONTAINER l ON adc.Layer_id = l.Container_Id
+                    LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
+                    JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
+                        AND nql.Universal_Sal_Level = dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                    WHERE l.visible = 1 AND adc.Assessment_Id = {assessmentId}
+                ) AS f ON ss.assessment_id = f.assessment_id
+                JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
+                JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
+                JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
+                JOIN Answer_Components a ON f.Question_Id = a.Question_Or_Requirement_Id
+                    AND f.assessment_id = a.assessment_id
+                WHERE a.component_guid = '00000000-0000-0000-0000-000000000000'
+                    AND a.Assessment_Id = {assessmentId}
+                ORDER BY h.Question_Group_Heading, h.Universal_Sub_Category
+                """;
+
+            var rawDefaults = await _context.Answer_Components_Default
+                .FromSqlInterpolated(defaultSql)
                 .AsNoTracking()
-                .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Question_Group_Heading)
-                .ThenBy(x => x.Universal_Sub_Category)
-                .Select(x => new Answer_Components_Base
-                {
-                    UniqueKey = x.UniqueKey,
-                    Assessment_Id = x.Assessment_Id,
-                    Answer_Id = x.Answer_Id,
-                    Question_Id = x.Question_Id,
-                    Answer_Text = x.Answer_Text,
-                    Comment = x.Comment,
-                    Alternate_Justification = x.Alternate_Justification,
-                    Question_Number = x.Question_Number,
-                    QuestionText = x.QuestionText,
-                    Question_Group_Heading = x.Question_Group_Heading,
-                    GroupHeadingId = x.GroupHeadingId,
-                    Universal_Sub_Category = x.Universal_Sub_Category,
-                    SubCategoryId = x.SubCategoryId,
-                    FeedBack = x.FeedBack,
-                    Is_Component = x.Is_Component ?? false,
-                    Component_Guid = x.Component_Guid,
-                    SAL = x.SAL,
-                    Mark_For_Review = x.Mark_For_Review,
-                    Is_Requirement = x.Is_Requirement ?? false,
-                    Is_Framework = x.Is_Framework ?? false,
-                    heading_pair_id = x.heading_pair_id,
-                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
-                    Simple_Question = x.Simple_Question,
-                    Reviewed = x.Reviewed,
-                    Label = x.label,
-                    ComponentName = x.ComponentName,
-                    Symbol_Name = x.Symbol_Name,
-                    Component_Symbol_Id = x.Component_Symbol_id
-                })
                 .ToListAsync();
+
+            var list2 = rawDefaults.Select(x => new Answer_Components_Base
+            {
+                UniqueKey = x.UniqueKey,
+                Assessment_Id = x.Assessment_Id,
+                Answer_Id = x.Answer_Id,
+                Question_Id = x.Question_Id,
+                Answer_Text = x.Answer_Text,
+                Comment = x.Comment,
+                Alternate_Justification = x.Alternate_Justification,
+                Question_Number = x.Question_Number,
+                QuestionText = x.QuestionText,
+                Question_Group_Heading = x.Question_Group_Heading,
+                GroupHeadingId = x.GroupHeadingId,
+                Universal_Sub_Category = x.Universal_Sub_Category,
+                SubCategoryId = x.SubCategoryId,
+                FeedBack = x.FeedBack,
+                Is_Component = x.Is_Component ?? false,
+                Component_Guid = x.Component_Guid,
+                SAL = x.SAL,
+                Mark_For_Review = x.Mark_For_Review,
+                Is_Requirement = x.Is_Requirement ?? false,
+                Is_Framework = x.Is_Framework ?? false,
+                heading_pair_id = x.heading_pair_id,
+                Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                Simple_Question = x.Simple_Question,
+                Reviewed = x.Reviewed,
+                Label = x.label,
+                ComponentName = x.ComponentName,
+                Symbol_Name = x.Symbol_Name,
+                Component_Symbol_Id = x.Component_Symbol_id
+            }).ToList();
 
             // Load answers with optimized batched queries
             await LoadAnswersOptimizedAsync(assessmentId);
+
+            // Populate SubCatAnswers for subcategory header answer display
+            _questionRequirement.AssessmentId = assessmentId;
+            _questionRequirement.InitializeSubCategoryAnswers();
+            SubCatAnswers = _questionRequirement.SubCatAnswers;
 
             // Build SubCatAnswers dictionary for O(1) lookups
             if (SubCatAnswers != null)
@@ -226,7 +319,7 @@ namespace CSETWebCore.Business.Question
 
             if (!answers.Any())
             {
-                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
                 return;
             }
 
@@ -249,8 +342,8 @@ namespace CSETWebCore.Business.Question
                 .ToDictionaryAsync(x => x.AnswerId, x => x.Count);
 
             // 4. Build O(1) lookup dictionary with computed status
-            _answersByQuestionId = answers.ToDictionary(
-                a => a.Question_Or_Requirement_Id,
+            _answersByQuestionIdAndGuid = answers.ToDictionary(
+                a => $"{a.Question_Or_Requirement_Id}{a.Component_Guid}",
                 a =>
                 {
                     documentCounts.TryGetValue(a.Answer_Id, out var docCount);
@@ -291,7 +384,7 @@ namespace CSETWebCore.Business.Question
 
             if (!answers.Any())
             {
-                _answersByQuestionId = new Dictionary<int, FullAnswer>();
+                _answersByQuestionIdAndGuid = new Dictionary<string, FullAnswer>();
                 return;
             }
 
@@ -314,8 +407,8 @@ namespace CSETWebCore.Business.Question
                 .ToDictionary(x => x.AnswerId, x => x.Count);
 
             // 4. Build O(1) lookup dictionary with computed status
-            _answersByQuestionId = answers.ToDictionary(
-                a => a.Question_Or_Requirement_Id,
+            _answersByQuestionIdAndGuid = answers.ToDictionary(
+                a => $"{a.Question_Or_Requirement_Id}{a.Component_Guid}",
                 a =>
                 {
                     documentCounts.TryGetValue(a.Answer_Id, out var docCount);
@@ -349,46 +442,116 @@ namespace CSETWebCore.Business.Question
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var dlist = (await _context.Answer_Components_Overrides
+            // Get component overrides using scoped SQL to avoid cross-assessment view scan
+            FormattableString overrideSql = $"""
+                SELECT
+                    CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) AS UniqueKey,
+                    a.Assessment_Id, b.Answer_Id, a.Question_Id,
+                    ISNULL(b.Answer_Text, c.Answer_Text) AS Answer_Text,
+                    CONVERT(nvarchar(1000), b.Comment) AS Comment,
+                    CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification,
+                    b.FeedBack, b.Question_Number, a.Simple_Question AS QuestionText,
+                    a.label AS ComponentName, a.Symbol_Name,
+                    a.Question_Group_Heading, a.GroupHeadingId,
+                    a.Universal_Sub_Category, a.SubCategoryId,
+                    ISNULL(b.Is_Component, 1) AS Is_Component, a.Component_Guid,
+                    a.Layer_Id, a.LayerName, a.Container_Id, a.ZoneName,
+                    dbo.convert_sal(a.SAL) AS SAL,
+                    b.Mark_For_Review,
+                    CAST(0 AS bit) AS Is_Requirement,
+                    CAST(0 AS bit) AS Is_Framework,
+                    b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description,
+                    a.heading_pair_id, a.label, a.Component_Symbol_Id
+                FROM (
+                    SELECT
+                        CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) AS UniqueKey,
+                        adc.Assessment_Id, q.Question_Id, q.Simple_Question,
+                        adc.label, adc.Component_Symbol_Id,
+                        h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
+                        h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
+                        adc.Component_Guid, adc.Layer_Id, l.Name AS LayerName, z.Container_Id,
+                        z.Name AS ZoneName,
+                        dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
+                        h.Sub_Heading_Question_Description, h.Heading_Pair_Id, cs.Symbol_Name
+                    FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                    JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                    JOIN COMPONENT_QUESTIONS cq ON adc.Component_Symbol_Id = cq.Component_Symbol_Id
+                    JOIN COMPONENT_SYMBOLS cs ON adc.Component_Symbol_Id = cs.Component_Symbol_Id
+                    JOIN NEW_QUESTION q ON cq.Question_Id = q.Question_Id
+                    JOIN DIAGRAM_CONTAINER l ON adc.Layer_Id = l.Container_Id
+                    LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
+                    JOIN (
+                        SELECT s.*, nql.Universal_Sal_Level
+                        FROM NEW_QUESTION_SETS s
+                        JOIN NEW_QUESTION_LEVELS nql ON s.New_Question_Set_Id = nql.New_Question_Set_Id
+                        WHERE set_name = 'Components'
+                    ) s ON q.Question_Id = s.Question_Id
+                        AND s.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                    LEFT JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
+                    LEFT JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
+                    WHERE l.Visible = 1 AND adc.Assessment_Id = {assessmentId}
+                ) a
+                LEFT JOIN Answer_Components b ON a.Question_Id = b.Question_Or_Requirement_Id
+                    AND a.Assessment_Id = b.Assessment_Id
+                    AND a.Component_Guid = b.Component_Guid
+                LEFT JOIN (
+                    SELECT a2.Assessment_Id, q.Question_Id, a2.Answer_Text
+                    FROM (
+                        SELECT DISTINCT q.question_id, adc.assessment_id
+                        FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                        JOIN component_questions q ON adc.Component_Symbol_Id = q.Component_Symbol_Id
+                        JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                        JOIN new_question nq ON q.question_id = nq.question_id
+                        JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
+                        JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
+                            AND nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)
+                        WHERE adc.Assessment_Id = {assessmentId}
+                    ) f
+                    JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
+                    JOIN Answer_Components a2 ON f.Question_Id = a2.Question_Or_Requirement_Id
+                        AND f.assessment_id = a2.assessment_id
+                    WHERE a2.component_guid = '00000000-0000-0000-0000-000000000000'
+                ) c ON a.Assessment_Id = c.Assessment_Id AND a.Question_Id = c.Question_Id
+                WHERE b.Answer_Id IS NOT NULL
+                ORDER BY a.Symbol_Name, a.label, a.Component_Guid, a.Universal_Sub_Category
+                """;
+
+            var rawOverrides = await _context.Answer_Components_Overrides
+                .FromSqlInterpolated(overrideSql)
                 .AsNoTracking()
-                .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Symbol_Name)
-                .ThenBy(x => x.ComponentName)
-                .ThenBy(x => x.Component_Guid)
-                .ThenBy(x => x.Universal_Sub_Category)
-                .ToListAsync())
-                .Select(x => new Answer_Components_Base
-                {
-                    UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
-                    Assessment_Id = x.Assessment_Id,
-                    Answer_Id = x.Answer_Id ?? 0,
-                    Question_Id = x.Question_Id,
-                    Answer_Text = x.Answer_Text,
-                    Comment = x.Comment,
-                    Alternate_Justification = x.Alternate_Justification,
-                    Question_Number = x.Question_Number,
-                    QuestionText = x.QuestionText,
-                    ComponentName = x.ComponentName,
-                    Symbol_Name = x.Symbol_Name,
-                    Question_Group_Heading = x.Question_Group_Heading,
-                    GroupHeadingId = x.GroupHeadingId ?? 0,
-                    Universal_Sub_Category = x.Universal_Sub_Category,
-                    SubCategoryId = x.SubCategoryId ?? 0,
-                    Is_Component = x.Is_Component,
-                    Component_Guid = x.Component_Guid,
-                    SAL = x.SAL,
-                    Mark_For_Review = x.Mark_For_Review,
-                    Is_Requirement = x.Is_Requirement ?? false,
-                    Is_Framework = x.Is_Framework ?? false,
-                    Reviewed = x.Reviewed,
-                    Simple_Question = x.Simple_Question,
-                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
-                    heading_pair_id = x.heading_pair_id ?? 0,
-                    Label = x.label,
-                    Component_Symbol_Id = x.Component_Symbol_Id,
-                    FeedBack = x.FeedBack
-                })
-                .ToList();
+                .ToListAsync();
+
+            var dlist = rawOverrides.Select(x => new Answer_Components_Base
+            {
+                UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
+                Assessment_Id = x.Assessment_Id,
+                Answer_Id = x.Answer_Id ?? 0,
+                Question_Id = x.Question_Id,
+                Answer_Text = x.Answer_Text,
+                Comment = x.Comment,
+                Alternate_Justification = x.Alternate_Justification,
+                Question_Number = x.Question_Number,
+                QuestionText = x.QuestionText,
+                ComponentName = x.ComponentName,
+                Symbol_Name = x.Symbol_Name,
+                Question_Group_Heading = x.Question_Group_Heading,
+                GroupHeadingId = x.GroupHeadingId ?? 0,
+                Universal_Sub_Category = x.Universal_Sub_Category,
+                SubCategoryId = x.SubCategoryId ?? 0,
+                Is_Component = x.Is_Component,
+                Component_Guid = x.Component_Guid,
+                SAL = x.SAL,
+                Mark_For_Review = x.Mark_For_Review,
+                Is_Requirement = x.Is_Requirement ?? false,
+                Is_Framework = x.Is_Framework ?? false,
+                Reviewed = x.Reviewed,
+                Simple_Question = x.Simple_Question,
+                Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                heading_pair_id = x.heading_pair_id ?? 0,
+                Label = x.label,
+                Component_Symbol_Id = x.Component_Symbol_Id,
+                FeedBack = x.FeedBack
+            }).ToList();
 
             AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
@@ -403,47 +566,116 @@ namespace CSETWebCore.Business.Question
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
-            var dlist = _context.Answer_Components_Overrides
+            // Get component overrides using scoped SQL to avoid cross-assessment view scan
+            FormattableString overrideSql = $"""
+                SELECT
+                    CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) AS UniqueKey,
+                    a.Assessment_Id, b.Answer_Id, a.Question_Id,
+                    ISNULL(b.Answer_Text, c.Answer_Text) AS Answer_Text,
+                    CONVERT(nvarchar(1000), b.Comment) AS Comment,
+                    CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification,
+                    b.FeedBack, b.Question_Number, a.Simple_Question AS QuestionText,
+                    a.label AS ComponentName, a.Symbol_Name,
+                    a.Question_Group_Heading, a.GroupHeadingId,
+                    a.Universal_Sub_Category, a.SubCategoryId,
+                    ISNULL(b.Is_Component, 1) AS Is_Component, a.Component_Guid,
+                    a.Layer_Id, a.LayerName, a.Container_Id, a.ZoneName,
+                    dbo.convert_sal(a.SAL) AS SAL,
+                    b.Mark_For_Review,
+                    CAST(0 AS bit) AS Is_Requirement,
+                    CAST(0 AS bit) AS Is_Framework,
+                    b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description,
+                    a.heading_pair_id, a.label, a.Component_Symbol_Id
+                FROM (
+                    SELECT
+                        CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) AS UniqueKey,
+                        adc.Assessment_Id, q.Question_Id, q.Simple_Question,
+                        adc.label, adc.Component_Symbol_Id,
+                        h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
+                        h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
+                        adc.Component_Guid, adc.Layer_Id, l.Name AS LayerName, z.Container_Id,
+                        z.Name AS ZoneName,
+                        dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
+                        h.Sub_Heading_Question_Description, h.Heading_Pair_Id, cs.Symbol_Name
+                    FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                    JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                    JOIN COMPONENT_QUESTIONS cq ON adc.Component_Symbol_Id = cq.Component_Symbol_Id
+                    JOIN COMPONENT_SYMBOLS cs ON adc.Component_Symbol_Id = cs.Component_Symbol_Id
+                    JOIN NEW_QUESTION q ON cq.Question_Id = q.Question_Id
+                    JOIN DIAGRAM_CONTAINER l ON adc.Layer_Id = l.Container_Id
+                    LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
+                    JOIN (
+                        SELECT s.*, nql.Universal_Sal_Level
+                        FROM NEW_QUESTION_SETS s
+                        JOIN NEW_QUESTION_LEVELS nql ON s.New_Question_Set_Id = nql.New_Question_Set_Id
+                        WHERE set_name = 'Components'
+                    ) s ON q.Question_Id = s.Question_Id
+                        AND s.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                    LEFT JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
+                    LEFT JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
+                    WHERE l.Visible = 1 AND adc.Assessment_Id = {assessmentId}
+                ) a
+                LEFT JOIN Answer_Components b ON a.Question_Id = b.Question_Or_Requirement_Id
+                    AND a.Assessment_Id = b.Assessment_Id
+                    AND a.Component_Guid = b.Component_Guid
+                LEFT JOIN (
+                    SELECT a2.Assessment_Id, q.Question_Id, a2.Answer_Text
+                    FROM (
+                        SELECT DISTINCT q.question_id, adc.assessment_id
+                        FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
+                        JOIN component_questions q ON adc.Component_Symbol_Id = q.Component_Symbol_Id
+                        JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
+                        JOIN new_question nq ON q.question_id = nq.question_id
+                        JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
+                        JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
+                            AND nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)
+                        WHERE adc.Assessment_Id = {assessmentId}
+                    ) f
+                    JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
+                    JOIN Answer_Components a2 ON f.Question_Id = a2.Question_Or_Requirement_Id
+                        AND f.assessment_id = a2.assessment_id
+                    WHERE a2.component_guid = '00000000-0000-0000-0000-000000000000'
+                ) c ON a.Assessment_Id = c.Assessment_Id AND a.Question_Id = c.Question_Id
+                WHERE b.Answer_Id IS NOT NULL
+                ORDER BY a.Symbol_Name, a.label, a.Component_Guid, a.Universal_Sub_Category
+                """;
+
+            var rawOverrides = _context.Answer_Components_Overrides
+                .FromSqlInterpolated(overrideSql)
                 .AsNoTracking()
-                .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Symbol_Name)
-                .ThenBy(x => x.ComponentName)
-                .ThenBy(x => x.Component_Guid)
-                .ThenBy(x => x.Universal_Sub_Category)
-                .AsEnumerable()
-                .Select(x => new Answer_Components_Base
-                {
-                    UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
-                    Assessment_Id = x.Assessment_Id,
-                    Answer_Id = x.Answer_Id ?? 0,
-                    Question_Id = x.Question_Id,
-                    Answer_Text = x.Answer_Text,
-                    Comment = x.Comment,
-                    Alternate_Justification = x.Alternate_Justification,
-                    Question_Number = x.Question_Number,
-                    QuestionText = x.QuestionText,
-                    ComponentName = x.ComponentName,
-                    Symbol_Name = x.Symbol_Name,
-                    Question_Group_Heading = x.Question_Group_Heading,
-                    GroupHeadingId = x.GroupHeadingId ?? 0,
-                    Universal_Sub_Category = x.Universal_Sub_Category,
-                    SubCategoryId = x.SubCategoryId ?? 0,
-                    Is_Component = x.Is_Component,
-                    Component_Guid = x.Component_Guid,
-                    SAL = x.SAL,
-                    Mark_For_Review = x.Mark_For_Review,
-                    Is_Requirement = x.Is_Requirement ?? false,
-                    Is_Framework = x.Is_Framework ?? false,
-                    Reviewed = x.Reviewed,
-                    Simple_Question = x.Simple_Question,
-                    Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
-                    heading_pair_id = x.heading_pair_id ?? 0,
-                    Label = x.label,
-                    Component_Symbol_Id = x.Component_Symbol_Id,
-                    FeedBack = x.FeedBack
-                })
                 .ToList();
+
+            var dlist = rawOverrides.Select(x => new Answer_Components_Base
+            {
+                UniqueKey = int.TryParse(x.UniqueKey, out var uk) ? uk : 0,
+                Assessment_Id = x.Assessment_Id,
+                Answer_Id = x.Answer_Id ?? 0,
+                Question_Id = x.Question_Id,
+                Answer_Text = x.Answer_Text,
+                Comment = x.Comment,
+                Alternate_Justification = x.Alternate_Justification,
+                Question_Number = x.Question_Number,
+                QuestionText = x.QuestionText,
+                ComponentName = x.ComponentName,
+                Symbol_Name = x.Symbol_Name,
+                Question_Group_Heading = x.Question_Group_Heading,
+                GroupHeadingId = x.GroupHeadingId ?? 0,
+                Universal_Sub_Category = x.Universal_Sub_Category,
+                SubCategoryId = x.SubCategoryId ?? 0,
+                Is_Component = x.Is_Component,
+                Component_Guid = x.Component_Guid,
+                SAL = x.SAL,
+                Mark_For_Review = x.Mark_For_Review,
+                Is_Requirement = x.Is_Requirement ?? false,
+                Is_Framework = x.Is_Framework ?? false,
+                Reviewed = x.Reviewed,
+                Simple_Question = x.Simple_Question,
+                Sub_Heading_Question_Description = x.Sub_Heading_Question_Description,
+                heading_pair_id = x.heading_pair_id ?? 0,
+                Label = x.label,
+                Component_Symbol_Id = x.Component_Symbol_Id,
+                FeedBack = x.FeedBack
+            }).ToList();
 
             AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
@@ -536,7 +768,8 @@ namespace CSETWebCore.Business.Question
                 };
 
                 // O(1) dictionary lookup instead of O(N) linear search
-                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
+                var k = $"{qa.QuestionId}{qa.ComponentGuid}";
+                _answersByQuestionIdAndGuid.TryGetValue(k, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -633,7 +866,8 @@ namespace CSETWebCore.Business.Question
                 };
 
                 // O(1) dictionary lookup instead of O(N) linear search
-                _answersByQuestionId.TryGetValue(qa.QuestionId, out var answer);
+                var k = $"{qa.QuestionId}{qa.ComponentGuid}";
+                _answersByQuestionIdAndGuid.TryGetValue(k, out var answer);
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -661,16 +895,13 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
         {
-            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
-
-            var questionlist = _context.Answer_Components_Exploded
+            return _context.Answer_Components_Exploded
                 .AsNoTracking()
                 .Where(c => c.Assessment_Id == assessmentId
                     && c.Question_Id == question_id
                     && c.Component_Symbol_Id == Component_Symbol_Id)
-                .Select(c => new usp_getExplodedComponent
+                .Select(c => new Answer_Components_Exploded_ForJSON
                 {
-                    UniqueKey = c.UniqueKey,
                     Assessment_Id = c.Assessment_Id,
                     Answer_Id = c.Answer_Id,
                     Question_Id = c.Question_Id,
@@ -680,29 +911,14 @@ namespace CSETWebCore.Business.Question
                     Question_Number = c.Question_Number,
                     QuestionText = c.QuestionText,
                     ComponentName = c.ComponentName,
-                    Component_Symbol_Id = c.Component_Symbol_Id,
                     Is_Component = c.Is_Component,
-                    Component_GUID = c.Component_Guid,
-                    Layer_Id = c.Layer_Id,
-                    LayerName = c.LayerName,
-                    Container_Id = c.Container_Id,
+                    Component_GUID = c.Component_Guid.ToString(),
                     ZoneName = c.ZoneName,
                     SAL = c.SAL,
-                    Mark_For_Review = c.Mark_For_Review,
+                    Mark_For_Review = c.Mark_For_Review ?? false,
                     Feedback = c.FeedBack
                 })
                 .ToList();
-
-            foreach (var question in questionlist)
-            {
-                Answer_Components_Exploded_ForJSON tmp = null;
-                TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
-                tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                tmp.Component_GUID = question.Component_GUID.ToString();
-                rlist.Add(tmp);
-            }
-
-            return rlist;
         }
 
 

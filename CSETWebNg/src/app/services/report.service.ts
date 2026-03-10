@@ -153,7 +153,7 @@ export class ReportService {
    * Opens a new window/tab
    */
   clickReportLink(reportType: string, print: boolean = false) {
-    const url = '/report/' + reportType;
+    const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
     localStorage.setItem('report-confidentiality', this.confidentiality);
     window.open(url, '_blank');
@@ -246,7 +246,7 @@ export class ReportService {
   }
 
   validateCisaAssessorFields() {
-    return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
+    return this.http.get(this.configSvc.apiUrl + 'reports/cisa-assessor-workflow-validate-fields');
   }
 
   applyJwtOffset(d: DateTime, format: string) {

@@ -45,14 +45,14 @@ a:visited ,*/
 .b-breadCrumbs__link:visited,
 .b-controlButtons__link,
 .b-controlButtons__link:visited {
-    color: #367190;
-    border-bottom-color: #367190;
+    color: #005288;
+    border-bottom-color: #005288;
 }
 
 tr.topLinkRow a,
 tr.topLinkRow a:visited {
-	color: #367190 !important;
-	border-bottom-color: #367190 !important;
+	color: #005288 !important;
+	border-bottom-color: #005288 !important;
 	font-size: 8pt !important;
 }
 
@@ -63,8 +63,8 @@ h6.b-article__generatorCopyright {
 
 .b-breadCrumbs__link:hover,
 .b-controlButtons__link:hover {
-    color: #052637;
-    border-bottom-color: #1d4b63;
+    color: #002b47;
+    border-bottom-color: #003e67;
 }
 
 .b-article__generatorCopyrightLink:link,
@@ -90,7 +90,7 @@ h6.b-article__generatorCopyright {
     text-align: center;
     cursor: default;
 
-    background-color: rgb(5,38,55);
+    background-color: rgb(0,43,71);
 
     font-size: 14px;
     font-family: Arial;
@@ -172,7 +172,7 @@ html {
     color: #000;
     font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    font-size: 14px;
+    font-size: 10.5pt;
     * font-size: 100%;
     line-height: 1.45;
 }
@@ -250,7 +250,7 @@ html {
 /*@import url( 'work-zone.css' );*/
 .m-pageContent__side__header
 {
-    background: #263238;
+    background: #002b47;
 }
 .m-pageContent__side__header__wrapper {
     width: 100%;
@@ -268,11 +268,11 @@ html {
 
 .m-pageContent__side__footer
 {
-    background: #263238;
+    background: #002b47;
 }
 .b-workZone {
     width: 100%;
-    background: #367190;
+    background: #005288;
     overflow: hidden;
 }
 
@@ -357,7 +357,7 @@ html[dir="rtl"] .m-workZone_seeAlso_itemContent {
 
 /*@import url( 'article.css');*/
 .b-article {
-    background-color: #367190;
+    background-color: #005288;
     color: #fafafa;
     padding: 0;
 
@@ -499,7 +499,7 @@ html[dir="rtl"] .b-article__wrapper .os-padding.vscroll {
 
 .b-article__generatorCopyright {
     color: #a1a1a1;
-    font-size: 12px;
+    font-size: 9pt;
     font-weight: normal;
     margin: 25px 0 0 0;
     padding: 8px 0 0 0;
@@ -636,14 +636,12 @@ html[dir="rtl"] .b-breadCrumbs {
 }
 
 .b-breadCrumbs__item {
-    display: -moz-inline-stack;
-    display: inline-block;
+    display: inline;
     vertical-align: top;
 
     margin: 0;
 
     font-size: 0.8em;
-    white-space: pre;
 }
 
 .b-breadCrumbs__item:before {
@@ -777,7 +775,7 @@ html[dir="rtl"] .b-search__labelPlaceholder {
     outline: none;
     min-height: 14px;
     color: #fafafa;
-    background-color: #367190;
+    background-color: #005288;
     border: 1px solid #fafafa;
 }
 
@@ -831,7 +829,7 @@ html[dir="rtl"] .m-search__tabs .m-search__side__submit {
 /*@import url( 'tree.css');*/
 .b-tree {
     color: #fafafa;
-    background-color: #367190;
+    background-color: #005288;
 
     position: relative;
 
@@ -959,12 +957,12 @@ html[dir="rtl"] .b-tree__itemLink {
 
 
 .m-tree__itemContent__selected {
-    background-color: rgb(5,38,55);
+    background-color: rgb(0,43,71);
     color: #ffffff;
 }
 
 .b-tree__itemContent:hover {
-    background-color: rgb(152,193,216);
+    background-color: rgb(219,234,254);
     color: #fafafa;
 }
 
@@ -1662,7 +1660,7 @@ html[dir="rtl"] .b-tabs__selectorItem {
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent,
 .b-tabs__wrapperItems {
-    background-color: #367190;
+    background-color: #005288;
     color: #fafafa;
 }
 
@@ -1702,7 +1700,7 @@ html[dir="rtl"] .b-tabs__selectorContent {
 }
 
 .m-tabs__selectorItem__hovered .b-tabs__selectorContent {
-    background-color: #052637;
+    background-color: #002b47;
     color: #fafafa;
     cursor: pointer;
 }
@@ -1785,7 +1783,7 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 .b-tabs__wrapperItemInner .os-scrollbar-horizontal,
 .b-tabs__wrapperItemInner .os-scrollbar-vertical,
 .b-tabs__wrapperItemInner .os-scrollbar-corner {
-    background-color: #367190 !important;
+    background-color: #005288 !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
@@ -1793,11 +1791,11 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar:hover > .os-scrollbar-track > .os-scrollbar-handle {
-    background-color: rgb(5,38,55) !important;
+    background-color: rgb(0,43,71) !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle.active {
-    background-color: rgb(5,38,55) !important;
+    background-color: rgb(0,43,71) !important;
 }
 
 .m-pageView__state__frame .b-tabs__wrapperItemInner {
@@ -2015,7 +2013,7 @@ div.index_page_title {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 20pt;
     text-decoration: none;
-    color: #263238;
+    color: #002b47;
     text-align: center;
     font-weight: bold;
     white-space: pre;
@@ -2036,7 +2034,7 @@ div.index_page {
     border-right: 0px;
     border-left: 0px;
     border-style: solid;
-    border-color: #263238;
+    border-color: #002b47;
     white-space: pre;
 }
 
@@ -2084,7 +2082,7 @@ div.de_ctrl > table {
 
 
 .b-workZone.m-workZone__withoutSideNav {
-    background: #263238 0 0px repeat-x;
+    background: #002b47 0 0px repeat-x;
 }
 
 .b-workZone.m-workZone__withoutSideNav .m-workZone__side__nav,
@@ -2165,7 +2163,7 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__xs .m-workZone__side__article {
     position: absolute;
     top: 0;
     left: 0;
-    color: #263238;
+    color: #002b47;
     font-size: 2em;
     line-height: 1em;
     z-index: 20;
@@ -2342,7 +2340,7 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__sm .b-workZone.m-workZone__withoutSp
     position: absolute;
     top: 0;
     right: 0;
-    color: #263238;
+    color: #002b47;
     font-size: 2em;
     line-height: 1em;
     z-index: 60;
@@ -2367,7 +2365,7 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__xs .m-article__headerSide__buttons {
 
 .b-pageLayout.b-pageLayout__xs .description_on_page img {
     max-width: 100%;
-    height: auto;
+    height: auto !important;
 }
 
 .b-pageLayout.b-pageLayout__xs .description_on_page .detbl {

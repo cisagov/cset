@@ -22,7 +22,7 @@
 -------------------------->
 <div *ngFor="let q of questionList" class="mb-5" id="mq{{q.questionId}}">
     <div class="d-flex flex-row">
-        <div *ngIf="q.displayNumber?.length > 0" class="font-weight-bold me-4">
+        <div *ngIf="q.displayNumber?.length > 0" class="fw-bold me-4">
             {{ q.displayNumber }}
         </div>
         <div *ngIf="showQuestionLevel" class="question-mat-level-name">

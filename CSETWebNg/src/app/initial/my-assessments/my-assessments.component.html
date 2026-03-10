@@ -28,7 +28,6 @@
       </div>
     </div>
     <div>
-
       <div *ngIf="browserIsIE" class="alert alert-danger text-start">
         {{ t('welcome page.internet explorer') }}
       </div>
@@ -37,47 +36,82 @@
         <div class="mt-1 mb-1 d-flex flex-column justify-content-between flex-00a">
           <div class="d-flex justify-content-between flex-00a">
             <div class="d-flex flex-row">
-              <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
-                      class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                      (click)="exportAllAssessments()" matTooltip="{{ t('tooltip.export all') }}"
-                      [disabled]="exportAllInProgress">
+              <button
+                *ngIf="configSvc.showExportAllButton()"
+                tabindex="0"
+                class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                (click)="exportAllAssessments()"
+                matTooltip="{{ t('tooltip.export all') }}"
+                [disabled]="exportAllInProgress"
+              >
                 <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                <span class="icon-link-button-text-dark">{{t('export all')}}</span>
+                <span class="icon-link-button-text-dark">{{ t('export all') }}</span>
               </button>
             </div>
           </div>
-          <div *ngIf="unsupportedImportFile"
-               class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
+          <div
+            *ngIf="unsupportedImportFile"
+            class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a"
+          >
             <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
             <div class="p-2 d-flex flex-column justify-content-center flex-01a">
               <span class="fs-base-3">{{ t('errors.import unsuported file 1') }}</span>
-              <span class="fs-base-1"><a
-                href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
-                tabindex="0" rel="noopener noreferrer">
-                                    {{ t('errors.import unsuported file 2') }}</a></span>
+              <span class="fs-base-1"
+                ><a
+                  href="{{ this.configSvc.docUrl }}htmlhelp/importing_a__cset_file.htm"
+                  target="_blank"
+                  tabindex="0"
+                  rel="noopener noreferrer"
+                >
+                  {{ t('errors.import unsuported file 2') }}</a
+                ></span
+              >
             </div>
           </div>
         </div>
       </ng-container>
-      <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4">
+      <div
+        *ngIf="sortedAssessments != null"
+        class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4"
+      >
         <div class="tw:flex tw:w-full sm:tw:w-auto">
-          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-transparent tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
-            <button type="button"
-                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
-                    (click)="setFilter('all')">
+          <div
+            class="tw:flex tw:w-full sm:tw:w-auto tw:bg-transparent tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm"
+          >
+            <button
+              type="button"
+              class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
+              [class]="
+                currentFilter === 'all'
+                  ? 'tw:bg-blue-100 tw:text-cset-primary'
+                  : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'
+              "
+              (click)="setFilter('all')"
+            >
               {{ t('filters.view all') || 'View all' }}
             </button>
-            <button type="button"
-                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
-                    (click)="setFilter('done')">
+            <button
+              type="button"
+              class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
+              [class]="
+                currentFilter === 'done'
+                  ? 'tw:bg-blue-100 tw:text-cset-primary'
+                  : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'
+              "
+              (click)="setFilter('done')"
+            >
               {{ t('filters.done') || 'Done' }}
             </button>
-            <button type="button"
-                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
-                    [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-cset-primary' : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'"
-                    (click)="setFilter('favorite')">
+            <button
+              type="button"
+              class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
+              [class]="
+                currentFilter === 'favorite'
+                  ? 'tw:bg-blue-100 tw:text-cset-primary'
+                  : 'tw:text-gray-600 tw:hover:text-gray-800 tw:dark:text-gray-200 tw:dark:hover:text-gray-400'
+              "
+              (click)="setFilter('favorite')"
+            >
               {{ t('filters.favorites') || 'Favorites' }}
             </button>
           </div>
@@ -100,42 +134,50 @@
           </label>
 
           <!-- Import Button (Non-Local) -->
-          <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
-                 matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
+          <label
+            *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+            class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
+            matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})"
+          >
             <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
-            <span class="tw:text-sm tw:font-medium ">{{ t('buttons.import') }}</span>
-            <input type="file"
-                   tabindex="-1"
-                   class="tw:hidden"
-                   id="importFile"
-                   multiple
-                   accept="{{ importExtensions }}"
-                   (change)="importAssessmentFile($event)">
+            <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }}</span>
+            <input
+              type="file"
+              tabindex="-1"
+              class="tw:hidden"
+              id="importFile"
+              multiple
+              accept="{{ importExtensions }}"
+              (change)="importAssessmentFile($event)"
+            />
           </label>
 
           <!-- New Assessment Button -->
-          <button class="btn btn-primary tw:h-12 tw:flex px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
-                  (click)="clickNewAssessmentButton()"
-                  matTooltip="{{ t('welcome page.new assessment tooltip') }}">
+          <button
+            class="btn btn-primary tw:h-12 tw:flex px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
+            (click)="clickNewAssessmentButton()"
+            matTooltip="{{ t('welcome page.new assessment tooltip') }}"
+          >
             <span class="tw:mr-3 tw:text-lg cset-icons-cset-lock"></span>
             <span class="tw:text-sm tw:font-medium">{{ t('welcome page.new assessment') }}</span>
           </button>
 
           <!-- Export All Button -->
-          <button *ngIf="configSvc.showExportAllButton()"
-                  tabindex="0"
-                  class="btn btn-secondary flex tw:justify-center tw:items-center h-12 px-6 tw:shadow-sm w-50"
-                  (click)="exportAllAssessments()"
-                  matTooltip="{{ t('tooltip.export all') }}"
-                  [disabled]="exportAllInProgress">
+          <button
+            *ngIf="configSvc.showExportAllButton()"
+            tabindex="0"
+            class="btn btn-secondary flex tw:justify-center tw:items-center h-12 px-6 tw:shadow-sm w-50"
+            (click)="exportAllAssessments()"
+            matTooltip="{{ t('tooltip.export all') }}"
+            [disabled]="exportAllInProgress"
+          >
             <span class="cset-icons-export-up tw:text-lg tw:mr-3"></span>
             <span class="tw:text-sm tw:font-medium">{{ t('export all') }}</span>
           </button>
         </div>
         <ng-template #noAssessmentsElseBlock>
           <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
-            <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
+            <div>{{ t('welcome page.welcome to', { appTitle: appTitle }) }}</div>
           </h2>
           <p>{{ t('welcome page.to get started') }}</p>
           <div class="tw:mt-3 tw:mb-4 tw:flex-column tw:d-flex tw:justify-content-between tw:flex-11a">
@@ -144,41 +186,65 @@
                 <button
                   class="m-0 p-3 tw:me-sm-2 tw:me-md-3 tw:me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                   (click)="clickNewAssessmentButton()"
-                  matTooltip="{{ t('welcome page.new assessment tooltip') }}">
+                  matTooltip="{{ t('welcome page.new assessment tooltip') }}"
+                >
                   <span class="tw:me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                   <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new assessment') }}</span>
                 </button>
                 <!-- <hr class="landing my-4"> -->
-                <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
-                       class="tw:mt-3 tw:mt-sm-3 tw:mt-md-0 tw:p-3 tw:c-gray-900 btn btn-secondary tw:d-flex tw:align-items-center tw:flex-11a tw:lp-btn-mw-lg"
-                       matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
+                <label
+                  *ngIf="authSvc.isLocal && configSvc.showImportButton()"
+                  class="tw:mt-3 tw:mt-sm-3 tw:mt-md-0 tw:p-3 tw:c-gray-900 btn btn-secondary tw:d-flex tw:align-items-center tw:flex-11a tw:lp-btn-mw-lg"
+                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})"
+                >
                   <span class="tw:me-3 tw:landing-icon tw:landing-icon-sm cset-icons-import"></span>
                   <label for="importFile" class="tw:m-0 tw:landing-button-text tw:landing-button-text-sm">
                     {{ t('welcome page.import assessment') }}
                   </label>
-                  <input type="file" class="display-none" id="importFile" multiple
-                         accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
+                  <input
+                    type="file"
+                    class="display-none"
+                    id="importFile"
+                    multiple
+                    accept="{{ importExtensions }},.cset"
+                    (change)="importAssessmentFile($event)"
+                  />
                 </label>
-                <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                       class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                       matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
+                <label
+                  *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+                  class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})"
+                >
                   <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
                   <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
                     {{ t('welcome page.import assessment') }}
                   </label>
-                  <input type="file" class="display-none" id="importFile" multiple
-                         accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
+                  <input
+                    type="file"
+                    class="display-none"
+                    id="importFile"
+                    multiple
+                    accept="{{ importExtensions }}"
+                    (change)="importAssessmentFile($event)"
+                  />
                 </label>
               </div>
             </div>
-            <div *ngIf="unsupportedImportFile"
-                 class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+            <div
+              *ngIf="unsupportedImportFile"
+              class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a"
+            >
               <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
               <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
                 <span class="fs-base-3">{{ t('errors.import unsuported file 1') }}</span>
-                <span class="fs-base-1 mt-2"><a
-                  href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
-                  rel="noopener noreferrer">{{ t('errors.import unsuported file 2') }}</a></span>
+                <span class="fs-base-1 mt-2"
+                  ><a
+                    href="{{ this.configSvc.docUrl }}htmlhelp/importing_a__cset_file.htm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ t('errors.import unsuported file 2') }}</a
+                  ></span
+                >
               </div>
             </div>
           </div>
@@ -191,43 +257,59 @@
             <div class="spinner-size-50"></div>
           </div>
         </div>
-
       </div>
 
       <div *ngIf="sortedAssessments?.length > 0" class="px-4 d-flex flex-column flex-11a oy-auto">
         <!-- table for handset portrait -->
-        <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-               (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-          <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment name') }}
+        <table
+          *ngIf="layoutSvc.hp"
+          role="presentation"
+          aria-label="assessments"
+          matSort
+          (matSortChange)="sortData($event)"
+          class="assessment-summary"
+          style="overflow-x: auto"
+        >
+          <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%">
+            {{ t('assessment name') }}
           </th>
-          <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
+          <th aria-label="date" mat-sort-header="date" style="width: 15%">{{ t('last modified') }}</th>
           <th [aria-label]="tSvc.translate('actions')" style="width: 5%" *ngIf="layoutSvc.hp"></th>
-          <tr *ngFor="let assessment of filteredAssessments;  let i = index">
+          <tr *ngFor="let assessment of filteredAssessments; let i = index">
             <td>
-              <button tabindex="0"
-                      class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
-                      (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                {{assessment.assessmentName}}
+              <button
+                tabindex="0"
+                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
+                (click)="this.navSvc.beginAssessment(assessment.assessmentId)"
+              >
+                {{ assessment.assessmentName }}
               </button>
             </td>
-            <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
+            <td>{{ systemTimeTranslator(assessment.lastModifiedDate, 'med') }}</td>
             <td class="text-nowrap ps-1">
-              <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
-                      (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">
+              <button
+                tabindex="0"
+                class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                (click)="removeAssessment(assessment, i)"
+                matTooltip="{{ t('tooltip.remove assessment') }}"
+              >
                 <span class="cset-icons-trash-x fs-base-2"></span>
               </button>
-              <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
-                      (click)="clickDownloadLink(assessment.assessmentId)"
-                      matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
+              <button
+                tabindex="0"
+                class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                (click)="clickDownloadLink(assessment.assessmentId)"
+                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }})."
+              >
                 <span class="cset-icons-export-up fs-base-2"></span>
               </button>
             </td>
           </tr>
         </table>
         <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
-          <div class="overflow-x-auto rounded-lg border border-gray-200" style="border-radius:10px;">
+          <div class="overflow-x-auto rounded-lg border border-gray-200" style="border-radius: 10px">
             <ag-grid-angular
-              class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
+              class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
               [columnDefs]="columnDefs"
               [defaultColDef]="defaultColDef"
@@ -241,7 +323,8 @@
               (firstDataRendered)="onFirstDataRendered()"
               (cellClicked)="onCellClicked($event)"
               [style.height.px]="dynamicGridHeight"
-              style="width: 100%">
+              style="width: 100%"
+            >
             </ag-grid-angular>
           </div>
         </div>
@@ -261,28 +344,42 @@
             {{ t('welcome page.to get started') }}
           </p>
           <div class="tw:flex tw:gap-3">
-            <button class="btn btn-primary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
-                    (click)="clickNewAssessmentButton()">
+            <button
+              class="btn btn-primary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
+              (click)="clickNewAssessmentButton()"
+            >
               <span class="mr-2 cset-icons-cset-lock"></span>
               {{ t('welcome page.new assessment') }}
             </button>
 
             <!-- Local import button -->
-            <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
-                   class="btn btn-secondary cursor-pointer tw:h-12 tw:flex px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center">
+            <label
+              *ngIf="authSvc.isLocal && configSvc.showImportButton()"
+              class="btn btn-secondary cursor-pointer tw:h-12 tw:flex px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
+            >
               <span class="mr-2 cset-icons-import"></span>
               {{ t('welcome page.import assessment') }}
-              <input type="file" class="hidden" accept="{{ importExtensions }},.cset"
-                     (change)="importAssessmentFile($event)">
+              <input
+                type="file"
+                class="hidden"
+                accept="{{ importExtensions }},.cset"
+                (change)="importAssessmentFile($event)"
+              />
             </label>
 
             <!-- Non-local import button -->
-            <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                   class="btn btn-secondary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center">
+            <label
+              *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+              class="btn btn-secondary tw:h-12 tw:flex tw:px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit tw:justify-center tw:items-center"
+            >
               <span class="mr-2 cset-icons-import"></span>
               {{ t('welcome page.import assessment') }}
-              <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
-                     (change)="importAssessmentFile($event)">
+              <input
+                type="file"
+                class="tw:hidden"
+                accept="{{ importExtensions }}"
+                (change)="importAssessmentFile($event)"
+              />
             </label>
           </div>
         </div>
@@ -297,32 +394,42 @@
         </h2>
         <p class="tw:text-text-secondary mb-4">{{ t('welcome page.to get started') }}</p>
         <div class="flex flex-col gap-3">
-          <button class="btn btn-primary w-full tw:justify-center tw:items-center"
-                  (click)="clickNewAssessmentButton()">
+          <button class="btn btn-primary w-full tw:justify-center tw:items-center" (click)="clickNewAssessmentButton()">
             <span class="mr-2 cset-icons-cset-lock"></span>
             {{ t('welcome page.new assessment') }}
           </button>
 
           <!-- Local import button for mobile -->
-          <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
+          <label
+            *ngIf="authSvc.isLocal && configSvc.showImportButton()"
+            class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center"
+          >
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="tw:hidden" accept="{{ importExtensions }},.cset"
-                   (change)="importAssessmentFile($event)">
+            <input
+              type="file"
+              class="tw:hidden"
+              accept="{{ importExtensions }},.cset"
+              (change)="importAssessmentFile($event)"
+            />
           </label>
 
           <!-- Non-local import button for mobile -->
-          <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center">
+          <label
+            *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+            class="btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center"
+          >
             <span class="mr-2 cset-icons-import"></span>
             {{ t('welcome page.import assessment') }}
-            <input type="file" class="tw:hidden" accept="{{ importExtensions }}"
-                   (change)="importAssessmentFile($event)">
+            <input
+              type="file"
+              class="tw:hidden"
+              accept="{{ importExtensions }}"
+              (change)="importAssessmentFile($event)"
+            />
           </label>
         </div>
       </div>
     </div>
-
   </div>
 </ng-container>
