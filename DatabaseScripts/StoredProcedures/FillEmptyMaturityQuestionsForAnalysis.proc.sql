@@ -21,6 +21,7 @@ BEGIN
 			and Mat_Question_Id not in 
 			(select Question_Or_Requirement_Id from [dbo].[ANSWER] 
 			where Assessment_Id = @Assessment_Id)
+			and is_answerable = 1
 		IF @result = -3  
 		BEGIN  
 			ROLLBACK TRANSACTION;  

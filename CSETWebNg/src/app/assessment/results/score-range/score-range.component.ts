@@ -43,16 +43,22 @@ export class ScoreRangeComponent implements OnInit {
    */
   h = 70;
 
-  barH: number;
-
+  
   @Input()
   label: string;
-
+  
   @Input()
   min: number;
-
+  
   @Input()
   max: number;
+  
+  
+  barWidth: number;
+  barHeight: number;
+  rangeBarFill = "#007BFF";
+  barTooltip: string;
+
 
   @Input()
   median: number;
@@ -64,7 +70,12 @@ export class ScoreRangeComponent implements OnInit {
   myScore: number;
 
   @Input()
-  myColor = "#0000aa";
+  dotFill;
+
+  @Input()
+  dotStroke;
+
+
 
   rangeColor = "#707885";
 
@@ -78,6 +89,13 @@ export class ScoreRangeComponent implements OnInit {
 
   ngOnInit(): void {
     this.containerWidth = this.chartWidth * 1.1;
-    this.barH = this.h * .1;
+    this.barHeight = this.h * .25;
+
+    this.barWidth = (this.chartWidth * (this.max/100)) - (this.chartWidth * (this.min/100));
+    this.barTooltip = `Score Range: ${this.fmt(this.min)} - ${this.fmt(this.max)}`;
+  }
+
+  fmt(pct) {
+    return pct.toFixed(2) + '%';
   }
 }
