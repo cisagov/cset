@@ -87,7 +87,7 @@ export class ThemeService {
   }
 
   /**
-   * Get saved theme from localStorage or detect system preference
+   * Get saved theme from localStorage or default to light mode
    */
   private getSavedTheme(): Theme {
     const savedTheme = localStorage.getItem(this.THEME_KEY) as Theme;
@@ -96,11 +96,7 @@ export class ThemeService {
       return savedTheme;
     }
 
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-
+    // Default to light mode for first-time users
     return 'light';
   }
 
