@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Barry H
 -- Create date: 4-19-2022
@@ -22,18 +23,17 @@ begin
 
 	---This is step 1 get the base data
 	
-	select a.Assessment_Id,Question_Group_Heading, Answer_Text,count(answer_text) qc into #temp
+	select a.Assessment_Id,Question_Group_Heading, Answer_Text, count(answer_text) qc into #temp
 	FROM Analytics_Answers a 
 	join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
 	join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id		
 	join NEW_QUESTION_SETS s on c.Question_Id = s.Question_Id			
-	join AVAILABLE_STANDARDS avs on a.Assessment_Id=avs.Assessment_Id		
-	left join DEMOGRAPHICS d on a.Assessment_Id = d.Assessment_Id
+	join AVAILABLE_STANDARDS avs on a.Assessment_Id=avs.Assessment_Id	
+	left join ASSESSMENT_SECTOR_SUBSECTOR ss on a.Assessment_Id = ss.Assessment_Id
 	where a.Answer_Text != 'NA' and a.question_type = 'Question' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name
-		and nullif(@sector_id,sectorid) is null
-		and nullif(@industry_id,industryid) is null
+		and nullif(@sector_id, ss.sectorid) is null
 	group by a.assessment_id, Question_Group_Heading, Answer_Text 
 	order by Question_Group_Heading, Assessment_Id
 
@@ -72,9 +72,9 @@ begin
           (
                  select QUESTION_GROUP_HEADING, minimum, maximum, average 
                  from (
-                                    select question_group_heading, round((ISNULL(min([percentage]),0) *100),1) minimum, 
-                                       round((ISNULL(max(percentage),0) *100),1) maximum, 
-                                       round((ISNULL(AVG(percentage),0) *100),1) average
+                                    select question_group_heading, (ISNULL(min([percentage]),0) *100) minimum, 
+                                       (ISNULL(max(percentage),0) *100) maximum, 
+                                       (ISNULL(AVG(percentage),0) *100) average
                                        from #Temp2
                                        group by Question_Group_Heading
                  ) qryA
@@ -86,10 +86,10 @@ begin
                  (
                          select QUESTION_GROUP_HEADING, 
                                     isnull(PERCENTILE_disc(0.5) WITHIN GROUP (ORDER BY [percentage]) OVER (PARTITION BY Question_Group_Heading),0) AS median,
-                                   ROW_NUMBER() OVER (PARTITION BY question_group_heading ORDER BY question_group_heading) rown
+                                    ROW_NUMBER() OVER (PARTITION BY question_group_heading ORDER BY question_group_heading) rown
                          from (
                                            select question_group_heading, 
-                                                  round((ISNULL([percentage],0) *100),0) [percentage]
+                                                  (ISNULL([percentage],0) *100) [percentage]
                                               from #Temp2
                          ) qry
                  ) qryB
@@ -108,12 +108,11 @@ begin
 	join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id=c.Requirement_Id
 	join REQUIREMENT_SETS s on c.Requirement_Id=s.Requirement_Id	
 	join AVAILABLE_STANDARDS avs on a.Assessment_Id=avs.Assessment_Id		
-	left join DEMOGRAPHICS d on a.Assessment_Id = d.Assessment_Id
+	left join ASSESSMENT_SECTOR_SUBSECTOR ss on a.Assessment_Id = ss.Assessment_Id
 	where a.Answer_Text != 'NA' and a.question_type = 'Requirement' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name
-			and nullif(@sector_id,sectorid) is null
-			and nullif(@industry_id,industryid) is null
+			and nullif(@sector_id, ss.sectorid) is null
 	group by a.assessment_id, Standard_Category, Answer_Text
 	order by Question_Group_Heading, Assessment_Id
 
@@ -151,9 +150,9 @@ begin
   select a.QUESTION_GROUP_HEADING, a.minimum, a.maximum, a.average, b.median--, b.rown 
           from 
           (
-				select question_group_heading, round((ISNULL(min([percentage]),0) *100),1) minimum, 
-                round((ISNULL(max(percentage),0) *100),1) maximum, 
-                round((ISNULL(AVG(percentage),0) *100),1) average
+				select question_group_heading, (ISNULL(min([percentage]),0) *100) minimum, 
+                (ISNULL(max(percentage),0) *100) maximum, 
+                (ISNULL(AVG(percentage),0) *100) average
                 from #tempR2
                 group by Question_Group_Heading          
           ) a
@@ -167,7 +166,7 @@ begin
                                     ROW_NUMBER() OVER (PARTITION BY question_group_heading ORDER BY question_group_heading) rown
                          from (
                                            select question_group_heading, 
-                                                  round((ISNULL([percentage],0) *100),0) [percentage]
+                                                  (ISNULL([percentage],0) *100) [percentage]
                                               from #tempR2
                          ) qry
                  ) qryB
@@ -175,6 +174,3 @@ begin
           ) b ON a.QUESTION_GROUP_HEADING = b.QUESTION_GROUP_HEADING
 end
 END
-
-
-

@@ -21,8 +21,8 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="question-group mb-3 tw:dark:bg-bg-primary">
-    <div class="subcat-header tw:dark:bg-bg-primary tw:dark:border-b-0" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
-        (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
+    <div class="subcat-header tw:dark:bg-bg-primary tw:dark:border-b-0" [class.flat-bottom]="myGrouping.expanded"
+        (click)="toggleExpansion()" (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
         [attr.aria-expanded]="myGrouping.expanded" role="group" id="gg{{myGrouping.groupingId}}">
         <div class="sub-head-1" tabindex="0">
             <div *ngIf="myGrouping.title != ''" class="sub-head-2">
@@ -40,16 +40,14 @@
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
 
-            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
-                <div>
-                    <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
-                    <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
-                </div>
-                <span [class.display-hidden]="!myGrouping.hasReviewItems"
-                    class="d-flex justify-content-center align-items-center flex-00a"
+            <div class="d-flex flex-row text-nowrap justify-content-end align-items-center flex-00a" *ngIf="layoutSvc.hp">
+                <div [class.display-hidden]="!myGrouping.hasReviewItems"
+                    class="mfr d-flex justify-content-center align-items-center flex-00a"
                     matTooltip="{{ t('tooltip.category requires review') }}">
                     <span class="me-1 cset-icons-flag-dark fs-small"></span>
-                </span>
+                </div>
+                <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
+                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
         </div>
         <div *ngIf="myGrouping.expanded && !!myGrouping.description && myGrouping.description.length > 0" class="mt-1">
@@ -70,9 +68,9 @@
                     <div *ngIf="q.parentQuestionId" class="ms-4 ps-5"></div>
 
                     <!-- parent-level questions -->
-                    <div *ngIf="!q.parentQuestionId" style="font-weight: bold; margin-right: 2rem; max-width: 25%;" 
-                        [class.text-nowrap]="!q.displayNumber.includes(' ')">
-                        {{ q.displayNumber }} 
+                    <div *ngIf="titlePlacement == 'side' && !q.parentQuestionId" class="fw-bold me-4"
+                        style="max-width: 25%;">
+                        {{ q.displayNumber }}
                         <div>
                             <span class="question-mat-level-name" *ngIf="showLevelIndicator(q)">
                                 {{ t('level.' + q.maturityLevelName.toLowerCase()) }}
@@ -80,8 +78,12 @@
                         </div>
                     </div>
 
-                    <div style="width: 100%;">
-                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
+                    <div class="w-100 flex-column">
+
+                        <div *ngIf="titlePlacement == 'top'" class="mb-2 mr-3 text-nowrap fw-bold">
+                            {{ q.displayNumber }}</div>
+
+                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic fw-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
                         </div>
@@ -121,7 +123,7 @@
                             <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" class="btn-check"
                                 (keydown)="checkReviewKeyPress($event, q)" tabindex="0"
                                 checked="{{q.markForReview === true}}">
-                            <span class="cset-icons-flag-dark fs-base"></span>
+                            <span class="cset-icons-flag-dark fs-base mt-auto"></span>
                         </label>
                     </div>
 
@@ -133,12 +135,14 @@
                 </div>
             </div>
 
+
+            <!-- Handheld Portrait -------------------------------------------------->
             <div class="w-100" *ngIf="layoutSvc.hp">
-                <!-- handset portrait -->
                 <div>
+
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         class="d-flex align-items-center mt-3 mb-2 text-nowrap">
-                        <span class="font-weight-bold">
+                        <span class="fw-bold">
                             {{ q.displayNumber }}
                         </span>
                         <span class="question-mat-level-name ms-4" *ngIf="showLevelIndicator(q)">
@@ -147,7 +151,7 @@
                     </div>
 
                     <div class="w-100 mb-3">
-                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
+                        <div *ngIf="!!q.shortName" class="mb-1 fst-italic fw-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
                         </div>
@@ -169,7 +173,7 @@
                 <div *ngIf="q.isAnswerable">
                     <!-- build the list of answer options -->
                     <div class="btn-group btn-group-toggle answer-group ms-0" data-toggle="buttons">
-                        <label *ngFor="let option of answerOptions" class="btn form-check-label"
+                        <label *ngFor="let option of q.answerOptions ?? modelAnswerOptions" class="btn form-check-label"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                             [class.answer-selected]="q.answer === option"
                             [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelName, option)">
@@ -184,7 +188,7 @@
                             matTooltip="This control requires further review.">
                             <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" class="btn-check"
                                 tabindex="0" checked="{{q.markForReview === true}}">
-                            <span class="cset-icons-flag-dark fs-base"></span>
+                            <span class="cset-icons-flag-dark fs-base mt-auto"></span>
                         </label>
                     </div>
 

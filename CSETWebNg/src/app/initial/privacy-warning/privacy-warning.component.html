@@ -25,7 +25,7 @@
     <div style="margin: 0 auto" [ngStyle]="{ 'width': layoutSvc.hp ? '90vw' : '70vw'}">
         <div style="margin: 2rem 0; padding: 2rem; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;"
             [class.p-3]="layoutSvc.hp" [class.fs-smaller]="layoutSvc.hp">
-            <p class="text-center font-weight-bold">
+            <p class="text-center fw-bold">
                 <span *ngIf="!layoutSvc.hp">
                     **WARNING**WARNING**WARNING**WARNING**WARNING**
                 </span>
@@ -36,7 +36,7 @@
             <p class="text-justify">
                 {{BannerText}}
             </p>
-            <p class="text-center font-weight-bold">
+            <p class="text-center fw-bold">
                 <span *ngIf="!layoutSvc.hp">
                     **WARNING**WARNING**WARNING**WARNING**WARNING**
                 </span>

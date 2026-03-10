@@ -25,9 +25,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observation, Importance } from './observations.model';
-import { map as lodash_map, filter as lodash_filter } from 'lodash';
+import { Observation, Importance, ObservationContact } from './observations.model';
 import { ConfigService } from '../../../services/config.service';
+import { firstValueFrom } from 'rxjs';
+import { ContactsService } from '../../../services/contacts.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-observations',
@@ -41,6 +43,7 @@ export class ObservationDetailComponent implements OnInit {
   observation: Observation;
   importances: Importance[];
   contactsModel: any[];
+  showContacts = true;
   answerId: number | null;
   questionId: number | null;
   impliedSave: boolean = false;
@@ -50,7 +53,8 @@ export class ObservationDetailComponent implements OnInit {
     private configSvc: ConfigService,
     private dialog: MatDialogRef<ObservationDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Observation,
-    public assessSvc: AssessmentService
+    public assessSvc: AssessmentService,
+    private contactsSvc: ContactsService
   ) {
     this.observation = data;
     this.answerId = data.answer_Id;
@@ -65,13 +69,23 @@ export class ObservationDetailComponent implements OnInit {
       this.importances = result;
     });
 
-    this.dialog.backdropClick().subscribe(() => {
-      this.save();
+    this.dialog.backdropClick().subscribe(async () => {
+      await this.save();
     });
 
+    if (this.configSvc.config.isRunningAnonymous) {
+      this.showContacts = false;
+    }
+
     // makes 'Individuals Responsible' show up initially
-    if (this.observation.observation_Contacts.length == 0)
+    if (this.observation.observation_Contacts.length == 0) {
       this.observation.observation_Contacts = await this.observationsSvc.getContactsForEmptyObservation();
+    }
+
+    // when the contacts list changes, re-draw the Individuals Responsible list accordingly
+    this.contactsSvc.contactsUpdated$.subscribe((contacts: User[]) => {
+      this.refreshIndividualsResponsible(contacts);
+    });
   }
 
   /**
@@ -93,15 +107,18 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  save() {
+  async save() {
     this.impliedSave = true;
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      this.observation.observation_Id = resp.observationId;
-      this.observation.answer_Id = resp.answerId;
-      this.dialog.close(true);
-    });
+    //this.refreshIndividualsResponsible();
+
+    this.observation.answer_Id = this.answerId;
+    this.observation.question_Id = this.questionId;
+
+    const resp: any = await firstValueFrom(this.observationsSvc.saveObservation(this.observation));
+
+    this.dialog.close(true);
   }
 
   /**
@@ -112,41 +129,20 @@ export class ObservationDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   * Build the checklist of Individuals Responsible 
+   * based on the latest contact list we have been given.
    */
-  showContacts(): boolean {
-    if (this.configSvc.config.isRunningAnonymous) {
-      return false;
-    }
+  refreshIndividualsResponsible(users: User[]) {
+    const oldList = this.observation.observation_Contacts;
 
-    return true;
-  }
-
-  /**
-   * 
-   */
-  async refreshContacts(): Promise<void> {
-    this.observation.answer_Id = this.answerId;
-    this.observation.question_Id = this.questionId;
-
-    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
-      if (this.observation.observation_Id == 0 && resp.observationId) {
-        this.observation.observation_Id = resp.observationId;
-      }
-      if (this.observation.answer_Id == 0 && resp.answerId) {
-        this.observation.answer_Id = resp.answerId;
-      }
-      if (this.observation.question_Id == 0 && resp.questionId) {
-        this.observation.question_Id = resp.questionId;
-      }
-      
-      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
-        .subscribe((response: Observation) => {
-          this.observation = response;
-          this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-        });
+    this.observation.observation_Contacts = [];
+    users.forEach(u => {
+      this.observation.observation_Contacts.push({
+        assessment_Contact_Id: u.assessmentContactId,
+        name: `${u.primaryEmail} -- ${u.firstName} ${u.lastName}`,
+        observation_Id: 0,
+        selected: oldList.find(x => x.assessment_Contact_Id === u.assessmentContactId)?.selected ?? false
+      } as ObservationContact);
     });
   }
 

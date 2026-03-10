@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AssessmentContactsResponse, AssessmentDetail } from '../../../../models/assessment-info.model';
+import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { User } from '../../../../models/user.model';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -31,6 +31,7 @@ import { DemographicIodService } from '../../../../services/demographic-iod.serv
 import { DemographicService } from '../../../../services/demographic.service';
 import { Upgrades } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { ContactsService } from '../../../../services/contacts.service';
 
 @Component({
   selector: 'app-assessment-config-iod',
@@ -52,6 +53,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
     private iodDemoSvc: DemographicIodService,
+    private contactsSvc: ContactsService,
     private configSvc: ConfigService,
     private navSvc: NavigationService
   ) { }
@@ -64,7 +66,6 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
       this.iodDemographics = data;
-      this.refreshContacts();
     });
 
     this.getAssessmentDetail();
@@ -78,6 +79,11 @@ export class AssessmentConfigIodComponent implements OnInit {
         }
       })
     }
+
+    // when the contacts list changes, update the local list
+    this.contactsSvc.contactsUpdated$.subscribe((contacts: User[]) => {
+      this.contacts = structuredClone(contacts);
+    });
   }
 
   /**
@@ -138,14 +144,6 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
   }
 
-  refreshContacts() {
-    if (this.assessSvc.id()) {
-      this.assessSvc.getAssessmentContacts().then((data: AssessmentContactsResponse) => {
-        this.contacts = data.contactList;
-      });
-    }
-  }
-
   showCityName() {
     return this.configSvc.behaviors.showCityName;
   }
@@ -167,8 +165,8 @@ export class AssessmentConfigIodComponent implements OnInit {
 
 
   }
-  setAssessmentDone(){
-    this.assessment.done =!this.assessment.done;
+  setAssessmentDone() {
+    this.assessment.done = !this.assessment.done;
     this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
   }
 }

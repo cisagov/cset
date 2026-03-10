@@ -46,6 +46,7 @@ services:
     container_name: cset-mssql-dev
     hostname: mssql
     image: "mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04"
+    platform: linux/amd64
     restart: unless-stopped
     env_file:
       - .env

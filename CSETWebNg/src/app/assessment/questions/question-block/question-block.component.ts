@@ -64,6 +64,8 @@ export class QuestionBlockComponent implements OnInit {
 
   altTextPlaceholder = "alt cset";
 
+  titlePlacement = 'top';
+
   showQuestionIds = false;
 
 
@@ -85,13 +87,7 @@ export class QuestionBlockComponent implements OnInit {
     public layoutSvc: LayoutService,
     public malcolmSvc: MalcolmService,
     public linebreakPipe: LinebreakPipe
-  ) {
-    this.matLevelMap.set("B", "Baseline");
-    this.matLevelMap.set("E", "Evolving");
-    this.matLevelMap.set("Int", "Intermediate");
-    this.matLevelMap.set("A", "Advanced");
-    this.matLevelMap.set("Inn", "Innovative");
-  }
+  ) { }
 
   /**
    *
@@ -110,15 +106,11 @@ export class QuestionBlockComponent implements OnInit {
       this.setJustificationVisibility(item);
     });
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
-  }
+    // place the titles
+    this.titlePlacement = this.assessSvc.applicationMode == 'Q' ? 'side' : 'top';
 
-  /**
-   *
-   * @param q
-   */
-  baselineLevel(q: Question) {
-    return this.matLevelMap.get(q.maturityLevel.toString());
+    // determine debug ID display
+    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
   /**

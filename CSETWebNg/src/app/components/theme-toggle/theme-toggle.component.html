@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <button class="tw:dark:hover:bg-bg-tertiary" mat-menu-item (click)="toggleTheme()"
-  [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+  [attr.aria-label]="(isDarkMode ? 'menu.user.switch to light mode' : 'menu.user.switch to dark mode') | transloco"
   [title]="(isDarkMode ? 'menu.user.switch to light mode' : 'menu.user.switch to dark mode') | transloco" type="button">
 
   <svg *ngIf="isDarkMode" class="me-2 align-middle"

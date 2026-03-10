@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
+const { app, ipcMain, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -27,6 +27,7 @@ const clientCode = config.behaviors.clientCode;
 const appName = config.behaviors.defaultTitle;
 
 let mainWindow = null;
+let apiProcess = null;
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
@@ -43,15 +44,167 @@ if (!gotTheLock) {
   });
 }
 
-function createWindow() {
-  // Create the browser window
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    webPreferences: { nodeIntegration: true, webSecurity: false },
-    icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName
+/**
+ * Setup spell check context menu for a window
+ * @param {WebContents} webContents - The webContents to add spell check context menu to
+ */
+function setupSpellCheckContextMenu(webContents) {
+  webContents.on('context-menu', (event, params) => {
+    const menu = new Menu();
+
+    // Add spelling suggestions if there are any
+    for (const suggestion of params.dictionarySuggestions) {
+      menu.append(new MenuItem({
+        label: suggestion,
+        click: () => webContents.replaceMisspelling(suggestion)
+      }));
+    }
+
+    // Add "Add to dictionary" option for misspelled words
+    if (params.misspelledWord) {
+      if (menu.items.length > 0) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({
+        label: 'Add to Dictionary',
+        click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+      }));
+    }
+
+    // Add standard context menu items
+    if (params.selectionText) {
+      if (menu.items.length > 0) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({ label: 'Cut', role: 'cut' }));
+      menu.append(new MenuItem({ label: 'Copy', role: 'copy' }));
+    }
+
+    if (params.editFlags.canPaste) {
+      if (menu.items.length > 0 && !params.selectionText) {
+        menu.append(new MenuItem({ type: 'separator' }));
+      }
+      menu.append(new MenuItem({ label: 'Paste', role: 'paste' }));
+    }
+
+    // Only show the menu if there are items
+    if (menu.items.length > 0) {
+      menu.popup();
+    }
   });
+}
+
+/**
+ * Returns BrowserWindow options merged with the app's common defaults (icon, title, webPreferences)
+ * @param {Object} overrides - Additional options to merge in
+ */
+function createBrowserWindowOptions(overrides = {}) {
+  return merge({
+    width: 900,
+    height: 700,
+    icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
+    title: appName,
+    webPreferences: {
+      preload: path.join(__dirname, 'main-electron-preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      webSecurity: true,
+      spellcheck: true
+    }
+  }, overrides);
+}
+
+/**
+ * Creates a BrowserWindow with the app's common defaults
+ * @param {Object} overrides - Additional options to merge in
+ */
+function createBrowserWindow(overrides = {}) {
+  return new BrowserWindow(createBrowserWindowOptions(overrides));
+}
+
+/**
+ * Setup a child window with spell check, window open handling, and recursive child setup
+ * @param {BrowserWindow} childWindow - The child window to configure
+ */
+function setupChildWindow(childWindow) {
+  setupSpellCheckContextMenu(childWindow.webContents);
+
+  childWindow.webContents.setWindowOpenHandler((details) => {
+    if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
+      shell.openExternal(details.url);
+      return { action: 'deny' };
+    }
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: createBrowserWindowOptions({ parent: mainWindow })
+    };
+  });
+
+  childWindow.webContents.on('did-create-window', (grandchild) => {
+    setupChildWindow(grandchild);
+  });
+
+  childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    log.error(errorDescription);
+    childWindow.close();
+  });
+}
+
+/**
+ * Save a BrowserWindow as PDF
+ * @param {BrowserWindow} window - The window to save as PDF
+ */
+async function saveWindowAsPDF(window) {
+  try {
+    // Get window title and sanitize for valid filename
+    const windowTitle = window.getTitle();
+    const sanitizedTitle = windowTitle.replace(/[/\\?%*:|"<>]/g, '-');
+
+    const saveDialogOptions = {
+      title: `${appName} - Save as PDF`,
+      filters: [
+        {
+          name: 'PDF',
+          extensions: ['pdf']
+        }
+      ],
+      defaultPath: path.join(app.getPath('downloads'), sanitizedTitle)
+    };
+
+    const filepath = dialog.showSaveDialogSync(saveDialogOptions);
+
+    if (!filepath) return; // User cancelled
+
+    // Generate PDF
+    const data = await window.webContents.printToPDF({ pageSize: 'Letter' });
+
+    // Save file
+    fs.writeFile(filepath, data, (error) => {
+      if (error) {
+        log.error(error);
+      }
+    });
+
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+// listen for the 'print-to-pdf' event from the renderer process
+ipcMain.on('print-to-pdf', () => {
+  const focusedWindow = BrowserWindow.getFocusedWindow();
+  if (focusedWindow) {
+    saveWindowAsPDF(focusedWindow);
+  }
+});
+
+
+function createWindow() {
+  // Configure spell checker languages
+  session.defaultSession.setSpellCheckerLanguages(['en-US']);
+
+  // Create the browser window
+  mainWindow = createBrowserWindow({ width: 1000, height: 800 });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
   let defaultMenu = Menu.getApplicationMenu();
@@ -83,33 +236,10 @@ function createWindow() {
             label: 'Save as PDF',
             accelerator: 'Ctrl+S',
             click: () => {
-              BrowserWindow.getFocusedWindow()
-                .webContents.printToPDF({ pageSize: 'Letter' })
-                .then((data) => {
-                  const saveDialogOptions = {
-                    title: `${appName} - Save as PDF`,
-                    filters: [
-                      {
-                        name: 'PDF',
-                        extensions: ['pdf']
-                      }
-                    ],
-                    defaultPath: app.getPath('downloads')
-                  };
-
-                  let filepath = dialog.showSaveDialogSync(saveDialogOptions);
-
-                  if (filepath) {
-                    fs.writeFile(filepath, data, (error) => {
-                      if (error) {
-                        log.error(error);
-                      }
-                    });
-                  }
-                })
-                .catch((error) => {
-                  log.error(error);
-                });
+              const focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow) {
+                saveWindowAsPDF(focusedWindow);
+              }
             }
           })
         );
@@ -180,9 +310,8 @@ function createWindow() {
                 title: 'Find Text',
                 label: 'Find:',
                 type: 'input',
-                icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+                icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
                 alwaysOnTop: true,
-                height: 190,
                 inputAttrs: {
                   required: true
                 },
@@ -220,6 +349,9 @@ function createWindow() {
     });
 
   Menu.setApplicationMenu(newMenu);
+
+  // Setup spell check context menu for main window
+  setupSpellCheckContextMenu(mainWindow.webContents);
 
   mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHTML));
   let rootDir = path.dirname(app.getPath('exe'));
@@ -281,24 +413,20 @@ function createWindow() {
   });
 
   // Emitted when the window is going to be closed
-  mainWindow.on('close', () => {
-    // Clear cache & local storage before the window is closed
-    session.defaultSession.clearCache();
-    session.defaultSession.clearStorageData();
+  mainWindow.on('close', async (event) => {
+    // Prevent the window from closing until cache and storage are cleared
+    event.preventDefault();
+    await session.defaultSession.clearCache();
+    await session.defaultSession.clearStorageData();
+    // Use destroy() to avoid re-triggering the close event
+    mainWindow.destroy();
   });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler((details) => {
     // trying to load url in form of index.html?returnPath=report/
     if (details.url.includes('index.html?returnPath=report')) {
-      let childWindow = new BrowserWindow({
-        parent: mainWindow,
-        width: 1000,
-        height: 800,
-        webPreferences: { nodeIntegration: true },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      });
+      let childWindow = createBrowserWindow({ parent: mainWindow });
 
       const newPath = details.url.substring(details.url.indexOf('index.html'));
       const newUrl = 'file:///' + __dirname + '/dist/' + newPath;
@@ -306,41 +434,7 @@ function createWindow() {
       log.info('Navigated to ' + newUrl);
       childWindow.loadURL(newUrl);
 
-      // Setup external links in child windows
-      childWindow.webContents.setWindowOpenHandler((details) => {
-        if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
-          shell.openExternal(details.url);
-          return { action: 'deny' };
-        }
-      });
-
-      return { action: 'deny' };
-
-      // navigating to help section; prevent additional popup windows
-    } else if (details.url.includes('htmlhelp')) {
-      let childWindow = new BrowserWindow({
-        parent: mainWindow,
-        webPreferences: { nodeIntegration: true },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      });
-
-      childWindow.loadURL(details.url);
-
-      // Setup external links in child windows
-      childWindow.webContents.setWindowOpenHandler((details) => {
-        if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
-          shell.openExternal(details.url);
-          return { action: 'deny' };
-        } else {
-          childWindow.loadURL(newUrl);
-          return { action: 'deny' ,
-            overrideBrowserWindowOptions: {
-              title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-            }
-          };
-        }
-      });
+      setupChildWindow(childWindow);
 
       return { action: 'deny' };
 
@@ -352,20 +446,12 @@ function createWindow() {
 
     return {
       action: 'allow',
-      overrideBrowserWindowOptions: {
-        parent: mainWindow,
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
-      }
+      overrideBrowserWindowOptions: createBrowserWindowOptions({ parent: mainWindow })
     };
   });
 
   mainWindow.webContents.on('did-create-window', (childWindow) => {
-    // Child windows that fail to load url are closed
-    childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
-      log.error(errorDescription);
-      childWindow.close();
-    });
+    setupChildWindow(childWindow);
   });
 
   // Load landing page if any window in app fails to load
@@ -397,23 +483,22 @@ function createWindow() {
   });
 
   mainWindow.webContents.debugger.on('message', (event, method, params) => {
-    if (method === 'Network.responseReceived') {
+    // log errors
+    if (method === 'Network.responseReceived' && params.response.status >= 400) {
       mainWindow.webContents.debugger
         .sendCommand('Network.getResponseBody', { requestId: params.requestId })
         .then((body) => {
-          if (params.response.url.toString().substring(0, 4) != 'file') {
-            log.info(
-              'REQUEST AT:',
-              params.response.url,
-              'RETURNED STATUS CODE',
-              params.response.status,
-              '\nRESPONSE BODY:',
-              body
-            );
-          }
+          log.error(
+            'REQUEST AT:',
+            params.response.url,
+            'RETURNED STATUS CODE',
+            params.response.status,
+            '\nRESPONSE BODY:',
+            body
+          );
         })
-        .catch(() => {
-          // Errors here being caused by traffic before api connection is established, so they are irrelevant
+        .catch((e) => {
+          log.error(e);
         });
     }
   });
@@ -450,11 +535,24 @@ app.on('window-all-closed', () => {
   }
 });
 
+function killApiProcess() {
+  if (!apiProcess) return;
+  log.info('Terminating API process (pid ' + apiProcess.pid + ')');
+  try {
+    apiProcess.kill();
+  } catch (e) {
+    log.error('Failed to kill API process:', e);
+  }
+  apiProcess = null;
+}
+
+app.on('will-quit', killApiProcess);
+
 function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = { cwd: exeDir };
   let args = ['--urls', config.api.protocol + '://' + config.api.host + ':' + port];
-  let apiProcess = child(exe, args, options, (error) => {
+  apiProcess = child(exe, args, options, (error) => {
     if (error) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
       log.error(error);

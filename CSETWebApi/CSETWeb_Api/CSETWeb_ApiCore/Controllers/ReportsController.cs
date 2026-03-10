@@ -837,7 +837,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reports/CisaAssessorWorkflowValidateFields")]
+        [Route("api/reports/cisa-assessor-workflow-validate-fields")]
         public IActionResult CisaAssessorWorkflowValidateFields()
         {
             var assessmentId = _token.AssessmentForUser();
@@ -850,6 +850,9 @@ namespace CSETWebCore.Api.Controllers
             DemographicExt iodDemograhics = iodDemoBusiness.GetExtDemographics(assessmentId);
             CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
             CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
+
+            // TODO: these objects need to be cleaned up - too many overlapping fields
+            cisServiceDemographics.CriticalServiceDescription = demographics.CriticalServiceDescription;
 
             CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
             return Ok(validator.ValidateFields());

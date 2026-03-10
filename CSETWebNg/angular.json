@@ -12,7 +12,10 @@
           "builder": "@angular/build:application",
           "options": {
             "aot": true,
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist",
+              "browser": ""
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -61,11 +64,6 @@
                 "output": "./assets/ae-icons/"
               },
               "src/assets",
-              "src/favicon_cset.ico",
-              "src/favicon_acet.ico",
-              "src/favicon_tsa.ico",
-              "src/favicon_cf.ico",
-              "src/favicon_renew.ico",
               "src/uploadAssessment.html",
               "src/sass",
               "src/web.config"
@@ -200,7 +198,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-builders/custom-webpack:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "csetweb-ng:build"
           }

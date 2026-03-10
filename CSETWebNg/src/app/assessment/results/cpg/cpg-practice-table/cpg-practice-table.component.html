@@ -38,14 +38,14 @@
                     <th style="width: 45%; border: 1px solid #ccc" [class]="groupIdToClass[d.groupingId]">
                         <div class="d-flex flex-row justify-content-between">
                             <div class="d-flex flex-row">
-                                <div class="me-2 font-weight-bold">
+                                <div class="me-2 fw-bold">
                                     {{q.displayNumber}}
                                 </div>
-                                <div class="font-weight-normal">
+                                <div class="fw-normal">
                                     <span [innerHTML]="q.securityPractice"></span>
                                 </div>
                             </div>
-                            <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
+                            <div class="ms-4 fw-normal d-flex flex-wrap justify-content-end align-content-start">
                                 <ng-container *ngFor="let c of q.csfMappings; let l = last">
                                     <span class="text-nowrap">
                                         {{c}}{{ l ? '' : ','}}
@@ -89,14 +89,15 @@
                     </td>
                     <!-- CPG 2.0 has child answers for OT/IT -->
                     <td *ngIf="model?.modelId == 21">
-                        <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
-                            <div class="sub-header-1">{{t('reports.core.cpg.ot-abbrev')}}</div>
-                            <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
-                        </div>
-
-                        <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
+                        <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null"
+                            class="mb-3">
                             <div class="sub-header-1">{{t('reports.core.cpg.it-abbrev')}}</div>
                             <app-cpg-answer-block [answer]="findChild(d, q, 'IT')?.answer"></app-cpg-answer-block>
+                        </div>
+                        <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null"
+                            class="mb-3">
+                            <div class="sub-header-1">{{t('reports.core.cpg.ot-abbrev')}}</div>
+                            <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
                         </div>
                     </td>
                     <td>

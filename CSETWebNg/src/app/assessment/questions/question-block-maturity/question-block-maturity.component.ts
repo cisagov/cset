@@ -50,8 +50,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
-  private _timeoutId: NodeJS.Timeout;
-
   percentAnswered = 0;
   modelAnswerOptions: string[] = [];
 
@@ -61,6 +59,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   maturityModelId: number;
   maturityModelName: string;
+
+  moduleBehavior: any;
+  titlePlacement: string;
 
 
   /**
@@ -83,6 +84,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    */
   ngOnInit(): void {
     const maturityModel = this.assessSvc.assessment?.maturityModel;
+    this.moduleBehavior = this.configSvc.getModuleBehavior(maturityModel.modelId);
 
     if (maturityModel?.modelName != null) {
       this.modelAnswerOptions = maturityModel.answerOptions;
@@ -96,6 +98,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.myGrouping.questions.map((item: Question) => {
       this.setJustificationVisibility(item);
     });
+
+    // place the titles
+    this.titlePlacement = this.moduleBehavior.titlePlacement ?? 'top';
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
@@ -130,9 +135,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * hidden.  Use config moduleBehavior to define this.
    */
   showLevelIndicator(q): boolean {
-    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment?.maturityModel?.modelName);
-    if (!!behavior) {
-      return behavior.showMaturityLevelBadge ?? true;
+    if (!!this.moduleBehavior) {
+      return this.moduleBehavior.showMaturityLevelBadge ?? true;
     }
 
     return true;

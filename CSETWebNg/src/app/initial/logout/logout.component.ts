@@ -34,6 +34,7 @@ export class LogoutComponent implements OnInit {
   constructor(
     private router: Router
   ) {
+    const savedLang = localStorage.getItem('cset-language');
     // remove user from session storage to log user out
     // Preserve theme preference
     const savedTheme = localStorage.getItem('cset-theme');
@@ -42,6 +43,9 @@ export class LogoutComponent implements OnInit {
       localStorage.setItem('cset-theme', savedTheme);
     }
     sessionStorage.removeItem('cset-assessments-page');
+    if(savedLang) {
+      localStorage.setItem('cset-language', savedLang);
+    }
     this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
   }
 

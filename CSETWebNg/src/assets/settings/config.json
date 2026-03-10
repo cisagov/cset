@@ -242,6 +242,7 @@
     {
       "moduleName": "CPG2",
       "modelId": "21",
+      "titlePlacement": "side",
       "displayNameKey": "modules.cpg2.display-name",
       "questionNodeKey": "modules.cpg2.question node title",
       "hideTopLevelGroupingName": true,
@@ -620,8 +621,11 @@
     {
       "value": "uk",
       "name": "українська"
-    },
+    }
+  ],
+  "futureLanguageOptions": [
     {
+      "note": "Japanese is roughly supported in the UI only, but no assessments have been translated",
       "value": "jp",
       "name": "日本語"
     }
