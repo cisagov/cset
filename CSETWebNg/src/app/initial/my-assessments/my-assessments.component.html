@@ -86,10 +86,10 @@
           <!-- Import Button (Local) -->
           <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                  tabindex="0"
-                 class="btn btn-secondary tw:flex btn btn-secondary tw:w-full cursor-pointer tw:justify-center tw:items-center h-12 px-6 tw:shadow-sm w-50"
+                 class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
-            <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }} local</span>
+            <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }}</span>
             <input type="file"
                    tabindex="0"
                    class="tw:hidden"
