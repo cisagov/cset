@@ -66,7 +66,7 @@
     "monaco-editor": "^0.55.1",
     "ng2-currency-mask": "^13.0.3",
     "ngx-csv": "^0.3.2",
-    "pdfmake": "^0.3.3",
+    "pdfmake": "^0.3.6",
     "rxjs": "^7.8.2",
     "sanitize-html": "^2.17.0",
     "sass": "^1.97.2",
