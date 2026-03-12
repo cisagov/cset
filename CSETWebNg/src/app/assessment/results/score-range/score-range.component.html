@@ -21,18 +21,20 @@
   SOFTWARE.
 -------------------------->
 <svg [attr.width]="containerWidth" [attr.height]="h" xmlns="http://www.w3.org/2000/svg">
+
      <line [attr.x1]="p" [attr.x2]="chartWidth + p" [attr.y1]="h/2" [attr.y2]="h/2" stroke="#ddd" stroke-width="1"></line>
 
-     <line [attr.x1]="(average/100) * chartWidth + p" [attr.y1]="h * .2" [attr.x2]="(average/100) * chartWidth + p"
-          [attr.y2]="h * .8" stroke="#2c3a4a" stroke-width="1" [matTooltip]="'Average: ' + average + '%'"></line>
+     <!-- range bar -->
+     <rect [attr.x]="chartWidth * (min/100) + p" [attr.y]="h/2 - h/8" 
+          [attr.width]="barWidth" [attr.height]="barHeight" 
+          [attr.fill]="rangeBarFill" [matTooltip]="barTooltip"></rect>
+          
+     <!-- median tick -->
+     <line [attr.x1]="(median/100) * chartWidth + p" [attr.y1]="h * .2" [attr.x2]="(median/100) * chartWidth + p"
+          [attr.y2]="h * .8" stroke="#2c3a4a" stroke-width="1" [matTooltip]="'Median: ' + fmt(median)"></line>
 
-     <circle id="myscore" [attr.cx]="chartWidth * (myScore/100) + p" [attr.cy]="h/2" [attr.r]="h/4"
-          [attr.fill]="myColor" [matTooltip]="'Score: ' + myScore + '%'"></circle>
-
-     <circle id="max" [attr.cx]="chartWidth * (max/100) + p" [attr.cy]="h/2" [attr.r]="h/6" fill="#4682B4"
-          [matTooltip]="'Max: ' + max + '%'"></circle>
-
-     <circle id="min" [attr.cx]="chartWidth * (min/100) + p" [attr.cy]="h/2" [attr.r]="h/12" fill="#F28C28"
-          [matTooltip]="'Min: ' + min + '%'"></circle>
+     <!-- current assessment score -->
+     <circle id="myscore" [attr.cx]="chartWidth * (myScore/100) + p" [attr.cy]="h/2" [attr.r]="h/8"
+          [attr.fill]="dotFill" [attr.stroke]="dotStroke" [matTooltip]="'Score: ' + fmt(myScore)"></circle>
 
 </svg>

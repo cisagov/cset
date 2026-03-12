@@ -69,8 +69,13 @@ export class AnalyticsResultsComponent implements OnInit {
   sampleSize: number;
   allSectors: string = 'All Sectors';
 
-  myColor = '#174792';
+
   mySectors: any[];
+
+  dotFill = "#ffffff";
+  dotStroke = "#0000aa";
+
+  rangeBarFill = "#007BFF";
 
   // result from API call
   scoreBarData: any;

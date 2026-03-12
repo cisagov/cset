@@ -122,6 +122,13 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get theme-aware colors
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    const gridColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.25) : 'rgba(0, 0, 0, 0.1)';
+    const axisBorderColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.45) : 'rgba(0, 0, 0, 0.3)';
+
     return new Chart(canvasId, {
       type: 'bar',
       data: {
@@ -162,7 +169,27 @@ export class AnalysisService {
         scales: {
           x: {
             beginAtZero: true,
-            max: 100
+            max: 100,
+            ticks: {
+              color: textColor
+            },
+            grid: {
+              color: gridColor
+            },
+            border: {
+              color: axisBorderColor
+            }
+          },
+          y: {
+            ticks: {
+              color: textColor
+            },
+            grid: {
+              color: gridColor
+            },
+            border: {
+              color: axisBorderColor
+            }
           }
         }
       }
@@ -177,6 +204,13 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get theme-aware colors
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    const gridColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.25) : 'rgba(0, 0, 0, 0.1)';
+    const axisBorderColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.45) : 'rgba(0, 0, 0, 0.3)';
+
     return new Chart(canvasId, {
       type: 'bar',
       data: {
@@ -214,7 +248,27 @@ export class AnalysisService {
         },
         scales: {
           x: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              color: textColor
+            },
+            grid: {
+              color: gridColor
+            },
+            border: {
+              color: axisBorderColor
+            }
+          },
+          y: {
+            ticks: {
+              color: textColor
+            },
+            grid: {
+              color: gridColor
+            },
+            border: {
+              color: axisBorderColor
+            }
           }
         }
       }
@@ -241,6 +295,13 @@ export class AnalysisService {
     if (tempChart) {
       tempChart.destroy();
     }
+
+    // Get theme-aware colors
+    const isDark = this.themeSvc.isDarkMode();
+    const textColor = isDark ? '#ffffffdd' : '#000000dd';
+    const gridColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.25) : 'rgba(0, 0, 0, 0.1)';
+    const axisBorderColor = isDark ? this.themeSvc.updateAlpha('#ffffff', 0.45) : 'rgba(0, 0, 0, 0.3)';
+
     return new Chart(canvasId,
       {
         type: 'bar',
@@ -251,7 +312,12 @@ export class AnalysisService {
         options: {
           indexAxis: 'y',
           plugins: {
-            legend: { display: true },
+            legend: {
+              display: true,
+              labels: {
+                color: textColor
+              }
+            },
             tooltip: {
               callbacks: {
                 label: ((context) =>
@@ -262,10 +328,28 @@ export class AnalysisService {
           },
           scales: {
             y: {
-              stacked: true
+              stacked: true,
+              ticks: {
+                color: textColor
+              },
+              grid: {
+                color: gridColor
+              },
+              border: {
+                color: axisBorderColor
+              }
             },
             x: {
-              stacked: true
+              stacked: true,
+              ticks: {
+                color: textColor
+              },
+              grid: {
+                color: gridColor
+              },
+              border: {
+                color: axisBorderColor
+              }
             }
           },
         }

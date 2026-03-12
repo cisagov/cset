@@ -15,11 +15,11 @@ BEGIN
 	--test base case where there is no data in db at all
 SELECT SectorId, COUNT(Assessment_Id) AS AssessmentCount
 FROM (
-    SELECT dd.Assessment_Id, dd.IntValue as SectorId FROM DETAILS_DEMOGRAPHICS dd
+    SELECT ss.Assessment_Id, ss.SectorId as SectorId FROM ASSESSMENT_SECTOR_SUBSECTOR ss
     JOIN AVAILABLE_MATURITY_MODELS amm
-    ON dd.Assessment_Id = amm.Assessment_Id
+    ON ss.Assessment_Id = amm.Assessment_Id
     WHERE amm.model_id = @maturity_model_id
-    AND (@sector_id IS NULL OR (DataItemName = 'SECTOR' AND dd.IntValue = @sector_id))
+    AND (@sector_id IS NULL OR (ss.SectorId = @sector_id))
 ) AS CombinedResult
 GROUP BY SectorId;
 END
