@@ -5334,6 +5334,53 @@ DELETE FROM [dbo].[GALLERY_ITEM] WHERE [Gallery_Item_Guid] = '2f798ad3-24ef-4329
 DELETE FROM [dbo].[GALLERY_ITEM] WHERE [Gallery_Item_Guid] = 'f1fe7bf3-ceb3-4b76-a684-f429abb8f1ae'
 PRINT(N'Operation applied to 61 rows out of 61')
 
+PRINT(N'Delete rows from [dbo].[CSF_MAPPING]')
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'DE.AE-08' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8571
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'DE.CM-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8556
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'DE.CM-09' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8570
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'GV.OV-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8542
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'GV.SC-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8541
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'GV.SC-05' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8541
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'GV.SC-07' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8543
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.AM-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8544
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.IM-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8547
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.IM-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8574
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.IM-04' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8547
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.IM-04' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8574
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8545
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8546
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-06' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8545
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-07' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8561
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-07' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8566
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'ID.RA-08' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8545
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AA-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8549
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AA-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8553
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AA-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8554
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AA-05' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8555
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AT-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8557
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.AT-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8557
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8558
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8559
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8568
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8558
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8559
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-10' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8559
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.DS-11' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8564
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.IR-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8556
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.IR-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8569
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8561
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8565
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8562
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8566
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8562
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8566
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'PR.PS-04' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8567
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'RC.RP-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8574
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'RS.CO-02' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8573
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'RS.CO-03' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8572
+DELETE FROM [dbo].[CSF_MAPPING] WHERE [CSF_Code] = N'RS.MA-01' AND [Question_Type] = N'Maturity' AND [Question_Id] = 8573
+PRINT(N'Operation applied to 44 rows out of 44')
+
 PRINT(N'Update rows in [dbo].[MATURITY_REFERENCES]')
 UPDATE [dbo].[MATURITY_REFERENCES] SET [Destination_String]=N'' WHERE [Mat_Question_Id] = 8540 AND [Gen_File_Id] = 3968 AND [Section_Ref] = N'PM-13' AND [Source] = 0
 UPDATE [dbo].[MATURITY_REFERENCES] SET [Destination_String]=N'' WHERE [Mat_Question_Id] = 8540 AND [Gen_File_Id] = 3968 AND [Section_Ref] = N'PM-19' AND [Source] = 0
@@ -6818,66 +6865,66 @@ UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=237 WHERE [Requiremen
 UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=238 WHERE [Requirement_Id] = 4129 AND [Set_Name] = N'NIST800_161_R1'
 UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=239 WHERE [Requirement_Id] = 4130 AND [Set_Name] = N'NIST800_161_R1'
 UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=240 WHERE [Requirement_Id] = 4131 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=241 WHERE [Requirement_Id] = 4132 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=242 WHERE [Requirement_Id] = 4133 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=243 WHERE [Requirement_Id] = 4134 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=244 WHERE [Requirement_Id] = 4135 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=245 WHERE [Requirement_Id] = 4136 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=246 WHERE [Requirement_Id] = 4137 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=247 WHERE [Requirement_Id] = 4138 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=248 WHERE [Requirement_Id] = 4139 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=249 WHERE [Requirement_Id] = 4140 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=250 WHERE [Requirement_Id] = 4141 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=252 WHERE [Requirement_Id] = 4142 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=253 WHERE [Requirement_Id] = 4143 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=254 WHERE [Requirement_Id] = 4144 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=255 WHERE [Requirement_Id] = 4145 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=256 WHERE [Requirement_Id] = 4146 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=257 WHERE [Requirement_Id] = 4147 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=258 WHERE [Requirement_Id] = 4148 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=259 WHERE [Requirement_Id] = 4149 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=260 WHERE [Requirement_Id] = 4150 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=261 WHERE [Requirement_Id] = 4151 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=262 WHERE [Requirement_Id] = 4152 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=263 WHERE [Requirement_Id] = 4153 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=264 WHERE [Requirement_Id] = 4154 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=265 WHERE [Requirement_Id] = 4155 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=266 WHERE [Requirement_Id] = 4156 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=267 WHERE [Requirement_Id] = 4157 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=268 WHERE [Requirement_Id] = 4158 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=270 WHERE [Requirement_Id] = 4159 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=271 WHERE [Requirement_Id] = 4160 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=272 WHERE [Requirement_Id] = 4161 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=273 WHERE [Requirement_Id] = 4162 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=274 WHERE [Requirement_Id] = 4163 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=275 WHERE [Requirement_Id] = 4164 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=276 WHERE [Requirement_Id] = 4165 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=277 WHERE [Requirement_Id] = 4166 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=278 WHERE [Requirement_Id] = 4167 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=279 WHERE [Requirement_Id] = 4168 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=280 WHERE [Requirement_Id] = 4169 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=281 WHERE [Requirement_Id] = 4170 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=282 WHERE [Requirement_Id] = 4171 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=283 WHERE [Requirement_Id] = 4172 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=284 WHERE [Requirement_Id] = 4173 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=285 WHERE [Requirement_Id] = 4174 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=286 WHERE [Requirement_Id] = 4175 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=287 WHERE [Requirement_Id] = 4176 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=288 WHERE [Requirement_Id] = 4177 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=289 WHERE [Requirement_Id] = 4178 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=290 WHERE [Requirement_Id] = 4179 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=291 WHERE [Requirement_Id] = 4180 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=292 WHERE [Requirement_Id] = 4181 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=293 WHERE [Requirement_Id] = 4182 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=294 WHERE [Requirement_Id] = 4183 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=295 WHERE [Requirement_Id] = 4184 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=296 WHERE [Requirement_Id] = 4185 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=297 WHERE [Requirement_Id] = 4186 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=298 WHERE [Requirement_Id] = 4187 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=299 WHERE [Requirement_Id] = 4188 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=300 WHERE [Requirement_Id] = 4189 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=301 WHERE [Requirement_Id] = 4190 AND [Set_Name] = N'NIST800_161_R1'
-UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=302 WHERE [Requirement_Id] = 4191 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=242 WHERE [Requirement_Id] = 4132 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=243 WHERE [Requirement_Id] = 4133 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=244 WHERE [Requirement_Id] = 4134 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=245 WHERE [Requirement_Id] = 4135 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=246 WHERE [Requirement_Id] = 4136 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=247 WHERE [Requirement_Id] = 4137 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=248 WHERE [Requirement_Id] = 4138 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=249 WHERE [Requirement_Id] = 4139 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=250 WHERE [Requirement_Id] = 4140 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=251 WHERE [Requirement_Id] = 4141 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=253 WHERE [Requirement_Id] = 4142 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=254 WHERE [Requirement_Id] = 4143 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=255 WHERE [Requirement_Id] = 4144 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=256 WHERE [Requirement_Id] = 4145 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=257 WHERE [Requirement_Id] = 4146 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=258 WHERE [Requirement_Id] = 4147 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=259 WHERE [Requirement_Id] = 4148 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=260 WHERE [Requirement_Id] = 4149 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=261 WHERE [Requirement_Id] = 4150 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=262 WHERE [Requirement_Id] = 4151 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=263 WHERE [Requirement_Id] = 4152 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=264 WHERE [Requirement_Id] = 4153 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=265 WHERE [Requirement_Id] = 4154 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=266 WHERE [Requirement_Id] = 4155 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=267 WHERE [Requirement_Id] = 4156 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=268 WHERE [Requirement_Id] = 4157 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=269 WHERE [Requirement_Id] = 4158 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=271 WHERE [Requirement_Id] = 4159 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=272 WHERE [Requirement_Id] = 4160 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=273 WHERE [Requirement_Id] = 4161 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=274 WHERE [Requirement_Id] = 4162 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=275 WHERE [Requirement_Id] = 4163 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=276 WHERE [Requirement_Id] = 4164 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=277 WHERE [Requirement_Id] = 4165 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=278 WHERE [Requirement_Id] = 4166 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=279 WHERE [Requirement_Id] = 4167 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=280 WHERE [Requirement_Id] = 4168 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=281 WHERE [Requirement_Id] = 4169 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=282 WHERE [Requirement_Id] = 4170 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=283 WHERE [Requirement_Id] = 4171 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=284 WHERE [Requirement_Id] = 4172 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=285 WHERE [Requirement_Id] = 4173 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=286 WHERE [Requirement_Id] = 4174 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=287 WHERE [Requirement_Id] = 4175 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=288 WHERE [Requirement_Id] = 4176 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=289 WHERE [Requirement_Id] = 4177 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=290 WHERE [Requirement_Id] = 4178 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=291 WHERE [Requirement_Id] = 4179 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=292 WHERE [Requirement_Id] = 4180 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=293 WHERE [Requirement_Id] = 4181 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=294 WHERE [Requirement_Id] = 4182 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=295 WHERE [Requirement_Id] = 4183 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=296 WHERE [Requirement_Id] = 4184 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=297 WHERE [Requirement_Id] = 4185 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=298 WHERE [Requirement_Id] = 4186 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=299 WHERE [Requirement_Id] = 4187 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=300 WHERE [Requirement_Id] = 4188 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=301 WHERE [Requirement_Id] = 4189 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=302 WHERE [Requirement_Id] = 4190 AND [Set_Name] = N'NIST800_161_R1'
+UPDATE [dbo].[REQUIREMENT_SETS] SET [Requirement_Sequence]=303 WHERE [Requirement_Id] = 4191 AND [Set_Name] = N'NIST800_161_R1'
 PRINT(N'Operation applied to 292 rows out of 292')
 
 PRINT(N'Add rows to [dbo].[MATURITY_LEVELS]')
@@ -18623,6 +18670,7 @@ UPDATE [dbo].[CATALOG_RECOMMENDATIONS_HEADINGS] SET [Heading_Name]=N'Physical an
 PRINT(N'Add rows to [dbo].[CSF_MAPPING]')
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'DE.AE-08', N'Maturity', 8570)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'DE.CM-01', N'Maturity', 8558)
+INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'DE.CM-01', N'Maturity', 8564)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'DE.CM-09', N'Maturity', 8569)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'GV.OV-03', N'Maturity', 8541)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'GV.SC-01', N'Maturity', 8543)
@@ -18641,6 +18689,7 @@ INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VAL
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'ID.RA-07', N'Maturity', 8565)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'ID.RA-08', N'Maturity', 8546)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.AA-01', N'Maturity', 8553)
+INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.AA-01', N'Maturity', 8554)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.AA-03', N'Maturity', 8555)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.AA-05', N'Maturity', 8556)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.AA-05', N'Maturity', 8557)
@@ -18651,17 +18700,17 @@ INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VAL
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.DS-02', N'Maturity', 8561)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.DS-10', N'Maturity', 8561)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.IR-01', N'Maturity', 8558)
+INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.IR-01', N'Maturity', 8564)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.IR-01', N'Maturity', 8568)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.PS-01', N'Maturity', 8549)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.PS-02', N'Maturity', 8565)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.PS-03', N'Maturity', 8565)
-INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.PS-04', N'Maturity', 8554)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'PR.PS-04', N'Maturity', 8566)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'RC.RP-01', N'Maturity', 8573)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'RS.CO-02', N'Maturity', 8572)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'RS.CO-03', N'Maturity', 8571)
 INSERT INTO [dbo].[CSF_MAPPING] ([CSF_Code], [Question_Type], [Question_Id]) VALUES (N'RS.MA-01', N'Maturity', 8572)
-PRINT(N'Operation applied to 40 rows out of 40')
+PRINT(N'Operation applied to 42 rows out of 42')
 
 PRINT(N'Add rows to [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS]')
 SET IDENTITY_INSERT [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS] ON
@@ -18682,165 +18731,6 @@ INSERT INTO [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS] ([Option_Id], [DataItemName], [
 SET IDENTITY_INSERT [dbo].[DETAILS_DEMOGRAPHICS_OPTIONS] OFF
 PRINT(N'Operation applied to 14 rows out of 14')
 
-PRINT(N'Add rows to [dbo].[DIAGRAM_CONTAINER]')
-SET IDENTITY_INSERT [dbo].[DIAGRAM_CONTAINER] ON
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23567, N'Layer', N'Main Layer', 1, N'1', 101379, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23570, N'Layer', N'Main Layer', 1, N'1', 101471, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23571, N'Zone', N'Wind Turbine Generators Virtual Machines-High', 0, N'5', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23572, N'Zone', N'Security VLAN-Moderate', 0, N'2', 101471, N'Moderate', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23573, N'Zone', N'Jump Host VLAN-Moderate', 0, N'3', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23574, N'Zone', N'SCADA VLAN-High', 0, N'4', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23575, N'Zone', N'Internet Sites-Low', 0, N'kq5FGfvMyonBIMvHzh2S-187', 101471, N'Low', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23576, N'Zone', N'Wind Site O/O-High', 0, N'kq5FGfvMyonBIMvHzh2S-199', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23577, N'Zone', N'Grid Operator-High-High', 0, N'bi1JvaAtu-6lTVzKTB_4-164', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23578, N'Zone', N'OEM Monitoring/Prognostics-High', 0, N'bi1JvaAtu-6lTVzKTB_4-178', 101471, N'High', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23579, N'Zone', N'Non-Critical VLAN-Low', 0, N'MSz8OllPPVoPWrnuEWKm-203', 101471, N'Low', 23570, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23580, N'Layer', N'Main Layer', 1, N'1', 101569, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23581, N'Zone', N'Corporate-Low', 0, N'2', 101569, N'Low', 23580, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23582, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 101569, N'High', 23580, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23583, N'Layer', N'Main Layer', 1, N'1', 101578, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23584, N'Zone', N'Corporate-Low', 0, N'2', 101578, N'Low', 23583, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23585, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101578, N'High', 23583, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23586, N'Layer', N'Main Layer', 1, N'1', 101577, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23587, N'Zone', N'Corporate-Low', 0, N'2', 101577, N'Low', 23586, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23588, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101577, N'High', 23586, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23589, N'Layer', N'Main Layer', 1, N'1', 101906, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23594, N'Layer', N'Main Layer', 1, N'1', 101944, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23599, N'Layer', N'Main Layer', 1, N'1', 101976, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23600, N'Zone', N'Corporate-Low', 0, N'2', 101976, N'Low', 23599, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23601, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 101976, N'High', 23599, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23602, N'Layer', N'Main Layer', 1, N'1', 101983, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23603, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 101983, N'Moderate', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23604, N'Zone', N'Corporate', 0, N'3', 101983, N'Low', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23607, N'Layer', N'Main Layer', 1, N'1', 101986, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23608, N'Zone', N'Squirrel County-Moderate', 1, N'5', 101986, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23609, N'Zone', N'External Radio-Moderate', 1, N'6', 101986, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23610, N'Zone', N'Moose County-Moderate', 1, N'4', 101986, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23611, N'Zone', N'Corporate-Low', 1, N'2', 101986, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23612, N'Zone', N'Main Radio Network-Moderate', 1, N'3', 101986, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23613, N'Layer', N'Main Layer', 1, N'1', 102011, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23614, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102011, N'Moderate', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23615, N'Zone', N'Corporate', 0, N'3', 102011, N'Low', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23616, N'Zone', N'SCADA', 0, N'4', 102011, N'High', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23617, N'Zone', N'Substation', 0, N'5', 102011, N'Moderate', 23589, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23618, N'Layer', N'Main Layer', 1, N'1', 102058, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23619, N'Zone', N'Corporate-Low', 1, N'3', 102058, N'Low', 6160, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23620, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102058, N'Moderate', 6160, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23621, N'Layer', N'Main Layer', 1, N'1', 102059, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23622, N'Zone', N'Corporate-Low', 1, N'3', 102059, N'Low', 6160, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23623, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102059, N'Moderate', 6160, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23624, N'Layer', N'Main Layer', 1, N'1', 102061, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23625, N'Zone', N'Corporate-Low', 1, N'3', 102061, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23626, N'Zone', N'Process Control System (PCS)-Moderate', 1, N'2', 102061, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23627, N'Layer', N'Main Layer', 1, N'1', 102063, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23628, N'Zone', N'Squirrel County-Moderate', 1, N'5', 102063, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23629, N'Zone', N'External Radio-Moderate', 1, N'6', 102063, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23630, N'Zone', N'Moose County-Moderate', 1, N'4', 102063, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23631, N'Zone', N'Corporate-Low', 1, N'2', 102063, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23632, N'Zone', N'Main Radio Network-Moderate', 1, N'3', 102063, N'Moderate', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23633, N'Layer', N'Main Layer', 1, N'1', 102065, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23634, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102065, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23635, N'Zone', N'Corporate-Low', 1, N'2', 102065, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23636, N'Layer', N'Main Layer', 1, N'1', 102079, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23637, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102079, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23638, N'Zone', N'Corporate-Low', 1, N'2', 102079, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23639, N'Layer', N'Main Layer', 1, N'1', 102080, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23640, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102080, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23641, N'Zone', N'Corporate-Low', 1, N'2', 102080, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23642, N'Layer', N'Main Layer', 1, N'1', 102090, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23643, N'Zone', N'Dispatcher Training Simulator-Moderate', 0, N'2', 102090, N'Moderate', 23642, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23644, N'Zone', N'Corporate-Low', 0, N'3', 102090, N'Low', 23642, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23645, N'Zone', N'SCADA-High', 0, N'4', 102090, N'High', 23642, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23646, N'Zone', N'Substation-Moderate', 0, N'5', 102090, N'Moderate', 23642, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23647, N'Layer', N'Main Layer', 1, N'1', 102092, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23649, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 102092, N'High', 23647, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23650, N'Layer', N'Main Layer', 1, N'1', 102103, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23651, N'Zone', N'SCADA', 0, N'4', 101983, N'High', 23602, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23652, N'Zone', N'PV Assets-Low', 0, N'8v38cvMF-3BwVDTpNylR-148', 101983, N'Low', 23602, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23653, N'Layer', N'Main Layer', 1, N'1', 102009, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23654, N'Zone', N'Corporate-Low', 0, N'2', 102009, N'Low', 23653, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23655, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102009, N'High', 23653, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23658, N'Layer', N'Main Layer', 1, N'1', 102136, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23659, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102136, N'Moderate', 23658, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23660, N'Zone', N'Corporate', 0, N'3', 102136, N'Low', 23658, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23661, N'Zone', N'SCADA', 0, N'4', 102136, N'High', 23658, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23662, N'Zone', N'Substation', 0, N'5', 102136, N'Moderate', 23658, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23663, N'Layer', N'Main Layer', 1, N'1', 102137, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23664, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102137, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23665, N'Zone', N'Corporate-Low', 1, N'2', 102137, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23666, N'Layer', N'Main Layer', 1, N'1', 102138, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23667, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102138, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23668, N'Zone', N'Corporate-Low', 1, N'2', 102138, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23669, N'Layer', N'Main Layer', 1, N'1', 102139, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23670, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102139, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23671, N'Zone', N'Corporate-Low', 1, N'2', 102139, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23672, N'Layer', N'Main Layer', 1, N'1', 102140, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23673, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102140, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23674, N'Zone', N'Corporate-Low', 1, N'2', 102140, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23675, N'Layer', N'Main Layer', 1, N'1', 102141, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23676, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102141, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23677, N'Zone', N'Corporate-Low', 1, N'2', 102141, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23678, N'Layer', N'Main Layer', 1, N'1', 102142, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23679, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102142, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23680, N'Zone', N'Corporate-Low', 1, N'2', 102142, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23681, N'Layer', N'Main Layer', 1, N'1', 102143, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23682, N'Zone', N'Distributed Control System (DCS)-High', 1, N'3', 102143, N'High', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23683, N'Zone', N'Corporate-Low', 1, N'2', 102143, N'Low', 1, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23684, N'Zone', N'Corporate-Low', 0, N'2', 102092, N'Low', 23647, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23685, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 101379, N'Moderate', 23567, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23686, N'Zone', N'Corporate', 0, N'3', 101379, N'Low', 23567, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23687, N'Zone', N'SCADA', 0, N'4', 101379, N'High', 23567, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23688, N'Zone', N'Substation', 0, N'5', 101379, N'Moderate', 23567, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23689, N'Layer', N'Main Layer', 1, N'1', 102153, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23690, N'Zone', N'Dispatcher Training Simulator', 0, N'2', 102153, N'Moderate', 23689, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23691, N'Zone', N'Corporate', 0, N'3', 102153, N'Low', 23689, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23692, N'Zone', N'SCADA', 0, N'4', 102153, N'High', 23689, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23693, N'Zone', N'Substation', 0, N'5', 102153, N'Moderate', 23689, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23694, N'Layer', N'Main Layer', 1, N'1', 102184, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23695, N'Zone', N'Corporate-Low', 0, N'2', 102184, N'Low', 23694, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23696, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102184, N'High', 23694, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23697, N'Layer', N'Main Layer', 1, N'1', 102197, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23698, N'Zone', N'Corporate-Low', 0, N'2', 102197, N'Low', 23697, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23699, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102197, N'High', 23697, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23700, N'Layer', N'Main Layer', 1, N'1', 102199, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23701, N'Zone', N'Corporate-Low', 0, N'2', 102199, N'Low', 23700, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23702, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102199, N'High', 23700, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23703, N'Layer', N'Main Layer', 1, N'1', 102007, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23704, N'Zone', N'Corporate-Low', 0, N'2', 102007, N'Low', 23703, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23705, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102007, N'High', 23703, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23706, N'Layer', N'Main Layer', 1, N'1', 102237, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23707, N'Zone', N'Corporate-Low', 0, N'2', 102237, N'Low', 23706, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23708, N'Zone', N'Nuclear Plant Control System-High', 0, N'3', 102237, N'High', 23706, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23715, N'Layer', N'Main Layer', 1, N'1', 102257, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23716, N'Zone', N'Security VLAN-Moderate', 0, N'2', 102257, N'Moderate', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23719, N'Zone', N'Wind Turbine Generators Virtual Machines-High', 0, N'5', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23720, N'Zone', N'External Radio-Moderate', 0, N'6', 102257, N'Moderate', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23721, N'Zone', N'Elevator Control System-Moderate', 0, N'7', 102257, N'Moderate', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23722, N'Zone', N'Heating, Ventilation, and Air-Conditioning System-Moderate', 0, N'8', 102257, N'Moderate', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23723, N'Zone', N'Internet Sites-Low', 0, N'kq5FGfvMyonBIMvHzh2S-187', 102257, N'Low', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23724, N'Zone', N'Wind Site O/O-High', 0, N'kq5FGfvMyonBIMvHzh2S-199', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23725, N'Zone', N'Grid Operator-High-High', 0, N'bi1JvaAtu-6lTVzKTB_4-164', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23726, N'Zone', N'OEM Monitoring/Prognostics-High', 0, N'bi1JvaAtu-6lTVzKTB_4-178', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23727, N'Zone', N'Non-Critical VLAN-Low', 0, N'MSz8OllPPVoPWrnuEWKm-203', 102257, N'Low', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23728, N'Zone', N'Grid Operator-High', 0, N'8v38cvMF-3BwVDTpNylR-146', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23729, N'Zone', N'PV Vendor/OEM-High', 0, N'8v38cvMF-3BwVDTpNylR-147', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23731, N'Zone', N'Utility DMZ-High', 0, N'5u88hDStEY-TeIxjajJq-145', 102257, N'High', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23734, N'Zone', N'Zone-12', 0, N'68jnyubRb4rfnVFpDGRR-7', 102257, N'Low', 23715, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23735, N'Layer', N'Main Layer', 1, N'1', 102258, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23736, N'Zone', N'Corporate-Low', 0, N'2', 102258, N'Low', 23735, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23737, N'Zone', N'Distributed Control System (DCS)-High', 0, N'3', 102258, N'High', 23735, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23738, N'Layer', N'Main Layer', 1, N'1', 102260, N'L', 0, NULL)
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23739, N'Zone', N'Corporate-Low', 0, N'2', 102260, N'Low', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23740, N'Zone', N'Closed Circuit Camera System-High', 0, N'3', 102260, N'High', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23741, N'Zone', N'Access Control Systems (Badges and Door Locks)-Moderate', 0, N'4', 102260, N'Moderate', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23742, N'Zone', N'Fire Supression-High', 0, N'5', 102260, N'High', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23743, N'Zone', N'Power/Lighting Control Systems-Moderate', 0, N'6', 102260, N'Moderate', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23744, N'Zone', N'Elevator Control System-Moderate', 0, N'7', 102260, N'Moderate', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23745, N'Zone', N'Heating, Ventilation, and Air-Conditioning System-Moderate', 0, N'8', 102260, N'Moderate', 23738, N'1')
-INSERT INTO [dbo].[DIAGRAM_CONTAINER] ([Container_Id], [ContainerType], [Name], [Visible], [DrawIO_id], [Assessment_Id], [Universal_Sal_Level], [Parent_Id], [Parent_Draw_IO_Id]) VALUES (23746, N'Layer', N'Main Layer', 1, N'1', 102268, N'L', 0, NULL)
-SET IDENTITY_INSERT [dbo].[DIAGRAM_CONTAINER] OFF
-PRINT(N'Operation applied to 154 rows out of 154')
-
 PRINT(N'Add rows to [dbo].[FILE_REF_KEYS]')
 INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'INL/RPT-25-88240')
 INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'PCIDSS 4.0.1')
@@ -18848,9 +18738,8 @@ PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add rows to [dbo].[GALLERY_ITEM]')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('4be4dc9b-4f82-4492-afe8-6a9e719699db', N'evci.png', N'evci.png', N'{"Sets":["EV_Charging_Infrastructure"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', NULL, N'EV Charging Infrastructure Assessment & Evaluation (EVCI)', 1, '2026-02-11 10:00:23.100')
-INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('9f480ab4-2060-4fdb-b875-ddac0afb126c', N'', N'', N'{Sets:["SET.20260302.152844"],SALLevel:"Low",QuestionMode:"Questions"}', N'Test Module 3/2/26', NULL, N'Test Module 3/2/26', 1, '2026-03-02 15:28:52.737')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('a7b3ba7c-83e4-450f-8429-fe749c982d2f', N'AWWA.png', N'AWWA.png', N'{"Sets":["AWWA 4.0"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', NULL, N'American Water Works Association v4.0', 1, '2025-09-22 15:00:00.000')
-PRINT(N'Operation applied to 3 rows out of 3')
+PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add rows to [dbo].[MATURITY_GLOBAL_SEQUENCES]')
 INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (702, 22, 580, 590, NULL, NULL)
@@ -19606,7 +19495,7 @@ PRINT(N'Operation applied to 4 rows out of 4')
 PRINT(N'Add rows to [dbo].[SETS]')
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'AWWA 4.0', N'American Water Works Association v4.0', N'AWWA 4.0', 1, 0, NULL, NULL, 0, NULL, NULL, 1, 1, 0, N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', 0, NULL, 0, NULL, 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'C800_53_R520', N'NIST Special Publication 800-53 Revision 5.2.0', N'SP800-53 R5.2', 1, 0, NULL, 4, 1, NULL, NULL, 1, 1, 0, N'This publication provides a catalog of security and privacy controls for information systems and organizations to protect organizational operations and assets, individuals, other organizations, and the Nation from a diverse set of threats and risks, including hostile attacks, human errors, natural disasters, structural failures, foreign intelligence entities, and privacy risks. The controls are flexible and customizable and implemented as part of an organization-wide process to manage risk. The controls address diverse requirements derived from mission and business needs, laws, executive orders, directives, regulations, policies, standards, and guidelines.', 0, NULL, 0, NULL, 0, 1)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'EV_Charging_Infrastructure', N'EV Charging Infrastructure Assessment & Evaluation Module 42', N'EV Charging Infrastructure', 1, 0, NULL, 12, 0, NULL, NULL, 1, 1, 0, N'Custom - This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', 0, NULL, 1, NULL, 0, 1)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'EV_Charging_Infrastructure', N'EV Charging Infrastructure Assessment & Evaluation Module 42', N'EV Charging Infrastructure', 1, 0, NULL, 12, 0, NULL, NULL, 0, 1, 0, N'This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', 0, NULL, 0, '2026-03-01 00:00:00.000', 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'NIST800_171_R3', N'NIST SP 800-171 Revision 3: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations', N'SP800-171 Rev. 3', 1, 0, NULL, 10, 4, NULL, NULL, 1, 1, 0, N'This publication provides agencies with recommended security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when the information is resident in nonfederal systems and organizations; when the nonfederal organization is not collecting or maintaining information on behalf of a federal agency or using or operating a system on behalf of an agency; and where there are no specific safeguarding requirements for protecting the confidentiality of CUI prescribed by the authorizing law, regulation, or governmentwide policy for the CUI category listed in the CUI Registry. The requirements apply to all components of nonfederal systems and organizations that process, store, and/or transmit CUI, or that provide protection for such components.', 0, NULL, 0, NULL, 0, 1)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'PCIDSS_4.0.1', N'Payment Card Industry Data Security Standard (PCI DSS) v4.0.1', N'PCIDSS 4.0.1', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, N'This document, PCI Data Security Standard Requirements and Security Assessment Procedures, combines the 12 PCI DSS requirements and corresponding testing procedures into a security assessment tool. It is designed for use during PCI DSS compliance assessments as part of an entity’s validation process.', 0, NULL, 0, '2024-06-11 00:00:00.000', 0, 1)
 PRINT(N'Operation applied to 5 rows out of 5')
@@ -19722,9 +19611,8 @@ INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Colum
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7276, 14, 1, 0, '446b8d52-16ba-4d18-afd4-d7431d501617')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8286, 9, 8, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8287, 13, 5, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
-INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8288, 76, 0, 0, '9f480ab4-2060-4fdb-b875-ddac0afb126c')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
-PRINT(N'Operation applied to 5 rows out of 5')
+PRINT(N'Operation applied to 4 rows out of 4')
 
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
@@ -19853,6 +19741,9 @@ INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Req
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (446, N'DS-2', N'A Privacy Policy as well as a Cyber Security Breach Policy are implemented.', N'An operator knows how to identify and respond to a suspected cyber breach, based on his cybersecurity training.', N'Business Continuity and Disaster Recovery', N'Business Continuity and Disaster Recovery', 0, NULL, N'AWWA 4.0', NULL, NULL, 99, 86, NULL, NULL)
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (447, N'SU-1', N'A supply chain risk management program.', N'Chain of custody documentation is required for all chemicals used in treatment.', N'Governance and Risk Management', N'Governance and Risk Management', 0, NULL, N'AWWA 4.0', NULL, NULL, 100, 88, NULL, NULL)
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (448, N'SU-2', N'A supply chain risk management program that includes cybersecurity.', N'Preferred vendors for computer hardware, software and peripherals are identified and selected based on evaluation of their supply chain among other criteria.', N'Governance and Risk Management', N'Governance and Risk Management', 0, NULL, N'AWWA 4.0', NULL, NULL, 3, 88, NULL, NULL)
+INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (4192, N'SA-11 (2)', N'<p>Require the developer of the system, system component, or system service to perform threat modeling and vulnerability analyses during development and the subsequent testing and evaluation of the system, component, or service that:</p>  <ol style="list-style-type: lower-alpha;">  <li>Uses the following contextual information: {{Assignment: organization-defined information concerning impact, environment of operations, known or assumed threats, and acceptable risk levels}};</li>  <li>Employs the following tools and methods: {{Assignment: organization-defined tools and methods}};</li>  <li>Conducts the modeling and analyses at the following level of rigor: {{Assignment: organization-defined breadth and depth of modeling and analyses}}; and</li>  <li>Produces evidence that meets the following acceptance criteria: {{Assignment: organization-defined acceptance criteria}}.</li>  </ol>', N'<p>Supplemental C-SCRM Guidance: This enhancement provides threat modeling and vulnerability analysis for the relevant federal agency and contractor products, applications, information systems, and networks. Performing this analysis will help integrate C-SCRM into code refinement and modification activities. See the C-SCRM threat and vulnerability analyses described in Appendix C for additional context.</p>
+<p>Level(s): 2, 3</p>
+<p>Related Control(s): PM-15, RA-3, RA-5</p>', N'System and Services Acquisition', N'Developer Testing and Evaluation', NULL, NULL, N'NIST800_161_R1', NULL, NULL, NULL, 48, NULL, NULL)
 INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (4200, N'03.01.01', N'<ol type="a"> <li>Define the types of system accounts allowed and prohibited.</li> <li>Create, enable, modify, disable, and remove system accounts in accordance with policy, procedures, prerequisites, and criteria.</li> <li>Specify: <ol type="1"> <li>Authorized users of the system,</li> <li>Group and role membership, and</li> <li>Access authorizations (i.e., privileges) for each account.</li> </ol> </li> <li>Authorize access to the system based on: <ol type="1"> <li>A valid access authorization and</li> <li>Intended system usage.</li> </ol> </li> <li>Monitor the use of system accounts.</li> <li>Disable system accounts when: <ol type="1"> <li>The accounts have expired,</li> <li>The accounts have been inactive for {{Assignment: organization-defined time period}},</li> <li>The accounts are no longer associated with a user or individual,</li> <li>The accounts are in violation of organizational policy, or</li> <li>Significant risks associated with individuals are discovered.</li> </ol> </li> <li>Notify account managers and designated personnel or roles within: <ol type="1"> <li>{{Assignment: organization-defined time period}} when accounts are no longer required.</li> <li>{{Assignment: organization-defined time period}} when users are terminated or transferred.</li> <li>{{Assignment: organization-defined time period}} when system usage or the need-to-know changes for an individual.</li> </ol> </li> <li>Require that users log out of the system after {{Assignment: organization-defined time period}} of expected inactivity or when {{Assignment: organization-defined circumstances}}.</li> </ol>', N'<p><strong>DISCUSSION</strong></p>
 <p>This requirement focuses on account management for systems and applications. The
 definition and enforcement of access authorizations other than those determined by
@@ -27940,7 +27831,7 @@ INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Req
 <li>Develop actions to address the root cause of the issue or failure;</li>
 <li>Implement the actions and monitor the implementation for effectiveness.</li></ol>', N'<p>Root cause analysis includes a wide range of approaches, tools, and techniques to systematically identify the underlying causes of issues or failures in systems and systems components (i.e., hardware, software, and firmware). Organizations consider the severity of the incident to determine what root cause analysis method should be used and how quickly to implement remediation actions. The root cause analysis includes a timeline, missed warning signs, key decisions, gaps, mitigations, and verification of effectiveness. The actions identified to address the source of the issue are implemented and integrated into applicable organizational policies, procedures, and control implementations.</p>', N'System and Information Integrity', N'Flaw Remediation', NULL, NULL, N'C800_53_R520', NULL, NULL, NULL, 73, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[NEW_REQUIREMENT] OFF
-PRINT(N'Operation applied to 1548 rows out of 1548')
+PRINT(N'Operation applied to 1549 rows out of 1549')
 
 PRINT(N'Add rows to [dbo].[GEN_FILE_LIB_PATH_CORL]')
 INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3972, 420)
@@ -30505,6 +30396,10 @@ SET IDENTITY_INSERT [dbo].[NEW_QUESTION_SETS] OFF
 PRINT(N'Operation applied to 2476 rows out of 2476')
 
 PRINT(N'Add rows to [dbo].[PARAMETER_REQUIREMENTS]')
+INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4192, 1178, NULL)
+INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4192, 1179, NULL)
+INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4192, 1180, NULL)
+INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4192, 3978, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4200, 706, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4200, 1129, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (4204, 710, NULL)
@@ -34000,7 +33895,7 @@ INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [I
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31050, 1603, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31051, 2073, NULL)
 INSERT INTO [dbo].[PARAMETER_REQUIREMENTS] ([Requirement_Id], [Parameter_Id], [ID]) VALUES (31051, 2131, NULL)
-PRINT(N'Operation applied to 3495 rows out of 3495')
+PRINT(N'Operation applied to 3499 rows out of 3499')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_LEVELS]')
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (349, N'H', N'NST', NULL)
@@ -34403,6 +34298,8 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (448, N'L', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (448, N'M', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (448, N'VH', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (4192, N'H', N'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (4192, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (4200, N'H', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (4200, N'L', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (4200, N'M', N'NST', NULL)
@@ -37759,7 +37656,7 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13808, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13809, N'VH', N'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (13810, N'VH', N'NST', NULL)
-PRINT(N'Operation applied to 3756 rows out of 3756')
+PRINT(N'Operation applied to 3758 rows out of 3758')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_QUESTIONS_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1, N'C800_53_R520', 13437)
@@ -40340,6 +40237,8 @@ INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [So
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (446, 280, 1, N'DS-2', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (447, 280, 1, N'SU-1', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (448, 280, 1, N'SU-2', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (4192, 3747, 1, N'SA-11(2)', NULL, NULL, NULL)
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (4192, 3968, 0, N'SA-11(2)', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (4200, 3968, 0, N'AC-2', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (4200, 3968, 0, N'AC-2(13)', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (4200, 3968, 0, N'AC-2(3)', NULL, NULL, NULL)
@@ -48744,7 +48643,7 @@ INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [So
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (13810, 3968, 1, N'SR-1', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (13810, 3968, 1, N'SR-8', NULL, NULL, NULL)
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Source], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (36508, 692, 1, N'', NULL, NULL, NULL)
-PRINT(N'Operation applied to 8504 rows out of 8504')
+PRINT(N'Operation applied to 8506 rows out of 8506')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (349, N'AWWA 4.0', 34)
@@ -48847,6 +48746,7 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (446, N'AWWA 4.0', 26)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (447, N'AWWA 4.0', 74)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (448, N'AWWA 4.0', 75)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4192, N'NIST800_161_R1', 241)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4200, N'NIST800_171_R3', 0)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4201, N'NIST800_171_R3', 1)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4202, N'NIST800_171_R3', 2)
@@ -48952,8 +48852,8 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4383, N'NIST800_161_R1', 137)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4384, N'NIST800_161_R1', 142)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4385, N'NIST800_161_R1', 234)
-INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4386, N'NIST800_161_R1', 251)
-INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4387, N'NIST800_161_R1', 269)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4386, N'NIST800_161_R1', 252)
+INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (4387, N'NIST800_161_R1', 270)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8001, N'PCIDSS_4.0.1', 0)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8002, N'PCIDSS_4.0.1', 1)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (8003, N'PCIDSS_4.0.1', 2)
@@ -50295,7 +50195,7 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13808, N'C800_53_R520', 726)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13809, N'C800_53_R520', 742)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (13810, N'C800_53_R520', 889)
-PRINT(N'Operation applied to 1548 rows out of 1548')
+PRINT(N'Operation applied to 1549 rows out of 1549')
 
 PRINT(N'Add rows to [dbo].[MATURITY_QUESTION_PROPS]')
 INSERT INTO [dbo].[MATURITY_QUESTION_PROPS] ([Mat_Question_Id], [PropertyName], [PropertyValue]) VALUES (8574, 'IS-IT', N'1')
