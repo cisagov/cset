@@ -1388,6 +1388,49 @@ ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] ALTER COLUMN [PropertyValue] [nvarch
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Altering [dbo].[FillEmptyMaturityQuestionsForAnalysis]'
+GO
+
+-- =============================================
+-- Author:		Dylan Johnson
+-- Create date: 10/04/2020
+-- Description:	Create empty data for questions that have not been filled out to ensure correct reporting values
+-- =============================================
+ALTER PROCEDURE [dbo].[FillEmptyMaturityQuestionsForAnalysis]
+	@Assessment_Id int	
+AS
+BEGIN	
+	DECLARE @result int;  
+	begin
+	BEGIN TRANSACTION;  
+	EXEC @result = sp_getapplock @Resource = '[Answer]', @LockMode = 'Exclusive';
+	INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id],[Answer_Text],[Question_Type],[Assessment_Id])     
+		select mq.Mat_Question_Id,Answer_Text = 'U', Question_Type='Maturity', Assessment_Id =@Assessment_Id
+		from [dbo].[MATURITY_QUESTIONS] mq
+			where Maturity_Model_Id in
+			(select model_id from [dbo].[AVAILABLE_MATURITY_MODELS]
+			where Assessment_Id = @Assessment_Id) 
+			and Mat_Question_Id not in 
+			(select Question_Or_Requirement_Id from [dbo].[ANSWER] 
+			where Assessment_Id = @Assessment_Id)
+			and is_answerable = 1
+		IF @result = -3  
+		BEGIN  
+			ROLLBACK TRANSACTION;  
+		END  
+		ELSE  
+		BEGIN  
+			EXEC sp_releaseapplock @Resource = '[Answer]'; 	
+			COMMIT TRANSACTION;  
+		END
+	end
+
+END
+/****** Object:  StoredProcedure [dbo].[FillEmptyQuestionsForAnalysis]    Script Date: 12/16/2020 11:01:33 AM ******/
+SET ANSI_NULLS ON
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Altering [dbo].[usp_GetTop5Areas]'
 GO
 
@@ -1877,76 +1920,135 @@ PRINT N'Altering [dbo].[analytics_Compute_MaturityAll]'
 GO
 
 -- =============================================
--- Author:		Luke G, Lilly, Barry
--- Create date: 4-6-2022
--- Description:	18 stored procedures for analytics. 
--- This procedure returns the AVG, MIN, MAX, MEDIAN Question Group Heading for the Question_Type 'Maturity' for all sectory and industry. 
+-- Author:       Luke G, Lilly, Barry
+-- Create date:  4-6-2022
+-- Description:  18 stored procedures for analytics.
+--               This procedure returns the AVG, MIN, MAX, MEDIAN Question Group Heading
+--               for the Question_Type 'Maturity' for all sectors and industries.
 --
--- Modification date: 12-NOV-2024
--- Author:      Randy
--- Description: Made sector and industry parameters optional, to cast a wider net.  
--- Also added consideration for a sector and industry stored in DETAILS_DEMOGRAPHICS.
--- Also the groupings are sorted in their sequence order, rather than alphabetically.
+-- Modification: 12-NOV-2024
+-- Author:       Randy
+-- Description:  Made sector and industry parameters optional, to cast a wider net.
+--               Added consideration for a sector and industry stored in DETAILS_DEMOGRAPHICS.
+--               Groupings are now sorted in sequence order rather than alphabetically.
 -- =============================================
 ALTER PROCEDURE [dbo].[analytics_Compute_MaturityAll]
-@maturity_model_id int,
-@sector_id int = NULL
+    @maturity_model_id  INT,
+    @sector_id          INT = NULL
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	--test base case where there is no data in db at all
---test case where the data is ther
---need to address the cases where all no, all yes, and mixed
---next steps the base data is there but the lower data(median) is not
---need to determine why it is not there
-	IF OBJECT_ID('tempdb..#Temp') IS NOT NULL DROP TABLE #Temp
-	IF OBJECT_ID('tempdb..#Temp2') IS NOT NULL DROP TABLE #Temp2
-	IF OBJECT_ID('tempdb..#Temp3') IS NOT NULL DROP TABLE #Temp3
+    SET NOCOUNT ON;
 
+    -- Drop temp tables if they exist
+    IF OBJECT_ID('tempdb..#Temp')  IS NOT NULL DROP TABLE #Temp;
+    IF OBJECT_ID('tempdb..#Temp2') IS NOT NULL DROP TABLE #Temp2;
+    IF OBJECT_ID('tempdb..#Temp3') IS NOT NULL DROP TABLE #Temp3;
 
---step 1 get the base data
-select a.Assessment_Id,Question_Group, Answer_Text, isnull(COUNT(a.answer_text),0) Answer_Count, 
-		sum(isnull(count(answer_text),0)) OVER(PARTITION BY a.assessment_id,question_group) AS Total	
-		,cast(IsNull((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY a.assessment_id,question_group),0),1)))*100,0) as float)  as [Percentage] 
-		into #temp
-		from [Analytics_Answers] a	
-		join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-		join ANALYTICS_MATURITY_GROUPINGS g on q.Mat_Question_Id=g.Maturity_Question_Id
-		left join ASSESSMENT_SECTOR_SUBSECTOR ddsector on a.Assessment_Id = ddsector.Assessment_Id
-		where a.question_type = 'Maturity' and q.Maturity_Model_Id=@maturity_model_id and g.Maturity_Model_Id=@maturity_model_id
-			and (nullif(@sector_id, ddsector.SectorId) is null)
-		group by a.assessment_id, Question_Group, Answer_Text
+    -- -------------------------------------------------------------------------
+    -- Step 1: Get the base data
+    -- -------------------------------------------------------------------------
+    SELECT
+        a.Assessment_Id,
+        Question_Group,
+        Answer_Text,
+        ISNULL(COUNT(a.Answer_Text), 0) AS Answer_Count,
+        SUM(ISNULL(COUNT(Answer_Text), 0))
+            OVER (PARTITION BY a.Assessment_Id, Question_Group) AS Total,
+        CAST(
+            ISNULL(
+                (
+                    CAST(COUNT(a.Answer_Text) AS FLOAT)
+                    / ISNULL(NULLIF(SUM(COUNT(Answer_Text))
+                        OVER (PARTITION BY a.Assessment_Id, Question_Group), 0), 1)
+                ) * 100,
+                0
+            )
+        AS FLOAT) AS [Percentage]
+    INTO #Temp
+    FROM [Analytics_Answers] a
+    JOIN MATURITY_QUESTIONS q ON a.Question_Or_Requirement_Id = q.Mat_Question_Id
+    JOIN ANALYTICS_MATURITY_GROUPINGS g ON q.Mat_Question_Id = g.Maturity_Question_Id
+    LEFT JOIN ASSESSMENT_SECTOR_SUBSECTOR ddsector ON a.Assessment_Id = ddsector.Assessment_Id
+    WHERE
+        a.Question_Type = 'Maturity'
+        AND q.Is_Answerable = 1
+        AND q.Maturity_Model_Id = @maturity_model_id
+        AND g.Maturity_Model_Id = @maturity_model_id
+        AND NULLIF(@sector_id, ddsector.SectorId) IS NULL
+    GROUP BY
+        a.Assessment_Id,
+        Question_Group,
+        Answer_Text;
 
+    -- -------------------------------------------------------------------------
+    -- Step 2: Handle all-Yes, all-No, and mixed answer cases
+    -- -------------------------------------------------------------------------
 
---step 2 handle the cases where we have all yes, all no, and mixed
-	--get the yes and mixed case
-	select * into #temp2 from #temp where answer_text='Y'
-	--get the all no case
-	insert #temp2
-	select assessment_id,QUESTION_GROUP,Answer_Text='Y',Answer_Count,total, [percentage]=0 from #temp where Answer_Text = 'N' and Answer_Count=total
+    -- Capture Yes answers and mixed cases
+    SELECT *
+    INTO #Temp2
+    FROM #Temp
+    WHERE Answer_Text = 'Y';
 
+    -- Capture all-No cases (no Yes answers exist; treat percentage as 0)
+    INSERT INTO #Temp2
+    SELECT
+        Assessment_Id,
+        Question_Group,
+        Answer_Text = 'Y',
+        Answer_Count,
+        Total,
+        [Percentage] = 0
+    FROM #Temp
+    WHERE Answer_Text = 'N'
+      AND Answer_Count = Total;
 
---step 3 calculate the min,max,avg
-	select G1.Question_Group as Question_Group_Heading, g1.Global_Sequence, min(isnull([percentage],0)) [minimum],max(isnull([percentage],0)) [maximum],avg(isnull([percentage],0)) [average] 
-	into #temp3
-	from
-	(	
-		select distinct Question_Group, global_sequence from ANALYTICS_MATURITY_GROUPINGS where Maturity_Model_Id = @maturity_model_id
-	) G1 LEFT OUTER JOIN #temp2 G2 ON G1.Question_Group = G2.Question_Group 
-	group by G1.Question_Group, global_sequence
+    -- -------------------------------------------------------------------------
+    -- Step 3: Calculate MIN, MAX, AVG per grouping
+    -- -------------------------------------------------------------------------
+    SELECT
+        G1.Question_Group AS Question_Group_Heading,
+        G1.Global_Sequence,
+        MIN(ISNULL(G2.[Percentage], 0)) AS [minimum],
+        MAX(ISNULL(G2.[Percentage], 0)) AS [maximum],
+        AVG(ISNULL(G2.[Percentage], 0)) AS [average]
+    INTO #Temp3
+    FROM (
+        SELECT DISTINCT
+            Question_Group,
+            Global_Sequence
+        FROM ANALYTICS_MATURITY_GROUPINGS
+        WHERE Maturity_Model_Id = @maturity_model_id
+    ) G1
+    LEFT JOIN #Temp2 G2 ON G1.Question_Group = G2.Question_Group
+    GROUP BY
+        G1.Question_Group,
+        G1.Global_Sequence;
 
+    -- -------------------------------------------------------------------------
+    -- Step 4: Add median and return final result set
+    -- -------------------------------------------------------------------------
+    SELECT
+        a.Question_Group_Heading,
+        CAST(a.minimum AS FLOAT) AS minimum,
+        CAST(a.maximum AS FLOAT) AS maximum,
+        CAST(a.average AS FLOAT) AS average,
+        ISNULL(b.median, 0) AS median
+    FROM #Temp3 a
+    LEFT JOIN (
+        SELECT DISTINCT
+            Question_Group AS Question_Group_Heading,
+            ISNULL(
+                PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY [Percentage])
+                    OVER (PARTITION BY Question_Group),
+                0
+            ) AS median
+        FROM #Temp2
+    ) b ON a.Question_Group_Heading = b.Question_Group_Heading
+    ORDER BY
+        a.Global_Sequence;
 
---step 4 add median
-	select a.Question_Group_Heading, cast(a.minimum as float) as minimum,cast(a.maximum as float) as maximum,cast(a.average as float) as average,isnull(b.median,0) as median from
-	#temp3 a left join 
-	(
-	select distinct Question_Group as Question_Group_Heading		
-	,isnull(PERCENTILE_disc(0.5) WITHIN GROUP (ORDER BY [Percentage]) OVER (PARTITION BY question_group),0) AS median	
-	from #temp2) b on a.Question_Group_Heading=b.Question_Group_Heading
-	order by a.Global_Sequence
-end
+END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -1954,39 +2056,61 @@ PRINT N'Altering [dbo].[analytics_compute_single_averages_maturity]'
 GO
 
 -- =============================================
--- Author:		Barry
+-- Author:      Barry
 -- Create date: 4/6/2022
--- Description:	average for maturity model
+-- Description: Average for maturity model
 -- =============================================
 ALTER PROCEDURE [dbo].[analytics_compute_single_averages_maturity]
-	@assessment_id int,
-	@maturity_model_id int
+    @assessment_id     INT,
+    @maturity_model_id INT
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-    
-	select G1.Title, G1.Answer_Text,isnull(G2.Answer_Count,0) as Answer_Count, isnull(G2.Total,0) as Total, isnull(G2.Percentage, 0) as [Percentage]
-	from
-	(
-		select distinct Assessment_Id= @assessment_id,
-		Question_Group as Title, Global_Sequence, Answer_Text = 'Y'
-		from ANALYTICS_MATURITY_GROUPINGS		
-		where Maturity_Model_Id= @maturity_model_id			
-	) G1 LEFT OUTER JOIN
-	(
-		select
-		Question_Group as Title, answer_text, count(answer_text) answer_count,
-		sum(count(answer_text)) OVER(PARTITION BY Question_Group) AS Total,
-		cast(IsNull((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY Question_Group),0),1)))*100,0) as float) as [Percentage] 
-		from Analytics_Answers a
-		join ANALYTICS_MATURITY_GROUPINGS g on a.Question_Or_Requirement_Id=g.Maturity_Question_Id
-		where assessment_id = @assessment_id
-		group by Question_Group, Answer_Text
-	) G2 ON G1.Title = G2.Title AND G1.Answer_Text = G2.Answer_Text		
-	where g1.answer_text = 'Y'
-	order by Global_Sequence
+    SET NOCOUNT ON;
+
+    SELECT
+        G1.Title,
+        G1.Answer_Text,
+        ISNULL(G2.Answer_Count, 0) AS Answer_Count,
+        ISNULL(G2.Total, 0) AS Total,
+        ISNULL(G2.Percentage, 0) AS [Percentage]
+    FROM (
+        SELECT DISTINCT
+            Assessment_Id  = @assessment_id,
+            Question_Group AS Title,
+            Global_Sequence,
+            Answer_Text    = 'Y'
+        FROM ANALYTICS_MATURITY_GROUPINGS
+        WHERE Maturity_Model_Id = @maturity_model_id
+    ) G1
+    LEFT JOIN (
+        SELECT
+            Question_Group AS Title,
+            Answer_Text,
+            COUNT(Answer_Text) AS Answer_Count,
+            SUM(COUNT(Answer_Text))
+                OVER (PARTITION BY Question_Group) AS Total,
+            CAST(
+                ISNULL(
+                    (
+                        CAST(COUNT(a.Answer_Text) AS FLOAT)
+                        / ISNULL(NULLIF(SUM(COUNT(Answer_Text))
+                            OVER (PARTITION BY Question_Group), 0), 1)
+                    ) * 100,
+                    0
+                )
+            AS FLOAT) AS [Percentage]
+        FROM Analytics_Answers a
+        JOIN ANALYTICS_MATURITY_GROUPINGS g ON a.Question_Or_Requirement_Id = g.Maturity_Question_Id
+        JOIN MATURITY_QUESTIONS mq ON a.Question_Or_Requirement_Id = mq.Mat_Question_Id
+        WHERE Assessment_Id = @assessment_id
+          AND mq.Is_Answerable = 1
+        GROUP BY
+            Question_Group,
+            Answer_Text
+    ) G2 ON G1.Title = G2.Title AND G1.Answer_Text = G2.Answer_Text
+    WHERE G1.Answer_Text = 'Y'
+    ORDER BY Global_Sequence;
+
 END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -2312,6 +2436,18 @@ CREATE FUNCTION [dbo].[fn_diagramobjects]	 ()
 		
 		return @InstalledObjects 
 	END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NCSF_MIGRATION2]'
+GO
+CREATE TABLE [dbo].[NCSF_MIGRATION2]
+(
+[V2id] [int] NULL,
+[V2Title] [varchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[V1Title] [varchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[V1Id] [int] NULL
+) ON [PRIMARY]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
