@@ -51,11 +51,6 @@ export class LandingPageTabsComponent implements OnInit {
     if (this._tabsElementRef) {
       const tabsEl = this._tabsElementRef.nativeElement;
       tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal && this.devMode) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
     }
   }
 

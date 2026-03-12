@@ -149,7 +149,7 @@
                 <mat-icon style="position: relative; top: -0.1rem">
                   {{ navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
                 </mat-icon>
-                <div class="text-wrap text-start u-hover tw:ml-2">
+                <div class="text-wrap text-start u-hover tw:ms-2">
                   {{ node?.label }}
                 </div>
               </div>
@@ -157,7 +157,7 @@
 
             <ul
               role="tree"
-              class="mat-tree-node tw:ml-4 tw:pl-2 tw:border-l tw:border-[#6b7280]"
+              class="mat-tree-node tw:ms-4 tw:ps-2 tw:border-l tw:border-[#6b7280]"
               *ngIf="navTreeSvc?.tocControl?.isExpanded(node)"
             >
               <ng-container matTreeNodeOutlet></ng-container>
