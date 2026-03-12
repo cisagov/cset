@@ -522,6 +522,20 @@
     stroke: var(--border-color) !important;
   }
 
+  // Fix for legend items being dark on hover in dark mode
+  .chart-legend .legend-label,
+  .legend-label {
+    color: var(--text-primary) !important;
+
+    &.active {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .legend-label-text {
+      color: var(--text-primary) !important;
+    }
+  }
+
   // Sticky header backgrounds in charts and analytics
   .sticky-sal {
     background-color: var(--bg-secondary) !important;
