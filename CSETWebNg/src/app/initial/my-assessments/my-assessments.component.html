@@ -59,6 +59,8 @@
 
       <div *ngIf="sortedAssessments != null"
         class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4">
+
+        @if(sortedAssessments?.length > 0) {
         <div class="tw:flex tw:w-full sm:tw:w-auto mt-3">
           <div
             class="tw:flex tw:w-full sm:tw:w-auto tw:bg-transparent tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
@@ -92,7 +94,6 @@
           </div>
         </div>
 
-        @if(sortedAssessments?.length > 0) {
         <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap mt-3">
           <!-- Import Button (Local) -->
           <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
