@@ -691,18 +691,18 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
             data-assessment-id="${assessmentId}"
             data-row-index="${rowIndex}"
             title="Remove assessment">
-      <span class="cset-icons-trash-x tw:text-sm mr-2"></span>
+      <span class="cset-icons-trash-x tw:text-sm me-2"></span>
       <span class="text-nowrap">${labelRemove}</span>
     </button>
   `;
 
     if (this.showColumn('export')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ml-1"
+      <button class="btn btn-ghost btn-sm ms-1"
               data-action="export"
               data-assessment-id="${assessmentId}"
               title="Export assessment">
-        <span class="cset-icons-export-up tw:text-sm mr-2"></span>
+        <span class="cset-icons-export-up tw:text-sm me-2"></span>
         <span class="text-nowrap">${labelExport}</span>
       </button>
     `;
@@ -710,11 +710,11 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
 
     if (this.showColumn('export json')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ml-1"
+      <button class="btn btn-ghost btn-sm ms-1"
               data-action="exportJson"
               data-assessment-id="${assessmentId}"
               title="Export assessment JSON">
-        <span class="cset-icons-export-up tw:text-sm mr-2"></span>
+        <span class="cset-icons-export-up tw:text-sm me-2"></span>
         <span class="text-nowrap">${labelExportJson}</span>
       </button>
     `;
@@ -724,7 +724,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     if (this.showColumn('export json')) {
       const uploaded = !!assessment.jsonUploaded;
       jsonIndicator = `
-      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:pl-2 tw:ml-1" title="Check to indicate that the JSON file has been submitted to CISA">
+      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2 tw:ms-1" title="Check to indicate that the JSON file has been submitted to CISA">
         <input type="checkbox" id="json-uploaded-${assessmentId}" ${uploaded ? 'checked' : ''}
                class="checkbox-custom"
                data-action="toggleJsonUploaded"
