@@ -92,7 +92,7 @@
           </div>
         </div>
 
-        @if(sortedAssessments?.count > 0) {
+        @if(sortedAssessments?.length > 0) {
         <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap mt-3">
           <!-- Import Button (Local) -->
           <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
