@@ -1157,9 +1157,8 @@
     "my sector": "My Sector",
     "all sectors": "All Sectors",
     "current score": "Current assessment score",
-    "vertical bar": "Vertical bar is average score for sample",
-    "max": "Maximum score",
-    "min": "Minimum score"
+    "vertical bar": "Median score for sample",
+    "score range": "Score range for sample"
   },
   "Module Content Report": "Module Content Report",
   "Select a Standard": "Select a Standard",

@@ -30,7 +30,7 @@
             'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black': selectedCategory === 'favorites',
             'tw:text-text-primary': selectedCategory !== 'favorites'
           }" (click)="selectCategory('favorites')">
-        <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-[#15288] tw:mr-2"
+        <i class="fa-solid fa-star tw:scale-125 tw:inline-block tw:text-[#15288] tw:me-2"
           style="text-shadow: 0 0 3px currentColor"></i>
         {{ t('gallery.favorites') }}
 
@@ -51,7 +51,7 @@
           'tw:bg-cset-primary tw:text-white tw:dark:text-gray-200 tw:[&>i]:text-black':  selectedCategoryId === row.group_Id,
           'tw:text-text-primary': selectedCategoryId !== row.group_Id
         }" (click)="selectCategory(row.group_Title)">
-          <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
+          <i [class]="getCategoryIcon(row.group_Title)" class="tw:me-2"></i>
           {{row.group_Title}}
           <span class="tw:float-right tw:text-text-primary tw:px-2 tw:py-1 tw:rounded tw:text-xs" [ngClass]="{
           'tw:bg-badge-active': selectedCategoryId === row.group_Id,

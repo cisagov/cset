@@ -21,13 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { ThemeService } from '../../../../services/theme.service';
+import { Subscription } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -37,7 +39,7 @@ declare var $: any;
     host: { class: 'd-flex flex-column flex-11a' },
     standalone: false
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -54,18 +56,38 @@ export class DashboardComponent implements OnInit {
   componentCount = 0;
   initialized = false;
 
+  private dashboardData: any;
+  private themeSubscription: Subscription;
+
   constructor(
     private analysisSvc: AnalysisService,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    private tSvc: TranslocoService) { }
+    private tSvc: TranslocoService,
+    private themeSvc: ThemeService) { }
 
   ngOnInit() {
-    this.analysisSvc.getDashboard().subscribe(x => this.setupPage(x));
+    this.analysisSvc.getDashboard().subscribe(x => {
+      this.dashboardData = x;
+      this.setupPage(x);
+    });
 
     // even up the score container widths
     $("#overall-score").css("width", $("#component-score").width() + "px");
+
+    // Subscribe to theme changes and rebuild charts
+    this.themeSubscription = this.themeSvc.theme$.subscribe(() => {
+      if (this.dashboardData) {
+        this.setupPage(this.dashboardData);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
 
