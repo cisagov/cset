@@ -4,11 +4,14 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Mvc;
-using System;
-using CSETWebCore.Interfaces.Notification;
-using NLog;
+using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Diagnostic;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Notification;
+using Microsoft.AspNetCore.Mvc;
+using NLog;
+using System;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -38,9 +41,9 @@ namespace CSETWebCore.Api.Controllers
             {
                 _notification.SendTestEmail(recip);
             }
-            catch (Exception Exc)
+            catch (Exception exc)
             {
-                return Exc.Message;
+                return exc.Message;
             }
 
             return "Test email sent successfully";
@@ -63,6 +66,34 @@ namespace CSETWebCore.Api.Controllers
             logToFile.Info(text);
 
             return Ok($"Complete at {DateTime.UtcNow} UTC");
+        }
+
+
+        /// <summary>
+        /// This endpoint is useful when preparing for release.  It looks
+        /// for data that needs to be addressed or deleted, like temporary
+        /// sets, custom sets, stranded requirements, temporary requirements, etc.
+        /// It requires a valid token to invoke.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/diagnostic/data/audit")]
+        [CsetAuthorize]
+        public IActionResult AuditData([FromQuery] string text)
+        {
+            try
+            {
+                var audit = new DatabaseAuditor(_context);
+                var result = audit.Run();
+                return Ok(result);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+
+                throw;
+            }
         }
     }
 }
