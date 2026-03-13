@@ -111,14 +111,10 @@ export class ObservationDetailComponent implements OnInit {
     this.impliedSave = true;
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    //this.refreshIndividualsResponsible();
-
-    this.observation.answer_Id = this.answerId;
-    this.observation.question_Id = this.questionId;
 
     const resp: any = await firstValueFrom(this.observationsSvc.saveObservation(this.observation));
 
-    this.dialog.close(true);
+    this.dialog.close(resp);
   }
 
   /**
