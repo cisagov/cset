@@ -43,6 +43,7 @@ import { FileExportService } from '../../../services/file-export.service';
 import { firstValueFrom } from 'rxjs';
 import { ResourceLibraryService } from './../../../services/resource-library.service';
 import { ThemeService } from '../../../services/theme.service';
+import { FeedbackService } from '../../../services/feedback.service';
 
 
 @Component({
@@ -90,6 +91,7 @@ export class QuestionExtrasComponent implements OnInit {
     private obsSvc: ObservationsService,
     public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
+    public feedbackSvc: FeedbackService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -751,7 +753,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     if (mode == 'FDBK') {
-      return this.configSvc.behaviors.showFeedback;
+      return this.feedbackSvc.showFeedback;
     }
 
     return true;

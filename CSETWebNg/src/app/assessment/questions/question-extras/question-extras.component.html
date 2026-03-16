@@ -112,7 +112,8 @@
             </svg>
         </button>
 
-        <button *ngIf="displayIcon('FDBK')" class="extras-button cursor-pointer icon-color"
+        @if(displayIcon('FDBK')) {
+        <button class="extras-button cursor-pointer icon-color"
             style="padding-top: 0px; padding-left: 2px;" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
             [matTooltip]="has('FDBK')==='inline'?t('tooltip.feedback with content'):t('tooltip.feedback')"
             matTooltipPosition="above">
@@ -136,6 +137,8 @@
                 </g>
             </svg>
         </button>
+        }
+
         <span *ngIf="displayIcon('REVIEWED')" class="btn-group btn-group-toggle">
             <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
                 <input class="btn-check" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
@@ -424,13 +427,14 @@
                             {{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}
                         </td>
                         <td class="py-2">
-                            <button class="icon-button fs-base cursor-pointer" style="color: #004D73 !important;" aria-label="Edit"
-                                (click)="editObservation(obs.observation_Id)">
+                            <button class="icon-button fs-base cursor-pointer" style="color: #004D73 !important;"
+                                aria-label="Edit" (click)="editObservation(obs.observation_Id)">
                                 <span class="me-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td class="py-2">
-                            <button class="icon-button fs-base cursor-pointer" [style.color]="getDeleteButtonColor() + ' !important'" aria-label="Delete"
+                            <button class="icon-button fs-base cursor-pointer"
+                                [style.color]="getDeleteButtonColor() + ' !important'" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
                                 <span class="me-1 cset-icons-trash-can"></span>
                             </button>
