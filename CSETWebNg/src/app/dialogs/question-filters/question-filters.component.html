@@ -72,6 +72,8 @@
           {{ t(skin + '.show with comments') }}
         </label>
       </div>
+
+      @if(this.feedbackSvc.showFeedback) {
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback"
           name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
@@ -79,6 +81,8 @@
           {{ t(skin + '.show with feedback') }}
         </label>
       </div>
+      }
+
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked"
           name="cbShowMarked" (click)="updateFilters($event, 'M')">
