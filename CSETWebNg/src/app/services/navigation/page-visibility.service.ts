@@ -24,6 +24,7 @@
 import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
+import { FeedbackService } from '../feedback.service';
 
 /**
  * Analyzes assessment
@@ -37,6 +38,7 @@ export class PageVisibilityService {
   constructor(
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
+    private feedbackSvc: FeedbackService
   ) { }
 
   /**
@@ -167,7 +169,7 @@ export class PageVisibilityService {
       }
 
       if (c == ('SHOW-FEEDBACK')) {
-        show = show && (this.configSvc.behaviors?.showFeedback ?? false);
+        show = show && this.feedbackSvc.showFeedback;
       }
 
       if (c == 'IS-CSA') {
