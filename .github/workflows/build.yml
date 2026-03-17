@@ -7,64 +7,84 @@ on:
       - release/*
   push:
     branches:
+      - develop
       - release/*
-
-env:
-  IMAGE: ${{ secrets.IMAGE }}
-  PAT: ${{ secrets.PAT }}
 
 jobs:
   build-api:
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]'
-    defaults:
-      run:
-        working-directory: ./CSETWebApi
     steps:
       - uses: actions/checkout@v6
 
-      - name: Registry login
-        run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+      - uses: docker/setup-buildx-action@v4
 
-      - name: Pull Docker Image
-        run: docker pull $IMAGE/api:latest || true
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT }}
 
-      - name: Tag Docker Image
-        run: docker build -f Dockerfile . --tag $IMAGE/api:latest --cache-from $IMAGE/api:latest
+      - uses: docker/metadata-action@v6
+        id: meta
+        with:
+          images: ${{ secrets.IMAGE }}/api
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-,format=short
 
-      - name: Push Docker Image
-        run: docker push $IMAGE/api:latest
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./CSETWebApi
+          file: ./CSETWebApi/Dockerfile
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   build-web:
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]'
-    defaults:
-      run:
-        working-directory: ./CSETWebNg
     steps:
       - uses: actions/checkout@v6
 
-      - name: Registry login
-        run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+      - uses: docker/setup-buildx-action@v4
 
-      - name: Pull Docker Image
-        run: docker pull $IMAGE/web:latest || true
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT }}
 
-      - name: Tag Docker Image
-        run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE/web:latest
+      - uses: docker/metadata-action@v6
+        id: meta
+        with:
+          images: ${{ secrets.IMAGE }}/web
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-,format=short
 
-      - name: Push Docker Image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: docker push $IMAGE/web:latest
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./CSETWebNg
+          file: ./CSETWebNg/Dockerfile
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   dependabot-build:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
       - uses: actions/checkout@v6
-      
+
       - name: Basic build test (API)
         working-directory: ./CSETWebApi
         run: docker build -f Dockerfile . --tag test-api:latest
-        
+
       - name: Basic build test (Web)
         working-directory: ./CSETWebNg
         run: docker build -f Dockerfile . --tag test-web:latest

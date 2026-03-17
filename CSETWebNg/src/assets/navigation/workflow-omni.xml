@@ -324,7 +324,7 @@
 
         <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="SHOW-FEEDBACK ASSESSOR" />
+        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="SHOW-FEEDBACK" />
 
         <!--
         <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA HAS-URL-ANALYTICS"/>
