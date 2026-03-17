@@ -13,6 +13,773 @@ BEGIN TRANSACTION
 PRINT(N'Disable DML triggers on [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] DISABLE TRIGGER [trg_update_maturity_groupings]
 
+PRINT(N'Delete rows from [dbo].[NEW_QUESTION_LEVELS]')
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56493
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56494
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56495
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56496
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56497
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56498
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56499
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56500
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56501
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56502
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56503
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56504
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56505
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56506
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56507
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56508
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56509
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56510
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56511
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56512
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56513
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56514
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56515
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56516
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56517
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56518
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56519
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56520
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56521
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56522
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56523
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56524
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56525
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56526
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56527
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56528
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56529
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56530
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56531
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56532
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56533
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56534
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56535
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56536
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56537
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56538
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56539
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56540
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56541
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56542
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56543
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56544
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56545
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56546
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56547
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56548
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56549
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56550
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56551
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56552
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56553
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56554
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56555
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56556
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56557
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56558
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56559
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56560
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56561
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56562
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56563
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56564
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56565
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56566
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56567
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56568
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56569
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56570
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56571
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56572
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56573
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56574
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56575
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56576
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56577
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56578
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56579
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56580
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56581
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56582
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56583
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56584
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56585
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56586
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56587
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56588
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56589
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56590
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56591
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56592
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56593
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56594
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56595
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56596
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56597
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56598
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56599
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56600
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56601
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56602
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56603
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56604
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56605
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56606
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56607
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56608
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56609
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56610
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56611
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56612
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56613
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56614
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56615
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56616
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56617
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56618
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56619
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56620
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56621
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56622
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56623
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56624
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56625
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56626
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56627
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56628
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56629
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56630
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56631
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56632
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56633
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56634
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56635
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56636
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56637
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56638
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56639
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56640
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56641
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56642
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56643
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56644
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56645
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56646
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56647
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56648
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56649
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56650
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56651
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56652
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56653
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56654
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56655
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56656
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56657
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56658
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56659
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56660
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56661
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56662
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56663
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56664
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56665
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56666
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56667
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56668
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56669
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56670
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56671
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56672
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56673
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56674
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56675
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56676
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56677
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56678
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56679
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56680
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56681
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56682
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 56683
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56493
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56494
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56495
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56496
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56497
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56498
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56499
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56500
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56501
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56502
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56503
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56504
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56505
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56506
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56507
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56508
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56509
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56510
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56511
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56512
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56513
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56514
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56515
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56516
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56517
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56518
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56519
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56520
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56521
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56522
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56523
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56524
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56525
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56526
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56527
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56528
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56529
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56530
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56531
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56532
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56533
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56534
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56535
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56536
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56537
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56538
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56539
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56540
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56541
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56542
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56543
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56544
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56545
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56546
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56547
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56548
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56549
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56550
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56551
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56552
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56553
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56554
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56555
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56556
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56557
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56558
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56559
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56560
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56561
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56562
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56563
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56564
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56565
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56566
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56567
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56568
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56569
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56570
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56571
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56572
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56573
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56574
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56575
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56576
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56577
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56578
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56579
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56580
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56581
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56582
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56583
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56584
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56585
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56586
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56587
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56588
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56589
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56590
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56591
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56592
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56593
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56594
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56595
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56596
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56597
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56598
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56599
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56600
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56601
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56602
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56603
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56604
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56605
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56606
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56607
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56608
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56609
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56610
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56611
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56612
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56613
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56614
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56615
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56616
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56617
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56618
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56619
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56620
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56621
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56622
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56623
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56624
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56625
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56626
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56627
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56628
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56629
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56630
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56631
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56632
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56633
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56634
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56635
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56636
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56637
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56638
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56639
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56640
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56641
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56642
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56643
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56644
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56645
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56646
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56647
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56648
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56649
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56650
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56651
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56652
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56653
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56654
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56655
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56656
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56657
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56658
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56659
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56660
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56661
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56662
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56663
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56664
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56665
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56666
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56667
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56668
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56669
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56670
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56671
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56672
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56673
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56674
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56675
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56676
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56677
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56678
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56679
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56680
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56681
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56682
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 56683
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56493
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56494
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56495
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56496
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56497
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56498
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56499
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56500
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56501
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56502
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56503
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56504
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56505
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56506
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56507
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56508
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56509
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56510
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56511
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56512
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56513
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56514
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56515
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56516
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56517
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56518
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56519
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56520
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56521
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56522
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56523
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56524
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56525
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56526
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56527
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56528
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56529
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56530
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56531
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56532
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56533
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56534
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56535
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56536
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56537
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56538
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56539
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56540
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56541
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56542
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56543
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56544
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56545
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56546
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56547
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56548
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56549
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56550
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56551
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56552
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56553
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56554
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56555
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56556
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56557
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56558
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56559
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56560
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56561
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56562
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56563
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56564
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56565
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56566
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56567
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56568
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56569
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56570
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56571
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56572
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56573
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56574
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56575
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56576
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56577
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56578
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56579
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56580
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56581
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56582
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56583
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56584
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56585
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56586
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56587
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56588
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56589
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56590
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56591
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56592
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56593
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56594
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56595
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56596
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56597
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56598
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56599
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56600
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56601
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56602
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56603
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56604
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56605
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56606
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56607
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56608
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56609
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56610
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56611
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56612
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56613
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56614
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56615
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56616
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56617
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56618
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56619
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56620
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56621
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56622
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56623
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56624
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56625
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56626
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56627
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56628
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56629
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56630
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56631
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56632
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56633
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56634
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56635
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56636
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56637
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56638
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56639
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56640
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56641
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56642
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56643
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56644
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56645
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56646
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56647
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56648
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56649
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56650
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56651
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56652
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56653
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56654
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56655
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56656
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56657
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56658
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56659
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56660
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56661
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56662
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56663
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56664
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56665
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56666
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56667
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56668
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56669
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56670
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56671
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56672
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56673
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56674
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56675
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56676
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56677
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56678
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56679
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56680
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56681
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56682
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 56683
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56493
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56494
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56495
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56496
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56497
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56498
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56499
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56500
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56501
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56502
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56503
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56504
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56505
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56506
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56507
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56508
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56509
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56510
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56511
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56512
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56513
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56514
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56515
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56516
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56517
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56518
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56519
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56520
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56521
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56522
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56523
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56524
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56525
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56526
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56527
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56528
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56529
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56530
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56531
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56532
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56533
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56534
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56535
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56536
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56537
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56538
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56539
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56540
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56541
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56542
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56543
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56544
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56545
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56546
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56547
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56548
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56549
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56550
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56551
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56552
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56553
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56554
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56555
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56556
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56557
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56558
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56559
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56560
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56561
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56562
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56563
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56564
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56565
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56566
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56567
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56568
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56569
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56570
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56571
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56572
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56573
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56574
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56575
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56576
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56577
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56578
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56579
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56580
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56581
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56582
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56583
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56584
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56585
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56586
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56587
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56588
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56589
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56590
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56591
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56592
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56593
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56594
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56595
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56596
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56597
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56598
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56599
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56600
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56601
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56602
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56603
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56604
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56605
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56606
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56607
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56608
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56609
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56610
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56611
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56612
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56613
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56614
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56615
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56616
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56617
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56618
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56619
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56620
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56621
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56622
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56623
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56624
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56625
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56626
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56627
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56628
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56629
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56630
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56631
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56632
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56633
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56634
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56635
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56636
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56637
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56638
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56639
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56640
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56641
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56642
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56643
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56644
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56645
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56646
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56647
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56648
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56649
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56650
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56651
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56652
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56653
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56654
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56655
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56656
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56657
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56658
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56659
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56660
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56661
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56662
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56663
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56664
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56665
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56666
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56667
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56668
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56669
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56670
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56671
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56672
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56673
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56674
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56675
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56676
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56677
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56678
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56679
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56680
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56681
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56682
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 56683
+PRINT(N'Operation applied to 764 rows out of 764')
+
 PRINT(N'Delete rows from [dbo].[MATURITY_REFERENCES]')
 DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 1402 AND [Gen_File_Id] = 3968 AND [Section_Ref] = N'AC-3' AND [Source] = 0
 DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 1402 AND [Gen_File_Id] = 3968 AND [Section_Ref] = N'AC-6' AND [Source] = 0
@@ -3821,7 +4588,8 @@ DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1175 AND [S
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1176 AND [Set_Name] = N'Nrc_571'
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1177 AND [Set_Name] = N'Nrc_571'
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 1178 AND [Set_Name] = N'Nrc_571'
-PRINT(N'Operation applied to 619 rows out of 619')
+DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 17031 AND [Set_Name] = N'ISA_62443_4_1'
+PRINT(N'Operation applied to 620 rows out of 620')
 
 PRINT(N'Delete rows from [dbo].[REQUIREMENT_LEVELS]')
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1197 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
@@ -3944,6 +4712,340 @@ DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1864 AND [Standa
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1865 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1867 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 1871 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31350 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31350 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31352 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31352 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31352 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31352 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31356 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31356 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31357 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31357 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31367 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31367 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31367 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31368 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31368 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31368 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31370 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31370 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31373 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31373 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31373 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31373 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31374 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31374 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31374 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31374 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31375 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31375 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31375 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31375 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31376 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31376 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31376 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31376 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31377 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31377 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31377 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31377 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31378 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31378 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31378 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31378 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31379 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31379 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31379 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31380 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31380 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31380 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31381 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31381 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31381 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31382 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31382 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31382 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31383 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31383 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31388 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31388 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31388 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31399 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31399 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31399 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31399 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31400 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31400 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31400 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31400 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31401 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31401 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31401 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31401 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31402 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31402 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31402 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31403 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31403 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31403 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31404 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31404 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31404 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31406 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31406 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31406 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31406 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31407 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31407 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31407 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31407 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31408 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31408 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31408 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31409 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31409 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31409 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31410 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31410 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31410 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31411 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31411 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31411 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31412 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31412 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31412 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31413 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31413 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31413 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31414 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31414 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31414 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31415 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31415 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31415 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31416 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31416 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31417 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31417 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31417 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31417 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31418 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31418 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31418 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31418 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31419 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31419 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31419 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31420 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31420 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31420 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31421 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31421 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31421 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31422 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31422 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31422 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31423 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31423 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31425 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31425 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31425 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31425 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31426 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31426 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31426 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31426 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31427 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31427 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31427 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31428 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31428 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31428 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31429 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31429 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31429 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31430 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31430 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31430 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31432 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31432 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31432 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31432 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31433 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31433 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31433 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31433 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31434 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31434 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31434 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31434 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31435 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31435 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31435 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31436 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31436 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31436 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31436 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31438 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31438 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31438 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31439 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31439 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31439 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31440 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31440 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31440 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31441 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31441 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31441 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31442 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31442 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31442 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31443 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31443 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31445 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31445 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31445 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31446 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31446 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31446 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31447 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31447 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31447 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31448 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31448 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31448 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31449 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31449 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31449 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31450 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31450 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31451 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31451 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31452 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31452 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31453 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31453 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31454 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31454 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31456 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31456 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31456 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31456 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31457 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31457 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31457 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31457 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31458 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31458 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31458 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31458 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31459 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31459 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31459 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31459 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31460 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31460 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31460 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31460 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31461 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31461 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31461 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31461 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31462 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31462 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31462 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31462 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31463 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31463 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31463 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31465 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31465 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31465 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31466 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31466 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31466 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31467 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31467 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31467 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31468 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31468 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31469 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31469 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31470 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31470 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31471 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31471 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31471 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31472 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31472 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31472 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31473 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31473 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31473 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31474 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31474 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31474 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31475 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31475 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31475 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31476 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31476 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31476 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31477 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31477 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31477 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31478 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31478 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31478 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31479 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31479 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31479 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31480 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31480 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31480 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31481 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31481 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31481 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31482 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31482 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31483 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31483 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31484 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31484 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31486 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31486 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31486 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31486 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31487 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31487 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31487 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31487 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31488 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31488 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31488 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31489 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31489 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31489 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31490 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31490 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31490 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31492 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31492 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31492 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31493 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31493 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31495 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31495 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31495 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31496 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31496 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31496 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31497 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31497 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31498 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
+DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31498 AND [Standard_Level] = N'VH' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31499 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31499 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31500 AND [Standard_Level] = N'H' AND [Level_Type] = N'NST'
@@ -4057,7 +5159,7 @@ DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31548 AND [Stand
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31548 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31549 AND [Standard_Level] = N'L' AND [Level_Type] = N'NST'
 DELETE FROM [dbo].[REQUIREMENT_LEVELS] WHERE [Requirement_Id] = 31549 AND [Standard_Level] = N'M' AND [Level_Type] = N'NST'
-PRINT(N'Operation applied to 233 rows out of 233')
+PRINT(N'Operation applied to 567 rows out of 567')
 
 PRINT(N'Delete rows from [dbo].[PARAMETER_REQUIREMENTS]')
 DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1197 AND [Parameter_Id] = 662
@@ -4244,6 +5346,200 @@ DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1865 AND [Pa
 DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1867 AND [Parameter_Id] = 662
 DELETE FROM [dbo].[PARAMETER_REQUIREMENTS] WHERE [Requirement_Id] = 1871 AND [Parameter_Id] = 662
 PRINT(N'Operation applied to 183 rows out of 183')
+
+PRINT(N'Delete rows from [dbo].[NEW_QUESTION_SETS]')
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56493
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56494
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56495
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56496
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56497
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56498
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56499
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56500
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56501
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56502
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56503
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56504
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56505
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56506
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56507
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56508
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56509
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56510
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56511
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56512
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56513
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56514
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56515
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56516
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56517
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56518
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56519
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56520
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56521
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56522
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56523
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56524
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56525
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56526
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56527
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56528
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56529
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56530
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56531
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56532
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56533
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56534
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56535
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56536
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56537
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56538
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56539
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56540
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56541
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56542
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56543
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56544
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56545
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56546
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56547
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56548
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56549
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56550
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56551
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56552
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56553
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56554
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56555
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56556
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56557
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56558
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56559
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56560
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56561
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56562
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56563
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56564
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56565
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56566
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56567
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56568
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56569
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56570
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56571
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56572
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56573
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56574
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56575
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56576
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56577
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56578
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56579
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56580
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56581
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56582
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56583
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56584
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56585
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56586
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56587
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56588
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56589
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56590
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56591
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56592
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56593
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56594
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56595
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56596
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56597
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56598
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56599
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56600
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56601
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56602
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56603
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56604
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56605
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56606
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56607
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56608
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56609
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56610
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56611
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56612
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56613
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56614
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56615
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56616
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56617
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56618
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56619
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56620
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56621
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56622
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56623
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56624
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56625
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56626
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56627
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56628
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56629
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56630
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56631
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56632
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56633
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56634
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56635
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56636
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56637
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56638
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56639
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56640
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56641
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56642
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56643
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56644
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56645
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56646
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56647
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56648
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56649
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56650
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56651
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56652
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56653
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56654
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56655
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56656
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56657
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56658
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56659
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56660
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56661
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56662
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56663
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56664
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56665
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56666
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56667
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56668
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56669
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56670
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56671
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56672
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56673
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56674
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56675
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56676
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56677
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56678
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56679
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56680
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56681
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56682
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 56683
+PRINT(N'Operation applied to 191 rows out of 191')
 
 PRINT(N'Delete rows from [dbo].[MATURITY_QUESTIONS]')
 DELETE FROM [dbo].[MATURITY_QUESTIONS] WHERE [Mat_Question_Id] = 1547
@@ -5269,6 +6565,13 @@ DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 
 DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8573 AND [Question_Group] = N'Respond'
 DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8574 AND [Question_Group] = N'Recover'
 PRINT(N'Operation applied to 362 rows out of 362')
+
+PRINT(N'Delete rows from [dbo].[SETS]')
+DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'CMMC'
+DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'ISA_62443_4_1'
+DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'ISA_62443_4_1_2'
+DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'RA-renames'
+PRINT(N'Operation applied to 4 rows out of 4')
 
 PRINT(N'Delete rows from [dbo].[GALLERY_ITEM]')
 DELETE FROM [dbo].[GALLERY_ITEM] WHERE [Gallery_Item_Guid] = '7481093d-eefa-423c-8479-025bb74d0d63'
