@@ -10,6 +10,10 @@ on:
       - develop
       - release/*
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   build-api:
     runs-on: ubuntu-latest
@@ -42,6 +46,24 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Scan API image for vulnerabilities
+        if: github.event_name == 'push'
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          scan-type: image
+          image-ref: ${{ secrets.IMAGE }}/api:latest
+          scanners: vuln
+          severity: CRITICAL,HIGH
+          format: sarif
+          output: trivy-api-image-results.sarif
+
+      - name: Upload image scan results
+        if: github.event_name == 'push'
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-api-image-results.sarif
+          category: api-image
 
   build-web:
     runs-on: ubuntu-latest
