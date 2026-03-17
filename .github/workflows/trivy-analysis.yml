@@ -37,11 +37,12 @@ jobs:
           scanners: vuln
           severity: CRITICAL,HIGH
 
-
       - name: Upload Trivy scan results to GitHub Security tab
+        if: always()
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'trivy-dotnet-results.sarif'
+          category: dotnet
 
   nodejs:
     name: Node.js Analysis
@@ -57,9 +58,12 @@ jobs:
           output: trivy-nodejs-results.sarif
           scan-type: fs
           scan-ref: ./CSETWebNg
+          scanners: vuln
           severity: CRITICAL,HIGH
 
       - name: Upload Trivy scan results to GitHub Security tab
+        if: always()
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'trivy-nodejs-results.sarif'
+          category: nodejs
