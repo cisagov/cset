@@ -27,6 +27,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { QuestionsService } from '../../services/questions.service';
+import { FeedbackService } from '../../services/feedback.service';
 
 @Component({
   selector: 'app-question-filters',
@@ -52,6 +53,7 @@ export class QuestionFiltersComponent implements OnInit {
 
   constructor(
     public filterSvc: QuestionFilterService,
+    public feedbackSvc: FeedbackService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,

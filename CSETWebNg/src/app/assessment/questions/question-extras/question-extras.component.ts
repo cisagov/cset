@@ -43,6 +43,7 @@ import { FileExportService } from '../../../services/file-export.service';
 import { firstValueFrom } from 'rxjs';
 import { ResourceLibraryService } from './../../../services/resource-library.service';
 import { ThemeService } from '../../../services/theme.service';
+import { FeedbackService } from '../../../services/feedback.service';
 
 
 @Component({
@@ -90,6 +91,7 @@ export class QuestionExtrasComponent implements OnInit {
     private obsSvc: ObservationsService,
     public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
+    public feedbackSvc: FeedbackService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -413,7 +415,7 @@ export class QuestionExtrasComponent implements OnInit {
       maxWidth: this.layoutSvc.hp ? '90%' : '750px',
     })
       .afterClosed().subscribe(result => {
-        this.populateList(obs.answer_Id);
+        this.populateList(result.answerId);
       });
   }
 
@@ -428,6 +430,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.obsSvc.getObservationsForAnswer(answerId).subscribe(
       (response: Observation[]) => {
         this.extras.observations = response;
+        this.myQuestion.hasObservation = (this.extras.observations.length > 0);
       },
       error => {
         console.error('Error updating observations | ' + (<Error>error).message);
@@ -750,7 +753,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     if (mode == 'FDBK') {
-      return this.configSvc.behaviors.showFeedback;
+      return this.feedbackSvc.showFeedback;
     }
 
     return true;
