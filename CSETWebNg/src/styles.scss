@@ -27,10 +27,10 @@ SOFTWARE.
 @use './sass/_dark-theme.scss';
 @use './sass/_force-light-mode.scss';
 //@use "~@ng-select/ng-select/themes/material.theme.css";
-@import 'ag-grid-community/styles/ag-grid.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
-@import '@kolkov/angular-editor/themes/default.scss';
-@import './styles.css';
+@use 'ag-grid-community/styles/ag-grid.css';
+@use 'ag-grid-community/styles/ag-theme-alpine.css';
+@use '@kolkov/angular-editor/themes/default.scss';
+@use './styles.css';
 
 
 .ag-theme-alpine {
