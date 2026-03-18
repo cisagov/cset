@@ -278,8 +278,15 @@ namespace CSETWebCore.Helpers
             var gaps = FindGaps(tableName, identityColumnName, 1000000)
                     .Where(x => x.GapSize >= recordsNeeded).OrderBy(x => x.GapSize).ToList();
 
-            var newSeed = 1000000;
-            if (gaps.Count > 0)
+            int newSeed = 1000000;
+
+            if (gaps.Count == 0)
+            {
+                // using SqlQueryRaw() here - make sure no user-supplied values are in the string-formatted query
+                string sql = $"SELECT ISNULL(MAX({identityColumnName}), 1000000) as [Value] FROM {tableName} WHERE {identityColumnName} >= 1000000";
+                newSeed = _context.Database.SqlQueryRaw<int>(sql).First();
+            }
+            else 
             {
                 newSeed = gaps.FirstOrDefault().GapStart;
             }
@@ -367,7 +374,6 @@ namespace CSETWebCore.Helpers
                         }
                     }
                 }
-
             }
             catch
             {
