@@ -5,6 +5,18 @@ WORKDIR /var/www
 COPY . /var/www/
 
 RUN apt-get update
+
+# Optional: install a custom CA cert for corporate proxies/VPNs.
+# Set CA_CERT_URL in .env (gitignored) to enable — e.g.:
+#   CA_CERT_URL=https://your-internal-cert-store/root_ca.crt
+ARG CA_CERT_URL=""
+RUN if [ -n "$CA_CERT_URL" ]; then \
+    apt-get install -y --no-install-recommends wget && \
+    wget -q --no-check-certificate -P /usr/local/share/ca-certificates/ "$CA_CERT_URL" && \
+    update-ca-certificates; \
+    fi
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+
 RUN npm i -g @angular/cli \
     && npm i
 

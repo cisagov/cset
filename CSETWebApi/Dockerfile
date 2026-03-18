@@ -4,14 +4,15 @@ WORKDIR /app
 
 COPY . .
 
-# Configure INL certs and environment variables
-# ADD http://certstore.inl.gov/pki/CAINLROOT_B64.crt /usr/local/share/ca-certificates/
-# RUN /usr/sbin/update-ca-certificates
-# ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt \
-#     REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
-#     CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
-#     SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
-#     SSL_CERT_DIR=/etc/ssl/certs/
+# Optional: install a custom CA cert for corporate proxies/VPNs.
+# Set CA_CERT_URL in .env (gitignored) to enable — e.g.:
+#   CA_CERT_URL=https://your-internal-cert-store/root_ca.crt
+ARG CA_CERT_URL=""
+RUN if [ -n "$CA_CERT_URL" ]; then \
+  apt-get update && apt-get install -y --no-install-recommends wget && \
+  wget -q --no-check-certificate -P /usr/local/share/ca-certificates/ "$CA_CERT_URL" && \
+  update-ca-certificates; \
+  fi
 
 # Use Release configuration for published output
 RUN dotnet publish CSETWeb_Api/CSETWeb_ApiCore -c Release -o out
