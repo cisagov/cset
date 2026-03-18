@@ -275,9 +275,14 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         private int FindSeed(string tableName, string identityColumnName, int recordsNeeded)
         {
-            var gaps = FindGaps(tableName, identityColumnName)
-                    .Where(x => x.GapStart < 1000000 && x.GapSize >= recordsNeeded).OrderBy(x => x.GapSize).ToList();
-            var newSeed = gaps.FirstOrDefault().GapSize;
+            var gaps = FindGaps(tableName, identityColumnName, 1000000)
+                    .Where(x => x.GapSize >= recordsNeeded).OrderBy(x => x.GapSize).ToList();
+
+            var newSeed = 1000000;
+            if (gaps.Count > 0)
+            {
+                newSeed = gaps.FirstOrDefault().GapStart;
+            }
 
             NLog.LogManager.GetCurrentClassLogger().Info($"Calculated new seed value of {newSeed} for table {tableName}");
 
@@ -317,22 +322,26 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// 
+        /// Find contiguous runs of unused identity values in a table.  
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="identityColumnName"></param>
         /// <returns></returns>
-        private List<GapResult> FindGaps(string tableName, string identityColumnName)
+        private List<GapResult> FindGaps(string tableName, string identityColumnName, int start = 0)
         {
             var sql = "SELECT " +
                 $"{identityColumnName} + 1 AS GapStart, " +
-                    "next_id - 1 AS GapEnd, " +
-                    $"next_id - {identityColumnName} - 1 AS GapSize " +
+                "next_id - 1 AS GapEnd, " +
+                $"next_id - {identityColumnName} - 1 AS GapSize " +
                 "FROM ( " +
                     "SELECT " +
                     $"{identityColumnName}, " +
                     $"LEAD({identityColumnName}) OVER (ORDER BY {identityColumnName}) AS next_id " +
-                    $"FROM {tableName} " +
+                    "FROM ( " +
+                        $"SELECT {identityColumnName} FROM {tableName} WHERE {identityColumnName} >= {start} " +
+                        "UNION ALL " +
+                        $"SELECT {start} - 1 " +
+                    ") anchored " +
                 ") subquery " +
                 $"WHERE next_id - {identityColumnName} > 1 " +
                 "ORDER BY GapStart;";
