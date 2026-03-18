@@ -6,6 +6,8 @@ services:
     image: ghcr.io/cisagov/cset/web:latest
     build:
       context: CSETWebNg
+      args:
+        - CA_CERT_URL=${CA_CERT_URL:-}
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -23,6 +25,8 @@ services:
     image: ghcr.io/cisagov/cset/api:latest
     build:
       context: CSETWebApi
+      args:
+        - CA_CERT_URL=${CA_CERT_URL:-}
     restart: unless-stopped
     ports:
       # Override host port via API_PORT without editing this file.

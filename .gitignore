@@ -19,6 +19,10 @@ WARP.md
 /CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.ask2agent.xml
 /CSETWebApi/CSETWeb_Api/.idea/.idea.CSETWeb_Api/.idea/copilot.data.migration.edit.xml
 
+## Local CA certs (corporate VPN/proxy — never commit) ##
+CSETWebNg/certs/
+CSETWebApi/certs/
+
 ## Mac OS ##
 .DS_Store
 
