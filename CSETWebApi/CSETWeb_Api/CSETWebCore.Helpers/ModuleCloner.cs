@@ -282,13 +282,15 @@ namespace CSETWebCore.Helpers
 
             if (gaps.Count == 0)
             {
+                // get the max used ID and seed to it
                 // using SqlQueryRaw() here - make sure no user-supplied values are in the string-formatted query
                 string sql = $"SELECT ISNULL(MAX({identityColumnName}), 1000000) as [Value] FROM {tableName} WHERE {identityColumnName} >= 1000000";
                 newSeed = _context.Database.SqlQueryRaw<int>(sql).First();
             }
-            else 
+            else
             {
-                newSeed = gaps.FirstOrDefault().GapStart;
+                // We want to reseed before the next available
+                newSeed = gaps.FirstOrDefault().GapStart - 1; 
             }
 
             NLog.LogManager.GetCurrentClassLogger().Info($"Calculated new seed value of {newSeed} for table {tableName}");
