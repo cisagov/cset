@@ -18384,6 +18384,43 @@ UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17399
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17400
 PRINT(N'Operation applied to 1970 rows out of 1970')
 
+PRINT(N'Update rows in [dbo].[NEW_QUESTION]')
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=9 WHERE [Question_Id] = 17635
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=10 WHERE [Question_Id] = 17636
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=15 WHERE [Question_Id] = 17637
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=16 WHERE [Question_Id] = 17638
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=30 WHERE [Question_Id] = 17639
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=29 WHERE [Question_Id] = 17640
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=31 WHERE [Question_Id] = 17641
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=28 WHERE [Question_Id] = 17642
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=19 WHERE [Question_Id] = 17643
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=27 WHERE [Question_Id] = 17644
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=18 WHERE [Question_Id] = 17645
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=7 WHERE [Question_Id] = 17646
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=24 WHERE [Question_Id] = 17647
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=20 WHERE [Question_Id] = 17648
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=21 WHERE [Question_Id] = 17649
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=22 WHERE [Question_Id] = 17650
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=23 WHERE [Question_Id] = 17651
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=1 WHERE [Question_Id] = 17652
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=14 WHERE [Question_Id] = 17653
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=5 WHERE [Question_Id] = 17654
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=2 WHERE [Question_Id] = 17655
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=17 WHERE [Question_Id] = 17656
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=3 WHERE [Question_Id] = 17657
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=4 WHERE [Question_Id] = 17658
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=11 WHERE [Question_Id] = 17659
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=12 WHERE [Question_Id] = 17660
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=13 WHERE [Question_Id] = 17661
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=8 WHERE [Question_Id] = 17662
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=25 WHERE [Question_Id] = 17663
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=26 WHERE [Question_Id] = 17664
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=32 WHERE [Question_Id] = 17665
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=6 WHERE [Question_Id] = 17666
+UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=33 WHERE [Question_Id] = 17667
+PRINT(N'Operation applied to 33 rows out of 33')
+
+
 PRINT(N'Update row in [dbo].[MATURITY_LEVELS]')
 UPDATE [dbo].[MATURITY_LEVELS] SET [Level_Name]=N'Level 1' WHERE [Maturity_Level_Id] = 24
 
