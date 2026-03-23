@@ -766,16 +766,17 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbSet.Set_Category_Id = set.SetCategory == 0 ? null : set.SetCategory;
                 dbSet.Is_Custom = set.IsCustom;
                 dbSet.Is_Displayed = set.IsDisplayed;
-
-                var gallItem = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains($"[\"{originalSet.Set_Name}\"]")).FirstOrDefault();
-
-                gallItem.Description = gallDescription;
-                gallItem.Title = dbSet.Full_Name;
-
                 _context.SETS.Update(dbSet);
                 _context.SaveChanges();
 
-                _context.GALLERY_ITEM.Update(gallItem);
+                var gallItem = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains($"[\"{originalSet.Set_Name}\"]")).FirstOrDefault();
+
+                if (gallItem != null)
+                {
+                    gallItem.Description = gallDescription;
+                    gallItem.Title = dbSet.Full_Name;
+                    _context.GALLERY_ITEM.Update(gallItem);
+                }
             }
 
             _context.SaveChanges();
