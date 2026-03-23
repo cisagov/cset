@@ -196,7 +196,7 @@ export class ModuleContentLaunchComponent implements OnInit {
         this.selectedOption === item.value
       );
 
-      if (!currentSelectedItem || value !== currentSelectedItem.displayName) {
+      if (this.isValidSelection && (!currentSelectedItem || value !== currentSelectedItem.displayName)) {
         // Text was modified, clear the selection
         this.clearSelection();
       }
