@@ -278,8 +278,10 @@ namespace CSETWebCore.Helpers
                         Invited = true
                     };
 
-                    _context.ASSESSMENT_CONTACTS.Add(assessmentContact);
-                    await _context.SaveChangesAsync();
+                    // Commenting out for now.  Deleting an assessment and refreshing My Assessments 
+                    // results in this code creating a brand new A_C record, effectively "un-deleting it"
+                    //_context.ASSESSMENT_CONTACTS.Add(assessmentContact);
+                    //await _context.SaveChangesAsync();
                 }
             }
 
