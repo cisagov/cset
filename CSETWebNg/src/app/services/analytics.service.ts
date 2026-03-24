@@ -115,7 +115,7 @@ export class AnalyticsService {
 
     //Custom header to avoid interceptor from adding the authorization header + token
     let headers = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true').set('x-cset-noauth', 'true'),
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true').set('cset-noauth', 'true'),
       params: new HttpParams()
     };
 
@@ -130,7 +130,7 @@ export class AnalyticsService {
       headers: new HttpHeaders()
         .set('RemoteAuthorization', remoteToken)
         .set('Content-Type', 'application/json')
-        .set('x-cset-noauth', 'true'),
+        .set('cset-noauth', 'true'),
       params: new HttpParams()
     };
 

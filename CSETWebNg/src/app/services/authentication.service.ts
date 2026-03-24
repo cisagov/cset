@@ -34,6 +34,7 @@ import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { RoleType } from '../models/enums/role.model';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 export interface LoginResponse {
   token: string;
@@ -72,6 +73,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private router: Router,
     private configSvc: ConfigService,
+    private oauthService: OAuthService,
     private tSvc: TranslocoService,
     public dialog: MatDialog
   ) {
@@ -230,6 +232,11 @@ export class AuthenticationService {
    *
    */
   logout() {
+    // logout of oauth if necessary
+    if (this.oauthService.hasValidAccessToken()) {
+      this.oauthService.logOut(true);
+    }
+
     this.isAuthenticated = false;
     this.router.navigate(['/home/logout'], { queryParamsHandling: 'preserve' });
   }
