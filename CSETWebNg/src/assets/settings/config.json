@@ -18,6 +18,17 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
+  "disabled_oidc": {
+    "note": "rename this section to 'oidc' to enable external authentication",
+    "clientId": "{client-id}",
+    "redirectUri": "http://{your-application-host}/callback",
+    "postLogoutRedirectUri": "http://{your-application-host}",
+    "scope": "openid profile email",
+    "issuer": "http://{oidc-provider-host}/realms/{realm}",
+    "strictDiscoveryDocumentValidation": false,
+    "requireHttps": false,
+    "showDebugInformation": true
+  },
   "library": {
     "protocol": "http",
     "host": "localhost",

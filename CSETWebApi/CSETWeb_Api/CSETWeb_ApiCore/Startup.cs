@@ -4,16 +4,22 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.AssessmentIO.Export;
+using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Demographic.Import;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.FileRepository;
 using CSETWebCore.Business.Framework;
+using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.Business.Notification;
@@ -24,11 +30,14 @@ using CSETWebCore.Business.RepositoryLibrary;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.Business.User;
+using CSETWebCore.Business.Version;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Aggregation;
+using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Interfaces.Assessment;
+using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Demographic;
@@ -36,6 +45,7 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Notification;
@@ -46,10 +56,12 @@ using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Interfaces.User;
-using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Interfaces.Version;
+using CSETWebCore.Model.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,29 +69,23 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Rewrite;
-using CSETWebCore.Interfaces.Analytics;
-using CSETWebCore.Business.Analytics;
-using CSETWebCore.Api.Error;
-using System;
-using CSETWebCore.Business.AssessmentIO.Import;
-using CSETWebCore.Interfaces.Malcolm;
-using CSETWebCore.Business.Malcolm;
-using CSETWebCore.Interfaces.Cmu;
-using CSETWebCore.Business.Version;
-using CSETWebCore.Interfaces.Version;
-using CSETWebCore.Business.Demographic.Import;
+using System.Threading.Tasks;
+
 
 namespace CSETWeb_ApiCore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -109,17 +115,20 @@ namespace CSETWeb_ApiCore
 
                     builder.WithOrigins(allowedOrigins)
                           .AllowAnyMethod()
-                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid", "pwd")
+                          .WithHeaders("content-type", "authorization", "noauth", "cset-noauth", "cset-scope", "cset-tzoffset", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid", "pwd")
                           .WithExposedHeaders("content-disposition");
                 });
             });
 
-            services.AddAuthentication(options =>
+           
+
+            var authBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+            .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = false;
@@ -129,6 +138,36 @@ namespace CSETWeb_ApiCore
                     ValidateAudience = false
                 };
             });
+
+
+            // Configure OIDC authentication if configured to do so
+            var authSettings = Configuration.GetSection("Auth").Get<AuthSettings>();
+
+            if (authSettings.OIDC?.Authority != null)
+            {
+                authBuilder.AddJwtBearer("OIDC", options =>
+                {
+                    options.Authority = authSettings.OIDC.Authority;
+                    options.Audience = authSettings.OIDC.Audience;
+                    options.RequireHttpsMetadata = !_env.IsDevelopment();
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = ctx =>
+                        {
+                            Console.WriteLine($"OIDC auth failed: {ctx.Exception}");
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = ctx =>
+                        {
+                            Console.WriteLine("OIDC token validated successfully");
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+            }
+
+
             services.AddAuthorization();
             services.AddControllers()
                 .AddNewtonsoftJson(options =>

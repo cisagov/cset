@@ -4,20 +4,23 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
@@ -384,6 +387,62 @@ namespace CSETWebCore.Helpers
 
             // Generate a token for this user and add to the response
             string token = _transactionSecurity.GenerateToken(null, login.AccessKey, login.TzOffset, -1, null, null, login.Scope);
+            resp.Token = token;
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Verifies the token issued by the OIDC IdP and returns a
+        /// CSET-issued token for use within the application.
+        ///
+        /// 1. Validate the OIDC token (handled by the [Authorize] attribute on the controller method)
+        /// 2. Look up the user based on the email claim in the OIDC token
+        /// 3. If the user exists, generate and return a CSET-signed token
+        /// </summary>
+        public async Task<LoginResponse> ExchangeToken(ClaimsPrincipal user, string tzOffset, string scope)
+        {
+            if (!user.Identity.IsAuthenticated)
+            {
+                throw new UnauthorizedAccessException("User not authenticated.");
+            }
+
+            var authSettings = _configuration
+                .GetSection("Auth")
+                .Get<AuthSettings>()
+                ?? throw new InvalidOperationException("Auth settings are missing.");
+
+            var userName = user.FindFirstValue(authSettings.OIDC.ClaimUsernameProperty ?? "preferred_username")
+                ?? throw new InvalidOperationException("Username claim not found in token.");
+
+            var email = user.FindFirstValue("email") ?? user.FindFirstValue(ClaimTypes.Email)
+                ?? throw new InvalidOperationException("Email claim not found in token.");
+
+            // Locate the CSET user record via the email claim
+            var dbUser = _context.USERS.FirstOrDefault(x => x.PrimaryEmail == email) 
+                ?? throw new UnauthorizedAccessException($"User email '{email}' is not registered in CSET.");
+
+
+            // Build response object
+            var resp = new LoginResponse
+            {
+                UserId = dbUser.UserId,
+                Email = dbUser.PrimaryEmail,
+                Lang = dbUser.Lang,
+                UserFirstName = dbUser.FirstName,
+                UserLastName = dbUser.LastName,
+                IsSuperUser = dbUser.IsSuperUser,
+                ResetRequired = dbUser.PasswordResetRequired,
+                ExportExtension = IOHelper.GetExportFileExtension(""),
+                ImportExtensions = IOHelper.GetImportFileExtensions(""),
+                IsFirstLogin = dbUser.IsFirstLogin,
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+            };
+
+
+            // Generate a token for this user and add to the response
+            string token = _transactionSecurity.GenerateToken(dbUser.UserId, null, tzOffset, -1, null, null, scope);
             resp.Token = token;
 
             return resp;

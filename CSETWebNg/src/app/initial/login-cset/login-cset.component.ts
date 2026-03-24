@@ -33,25 +33,27 @@ import { EmailService } from '../../services/email.service';
 import { JwtParser } from '../../helpers/jwt-parser';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { ThemeService } from '../../services/theme.service';
+import { AuthenticationExternalService } from '../../services/authentication-external.service';
 
 @Component({
-    selector: 'app-login-cset',
-    templateUrl: './login-cset.component.html',
-    styleUrls: ['./login-cset.component.scss'],
-    standalone: false
+  selector: 'app-login-cset',
+  templateUrl: './login-cset.component.html',
+  styleUrls: ['./login-cset.component.scss'],
+  standalone: false
 })
 export class LoginCsetComponent implements OnInit {
 
   /**
-   * The current display mode of the page -- LOGIN or SIGNUP
+   * The current display mode of the page -- LOGIN or SIGNUP or EXTERNAL-AUTH
    */
-  mode: string;
+  loginMode: string;
+
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
 
   theme: string;
-  theme$= this.themeSvc.theme$
+  theme$ = this.themeSvc.theme$;
   loading = false;
   incorrect = false;
   showPassword = false;
@@ -60,31 +62,48 @@ export class LoginCsetComponent implements OnInit {
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
+  externalAuthMessage = '';
+
+  /**
+   * 
+   */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     public configSvc: ConfigService,
     private authenticationService: AuthenticationService,
-    private emailSvc: EmailService,
+    private authExtSvc: AuthenticationExternalService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog,
     private themeSvc: ThemeService
   ) { }
 
+  /**
+   * Set up the login page for the currently configured option:
+   * 
+   *  - LOCAL: no login page presented; machine account credentials used
+   *  - EXTERNAL-AUTH: OIDC is configured to capture credentials
+   *  - LOGIN: This login page displays and captures credentials defined in CSET's database
+   */
   ngOnInit() {
     this.theme = this.themeSvc.getTheme();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.isRunningInElectron = this.configSvc.isRunningInElectron;
+
     if (this.authenticationService.isLocal) {
-      this.mode = 'LOCAL';
+      // local machine identity - no credentials
+      this.loginMode = 'LOCAL';
       this.continueStandAlone();
+    } else if (!!this.configSvc.config.oidc) {
+      // an external IdP provides authentication
+      this.loginMode = 'EXTERNAL-AUTH';
     } else {
-      // reset login status
-      //this.authenticationService.logout();
       // default the page as 'login'
-      this.mode = 'LOGIN';
+      this.loginMode = 'LOGIN';
       this.checkForEjection(this.route.snapshot.queryParams['token']);
+
+
       // Clear token query param to make the url look nicer.
       if (this.route.snapshot.queryParams['token']) {
         this.router.navigate([], { queryParams: {} });
@@ -95,12 +114,11 @@ export class LoginCsetComponent implements OnInit {
     }
   }
 
-  emailValid() {
-    return this.emailSvc.validAddress(this.model.email);
-  }
-
-  setMode(newMode: string) {
-    this.mode = newMode;
+  /**
+   * 
+   */
+  setMode(m: string) {
+    this.loginMode = m;
   }
 
   /**
@@ -207,5 +225,18 @@ export class LoginCsetComponent implements OnInit {
 
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
+  }
+
+
+  /**
+   * Redirects to the IdP's login page
+   */
+  async loginOIDC() {
+    try {
+      await this.authExtSvc.login();
+    } catch (error) {
+      console.error(error);
+      this.externalAuthMessage = error.message;
+    }
   }
 }

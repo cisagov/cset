@@ -595,6 +595,8 @@ import { AdminSettingsComponent } from './initial/admin-settings/admin-settings.
 import { UserService } from './services/user.service';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 import { CoverPageComponent } from './reports/cover-page/cover-page.component';
+import { ApplicationConfig } from '@angular/core';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
@@ -1050,6 +1052,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
+        OAuthModule.forRoot(),
         FormsModule,
         CommonModule,
         AppRoutingModule,
