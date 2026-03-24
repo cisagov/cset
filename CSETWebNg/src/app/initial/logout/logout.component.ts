@@ -23,37 +23,40 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
-    selector: 'app-logout',
-    templateUrl: './logout.component.html',
-    standalone: false
+  selector: 'app-logout',
+  templateUrl: './logout.component.html',
+  standalone: false
 })
 export class LogoutComponent implements OnInit {
 
   constructor(
     private router: Router
-  ) {
-    const savedLang = localStorage.getItem('cset-language');
-    // remove user from session storage to log user out
-    // Preserve theme preference
-    const savedTheme = localStorage.getItem('cset-theme');
-    localStorage.clear();
-    if (savedTheme) {
-      localStorage.setItem('cset-theme', savedTheme);
-    }
-    sessionStorage.removeItem('cset-assessments-page');
-    if(savedLang) {
-      localStorage.setItem('cset-language', savedLang);
-    }
-    this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
-  }
+  ) { }
 
   /**
    *
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    // Grab a couple of items that should be persisted across sessions
+    const savedLang = localStorage.getItem('cset-language');
+    const savedTheme = localStorage.getItem('cset-theme');
+    
+    localStorage.clear();
 
+    // Restore those items
+    if (savedTheme) {
+      localStorage.setItem('cset-theme', savedTheme);
+    }
+    if (savedLang) {
+      localStorage.setItem('cset-language', savedLang);
+    }
+
+
+    sessionStorage.removeItem('cset-assessments-page');
+
+    this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
   }
-
 }

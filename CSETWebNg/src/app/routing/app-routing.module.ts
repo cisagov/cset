@@ -54,6 +54,7 @@ import { PrivacyWarningRejectComponent } from '../initial/privacy-warning-reject
 import { LogoutComponent } from '../initial/logout/logout.component';
 import { LoginAccessKeyComponent } from '../initial/login-access-key/login-access-key.component';
 import { AdminSettingsComponent } from '../initial/admin-settings/admin-settings.component';
+import { CallbackComponent } from '../callback/callback.component';
 
 const appRoutes: Routes = [
   {
@@ -165,6 +166,7 @@ const appRoutes: Routes = [
       { path: '', loadChildren: () => import('./reports-routing/report-routing.module').then(m => m.ReportRoutingModule) },
     ]
   },
+  { path: 'callback', component: CallbackComponent },
   { path: '**', redirectTo: 'home' }
 ];
 
