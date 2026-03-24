@@ -11,6 +11,7 @@ using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NLog;
 using System;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IUserAuthentication _userAuthentication;
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _tokenManager;
+        private readonly IConfiguration _configuration;
         private static readonly object _locker = new object();
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -30,11 +32,13 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Constructor.
         /// </summary>
-        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager, ILocalInstallationHelper localInstallationHelper)
+        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager, 
+            ILocalInstallationHelper localInstallationHelper, IConfiguration configuration)
         {
             _userAuthentication = userAuthentication;
             _localInstallationHelper = localInstallationHelper;
             _tokenManager = tokenManager;
+            _configuration = configuration;
         }
 
 
@@ -101,6 +105,24 @@ namespace CSETWebCore.Api.Controllers
                 _logger.Error(exc.Message);
                 return StatusCode(500);
             }
+        }
+
+
+        /// <summary>
+        /// Returns configuration settings for the front end to 
+        /// use external OIDC authentication.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/auth/login/config")]
+        public async Task<IActionResult> GetLoginAuthConfig()
+        {
+            var authSettings = _configuration
+               .GetSection("Auth")?
+               .Get<AuthSettings>();
+
+            return Ok(authSettings);
         }
 
 
