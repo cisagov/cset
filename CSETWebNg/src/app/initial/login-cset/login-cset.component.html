@@ -21,63 +21,73 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" id="white-panel"
-  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary" style="position: relative;">
+  class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a tw:bg-bg-primary"
+  style="position: relative;">
   <div style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">
     <app-theme-toggle [showText]="false"></app-theme-toggle>
   </div>
   <div class="p-4 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
 
     <!-- CSET Logo and Name -->
-    <div *ngIf="!configSvc.isRunningAnonymous" class="my-4 d-flex justify-content-start flex-00a">
-      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
-    </div>
-
-    <div *ngIf="configSvc.isRunningAnonymous" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
+    @if(configSvc.isRunningAnonymous) {
+    <div class="my-4 d-flex align-items-end flex-00a flex-nowrap">
       <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
       <span class="align-bottom ms-3 fst-italic"
         style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>
+    }
+    @else {
+    <div class="my-4 d-flex justify-content-start flex-00a">
+      <app-logo-cset logoHeight="50" [mode]="(theme$ |async )== 'light' ? 'fill-white' : 'white'"></app-logo-cset>
+    </div>
+    }
 
+    <!-- "blue stripe "-->
     <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mb-4 p-3 c-white">
-      <div *ngIf="mode === 'LOCAL'">
-        {{t('login.running locally')}}
-      </div>
-      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-        {{t('login.error encountered')}}
-      </div>
-      <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
-        {{t('login.login prompt')}}
-      </div>
-      <div *ngIf="mode === 'SIGNUP'">
-        {{t('login.enter name and email')}}
-      </div>
+      @if(loginMode === 'LOCAL') {
+      {{t('login.running locally')}}
+      } @else if(loginMode === 'LOGIN' && isRunningInElectron) {
+      {{t('login.error encountered')}}
+      } @else if(loginMode === 'LOGIN' && !isRunningInElectron) {
+      {{t('login.login prompt')}}
+      } @else if(loginMode === 'SIGNUP') {
+      {{t('login.enter name and email')}}
+      } @else if(loginMode === 'EXTERNAL-AUTH') {
+        {{t('login.external login prompt')}}
+      }
     </div>
 
     <app-no-server-connection class="mb-4"></app-no-server-connection>
 
-    <div *ngIf="mode === 'LOCAL'">
+    @if(loginMode === 'LOCAL') {
+    <div>
       <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
         <div class="d-flex flex-nowrap ps-3 pe-3 ms-2 mt-2">
           <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">{{t('buttons.continue')}}</button>
-          <div class="spinner-container" *ngIf="loading">
-            <div style="max-width: 30px; max-height: 30px;"></div>
-          </div>
+          @if(loading) {
+            <div class="spinner-container">
+              <div style="max-width: 30px; max-height: 30px;"></div>
+            </div>
+          }
         </div>
       </form>
     </div>
+    }
 
     <!-- If we reach the login page while running in electron, we can assume there was an error getting
       the standalone status from the API; prompt for exiting the application -->
-    <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+    @if(loginMode === 'LOGIN' && isRunningInElectron) {
+    <div>
       <form name="form" (ngSubmit)="exit()" #f="ngForm" class="p-3" novalidate>
         <div class="d-flex flex-nowrap">
           <button type="submit" class="btn btn-primary btn-lg">{{t('buttons.exit')}}</button>
         </div>
       </form>
     </div>
+    }
 
-    <div class="d-flex flex-column justify-content-between flex-00a"
-      *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
+    @if((loginMode === 'LOGIN' || loginMode === 'REGISTERED') && !isRunningInElectron) {
+    <div class="d-flex flex-column justify-content-between flex-00a">
       <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
         class="d-flex flex-column justify-content-center flex-00a">
         <div *ngIf="incorrect">
@@ -122,10 +132,26 @@
         </div>
       </form>
     </div>
+    }
 
-    <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+    <!-- Present button to redirect to exernal authentication service -->
+    @if(loginMode == 'EXTERNAL-AUTH') {
+    <div>
+      <button (click)="loginOIDC()" [disabled]="loading" class="btn btn-primary">{{t('buttons.login')}}</button>
+      @if(externalAuthMessage.length > 0) {
+        <div class="mt-2 alert alert-danger">{{externalAuthMessage}}</div>
+      }
+    </div>
+    }
+
+
+
+    @if(loginMode == 'SIGNUP') {
+    <div class="d-flex flex-column flex-00a">
       <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
     </div>
+    }
+
 
     <div class="my-4 d-flex flex-column justify-content-start align-items-center flex-11a">
       <p class="c-gray-600 mb-4 w-100">
@@ -134,20 +160,24 @@
 
       <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
 
-      <div *ngIf="configSvc.config.isRunningAnonymous" class="d-flex flex-column align-items-center mt-2">
+      @if(configSvc.config.isRunningAnonymous) {
+      <div class="d-flex flex-column align-items-center mt-2">
         <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability
           Disclosure Program</a>
         <div class="row">
           <a class="btn-link-dark" (click)="showDisclaimer()">INL Privacy & Accessibility</a>
         </div>
       </div>
+      }
 
-      <div *ngIf="browserIsIE" class="alert alert-danger text-start w-100 mt-3">
+      @if(browserIsIE) {
+      <div class="alert alert-danger text-start w-100 mt-3">
         Internet Explorer has been detected as your current browser.
         Some functionality of CSET is not fully supported by Internet Explorer.
         Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
         your experience.
       </div>
+      }
     </div>
 
   </div>

@@ -303,8 +303,8 @@
     "close": "Close",
     "back": "Back",
     "submit": "Submit",
-    "login": "Login",
-    "logout": "Logout",
+    "login": "Log in",
+    "logout": "Log out",
     "convert": "Convert",
     "analytics": "Analytics",
     "export": "Export",
@@ -980,7 +980,8 @@
     "password expired": "Password is expired. Click 'Reset Password'",
     "running locally": "The application is running locally. No login is required.",
     "error encountered": "An error was encountered while running the application",
-    "enter name and email": "Enter your name and email address to register a new account"
+    "enter name and email": "Enter your name and email address to register a new account",
+    "external login prompt": "Log in with your organization's credentials to access CSET"
   },
   "footer": {
     "expand footer": "Expand footer",
