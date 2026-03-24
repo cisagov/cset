@@ -24,8 +24,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, DOCUMENT } from '@angular/core';
 
-import { BehaviorSubject, concat, firstValueFrom } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, firstValueFrom, forkJoin, of } from 'rxjs';
+import { catchError, first, tap, toArray } from 'rxjs/operators';
 import { merge } from 'lodash';
 import { ModuleBehavior } from '../models/module-config.model';
 
@@ -114,41 +114,56 @@ export class ConfigService {
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
 
   /**
-   *
+   * 1. Loads the local config.json file, 
+   * 2. Overlays with any skin-specific config files,
+   * 3. Pulls external auth (OIDC) configuration from the API. 
    */
   async loadConfig() {
     if (!this.initialized) {
-      this.isRunningInElectron = !!(window as any).electronApi;
+      try {
+        this.isRunningInElectron = !!(window as any).electronApi;
 
-      const obs = this.http.get('assets/settings/config.json');
-      const prom = firstValueFrom(obs);
+        // Step 1: Load the base config.json file
+        const baseConfig = await firstValueFrom(
+          this.http.get('assets/settings/config.json')
+        );
+        this.config = baseConfig;
 
-      return prom.then((config) => {
-        this.config = config;
-      })
-        .then(() => {
-          const configPaths = [];
-          this.config.currentConfigChain.forEach((configProfile) => {
-            configPaths.push(`assets/settings/config.${configProfile}.json`);
-          });
-
-          return concat(...configPaths.map((path) => this.http.get(path)))
-            .pipe(
-              tap((subConfig) => {
-                merge(this.config, subConfig);
-              })
-            )
-            .toPromise()
-            .then(() => {
-              this.setConfigPropertiesForLocalService();
-              this.switchConfigsForMode(this.config.installationMode || 'CSET');
-              // Signal that config is ready
-              this.configReady$.next(true);
-            });
-        })
-        .catch(() => {
-          console.error('FAILED TO LOAD APPLICATION CONFIGURATION');
+        // Step 2: Build the local config chain
+        const configPaths = [];
+        this.config.currentConfigChain.forEach((configProfile) => {
+          configPaths.push(`assets/settings/config.${configProfile}.json`);
         });
+
+        for (const path of configPaths) {
+          const subConfig = await firstValueFrom(this.http.get(path));
+          merge(this.config, subConfig);
+        }
+
+        
+        // Step 3: Additional configuration setup
+        this.setConfigPropertiesForLocalService();
+        this.switchConfigsForMode(this.config.installationMode || 'CSET');
+
+        
+        // Step 4: Fetch the remote API config
+        try {
+          const remoteConfig = await firstValueFrom(
+            this.http.get(`${this.apiUrl}auth/login/config`)
+          );
+          merge(this.config, remoteConfig);
+        } catch (err) {
+          console.warn(
+            'Failed to load remote config, continuing with local config.',
+            err
+          );
+        }
+
+        // Signal that config is ready
+        this.configReady$.next(true);
+      } catch (err) {
+        console.error('FAILED TO LOAD APPLICATION CONFIGURATION', err);
+      }
     }
   }
 

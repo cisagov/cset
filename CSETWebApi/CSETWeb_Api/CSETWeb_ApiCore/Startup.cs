@@ -143,11 +143,11 @@ namespace CSETWeb_ApiCore
             // Configure OIDC authentication if configured to do so
             var authSettings = Configuration.GetSection("Auth").Get<AuthSettings>();
 
-            if (authSettings.OIDC?.Authority != null)
+            if (authSettings.OIDC?.Issuer != null)
             {
                 authBuilder.AddJwtBearer("OIDC", options =>
                 {
-                    options.Authority = authSettings.OIDC.Authority;
+                    options.Authority = authSettings.OIDC.Issuer;
                     options.Audience = authSettings.OIDC.Audience;
                     options.RequireHttpsMetadata = !_env.IsDevelopment();
 
