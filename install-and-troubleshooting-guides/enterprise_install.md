@@ -1,3 +1,5 @@
+[← Back to CSET Installation Options](README.md)
+
 # CSET Enterprise Installation Instructions
 
 ## Introduction
@@ -294,3 +296,10 @@ Kestrel is a lightweight, cross-platform web server that can run without IIS:
 An SSL certificate is a web technology that establishes a secure link between a web server and a browser. This link encrypts all data (such as passwords) so that your server is more secure.
 
   1.	You can follow [this tutorial](https://knowledge.digicert.com/tutorials/iis-7-how-to-import-export-ssl-certificates) to add an SSL certificate to your CSET® stand-alone.
+
+## OpenID Connect (OIDC) Configuration
+In an enterprise deployment, user authentication is typically managed internally by default. User credentials are securely encrypted and stored within the CSET database, and users enter these credentials directly during login.
+
+Alternatively, CSET can be configured to use OpenID Connect (OIDC) for user authentication alongside its internal USERS table. Instead of collecting credentials through CSET’s login screen, authentication is delegated to an external OIDC provider, allowing users to log in via a trusted identity service.
+
+[CSET OIDC Configuration Instructions](oidc_configuration.md)
