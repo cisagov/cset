@@ -12,6 +12,10 @@ namespace CSETWebCore.Model.Auth
         public OidcSettings OIDC { get; set; }
     }
 
+    /// <summary>
+    /// Represents the configuration settings required for integrating an application 
+    /// with an OpenID Connect (OIDC) identity provider. 
+    /// </summary>
     public class OidcSettings
     {
         /// <summary>
@@ -30,6 +34,29 @@ namespace CSETWebCore.Model.Auth
         /// </summary>
         public string PostLogoutRedirectUri { get; set; } = string.Empty;
 
+
+        /// <summary>
+        /// The base URL of the OIDC identity provider (the realm/tenant issuer URL). 
+        /// The app will use this to discover provider endpoints via 
+        /// {issuer}/.well-known/openid-configuration.
+        /// </summary>
+        public string Issuer { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The base URL used by the application to interact with the OIDC identity provider. 
+        /// It serves as the starting point for discovering metadata and endpoints (e.g., authorization, 
+        /// token, and user information endpoints) via the OIDC discovery document. 
+        /// Typically, this matches the Issuer value but is explicitly included for configuration purposes.
+        /// </summary>
+        public string Authority { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Identifies the client ID of the application registered with the OIDC provider. 
+        /// This value must match the "aud" (audience) claim in the token to validate it.
+        /// </summary>
+        public string Audience { get; set; } = string.Empty;
+
+
         /// <summary>
         /// Space-separated list of OAuth 2.0 scopes to request. 
         /// openid is required; profile and email are standard optional scopes.
@@ -37,11 +64,11 @@ namespace CSETWebCore.Model.Auth
         public string Scope { get; set; } = string.Empty;
 
         /// <summary>
-        ///The base URL of the OIDC identity provider (the realm/tenant issuer URL). 
-        ///The app will use this to discover provider endpoints via 
-        ///{issuer}/.well-known/openid-configuration.
+        /// Specifies the claim name in the token that should be used to 
+        /// identify the username.  Defaults to "preferred_username" if not specified.
         /// </summary>
-        public string Issuer { get; set; } = string.Empty;
+        public string ClaimUsernameProperty { get; set; } = string.Empty;
+
 
         /// <summary>
         /// When true, enforces that all endpoint URLs in the discovery document 
@@ -57,22 +84,11 @@ namespace CSETWebCore.Model.Auth
         /// </summary>
         public bool RequireHttps { get; set; } = true;
 
+
         /// <summary>
         /// When true, logs verbose OIDC debug output to the browser console. 
         /// Useful during development and troubleshooting. Should be false in production.
         /// </summary>
         public bool ShowDebugInformation { get; set; } = false;
-
-        /// <summary>
-        /// Identifies the client ID of the application registered with the OIDC provider. 
-        /// This value must match the "aud" (audience) claim in the token to validate it.
-        /// </summary>
-        public string Audience { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Specifies the claim name in the token that should be used to 
-        /// identify the username.  Defaults to "preferred_username" if not specified.
-        /// </summary>
-        public string ClaimUsernameProperty { get; set; } = string.Empty;
     }
 }
