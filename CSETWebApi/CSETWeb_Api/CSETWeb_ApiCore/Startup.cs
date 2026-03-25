@@ -70,6 +70,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.IO;
 using System.Linq;
@@ -143,24 +144,24 @@ namespace CSETWeb_ApiCore
             // Configure OIDC authentication if configured to do so
             var authSettings = Configuration.GetSection("Auth").Get<AuthSettings>();
 
-            if (authSettings.OIDC?.Issuer != null)
+            if (authSettings.OIDC?.Authority != null)
             {
                 authBuilder.AddJwtBearer("OIDC", options =>
                 {
-                    options.Authority = authSettings.OIDC.Issuer;
+                    options.Authority = authSettings.OIDC.Authority;
                     options.Audience = authSettings.OIDC.Audience;
-                    options.RequireHttpsMetadata = !_env.IsDevelopment();
+                    options.RequireHttpsMetadata = authSettings.OIDC.RequireHttps;
 
                     options.Events = new JwtBearerEvents
                     {
                         OnAuthenticationFailed = ctx =>
                         {
-                            Console.WriteLine($"OIDC auth failed: {ctx.Exception}");
+                            LogManager.GetCurrentClassLogger().Error($"OIDC auth failed: {ctx.Exception}");
                             return Task.CompletedTask;
                         },
                         OnTokenValidated = ctx =>
                         {
-                            Console.WriteLine("OIDC token validated successfully");
+                            LogManager.GetCurrentClassLogger().Error("OIDC token validated successfully");
                             return Task.CompletedTask;
                         }
                     };
