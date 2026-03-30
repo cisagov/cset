@@ -29,9 +29,10 @@ namespace UpgradeLibrary.Upgrade
             try
             {
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000.sql"), conn);
-                this.UpgradeToVersionLocalDB(conn, myVersion);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000_data.sql"), conn);
 
                 ConvertSectors(conn);
+                this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
             {
