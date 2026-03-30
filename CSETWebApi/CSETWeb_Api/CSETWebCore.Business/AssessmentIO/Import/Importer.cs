@@ -173,7 +173,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         refreshContact.Phone = originalContact.Phone;
                         refreshContact.Title = originalContact.Title;
                         //If they have removed this assessment on enterprise and this contact is being re-added, they are demoted to a user role. 
-                        refreshContact.AssessmentRoleId = 1;
+                        refreshContact.AssessmentRoleId = Constants.Constants.UserRoleUser;
 
                         _context.ASSESSMENT_CONTACTS.Add(refreshContact);
                         _context.SaveChanges();

@@ -48,6 +48,9 @@ export class CallbackComponent implements OnInit {
 
 
       const accessToken = this.authExtSvc.oauthService.getAccessToken();
+      const idToken = this.authExtSvc.oauthService.getIdToken();
+      sessionStorage.setItem('oidc-token', accessToken);
+      sessionStorage.setItem('oidc-id-token', idToken);
 
 
       // Send token to your backend

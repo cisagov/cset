@@ -34,7 +34,7 @@ import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { RoleType } from '../models/enums/role.model';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthenticationExternalService } from './authentication-external.service';
 
 export interface LoginResponse {
   token: string;
@@ -64,7 +64,6 @@ export class AuthenticationService {
 
   isLocal: boolean;
   private initialized = false;
-  private parser = new JwtParser();
   private currentUser: LoginResponse | null = null;
 
   isAuthenticated = false;
@@ -73,7 +72,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private router: Router,
     private configSvc: ConfigService,
-    private oauthService: OAuthService,
+    private authExternalSvc: AuthenticationExternalService,
     private tSvc: TranslocoService,
     public dialog: MatDialog
   ) {
@@ -231,11 +230,10 @@ export class AuthenticationService {
   /**
    *
    */
-  logout() {
+  logOut() {
     // logout of oauth if necessary
-    if (this.oauthService.hasValidAccessToken()) {
-      this.oauthService.logOut(true);
-    }
+    this.authExternalSvc.logOut();
+   
 
     this.isAuthenticated = false;
     this.router.navigate(['/home/logout'], { queryParamsHandling: 'preserve' });

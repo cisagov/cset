@@ -277,7 +277,7 @@ namespace CSETWebCore.Helpers
                         FirstName = name,
                         LastName = "",
                         PrimaryEmail = primaryEmailSO,
-                        AssessmentRoleId = 2, // Admin role
+                        AssessmentRoleId = Constants.Constants.UserRoleAdmin, // Admin role
                         Invited = true
                     };
 
@@ -419,9 +419,34 @@ namespace CSETWebCore.Helpers
             var email = user.FindFirstValue("email") ?? user.FindFirstValue(ClaimTypes.Email)
                 ?? throw new InvalidOperationException("Email claim not found in token.");
 
+           
+
             // Locate the CSET user record via the email claim
-            var dbUser = _context.USERS.FirstOrDefault(x => x.PrimaryEmail == email) 
-                ?? throw new UnauthorizedAccessException($"User email '{email}' is not registered in CSET.");
+            var dbUser = _context.USERS.FirstOrDefault(x => x.PrimaryEmail == email);
+
+
+            // if the user is not yet defined in CSET, create them
+            if (!String.IsNullOrEmpty(email) && dbUser == null)
+            {
+                var givenName = user.FindFirstValue(ClaimTypes.GivenName);
+                var surname = user.FindFirstValue(ClaimTypes.Surname);
+
+                dbUser = new USERS { 
+                    PrimaryEmail = email, 
+                    FirstName = givenName, 
+                    LastName = surname 
+                };
+                _context.USERS.Add(dbUser);
+                _context.SaveChanges();
+
+
+                var dbUserRole = new USER_ROLES { 
+                    RoleId = Constants.Constants.UserRoleUser, 
+                    UserId = dbUser.UserId 
+                };
+                _context.USER_ROLES.Add(dbUserRole);
+                _context.SaveChanges();
+            }
 
 
             // Build response object

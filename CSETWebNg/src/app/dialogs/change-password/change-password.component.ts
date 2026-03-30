@@ -147,7 +147,7 @@ export class ChangePasswordComponent implements OnInit {
     // if canceling out of a change TEMP password, navigate back to the login
     // but if cancelling out of a NON-TEMP password change, don't do anything.
     if (this.warning && this.message === this.msgChangeTempPw) {
-      this.auth.logout();
+      this.auth.logOut();
     }
   }
 
