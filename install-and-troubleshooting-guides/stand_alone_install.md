@@ -1,3 +1,5 @@
+[← Back to Installation Options](README.md)
+
 # Using the CSET Standalone Installer
 
 The installer will add everything needed to run CSET on a self-contained Windows computer.  The front- and back-end components

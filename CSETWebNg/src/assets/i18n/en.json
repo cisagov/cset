@@ -853,7 +853,8 @@
     "emails do not match": "Emails do not match",
     "your own question": "Your own custom security question",
     "answer": "Answer",
-    "account created": "Your account was successfully created. An email was sent to {{email}} containing your temporary password."
+    "account created": "Your account was successfully created. An email was sent to {{email}} containing your temporary password.",
+    "settings are external": "User management settings are managed outside of this app. If you need to make changes, please reach out to your administrator."
   },
   "change password": {
     "dialog title": "Change Password",

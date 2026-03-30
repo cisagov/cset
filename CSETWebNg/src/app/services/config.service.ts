@@ -24,8 +24,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, DOCUMENT } from '@angular/core';
 
-import { BehaviorSubject, concat, firstValueFrom, forkJoin, of } from 'rxjs';
-import { catchError, first, tap, toArray } from 'rxjs/operators';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { merge } from 'lodash';
 import { ModuleBehavior } from '../models/module-config.model';
 
@@ -184,6 +183,13 @@ export class ConfigService {
   checkOnlineDocStatus() {
     // TODO: temporary return until we get this working in production
     return this.http.get(this.apiUrl + 'HasLocalDocuments');
+  }
+
+  /**
+   * Indicates if user authentication is configured to be handled outside of CSET
+   */
+  get isUserAuthenticationExternal() {
+    return this.config?.oidc != null;
   }
 
   getDhsEmail() {

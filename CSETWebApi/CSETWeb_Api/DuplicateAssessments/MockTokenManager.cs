@@ -547,7 +547,7 @@ namespace DuplicateAssessments
             var myAdminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.UserId == userId
                     && ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 2)
+                    && ac.AssessmentRoleId == Constants.UserRoleAdmin)
                     .ToList();
 
             if (myAdminConnections.Count() == 0)
@@ -569,13 +569,13 @@ namespace DuplicateAssessments
 
             var adminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 2)
+                    && ac.AssessmentRoleId == Constants.UserRoleAdmin)
                     .ToList();
 
 
             var userConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 1)
+                    && ac.AssessmentRoleId == Constants.UserRoleAdmin)
                     .ToList();
 
             // Return a boolean indicating whether I am the last Admin and there is more than one User
