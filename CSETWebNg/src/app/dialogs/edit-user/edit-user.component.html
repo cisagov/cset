@@ -22,8 +22,7 @@
 -------------------------->
 <div *transloco="let t"
   class="edit-user-dialog d-flex flex-column justify-content-center flex-11a tw:rounded-xl tw:shadow-xl tw:max-w-2xl tw:mx-auto">
-  <div
-    class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-profile fs-base-6 me-3"></span>
     <span class="tw:font-semibold tw:text-lg">{{t('user profile.dialog title')}}</span>
   </div>
@@ -31,6 +30,40 @@
   <mat-dialog-content class="p-4 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm">
       <div class="tw:space-y-4">
+
+        @if(configSvc.isUserAuthenticationExternal) {
+        <div class="mb-4 d-flex flex-row">
+          <i class="cset-icons-info-circle me-2"></i>
+          <div>
+            {{ t('user profile.settings are external') }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label>{{t('user profile.first name')}}</label>
+              <p class="form-control-plaintext">{{model.firstName}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label>{{t('user profile.last name')}}</label>
+              <p class="form-control-plaintext">{{model.lastName}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label>{{t('user profile.email')}}</label>
+              <p class="form-control-plaintext">{{model.primaryEmail}}</p>
+            </div>
+          </div>
+        </div>
+
+        } @else {
+
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group mb-4" [ngClass]="{ 'has-error': !firstName.valid }">
@@ -76,6 +109,10 @@
             </div>
           </div>
         </div>
+        }
+
+
+        @if(!configSvc.isUserAuthenticationExternal) {
 
         <hr>
 
@@ -114,12 +151,20 @@
             </div>
           </div>
         </div>
+        }
       </div>
     </form>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-4 pt-0 d-flex justify-content-between flex-11a">
+  <mat-dialog-actions class="p-4 pt-0 d-flex flex-11a" [class.justify-content-between]="!configSvc.isUserAuthenticationExternal"
+    [class.justify-content-end]="!!configSvc.isUserAuthenticationExternal">
+
+    @if(!configSvc.isUserAuthenticationExternal) {
     <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
     <button class="m-0 btn btn-primary" (click)="save(userForm)">{{ t('buttons.save') }}</button>
+    } @else {
+    <button class="m-0 btn btn-primary" (click)="save(userForm)">{{ t('buttons.ok') }}</button>
+    }
+
   </mat-dialog-actions>
 </div>

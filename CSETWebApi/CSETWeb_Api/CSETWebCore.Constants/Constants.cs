@@ -15,6 +15,9 @@ namespace CSETWebCore.Constants
 
         public static string AssesmentUser = "ASSESS_USER";
 
+        public static int UserRoleUser = 1;
+        public static int UserRoleAdmin = 2;
+
         public static string Token_TimezoneOffsetKey = "tzoffset";
         public static string Token_UserId = "userid";
         public static string Token_AccessKey = "acckey";
