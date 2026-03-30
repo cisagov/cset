@@ -513,8 +513,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   /**
    *
    */
-  logout() {
-    this.authSvc.logout();
+  logOut() {
+    this.authSvc.logOut();
   }
 
   /**

@@ -44,4 +44,23 @@ export class AuthenticationExternalService {
     await this.oauthService.loadDiscoveryDocument();
     this.oauthService.initLoginFlow();
   }
+
+  /**
+   * 
+   */
+  async logOut() {
+    // if external authentication is not being used, do nothing
+    if (!this.oauthService.hasValidAccessToken()) {
+      return;
+    }
+
+    this.initializeOAuth();
+    await this.oauthService.loadDiscoveryDocument();
+
+    const idToken = sessionStorage.getItem('oidc-id-token');
+    const logoutUrl = (this.oauthService as any).logoutUrl;
+    const postLogoutUri = encodeURIComponent(this.oauthService.postLogoutRedirectUri); 
+
+    window.location.href = `${logoutUrl}?id_token_hint=${idToken}&post_logout_redirect_uri=${postLogoutUri}`;
+  }
 }

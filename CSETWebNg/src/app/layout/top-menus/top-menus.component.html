@@ -180,27 +180,34 @@
                     <span class="cset-icons-profile fs-base me-2 align-middle"></span>
                     <span>{{ t('menu.user.user profile') }}</span>
                 </button>
+
                 <button mat-menu-item (click)="goHome()" class="tw:dark:hover:bg-bg-tertiary">
                     <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
                     <span>{{ t('menu.user.my assessments') }}</span>
                 </button>
+
+                @if(!configSvc.isUserAuthenticationExternal) {
                 <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()"
                     class="tw:dark:hover:bg-bg-tertiary">
                     <span class="cset-icons-key fs-base me-2 align-middle"></span>
                     <span>{{ t('menu.user.change password') }}</span>
                 </button>
+                }
+                
                 <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()"
                     class="tw:dark:hover:bg-bg-tertiary">
                     <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                     <span>{{t('menu.user.settings')}}</span>
                 </button>
+
                 <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')"
                     class="tw:dark:hover:bg-bg-tertiary">
                     <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
                     <span>{{t('menu.user.admin')}}</span>
                 </button>
+
                 <app-theme-toggle></app-theme-toggle>
-                <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()"
+                <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logOut()"
                     class="tw:dark:hover:bg-bg-tertiary">
                     <span class="cset-icons-logout fs-base me-2 align-middle"></span>
                     <span>{{t('menu.user.logout')}}</span>
@@ -231,7 +238,7 @@
                     <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
                     <span>{{ t('my assessments') }}</span>
                 </button>
-                <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
+                <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logOut()">
                     <span class="cset-icons-logout fs-base me-2 align-middle"></span>
                     <span>{{ t('buttons.logout') }}</span>
                 </button>

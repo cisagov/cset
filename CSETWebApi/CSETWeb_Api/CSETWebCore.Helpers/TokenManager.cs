@@ -586,7 +586,7 @@ namespace CSETWebCore.Helpers
             var myAdminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.UserId == userId
                     && ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 2)
+                    && ac.AssessmentRoleId == Constants.Constants.UserRoleAdmin)
                     .ToList();
 
             if (myAdminConnections.Count() == 0)
@@ -608,13 +608,13 @@ namespace CSETWebCore.Helpers
 
             var adminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 2)
+                    && ac.AssessmentRoleId == Constants.Constants.UserRoleAdmin)
                     .ToList();
 
 
             var userConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 1)
+                    && ac.AssessmentRoleId == Constants.Constants.UserRoleUser)
                     .ToList();
 
             // Return a boolean indicating whether I am the last Admin and there is more than one User
