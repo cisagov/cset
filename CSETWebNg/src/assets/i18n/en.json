@@ -982,7 +982,8 @@
     "running locally": "The application is running locally. No login is required.",
     "error encountered": "An error was encountered while running the application",
     "enter name and email": "Enter your name and email address to register a new account",
-    "external login prompt": "Log in with your organization's credentials to access CSET"
+    "external login prompt": "Log in with your organization's credentials to access CSET",
+    "external login failure": "The authentication service is not available. Please try again later or contact your administrator."
   },
   "footer": {
     "expand footer": "Expand footer",
