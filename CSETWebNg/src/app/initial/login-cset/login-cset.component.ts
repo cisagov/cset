@@ -29,11 +29,11 @@ import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { EmailService } from '../../services/email.service';
 import { JwtParser } from '../../helpers/jwt-parser';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { ThemeService } from '../../services/theme.service';
 import { AuthenticationExternalService } from '../../services/authentication-external.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-cset',
@@ -74,6 +74,7 @@ export class LoginCsetComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private authExtSvc: AuthenticationExternalService,
     private assessSvc: AssessmentService,
+    private tSvc: TranslocoService,
     private dialog: MatDialog,
     private themeSvc: ThemeService
   ) { }
@@ -235,8 +236,8 @@ export class LoginCsetComponent implements OnInit {
     try {
       await this.authExtSvc.login();
     } catch (error) {
-      console.error(error);
-      this.externalAuthMessage = error.message;
+      console.error('OIDC login failure:', error);
+      this.externalAuthMessage = this.tSvc.translate('login.external login failure');
     }
   }
 }

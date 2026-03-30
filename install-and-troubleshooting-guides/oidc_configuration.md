@@ -87,3 +87,5 @@ Before deploying to a production environment, ensure the following:
 ### Notes
  - The `StrictDiscoveryDocumentValidation: false` setting is typically only needed for non-standard provider configurations or local setups where endpoint URLs don't match the issuer base URL. Enable it in production where possible.
  - The `Scope` field must always include `openid` to conform to the OIDC specification. Additional scopes such as `profile` and `email` control what claims are included in the ID token.
+- When a user not yet registered in CSET successfully authenticates via the OIDC provider, a CSET account is automatically created using their email, first name, and last name from the token.
+- When OIDC is enabled, user identity is managed by the OIDC provider rather than CSET.  The User Settings dialog will display basic account information as read-only, and options to change user details, reset the password, or configure security questions will not be available.
