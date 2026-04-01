@@ -12,7 +12,7 @@ using CSETWebCore.DataLayer.Manual;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Snickler.EFCore;
+using Npgsql;
 
 namespace CSETWebCore.DataLayer.Model
 {
@@ -40,7 +40,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             if (!optionsBuilder.IsConfigured && _connectionString != null)
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseNpgsql(_connectionString);
             }
         }
 
@@ -106,7 +106,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
-                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
+                entity.Property(e => e.Text_Hash).HasComputedColumnSql("digest(\"Question_Text\", 'sha1')");
             });
             modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
             {
@@ -192,15 +192,9 @@ namespace CSETWebCore.DataLayer.Model
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_Assessments_For_UserResult> myrval = null;
-            this.LoadStoredProc("usp_Assessments_For_User")
-                     .WithSqlParam("user_id", userId)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<usp_Assessments_For_UserResult>(
+                "SELECT * FROM usp_Assessments_For_User(@user_id)",
+                new NpgsqlParameter("user_id", userId)).ToList();
         }
 
 
@@ -212,122 +206,74 @@ namespace CSETWebCore.DataLayer.Model
         /// <returns></returns>
         public int ChangeEmail(string originalEmail, string newEmail)
         {
-
             if ((originalEmail == null) || (newEmail != null))
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("changeEmail")
-                     .WithSqlParam("originalEmail", originalEmail)
-                     .WithSqlParam("newEmail", newEmail)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            this.Database.ExecuteSqlRaw(
+                "CALL changeEmail(@originalEmail, @newEmail)",
+                new NpgsqlParameter("originalEmail", originalEmail),
+                new NpgsqlParameter("newEmail", newEmail));
+            return 0;
         }
 
         public virtual IList<AnalyticsgetMedianOverall> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
         {
-            IList<AnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_compute_single_averages_maturity")
-                    .WithSqlParam("assessment_id", assessmentId)
-                     .WithSqlParam("maturity_model_id", maturity_model_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsgetMedianOverall>(
+                "SELECT * FROM analytics_compute_single_averages_maturity(@assessment_id, @maturity_model_id)",
+                new NpgsqlParameter("assessment_id", assessmentId),
+                new NpgsqlParameter("maturity_model_id", maturity_model_id)).ToList();
         }
         public virtual IList<SetStandard> analytics_selectedStandardList(int assessmentId)
         {
-            IList<SetStandard> myrval = null;
-            this.LoadStoredProc("analytics_selectedStandardList")
-                .WithSqlParam("standard_assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<SetStandard>();
-                });
-            return myrval;
+            return this.Database.SqlQueryRaw<SetStandard>(
+                "SELECT * FROM analytics_selectedStandardList(@standard_assessment_id)",
+                new NpgsqlParameter("standard_assessment_id", assessmentId)).ToList();
         }
 
 
         public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
         {
-            IList<AnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_getMedianOverall")
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsgetMedianOverall>(
+                "SELECT * FROM analytics_getMedianOverall()").ToList();
         }
         public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup(int sectorId, int industryId)
         {
-            IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> myrval = null;
-            this.LoadStoredProc("analytics_getMinMaxAverageForSectorIndustryGroup")
-                 .WithSqlParam("sector_id", sectorId)
-                  .WithSqlParam("industry_id", industryId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsgetMinMaxAverForSectorIndustryGroup>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsgetMinMaxAverForSectorIndustryGroup>(
+                "SELECT * FROM analytics_getMinMaxAverageForSectorIndustryGroup(@sector_id, @industry_id)",
+                new NpgsqlParameter("sector_id", sectorId),
+                new NpgsqlParameter("industry_id", industryId)).ToList();
         }
         public virtual IList<AnalyticsStandardMinMaxAvg> analytics_Compute_standard_all(int assessmentId, string setname, int? sectorId,
             int? industryId)
         {
-
-            IList<AnalyticsStandardMinMaxAvg> myrval = null;
-            this.LoadStoredProc("analytics_Compute_standard_all")
-                .WithSqlParam("assessment_id", assessmentId)
-                .WithSqlParam("set_name", setname)
-                .WithSqlParam("sector_id", sectorId == null ? DBNull.Value : sectorId)
-                .WithSqlParam("industry_id", industryId == null ? DBNull.Value : industryId)
-                // .WithSqlParam("industry_id",industryId ==null?DBNull.Value:industryId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<AnalyticsStandardMinMaxAvg>();
-                });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsStandardMinMaxAvg>(
+                "SELECT * FROM analytics_Compute_standard_all(@assessment_id, @set_name, @sector_id, @industry_id)",
+                new NpgsqlParameter("assessment_id", assessmentId),
+                new NpgsqlParameter("set_name", setname),
+                new NpgsqlParameter("sector_id", (object)sectorId ?? DBNull.Value),
+                new NpgsqlParameter("industry_id", (object)industryId ?? DBNull.Value)).ToList();
         }
         public virtual IList<standardAnalyticsgetMedianOverall> analytics_compute_single_averages_standard(int assessmentId, string setname)
         {
-
-            IList<standardAnalyticsgetMedianOverall> myrval = null;
-            this.LoadStoredProc("analytics_compute_single_averages_standard")
-                .WithSqlParam("assessment_id", assessmentId)
-                .WithSqlParam("set_name", setname)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<standardAnalyticsgetMedianOverall>();
-                });
-            return myrval;
+            return this.Database.SqlQueryRaw<standardAnalyticsgetMedianOverall>(
+                "SELECT * FROM analytics_compute_single_averages_standard(@assessment_id, @set_name)",
+                new NpgsqlParameter("assessment_id", assessmentId),
+                new NpgsqlParameter("set_name", setname)).ToList();
         }
 
         public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id, int? sectorId, int? industryId)
         {
-            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
-            this.LoadStoredProc("analytics_Compute_MaturityAll")
-                 .WithSqlParam("maturity_model_id", model_id)
-                 .WithSqlParam("sector_id", sectorId == null ? DBNull.Value : sectorId)
-                 .WithSqlParam("industry_id", industryId == null ? DBNull.Value : industryId)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsMinMaxAvgMedianByGroup>(
+                "SELECT * FROM analytics_Compute_MaturityAll(@maturity_model_id, @sector_id, @industry_id)",
+                new NpgsqlParameter("maturity_model_id", model_id),
+                new NpgsqlParameter("sector_id", (object)sectorId ?? DBNull.Value),
+                new NpgsqlParameter("industry_id", (object)industryId ?? DBNull.Value)).ToList();
         }
         public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll_Median(int model_id)
         {
-            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
-            this.LoadStoredProc("analytics_Compute_MaturityAll_Median")
-                 .WithSqlParam("maturity_model_id", model_id)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<AnalyticsMinMaxAvgMedianByGroup>(
+                "SELECT * FROM analytics_Compute_MaturityAll_Median(@maturity_model_id)",
+                new NpgsqlParameter("maturity_model_id", model_id)).ToList();
         }
 
 
@@ -342,15 +288,10 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyQuestionsForAnalysis")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            this.Database.ExecuteSqlRaw(
+                "CALL FillEmptyQuestionsForAnalysis(@Assessment_Id)",
+                new NpgsqlParameter("Assessment_Id", assessment_Id));
+            return 0;
         }
 
         /// <summary>
@@ -364,15 +305,10 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            this.Database.ExecuteSqlRaw(
+                "CALL FillEmptyMaturityQuestionsForAnalysis(@Assessment_Id)",
+                new NpgsqlParameter("Assessment_Id", assessment_Id));
+            return 0;
         }
 
 
@@ -387,16 +323,11 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessmentId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillEmptyMaturityQuestionsForModel")
-                     .WithSqlParam("Assessment_Id", assessmentId)
-                     .WithSqlParam("Model_Id", modelId)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            this.Database.ExecuteSqlRaw(
+                "CALL FillEmptyMaturityQuestionsForModel(@Assessment_Id, @Model_Id)",
+                new NpgsqlParameter("Assessment_Id", assessmentId),
+                new NpgsqlParameter("Model_Id", modelId));
+            return 0;
         }
 
 
@@ -410,15 +341,10 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            int myrval = 0;
-            this.LoadStoredProc("FillNetworkDiagramQuestions")
-                     .WithSqlParam("Assessment_Id", assessment_Id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToValue<int>() ?? 0;
-                     });
-            return myrval;
+            this.Database.ExecuteSqlRaw(
+                "CALL FillNetworkDiagramQuestions(@Assessment_Id)",
+                new NpgsqlParameter("Assessment_Id", assessment_Id));
+            return 0;
         }
 
 
@@ -432,15 +358,9 @@ namespace CSETWebCore.DataLayer.Model
             if (!aggregation_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<usp_GetTop5Areas_result> myrval = null;
-            this.LoadStoredProc("usp_GetTop5Areas")
-                     .WithSqlParam("aggregation_id", aggregation_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_GetTop5Areas_result>();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<usp_GetTop5Areas_result>(
+                "SELECT * FROM usp_GetTop5Areas(@aggregation_id)",
+                new NpgsqlParameter("aggregation_id", aggregation_id)).ToList();
         }
 
 
@@ -455,16 +375,10 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<int> myrval = null;
-            this.LoadStoredProc("InScopeQuestions")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var myrval2 = handler.ReadToList<Question_Id_result>();
-                         myrval = myrval2.Select(x => x.Question_Id).ToList();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<Question_Id_result>(
+                "SELECT * FROM InScopeQuestions(@assessment_id)",
+                new NpgsqlParameter("assessment_id", assessment_id))
+                .Select(x => x.Question_Id).ToList();
         }
 
 
@@ -479,31 +393,19 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<int> myrval = null;
-            this.LoadStoredProc("InScopeRequirements")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var myrval2 = handler.ReadToList<Requirement_Id_result>();
-                         myrval = myrval2.Select(x => x.Requirement_Id).ToList();
-                     });
-            return myrval;
+            return this.Database.SqlQueryRaw<Requirement_Id_result>(
+                "SELECT * FROM InScopeRequirements(@assessment_id)",
+                new NpgsqlParameter("assessment_id", assessment_id))
+                .Select(x => x.Requirement_Id).ToList();
         }
 
 
         public virtual IList<GetChildrenAnswersResult> Get_Children_Answers(int parentId, int assessId)
         {
-            IList<GetChildrenAnswersResult> myrval = null;
-            this.LoadStoredProc("GetChildrenAnswers")
-                .WithSqlParam("@Parent_Id", parentId)
-                .WithSqlParam("@Assess_Id", assessId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<GetChildrenAnswersResult>();
-                });
-
-            return myrval;
+            return this.Database.SqlQueryRaw<GetChildrenAnswersResult>(
+                "SELECT * FROM GetChildrenAnswers(@Parent_Id, @Assess_Id)",
+                new NpgsqlParameter("Parent_Id", parentId),
+                new NpgsqlParameter("Assess_Id", assessId)).ToList();
         }
     }
 }
