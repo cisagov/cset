@@ -45,42 +45,14 @@
           "System.Security.Cryptography.ProtectedData": "9.0.11"
         }
       },
-      "Microsoft.Data.SqlClient": {
-        "type": "Direct",
-        "requested": "[6.1.4, )",
-        "resolved": "6.1.4",
-        "contentHash": "lQcSog5LLImg4yNEuuG6ccvdzXnCvER8Rms9Ngk9zB4Q8na4f+S7/abSoC7gnEltBg4e5xTnLAWmMLIOtLg4pg==",
-        "dependencies": {
-          "Azure.Core": "1.50.0",
-          "Azure.Identity": "1.17.1",
-          "Microsoft.Data.SqlClient.SNI.runtime": "6.0.2",
-          "Microsoft.Identity.Client": "4.80.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "7.7.1",
-          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.7.1",
-          "Microsoft.SqlServer.Server": "1.0.0",
-          "System.Configuration.ConfigurationManager": "9.0.11",
-          "System.IdentityModel.Tokens.Jwt": "7.7.1",
-          "System.Security.Cryptography.Pkcs": "9.0.11"
-        }
-      },
       "Microsoft.EntityFrameworkCore": {
         "type": "Direct",
-        "requested": "[10.0.3, )",
-        "resolved": "10.0.3",
-        "contentHash": "CDEImwD4A7BseABJMCpLZnhfFjmPY/bHwhhS70elc6gLI/bYUEOhxWt7PmaNGYGhIEzOnStlCy5QcVb+8dod5Q==",
+        "requested": "[10.0.4, )",
+        "resolved": "10.0.4",
+        "contentHash": "kzTsfFK2GCytp6DDTfQOmxPU4gbGdrIlP7PxrxF3ESNLtfXrC8BoUVZENBN2WORlZPAD7CVX6AYIglgkpXQooA==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.3",
-          "Microsoft.EntityFrameworkCore.Analyzers": "10.0.3"
-        }
-      },
-      "Microsoft.EntityFrameworkCore.SqlServer": {
-        "type": "Direct",
-        "requested": "[10.0.3, )",
-        "resolved": "10.0.3",
-        "contentHash": "q0fUFQ4PG4uhKwP+D5dsvlDQbwNpEfWsag3HaoGzkkKj+OQ90ya9W0HuFtwigwEEqc/H1SzDZYUAv7Ya1hh5ow==",
-        "dependencies": {
-          "Microsoft.Data.SqlClient": "6.1.1",
-          "Microsoft.EntityFrameworkCore.Relational": "10.0.3"
+          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.4",
+          "Microsoft.EntityFrameworkCore.Analyzers": "10.0.4"
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
@@ -154,20 +126,22 @@
         "resolved": "3.3.1",
         "contentHash": "7zkTEqmakybTTuDuifpnzl5s8MkmpAdyvoqIPIO2+M2ThF8ixavPcPt1afPfFyCI+A6t3ySujgpGq/5iWc4/RQ=="
       },
+      "Npgsql.EntityFrameworkCore.PostgreSQL": {
+        "type": "Direct",
+        "requested": "[10.0.1, )",
+        "resolved": "10.0.1",
+        "contentHash": "P6EwH0Q4xkaA264iNZDqCPhWt8pscfUGxXazDQg4noBfqjoOlk4hKWfvBjF9ZX3R/9JybRmmJfmxr2iBMj0EpA==",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "[10.0.4, 11.0.0)",
+          "Microsoft.EntityFrameworkCore.Relational": "[10.0.4, 11.0.0)",
+          "Npgsql": "10.0.2"
+        }
+      },
       "SharpZipLib": {
         "type": "Direct",
         "requested": "[1.4.2, )",
         "resolved": "1.4.2",
         "contentHash": "yjj+3zgz8zgXpiiC3ZdF/iyTBbz2fFvMxZFEBPUcwZjIvXOf37Ylm+K58hqMfIBt5JgU/Z2uoUS67JmTLe973A=="
-      },
-      "Snickler.EFCore": {
-        "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "DovydBI8ojnRFBfGXepme9P3laK8HMacbn5vmdVsN6t/oZL66bPheUAOcsxJdqctdcMu3M2h7baAhZETOxK6Dg==",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.0"
-        }
       },
       "Swashbuckle.AspNetCore": {
         "type": "Direct",
@@ -766,14 +740,6 @@
           "Lucene.Net": "4.8.0-beta00016"
         }
       },
-      "MartinCostello.SqlLocalDb": {
-        "type": "Transitive",
-        "resolved": "3.4.0",
-        "contentHash": "dfWr1ZKFMIi6I2RkGhU8z8vjf6ob/jwbNgOVkrIYlF+ELGGY7BZJZnAwv5XKYJ4okRc+oDn2qzbVqb5n4eE1RQ==",
-        "dependencies": {
-          "Microsoft.Data.SqlClient": "5.1.5"
-        }
-      },
       "Microsoft.AspNetCore.JsonPatch": {
         "type": "Transitive",
         "resolved": "10.0.3",
@@ -898,6 +864,23 @@
           "System.Composition": "7.0.0"
         }
       },
+      "Microsoft.Data.SqlClient": {
+        "type": "Transitive",
+        "resolved": "6.1.4",
+        "contentHash": "lQcSog5LLImg4yNEuuG6ccvdzXnCvER8Rms9Ngk9zB4Q8na4f+S7/abSoC7gnEltBg4e5xTnLAWmMLIOtLg4pg==",
+        "dependencies": {
+          "Azure.Core": "1.50.0",
+          "Azure.Identity": "1.17.1",
+          "Microsoft.Data.SqlClient.SNI.runtime": "6.0.2",
+          "Microsoft.Identity.Client": "4.80.0",
+          "Microsoft.IdentityModel.JsonWebTokens": "7.7.1",
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.7.1",
+          "Microsoft.SqlServer.Server": "1.0.0",
+          "System.Configuration.ConfigurationManager": "9.0.11",
+          "System.IdentityModel.Tokens.Jwt": "7.7.1",
+          "System.Security.Cryptography.Pkcs": "9.0.11"
+        }
+      },
       "Microsoft.Data.SqlClient.SNI.runtime": {
         "type": "Transitive",
         "resolved": "6.0.2",
@@ -930,28 +913,20 @@
       },
       "Microsoft.EntityFrameworkCore.Abstractions": {
         "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "c7Uoz381xnMHNBRB8eHRhGgzUtXbgddlbODhwZRrTSzZWDharp3RkJsFwhxyESbeXhCqmML7VdvjMQ7uu+HreA=="
+        "resolved": "10.0.4",
+        "contentHash": "qDcJqCfN1XYyX0ID/Hd9/kQTRvlia8S+Yuwyl9uFhBIKnOCbl9WMdGQCzbZUKbkpkfvf3P9CDdXsnxHyE3O0Aw=="
       },
       "Microsoft.EntityFrameworkCore.Analyzers": {
         "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "lVABgJTyTUNE7Bi0bSu4dWHiCHIXEGzTh/kLh0N07IgU/tIKwTeBPp8tgV4x2iKj4h7iPLo8oXzyHmLDGtAE1g=="
+        "resolved": "10.0.4",
+        "contentHash": "pQeMHCyD3yTtCEGnHV4VsgKUvrESo3MR5mnh8sgQ1hWYmI1YFsUutDowBIxkobeWRtaRmBqQAtF7XQFW6FWuNA=="
       },
       "Microsoft.EntityFrameworkCore.Relational": {
         "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "Pmh60OK9neVr/M0FJwm9hlzm2bD4Kd65SID8E6SP5c90tExNgXwORrlEWl0oGU/ig9ifpNN4PSpIrnHNozlT5w==",
+        "resolved": "10.0.4",
+        "contentHash": "DOTjTHy93W3TwpMLM4SCm0n57Sc0Jj3+m2S6LSTstKyBB34eT1UouaMS19mpWwvtj42+sRiEjA3+rOTNoNzXFQ==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "10.0.3"
-        }
-      },
-      "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": {
-        "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "K73jOafOjF8oMLrPhXz3er6csmXCOGBQbeXsFPXrtz7/4QJJYalcOHQzoppEhl1gwLEZNnJMUDlOWcQ1FeW27Q==",
-        "dependencies": {
-          "Microsoft.SqlServer.Types": "160.1000.6"
+          "Microsoft.EntityFrameworkCore": "10.0.4"
         }
       },
       "Microsoft.Extensions.ApiDescription.Server": {
@@ -1041,14 +1016,6 @@
         "type": "Transitive",
         "resolved": "1.0.0",
         "contentHash": "N4KeF3cpcm1PUHym1RmakkzfkEv3GRMyofVv40uXsQhCQeglr2OHNcUk2WOG51AKpGO8ynGpo9M/kFXSzghwug=="
-      },
-      "Microsoft.SqlServer.Types": {
-        "type": "Transitive",
-        "resolved": "160.1000.6",
-        "contentHash": "4kk+rz5vnIPr9ENzm8KttUbhBKftv0uHSSFDVjc5OuKPtRP5q0lDbYUy5ZsoYCAG3RrZdJoxPnWN2JNozZAiGA==",
-        "dependencies": {
-          "Microsoft.SqlServer.Server": "1.0.0"
-        }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration": {
         "type": "Transitive",
@@ -1242,6 +1209,11 @@
         "dependencies": {
           "NLog": "5.4.0"
         }
+      },
+      "Npgsql": {
+        "type": "Transitive",
+        "resolved": "10.0.2",
+        "contentHash": "q5RfBI+wywJSFUNDE1L4ZbHEHCFTblo8Uf6A6oe4feOUFYiUQXyAf9GBh5qEZpvJaHiEbpBPkQumjEhXCJxdrg=="
       },
       "NuGet.Common": {
         "type": "Transitive",
@@ -1487,13 +1459,12 @@
           "Lucene.Net.Analysis.Common": "[4.8.0-beta00016, )",
           "Lucene.Net.Queries": "[4.8.0-beta00016, )",
           "Lucene.Net.QueryParser": "[4.8.0-beta00016, )",
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "Microsoft.EntityFrameworkCore": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": "[10.0.3, )",
+          "Microsoft.EntityFrameworkCore": "[10.0.4, )",
           "NJsonSchema": "[11.5.2, )",
           "NLog.Web.AspNetCore": "[5.4.0, )",
           "Newtonsoft.Json": "[13.0.4, )",
+          "Npgsql": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
           "SharpZipLib": "[1.4.2, )",
           "SixLabors.ImageSharp": "[3.1.12, )",
           "System.Data.OleDb": "[10.0.3, )",
@@ -1516,20 +1487,16 @@
           "CSETWebCore.Constants": "[1.0.0, )",
           "CSETWebCore.DataLayer": "[1.0.0, )",
           "CSETWebCore.UpgradeLibrary": "[1.0.0, )",
-          "MartinCostello.SqlLocalDb": "[3.4.0, )",
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "NLog.Web.AspNetCore": "[5.3.15, )"
+          "NLog.Web.AspNetCore": "[5.3.15, )",
+          "Npgsql": "[10.0.2, )"
         }
       },
       "csetwebcore.datalayer": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "Microsoft.EntityFrameworkCore": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": "[10.0.3, )",
+          "Microsoft.EntityFrameworkCore": "[10.0.4, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
           "SixLabors.ImageSharp": "[3.1.12, )",
-          "Snickler.EFCore": "[3.0.0, )",
           "System.Security.Cryptography.Pkcs": "[9.0.11, )"
         }
       },
@@ -1554,12 +1521,11 @@
           "CSETWebCore.DataLayer": "[1.0.0, )",
           "CSETWebCore.Enum": "[1.0.0, )",
           "CSETWebCore.Interfaces": "[1.0.0, )",
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "Microsoft.EntityFrameworkCore": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": "[10.0.3, )",
+          "Microsoft.EntityFrameworkCore": "[10.0.4, )",
           "NJsonSchema": "[11.5.2, )",
           "NLog.Web.AspNetCore": "[5.4.0, )",
+          "Npgsql": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
           "SixLabors.ImageSharp": "[3.1.12, )"
         }
       },
@@ -1569,11 +1535,9 @@
           "CSETWebCore.DataLayer": "[1.0.0, )",
           "CSETWebCore.Enum": "[1.0.0, )",
           "CSETWebCore.Model": "[1.0.0, )",
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "Microsoft.EntityFrameworkCore": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": "[10.0.3, )",
+          "Microsoft.EntityFrameworkCore": "[10.0.4, )",
           "NJsonSchema": "[11.5.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
           "SixLabors.ImageSharp": "[3.1.12, )",
           "System.IdentityModel.Tokens.Jwt": "[8.16.0, )"
         }
@@ -1583,13 +1547,10 @@
         "dependencies": {
           "CSETWebCore.DataLayer": "[1.0.0, )",
           "CSETWebCore.Enum": "[1.0.0, )",
-          "Microsoft.Data.SqlClient": "[6.1.4, )",
-          "Microsoft.EntityFrameworkCore": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.3, )",
-          "Microsoft.EntityFrameworkCore.SqlServer.Abstractions": "[10.0.3, )",
+          "Microsoft.EntityFrameworkCore": "[10.0.4, )",
           "NJsonSchema": "[11.5.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
           "SixLabors.ImageSharp": "[3.1.12, )",
-          "Snickler.EFCore": "[3.0.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.16.0, )"
         }
       },
