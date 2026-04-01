@@ -191,6 +191,7 @@ fi
 echo "[+] Running pgloader with configuration file: $PGLOADER_LOAD_FILE"
 docker run --rm \
   --platform linux/amd64 \
+  --add-host=host.docker.internal:host-gateway \
   --name cset-pgloader \
   -e TDS_MAX_CONN=2048 \
   -e TDSVER=7.4 \

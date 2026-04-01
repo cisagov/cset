@@ -82,6 +82,7 @@ run_docker() {
   echo "[+] Using Docker postgres:17-alpine client to restore"
 
   docker run --rm \
+    --add-host=host.docker.internal:host-gateway \
     -e PGPASSWORD="$PG_PASSWORD" \
     -v "$DUMP_DIR:/dump:ro" \
     postgres:17-alpine sh -c "\

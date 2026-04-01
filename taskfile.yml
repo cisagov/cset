@@ -110,7 +110,7 @@ tasks:
   launch:pgdb:
     desc: Launch the PostgreSQL database
     cmds:
-      - docker compose -f compose.postgres.yml up -d db
+      - docker compose -f compose.postgres.yml up -d postgresql
 
   split:bak:
     desc: Split the database backup file into smaller chunks
@@ -158,12 +158,43 @@ tasks:
     cmds:
       - docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -d CSET -C -W -s "|" < {{.CLI_ARGS}}
 
+  stop:pgdb:
+    desc: Stop the PostgreSQL database
+    cmds:
+      - docker compose -f compose.postgres.yml stop postgresql
+
+  down:pgdb:
+    desc: Remove the PostgreSQL container and its data
+    cmds:
+      - docker compose -f compose.postgres.yml down -v postgresql
+
+  pg:
+    desc: Open PostgreSQL shell for database exploration
+    interactive: true
+    cmds:
+      - docker exec -it cset-postgres psql -U cset -d csetweb
+
+  pg:query:
+    desc: Execute a PostgreSQL query non-interactively (for coding agents)
+    cmds:
+      - docker exec cset-postgres psql -U cset -d csetweb -t -A -F "|" -c {{.CLI_ARGS}}
+
+  pg:file:
+    desc: Execute PostgreSQL from a file non-interactively
+    cmds:
+      - docker exec -i cset-postgres psql -U cset -d csetweb < {{.CLI_ARGS}}
+
   mssql-to-postgres:
     desc: Convert MSSQL .bak to PostgreSQL 17 backup
+    env:
+      BAK_PATH: backup/CSET.bak
+      MSSQL_DB: CSET
     cmds:
       - bash DatabaseScripts/Migration/convert-mssql-bak-to-postgres.sh
 
   load-postgres-dump:
     desc: Load PostgreSQL dump into the database
+    env:
+      DUMP_PATH: backup/csetweb-from-mssql.sql
     cmds:
       - bash DatabaseScripts/Migration/load-postgres-dump.sh

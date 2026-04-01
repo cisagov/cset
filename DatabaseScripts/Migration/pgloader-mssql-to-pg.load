@@ -1,5 +1,5 @@
 LOAD DATABASE
-     FROM mssql://sa:Password123@host.docker.internal:1433/CSETWebTest
+     FROM mssql://sa:Password123@host.docker.internal:1433/CSET
      INTO postgresql://cset:password@host.docker.internal:55432/csetweb_stage
 
 WITH
