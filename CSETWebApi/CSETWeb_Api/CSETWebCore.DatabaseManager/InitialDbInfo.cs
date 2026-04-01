@@ -8,7 +8,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Text.RegularExpressions;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using static CSETWebCore.Constants.Constants;
 
 namespace CSETWebCore.DatabaseManager
@@ -29,13 +29,13 @@ namespace CSETWebCore.DatabaseManager
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(MasterConnectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(MasterConnectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
+                    NpgsqlCommand cmd = conn.CreateCommand();
                     cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode + "'";
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         var type = reader.GetString(0);
@@ -66,7 +66,7 @@ namespace CSETWebCore.DatabaseManager
                 }
 
             }
-            catch (SqlException)
+            catch (NpgsqlException)
             {
                 // We are only concerned here if SQL LocalDb 2022 (uses localdb2022_ConnectionString) is not accessible
                 // (2012 & 2019 might not be installed, and that's ok--just assume the db does not exist)
@@ -87,12 +87,12 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(ConnectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
+                    NpgsqlCommand cmd = conn.CreateCommand();
                     cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + DatabaseCode + "'";
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    NpgsqlDataReader reader = cmd.ExecuteReader();
                     // If CSETWeb database does not exist return null
                     if (!reader.HasRows)
                     {
@@ -102,7 +102,7 @@ namespace CSETWebCore.DatabaseManager
 
                 string newConnectionString = ConnectionString.Replace("Master", DatabaseCode);
 
-                using (SqlConnection conn = new SqlConnection(newConnectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(newConnectionString))
                 {
                     conn.Open();
 
@@ -117,10 +117,10 @@ namespace CSETWebCore.DatabaseManager
 
         }
 
-        private Version GetDBVersion(SqlConnection conn)
+        private Version GetDBVersion(NpgsqlConnection conn)
         {
             DataTable versionTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT [Version_Id], [Cset_Version] FROM [CSET_VERSION]", conn);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter("SELECT [Version_Id], [Cset_Version] FROM [CSET_VERSION]", conn);
             adapter.Fill(versionTable);
 
             var version = new Version(versionTable.Rows[0]["Cset_Version"].ToString());
