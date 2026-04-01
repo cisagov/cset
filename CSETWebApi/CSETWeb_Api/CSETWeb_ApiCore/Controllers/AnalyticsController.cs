@@ -14,9 +14,10 @@ using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -96,52 +97,45 @@ namespace CSETWebCore.Api.Controllers
             var dtTargetAssessment = new DataTable();
             var SampleSize = new DataTable();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("analytics_setup_maturity_groupings", connection))
+                using (NpgsqlCommand command = new NpgsqlCommand("CALL analytics_setup_maturity_groupings()", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
                     command.ExecuteNonQuery();
                 }
 
 
-                using (SqlCommand command = new SqlCommand("FillAll", connection))
+                using (NpgsqlCommand command = new NpgsqlCommand("CALL FillAll(@assessment_id)", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
                     // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
+                    command.Parameters.Add(new NpgsqlParameter("@assessment_id", assessmentId));
                     command.ExecuteNonQuery();
                 }
 
 
-                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
+                using (NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM analytics_Compute_MaturityAll(@maturity_model_id, @sector_id, NULL)", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
                     // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-                    //command.Parameters.Add(new SqlParameter("@industry_id", industryId));
+                    command.Parameters.Add(new NpgsqlParameter("@maturity_model_id", modelId));
+                    command.Parameters.Add(new NpgsqlParameter("@sector_id", (object)sectorId ?? DBNull.Value));
+                    //command.Parameters.Add(new NpgsqlParameter("@industry_id", industryId));
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         dtPool.Load(reader);
                     }
                 }
 
 
-                using (SqlCommand command = new SqlCommand("analytics_compute_single_averages_maturity", connection))
+                using (NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM analytics_compute_single_averages_maturity(@assessment_id, @maturity_model_id)", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
                     // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
+                    command.Parameters.Add(new NpgsqlParameter("@assessment_id", assessmentId));
+                    command.Parameters.Add(new NpgsqlParameter("@maturity_model_id", modelId));
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         dtTargetAssessment.Load(reader);
                     }
