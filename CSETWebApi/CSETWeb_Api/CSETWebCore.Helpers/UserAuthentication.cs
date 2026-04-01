@@ -419,7 +419,7 @@ namespace CSETWebCore.Helpers
             var email = user.FindFirstValue("email") ?? user.FindFirstValue(ClaimTypes.Email)
                 ?? throw new InvalidOperationException("Email claim not found in token.");
 
-           
+
 
             // Locate the CSET user record via the email claim
             var dbUser = _context.USERS.FirstOrDefault(x => x.PrimaryEmail == email);
@@ -431,18 +431,20 @@ namespace CSETWebCore.Helpers
                 var givenName = user.FindFirstValue(ClaimTypes.GivenName);
                 var surname = user.FindFirstValue(ClaimTypes.Surname);
 
-                dbUser = new USERS { 
-                    PrimaryEmail = email, 
-                    FirstName = givenName, 
-                    LastName = surname 
+                dbUser = new USERS
+                {
+                    PrimaryEmail = email,
+                    FirstName = givenName,
+                    LastName = surname
                 };
                 _context.USERS.Add(dbUser);
                 _context.SaveChanges();
 
 
-                var dbUserRole = new USER_ROLES { 
-                    RoleId = Constants.Constants.UserRoleUser, 
-                    UserId = dbUser.UserId 
+                var dbUserRole = new USER_ROLES
+                {
+                    RoleId = Constants.Constants.UserRoleUser,
+                    UserId = dbUser.UserId
                 };
                 _context.USER_ROLES.Add(dbUserRole);
                 _context.SaveChanges();

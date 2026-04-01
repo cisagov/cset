@@ -390,7 +390,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (newRequirements.Count > 0)
             {
-                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_REQUIREMENT', RESEED)");
+                _context.Database.ExecuteSqlRaw("SELECT setval(pg_get_serial_sequence('\"NEW_REQUIREMENT\"', 'Requirement_Id'), COALESCE((SELECT MAX(\"Requirement_Id\") FROM \"NEW_REQUIREMENT\"), 0))");
                 _context.NEW_REQUIREMENT.AddRange(newRequirements);
                 _context.SaveChanges();
             }
@@ -531,7 +531,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (questionSetsToAdd.Count > 0)
             {
-                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
+                _context.Database.ExecuteSqlRaw("SELECT setval(pg_get_serial_sequence('\"NEW_QUESTION_SETS\"', 'New_Question_Set_Id'), COALESCE((SELECT MAX(\"New_Question_Set_Id\") FROM \"NEW_QUESTION_SETS\"), 0))");
                 _context.NEW_QUESTION_SETS.AddRange(questionSetsToAdd);
                 _context.SaveChanges();
             }
@@ -1050,7 +1050,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Set_Name = request.SetName
                 };
 
-                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
+                _context.Database.ExecuteSqlRaw("SELECT setval(pg_get_serial_sequence('\"NEW_QUESTION_SETS\"', 'New_Question_Set_Id'), COALESCE((SELECT MAX(\"New_Question_Set_Id\") FROM \"NEW_QUESTION_SETS\"), 0))");
                 _context.NEW_QUESTION_SETS.Add(nqs);
                 _context.SaveChanges();
 
@@ -1115,7 +1115,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Set_Name = request.SetName
                 };
 
-                _context.Database.ExecuteSqlRaw("DBCC CHECKIDENT('NEW_QUESTION_SETS', RESEED)");
+                _context.Database.ExecuteSqlRaw("SELECT setval(pg_get_serial_sequence('\"NEW_QUESTION_SETS\"', 'New_Question_Set_Id'), COALESCE((SELECT MAX(\"New_Question_Set_Id\") FROM \"NEW_QUESTION_SETS\"), 0))");
                 _context.NEW_QUESTION_SETS.Add(existingNqs);
                 _context.SaveChanges();
             }

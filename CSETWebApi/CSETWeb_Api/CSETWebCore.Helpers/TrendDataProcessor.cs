@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
-using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Snickler.EFCore;
+using Npgsql;
 
 namespace CSETWebCore.Helpers
 {
     public class TrendDataProcessor : ITrendDataProcessor
     {
         private const int MaxRetries = 3;
-        private const int DeadlockErrorCode = 1205;
+        private const string DeadlockSqlState = "40P01";
 
         private readonly ILogger<TrendDataProcessor> _logger;
 
@@ -37,19 +37,15 @@ namespace CSETWebCore.Helpers
             {
                 try
                 {
-                    var results = new List<usp_GetTop5Areas_result>();
-                    db.LoadStoredProc("[usp_GetTop5Areas]")
-                        .WithSqlParam("aggregation_id", aggregationID)
-                        .ExecuteStoredProc(handler =>
-                        {
-                            results = handler.ReadToList<usp_GetTop5Areas_result>().ToList();
-                        });
+                    var results = db.Database.SqlQueryRaw<usp_GetTop5Areas_result>(
+                        "SELECT * FROM usp_GetTop5Areas(@aggregation_id)",
+                        new NpgsqlParameter("aggregation_id", aggregationID)).ToList();
 
                     BuildChartData(results, response, type);
 
                     return; // success
                 }
-                catch (SqlException ex) when (ex.Number == DeadlockErrorCode)
+                catch (NpgsqlException ex) when (ex.SqlState == DeadlockSqlState)
                 {
                     attempt++;
                     _logger.LogWarning(

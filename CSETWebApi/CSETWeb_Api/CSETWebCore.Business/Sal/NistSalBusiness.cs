@@ -7,7 +7,7 @@
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -45,36 +45,17 @@ namespace CSETWebCore.Business.Sal
         internal void CreateInitialList(object assessmentId)
         {
             string sql =
-            "if exists(select * from STANDARD_SELECTION where Assessment_Id = @id) and not exists(select * from NIST_SAL_INFO_TYPES where assessment_id = @id)  " +
-            "begin " +
-            "INSERT INTO [NIST_SAL_INFO_TYPES] " +
-            "           ([Assessment_Id] " +
-            "           ,[Type_Value] " +
-            "           ,[Selected] " +
-            "           ,[Confidentiality_Value] " +
-            "           ,[Confidentiality_Special_Factor] " +
-            "           ,[Integrity_Value] " +
-            "           ,[Integrity_Special_Factor] " +
-            "           ,[Availability_Value] " +
-            "           ,[Availability_Special_Factor] " +
-            "           ,[Area] " +
-            "           ,[NIST_Number]) " +
-            "select [assessment_id] =@id " +
-            "      ,[Type_Value]    " +
-            "	  ,[Selected] = 0    " +
-            "      ,[Confidentiality_Value] " +
-            "      ,[Confidentiality_Special_Factor] " +
-            "      ,[Integrity_Value] " +
-            "      ,[Integrity_Special_Factor] " +
-            "      ,[Availability_Value] " +
-            "      ,[Availability_Special_Factor] " +
-            "      ,[Area] " +
-            "      ,[NIST_Number] " +
-            "	   from NIST_SAL_INFO_TYPES_DEFAULTS " +
-            "end  ";
+            "INSERT INTO NIST_SAL_INFO_TYPES " +
+            "    (Assessment_Id, Type_Value, Selected, Confidentiality_Value, Confidentiality_Special_Factor, " +
+            "     Integrity_Value, Integrity_Special_Factor, Availability_Value, Availability_Special_Factor, Area, NIST_Number) " +
+            "SELECT @id, Type_Value, 0, Confidentiality_Value, Confidentiality_Special_Factor, " +
+            "       Integrity_Value, Integrity_Special_Factor, Availability_Value, Availability_Special_Factor, Area, NIST_Number " +
+            "FROM NIST_SAL_INFO_TYPES_DEFAULTS " +
+            "WHERE EXISTS (SELECT 1 FROM STANDARD_SELECTION WHERE Assessment_Id = @id) " +
+            "  AND NOT EXISTS (SELECT 1 FROM NIST_SAL_INFO_TYPES WHERE assessment_id = @id)";
 
             _context.Database.ExecuteSqlRaw(sql,
-                new SqlParameter("@Id", assessmentId));
+                new NpgsqlParameter("@id", assessmentId));
         }
 
 

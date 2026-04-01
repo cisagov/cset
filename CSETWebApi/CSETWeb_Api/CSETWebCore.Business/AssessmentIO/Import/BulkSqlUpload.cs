@@ -1,15 +1,15 @@
-//////////////////////////////// 
-// 
-//   Copyright 2026 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Linq;
+using Npgsql;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -36,33 +36,18 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
         public void BulkInsert(DataTable dt)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using var connection = new NpgsqlConnection(ConnectionString);
+            connection.Open();
+            var cols = string.Join(",", dt.Columns.Cast<DataColumn>().Select(c => $"\"{c.ColumnName}\""));
+            var copyCommand = $"COPY \"{TableName}\" ({cols}) FROM STDIN (FORMAT BINARY)";
+            using var writer = connection.BeginBinaryImport(copyCommand);
+            foreach (DataRow row in dt.Rows)
             {
-                // make sure to enable triggers
-                // more on triggers in next post
-                SqlBulkCopy bulkCopy =
-                    new SqlBulkCopy
-                    (
-                    connection,
-                    SqlBulkCopyOptions.TableLock |
-                    SqlBulkCopyOptions.FireTriggers |
-                    SqlBulkCopyOptions.UseInternalTransaction,
-                    null
-                    );
-                //bulkCopy.ColumnMappings.Clear();
-                foreach (DataColumn col in dt.Columns)
-                {
-                    //if (!col.ColumnName.Equals("Answer_Id"))
-                    bulkCopy.ColumnMappings.Add(col.ColumnName, col.ColumnName);
-                }
-                // set the destination table name
-                bulkCopy.DestinationTableName = TableName;
-                connection.Open();
-
-                // write the data in the "dataTable"
-                bulkCopy.WriteToServer(dt);
-                connection.Close();
+                writer.StartRow();
+                foreach (var item in row.ItemArray)
+                    writer.Write(item == DBNull.Value ? DBNull.Value : item);
             }
+            writer.Complete();
         }
     }
 
@@ -86,4 +71,3 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         }
     }
 }
-

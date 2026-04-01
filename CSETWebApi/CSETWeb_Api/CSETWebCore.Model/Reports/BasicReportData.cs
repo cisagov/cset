@@ -12,7 +12,8 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
-using Snickler.EFCore;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace CSETWebCore.Business.Reports
 {
@@ -245,12 +246,9 @@ namespace CSETWebCore.Business.Reports
         {
             List<RelevantAnswers> answers = new List<RelevantAnswers>();
 
-            context.LoadStoredProc("[RelevantAnswers]")
-                .WithSqlParam("assessment_id", assessmentID)
-                .ExecuteStoredProc((handler) =>
-                {
-                    answers = handler.ReadToList<RelevantAnswers>().ToList();
-                });
+            answers = context.Database.SqlQueryRaw<RelevantAnswers>(
+                "SELECT * FROM RelevantAnswers(@assessment_id)",
+                new NpgsqlParameter("assessment_id", assessmentID)).ToList();
 
             return answers;
         }
