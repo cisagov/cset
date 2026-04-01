@@ -14,7 +14,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
-using Snickler.EFCore;
+using Npgsql;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Results;
@@ -682,30 +682,27 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetComparisonBestToWorst]")
-                        .WithSqlParam("assessment_id", a.Assessment_Id)
-                        .ExecuteStoredProc((handler) =>
-                        {
-                            var result = handler.ReadToList<GetComparisonBestToWorst>();
-                            foreach (var r in result)
-                            {
-                                r.AssessmentName = a.Alias;
+                var bestToWorst = _context.Database.SqlQueryRaw<GetComparisonBestToWorst>(
+                        "SELECT * FROM GetComparisonBestToWorst(@assessment_id)",
+                        new NpgsqlParameter("assessment_id", a.Assessment_Id)).ToList();
+                foreach (var r in bestToWorst)
+                {
+                    r.AssessmentName = a.Alias;
 
-                                // tweak - make sure that rounding didn't end up with more than 100%
-                                var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
-                                if (realAnswerPct + r.UnansweredValue > 100f)
-                                {
-                                    r.UnansweredValue = 100f - realAnswerPct;
-                                }
+                    // tweak - make sure that rounding didn't end up with more than 100%
+                    var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
+                    if (realAnswerPct + r.UnansweredValue > 100f)
+                    {
+                        r.UnansweredValue = 100f - realAnswerPct;
+                    }
 
 
-                                if (!dict.ContainsKey(r.Name))
-                                {
-                                    dict[r.Name] = new List<GetComparisonBestToWorst>();
-                                }
-                                dict[r.Name].Add(r);
-                            }
-                        });
+                    if (!dict.ContainsKey(r.Name))
+                    {
+                        dict[r.Name] = new List<GetComparisonBestToWorst>();
+                    }
+                    dict[r.Name].Add(r);
+                }
             }
 
             // repackage the data 
@@ -768,53 +765,49 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetAnswerCountsForGroupings]")
-                        .WithSqlParam("assessmentid", a.Assessment_Id)
-                        .ExecuteStoredProc((handler) =>
-                        {
-                            var result = handler.ReadToList<Proc_AnswerCounts>();
-
-                            foreach (var r in result)
-                            {
-                                var groupingTotal = result.Where(x => x.Grouping_Id == r.Grouping_Id).Select(x => x.AnsCount).ToList().Sum();
+                var answerCounts = _context.Database.SqlQueryRaw<Proc_AnswerCounts>(
+                        "SELECT * FROM GetAnswerCountsForGroupings(@assessmentid)",
+                        new NpgsqlParameter("assessmentid", a.Assessment_Id)).ToList();
+                foreach (var r in answerCounts)
+                {
+                    var groupingTotal = answerCounts.Where(x => x.Grouping_Id == r.Grouping_Id).Select(x => x.AnsCount).ToList().Sum();
 
 
-                                var percent = 0.0;
-                                if (groupingTotal > 0)
-                                {
-                                    percent = ((double)r.AnsCount / (double)groupingTotal) * 100.0;
-                                }
+                    var percent = 0.0;
+                    if (groupingTotal > 0)
+                    {
+                        percent = ((double)r.AnsCount / (double)groupingTotal) * 100.0;
+                    }
 
 
 
-                                // Create a home for the grouping, if it doesn't exist yet
-                                var g = response.Groupings.FirstOrDefault(x => x.GroupingId == r.Grouping_Id);
-                                if (g == null)
-                                {
-                                    g = new Grouping() { GroupingId = r.Grouping_Id, Title = r.Title };
-                                    response.Groupings.Add(g);
-                                }
+                    // Create a home for the grouping, if it doesn't exist yet
+                    var g = response.Groupings.FirstOrDefault(x => x.GroupingId == r.Grouping_Id);
+                    if (g == null)
+                    {
+                        g = new Grouping() { GroupingId = r.Grouping_Id, Title = r.Title };
+                        response.Groupings.Add(g);
+                    }
 
 
-                                var aa = g.Assessments.FirstOrDefault(x => x.AssessmentId == a.Assessment_Id);
-                                if (aa == null)
-                                {
-                                    aa = new AssessmentAlias() { Alias = a.Alias, AssessmentId = a.Assessment_Id };
-                                    g.Assessments.Add(aa);
-                                }
+                    var aa = g.Assessments.FirstOrDefault(x => x.AssessmentId == a.Assessment_Id);
+                    if (aa == null)
+                    {
+                        aa = new AssessmentAlias() { Alias = a.Alias, AssessmentId = a.Assessment_Id };
+                        g.Assessments.Add(aa);
+                    }
 
-                                // Add a new answer percentage object and keep the list sorted by answer order
-                                var ap = new AnswerPercentage()
-                                {
-                                    AnswerText = r.Answer_Text,
-                                    AnswerIndex = answerOptions.IndexOf(r.Answer_Text),
-                                    Percent = percent
-                                };
-                                aa.Percentages.Add(ap);
+                    // Add a new answer percentage object and keep the list sorted by answer order
+                    var ap = new AnswerPercentage()
+                    {
+                        AnswerText = r.Answer_Text,
+                        AnswerIndex = answerOptions.IndexOf(r.Answer_Text),
+                        Percent = percent
+                    };
+                    aa.Percentages.Add(ap);
 
-                                aa.Percentages.Sort((x, y) => x.AnswerIndex.CompareTo(y.AnswerIndex));
-                            }
-                        });
+                    aa.Percentages.Sort((x, y) => x.AnswerIndex.CompareTo(y.AnswerIndex));
+                }
             }
 
             return Ok(response);

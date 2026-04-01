@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Constructor.
         /// </summary>
-        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager, 
+        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager,
             ILocalInstallationHelper localInstallationHelper, IConfiguration configuration)
         {
             _userAuthentication = userAuthentication;

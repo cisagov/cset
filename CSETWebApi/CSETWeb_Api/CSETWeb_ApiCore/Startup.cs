@@ -121,7 +121,7 @@ namespace CSETWeb_ApiCore
                 });
             });
 
-           
+
 
             var authBuilder = services.AddAuthentication(options =>
             {
@@ -178,7 +178,7 @@ namespace CSETWeb_ApiCore
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("CSET_DB")));
+                options => options.UseNpgsql(Configuration.GetConnectionString("CSET_DB")));
 
             //Services
             services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();

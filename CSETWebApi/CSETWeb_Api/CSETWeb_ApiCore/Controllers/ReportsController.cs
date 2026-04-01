@@ -20,8 +20,8 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -503,7 +503,7 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(data);
             }
-            catch (SqlException ex) when (ex.Number == -2) // SQL Server timeout
+            catch (NpgsqlException ex) when (ex.SqlState == "57014") // query_canceled (statement timeout)
             {
                 stopwatch.Stop();
                 return StatusCode(504, new
@@ -567,7 +567,7 @@ namespace CSETWebCore.Api.Controllers
                     );
                 }
             }
-            catch (SqlException ex) when (ex.Number == -2) // SQL Server timeout
+            catch (NpgsqlException ex) when (ex.SqlState == "57014") // query_canceled (statement timeout)
             {
                 stopwatch.Stop();
                 return StatusCode(504, new
