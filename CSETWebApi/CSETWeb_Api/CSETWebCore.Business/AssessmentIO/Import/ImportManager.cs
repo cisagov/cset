@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using ICSharpCode.SharpZipLib.Zip;
 using CSETWebCore.Business.Question;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using Microsoft.Extensions.Configuration;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
@@ -258,15 +258,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             //Fill diagram questions for percentage completion 
                             string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
 
-                            using (SqlConnection connection = new SqlConnection(connectionString))
+                            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                             {
                                 connection.Open();
 
-                                using (SqlCommand command = new SqlCommand("FillNetworkDiagramQuestions", connection))
+                                using (NpgsqlCommand command = new NpgsqlCommand("CALL FillNetworkDiagramQuestions(@assessment_id)", connection))
                                 {
-                                    command.CommandType = CommandType.StoredProcedure;
                                     // Add input parameter
-                                    command.Parameters.Add(new SqlParameter("@assessment_id", newAssessmentId));
+                                    command.Parameters.Add(new NpgsqlParameter("@assessment_id", newAssessmentId));
                                     command.ExecuteNonQuery();
                                 }
                             }

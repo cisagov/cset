@@ -8,7 +8,6 @@ using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Set;
-using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.GalleryParser;
 

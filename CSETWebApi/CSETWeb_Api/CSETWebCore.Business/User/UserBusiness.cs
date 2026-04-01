@@ -76,10 +76,10 @@ namespace CSETWebCore.Business.User
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
-                Microsoft.Data.SqlClient.SqlException sqlException = (Microsoft.Data.SqlClient.SqlException)ex.InnerException;
-                if (sqlException.Number != 2627)
+                Npgsql.NpgsqlException sqlException = ex.InnerException as Npgsql.NpgsqlException;
+                if (sqlException == null || sqlException.SqlState != "23505")
                 {
-                    NLog.LogManager.GetCurrentClassLogger().Error($"Exception thrown in UserBusiness.  sqlExceptionNumber = {sqlException.Number}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"Exception thrown in UserBusiness.  sqlState = {sqlException?.SqlState}");
 
                     throw;
                 }

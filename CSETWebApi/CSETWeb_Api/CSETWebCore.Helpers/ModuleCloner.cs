@@ -284,13 +284,13 @@ namespace CSETWebCore.Helpers
             {
                 // get the max used ID and seed to it
                 // using SqlQueryRaw() here - make sure no user-supplied values are in the string-formatted query
-                string sql = $"SELECT ISNULL(MAX({identityColumnName}), 1000000) as [Value] FROM {tableName} WHERE {identityColumnName} >= 1000000";
+                string sql = $"SELECT COALESCE(MAX(\"{identityColumnName}\"), 1000000) AS \"Value\" FROM \"{tableName}\" WHERE \"{identityColumnName}\" >= 1000000";
                 newSeed = _context.Database.SqlQueryRaw<int>(sql).First();
             }
             else
             {
                 // We want to reseed before the next available
-                newSeed = gaps.FirstOrDefault().GapStart - 1; 
+                newSeed = gaps.FirstOrDefault().GapStart - 1;
             }
 
             NLog.LogManager.GetCurrentClassLogger().Info($"Calculated new seed value of {newSeed} for table {tableName}");
@@ -316,13 +316,9 @@ namespace CSETWebCore.Helpers
                 throw new ArgumentException("Invalid column name", nameof(identityColumnName));
             }
 
-            // Reseed multiple times for stubborn cases
-            // Table name is validated above with regex, so it's safe to use in the SQL string.
-            // The seedValue is passed as a parameter to prevent SQL injection.
-            var sql = string.Format("DBCC CHECKIDENT ('{0}', RESEED, {{0}})", tableName);
-#pragma warning disable EF1002 // Table name validated with regex above
-            _context.Database.ExecuteSqlRaw(sql, seedValue);
-            _context.Database.ExecuteSqlRaw(sql, seedValue);
+            // Reseed the sequence. Table name and column name are validated above with regex.
+            var sql = string.Format("SELECT setval(pg_get_serial_sequence('\"{0}\"', '{1}'), {{0}})", tableName, identityColumnName);
+#pragma warning disable EF1002 // Table name and column name validated with regex above
             _context.Database.ExecuteSqlRaw(sql, seedValue);
 #pragma warning restore EF1002
 

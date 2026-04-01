@@ -48,7 +48,7 @@ namespace DuplicateAssessments
             // Setup services
             var services = new ServiceCollection();
             services.AddDbContext<CSETContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<Hooks>();
 
             //var optionsBuilder = new DbContextOptionsBuilder<CsetwebContext>();

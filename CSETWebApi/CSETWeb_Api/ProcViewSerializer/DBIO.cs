@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using Npgsql;
 
 namespace ProcViewSerializer
 {
@@ -27,17 +27,17 @@ namespace ProcViewSerializer
         {
             var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter())
+                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter())
                 {
-                    adapter.SelectCommand = new SqlCommand(sql, conn);
+                    adapter.SelectCommand = new NpgsqlCommand(sql, conn);
 
                     if (parms != null)
                     {
                         foreach (var parm in parms)
                         {
-                            adapter.SelectCommand.Parameters.Add(new SqlParameter
+                            adapter.SelectCommand.Parameters.Add(new NpgsqlParameter
                             {
                                 ParameterName = parm.Key,
                                 Value = parm.Value
@@ -65,13 +65,13 @@ namespace ProcViewSerializer
 
             var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = conn.CreateCommand();
+                NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.CommandText += "; select SCOPE_IDENTITY();";
+                cmd.CommandText += "; select LASTVAL();";
 
                 cmd.Transaction = conn.BeginTransaction();
 
@@ -79,7 +79,7 @@ namespace ProcViewSerializer
                 {
                     foreach (var key in parms.Keys)
                     {
-                        SqlParameter parm = new SqlParameter(key, parms[key]);
+                        NpgsqlParameter parm = new NpgsqlParameter(key, parms[key]);
 
                         if (parm.Value == null)
                         {
@@ -116,20 +116,20 @@ namespace ProcViewSerializer
         {
             var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(procName, conn);
+                NpgsqlCommand cmd = new NpgsqlCommand(procName, conn);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
                 adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 if (parms != null)
                 {
                     foreach (var parm in parms)
                     {
-                        adapter.SelectCommand.Parameters.Add(new SqlParameter
+                        adapter.SelectCommand.Parameters.Add(new NpgsqlParameter
                         {
                             ParameterName = parm.Key,
                             Value = parm.Value
@@ -153,7 +153,7 @@ namespace ProcViewSerializer
         {
             var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
                 DataTable metaDataTable = conn.GetSchema("Columns");

@@ -80,21 +80,21 @@ namespace CSETWebCore.Business.Question
             // Get component defaults using scoped SQL to avoid cross-assessment view scan
             FormattableString defaultSql = $"""
                 SELECT
-                    ISNULL(CONVERT(int, ROW_NUMBER() OVER (ORDER BY q.Question_id)), 0) AS UniqueKey,
+                    COALESCE(ROW_NUMBER() OVER (ORDER BY q.Question_id), 0)::int AS UniqueKey,
                     a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text,
-                    CONVERT(nvarchar(1000), a.Comment) AS Comment,
-                    CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification,
+                    a.Comment::varchar(1000) AS Comment,
+                    a.Alternate_Justification::varchar(1000) AS Alternate_Justification,
                     a.Question_Number, q.Simple_Question AS QuestionText,
                     h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
                     h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
                     a.FeedBack, a.Is_Component, a.Component_Guid,
-                    dbo.convert_sal(ss.Selected_Sal_Level) AS SAL,
+                    convert_sal(ss.Selected_Sal_Level) AS SAL,
                     a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,
                     q.heading_pair_id, h.Sub_Heading_Question_Description,
                     q.Simple_Question, a.Reviewed,
-                    CAST(NULL AS nvarchar) AS label,
-                    CAST(NULL AS nvarchar) AS ComponentName,
-                    CAST(NULL AS nvarchar) AS Symbol_Name,
+                    NULL::varchar AS label,
+                    NULL::varchar AS ComponentName,
+                    NULL::varchar AS Symbol_Name,
                     0 AS Component_Symbol_id
                 FROM STANDARD_SELECTION ss
                 JOIN (
@@ -107,7 +107,7 @@ namespace CSETWebCore.Business.Question
                     JOIN DIAGRAM_CONTAINER l ON adc.Layer_id = l.Container_Id
                     LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
                     JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
-                        AND nql.Universal_Sal_Level = dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                        AND nql.Universal_Sal_Level = convert_sal(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level))
                     WHERE l.visible = 1 AND adc.Assessment_Id = {assessmentId}
                 ) AS f ON ss.assessment_id = f.assessment_id
                 JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
@@ -204,21 +204,21 @@ namespace CSETWebCore.Business.Question
             // Get component defaults using scoped SQL to avoid cross-assessment view scan
             FormattableString defaultSql = $"""
                 SELECT
-                    ISNULL(CONVERT(int, ROW_NUMBER() OVER (ORDER BY q.Question_id)), 0) AS UniqueKey,
+                    COALESCE(ROW_NUMBER() OVER (ORDER BY q.Question_id), 0)::int AS UniqueKey,
                     a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text,
-                    CONVERT(nvarchar(1000), a.Comment) AS Comment,
-                    CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification,
+                    a.Comment::varchar(1000) AS Comment,
+                    a.Alternate_Justification::varchar(1000) AS Alternate_Justification,
                     a.Question_Number, q.Simple_Question AS QuestionText,
                     h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
                     h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
                     a.FeedBack, a.Is_Component, a.Component_Guid,
-                    dbo.convert_sal(ss.Selected_Sal_Level) AS SAL,
+                    convert_sal(ss.Selected_Sal_Level) AS SAL,
                     a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,
                     q.heading_pair_id, h.Sub_Heading_Question_Description,
                     q.Simple_Question, a.Reviewed,
-                    CAST(NULL AS nvarchar) AS label,
-                    CAST(NULL AS nvarchar) AS ComponentName,
-                    CAST(NULL AS nvarchar) AS Symbol_Name,
+                    NULL::varchar AS label,
+                    NULL::varchar AS ComponentName,
+                    NULL::varchar AS Symbol_Name,
                     0 AS Component_Symbol_id
                 FROM STANDARD_SELECTION ss
                 JOIN (
@@ -231,7 +231,7 @@ namespace CSETWebCore.Business.Question
                     JOIN DIAGRAM_CONTAINER l ON adc.Layer_id = l.Container_Id
                     LEFT JOIN DIAGRAM_CONTAINER z ON adc.Zone_Id = z.Container_Id
                     JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
-                        AND nql.Universal_Sal_Level = dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                        AND nql.Universal_Sal_Level = convert_sal(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level))
                     WHERE l.visible = 1 AND adc.Assessment_Id = {assessmentId}
                 ) AS f ON ss.assessment_id = f.assessment_id
                 JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
@@ -445,33 +445,33 @@ namespace CSETWebCore.Business.Question
             // Get component overrides using scoped SQL to avoid cross-assessment view scan
             FormattableString overrideSql = $"""
                 SELECT
-                    CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) AS UniqueKey,
+                    ROW_NUMBER() OVER (ORDER BY a.Question_id)::varchar(100) AS UniqueKey,
                     a.Assessment_Id, b.Answer_Id, a.Question_Id,
-                    ISNULL(b.Answer_Text, c.Answer_Text) AS Answer_Text,
-                    CONVERT(nvarchar(1000), b.Comment) AS Comment,
-                    CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification,
+                    COALESCE(b.Answer_Text, c.Answer_Text) AS Answer_Text,
+                    b.Comment::varchar(1000) AS Comment,
+                    b.Alternate_Justification::varchar(1000) AS Alternate_Justification,
                     b.FeedBack, b.Question_Number, a.Simple_Question AS QuestionText,
                     a.label AS ComponentName, a.Symbol_Name,
                     a.Question_Group_Heading, a.GroupHeadingId,
                     a.Universal_Sub_Category, a.SubCategoryId,
-                    ISNULL(b.Is_Component, 1) AS Is_Component, a.Component_Guid,
+                    COALESCE(b.Is_Component, true) AS Is_Component, a.Component_Guid,
                     a.Layer_Id, a.LayerName, a.Container_Id, a.ZoneName,
-                    dbo.convert_sal(a.SAL) AS SAL,
+                    convert_sal(a.SAL) AS SAL,
                     b.Mark_For_Review,
-                    CAST(0 AS bit) AS Is_Requirement,
-                    CAST(0 AS bit) AS Is_Framework,
+                    false AS Is_Requirement,
+                    false AS Is_Framework,
                     b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description,
                     a.heading_pair_id, a.label, a.Component_Symbol_Id
                 FROM (
                     SELECT
-                        CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) AS UniqueKey,
+                        ROW_NUMBER() OVER (ORDER BY q.Question_id)::varchar(100) AS UniqueKey,
                         adc.Assessment_Id, q.Question_Id, q.Simple_Question,
                         adc.label, adc.Component_Symbol_Id,
                         h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
                         h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
                         adc.Component_Guid, adc.Layer_Id, l.Name AS LayerName, z.Container_Id,
                         z.Name AS ZoneName,
-                        dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
+                        convert_sal(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
                         h.Sub_Heading_Question_Description, h.Heading_Pair_Id, cs.Symbol_Name
                     FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
                     JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
@@ -486,7 +486,7 @@ namespace CSETWebCore.Business.Question
                         JOIN NEW_QUESTION_LEVELS nql ON s.New_Question_Set_Id = nql.New_Question_Set_Id
                         WHERE set_name = 'Components'
                     ) s ON q.Question_Id = s.Question_Id
-                        AND s.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                        AND s.Universal_Sal_Level = convert_sal_short(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level))
                     LEFT JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
                     LEFT JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
                     WHERE l.Visible = 1 AND adc.Assessment_Id = {assessmentId}
@@ -504,7 +504,7 @@ namespace CSETWebCore.Business.Question
                         JOIN new_question nq ON q.question_id = nq.question_id
                         JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
                         JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
-                            AND nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)
+                            AND nql.Universal_Sal_Level = convert_sal(ss.Selected_Sal_Level)
                         WHERE adc.Assessment_Id = {assessmentId}
                     ) f
                     JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id
@@ -569,33 +569,33 @@ namespace CSETWebCore.Business.Question
             // Get component overrides using scoped SQL to avoid cross-assessment view scan
             FormattableString overrideSql = $"""
                 SELECT
-                    CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) AS UniqueKey,
+                    ROW_NUMBER() OVER (ORDER BY a.Question_id)::varchar(100) AS UniqueKey,
                     a.Assessment_Id, b.Answer_Id, a.Question_Id,
-                    ISNULL(b.Answer_Text, c.Answer_Text) AS Answer_Text,
-                    CONVERT(nvarchar(1000), b.Comment) AS Comment,
-                    CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification,
+                    COALESCE(b.Answer_Text, c.Answer_Text) AS Answer_Text,
+                    b.Comment::varchar(1000) AS Comment,
+                    b.Alternate_Justification::varchar(1000) AS Alternate_Justification,
                     b.FeedBack, b.Question_Number, a.Simple_Question AS QuestionText,
                     a.label AS ComponentName, a.Symbol_Name,
                     a.Question_Group_Heading, a.GroupHeadingId,
                     a.Universal_Sub_Category, a.SubCategoryId,
-                    ISNULL(b.Is_Component, 1) AS Is_Component, a.Component_Guid,
+                    COALESCE(b.Is_Component, true) AS Is_Component, a.Component_Guid,
                     a.Layer_Id, a.LayerName, a.Container_Id, a.ZoneName,
-                    dbo.convert_sal(a.SAL) AS SAL,
+                    convert_sal(a.SAL) AS SAL,
                     b.Mark_For_Review,
-                    CAST(0 AS bit) AS Is_Requirement,
-                    CAST(0 AS bit) AS Is_Framework,
+                    false AS Is_Requirement,
+                    false AS Is_Framework,
                     b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description,
                     a.heading_pair_id, a.label, a.Component_Symbol_Id
                 FROM (
                     SELECT
-                        CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) AS UniqueKey,
+                        ROW_NUMBER() OVER (ORDER BY q.Question_id)::varchar(100) AS UniqueKey,
                         adc.Assessment_Id, q.Question_Id, q.Simple_Question,
                         adc.label, adc.Component_Symbol_Id,
                         h.Question_Group_Heading, usch.Question_Group_Heading_Id AS GroupHeadingId,
                         h.Universal_Sub_Category, usch.Universal_Sub_Category_Id AS SubCategoryId,
                         adc.Component_Guid, adc.Layer_Id, l.Name AS LayerName, z.Container_Id,
                         z.Name AS ZoneName,
-                        dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
+                        convert_sal(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
                         h.Sub_Heading_Question_Description, h.Heading_Pair_Id, cs.Symbol_Name
                     FROM ASSESSMENT_DIAGRAM_COMPONENTS adc
                     JOIN STANDARD_SELECTION ss ON adc.Assessment_Id = ss.Assessment_Id
@@ -610,7 +610,7 @@ namespace CSETWebCore.Business.Question
                         JOIN NEW_QUESTION_LEVELS nql ON s.New_Question_Set_Id = nql.New_Question_Set_Id
                         WHERE set_name = 'Components'
                     ) s ON q.Question_Id = s.Question_Id
-                        AND s.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
+                        AND s.Universal_Sal_Level = convert_sal_short(COALESCE(z.Universal_Sal_Level, ss.Selected_Sal_Level))
                     LEFT JOIN vQUESTION_HEADINGS h ON q.Heading_Pair_Id = h.Heading_Pair_Id
                     LEFT JOIN UNIVERSAL_SUB_CATEGORY_HEADINGS usch ON usch.Heading_Pair_Id = h.Heading_Pair_Id
                     WHERE l.Visible = 1 AND adc.Assessment_Id = {assessmentId}
@@ -628,7 +628,7 @@ namespace CSETWebCore.Business.Question
                         JOIN new_question nq ON q.question_id = nq.question_id
                         JOIN new_question_sets qs ON nq.question_id = qs.question_id AND qs.Set_Name = 'Components'
                         JOIN NEW_QUESTION_LEVELS nql ON qs.New_Question_Set_Id = nql.New_Question_Set_Id
-                            AND nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)
+                            AND nql.Universal_Sal_Level = convert_sal(ss.Selected_Sal_Level)
                         WHERE adc.Assessment_Id = {assessmentId}
                     ) f
                     JOIN NEW_QUESTION q ON f.Question_Id = q.Question_Id

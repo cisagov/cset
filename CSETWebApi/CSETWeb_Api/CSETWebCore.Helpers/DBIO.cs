@@ -1,13 +1,15 @@
-﻿//////////////////////////////// 
-// 
-//   Copyright 2026 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
+////////////////////////////////
+//
+//   Copyright 2026 Battelle Energy Alliance, LLC
+//
+//
+////////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;
+using System.Linq;
+using Npgsql;
+using NpgsqlTypes;
 using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
@@ -20,7 +22,7 @@ namespace CSETWebCore.Helpers
         private readonly CSETContext _context;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="context"></param>
         public DBIO(CSETContext context)
@@ -39,17 +41,17 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter())
+                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter())
                 {
-                    adapter.SelectCommand = new SqlCommand(sql, conn);
+                    adapter.SelectCommand = new NpgsqlCommand(sql, conn);
 
                     if (parms != null)
                     {
                         foreach (var parm in parms)
                         {
-                            adapter.SelectCommand.Parameters.Add(new SqlParameter
+                            adapter.SelectCommand.Parameters.Add(new NpgsqlParameter
                             {
                                 ParameterName = parm.Key,
                                 Value = parm.Value
@@ -69,18 +71,19 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection connection = new SqlConnection(connStr))
+            using (NpgsqlConnection connection = new NpgsqlConnection(connStr))
             {
-                var transaction = connection.BeginTransaction();
-                SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.TableLock | SqlBulkCopyOptions.FireTriggers | SqlBulkCopyOptions.UseInternalTransaction
-                    , transaction);
-
-                // set the destination table name
-                bulkCopy.DestinationTableName = tableName;
                 connection.Open();
-                // write the data in the "dataTable"
-                bulkCopy.WriteToServer(dataTable);
-                connection.Close();
+                var cols = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => $"\"{c.ColumnName}\""));
+                var copyCommand = $"COPY \"{tableName}\" ({cols}) FROM STDIN (FORMAT BINARY)";
+                using var writer = connection.BeginBinaryImport(copyCommand);
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    writer.StartRow();
+                    foreach (var item in row.ItemArray)
+                        writer.Write(item == DBNull.Value ? DBNull.Value : item);
+                }
+                writer.Complete();
             }
         }
 
@@ -97,13 +100,13 @@ namespace CSETWebCore.Helpers
 
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = conn.CreateCommand();
+                NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.CommandText += "; select SCOPE_IDENTITY();";
+                cmd.CommandText += "; select LASTVAL();";
 
                 cmd.Transaction = conn.BeginTransaction();
 
@@ -111,26 +114,22 @@ namespace CSETWebCore.Helpers
                 {
                     foreach (KeyValuePair<string, ObjectTypePair> pair in parms)
                     {
-                        SqlParameter parm = null;
+                        NpgsqlParameter parm = null;
                         switch (pair.Value.Type)
                         {
                             case 1: //normal type
-                                parm = new SqlParameter(pair.Key, pair.Value.ParmValue);
-                                if (pair.Value.ParmValue == null)
-                                {
-                                    parm.Value = DBNull.Value;
-                                }
+                                parm = new NpgsqlParameter(pair.Key, pair.Value.ParmValue ?? DBNull.Value);
                                 break;
-                            case 2: //varbinary
+                            case 2: //bytea
                                 if ((pair.Value.ParmValue) == DBNull.Value)
                                 {
-                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, -1);
+                                    parm = new NpgsqlParameter(pair.Key, NpgsqlDbType.Bytea);
                                     parm.Value = DBNull.Value;
                                 }
                                 else
                                 {
                                     byte[] bytes = (byte[])pair.Value.ParmValue;
-                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, bytes.Length);
+                                    parm = new NpgsqlParameter(pair.Key, NpgsqlDbType.Bytea);
                                     parm.Value = bytes;
                                 }
                                 break;
@@ -175,13 +174,13 @@ namespace CSETWebCore.Helpers
 
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = conn.CreateCommand();
+                NpgsqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.CommandText += "; select SCOPE_IDENTITY();";
+                cmd.CommandText += "; select LASTVAL();";
 
                 cmd.Transaction = conn.BeginTransaction();
 
@@ -189,13 +188,7 @@ namespace CSETWebCore.Helpers
                 {
                     foreach (var key in parms.Keys)
                     {
-                        SqlParameter parm = new SqlParameter(key, parms[key]);
-
-                        if (parm.Value == null)
-                        {
-                            parm.Value = DBNull.Value;
-                        }
-
+                        NpgsqlParameter parm = new NpgsqlParameter(key, parms[key] ?? DBNull.Value);
                         cmd.Parameters.Add(parm);
                     }
 
@@ -224,14 +217,14 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public DataTable GetSchema()
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
                 DataTable metaDataTable = conn.GetSchema("Columns");
@@ -241,7 +234,7 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
@@ -250,10 +243,9 @@ namespace CSETWebCore.Helpers
             var dict = new Dictionary<string, string>();
 
             const string sql =
-                 "select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS "
-               + "where TABLE_SCHEMA = 'dbo' and COLUMNPROPERTY(object_id(TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1 "
-               + "order by TABLE_NAME";
-
+                 "SELECT table_schema, table_name, column_name FROM information_schema.columns "
+               + "WHERE table_schema = 'public' AND column_default LIKE 'nextval%' "
+               + "ORDER BY table_name";
 
             DataTable schema = Select(sql, null);
             foreach (DataRow row in schema.Rows)
