@@ -7,12 +7,12 @@
 using System;
 using System.IO;
 using Microsoft.Win32;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using UpgradeLibrary.Upgrade;
 using System.Reflection;
 using System.Diagnostics;
 using NLog;
-using MartinCostello.SqlLocalDb;
+
 using static CSETWebCore.Constants.Constants;
 
 namespace CSETWebCore.DatabaseManager
@@ -61,18 +61,7 @@ namespace CSETWebCore.DatabaseManager
 
                 if (LocalDb2022Installed)
                 {
-                    using (SqlLocalDbApi localDb = new SqlLocalDbApi())
-                    {
-
-                        // Create and start our custom localdb instance
-                        ISqlLocalDbInstanceInfo instance = localDb.GetOrCreateInstance(LOCALDB_2022_CUSTOM_INSTANCE_NAME);
-                        ISqlLocalDbInstanceManager manager = instance.Manage();
-
-                        if (!instance.IsRunning)
-                        {
-                            manager.Start();
-                        }
-                    }
+                    // LocalDB instance management removed (PostgreSQL deployment does not use LocalDB)
 
                     InitialDbInfo localDb2022Info = new InitialDbInfo(LocalDb2022ConnectionString, DatabaseCode);
                     InitialDbInfo localDb2019Info = null;
@@ -230,7 +219,7 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         private void VerifyApplicationDatabaseFunctioning(InitialDbInfo targetLocalDbInfo)
         {
-            using (SqlConnection conn = new SqlConnection(targetLocalDbInfo.MasterConnectionString))
+            using (NpgsqlConnection conn = new NpgsqlConnection(targetLocalDbInfo.MasterConnectionString))
             {
                 if (DatabaseExists(conn))
                 {
@@ -386,14 +375,14 @@ namespace CSETWebCore.DatabaseManager
 
         public void ForceCloseAndDetach(string masterConnectionString, string dbName)
         {
-            using (SqlConnection conn = new SqlConnection(masterConnectionString))
+            using (NpgsqlConnection conn = new NpgsqlConnection(masterConnectionString))
             {
                 ForceClose(conn, dbName);
                 conn.Close();
             }
         }
 
-        private static void ForceClose(SqlConnection conn, string dbName)
+        private static void ForceClose(NpgsqlConnection conn, string dbName)
         {
             string cmdForceClose =
                 "Use Master; \n"
@@ -410,7 +399,7 @@ namespace CSETWebCore.DatabaseManager
                 + "EXEC sp_detach_db  @dbname = N'" + dbName + "'"
                 + "end  \n";
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
+            NpgsqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = cmdForceClose;
             cmd.ExecuteNonQuery();
         }
@@ -435,14 +424,14 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="conn"></param>
         /// <returns>True if database with provided DatabaseCode exists on given connection; false otherwise</returns>
-        private bool DatabaseExists(SqlConnection conn)
+        private bool DatabaseExists(NpgsqlConnection conn)
         {
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
+            NpgsqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT name \n" +
             "FROM master..sysdatabases \n" +
             "where name ='" + DatabaseCode + "'";
-            SqlDataReader reader = cmd.ExecuteReader();
+            NpgsqlDataReader reader = cmd.ExecuteReader();
             return reader.HasRows;
         }
 
@@ -480,15 +469,15 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
+                    NpgsqlCommand cmd = conn.CreateCommand();
                     cmd.CommandText = sql;
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (SqlException sqle)
+            catch (NpgsqlException sqle)
             {
                 _logger.Error(sqle.Message);
             }
@@ -504,15 +493,15 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
+                    NpgsqlCommand cmd = conn.CreateCommand();
                     cmd.CommandText = sql;
                     return cmd.ExecuteScalar();
                 }
             }
-            catch (SqlException sqle)
+            catch (NpgsqlException sqle)
             {
                 _logger.Error(sqle.Message);
                 return null;
