@@ -543,10 +543,10 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Component_Guid)
                 .HasComment("The Component Guid is used to")
                 .HasAnnotation("Relational:DefaultConstraintName", "DF_ANSWER_Component_Guid");
-            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CASE \"Question_Type\" WHEN 'Component' THEN true ELSE false END)", false);
+            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CASE \"Question_Type\" WHEN 'Framework' THEN true ELSE false END)", false);
+            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CASE \"Question_Type\" WHEN 'Maturity' THEN true ELSE false END)", false);
+            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CASE \"Question_Type\" WHEN 'Requirement' THEN true ELSE false END)", false);
             entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
             entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
             entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
@@ -1647,7 +1647,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of MATURITY_QUESTIONS records"));
 
             entity.Property(e => e.Is_Answerable).HasDefaultValue(true);
-            entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))", true);
+            entity.Property(e => e.Text_Hash).HasComputedColumnSql("digest(\"Question_Text\", 'sha1')", true);
 
             entity.HasOne(d => d.Grouping).WithMany(p => p.MATURITY_QUESTIONS).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS");
 
@@ -1816,8 +1816,8 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of NEW_QUESTION records"));
 
-            entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
-            entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
+            entity.Property(e => e.Question_Hash).HasComputedColumnSql("digest(left(\"Simple_Question\", 8000), 'sha1')", true);
+            entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(CASE WHEN \"std_ref\" IS NULL THEN NULL ELSE \"Std_Ref\" || '.' || CAST(\"Std_Ref_Number\" AS varchar(50)) END)", false);
             entity.Property(e => e.Universal_Sal_Level)
                 .HasDefaultValue("none")
                 .HasAnnotation("Relational:DefaultConstraintName", "DF_NEW_QUESTION_Universal_Sal_Level");
@@ -1872,8 +1872,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of NEW_REQUIREMENT records"));
 
-            entity.Property(e => e.Supp_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))", true);
-            entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))", true);
+            entity.Property(e => e.Supp_Hash).HasComputedColumnSql("digest(left(\"Supplemental_Info\", 8000), 'sha1')", true);
+            entity.Property(e => e.Text_Hash).HasComputedColumnSql("digest(\"Requirement_Text\", 'sha1')", true);
 
             entity.HasOne(d => d.NCSF_Cat).WithMany(p => p.NEW_REQUIREMENT)
                 .OnDelete(DeleteBehavior.Cascade)
@@ -2582,7 +2582,7 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Set_Name)
                 .HasDefaultValue("Standards")
                 .HasAnnotation("Relational:DefaultConstraintName", "DF_UNIVERSAL_SUB_CATEGORY_HEADINGS_Set_Name");
-            entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))", false);
+            entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CASE WHEN \"sub_heading_question_description\" IS NULL OR length(trim(\"sub_heading_question_description\")) = 0 OR position('?' in \"sub_heading_question_description\") = 0 THEN false ELSE true END)", false);
             entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Question_Group_Heading).WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
