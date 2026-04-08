@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewEncapsulation, OnInit, isDevMode, inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -50,7 +50,6 @@ export class LayoutMainComponent implements OnInit {
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
   footerClosed: boolean = true;
-  devMode: boolean = isDevMode();
 
   display = "none";
   displayNotifications = "none";
@@ -122,7 +121,7 @@ export class LayoutMainComponent implements OnInit {
     var navigator = window.navigator as any;
     if(localStorage.getItem("mobileDismissed") != "true"){
       if (window.matchMedia("(max-width: 767px)").matches == false)
-      { 
+      {
         hasTouchScreen = false;
       } else if ("maxTouchPoints" in navigator) {
           hasTouchScreen = navigator.maxTouchPoints > 0;
@@ -145,7 +144,7 @@ export class LayoutMainComponent implements OnInit {
       }
 
       if (hasTouchScreen) {
-          this.isMobile = true; 
+          this.isMobile = true;
       } else {
         this.isMobile = false;
       }
@@ -159,6 +158,6 @@ export class LayoutMainComponent implements OnInit {
         });
       }
     }
-    
+
   }
 }
