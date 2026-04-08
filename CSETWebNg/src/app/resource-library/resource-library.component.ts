@@ -21,7 +21,7 @@
 //
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, isDevMode } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Title } from "@angular/platform-browser";
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -31,7 +31,7 @@ import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation/navigation.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
-import { AuthenticationService } from '../services/authentication.service';
+
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
@@ -78,29 +78,12 @@ export class ResourceLibraryComponent implements OnInit {
   children?: LibrarySearchResponse[];
   filter: string = '';
   setFilterDebounced = new Subject<string>();
-  devMode: boolean = isDevMode();
-  private _tabsElementRef: ElementRef;
-
-  @ViewChild('tabs') set tabsElementRef(element: ElementRef) {
-    this._tabsElementRef = element;
-
-    if (this._tabsElementRef) {
-      const tabsEl = this._tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal && this.devMode) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
-    }
-  }
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public dialog: MatDialog,
-    private authSvc: AuthenticationService,
     public titleSvc: Title) {
   }
 
