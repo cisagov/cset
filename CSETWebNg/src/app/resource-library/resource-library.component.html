@@ -23,7 +23,7 @@
 <div class="rl d-flex flex-column flex-11a" *transloco="let t">
 
   <!-- Tabs -->
-  <ul #tabs class="nav nav-tabs d-flex flex-00a">
+  <ul #tabs class="sticky-tabs nav nav-tabs d-flex flex-00a">
     <li style="width: 45px"></li>
     <li [ngClass]="(selectedPane === 'search') ? ['active', 'landing-page'] : []" class="d-flex align-items-center flex-00a"
       (click)="selectedPane = 'search'">

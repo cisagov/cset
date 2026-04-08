@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, isDevMode } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -42,17 +42,6 @@ export class LandingPageTabsComponent implements OnInit {
   currentTab: string;
   isSearch: boolean = false;
   searchString: string = '';
-  devMode: boolean = isDevMode();
-  private _tabsElementRef: ElementRef;
-
-  @ViewChild('tabs') set tabsElementRef(element: ElementRef) {
-    this._tabsElementRef = element;
-
-    if (this._tabsElementRef) {
-      const tabsEl = this._tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-    }
-  }
 
   constructor(
     private route: ActivatedRoute,
