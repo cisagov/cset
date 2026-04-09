@@ -76,7 +76,7 @@
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.21",
+    "@angular/build": "^20.3.23",
     "@electron/packager": "^19.1.0",
     "@tailwindcss/postcss": "^4.2.2",
     "autoprefixer": "^10.4.27",
