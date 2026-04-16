@@ -189,7 +189,7 @@ export class ConfigService {
    * Indicates if user authentication is configured to be handled outside of CSET
    */
   get isUserAuthenticationExternal() {
-    return this.config?.oidc != null;
+    return !!this.config?.oidc;
   }
 
   getDhsEmail() {
