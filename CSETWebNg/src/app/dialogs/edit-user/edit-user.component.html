@@ -31,7 +31,7 @@
     <form name="form" #userForm="ngForm">
       <div class="tw:space-y-4">
 
-        @if(configSvc.isUserAuthenticationExternal) {
+        @if(configSvc?.isUserAuthenticationExternal) {
         <div class="mb-4 d-flex flex-row">
           <i class="cset-icons-info-circle me-2"></i>
           <div>
@@ -112,7 +112,7 @@
         }
 
 
-        @if(!configSvc.isUserAuthenticationExternal) {
+        @if(!configSvc?.isUserAuthenticationExternal) {
 
         <hr>
 
@@ -156,10 +156,10 @@
     </form>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-4 pt-0 d-flex flex-11a" [class.justify-content-between]="!configSvc.isUserAuthenticationExternal"
-    [class.justify-content-end]="!!configSvc.isUserAuthenticationExternal">
+  <mat-dialog-actions class="p-4 pt-0 d-flex flex-11a" [class.justify-content-between]="!configSvc?.isUserAuthenticationExternal"
+    [class.justify-content-end]="!!configSvc?.isUserAuthenticationExternal">
 
-    @if(!configSvc.isUserAuthenticationExternal) {
+    @if(!configSvc?.isUserAuthenticationExternal) {
     <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
     <button class="m-0 btn btn-primary" (click)="save(userForm)">{{ t('buttons.save') }}</button>
     } @else {

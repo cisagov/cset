@@ -30,7 +30,8 @@ export class AuthenticationExternalService {
       issuer: c.issuer,
       strictDiscoveryDocumentValidation: c.strictDiscoveryDocumentValidation,
       requireHttps: c.requireHttps ?? true,
-      showDebugInformation: c.showDebugInformation ?? false
+      showDebugInformation: c.showDebugInformation ?? false,
+      responseType: c.responseType ?? 'code'
     });
 
     this.oauthService.setStorage(localStorage);

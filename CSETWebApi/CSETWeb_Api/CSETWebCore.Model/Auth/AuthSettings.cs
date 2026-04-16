@@ -84,6 +84,14 @@ namespace CSETWebCore.Model.Auth
         /// </summary>
         public bool RequireHttps { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets the response type used in the OpenID Connect authorization request.
+        /// Determines what artifacts are returned from the authorization endpoint,
+        /// such as <c>code</c> for an authorization code, <c>token</c> for an access token,
+        /// or <c>id_token</c> for an identity token, as well as combinations thereof.
+        /// </summary>
+        public string ResponseType { get; set; } = "code";
+
 
         /// <summary>
         /// When true, logs verbose OIDC debug output to the browser console. 
