@@ -69,7 +69,7 @@
     "ngx-csv": "^0.3.2",
     "pdfmake": "^0.3.7",
     "rxjs": "^7.8.2",
-    "sanitize-html": "^2.17.2",
+    "sanitize-html": "^2.17.3",
     "sass": "^1.98.0",
     "style-loader": "^4.0.0",
     "typescript": "~5.9.3",
