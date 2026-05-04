@@ -20081,157 +20081,164 @@ INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('a7b3ba7c-83e4-450f-8429-fe749c982d2f', N'AWWA.png', N'AWWA.png', N'{"Sets":["AWWA 4.0"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', NULL, N'American Water Works Association v4.0', 1, '2025-09-22 15:00:00.000')
 PRINT(N'Operation applied to 3 rows out of 3')
 
+
 PRINT(N'Add rows to [dbo].[MATURITY_GLOBAL_SEQUENCES]')
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (702, 22, 580, 590, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (703, 22, 580, 591, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (704, 22, 580, 592, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (705, 22, 581, 593, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (706, 22, 581, 594, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (707, 22, 581, 595, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (708, 22, 582, 596, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (709, 22, 582, 597, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (710, 22, 582, 598, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (711, 22, 583, 599, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (712, 22, 583, 600, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (713, 22, 584, 601, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (714, 22, 585, 602, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (715, 22, 586, 603, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (716, 22, 587, 604, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (717, 22, 587, 605, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (718, 22, 588, 606, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (719, 22, 589, 607, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (720, 23, 700, 712, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (721, 23, 700, 710, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (722, 23, 700, 714, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (723, 23, 700, 717, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (724, 23, 700, 716, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (725, 23, 700, 715, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (726, 23, 700, 713, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (727, 23, 700, 718, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (728, 23, 701, 711, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (729, 23, 701, 719, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (730, 23, 702, 722, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (731, 23, 702, 720, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (732, 23, 702, 721, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (733, 23, 702, 723, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (734, 23, 703, 731, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (735, 23, 703, 734, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (736, 23, 703, 729, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (737, 23, 703, 725, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (738, 23, 703, 724, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (739, 23, 703, 727, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (740, 23, 703, 726, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (741, 23, 703, 730, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (742, 23, 703, 728, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (743, 23, 703, 733, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (744, 23, 703, 732, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (745, 23, 703, 735, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (746, 23, 704, 736, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (747, 23, 704, 737, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (748, 23, 704, 738, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (749, 23, 704, 739, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (750, 23, 705, 740, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (751, 23, 706, 742, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (752, 23, 706, 741, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (753, 23, 707, 746, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (754, 23, 707, 754, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (755, 23, 707, 745, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (756, 23, 707, 749, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (757, 23, 707, 750, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (758, 23, 707, 743, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (759, 23, 707, 748, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (760, 23, 707, 751, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (761, 23, 707, 744, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (762, 23, 707, 747, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (763, 23, 707, 756, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (764, 23, 707, 753, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (765, 23, 707, 755, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (766, 23, 707, 752, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (767, 23, 708, 758, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (768, 23, 708, 757, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (769, 23, 709, 759, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (770, 23, 709, 760, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (771, 23, 709, 761, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (772, 24, 770, 780, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (773, 24, 770, 781, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (774, 24, 770, 782, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (775, 24, 770, 783, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (776, 24, 771, 784, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (777, 24, 771, 785, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (778, 24, 771, 786, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (779, 24, 771, 787, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (780, 24, 772, 788, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (781, 24, 772, 789, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (782, 24, 772, 790, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (783, 24, 772, 791, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (784, 24, 773, 792, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (785, 24, 773, 793, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (786, 24, 773, 794, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (787, 24, 773, 795, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (788, 24, 774, 796, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (789, 24, 774, 797, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (790, 24, 774, 798, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (791, 24, 774, 799, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (792, 24, 775, 800, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (793, 24, 775, 801, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (794, 24, 775, 802, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (795, 24, 775, 803, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (796, 24, 776, 804, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (797, 24, 776, 805, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (798, 24, 776, 806, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (799, 24, 776, 807, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (800, 24, 777, 808, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (801, 24, 777, 809, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (802, 24, 777, 810, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (803, 24, 777, 811, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (804, 24, 778, 812, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (805, 24, 778, 813, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (806, 24, 778, 814, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (807, 24, 778, 815, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (808, 24, 779, 816, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (809, 24, 779, 817, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (810, 24, 779, 818, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (811, 24, 779, 819, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (812, 25, 641, 654, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (813, 25, 641, 655, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (814, 25, 641, 656, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (815, 25, 641, 657, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (816, 25, 641, 658, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (817, 25, 642, 659, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (818, 25, 642, 660, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (819, 25, 642, 661, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (820, 25, 642, 662, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (821, 25, 642, 663, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (822, 25, 643, 664, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (823, 25, 643, 665, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (824, 25, 643, 666, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (825, 25, 643, 667, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (826, 25, 644, 668, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (827, 25, 645, 669, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (828, 25, 645, 670, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (829, 25, 645, 671, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (830, 25, 645, 672, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (831, 25, 645, 673, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (832, 25, 646, 674, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (833, 25, 647, 675, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (834, 25, 647, 676, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (835, 25, 647, 677, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (836, 25, 647, 678, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (837, 25, 647, 679, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (838, 25, 648, 680, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (839, 25, 649, 681, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (840, 25, 649, 682, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (841, 25, 650, 683, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (842, 25, 650, 684, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (843, 25, 651, 685, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (844, 25, 651, 686, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (845, 25, 651, 687, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (846, 25, 652, 688, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (847, 25, 652, 689, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (848, 25, 652, 690, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (849, 25, 652, 691, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (850, 25, 653, 692, NULL, NULL)
-PRINT(N'Operation applied to 149 rows out of 149')
+INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4])
+SELECT * FROM (VALUES
+    (702, 22, 580, 590, NULL, NULL),
+    (703, 22, 580, 591, NULL, NULL),
+    (704, 22, 580, 592, NULL, NULL),
+    (705, 22, 581, 593, NULL, NULL),
+    (706, 22, 581, 594, NULL, NULL),
+    (707, 22, 581, 595, NULL, NULL),
+    (708, 22, 582, 596, NULL, NULL),
+    (709, 22, 582, 597, NULL, NULL),
+    (710, 22, 582, 598, NULL, NULL),
+    (711, 22, 583, 599, NULL, NULL),
+    (712, 22, 583, 600, NULL, NULL),
+    (713, 22, 584, 601, NULL, NULL),
+    (714, 22, 585, 602, NULL, NULL),
+    (715, 22, 586, 603, NULL, NULL),
+    (716, 22, 587, 604, NULL, NULL),
+    (717, 22, 587, 605, NULL, NULL),
+    (718, 22, 588, 606, NULL, NULL),
+    (719, 22, 589, 607, NULL, NULL),
+    (720, 23, 700, 712, NULL, NULL),
+    (721, 23, 700, 710, NULL, NULL),
+    (722, 23, 700, 714, NULL, NULL),
+    (723, 23, 700, 717, NULL, NULL),
+    (724, 23, 700, 716, NULL, NULL),
+    (725, 23, 700, 715, NULL, NULL),
+    (726, 23, 700, 713, NULL, NULL),
+    (727, 23, 700, 718, NULL, NULL),
+    (728, 23, 701, 711, NULL, NULL),
+    (729, 23, 701, 719, NULL, NULL),
+    (730, 23, 702, 722, NULL, NULL),
+    (731, 23, 702, 720, NULL, NULL),
+    (732, 23, 702, 721, NULL, NULL),
+    (733, 23, 702, 723, NULL, NULL),
+    (734, 23, 703, 731, NULL, NULL),
+    (735, 23, 703, 734, NULL, NULL),
+    (736, 23, 703, 729, NULL, NULL),
+    (737, 23, 703, 725, NULL, NULL),
+    (738, 23, 703, 724, NULL, NULL),
+    (739, 23, 703, 727, NULL, NULL),
+    (740, 23, 703, 726, NULL, NULL),
+    (741, 23, 703, 730, NULL, NULL),
+    (742, 23, 703, 728, NULL, NULL),
+    (743, 23, 703, 733, NULL, NULL),
+    (744, 23, 703, 732, NULL, NULL),
+    (745, 23, 703, 735, NULL, NULL),
+    (746, 23, 704, 736, NULL, NULL),
+    (747, 23, 704, 737, NULL, NULL),
+    (748, 23, 704, 738, NULL, NULL),
+    (749, 23, 704, 739, NULL, NULL),
+    (750, 23, 705, 740, NULL, NULL),
+    (751, 23, 706, 742, NULL, NULL),
+    (752, 23, 706, 741, NULL, NULL),
+    (753, 23, 707, 746, NULL, NULL),
+    (754, 23, 707, 754, NULL, NULL),
+    (755, 23, 707, 745, NULL, NULL),
+    (756, 23, 707, 749, NULL, NULL),
+    (757, 23, 707, 750, NULL, NULL),
+    (758, 23, 707, 743, NULL, NULL),
+    (759, 23, 707, 748, NULL, NULL),
+    (760, 23, 707, 751, NULL, NULL),
+    (761, 23, 707, 744, NULL, NULL),
+    (762, 23, 707, 747, NULL, NULL),
+    (763, 23, 707, 756, NULL, NULL),
+    (764, 23, 707, 753, NULL, NULL),
+    (765, 23, 707, 755, NULL, NULL),
+    (766, 23, 707, 752, NULL, NULL),
+    (767, 23, 708, 758, NULL, NULL),
+    (768, 23, 708, 757, NULL, NULL),
+    (769, 23, 709, 759, NULL, NULL),
+    (770, 23, 709, 760, NULL, NULL),
+    (771, 23, 709, 761, NULL, NULL),
+    (772, 24, 770, 780, NULL, NULL),
+    (773, 24, 770, 781, NULL, NULL),
+    (774, 24, 770, 782, NULL, NULL),
+    (775, 24, 770, 783, NULL, NULL),
+    (776, 24, 771, 784, NULL, NULL),
+    (777, 24, 771, 785, NULL, NULL),
+    (778, 24, 771, 786, NULL, NULL),
+    (779, 24, 771, 787, NULL, NULL),
+    (780, 24, 772, 788, NULL, NULL),
+    (781, 24, 772, 789, NULL, NULL),
+    (782, 24, 772, 790, NULL, NULL),
+    (783, 24, 772, 791, NULL, NULL),
+    (784, 24, 773, 792, NULL, NULL),
+    (785, 24, 773, 793, NULL, NULL),
+    (786, 24, 773, 794, NULL, NULL),
+    (787, 24, 773, 795, NULL, NULL),
+    (788, 24, 774, 796, NULL, NULL),
+    (789, 24, 774, 797, NULL, NULL),
+    (790, 24, 774, 798, NULL, NULL),
+    (791, 24, 774, 799, NULL, NULL),
+    (792, 24, 775, 800, NULL, NULL),
+    (793, 24, 775, 801, NULL, NULL),
+    (794, 24, 775, 802, NULL, NULL),
+    (795, 24, 775, 803, NULL, NULL),
+    (796, 24, 776, 804, NULL, NULL),
+    (797, 24, 776, 805, NULL, NULL),
+    (798, 24, 776, 806, NULL, NULL),
+    (799, 24, 776, 807, NULL, NULL),
+    (800, 24, 777, 808, NULL, NULL),
+    (801, 24, 777, 809, NULL, NULL),
+    (802, 24, 777, 810, NULL, NULL),
+    (803, 24, 777, 811, NULL, NULL),
+    (804, 24, 778, 812, NULL, NULL),
+    (805, 24, 778, 813, NULL, NULL),
+    (806, 24, 778, 814, NULL, NULL),
+    (807, 24, 778, 815, NULL, NULL),
+    (808, 24, 779, 816, NULL, NULL),
+    (809, 24, 779, 817, NULL, NULL),
+    (810, 24, 779, 818, NULL, NULL),
+    (811, 24, 779, 819, NULL, NULL),
+    (812, 25, 641, 654, NULL, NULL),
+    (813, 25, 641, 655, NULL, NULL),
+    (814, 25, 641, 656, NULL, NULL),
+    (815, 25, 641, 657, NULL, NULL),
+    (816, 25, 641, 658, NULL, NULL),
+    (817, 25, 642, 659, NULL, NULL),
+    (818, 25, 642, 660, NULL, NULL),
+    (819, 25, 642, 661, NULL, NULL),
+    (820, 25, 642, 662, NULL, NULL),
+    (821, 25, 642, 663, NULL, NULL),
+    (822, 25, 643, 664, NULL, NULL),
+    (823, 25, 643, 665, NULL, NULL),
+    (824, 25, 643, 666, NULL, NULL),
+    (825, 25, 643, 667, NULL, NULL),
+    (826, 25, 644, 668, NULL, NULL),
+    (827, 25, 645, 669, NULL, NULL),
+    (828, 25, 645, 670, NULL, NULL),
+    (829, 25, 645, 671, NULL, NULL),
+    (830, 25, 645, 672, NULL, NULL),
+    (831, 25, 645, 673, NULL, NULL),
+    (832, 25, 646, 674, NULL, NULL),
+    (833, 25, 647, 675, NULL, NULL),
+    (834, 25, 647, 676, NULL, NULL),
+    (835, 25, 647, 677, NULL, NULL),
+    (836, 25, 647, 678, NULL, NULL),
+    (837, 25, 647, 679, NULL, NULL),
+    (838, 25, 648, 680, NULL, NULL),
+    (839, 25, 649, 681, NULL, NULL),
+    (840, 25, 649, 682, NULL, NULL),
+    (841, 25, 650, 683, NULL, NULL),
+    (842, 25, 650, 684, NULL, NULL),
+    (843, 25, 651, 685, NULL, NULL),
+    (844, 25, 651, 686, NULL, NULL),
+    (845, 25, 651, 687, NULL, NULL),
+    (846, 25, 652, 688, NULL, NULL),
+    (847, 25, 652, 689, NULL, NULL),
+    (848, 25, 652, 690, NULL, NULL),
+    (849, 25, 652, 691, NULL, NULL),
+    (850, 25, 653, 692, NULL, NULL)
+) AS src ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4])
+WHERE NOT EXISTS (
+    SELECT 1 FROM [dbo].[MATURITY_GLOBAL_SEQUENCES] t
+    WHERE t.[global_sequence] = src.[global_sequence]
+);
 
 PRINT(N'Add rows to [dbo].[PARAMETERS]')
 SET IDENTITY_INSERT [dbo].[PARAMETERS] ON
