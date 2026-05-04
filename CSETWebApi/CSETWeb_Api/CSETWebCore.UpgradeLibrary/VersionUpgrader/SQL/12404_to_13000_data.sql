@@ -18382,9 +18382,6 @@ UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17397
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17398
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17399
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17400
-PRINT(N'Operation applied to 1970 rows out of 1970')
-
-PRINT(N'Update rows in [dbo].[NEW_QUESTION]')
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=9 WHERE [Question_Id] = 17635
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=10 WHERE [Question_Id] = 17636
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=15 WHERE [Question_Id] = 17637
@@ -18418,8 +18415,7 @@ UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=26 WHERE [Question_Id] = 17664
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=32 WHERE [Question_Id] = 17665
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=6 WHERE [Question_Id] = 17666
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=33 WHERE [Question_Id] = 17667
-PRINT(N'Operation applied to 33 rows out of 33')
-
+PRINT(N'Operation applied to 2003 rows out of 2003')
 
 PRINT(N'Update row in [dbo].[MATURITY_LEVELS]')
 UPDATE [dbo].[MATURITY_LEVELS] SET [Level_Name]=N'Level 1' WHERE [Maturity_Level_Id] = 24
@@ -18520,11 +18516,13 @@ UPDATE [dbo].[MATURITY_GROUPINGS] SET [Sequence]=3 WHERE [Grouping_Id] = 761
 PRINT(N'Operation applied to 92 rows out of 92')
 
 PRINT(N'Update rows in [dbo].[GALLERY_GROUP_DETAILS]')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=1 WHERE [Group_Detail_Id] = 15
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=2 WHERE [Group_Detail_Id] = 46
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 48
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=7 WHERE [Group_Detail_Id] = 97
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=6 WHERE [Group_Detail_Id] = 98
-PRINT(N'Operation applied to 4 rows out of 4')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 103
+PRINT(N'Operation applied to 6 rows out of 6')
 
 PRINT(N'Update rows in [dbo].[SETS]')
 UPDATE [dbo].[SETS] SET [Full_Name]=N'American Water Works Association v3.0', [Short_Name]=N'AWWA 3.0', [Standard_ToolTip]=N'American Water Works Association (AWWA) assessment tool questions (v3.0) in conjunction with additional questions from CSET.' WHERE [Set_Name] = N'AWWA'
@@ -19999,7 +19997,8 @@ UPDATE [dbo].[GALLERY_ITEM] SET [Title]=N'Land Mobile Radio Rapid Assessment (LM
 UPDATE [dbo].[GALLERY_ITEM] SET [Title]=N'NIST SP 800-161 Rev. 1', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '3ec1234b-7fde-4b85-a2a8-7ffb888438fd'
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'The CISA Validated Architecture Design Review (VADR) module provides a standardized framework for evaluating and measuring the cybersecurity resilience of OT/ICS networks. Through guided interviews and network analysis, the module facilitates structured discoveries by assessing access controls, system configurations, and data flows. It identifies vulnerabilities and risks, such as insufficient OT-specific governance, while offering actionable recommendations to mitigate issues and enhance security.', [Title]=N'CISA Validated Architecture Design Reviews (VADR)', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = 'a430c6cd-edac-42f7-bc67-8b544d7ea4f8'
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'<p>NIST SP 800-171 Rev. 3 - Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</p><p>This publication provides agencies with recommended security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when the information is resident in nonfederal systems and organizations; when the nonfederal organization is not collecting or maintaining information on behalf of a federal agency or using or operating a system on behalf of an agency; and where there are no specific safeguarding requirements for protecting the confidentiality of CUI prescribed by the authorizing law, regulation, or governmentwide policy for the CUI category listed in the CUI Registry. The requirements apply to all components of nonfederal systems and organizations that process, store, and/or transmit CUI, or that provide protection for such components.</p>', [Title]=N'NIST SP 800-171 Rev. 3', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '0b740316-ddaf-464f-8bea-a91d2ff0e134'
-PRINT(N'Operation applied to 6 rows out of 6')
+UPDATE [dbo].[GALLERY_ITEM] SET [Is_Visible]=0 WHERE [Gallery_Item_Guid] = 'd7314c82-83b4-443c-a275-d5215a73220e'
+PRINT(N'Operation applied to 7 rows out of 7')
 
 PRINT(N'Update row in [dbo].[GALLERY_GROUP]')
 UPDATE [dbo].[GALLERY_GROUP] SET [Group_Title]=N'Financial' WHERE [Group_Id] = 73
@@ -20077,9 +20076,10 @@ INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'PCIDSS 4.0.1')
 PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add rows to [dbo].[GALLERY_ITEM]')
+INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('1c1c5c56-3544-4059-99ee-2ba1cb5edeeb', N'nist-sp-800-53.png', N'nist-sp-800-53.png', N'{"Sets":["C800_53_R520"],"SALLevel":"Low","QuestionMode":"Questions"}', N'NIST Special Publication (SP) 800-53 Release 5.2.0, "Security and Privacy Controls for Information Systems and Organizations," is a revision that primarily focuses on enhancing the security and reliability of software updates and patches. This update responds to Executive Order 14306, which aims to strengthen national cybersecurity. SP 800-53 Release 5.2.0 addresses various aspects of the software development and deployment lifecycle, including designing for software and system resiliency, developer testing, the deployment and management of updates, and ensuring software integrity and validation. It also revises discussion sections of some existing controls to offer additional scoping and implementation examples.', NULL, N'NIST SP 800-53 Release 5.2.0', 1, '2026-04-24 14:58:27.347')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('4be4dc9b-4f82-4492-afe8-6a9e719699db', N'evci.png', N'evci.png', N'{"Sets":["EV_Charging_Infrastructure"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', NULL, N'EV Charging Infrastructure Assessment & Evaluation (EVCI)', 1, '2026-02-11 10:00:23.100')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('a7b3ba7c-83e4-450f-8429-fe749c982d2f', N'AWWA.png', N'AWWA.png', N'{"Sets":["AWWA 4.0"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', NULL, N'American Water Works Association v4.0', 1, '2025-09-22 15:00:00.000')
-PRINT(N'Operation applied to 2 rows out of 2')
+PRINT(N'Operation applied to 3 rows out of 3')
 
 PRINT(N'Add rows to [dbo].[MATURITY_GLOBAL_SEQUENCES]')
 INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (702, 22, 580, 590, NULL, NULL)
@@ -20951,8 +20951,9 @@ INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Colum
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7276, 14, 1, 0, '446b8d52-16ba-4d18-afd4-d7431d501617')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8286, 9, 8, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8287, 13, 5, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
+INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8331, 6, 2, 0, '1c1c5c56-3544-4059-99ee-2ba1cb5edeeb')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
-PRINT(N'Operation applied to 4 rows out of 4')
+PRINT(N'Operation applied to 5 rows out of 5')
 
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
@@ -55151,9 +55152,5 @@ PRINT(N'Operation applied to 2319 rows out of 2319')
 
 PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]
-
-PRINT(N'Setting existing user in USERS table IsLocalAccount column as true in the db')
-UPDATE USERS SET IsLocalAccount = 1 WHERE (SELECT COUNT(*) FROM USERS) = 1 AND PrimaryEmail NOT LIKE '%@%';
-
 COMMIT TRANSACTION
 GO
