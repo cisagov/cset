@@ -54560,5 +54560,8 @@ PRINT(N'Operation applied to 2319 rows out of 2319')
 
 PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]
+
+PRINT(N'Rebuild [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
+EXEC [dbo].[analytics_setup_maturity_groupings]
 COMMIT TRANSACTION
 GO
