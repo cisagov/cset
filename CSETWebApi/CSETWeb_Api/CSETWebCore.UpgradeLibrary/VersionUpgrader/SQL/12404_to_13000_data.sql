@@ -20363,6 +20363,82 @@ INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Colum
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
 PRINT(N'Operation applied to 5 rows out of 5')
 
+PRINT(N'Backfill Is_Uploaded=1 on customer-uploaded GEN_FILE rows that were mis-flagged by ModuleBuilder')
+-- Pre-v13.0.0.0 ModuleBuilder uploads (RecordDocInDB) created GEN_FILE rows with Is_Uploaded
+-- defaulting to false, which excluded them from .csetw assessment exports.
+-- Rows with inline [Data] are uploads (both customer write paths populate Data); official rows
+-- ship with Data = NULL. Older upgrades that explicitly set Is_Uploaded=0 on mis-flagged official
+-- rows also set Data=NULL in the same UPDATE, so those rows are excluded by this filter.
+UPDATE [dbo].[GEN_FILE]
+SET [Is_Uploaded] = 1
+WHERE [Data] IS NOT NULL
+  AND [Is_Uploaded] = 0
+
+PRINT(N'Relocate all customer-uploaded GEN_FILE rows into the >=1,000,000 custom range')
+-- Identifies customer-uploaded rows as those that:
+--   (a) have inline binary [Data] (both ImportManager and ModuleBuilder populate this; official content ships with Data = NULL)
+--   (b) are NOT linked to any official SET via SET_FILES
+--   (c) are NOT referenced by any MATURITY_REFERENCES (maturity content is always official)
+--   (d) are NOT referenced by any REQUIREMENT_REFERENCES whose requirement belongs to an official SET
+-- The [Gen_File_Id] < 1000000 clause makes this idempotent on repeat runs.
+
+DECLARE @OldGenFileId INT, @NewGenFileId INT
+DECLARE @NextCustomGenFileId INT
+SELECT @NextCustomGenFileId = ISNULL(MAX([Gen_File_Id]), 999999) + 1 FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] >= 1000000
+IF @NextCustomGenFileId < 1000000 SET @NextCustomGenFileId = 1000000
+
+DECLARE relocate_gen_file_cursor CURSOR LOCAL FAST_FORWARD FOR
+    SELECT g.[Gen_File_Id]
+    FROM [dbo].[GEN_FILE] g
+    WHERE g.[Gen_File_Id] < 1000000
+      AND g.[Data] IS NOT NULL
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[SET_FILES] sf
+          INNER JOIN [dbo].[SETS] s ON sf.[SetName] = s.[Set_Name]
+          WHERE sf.[Gen_File_Id] = g.[Gen_File_Id] AND s.[Is_Custom] = 0
+      )
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[MATURITY_REFERENCES] mr
+          WHERE mr.[Gen_File_Id] = g.[Gen_File_Id]
+      )
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[REQUIREMENT_REFERENCES] rr
+          INNER JOIN [dbo].[REQUIREMENT_SETS] rs ON rr.[Requirement_Id] = rs.[Requirement_Id]
+          INNER JOIN [dbo].[SETS] s ON rs.[Set_Name] = s.[Set_Name]
+          WHERE rr.[Gen_File_Id] = g.[Gen_File_Id] AND s.[Is_Custom] = 0
+      )
+
+OPEN relocate_gen_file_cursor
+FETCH NEXT FROM relocate_gen_file_cursor INTO @OldGenFileId
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @NewGenFileId = @NextCustomGenFileId
+    SET @NextCustomGenFileId = @NextCustomGenFileId + 1
+
+    SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
+    INSERT INTO [dbo].[GEN_FILE]
+        ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language])
+    SELECT @NewGenFileId, [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language]
+    FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = @OldGenFileId
+    SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
+
+    UPDATE [dbo].[FILE_KEYWORDS]          SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[GEN_FILE_LIB_PATH_CORL] SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[MATURITY_REFERENCES]    SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[SET_FILES]              SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+
+    DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = @OldGenFileId
+
+    PRINT(N'Relocated GEN_FILE Id ' + CAST(@OldGenFileId AS NVARCHAR(20)) + N' -> ' + CAST(@NewGenFileId AS NVARCHAR(20)))
+
+    FETCH NEXT FROM relocate_gen_file_cursor INTO @OldGenFileId
+END
+
+CLOSE relocate_gen_file_cursor
+DEALLOCATE relocate_gen_file_cursor
+
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
 INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language]) VALUES (280, 31, N'Water-Sector-Cybersecurity-Risk-Managmenet-Guidance-V4.0.pdf', N'AWWA Water Sector Cybersecurity Risk Management Guidance
@@ -20372,6 +20448,12 @@ INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title
 INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language]) VALUES (3990, 31, N'CyberMESA EVCI Eval Procedures Measurements and Metrics.pdf', N'CyberMESA: Evaluation Procedures and Metrics for Charging Infrastructure Cybersecurity', N'CyberMESA', NULL, N'INL/RPT-25-88240', N'', NULL, N'EVCI Eval Procedures Measurements and Metrics', '2025-12-01 00:00:00.000', N'1.0', N'This document aims to aid in the vulnerability assessments of individual EVCI devices, such as Electric Vehicle Supply Equipment (EVSE), to support vendors in adopting and implementing security standards such as UL 2900, NIST SP 800-53 and Common Criteria (CC) (ISO/IEC 15408).', NULL, NULL, 0, NULL)
 SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
 PRINT(N'Operation applied to 4 rows out of 4')
+
+PRINT(N'Reseed [dbo].[GEN_FILE] IDENTITY into the >=1,000,000 custom-upload range')
+DECLARE @GenFileReseedValue INT
+SELECT @GenFileReseedValue = ISNULL(MAX([Gen_File_Id]), 0) FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] >= 1000000
+IF @GenFileReseedValue < 1000000 SET @GenFileReseedValue = 1000000
+DBCC CHECKIDENT('[dbo].[GEN_FILE]', RESEED, @GenFileReseedValue)
 
 PRINT(N'Add rows to [dbo].[MATURITY_GROUPINGS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] ON

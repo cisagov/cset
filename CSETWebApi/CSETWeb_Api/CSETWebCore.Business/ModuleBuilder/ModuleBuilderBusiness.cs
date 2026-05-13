@@ -2258,7 +2258,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     File_Size = file.FileSize,
                     Doc_Num = "NONE",
                     Short_Name = "(no short name)",
-                    Data = file.FileBytes
+                    Data = file.FileBytes,
+                    Is_Uploaded = true
                 };
                 _context.GEN_FILE.Add(gf);
                 _context.SaveChanges();
