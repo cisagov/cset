@@ -1,0 +1,38 @@
+﻿<Window x:Class="CSETAddUser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSETAddUser"
+        mc:Ignorable="d"
+        Title="Add a CSET User" Height="220" Width="463">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding AddCommand}" Key="Enter"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>          
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="First Name" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Name="txtFirstName" HorizontalAlignment="Left" Height="23" VerticalAlignment="Center" Width="200"/>
+        <Label Grid.Column="0" Grid.Row="1" Content="Last Name" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="txtLastName"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="200"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Email" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Name="txtEmail"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="200"/>
+        <Label Grid.Column="0" Grid.Row="3" Content="Password" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <PasswordBox Name="Password1" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="23" Width="200"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Confirm Password" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <PasswordBox Name="Password2" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Height="23" VerticalAlignment="Center" Width="200" />
+        <Label Grid.Column="0" Grid.Row="5" Name="Warning" Visibility="Hidden" Foreground="Red" Content="Passwords do not match" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Grid.Column="1" Grid.Row="5" Content="Save" Click="Button_Click"></Button>
+    </Grid>
+</Window>
