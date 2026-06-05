@@ -908,11 +908,14 @@ namespace CSETWebCore.Business.Reports
             {
                 l.Add(new ComponentQuestion
                 {
+                    AnswerId = q.Answer_Id ?? 0,
                     Answer = q.Answer_Text,
                     ComponentName = q.ComponentName,
                     Component_Symbol_Id = q.Component_Symbol_Id,
                     Question = q.QuestionText,
                     QuestionId = q.Question_Id,
+                    Comment = q.Comment,
+                    Feedback = q.Feedback,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
                     Zone = q.ZoneName,
@@ -937,6 +940,7 @@ namespace CSETWebCore.Business.Reports
                 .ThenBy(c => c.QuestionText)
                 .Select(c => new ComponentQuestion
                 {
+                    AnswerId = c.Answer_Id ?? 0,
                     Answer = c.Answer_Text,
                     ComponentName = c.ComponentName,
                     Component_Symbol_Id = c.Component_Symbol_Id,
