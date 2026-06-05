@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
     public class JSONAssessmentExportManager
@@ -131,12 +132,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 // SAL
                 var biz = new SalBusiness(_context, null, _assessmentUtil, null, null);
                 var salInfo = biz.GetSals(assessmentId);
-                assessment.Sal = new SalJson();
-                assessment.Sal.OverallLevel = salInfo.Selected_Sal_Level;
-                assessment.Sal.Methodology = salInfo.Methodology ?? "Simple";
-                assessment.Sal.Confidentiality = salInfo.CLevel;
-                assessment.Sal.Integrity = salInfo.ILevel;
-                assessment.Sal.Availability = salInfo.ALevel;
+                assessment.Sal = new SalJson
+                {
+                    OverallLevel = salInfo.Selected_Sal_Level,
+                    Methodology = salInfo.Methodology ?? "Simple",
+                    Confidentiality = salInfo.CLevel,
+                    Integrity = salInfo.ILevel,
+                    Availability = salInfo.ALevel
+                };
 
 
                 // Ensure the standard selections are populated before exporting
@@ -202,6 +205,21 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
 
+
+                // Comments are left out of the basic result for efficiency elsewhere.  
+                // So we add them manually here.
+                var allComments = _context.ANSWER.Where(x => x.Assessment_Id == assessmentDetail.Id && !string.IsNullOrEmpty(x.Comment)).ToList();
+
+
+                // The view that generates component questions and answers doesn't include Answer_Id.
+                // We fetch all answers for this assessment so we can map questions to their Answer_Id,
+                // which is needed to link comments and observations.
+                var questionAnswerMap = _context.ANSWER
+                    .Where(x => x.Assessment_Id == assessmentDetail.Id)
+                    .Select(x => new { x.Question_Or_Requirement_Id, x.Answer_Id })
+                    .ToList();
+
+
                 var listCQJson = new List<ComponentQuestionJson>();
                 foreach (var cq in componentQuestions)
                 {
@@ -212,13 +230,26 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         QuestionText = cq.Question,
                         QuestionId = cq.QuestionId,
                         AnswerText = cq.Answer,
+                        Feedback = cq.Feedback,
                         Zone = cq.Zone,
                         Sal = cq.SAL,
                         LayerName = cq.LayerName,
                         IsOverride = cq.IsOverride
                     };
 
-                    // TODO:  include Comment with component question
+                    
+                    var answerId = questionAnswerMap
+                        .FirstOrDefault(x => x.Question_Or_Requirement_Id == cq.QuestionId)?.Answer_Id;
+
+                    cqj.Comment = allComments.FirstOrDefault(x => x.Answer_Id == answerId)?.Comment;
+
+                    // Add observations if they exist for this answer
+                    var myObs = _answerObservations.Where(x => x.AnswerId == answerId).ToList();
+                    foreach (var obs in myObs)
+                    {
+                        cqj.Observations.Add(obs);
+                    }
+
 
                     listCQJson.Add(cqj);
                 }
@@ -242,7 +273,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             if (removePCII)
             {
-                RemovePCII(payload);
+                var sanitizer = new PciiSanitizer(payload);
+                sanitizer.Sanitize();
             }
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
@@ -279,6 +311,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 if (q.ParentQuestionId == null)
                 {
+                    qJ.Title = q.DisplayNumber;
                     qJ.QuestionText = q.QuestionText;
                     if (string.IsNullOrEmpty(qJ.QuestionText))
                     {
@@ -290,8 +323,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     if (q.IsAnswerable)
                     {
                         qJ.AnswerText = q.Answer;
-                        qJ.Comment = q.Comment;
                     }
+                    qJ.Comment = q.Comment;
+                    qJ.Feedback = q.Feedback;
+
+
 
                     // Add observations if they exist for this answer
                     var myObs = _answerObservations.Where(x => x.AnswerId == q.Answer_Id).ToList();
@@ -320,6 +356,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     qqJ.MaturityLevel = qq.MaturityLevel;
                     qqJ.AnswerText = qq.Answer;
                     qqJ.Comment = qq.Comment;
+                    qqJ.Feedback = qq.Feedback;
 
 
 
@@ -521,6 +558,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                         standardQuestion.AnswerText = question.Answer;
                         standardQuestion.Comment = question.Comment;
+                        standardQuestion.Feedback = question.Feedback;
+
+
 
                         // Add observations if they exist for this answer
                         var myObs = _answerObservations.Where(x => x.AnswerId == question.Answer_Id).ToList();
@@ -594,8 +634,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                                 RequirementText = requirement.QuestionText,
                                 Title = requirement.DisplayNumber,
                                 AnswerText = requirement.Answer,
-                                Comment = requirement.Comment
+                                Comment = requirement.Comment,
+                                Feedback = requirement.Feedback
                             };
+
+                            // Add observations if they exist for this answer
+                            var myObs = _answerObservations.Where(x => x.AnswerId == requirement.Answer_Id).ToList();
+                            foreach (var obs in myObs)
+                            {
+                                requirementJson.Observations.Add(obs);
+                            }
 
                             standardJson.Requirements.Add(requirementJson);
                         }
@@ -621,6 +669,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             details.CityOrSiteName = assessment.CityOrSiteName;
             details.StateProvRegion = assessment.StateProvRegion;
             details.FacilityName = assessment.FacilityName;
+
+            details.PciiNumber = assessment.PciiNumber;
 
 
             // get the demographics values for the assessment
@@ -650,6 +700,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             details.CriticalServiceName = demog.CriticalServiceName;
+            details.CriticalServiceDescription = demog.CriticalServiceDescription;
 
 
             // IOD demographic fields

@@ -54,6 +54,7 @@ namespace CSETWebCore.Model.Demographic
         public int? AnnualRevenue { get; set; }
 
         public string CriticalServiceName { get; set; }
+        public string CriticalServiceDescription { get; set; }
         public int? CriticalServiceRevenuePercent { get; set; }
         public string CriticalDependencyIncidentResponseSupport { get; set; }
 

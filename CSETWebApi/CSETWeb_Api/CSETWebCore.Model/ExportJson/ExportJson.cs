@@ -4,7 +4,6 @@
 // 
 // 
 ////////////////////////////////
-
 using CSETWebCore.Model.Maturity;
 using System;
 using System.Collections.Generic;
@@ -42,6 +41,8 @@ namespace CSETWebCore.Model.ExportJson
         public string OrganizationName { get; set; }
         public string BusinessUnit { get; set; }
 
+        public string PciiNumber { get; set; }
+
 
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
@@ -56,6 +57,9 @@ namespace CSETWebCore.Model.ExportJson
 
 
         public string CriticalServiceName { get; set; }
+        public string CriticalServiceDescription { get; set; }
+
+        public string MultiSiteDescription { get; set; }
 
 
         public string NumberEmployeesInOrg { get; set; }
@@ -150,10 +154,12 @@ namespace CSETWebCore.Model.ExportJson
     public class MaturityQuestionJson
     {
         public int QuestionId { get; set; }
+        public string Title { get; set; }
         public string QuestionText { get; set; }
         public int MaturityLevel { get; set; }
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Feedback { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
 
@@ -207,6 +213,9 @@ namespace CSETWebCore.Model.ExportJson
         public string Title { get; set; }
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Feedback { get; set; }
+
+        public List<ObservationJson> Observations { get; set; } = [];
     }
 
 
@@ -218,6 +227,7 @@ namespace CSETWebCore.Model.ExportJson
 
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Feedback { get; set; }
 
         public List<ObservationJson> Observations { get; set; } = [];
     }
@@ -229,8 +239,13 @@ namespace CSETWebCore.Model.ExportJson
         public int ComponentSymbolId { get; set; }
         public string QuestionText { get; set; }
         public int QuestionId { get; set; }
+
         public string AnswerText { get; set; }
         public string Comment { get; set; }
+        public string Feedback { get; set; }
+
+        public List<ObservationJson> Observations { get; set; } = [];
+
         public string Zone { get; set; }
         public string Sal { get; set; }
         public string LayerName { get; set; }
