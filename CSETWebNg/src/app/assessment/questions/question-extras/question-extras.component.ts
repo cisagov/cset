@@ -760,20 +760,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns an "I" or "G", depending on which version of the suppemental icon
-   * should be shown based on context.
-   * @returns
-   */
-  whichSupplementalIcon() {
-    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
-    if (!!behavior && behavior.questionIcons?.guidanceIcon?.toLowerCase() == 'g') {
-      return "G";
-    } else {
-      return "I";
-    }
-  }
-
-  /**
    * Returns 'Observation' 
    */
   observationOrIssue() {

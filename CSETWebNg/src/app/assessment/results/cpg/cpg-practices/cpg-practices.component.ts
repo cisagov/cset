@@ -49,6 +49,7 @@ export class CpgPracticesComponent implements OnInit {
    */
   ngOnInit(): void {
     this.ssgBonusModels = this.assessSvc.assessment.ssgModelIds;
+    console.log('practices', this.assessSvc.assessment);
   }
 
   /**
