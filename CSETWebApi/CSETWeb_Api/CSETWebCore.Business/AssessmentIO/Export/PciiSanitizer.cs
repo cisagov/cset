@@ -4,30 +4,8 @@
 // 
 // 
 ////////////////////////////////
-using System;
-using System.Collections.Generic;
-using System.Text;
-using CSETWebCore.Business.Demographic;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Question;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Business.Sal;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Contact;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.ExportJson;
-using CSETWebCore.Model.Maturity;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace CSETWebCore.Business.AssessmentIO.Export

@@ -10,6 +10,7 @@ using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
@@ -45,6 +46,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private List<ObservationJson> _answerObservations;
         private List<ObservationJson> _assessmentObservations;
 
+        private ModelAnswerLookup _ansLookup;
+
         /// <summary>
         /// Creates an export manager that uses the assessment business service to fetch
         /// detailed assessment data for JSON serialization.
@@ -75,6 +78,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
+
+
+            _ansLookup = new ModelAnswerLookup();
         }
 
 
@@ -229,7 +235,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         ComponentSymbolId = cq.Component_Symbol_Id,
                         QuestionText = cq.Question,
                         QuestionId = cq.QuestionId,
-                        AnswerText = cq.Answer,
+                        AnswerText = _ansLookup.GetDisplayValue(0, cq.Answer),
                         Feedback = cq.Feedback,
                         Zone = cq.Zone,
                         Sal = cq.SAL,
@@ -322,7 +328,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     if (q.IsAnswerable)
                     {
-                        qJ.AnswerText = q.Answer;
+                        qJ.AnswerText = _ansLookup.GetDisplayValue(q.MaturityModelId, q.Answer);
                     }
                     qJ.Comment = q.Comment;
                     qJ.Feedback = q.Feedback;
@@ -354,7 +360,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     qqJ.QuestionId = qq.QuestionId;
                     qqJ.MaturityLevel = qq.MaturityLevel;
-                    qqJ.AnswerText = qq.Answer;
+                    qqJ.AnswerText = _ansLookup.GetDisplayValue(qq.MaturityModelId, qq.Answer);
                     qqJ.Comment = qq.Comment;
                     qqJ.Feedback = qq.Feedback;
 
@@ -556,7 +562,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             Title = question.DisplayNumber
                         };
 
-                        standardQuestion.AnswerText = question.Answer;
+                        standardQuestion.AnswerText = _ansLookup.GetDisplayValue(0, question.Answer);
                         standardQuestion.Comment = question.Comment;
                         standardQuestion.Feedback = question.Feedback;
 
@@ -633,7 +639,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                                 RequirementId = requirement.QuestionId,
                                 RequirementText = requirement.QuestionText,
                                 Title = requirement.DisplayNumber,
-                                AnswerText = requirement.Answer,
+                                AnswerText = _ansLookup.GetDisplayValue(0, requirement.Answer),
                                 Comment = requirement.Comment,
                                 Feedback = requirement.Feedback
                             };
