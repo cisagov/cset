@@ -164,13 +164,6 @@ export class QuestionIconsConfig {
      showGuidance?: boolean;
 
      /**
-      * Indicates which icon should be used for supplemental/guidance.
-      *    Default is the "i" icon
-      *    Can be overriden with the "G" icon by setting this to "G".
-      */
-     guidanceIcon?: string;
-
-     /**
       * Indicates if the "References" 'three books' icon should be displayed in the question icons.
       */
      showReferences?: boolean;

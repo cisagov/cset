@@ -92,7 +92,7 @@ interface UserAssessment {
 })
 export class MyAssessmentsComponent implements OnInit, OnDestroy {
   comparer: Comparer = new Comparer();
-  sortedAssessments: UserAssessment[] = [];
+  sortedAssessments: UserAssessment[] | undefined = [];
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
@@ -148,13 +148,12 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.getAssessments();
     this.calculateGridHeight();
 
-    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.browserIsIE = /msie\s|trident\//i.test(globalThis.navigator.userAgent);
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
 
-    if (localStorage.getItem('returnPath')) {
-    } else {
+    if (!localStorage.getItem('returnPath')) {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -179,6 +178,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       this.cisaWorkflowSubscription.unsubscribe();
     }
   }
+
   updateGridTranslations(): void {
     this.initializeColumnDefs();
     if (this.gridApi && !this.gridApi.isDestroyed()) {
@@ -300,11 +300,22 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         filter: false,
         flex: 2
       },
+      // {
+      //   headerName: this.tSvc.translate('actions'),
+      //   cellRenderer: this.actionsRenderer.bind(this),
+      //   sortable: false,
+      //   filter: false,
+      //   width: this.showColumn('export json') ? 730 : 200,
+      //   pinned: 'right',
+      //  // cellStyle: { overflow: 'auto'}
+      // }
       {
         headerName: this.tSvc.translate('actions'),
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
+        minWidth: 120,       // minimum before buttons start clipping
+        maxWidth: 530,       // cap for wide viewports
         width: this.showColumn('export json') ? 530 : 200,
         pinned: 'right'
       }
@@ -343,7 +354,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   }
 
   getAssessments() {
-    this.sortedAssessments = null;
+    this.sortedAssessments = [];
     this.filterSvc.refresh();
     //NOTE THIS remove to disable the menu items when clearing
     localStorage.removeItem('assessmentId');
@@ -352,15 +363,13 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       localStorage.removeItem('redirectid');
       this.navSvc.beginAssessment(+rid);
     }
+
     this.assessSvc.getAssessmentsCompletion().pipe(
-      concatMap((assessmentsCompletionData: any[]) =>
+      concatMap((assessmentsCompletionData: any) =>
         this.assessSvc.getAssessments().pipe(
-          map((assessments: UserAssessment[]) => {
-            assessments.forEach((item, index, arr) => {
-
-              // determine assessment type display
+          map((assessments: any) => {
+            assessments.forEach((item: UserAssessment) => {
               item.type = this.determineAssessmentType(item);
-
 
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
@@ -368,26 +377,26 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
-
-
             });
 
-
             this.sortedAssessments = assessments;
+            this.sortData({ active: 'date', direction: 'desc' });
+
             if (this.gridApi && !this.gridApi.isDestroyed()) {
               this.gridApi.setGridOption('rowData', this.filteredAssessments);
             }
-          },
-            error => {
-              console.error(
-                'Unable to get Assessments for ' +
-                this.authSvc.email() +
-                ': ' +
-                (<Error>error).message
-              );
-            }
-          )
-        ))).subscribe();
+          }),
+          catchError(error => {
+            console.error(
+              'Unable to get Assessments for ' +
+              this.authSvc.email() + ': ' +
+              (<Error>error).message
+            );
+            return of(null);
+          })
+        )
+      )
+    ).subscribe();
   }
 
   /**
@@ -577,7 +586,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
    *
    * @param event
    */
-  importAssessmentFile(event) {
+  importAssessmentFile(event: any) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
     if (event.target.files[0].name.endsWith('.csetw')
@@ -597,7 +606,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     }
 
     if (!this.unsupportedImportFile) {
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef?.afterClosed().subscribe(result => {
         this.getAssessments();
       });
     }
@@ -629,7 +638,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   async exportAllLoop() { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
-      a.click();
+      a?.click();
       await this.timer(1500); // prevents api calls from canceling each other
     }
 

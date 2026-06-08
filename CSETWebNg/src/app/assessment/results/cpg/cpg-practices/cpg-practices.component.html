@@ -29,7 +29,8 @@
         </p>
 
         <div *ngFor="let s of ssgBonusModels" class="my-2">
-            <button class="btn btn-link" (click)="scrollTo('ssg-section-' + s)">Jump to {{t(`reports.core.ssg.${s}`)}}</button>
+            <button class="btn btn-link" (click)="scrollTo('ssg-section-' + s)">Jump to
+                {{t(`reports.core.ssg.${s}`)}}</button>
         </div>
 
         <!-- the table for the CPG answers -->
@@ -47,6 +48,10 @@
             </div>
 
             <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
+        </div>
+
+        <div class="my-2">
+            <button class="btn btn-link" (click)="scrollTo('top-section')">Jump to Top</button>
         </div>
     </div>
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>

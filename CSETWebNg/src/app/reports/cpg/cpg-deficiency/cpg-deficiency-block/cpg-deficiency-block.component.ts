@@ -28,12 +28,12 @@ import { QuestionsService } from '../../../../services/questions.service';
   selector: 'app-cpg-deficiency-block',
   standalone: false,
   templateUrl: './cpg-deficiency-block.component.html',
-  styleUrl: './cpg-deficiency-block.component.scss'
+  styleUrls: ['./cpg-deficiency-block.component.scss', '../../../reports.scss'],
 })
 export class CpgDeficiencyBlockComponent {
 
   @Input()
-  deficiencyList: any[];
+  deficiencyList: any[] | undefined;
 
   constructor(
     public questionsSvc: QuestionsService
