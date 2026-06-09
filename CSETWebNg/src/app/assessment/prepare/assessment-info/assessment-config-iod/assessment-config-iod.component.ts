@@ -50,12 +50,12 @@ export class AssessmentConfigIodComponent implements OnInit {
 
 
   constructor(
-    private assessSvc: AssessmentService,
-    private demoSvc: DemographicService,
-    private iodDemoSvc: DemographicIodService,
-    private contactsSvc: ContactsService,
-    private configSvc: ConfigService,
-    private navSvc: NavigationService
+    private readonly assessSvc: AssessmentService,
+    private readonly demoSvc: DemographicService,
+    private readonly iodDemoSvc: DemographicIodService,
+    private readonly contactsSvc: ContactsService,
+    private readonly configSvc: ConfigService,
+    private readonly navSvc: NavigationService
   ) { }
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.getAssessmentDetail();
 
-    if (this.configSvc.showAssessmentUpgrade() == true) {
+    if (this.configSvc.showAssessmentUpgrade()) {
       this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
         if (data) {
           this.showUpgrade = !!data;

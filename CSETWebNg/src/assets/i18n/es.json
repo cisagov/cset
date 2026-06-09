@@ -410,7 +410,7 @@
         "instructions ssg": "Las metas específicas del sector (SSG) se muestran según el sector seleccionado en los datos de la evaluación. Estos objetivos, adjuntos a las CPG, están diseñados para abordar inquietudes adicionales exclusivas de su industria."
     },
     "tooltip": {
-        "view detail": "Ver detalle",
+        "view detail": "Ver detalles",
         "create assessment": "Crear evaluación",
         "close": "Cerrar",
         "search": "Buscar",
