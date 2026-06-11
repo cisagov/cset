@@ -129,11 +129,11 @@
                "sectionTitle": "Cross-Sector Cybersecurity Performance Goals (CPG)",
                "1": {
                     "title": "CPG Report",
-                    "desc": "The CPG Report includes the CPG Performance Summary and the Security Practice Checklist."
+                    "desc": "The CPG Report includes the CPG Performance Summary and the CPG Checklist."
                },
                "2": {
                     "title": "CPG Deficiency",
-                    "desc": "The report contains a list of all security practices that were marked as “Not Implemented” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
+                    "desc": "The report contains a list of all goals that were marked as “Not Implemented” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
                },
                "3": {
                     "title": "Comments and Marked for Review",
@@ -627,18 +627,17 @@
                     "cpg report": "CPG Report",
                     "performance summary": "Performance Summary",
                     "chart detail": "Chart Detail",
-                    "security practice checklist": "Security Practice Checklist",
                     "cpg checklist": "CPG Checklist",
                     "p": {
                          "1": "This chart shows the answer distribution for each of the Security Practice categories.",
                          "2": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category.",
+                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each category. It presents the distribution percentage of each response type per category.",
                          "b": "The checklist provides a comprehensive summary of assessment findings, capturing identified TTPs or risks alongside recommended courses of action. Each checklist item is evaluated against three criteria — Impact, Cost, and Complexity — enabling organizations to assess the significance of each practice and establish implementation priorities accordingly."
                     },
                     "ssg": {
                          "ssg security practice checklist": "Sector-Specific Goal Security Practices",
                          "includes ssg": "Sector-Specific Goal answers are included in these results.",
-                         "1": "This table lists all applicable SSG security practices and how they have been answered.",
+                         "1": "This table lists all applicable sector-specific goals and how they have been answered.",
                          "2": "Sector Specific"
                     },
                     "impact scores": {
