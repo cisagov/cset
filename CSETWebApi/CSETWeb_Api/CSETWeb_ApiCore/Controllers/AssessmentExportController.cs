@@ -155,7 +155,15 @@ namespace CSETWebCore.Api.Controllers
 
                 var json = _jsonAssessmentExportManager.GetJson(resolvedAssessmentId, lang, removePCII);
                 var contents = Encoding.UTF8.GetBytes(json);
+
+                // determine file name
                 var fileName = $"assessment-{resolvedAssessmentId}.json";
+                var assessmentName = _context.INFORMATION.Where(x => x.Id == resolvedAssessmentId).FirstOrDefault()?.Assessment_Name;
+                if (!string.IsNullOrEmpty(assessmentName))
+                {
+                    fileName = $"{assessmentName}.json";
+                }
+
                 return File(contents, "application/json", fileName);
             }
             catch (InvalidOperationException notFound)

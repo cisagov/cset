@@ -347,8 +347,12 @@ export class MaturityService {
    *
    * @param maturity
    */
-  getCommentsMarked() {
-    return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked', headers);
+  getReportComments() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/comments', headers);
+  }
+
+  getMarkedForReview() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/marked-for-review', headers);
   }
 
   /**

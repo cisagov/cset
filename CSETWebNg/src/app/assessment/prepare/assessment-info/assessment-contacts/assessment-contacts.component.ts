@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output, ViewChildren } from "@angular/core";
+import { Component, Input, OnInit, ViewChildren } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { TranslocoService } from "@jsverse/transloco";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
@@ -33,7 +33,6 @@ import { User } from "../../../../models/user.model";
 import { AssessmentService } from "../../../../services/assessment.service";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { ConfigService } from "../../../../services/config.service";
-import { EmailService } from "../../../../services/email.service";
 import { LayoutService } from "../../../../services/layout.service";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
 import { ContactsService } from "../../../../services/contacts.service";
@@ -52,7 +51,7 @@ export class AssessmentContactsComponent implements OnInit {
   emailDialog: MatDialogRef<EmailComponent>;
   userRole: any;
   userEmail: string;
-  adding: boolean = false;
+  editInProgress: boolean = false;
   private creatorId: number | null = null;
 
 
@@ -64,7 +63,6 @@ export class AssessmentContactsComponent implements OnInit {
     private contactsSvc: ContactsService,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService,
-    private emailSvc: EmailService,
     private auth: AuthenticationService,
     private dialog: MatDialog,
     public layoutSvc: LayoutService,
@@ -116,7 +114,7 @@ export class AssessmentContactsComponent implements OnInit {
     }
 
     // Find current user (if different from creator)
-    const currentUserEmail = this.auth.email().toUpperCase();
+    const currentUserEmail = this.auth.email()?.toUpperCase();
     const currentUserIndex = this.contacts.findIndex(
       (contact, index) =>
         index > 0 && // Skip if already at position 0 (creator)
@@ -155,7 +153,7 @@ export class AssessmentContactsComponent implements OnInit {
    * User just clicked 'add contact'
    */
   newContact() {
-    this.adding = true;
+    this.editInProgress = true;
 
     // disable the existing contacts' controls while in add/edit mode
     this.contactItems.forEach(x => x.enableMyControls = false);
@@ -199,7 +197,8 @@ export class AssessmentContactsComponent implements OnInit {
         );
       }
     );
-    this.adding = false;
+    
+    this.editInProgress = false;
 
     // done adding - show the contacts' controls
     this.contactItems.forEach(x => x.enableMyControls = true);
@@ -212,14 +211,14 @@ export class AssessmentContactsComponent implements OnInit {
   removeContact(contact: EditableUser, indx: number) {
     this.contactItems.forEach(x => x.enableMyControls = true);
 
-    if (this.adding && contact.isNew) {
+    if (this.editInProgress && contact.isNew) {
       this.contacts.splice(indx, 1);
-      this.adding = false;
+      this.editInProgress = false;
       this.refreshContacts();
       return;
     }
 
-    this.adding = false;
+    this.editInProgress = false;
     if (contact.firstName === undefined
       || contact.lastName === undefined
       || contact.primaryEmail === undefined
@@ -245,6 +244,7 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when the user clicks 'change' on one of the children contact items.
    */
   startEdit() {
+    this.editInProgress = true;
     // disable the existing contacts' controls while in add/edit mode
     this.contactItems.forEach(x => x.enableMyControls = false);
   }
@@ -253,6 +253,7 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when an edit of one of the children contact items is abandoned.
    */
   abandonEdit() {
+    this.editInProgress = false;
     this.contactItems.forEach(x => x.enableMyControls = true);
   }
 
@@ -270,16 +271,19 @@ export class AssessmentContactsComponent implements OnInit {
         }
 
         this.assessSvc.updateContact(contact).subscribe({
-          next: (data) => {
+          next: (data: any) => {
             if (data && data.userId != contact.userId) {
               // Update the userId in case changing email linked to new user in backend
-              this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
+              const found = this.contacts.find(x => x.userId === contact.userId);
+              if (found != null) {
+                found.userId = data.userId;
+              }
             }
             this.contactItems.forEach(x => x.enableMyControls = true);
             this.sortContactsWithCreatorFirst();
             this.refreshContacts();
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error(error);
           }
         });
@@ -302,6 +306,11 @@ export class AssessmentContactsComponent implements OnInit {
       this.contacts.findIndex(c => c.assessmentContactId === contact.assessmentContactId),
       1
     );
+
+    // if canceling out of an add attempt don't call the API
+    if (contact.assessmentContactId == null) {
+      return;
+    }
 
     // update the API
     this.assessSvc.removeContact(contact.assessmentContactId).subscribe(

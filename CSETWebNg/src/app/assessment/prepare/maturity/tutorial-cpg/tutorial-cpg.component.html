@@ -50,13 +50,13 @@
             </div>
             <p>{{ttcpg('5')}}</p>
 
-            <h6>{{t('tutorial.practice identifier')}}</h6>
+            <h6>{{t('tutorial.goal number')}}</h6>
             <div class="img-frame">
                 <img src="assets/images/CPG/tutorial/Picture3.png" style="width: 60px">
             </div>
             <p>{{ttcpg('6')}}</p>
 
-            <h6>{{t('tutorial.security practice')}}</h6>
+            <h6>{{t('tutorial.goal')}}</h6>
             <div class="img-frame">
                 <img src="assets/images/CPG/tutorial/Picture4.png" style="width: 60px">
             </div>
@@ -115,8 +115,10 @@
             </ul>
             <h5>{{t('titles.additional resources')}}</h5>
             <p>{{t('tutorial.additional resources')}}</p>
-            <p>{{t('tutorial.please visit')}} <a href="https://www.cisa.gov/cpgs"
-                    target="_blank">https://www.cisa.gov/cpgs</a> {{t('tutorial.for more information')}}</p>
+            <p
+                [innerHTML]="t('tutorial.cpg2.visit for more info', { label: 'https://www.cisa.gov/cpgs', href: 'https://www.cisa.gov/cpgs'})">
+            </p>
+
         </div>
     </div>
     <app-nav-back-next [page]="'tutorial-cpg'"></app-nav-back-next>

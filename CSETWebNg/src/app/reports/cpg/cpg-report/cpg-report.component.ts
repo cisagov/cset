@@ -71,7 +71,7 @@ export class CpgReportComponent implements OnInit {
 
   heatmapModelCpg?: any[];
   ssgHeatmaps: { [id: number]: any } = {};
-  info: AssessmentDetail;
+  info: AssessmentDetail | null = null;
 
 
 
@@ -91,9 +91,16 @@ export class CpgReportComponent implements OnInit {
   ) { }
 
   /**
+   * 
+   */
+  ngOnInit(): void {
+    this.initAsync();
+  }
+
+  /**
    *
    */
-  async ngOnInit(): Promise<void> {
+  async initAsync(): Promise<void> {
     // Force body/html background to white for reports
     this.forceLightModeBackground();
 
@@ -129,20 +136,22 @@ export class CpgReportComponent implements OnInit {
         this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
       });
 
-    var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
+    let demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
     this.assessSvc.assessment.ssgModelIds = demog.ssgModelIds;
 
     // CPG 1.1
     if (this.modelId == 11) {
       this.initCpg1();
+
+      this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(this.modelId));
     }
 
-    // CPG 1.2
+    // CPG 2.0
     if (this.modelId == 21) {
       this.initCpg2();
 
-      this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(21));
+      this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(this.modelId));
     }
 
     // SSG
@@ -176,7 +185,7 @@ export class CpgReportComponent implements OnInit {
   async initSsg(): Promise<void> {
     this.ssgBonusModelIds = this.assessSvc.assessment.ssgModelIds;
 
-    const ssgDistrib$ = this.ssgBonusModelIds.map(async id => {
+    const ssgDistrib$ = (this.ssgBonusModelIds ?? []).map(async id => {
       const d = await this.getAnswerDistribution(id, '');
       return {
         modelId: id,
@@ -186,7 +195,7 @@ export class CpgReportComponent implements OnInit {
     this.answerDistribsSsg = await Promise.all(ssgDistrib$);
 
 
-    const ssgHeatmap$ = this.ssgBonusModelIds.map(async id => {
+    const ssgHeatmap$ = (this.ssgBonusModelIds ?? []).map(async id => {
       const scores = await firstValueFrom(this.reportSvc.getHeatmap(id));
       return {
         modelId: id,
@@ -197,6 +206,8 @@ export class CpgReportComponent implements OnInit {
     hm.forEach(h => {
       this.ssgHeatmaps[h.modelId] = h.scores;
     });
+
+    console.log('ssg heatmaps', this.ssgHeatmaps);
   }
 
   /**
