@@ -92,7 +92,7 @@ interface UserAssessment {
 })
 export class MyAssessmentsComponent implements OnInit, OnDestroy {
   comparer: Comparer = new Comparer();
-  sortedAssessments: UserAssessment[] | undefined = [];
+  sortedAssessments: UserAssessment[] | undefined = undefined;
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
@@ -354,7 +354,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   }
 
   getAssessments() {
-    this.sortedAssessments = [];
+    this.sortedAssessments = undefined;
     this.filterSvc.refresh();
     //NOTE THIS remove to disable the menu items when clearing
     localStorage.removeItem('assessmentId');
@@ -700,7 +700,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
             data-assessment-id="${assessmentId}"
             data-row-index="${rowIndex}"
             title="Remove assessment">
-      <span class="cset-icons-trash-x tw:text-sm me-2"></span>
+      <span class="cset-icons-trash-x tw:text-sm me-1"></span>
       <span class="text-nowrap">${labelRemove}</span>
     </button>
   `;
@@ -711,7 +711,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
               data-action="export"
               data-assessment-id="${assessmentId}"
               title="Export assessment">
-        <span class="cset-icons-export-up tw:text-sm me-2"></span>
+        <span class="cset-icons-export-up tw:text-sm me-1"></span>
         <span class="text-nowrap">${labelExport}</span>
       </button>
     `;
@@ -723,7 +723,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
               data-action="exportJson"
               data-assessment-id="${assessmentId}"
               title="Export assessment JSON">
-        <span class="cset-icons-export-up tw:text-sm me-2"></span>
+        <span class="cset-icons-export-up tw:text-sm me-1"></span>
         <span class="text-nowrap">${labelExportJson}</span>
       </button>
     `;

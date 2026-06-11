@@ -772,31 +772,19 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="maturity"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/getCommentsMarked")]
-        public IActionResult GetCommentsMarked()
+        [Route("api/reports/comments")]
+        public IActionResult GetReportComments()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             string lang = _tokenManager.GetCurrentLanguage();
+            int? primaryModelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
 
 
             _reports.SetReportsAssessmentId(assessmentId);
 
-            int? primaryModelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
-
-
-            // if this is a CIS assessment, don't include questions that
-            // are "out of scope" (a descendant of a deselected Option)
-            List<int> oos = new();
-            if (primaryModelId == Constants.Constants.Model_CIS)
-            {
-                var qt = new QuestionTreeXml(assessmentId, _context);
-                oos = qt.OutOfScopeQuestionIds();
-            }
-
             MaturityBasicReportData data = new MaturityBasicReportData
             {
                 Comments = _reports.GetCommentsList(),
-                MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
 
@@ -809,15 +797,19 @@ namespace CSETWebCore.Api.Controllers
                 {
                     var ssgComments = _reports.GetCommentsList(m);
                     data.Comments.AddRange(ssgComments);
-
-                    var ssgMarked = _reports.GetMarkedForReviewList(m);
-                    data.MarkedForReviewList.AddRange(ssgMarked);
                 }
             }
 
 
+            // if this is a CIS assessment, don't include questions that
+            // are "out of scope" (a descendant of a deselected Option)
+            List<int> oos = new();
+            if (primaryModelId == Constants.Constants.Model_CIS)
+            {
+                var qt = new QuestionTreeXml(assessmentId, _context);
+                oos = qt.OutOfScopeQuestionIds();
+            }
             data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
-            data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -830,6 +822,57 @@ namespace CSETWebCore.Api.Controllers
                 d.Mat.InverseParent_Question = null;
                 d.Mat.Parent_Question = null;
             });
+
+            return Ok(data);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/marked-for-review")]
+        public IActionResult GetReportMarkedForReview()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            string lang = _tokenManager.GetCurrentLanguage();
+            int? primaryModelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
+
+
+            _reports.SetReportsAssessmentId(assessmentId);
+
+
+            // This response will be simple - just the MFR data
+            MaturityBasicReportData data = new MaturityBasicReportData
+            {
+                MarkedForReviewList = _reports.GetMarkedForReviewList(),
+            };
+
+             
+            // If the assessment is a CPG and the assessor is including SSG questions
+            if (primaryModelId == Constants.Constants.Model_CPG2)
+            {
+                var ssgModelIds = new CpgBusiness(_context, lang).DetermineSsgModels(assessmentId);
+                foreach (var m in ssgModelIds)
+                {
+                    var ssgMarked = _reports.GetMarkedForReviewList(m);
+                    data.MarkedForReviewList.AddRange(ssgMarked);
+                }
+            }
+
+
+            // if this is a CIS assessment, don't include questions that
+            // are "out of scope" (a descendant of a deselected Option)
+            List<int> oos = new();
+        
+            if (primaryModelId == Constants.Constants.Model_CIS)
+            {
+                var qt = new QuestionTreeXml(assessmentId, _context);
+                oos = qt.OutOfScopeQuestionIds();
+            }
+            data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+
 
             data.MarkedForReviewList.ForEach(d =>
             {

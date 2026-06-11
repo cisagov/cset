@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Analytics;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity;
@@ -329,6 +330,15 @@ namespace CSETWebCore.Business.Reports
 
             var responseList = GetQuestionsList(targetModel.Maturity_Model_Id, true).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
+
+
+            // if this is CPG2, the answer and specific question text are stored on child questions
+            if (targetModel.Maturity_Model_Id == Constants.Constants.Model_CPG2)
+            {
+                responseList = ConvertParentsToChildren(_assessmentId, responseList);
+            }
+
+
             return responseList;
         }
 
@@ -353,6 +363,58 @@ namespace CSETWebCore.Business.Reports
             var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
 
             return responseList;
+        }
+
+
+        /// <summary>
+        /// Build a list of child questions based on the specified parent question list.
+        /// Propagate the parent's comment to its children.
+        /// </summary>
+        /// <returns></returns>
+        private List<MatRelevantAnswers> ConvertParentsToChildren(int assessmentId, List<MatRelevantAnswers> parentQuestions)
+        {
+            var parentIds = parentQuestions.Select(a => a.ANSWER.Question_Or_Requirement_Id).ToList();
+
+            var allChildQuestions = _context.MATURITY_QUESTIONS
+                .Where(q => q.Parent_Question_Id != null && parentIds.Contains((int)q.Parent_Question_Id))
+                .Join(_context.ANSWER,
+                    q => q.Mat_Question_Id,
+                    a => a.Question_Or_Requirement_Id,
+                    (q, a) => new { Question = q, Answer = a })
+                .Where(x => x.Answer.Assessment_Id == assessmentId && x.Answer.Question_Type == "Maturity")
+                .ToList();
+
+
+            var grouped = allChildQuestions.GroupBy(q => q.Question.Parent_Question_Id!.Value);
+            var childrenByParent = grouped.ToDictionary(g => g.Key, g => g.ToList());
+
+
+            List<MatRelevantAnswers> resp = new();
+            foreach (var parent in parentQuestions)
+            {
+                if (childrenByParent.TryGetValue(parent.ANSWER.Question_Or_Requirement_Id, out var children))
+                {
+                    var parentQText = parent.Mat.Question_Text != "" ? parent.Mat.Question_Text : parent.Mat.Security_Practice;
+
+                    children.ForEach(child =>
+                    {
+                        var newQ = new MatRelevantAnswers();
+                        MATURITY_QUESTIONS mq = new();
+                        mq.Question_Title = child.Question.Question_Title;
+                        mq.Question_Text = $"{parentQText} - {child.Question.Question_Text}";
+                        newQ.Mat = mq;
+
+                        ANSWER ans = new();
+                        ans.Answer_Text = child.Answer.Answer_Text;
+                        ans.Mark_For_Review = child.Answer.Mark_For_Review;
+                        ans.Comment = parent.ANSWER.Comment;
+                        newQ.ANSWER = ans;
+                        resp.Add(newQ);
+                    });
+                }
+            }
+
+            return resp;
         }
 
 

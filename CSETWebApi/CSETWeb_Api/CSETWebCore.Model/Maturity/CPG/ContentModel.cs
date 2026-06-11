@@ -76,6 +76,30 @@ namespace CSETWebCore.Model.Maturity.CPG
     {
         public List<AnswerDistribDomain> Distrib { get; set; } = [];
 
-        public double ComplianceScore { get; set; }
+        public CpgComplianceScore ComplianceScore { get; set; }
+    }
+
+
+    public class CpgComplianceScore
+    {
+        public double Overall { get; set; }
+        public double ImpactHigh { get; set; }
+        public double ImpactModerate { get; set; }
+        public double ImpactLow { get; set; }
+    }
+
+
+    /// <summary>
+    /// A helper class containing answer values and impact values.
+    /// Used to calculate CPG scoring.
+    /// </summary>
+    public class AnswerImpact
+    {
+        public int GroupingId { get; set; }
+        public int QuestionId { get; set; }
+        public string Title { get; set; }
+        public string Impact { get; set; }
+        public int AnswerId { get; set; }
+        public string AnswerText { get; set; }
     }
 }
