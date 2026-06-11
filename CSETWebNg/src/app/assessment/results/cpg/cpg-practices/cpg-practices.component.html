@@ -23,13 +23,14 @@
 <div>
     <div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
         <i id="top-section"></i>
-        <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
+        <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.cpg checklist')}}</h3>
         <p>
             {{t('reports.core.cpg.report.p.b')}}
         </p>
 
         <div *ngFor="let s of ssgBonusModels" class="my-2">
-            <button class="btn btn-link" (click)="scrollTo('ssg-section-' + s)">Jump to {{t(`reports.core.ssg.${s}`)}}</button>
+            <button class="btn btn-link" (click)="scrollTo('ssg-section-' + s)">Jump to
+                {{t(`reports.core.ssg.${s}`)}}</button>
         </div>
 
         <!-- the table for the CPG answers -->
@@ -47,6 +48,10 @@
             </div>
 
             <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
+        </div>
+
+        <div class="my-2">
+            <button class="btn btn-link" (click)="scrollTo('top-section')">Jump to Top</button>
         </div>
     </div>
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>

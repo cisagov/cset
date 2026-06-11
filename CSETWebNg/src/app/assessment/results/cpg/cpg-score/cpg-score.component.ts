@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { CpgService } from '../../../../services/cpg.service';
+import { Component, Input } from '@angular/core';
 
 /**
  * Displays separate scores for the CPG2 IT and OT questions.
@@ -38,29 +37,8 @@ import { CpgService } from '../../../../services/cpg.service';
   templateUrl: './cpg-score.component.html',
   styleUrl: './cpg-score.component.scss'
 })
-export class CpgScoreComponent implements OnInit {
+export class CpgScoreComponent {
 
   @Input()
-  itScore?: number;
-
-  @Input()
-  otScore?: number;
-
-  @Input()
-  techDomain?: string;
-
-  TECH_DOMAIN_OT = ['OT', 'OT+IT', null];
-  TECH_DOMAIN_IT = ['IT', 'OT+IT', null];
-
-  /**
-   * 
-   */
-  constructor(
-    public cpgSvc: CpgService
-  ) { }
-
-  /**
-   * 
-   */
-  ngOnInit(): void { }
+  scores?: number;
 }

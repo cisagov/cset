@@ -40,6 +40,12 @@ SOFTWARE.
   --ag-odd-row-background-color: transparent;
 }
 
+@media (max-width: 900px) {
+  .ag-pinned-right-cols-container .text-nowrap {
+    display: none;
+  }
+}
+
 .custom-progress {
 
   // Progress bar background (empty part)

@@ -37,7 +37,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   @Input()
-  modelId: number;
+  modelId: number | null = null;
 
   /**
    * To render a practice table for a specified model
@@ -85,9 +85,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    // let modelId: number | null = null;
-
-    if (!!this.ssgModelId) {
+    if (this.ssgModelId != null) {
       this.modelId = this.ssgModelId;
     }
 
@@ -101,7 +99,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   parentQuestions(d: any) {
-    return d.questions.filter(x => x.isParentQuestion);
+    return d.questions.filter((x: any) => x.isParentQuestion);
   }
 
   /**

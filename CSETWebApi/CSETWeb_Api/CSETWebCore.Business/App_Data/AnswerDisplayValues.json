@@ -1,0 +1,29 @@
+﻿{
+  "Purpose": "This file provides a place to define (maturity) model behaviors and features.  It is an embedded resource, so it gets compiled into the assembly.",
+  "Models": [
+    {
+      "21": {
+        "ModelName": "CPG2",
+        "Y": "Implemented",
+        "I": "In Progress",
+        "S": "Scoped",
+        "N": "Not Implemented"
+      },
+      "12": {
+        "ModelName": "C2M2",
+        "FI": "Fully Implemented - Complete",
+        "LI": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
+        "PI": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
+        "NI": "Not Implemented - Absent; the practice is not performed by the organization"
+      },
+      "Default": {
+        "Y": "Yes",
+        "N": "No",
+        "A": "Alternate",
+        "NA": "Not Applicable",
+        "U": "Unanswered",
+        "INC": "Incomplete"
+      }
+    }
+  ]
+}
