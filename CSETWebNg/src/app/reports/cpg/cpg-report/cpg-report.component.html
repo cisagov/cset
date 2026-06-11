@@ -42,34 +42,38 @@
 
 
             <!-- CPG 2.0 chart/table -->
-            <ng-container *ngIf="modelId == 21">
-                <div style="margin-top: 4rem; margin-bottom: 4rem"
-                    *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+            @if("modelId == 21") {
+            <div style="margin-top: 4rem; margin-bottom: 4rem"
+                *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+                <div style="page-break-inside: avoid">
                     <h4>{{t('reports.core.cpg.it')}}</h4>
                     <app-cpg-domain-summary [distrib]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary>
-
-                    <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                    <app-cpg-domain-summary-table
-                        [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
                 </div>
-                
-                <div style="margin-top: 4rem; margin-bottom: 4rem"
-                    *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
+            </div>
+
+            <div style="margin-top: 4rem; margin-bottom: 4rem"
+                *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+                <div style="page-break-inside: avoid">
                     <h4>{{t('reports.core.cpg.ot')}}</h4>
                     <app-cpg-domain-summary [distrib]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary>
-
-                    <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                    <app-cpg-domain-summary-table
-                        [data]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary-table>
                 </div>
-            </ng-container>
+
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary-table>
+            </div>
+            }
 
 
             <!-- SSG chart/table -->
             <ng-container *ngFor="let dssg of answerDistribsSsg">
                 <div style="margin-top: 4rem; margin-bottom: 4rem">
-                    <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
-                    <app-cpg-domain-summary [distrib]="dssg.distribution.distrib"></app-cpg-domain-summary>
+                    <div style="page-break-inside: avoid">
+                        <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
+                        <app-cpg-domain-summary [distrib]="dssg.distribution.distrib"></app-cpg-domain-summary>
+                    </div>
 
                     <p>{{t('reports.core.cpg.report.p.2')}}</p>
                     <app-cpg-domain-summary-table [data]="dssg.distribution.distrib"></app-cpg-domain-summary-table>
@@ -79,37 +83,15 @@
 
 
         <div class="page-break">
-            <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
-            <p class="mb-0">{{t('reports.core.cpg.report.p.b')}}</p>
+            <h1>{{t('reports.core.cpg.report.cpg checklist')}}</h1>
+            <p>{{t('reports.core.cpg.report.p.b')}}</p>
 
             <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
-
-            <!-- heatmap - waiting for approval to enable this -->
-            <div *ngIf="true">
-                <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
-                <div class="d-flex flex-row">
-                    <p style="width: 70%" class="me-4">
-                        {{ t('reports.core.heatmap.p1') }}
-                    </p>
-                    <app-key-display-1></app-key-display-1>
-                </div>
-
-                <div *ngFor="let d of heatmapModelCpg" class="mb-3">
-                    <app-heatmap [scores]="[d]"></app-heatmap>
-                </div>
-            </div>
         </div>
 
 
-        <!-- a table for SSG answers, if applicable -->
-        <div *ngFor="let s of ssgBonusModelIds" [id]="'ssg-section-' + s">
-            <hr class="page-line">
-            <h1>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h1>
-            <p>{{t('reports.core.cpg.report.ssg.1')}}</p>
-
-            <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
-
-            <!-- heat map -->
+        <div class="page-break">
+            <!-- heatmap -->
             <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
             <div class="d-flex flex-row">
                 <p style="width: 70%" class="me-4">
@@ -118,10 +100,34 @@
                 <app-key-display-1></app-key-display-1>
             </div>
 
-            <div *ngFor="let d of ssgHeatmaps[s]" class="mb-3">
+            <div *ngFor="let d of heatmapModelCpg" class="mb-3">
                 <app-heatmap [scores]="[d]"></app-heatmap>
             </div>
+        </div>
 
+
+        <!-- a table for SSG answers, if applicable -->
+        <div class="page-break" *ngFor="let s of ssgBonusModelIds" [id]="'ssg-section-' + s">
+            <h1>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h1>
+            <p>{{t('reports.core.cpg.report.ssg.1')}}</p>
+
+            <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
+
+            <div class="page-break">
+                <!-- heat map -->
+                <h2 style="font-size: 1.4rem">{{ t('reports.core.heatmap.title') }}</h2>
+                <div class="d-flex flex-row">
+                    <p style="width: 70%" class="me-4">
+                        {{ t('reports.core.heatmap.p1') }}
+                    </p>
+                    <app-key-display-1></app-key-display-1>
+                </div>
+
+                <div *ngFor="let d of ssgHeatmaps[s]" class="mb-3">
+                    <app-heatmap [scores]="[d]"></app-heatmap>
+                </div>
+
+            </div>
         </div>
 
     </div>

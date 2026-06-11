@@ -42,7 +42,7 @@ import { ContactsService } from '../../../../services/contacts.service';
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
   demographics: any = {};
-  contacts: User[];
+  contacts: User[] = [];
   assessment: AssessmentDetail = {};
   IsPCII: boolean = false;
   showUpgrade: boolean = false;
@@ -62,6 +62,9 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
       this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
+
+      // default technology domain to IT
+      this.demographics.techDomain ??= 'IT';
     });
 
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
@@ -73,7 +76,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     if (this.configSvc.showAssessmentUpgrade()) {
       this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
         if (data) {
-          this.showUpgrade = !!data;
+          this.showUpgrade = (data != null);
           this.assessSvc.galleryItemGuid = data.target;
           this.assessSvc.convertToModel = data.name;
         }
@@ -94,6 +97,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.IsPCII = this.assessment.is_PCII ?? false;
 
     this.assessSvc.isBrandNew = false;
+
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate ?? '0001-01-01');
     if (assessDate.getFullYear() <= 1900) {

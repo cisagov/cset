@@ -27,8 +27,8 @@
         </div>
     </div>
 
-    <div *ngFor="let d of model?.domains">
-        <div class="page-break border-top-0">
+    <div *ngFor="let d of model?.domains; let i = index">
+        <div class="border-top-0" [class.page-break]="i > 0">
             <div class="cpg-domain-bar" [class]="groupIdToClass[d.groupingId]">
                 {{d.title}}
             </div>
