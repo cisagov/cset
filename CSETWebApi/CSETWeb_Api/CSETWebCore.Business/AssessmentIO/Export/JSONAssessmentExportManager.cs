@@ -108,6 +108,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 AssessmentDate = assessmentDetail.AssessmentDate,
                 AssessmentGuid = assessmentDetail.AssessmentGuid,
                 CreatedDate = assessmentDetail.CreatedDate,
+                GalleryItemGuid = assessmentDetail.GalleryItemGuid,
                 Name = assessmentDetail.AssessmentName,
                 SelfAssessment = assessmentDetail.SelfAssessment,
                 FacilitatorName = assessmentDetail.FacilitatorName,

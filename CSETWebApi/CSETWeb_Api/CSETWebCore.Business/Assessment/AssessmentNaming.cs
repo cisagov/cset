@@ -16,6 +16,8 @@ namespace CSETWebCore.Business.Assessment
         /// <summary>
         /// determines the assessment Name;
         /// HAS the side effect of changing the assessment name in CISA Assessor Mode
+        /// 
+        /// Note that the "shortName" will be blank for diagram-based assessments (no model or standard to list)
         /// </summary>
         /// <returns>Nothing</returns>
         static public void ProcessName(CsetwebContext context, int userid, int assessmentid)
@@ -47,13 +49,16 @@ namespace CSETWebCore.Business.Assessment
              */
             if (assessment.AssessorMode)
             {
-                var date = assessment.Assessment_Date.ToString("yyyy-MM-dd-HHmm");
+                var date = assessment.Assessment_Date.ToString("yyyy-MM-dd");
                 var OrgName = info.Facility_Name;
+
                 var shortName = String.Join(',', maturityModels) + String.Join(',', stnds).Trim(',');
+                var orgAndType = $"{OrgName} {shortName}".Trim();
+
                 var pcii = assessment.Is_PCII ? "pcii" : "non-pcii";
 
                 date = assessment.Is_PCII ? assessment.PCII_Number : date;
-                var assessmentName = $"{OrgName} {shortName}.{pcii}.{date}".Trim();
+                var assessmentName = $"{orgAndType}.{pcii}.{date}".Trim();
                 info.Assessment_Name = assessmentName;
                 context.SaveChanges();
             }

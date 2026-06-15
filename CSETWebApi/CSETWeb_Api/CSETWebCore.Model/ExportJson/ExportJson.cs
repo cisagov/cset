@@ -17,6 +17,8 @@ namespace CSETWebCore.Model.ExportJson
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public Guid? GalleryItemGuid { get; set; }
+
         public bool SelfAssessment { get; set; }
         public DateTime? AssessmentDate { get; set; }
 
