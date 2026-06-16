@@ -41,11 +41,11 @@
                                 <div class="me-2 fw-bold">
                                     {{q.displayNumber}}
                                 </div>
-                                <div class="fw-normal">
+                                <div>
                                     <span [innerHTML]="q.securityPractice"></span>
                                 </div>
                             </div>
-                            <div class="ms-4 fw-normal d-flex flex-wrap justify-content-end align-content-start">
+                            <div class="ms-4 d-flex flex-wrap justify-content-end align-content-start">
                                 <ng-container *ngFor="let c of q.csfMappings; let l = last">
                                     <span class="text-nowrap">
                                         {{c}}{{ l ? '' : ','}}

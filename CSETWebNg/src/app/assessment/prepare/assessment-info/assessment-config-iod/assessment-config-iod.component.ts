@@ -131,6 +131,10 @@ export class AssessmentConfigIodComponent implements OnInit {
       }
 
       this.configSvc.userIsCisaAssessor = true;
+
+      // Keep facility name in sync with org name
+      this.assessment.facilityName = this.demographics.organizationName;
+
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
   }
