@@ -9,6 +9,20 @@
         "S": "Scoped",
         "N": "Not Implemented"
       },
+      "18": {
+        "ModelName": "SSG Chemical",
+        "Y": "Implemented",
+        "I": "In Progress",
+        "S": "Scoped",
+        "N": "Not Implemented"
+      },
+      "20": {
+        "ModelName": "SSG IT",
+        "Y": "Implemented",
+        "I": "In Progress",
+        "S": "Scoped",
+        "N": "Not Implemented"
+      },
       "12": {
         "ModelName": "C2M2",
         "FI": "Fully Implemented - Complete",
