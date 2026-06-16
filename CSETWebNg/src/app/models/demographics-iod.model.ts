@@ -29,6 +29,7 @@ export interface DemographicsIod {
   version?: number;
   organizationType?: number;
   organizationName?: string;
+  facilityName?: string;
   businessUnit?: string;
 
   // PPD-21 or NIPP

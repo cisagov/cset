@@ -67,6 +67,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 _payload.Assessment.OrganizationInfo.Reg2Other = null;
                 _payload.Assessment.OrganizationInfo.ShareOrgOther = null;
 
+                _payload.Assessment.OrganizationInfo.CriticalServiceName = null;
                 _payload.Assessment.OrganizationInfo.CriticalServiceDescription = null;
                 _payload.Assessment.OrganizationInfo.MultiSiteDescription = null;
             }
@@ -133,7 +134,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             // Component Questions 
-            if (_payload.Details.ContainsKey("componentQuestions"))
+            if (_payload.Details?.ContainsKey("componentQuestions") ?? false)
             {
                 List<ComponentQuestionJson> questions = _payload.Details["componentQuestions"]
                     as List<ComponentQuestionJson>;
