@@ -28,7 +28,6 @@ $near-black: #000000d5;
 
 
 .cpg-domain-bar {
-    color: $near-white;
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
@@ -44,7 +43,6 @@ table.cpg-table {
 }
 
 table.cpg-table th {
-    color: #ffffff !important;
     padding: 1rem .5rem;
     border-right: 1px solid white;
     font-size: .8rem;
@@ -127,28 +125,31 @@ table.cpg-table td {
 .csf1-func-id {
     background-color: #355C9B;
     border-color: #355C9B;
-    color: $near-white !important;
+    color: $white !important;
 }
 
 .csf1-func-pr {
     background-color: #784390;
     border-color: #784390;
-    color: $near-white !important;
+    color: $white !important;
 }
 
 .csf1-func-de {
     background-color: #F7E24E;
     border-color: #F7E24E;
+    color: $near-black !important;
 }
 
 .csf1-func-rs {
     background-color: #D93A34;
     border-color: #D93A34;
+    color: $white !important;
 }
 
 .csf1-func-rc {
     background-color: #4CA056;
     border-color: #4CA056;
+    color: $white !important;
 }
 
 
@@ -288,12 +289,12 @@ table.cpg-table td {
     .csf1-func-rs {
         background-color: #D93A34 !important;
         border-color: #D93A34 !important;
-        color: $near-black !important;
+        color: $white !important;
     }
 
     .csf1-func-rc {
         background-color: #4CA056 !important;
         border-color: #4CA056 !important;
-        color: $near-black !important;
+        color: $white !important;
     }
 }

@@ -25,26 +25,30 @@
      <div id="overall-score" class="score-container align-self-center align-self-start" style="margin: 0 4px;">
           <div>{{t('reports.core.cpg.report.impact scores.overall score')}}</div>
           <div class="p-1" style="font-size: 2rem;">
-               {{scores?.overall.toFixed(0) + '%'}}</div>
+               {{scores ? scores.overall.toFixed(0) + '%' : ''}}
+          </div>
      </div>
 
      <div class="flex-column">
           <div id="impact-score-high" class="score-container">
                <div>{{t('reports.core.cpg.report.impact scores.high')}}</div>
                <div class="p-1" [class.has-score]="standardBasedScore > 0">
-                    {{scores?.impactHigh.toFixed(0) + '%'}}</div>
+                    {{scores ? scores.impactHigh.toFixed(0) + '%' : ''}}
+               </div>
           </div>
 
           <div id="impact-score-mod" class="score-container">
                <div>{{t('reports.core.cpg.report.impact scores.moderate')}}</div>
                <div class="p-1" [class.has-score]="componentBasedScore > 0">
-                    {{scores?.impactModerate.toFixed(0) + '%'}}</div>
+                    {{scores ? scores.impactModerate.toFixed(0) + '%' : ''}}
+               </div>
           </div>
 
           <div id="impact-score-low" class="score-container">
                <div>{{t('reports.core.cpg.report.impact scores.low')}}</div>
                <div class="p-1" [class.has-score]="componentBasedScore > 0">
-                    {{scores?.impactLow.toFixed(0) + '%'}}</div>
+                    {{scores ? scores.impactLow.toFixed(0) + '%' : ''}}
+               </div>
           </div>
      </div>
 
