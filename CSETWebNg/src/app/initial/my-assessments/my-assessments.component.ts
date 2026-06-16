@@ -122,10 +122,12 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   private langChangeSubscription!: Subscription;
   private cisaWorkflowSubscription!: Subscription;
 
+  private exportJsonIcon: string = '';
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    private router: Router,
+    private readonly router: Router,
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
@@ -134,15 +136,16 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     public titleSvc: Title,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private filterSvc: QuestionFilterService,
+    private readonly filterSvc: QuestionFilterService,
     public tSvc: TranslocoService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public reportSvc: ReportService,
     public conversionSvc: ConversionService,
-    private demoSvc: DemographicService
+    private readonly demoSvc: DemographicService
   ) {
   }
+
 
   ngOnInit() {
     this.getAssessments();
@@ -168,7 +171,13 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.langChangeSubscription = this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
+
+    // initialize certain icons
+    fetch('/assets/images/icons/export-json.svg')
+      .then(r => r.text())
+      .then(svg => this.exportJsonIcon = svg);
   }
+
   ngOnDestroy(): void {
     // Clean up subscriptions to prevent memory leaks
     if (this.langChangeSubscription) {
@@ -300,23 +309,14 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         filter: false,
         flex: 2
       },
-      // {
-      //   headerName: this.tSvc.translate('actions'),
-      //   cellRenderer: this.actionsRenderer.bind(this),
-      //   sortable: false,
-      //   filter: false,
-      //   width: this.showColumn('export json') ? 730 : 200,
-      //   pinned: 'right',
-      //  // cellStyle: { overflow: 'auto'}
-      // }
       {
         headerName: this.tSvc.translate('actions'),
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        minWidth: 120,       // minimum before buttons start clipping
-        maxWidth: 530,       // cap for wide viewports
-        width: this.showColumn('export json') ? 530 : 200,
+        minWidth: 250,       // minimum before buttons start clipping
+        maxWidth: 280,       // cap for wide viewports
+        width: this.showColumn('export json') ? 250 : 200,
         pinned: 'right'
       }
     ];
@@ -695,37 +695,34 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     const labelExportJson = this.tSvc.translate('buttons.export json');
 
     let buttons = `
-    <button class="btn btn-ghost btn-sm hover:btn-error"
+    <button class="btn hover:btn-error"
             data-action="delete"
             data-assessment-id="${assessmentId}"
             data-row-index="${rowIndex}"
             title="Remove assessment">
-      <span class="cset-icons-trash-x tw:text-sm me-1"></span>
-      <span class="text-nowrap">${labelRemove}</span>
+      <span class="cset-icons-trash-x"></span>
     </button>
   `;
 
     if (this.showColumn('export')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ms-1"
+      <button class="btn btn-ghost"
               data-action="export"
               data-assessment-id="${assessmentId}"
               title="Export assessment">
-        <span class="cset-icons-export-up tw:text-sm me-1"></span>
-        <span class="text-nowrap">${labelExport}</span>
+        <span class="cset-icons-export-up"></span>
       </button>
     `;
     }
 
     if (this.showColumn('export json')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ms-1"
-              data-action="exportJson"
-              data-assessment-id="${assessmentId}"
-              title="Export assessment JSON">
-        <span class="cset-icons-export-up tw:text-sm me-1"></span>
-        <span class="text-nowrap">${labelExportJson}</span>
-      </button>
+        <button class="btn btn-ghost"
+                data-action="exportJson"
+                data-assessment-id="${assessmentId}"
+                title="Export assessment JSON">
+          ${this.exportJsonIcon}
+        </button>
     `;
     }
 
@@ -733,17 +730,23 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     if (this.showColumn('export json')) {
       const uploaded = !!assessment.jsonUploaded;
       jsonIndicator = `
-      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2 tw:ms-1" title="Check to indicate that the JSON file has been submitted to CISA">
-        <input type="checkbox" id="json-uploaded-${assessmentId}" ${uploaded ? 'checked' : ''}
-               class="checkbox-custom"
-               data-action="toggleJsonUploaded"
-               data-assessment-id="${assessmentId}">
-        <label class="checkbox-custom-label tw:my-0 tw:items-center" for="json-uploaded-${assessmentId}">Submitted</label>
-      </div>
-    `;
+        <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2" title="Mark as submitted to CISA">
+          <input type="checkbox"
+                id="json-uploaded-${assessmentId}"
+                ${uploaded ? 'checked' : ''}
+                class="checkbox-custom tw:sr-only"
+                data-action="toggleJsonUploaded"
+                data-assessment-id="${assessmentId}">
+          <label for="json-uploaded-${assessmentId}"
+                class="checkbox-custom-label tw:my-0 tw:items-center"
+                title="Mark as submitted to CISA">
+            CISA
+          </label>
+        </div>
+      `;
     }
 
-    return `<div class="tw:flex tw:items-center tw:h-full tw:gap-1">${buttons}${jsonIndicator}</div>`;
+    return `<div class="tw:flex tw:h-full tw:gap-0">${buttons}${jsonIndicator}</div>`;
   }
 
   /**
@@ -820,7 +823,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         break;
 
       case 'toggleJsonUploaded':
-        const newValue = (actionElement as HTMLInputElement).checked;
+        const checkbox = actionElement as HTMLInputElement;
+        const newValue = checkbox.checked;
         const assessmentToToggle = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessmentToToggle) {
           this.toggleJsonUploaded(assessmentToToggle, newValue);
