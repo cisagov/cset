@@ -99,7 +99,7 @@
 
         <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap mt-3">
           <!-- Import Button (Local) -->
-          <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
+          <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
             class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
             matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:me-3 tw:text-lg cset-icons-import"></span>
@@ -167,10 +167,10 @@
                   class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
                   matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
                   <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                  <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                  <label for="importFile2" class="m-0 landing-button-text landing-button-text-sm">
                     {{ t('welcome page.import assessment') }}
                   </label>
-                  <input type="file" class="d-none" id="importFile" multiple accept="{{ importExtensions }}"
+                  <input type="file" class="d-none" id="importFile2" multiple accept="{{ importExtensions }}"
                     (change)="importAssessmentFile($event)" />
                 </label>
               </div>
@@ -201,7 +201,7 @@
 
         <!-- table for handset portrait -->
         @if(layoutSvc.hp) {
-        <table role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <table aria-label="assessments" matSort (matSortChange)="sortData($event)"
           class="assessment-summary" style="overflow-x: auto">
           <tr>
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%">
