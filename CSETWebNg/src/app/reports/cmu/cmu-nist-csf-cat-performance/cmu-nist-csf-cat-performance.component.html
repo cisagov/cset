@@ -79,21 +79,24 @@
                         </ng-container>
                     </td>
                     <td colspan="2" class="align-top border-0">
-                        <table class="m-0 border-0">
-                            <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
+                        <div class="m-0">
+                            <div *ngFor="let subCat of cat.subCats; let i = index" class="d-flex" style="padding: 1rem;"
                                 [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
-                                <td class="pe-3 py-1 border-0 align-top text-1" style="width: 210px;">
+
+                                <div class="pe-3 py-1 align-top text-1" style="width: 210px;">
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
-                                </td>
-                                <td class="references py-1 border-0" style="width: 280px;">
+                                </div>
+
+                                <div class="references py-1" style="width: 280px;">
                                     <div class="d-flex justify-content-start flex-wrap" style="column-gap: 15px;">
                                         <div class="flex-00a" *ngFor="let subCatHeatMap of subCat.heatMaps"
                                             [innerHtml]="subCatHeatMap | safe">
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <div *ngIf="func.function.Function.code !== 'RC'" class="break"></div>
