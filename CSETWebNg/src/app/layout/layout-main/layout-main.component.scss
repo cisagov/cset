@@ -78,7 +78,7 @@ $primary-900: map.get($primary, 900); // Main Dark Primary
 
 $primary-color: $primary-900;
 $secondary-color: map.get($primary, 450);
-$orange-500:#f97316;
+$orange-500: #f97316;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -522,8 +522,8 @@ label[required]::after {
   overflow-x: hidden;
   border-radius: 8px;
 
-  min-height: calc(100cqh - 320px);
-  max-height: calc(100cqh - 320px);
+  min-height: var(--panel-height);
+  max-height: var(--panel-height);
 
   color: $gray-800;
   scrollbar-width: thin;
@@ -567,6 +567,9 @@ label[required]::after {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
+  min-height: var(--panel-height);
+  max-height: var(--panel-height);
+
   color: $gray-800;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
@@ -585,12 +588,6 @@ label[required]::after {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
   }
-}
-
-// Fill the available height minus 130px
-.avail-h-minus-offset {
-  min-height: calc(100cqh - var(--offset, 0px));
-  max-height: calc(100cqh - var(--offset, 0px));
 }
 
 mat-dialog-content {
@@ -1211,7 +1208,8 @@ table.td-align-top td {
 }
 
 .btn-mfr.answer-selected {
-  background-color: $orange-500;;
+  background-color: $orange-500;
+  ;
   color: $white;
 }
 
