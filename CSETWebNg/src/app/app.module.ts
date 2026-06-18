@@ -597,6 +597,7 @@ import { KeyDisplay1Component } from './assessment/results/key-display-1/key-dis
 import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 import { ApplicationConfig } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { WhitePanelDirective } from './helpers/white-panel.directive';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
@@ -720,6 +721,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         LayoutBlankComponent,
         LayoutSwitcherComponent,
         LayoutMainComponent,
+        WhitePanelDirective,
         SiteDetailComponent,
         ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,
