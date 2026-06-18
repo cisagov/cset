@@ -523,8 +523,8 @@ label[required]::after {
   overflow-x: hidden;
   border-radius: 8px;
 
-  min-height: calc(100cqh - 320px);
-  max-height: calc(100cqh - 320px);
+  min-height: var(--panel-height);
+  max-height: var(--panel-height);
 
   color: $gray-800;
   scrollbar-width: thin;
@@ -568,6 +568,9 @@ label[required]::after {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
+  min-height: var(--panel-height);
+  max-height: var(--panel-height);
+
   color: $gray-800;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
@@ -586,12 +589,6 @@ label[required]::after {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
   }
-}
-
-// Fill the available height minus the offset defined in the style attribute
-.avail-h-minus-offset {
-  min-height: calc(100cqh - var(--offset, 0px));
-  max-height: calc(100cqh - var(--offset, 0px));
 }
 
 mat-dialog-content {
@@ -1140,6 +1137,7 @@ table.td-align-top td {
 .mfr {
   color: $orange-500 !important;
 }
+
 .btn-mfr {
   background-color: $white;
   border-color: $orange-500;
@@ -1153,7 +1151,8 @@ table.td-align-top td {
 }
 
 .btn-mfr.answer-selected {
-  background-color: $orange-500;;
+  background-color: $orange-500;
+  ;
   color: $white;
 }
 
@@ -2719,7 +2718,8 @@ mat-sidenav.mat-sidenav {
   color: $white;
 }
 
-.rl-container, mat-tree.rl-container {
+.rl-container,
+mat-tree.rl-container {
   background-color: var(--bg-primary);
 }
 
