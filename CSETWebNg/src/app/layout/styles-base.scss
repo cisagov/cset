@@ -414,8 +414,8 @@ label[required]::after {
   padding: 2em;
   overflow-y: scroll;
   border-radius: 8px;
-  max-height: calc(100cqh - 20rem);
-  min-height: calc(100cqh - 20rem);
+  min-height: var(--panel-height);
+  max-height: var(--panel-height);
   color: $gray-800;
 }
 
