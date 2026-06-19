@@ -314,9 +314,9 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        minWidth: 250,       // minimum before buttons start clipping
-        maxWidth: 280,       // cap for wide viewports
-        width: this.showColumn('export json') ? 250 : 200,
+        minWidth: this.showColumn('export json') ? 250 : 120,  // minimum before buttons start clipping
+        maxWidth: this.showColumn('export json') ? 250 : 120,  // cap for wide viewports
+        width: this.showColumn('export json') ? 250 : 120,
         pinned: 'right'
       }
     ];
@@ -371,7 +371,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
             assessments.forEach((item: UserAssessment) => {
               item.type = this.determineAssessmentType(item);
 
-              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              let currentAssessmentStats = assessmentsCompletionData.find((x: any) => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
@@ -531,55 +531,49 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
    */
   async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
     const obs = this.assessSvc.getEncryptPreference();
-    const prom = firstValueFrom(obs);
-    prom.then((response: boolean) => {
-      let encryption = response;
+    const encryption = await firstValueFrom(obs).catch(() => false);
 
-      if (encryption || jsonOnly) {
-        let dialogRef = this.dialog.open(ExportAssessmentComponent, {
-          data: { jsonOnly, encryption }
-        });
+    if (encryption || jsonOnly) {
+      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+        data: { jsonOnly, encryption }
+      });
 
-        dialogRef.afterClosed().subscribe(result => {
-          let url = this.fileSvc.exportUrl;
+      dialogRef.afterClosed().subscribe(result => {
+        let url = this.fileSvc.exportUrl;
 
-          this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
-            if (result) {
-              if (jsonOnly) {
-                url = this.fileSvc.exportJsonUrl;
-              }
-
-              let params = '';
-
-              if (result.removePCII) {
-                params = params + '&removePCII=' + result.removePCII;
-              }
-
-              if (result.encryptionData.password != null && result.encryptionData.password !== '') {
-                params = params + '&password=' + result.encryptionData.password;
-              }
-
-              if (result.encryptionData.hint != null && result.encryptionData.hint !== '') {
-                params = params + '&passwordHint=' + result.encryptionData.hint;
-              }
-
-              if (params.length > 0) {
-                url = url + '?' + params.replace(/^&/, '');
-              }
-              this.fileExportSvc.fetchAndSaveFile(url, response.token);
+        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+          if (result) {
+            if (jsonOnly) {
+              url = this.fileSvc.exportJsonUrl;
             }
 
+            let params = '';
 
-          });
+            if (result.removePCII) {
+              params = params + '&removePCII=' + result.removePCII;
+            }
+
+            if (result.encryptionData.password != null && result.encryptionData.password !== '') {
+              params = params + '&password=' + result.encryptionData.password;
+            }
+
+            if (result.encryptionData.hint != null && result.encryptionData.hint !== '') {
+              params = params + '&passwordHint=' + result.encryptionData.hint;
+            }
+
+            if (params.length > 0) {
+              url = url + '?' + params.replace(/^&/, '');
+            }
+            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+          }
         });
-      } else {
-        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
-          let url = this.fileSvc.exportUrl;
-          this.fileExportSvc.fetchAndSaveFile(url, response.token);
-        });
-      }
-      ;
-    });
+      });
+    } else {
+      this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+        let url = this.fileSvc.exportUrl;
+        this.fileExportSvc.fetchAndSaveFile(url, response.token);
+      });
+    };
   }
 
   /**
@@ -619,7 +613,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(dateString: string, format: string) {
-    var dtD = DateTime.fromISO(dateString);
+    const dtD = DateTime.fromISO(dateString);
     let localDate = '';
     if (format == 'med') {
       localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
@@ -635,11 +629,16 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.exportAllLoop();
   }
 
-  async exportAllLoop() { // allows for multiple api calls
+  /**
+   * Allows for multiple API calls
+   */
+  async exportAllLoop() {
+    if (!this.sortedAssessments?.length) return;
+
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
       a?.click();
-      await this.timer(1500); // prevents api calls from canceling each other
+      await this.timer(1500);
     }
 
     this.exportAllInProgress = false;
@@ -653,11 +652,11 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     if (!this.sortedAssessments) return [];
     switch (this.currentFilter) {
       case 'done':
-        return this.sortedAssessments.filter(a => a.done == true);
+        return this.sortedAssessments.filter(a => a.done);
       case 'pending':
-        return this.sortedAssessments.filter(a => a.done == false);
+        return this.sortedAssessments.filter(a => !a.done);
       case 'favorite':
-        return this.sortedAssessments.filter(a => a.favorite == true);
+        return this.sortedAssessments.filter(a => a.favorite);
       default:
         return this.sortedAssessments;
     }
@@ -799,20 +798,22 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         this.navSvc.beginAssessment(assessmentId);
         break;
 
-      case 'toggleFavorite':
+      case 'toggleFavorite': {
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
           this.toggleFavorite(assessment);
         }
         break;
+      }
 
-      case 'delete':
-        const rowIndex = parseInt(actionElement.getAttribute('data-row-index'));
+      case 'delete': {
+        const rowIndex = Number.parseInt(actionElement.getAttribute('data-row-index'));
         const assessmentToDelete = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessmentToDelete) {
           this.removeAssessment(assessmentToDelete, rowIndex);
         }
         break;
+      }
 
       case 'export':
         this.clickDownloadLink(assessmentId);
@@ -822,7 +823,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         this.clickDownloadLink(assessmentId, true);
         break;
 
-      case 'toggleJsonUploaded':
+      case 'toggleJsonUploaded': {
         const checkbox = actionElement as HTMLInputElement;
         const newValue = checkbox.checked;
         const assessmentToToggle = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
@@ -830,6 +831,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
           this.toggleJsonUploaded(assessmentToToggle, newValue);
         }
         break;
+      }
     }
   }
 
