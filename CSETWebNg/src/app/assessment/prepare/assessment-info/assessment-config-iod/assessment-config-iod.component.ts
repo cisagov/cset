@@ -62,13 +62,12 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
       this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
-
-      // default technology domain to IT
       this.demographics.techDomain ??= 'IT';
     });
 
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
       this.iodDemographics = data;
+      this.iodDemographics.techDomain ??= 'IT';
     });
 
     this.getAssessmentDetail();
