@@ -50,14 +50,14 @@ export class AssessmentDetailComponent implements OnInit {
 
   demographics: any = {};
 
-  dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
+  dialogRefAwwa?: MatDialogRef<AwwaStandardComponent>;
   isAwwa = false;
 
   /**
    *
    */
   constructor(
-    private assessSvc: AssessmentService,
+    private readonly assessSvc: AssessmentService,
     public demoSvc: DemographicService,
     public navSvc: NavigationService,
     public awwaSvc: AwwaService,
@@ -73,7 +73,9 @@ export class AssessmentDetailComponent implements OnInit {
   ngOnInit() {
     if (this.assessSvc.id()) {
       // If assessment is not loaded yet (direct URL navigation), load it first
-      if (!this.assessSvc.assessment) {
+      if (this.assessSvc.assessment) {
+        this.getAssessmentDetail();
+      } else {
         this.assessSvc.loadAssessment(this.assessSvc.id())
           .then(() => {
             this.getAssessmentDetail();
@@ -83,19 +85,18 @@ export class AssessmentDetailComponent implements OnInit {
             // Could also show user-friendly error message here
             // this.dialog.showErrorMessage('Unable to load assessment. Please try again.');
           });
-      } else {
-        this.getAssessmentDetail();
       }
     }
 
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographics = data;
+      this.demographics.techDomain ??= 'IT';
 
-      if (!!this.assessSvc.assessment) {
+      if (this.assessSvc.assessment != null) {
         this.assessSvc.assessment.ssgModelIds = data?.ssgModelIds ?? [];
       }
 
-      if (data.acknowledgement == true) {
+      if (data.acknowledgement ?? false) {
         const dlgOkay = this.dialog.open(OkayComponent, {
           data: {
             title: this.tSvc.translate('sector changes'),
@@ -128,7 +129,7 @@ export class AssessmentDetailComponent implements OnInit {
    */
   update(e) {
     // default Assessment Name if it is left empty
-    if (!!this.assessment) {
+    if (this.assessment) {
       if (this.assessment.assessmentName?.trim().length === 0) {
         this.assessment.assessmentName = "(Untitled Assessment)";
       }
