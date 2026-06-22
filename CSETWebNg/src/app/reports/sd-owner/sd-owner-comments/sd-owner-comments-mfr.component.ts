@@ -66,7 +66,7 @@ export class SdOwnerCommentsMfrComponent {
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
 
-    this.maturitySvc.getCommentsMarked().subscribe(
+    this.maturitySvc.getReportComments().subscribe(
       (r: any) => {
         this.response = r;
 

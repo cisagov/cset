@@ -28,17 +28,6 @@
         </p>
 
 
-        <div *ngIf="assessorWorkflow" class="mb-5">
-            <h4>
-                {{t('reports.core.cpg.report.compliance score')}}
-            </h4>
-            <app-cpg-score [techDomain]="techDomain"
-                [otScore]="answerDistribByDomainOt?.complianceScore" 
-                [itScore]="answerDistribByDomainIt?.complianceScore">
-            </app-cpg-score>
-        </div>
-
-
         <!-- CPG 1.1 chart/table -->
         <ng-container *ngIf="modelId == 11">
             <app-cpg-domain-summary [distrib]="answerDistribByDomain?.distrib"></app-cpg-domain-summary>
@@ -52,14 +41,40 @@
         <ng-container *ngIf="modelId == 21">
             <div class="mb-5" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.it')}}</h4>
+
+                @if(assessorWorkflow) {
+                <h5>
+                    {{t('reports.core.cpg.report.impact scores.header')}}
+                </h5>
+                <div class="ms-3 mb-5">
+                    <app-cpg-score [scores]="answerDistribByDomainIt?.complianceScore"></app-cpg-score>
+                </div>
+                }
+
+                <h5>
+                    {{t('reports.core.cpg.report.answer distribution')}}
+                </h5>
                 <app-cpg-domain-summary [distrib]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
                 <app-cpg-domain-summary-table [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
             </div>
 
-             <div class="mb-5" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+            <div class="mb-5" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.ot')}}</h4>
+
+                @if(assessorWorkflow) {
+                <h5>
+                    {{t('reports.core.cpg.report.impact scores.header')}}
+                </h5>
+                <div class="ms-3 mb-5">
+                    <app-cpg-score [scores]="answerDistribByDomainOt?.complianceScore"></app-cpg-score>
+                </div>
+                }
+
+                <h5>
+                    {{t('reports.core.cpg.report.answer distribution')}}
+                </h5>
                 <app-cpg-domain-summary [distrib]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>

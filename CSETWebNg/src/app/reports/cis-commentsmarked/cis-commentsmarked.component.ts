@@ -57,7 +57,7 @@ export class CisCommentsmarkedComponent implements OnInit {
         this.info = r;
       }
     );
-    this.maturitySvc.getCommentsMarked().subscribe(
+    this.maturitySvc.getReportComments().subscribe(
       (r: any) => {
         this.response = r;
         this.loading = false;
