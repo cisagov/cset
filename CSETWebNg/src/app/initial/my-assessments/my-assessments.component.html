@@ -28,9 +28,12 @@
       </div>
     </div>
     <div>
-      <div *ngIf="browserIsIE" class="alert alert-danger text-start">
+      @if(browserIsIE) {
+      <div class="alert alert-danger text-start">
         {{ t('welcome page.internet explorer') }}
       </div>
+      }
+
       <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
         <h3 class="mt-0 px-4 mt-4" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
         <div class="mt-1 mb-1 d-flex flex-column justify-content-between flex-00a">
@@ -96,7 +99,7 @@
 
         <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap mt-3">
           <!-- Import Button (Local) -->
-          <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
+          <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
             class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:justify-center tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-border"
             matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:me-3 tw:text-lg cset-icons-import"></span>
@@ -111,8 +114,8 @@
             matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:me-3 tw:text-lg cset-icons-import"></span>
             <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }}</span>
-            <input type="file" tabindex="-1" class="tw:hidden d-none" id="importFile" multiple accept="{{ importExtensions }}"
-              (change)="importAssessmentFile($event)" />
+            <input type="file" tabindex="-1" class="tw:hidden d-none" id="importFile" multiple
+              accept="{{ importExtensions }}" (change)="importAssessmentFile($event)" />
           </label>
 
           <!-- New Assessment Button -->
@@ -149,7 +152,7 @@
                   <span class="tw:me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                   <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new assessment') }}</span>
                 </button>
-                <!-- <hr class="landing my-4"> -->
+
                 <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                   class="tw:mt-3 tw:mt-sm-3 tw:mt-md-0 tw:p-3 tw:c-gray-900 btn btn-secondary tw:d-flex tw:align-items-center tw:flex-11a tw:lp-btn-mw-lg"
                   matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
@@ -164,10 +167,10 @@
                   class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
                   matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
                   <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                  <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                  <label for="importFile2" class="m-0 landing-button-text landing-button-text-sm">
                     {{ t('welcome page.import assessment') }}
                   </label>
-                  <input type="file" class="d-none" id="importFile" multiple accept="{{ importExtensions }}"
+                  <input type="file" class="d-none" id="importFile2" multiple accept="{{ importExtensions }}"
                     (change)="importAssessmentFile($event)" />
                 </label>
               </div>
@@ -193,15 +196,20 @@
         </div>
       </div>
 
-      <div *ngIf="sortedAssessments?.length > 0" class="px-4 d-flex flex-column flex-11a oy-auto">
+      @if(sortedAssessments?.length > 0) {
+      <div class="px-4 d-flex flex-column flex-11a oy-auto">
+
         <!-- table for handset portrait -->
-        <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-          (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x: auto">
-          <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%">
-            {{ t('assessment name') }}
-          </th>
-          <th aria-label="date" mat-sort-header="date" style="width: 15%">{{ t('last modified') }}</th>
-          <th [aria-label]="tSvc.translate('actions')" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+        @if(layoutSvc.hp) {
+        <table aria-label="assessments" matSort (matSortChange)="sortData($event)"
+          class="assessment-summary" style="overflow-x: auto">
+          <tr>
+            <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%">
+              {{ t('assessment name') }}
+            </th>
+            <th aria-label="date" mat-sort-header="date" style="width: 15%">{{ t('last modified') }}</th>
+            <th [aria-label]="tSvc.translate('actions')" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+          </tr>
           <tr *ngFor="let assessment of filteredAssessments; let i = index">
             <td>
               <button tabindex="0"
@@ -224,7 +232,10 @@
             </td>
           </tr>
         </table>
-        <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
+        }
+
+        @if(sortedAssessments?.length > 0 && !layoutSvc.hp) {
+        <div class="mt-4 flex flex-col flex-1">
           <div class="overflow-x-auto rounded-lg border border-gray-200" style="border-radius: 10px">
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
@@ -236,10 +247,15 @@
             </ag-grid-angular>
           </div>
         </div>
+        }
+
       </div>
+      }
     </div>
+
     <!-- Desktop/Tablet: Empty state when no assessments -->
-    <div *ngIf="sortedAssessments?.length === 0 && !layoutSvc.hp" class="mt-4 mb-4 flex flex-col flex-1">
+    @if(sortedAssessments?.length === 0 && !layoutSvc.hp) {
+    <div class="mt-4 mb-4 flex flex-col flex-1">
       <div class="tw:bg-bg-primary tw:rounded-lg tw:border tw:border-border tw:p-8 tw:text-center">
         <div class="flex flex-col items-center justify-center tw:py-12">
           <div class="mb-4">
@@ -280,9 +296,11 @@
         </div>
       </div>
     </div>
+    }
 
     <!-- Mobile: Empty state when no assessments -->
-    <div *ngIf="sortedAssessments?.length === 0 && layoutSvc.hp" class="mt-4">
+    @if(sortedAssessments?.length === 0 && layoutSvc.hp) {
+    <div class="mt-4">
       <div class="tw:bg-bg-primary tw:rounded-lg tw:border tw:border-border tw:p-6 tw:text-center">
         <h2 class="mt-0 text-lg font-semibold mb-2">
           {{ t('welcome page.welcome to', { appTitle: appTitle }) }}
@@ -314,5 +332,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </ng-container>

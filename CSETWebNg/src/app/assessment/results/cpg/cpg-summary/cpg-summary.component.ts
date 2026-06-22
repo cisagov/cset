@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { CpgService } from '../../../../services/cpg.service';
@@ -69,19 +69,28 @@ export class CpgSummaryComponent implements OnInit {
   /**
    * 
    */
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
+    this.initAsync();
+  }
+
+  /**
+   * 
+   */
+  private async initAsync(): Promise<void> {
     this.modelId = this.assessSvc.assessment?.maturityModel?.modelId ?? 0;
 
-    this.assessorWorkflow = this.assessSvc.assessment.assessorMode ?? false;
+    this.assessorWorkflow = this.assessSvc.assessment?.assessorMode ?? false;
 
-    var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
+    const demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.assessSvc.assessment.ssgModelIds = demog.ssgModelIds;
     this.techDomain = demog.techDomain;
+
 
     // CPG 1.1
     if (this.modelId == 11) {
       this.answerDistribByDomain = await this.getAnswerDistribution(this.modelId, '');
     }
+
 
     // CPG 2.0
     if (this.modelId == 21) {
@@ -94,8 +103,9 @@ export class CpgSummaryComponent implements OnInit {
       this.answerDistribByDomainIt = answerDistribByDomainIt;
     }
 
+
     // SSG
-    const ssgPromises = this.assessSvc.assessment.ssgModelIds.map(async id => {
+    const ssgPromises = (this.assessSvc.assessment.ssgModelIds ?? []).map(async id => {
       const d = await this.getAnswerDistribution(id, '');
       return {
         modelId: id,

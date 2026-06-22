@@ -32,27 +32,22 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { forkJoin, Observable, tap } from 'rxjs';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { DemographicService } from '../../../services/demographic.service';
 
 @Component({
   selector: 'app-cpg-deficiency',
   templateUrl: './cpg-deficiency.component.html',
   styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss'],
   standalone: false,
-    // eslint-disable-next-line
-    host: {
-      'class': 'force-light-mode',
-      '[attr.data-theme]': '"light"',
-      '[attr.data-bs-theme]': '"light"'
-    }
+  // eslint-disable-next-line
+  host: {
+    'class': 'force-light-mode',
+    '[attr.data-theme]': '"light"',
+    '[attr.data-bs-theme]': '"light"'
+  }
 })
 export class CpgDeficiencyComponent implements OnInit {
-  // assessmentName: string;
-  // assessmentDate: string;
-  // assessorName: string;
-  // facilityName: string;
-  // selfAssessment: boolean;
-
-  info: AssessmentDetail;
+  info: AssessmentDetail | null = null;
 
   // deficient answers in the principal model (CPG)
   loadingCpg = false;
@@ -60,7 +55,7 @@ export class CpgDeficiencyComponent implements OnInit {
 
   // deficient SSG answers
   loadingSsg = false;
-  ssgBonusModels: number[];
+  ssgBonusModels: number[] = [];
   ssgModels: any[] = [];
 
 
@@ -70,6 +65,7 @@ export class CpgDeficiencyComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public titleSvc: Title,
+    public demoSvc: DemographicService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
@@ -125,15 +121,25 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   getSsgModels() {
-    this.loadingSsg = true;
-    this.ssgBonusModels = this.assessSvc.assessment.ssgModelIds;
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.assessSvc.assessment.ssgModelIds = data?.ssgModelIds ?? [];
+      this.ssgBonusModels = this.assessSvc.assessment.ssgModelIds ?? [];
+      
+      this.loadingSsg = true;
 
-    const obs: Observable<any>[] = [];
-    this.ssgBonusModels.forEach(m => obs.push(this.maturitySvc.getMaturityDeficiency(m)));
+      if (!this.ssgBonusModels.length) {
+        this.loadingSsg = false;
+        this.ssgModels = [];
+        return;
+      }
 
-    forkJoin(obs).subscribe((results: any) => {
-      this.loadingSsg = false;
-      this.ssgModels = results;
+      const obs: Observable<any>[] = [];
+      this.ssgBonusModels.forEach(m => obs.push(this.maturitySvc.getMaturityDeficiency(m)));
+
+      forkJoin(obs).subscribe((results: any) => {
+        this.loadingSsg = false;
+        this.ssgModels = results;
+      });
     });
   }
 }

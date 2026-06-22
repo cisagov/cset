@@ -92,7 +92,7 @@ interface UserAssessment {
 })
 export class MyAssessmentsComponent implements OnInit, OnDestroy {
   comparer: Comparer = new Comparer();
-  sortedAssessments: UserAssessment[] = [];
+  sortedAssessments: UserAssessment[] | undefined = undefined;
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
@@ -122,10 +122,12 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   private langChangeSubscription!: Subscription;
   private cisaWorkflowSubscription!: Subscription;
 
+  private exportJsonIcon: string = '';
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    private router: Router,
+    private readonly router: Router,
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
@@ -134,27 +136,27 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     public titleSvc: Title,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private filterSvc: QuestionFilterService,
+    private readonly filterSvc: QuestionFilterService,
     public tSvc: TranslocoService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public reportSvc: ReportService,
     public conversionSvc: ConversionService,
-    private demoSvc: DemographicService
+    private readonly demoSvc: DemographicService
   ) {
   }
+
 
   ngOnInit() {
     this.getAssessments();
     this.calculateGridHeight();
 
-    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.browserIsIE = /msie\s|trident\//i.test(globalThis.navigator.userAgent);
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
 
-    if (localStorage.getItem('returnPath')) {
-    } else {
+    if (!localStorage.getItem('returnPath')) {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -169,7 +171,13 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.langChangeSubscription = this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
+
+    // initialize certain icons
+    fetch('/assets/images/icons/export-json.svg')
+      .then(r => r.text())
+      .then(svg => this.exportJsonIcon = svg);
   }
+
   ngOnDestroy(): void {
     // Clean up subscriptions to prevent memory leaks
     if (this.langChangeSubscription) {
@@ -179,6 +187,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       this.cisaWorkflowSubscription.unsubscribe();
     }
   }
+
   updateGridTranslations(): void {
     this.initializeColumnDefs();
     if (this.gridApi && !this.gridApi.isDestroyed()) {
@@ -305,7 +314,9 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: this.showColumn('export json') ? 530 : 200,
+        minWidth: this.showColumn('export json') ? 250 : 120,  // minimum before buttons start clipping
+        maxWidth: this.showColumn('export json') ? 250 : 120,  // cap for wide viewports
+        width: this.showColumn('export json') ? 250 : 120,
         pinned: 'right'
       }
     ];
@@ -343,7 +354,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   }
 
   getAssessments() {
-    this.sortedAssessments = null;
+    this.sortedAssessments = undefined;
     this.filterSvc.refresh();
     //NOTE THIS remove to disable the menu items when clearing
     localStorage.removeItem('assessmentId');
@@ -352,42 +363,40 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       localStorage.removeItem('redirectid');
       this.navSvc.beginAssessment(+rid);
     }
-    this.assessSvc.getAssessmentsCompletion().pipe(
-      concatMap((assessmentsCompletionData: any[]) =>
-        this.assessSvc.getAssessments().pipe(
-          map((assessments: UserAssessment[]) => {
-            assessments.forEach((item, index, arr) => {
 
-              // determine assessment type display
+    this.assessSvc.getAssessmentsCompletion().pipe(
+      concatMap((assessmentsCompletionData: any) =>
+        this.assessSvc.getAssessments().pipe(
+          map((assessments: any) => {
+            assessments.forEach((item: UserAssessment) => {
               item.type = this.determineAssessmentType(item);
 
-
-              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              let currentAssessmentStats = assessmentsCompletionData.find((x: any) => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
-
-
             });
 
-
             this.sortedAssessments = assessments;
+            this.sortData({ active: 'date', direction: 'desc' });
+
             if (this.gridApi && !this.gridApi.isDestroyed()) {
               this.gridApi.setGridOption('rowData', this.filteredAssessments);
             }
-          },
-            error => {
-              console.error(
-                'Unable to get Assessments for ' +
-                this.authSvc.email() +
-                ': ' +
-                (<Error>error).message
-              );
-            }
-          )
-        ))).subscribe();
+          }),
+          catchError(error => {
+            console.error(
+              'Unable to get Assessments for ' +
+              this.authSvc.email() + ': ' +
+              (<Error>error).message
+            );
+            return of(null);
+          })
+        )
+      )
+    ).subscribe();
   }
 
   /**
@@ -522,62 +531,56 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
    */
   async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
     const obs = this.assessSvc.getEncryptPreference();
-    const prom = firstValueFrom(obs);
-    prom.then((response: boolean) => {
-      let encryption = response;
+    const encryption = await firstValueFrom(obs).catch(() => false);
 
-      if (encryption || jsonOnly) {
-        let dialogRef = this.dialog.open(ExportAssessmentComponent, {
-          data: { jsonOnly, encryption }
-        });
+    if (encryption || jsonOnly) {
+      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+        data: { jsonOnly, encryption }
+      });
 
-        dialogRef.afterClosed().subscribe(result => {
-          let url = this.fileSvc.exportUrl;
+      dialogRef.afterClosed().subscribe(result => {
+        let url = this.fileSvc.exportUrl;
 
-          this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
-            if (result) {
-              if (jsonOnly) {
-                url = this.fileSvc.exportJsonUrl;
-              }
-
-              let params = '';
-
-              if (result.removePCII) {
-                params = params + '&removePCII=' + result.removePCII;
-              }
-
-              if (result.encryptionData.password != null && result.encryptionData.password !== '') {
-                params = params + '&password=' + result.encryptionData.password;
-              }
-
-              if (result.encryptionData.hint != null && result.encryptionData.hint !== '') {
-                params = params + '&passwordHint=' + result.encryptionData.hint;
-              }
-
-              if (params.length > 0) {
-                url = url + '?' + params.replace(/^&/, '');
-              }
-              this.fileExportSvc.fetchAndSaveFile(url, response.token);
+        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+          if (result) {
+            if (jsonOnly) {
+              url = this.fileSvc.exportJsonUrl;
             }
 
+            let params = '';
 
-          });
+            if (result.removePCII) {
+              params = params + '&removePCII=' + result.removePCII;
+            }
+
+            if (result.encryptionData.password != null && result.encryptionData.password !== '') {
+              params = params + '&password=' + result.encryptionData.password;
+            }
+
+            if (result.encryptionData.hint != null && result.encryptionData.hint !== '') {
+              params = params + '&passwordHint=' + result.encryptionData.hint;
+            }
+
+            if (params.length > 0) {
+              url = url + '?' + params.replace(/^&/, '');
+            }
+            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+          }
         });
-      } else {
-        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
-          let url = this.fileSvc.exportUrl;
-          this.fileExportSvc.fetchAndSaveFile(url, response.token);
-        });
-      }
-      ;
-    });
+      });
+    } else {
+      this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+        let url = this.fileSvc.exportUrl;
+        this.fileExportSvc.fetchAndSaveFile(url, response.token);
+      });
+    };
   }
 
   /**
    *
    * @param event
    */
-  importAssessmentFile(event) {
+  importAssessmentFile(event: any) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
     if (event.target.files[0].name.endsWith('.csetw')
@@ -597,7 +600,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     }
 
     if (!this.unsupportedImportFile) {
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef?.afterClosed().subscribe(result => {
         this.getAssessments();
       });
     }
@@ -610,7 +613,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(dateString: string, format: string) {
-    var dtD = DateTime.fromISO(dateString);
+    const dtD = DateTime.fromISO(dateString);
     let localDate = '';
     if (format == 'med') {
       localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
@@ -626,11 +629,16 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     this.exportAllLoop();
   }
 
-  async exportAllLoop() { // allows for multiple api calls
+  /**
+   * Allows for multiple API calls
+   */
+  async exportAllLoop() {
+    if (!this.sortedAssessments?.length) return;
+
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
-      a.click();
-      await this.timer(1500); // prevents api calls from canceling each other
+      a?.click();
+      await this.timer(1500);
     }
 
     this.exportAllInProgress = false;
@@ -644,11 +652,11 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     if (!this.sortedAssessments) return [];
     switch (this.currentFilter) {
       case 'done':
-        return this.sortedAssessments.filter(a => a.done == true);
+        return this.sortedAssessments.filter(a => a.done);
       case 'pending':
-        return this.sortedAssessments.filter(a => a.done == false);
+        return this.sortedAssessments.filter(a => !a.done);
       case 'favorite':
-        return this.sortedAssessments.filter(a => a.favorite == true);
+        return this.sortedAssessments.filter(a => a.favorite);
       default:
         return this.sortedAssessments;
     }
@@ -686,37 +694,34 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     const labelExportJson = this.tSvc.translate('buttons.export json');
 
     let buttons = `
-    <button class="btn btn-ghost btn-sm hover:btn-error"
+    <button class="btn hover:btn-error"
             data-action="delete"
             data-assessment-id="${assessmentId}"
             data-row-index="${rowIndex}"
             title="Remove assessment">
-      <span class="cset-icons-trash-x tw:text-sm me-2"></span>
-      <span class="text-nowrap">${labelRemove}</span>
+      <span class="cset-icons-trash-x"></span>
     </button>
   `;
 
     if (this.showColumn('export')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ms-1"
+      <button class="btn btn-ghost"
               data-action="export"
               data-assessment-id="${assessmentId}"
               title="Export assessment">
-        <span class="cset-icons-export-up tw:text-sm me-2"></span>
-        <span class="text-nowrap">${labelExport}</span>
+        <span class="cset-icons-export-up"></span>
       </button>
     `;
     }
 
     if (this.showColumn('export json')) {
       buttons += `
-      <button class="btn btn-ghost btn-sm ms-1"
-              data-action="exportJson"
-              data-assessment-id="${assessmentId}"
-              title="Export assessment JSON">
-        <span class="cset-icons-export-up tw:text-sm me-2"></span>
-        <span class="text-nowrap">${labelExportJson}</span>
-      </button>
+        <button class="btn btn-ghost"
+                data-action="exportJson"
+                data-assessment-id="${assessmentId}"
+                title="Export assessment JSON">
+          ${this.exportJsonIcon}
+        </button>
     `;
     }
 
@@ -724,17 +729,23 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     if (this.showColumn('export json')) {
       const uploaded = !!assessment.jsonUploaded;
       jsonIndicator = `
-      <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2 tw:ms-1" title="Check to indicate that the JSON file has been submitted to CISA">
-        <input type="checkbox" id="json-uploaded-${assessmentId}" ${uploaded ? 'checked' : ''}
-               class="checkbox-custom"
-               data-action="toggleJsonUploaded"
-               data-assessment-id="${assessmentId}">
-        <label class="checkbox-custom-label tw:my-0 tw:items-center" for="json-uploaded-${assessmentId}">Submitted</label>
-      </div>
-    `;
+        <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2" title="Mark as submitted to CISA">
+          <input type="checkbox"
+                id="json-uploaded-${assessmentId}"
+                ${uploaded ? 'checked' : ''}
+                class="checkbox-custom tw:sr-only"
+                data-action="toggleJsonUploaded"
+                data-assessment-id="${assessmentId}">
+          <label for="json-uploaded-${assessmentId}"
+                class="checkbox-custom-label tw:my-0 tw:items-center"
+                title="Mark as submitted to CISA">
+            CISA
+          </label>
+        </div>
+      `;
     }
 
-    return `<div class="tw:flex tw:items-center tw:h-full tw:gap-1">${buttons}${jsonIndicator}</div>`;
+    return `<div class="tw:flex tw:h-full tw:gap-0">${buttons}${jsonIndicator}</div>`;
   }
 
   /**
@@ -787,20 +798,22 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         this.navSvc.beginAssessment(assessmentId);
         break;
 
-      case 'toggleFavorite':
+      case 'toggleFavorite': {
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
           this.toggleFavorite(assessment);
         }
         break;
+      }
 
-      case 'delete':
-        const rowIndex = parseInt(actionElement.getAttribute('data-row-index'));
+      case 'delete': {
+        const rowIndex = Number.parseInt(actionElement.getAttribute('data-row-index'));
         const assessmentToDelete = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessmentToDelete) {
           this.removeAssessment(assessmentToDelete, rowIndex);
         }
         break;
+      }
 
       case 'export':
         this.clickDownloadLink(assessmentId);
@@ -810,13 +823,15 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         this.clickDownloadLink(assessmentId, true);
         break;
 
-      case 'toggleJsonUploaded':
-        const newValue = (actionElement as HTMLInputElement).checked;
+      case 'toggleJsonUploaded': {
+        const checkbox = actionElement as HTMLInputElement;
+        const newValue = checkbox.checked;
         const assessmentToToggle = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessmentToToggle) {
           this.toggleJsonUploaded(assessmentToToggle, newValue);
         }
         break;
+      }
     }
   }
 

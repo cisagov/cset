@@ -20,11 +20,36 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="border border-secondary p-3 rounded mb-4 w-fit">
-     <div *ngIf="TECH_DOMAIN_IT.includes(techDomain)">
-          Information Technology (IT): {{itScore | number:'1.1-2'}}%
+<div *transloco="let t" class="d-flex">
+
+     <div id="overall-score" class="score-container align-self-center align-self-start" style="margin: 0 4px;">
+          <div>{{t('reports.core.cpg.report.impact scores.overall score')}}</div>
+          <div class="p-1" style="font-size: 2rem;">
+               {{scores ? scores.overall.toFixed(0) + '%' : ''}}
+          </div>
      </div>
-     <div *ngIf="TECH_DOMAIN_OT.includes(techDomain)">
-          Operation Technology (OT): {{otScore | number:'1.1-2'}}%
+
+     <div class="flex-column">
+          <div id="impact-score-high" class="score-container">
+               <div>{{t('reports.core.cpg.report.impact scores.high')}}</div>
+               <div class="p-1" [class.has-score]="standardBasedScore > 0">
+                    {{scores ? scores.impactHigh.toFixed(0) + '%' : ''}}
+               </div>
+          </div>
+
+          <div id="impact-score-mod" class="score-container">
+               <div>{{t('reports.core.cpg.report.impact scores.moderate')}}</div>
+               <div class="p-1" [class.has-score]="componentBasedScore > 0">
+                    {{scores ? scores.impactModerate.toFixed(0) + '%' : ''}}
+               </div>
+          </div>
+
+          <div id="impact-score-low" class="score-container">
+               <div>{{t('reports.core.cpg.report.impact scores.low')}}</div>
+               <div class="p-1" [class.has-score]="componentBasedScore > 0">
+                    {{scores ? scores.impactLow.toFixed(0) + '%' : ''}}
+               </div>
+          </div>
      </div>
+
 </div>

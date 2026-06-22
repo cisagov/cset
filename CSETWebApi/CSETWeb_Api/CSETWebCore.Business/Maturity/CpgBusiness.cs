@@ -4,13 +4,14 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using CSETWebCore.Model.Maturity.CPG;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Model.Maturity.CPG;
+
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -48,9 +49,17 @@ namespace CSETWebCore.Business.Maturity
                 modelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
             }
 
+            // first, get the answer set
+            var answerList = GetAnswerList(assessmentId, techDomain, modelId);
+
+
+            // calculate the compliance scores
+            var scoring = new CpgScoring();
+            resp.ComplianceScore = scoring.CalculateNewImpactScore(answerList);
+
 
             // get the CPG question distribution
-            var dbListCpg = GetAnswerDistribGroupings(assessmentId, techDomain, modelId);
+            var dbListCpg = GetAnswerDistribGroupings(answerList);
 
             foreach (var item in dbListCpg)
             {
@@ -78,8 +87,6 @@ namespace CSETWebCore.Business.Maturity
 
                 });
             });
-
-            resp.ComplianceScore = CalculateScore(dbListCpg);
 
             return resp;
         }
@@ -161,7 +168,28 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         /// <param name="modelId"></param>
         /// <returns></returns>
-        public IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId, string techDomain, int? modelId)
+        public IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(List<AnswerImpact> answerList)
+        {
+            // group the answers 
+            var groupedList = answerList
+                .GroupBy(o => new { o.GroupingId, o.Title, o.AnswerText })
+                .Select(g => new GetAnswerDistribGroupingsResult
+                {
+                    grouping_id = g.Key.GroupingId,
+                    title = g.Key.Title,
+                    answer_text = g.Key.AnswerText,
+                    answer_count = g.Count()
+                })
+                .ToList();
+
+            return groupedList;
+        }
+
+
+        /// <summary>
+        /// Builds a list of in-scope answers for a model and tech domain.
+        /// </summary>
+        private List<AnswerImpact> GetAnswerList(int assessmentId, string techDomain, int? modelId)
         {
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
@@ -176,10 +204,31 @@ namespace CSETWebCore.Business.Maturity
 
             var query = from a in _context.ANSWER
                         join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+
+                        let propsId = q.Parent_Question_Id != null ? (int)q.Parent_Question_Id : q.Mat_Question_Id
+                        join p in _context.MATURITY_QUESTION_PROPS
+                            on new
+                            {
+                                Mat_Question_Id = propsId,
+                                PropertyName = "IMPACT"
+                            }
+                            equals new { p.Mat_Question_Id, p.PropertyName }
+                            into props
+                        from p in props.DefaultIfEmpty()
+
                         join g in _context.MATURITY_GROUPINGS on q.Grouping_Id equals g.Grouping_Id
                         where a.Question_Type == "Maturity" && q.Is_Answerable
                            && a.Assessment_Id == assessmentId && q.Maturity_Model_Id == modelId
-                        select new { g.Grouping_Id, g.Title, a.Answer_Id, a.Answer_Text, q.Mat_Question_Id };
+
+                        select new AnswerImpact()
+                        {
+                            GroupingId = g.Grouping_Id,
+                            QuestionId = q.Mat_Question_Id,
+                            Title = g.Title,
+                            Impact = p != null ? p.PropertyValue : null,
+                            AnswerId = a.Answer_Id,
+                            AnswerText = a.Answer_Text,
+                        };
 
             var answerList = query.ToList();
 
@@ -194,42 +243,9 @@ namespace CSETWebCore.Business.Maturity
                 _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, techDomain);
             }
 
+            answerList.RemoveAll(x => _questionScope.OutOfScopeQuestionIds.Contains(x.QuestionId));
 
-            answerList.RemoveAll(x => _questionScope.OutOfScopeQuestionIds.Contains(x.Mat_Question_Id));
-
-
-            // group the answers 
-            var groupedList = answerList
-                .GroupBy(o => new { o.Grouping_Id, o.Title, o.Answer_Text })
-                .Select(g => new GetAnswerDistribGroupingsResult
-                {
-                    grouping_id = g.Key.Grouping_Id,
-                    title = g.Key.Title,
-                    answer_text = g.Key.Answer_Text,
-                    answer_count = g.Count()
-                })
-                .ToList();
-
-            return groupedList;
-        }
-
-
-        /// <summary>
-        /// Calculates a percentage answered Yes.  
-        /// In Progress answers are given half credit.
-        /// </summary>
-        private double CalculateScore(IList<GetAnswerDistribGroupingsResult> distrib)
-        {
-            var summary = distrib
-                .GroupBy(x => x.answer_text)
-                .ToDictionary(g => g.Key, g => g.Sum(x => x.answer_count));
-
-            double total = (double)summary.Sum(x => x.Value);
-            double y = (double)summary.GetValueOrDefault("Y", 0);
-            double i = (double)summary.GetValueOrDefault("I", 0) * 0.5;
-
-            double score = ((y + i) / total) * 100d;
-            return score;
+            return answerList;
         }
     }
 }

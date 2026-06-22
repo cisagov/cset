@@ -408,22 +408,22 @@ html[data-bs-theme="dark"]:has(.light-mode-wrapper) {
 
   // CPG practice table headers - need very high specificity to override component styles
   // The first header column (Security Practice) needs white text
-  table.cpg-table th, 
-  table.cpg-table th * {
-    color: #ffffffdd !important; // near-white (default for most headers)
-  }
+  // table.cpg-table th, 
+  // table.cpg-table th * {
+  //   color: #ffffffdd !important; // near-white (default for most headers)
+  // }
 
   // CSF1 functions with dark backgrounds need white text
-  table.cpg-table th.csf1-func-id,
-  table.cpg-table th.csf1-func-pr {
-    color: #ffffffdd !important; // near-white
-  }
+  // table.cpg-table th.csf1-func-id,
+  // table.cpg-table th.csf1-func-pr {
+  //   color: #ffffffdd !important; // near-white
+  // }
 
-  // SSG headers need white text
-  table.cpg-table th.ssg-it-product-design,
-  table.cpg-table th.ssg-it-software-dev {
-    color: #ffffffdd !important; // near-white
-  }
+  // // SSG headers need white text
+  // table.cpg-table th.ssg-it-product-design,
+  // table.cpg-table th.ssg-it-software-dev {
+  //   color: #ffffffdd !important; // near-white
+  // }
 }
 
 // Additional override for dark theme to ensure it applies

@@ -160,6 +160,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
                 this.demographicData = data;
+                this.demographicData.techDomain ??= 'IT';
                 this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
 
                 if (this.demographicData.organizationType == "3") {
@@ -169,7 +170,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                 // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
 
-                if (this.demographicData.acknowledgement == true) {
+                if (this.demographicData.acknowledgement ?? false) {
                     const dlgOkay = this.dialog.open(OkayComponent, {
                         data: {
                             title: this.tSvc.translate('sector changes'),

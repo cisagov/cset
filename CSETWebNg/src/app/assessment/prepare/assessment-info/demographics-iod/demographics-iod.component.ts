@@ -32,6 +32,7 @@ import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServi
 import { ConstantsService } from '../../../../services/constants.service';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { TranslocoService } from '@jsverse/transloco';
+import { AnalyticsCompareComponent } from '../../../results/analytics-compare/analytics-compare.component';
 
 
 @Component({
@@ -42,26 +43,26 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class DemographicsIodComponent implements OnInit {
 
-  @Input() events: Observable<void>;
+  @Input() events?: Observable<void>
 
   /**
    * The principal model for this page
    */
   @Input() demographicData: DemographicsIod = {};
-  assessmentConfig: AssessmentConfig;
-  serviceDemographics: ServiceDemographic;
-  serviceComposition: ServiceComposition;
+
+  assessmentConfig?: AssessmentConfig;
+  serviceDemographics?: ServiceDemographic;
+  serviceComposition?: ServiceComposition;
 
 
   /**
    * 
    */
   constructor(public demoSvc: DemographicIodService,
-    private assessSvc: AssessmentService,
+    private readonly assessSvc: AssessmentService,
     public dialog: MatDialog,
-    private configSvc: ConfigService,
-    private c: ConstantsService,
-    private tSvc: TranslocoService
+    private readonly configSvc: ConfigService,
+    private readonly tSvc: TranslocoService
   ) { }
 
   /**
@@ -123,8 +124,8 @@ export class DemographicsIodComponent implements OnInit {
   /**
    * 
    */
-  isSharedOrgChecked(org): boolean {
-    return this.demographicData.shareOrgs.includes(org.optionValue);
+  isSharedOrgChecked(org: any): boolean {
+    return this.demographicData?.shareOrgs?.includes(org.optionValue) ?? false;
   }
 
   /**
@@ -160,6 +161,8 @@ export class DemographicsIodComponent implements OnInit {
   updateDemographics() {
     this.configSvc.userIsCisaAssessor = true;
     this.demographicData.sectorDirective = 'NIPP';
+
+    this.demographicData.facilityName = this.demographicData.organizationName;
 
     this.demoSvc.updateDemographic(this.demographicData);
   }

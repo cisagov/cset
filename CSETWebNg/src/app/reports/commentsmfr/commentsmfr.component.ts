@@ -31,6 +31,7 @@ import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentDetail } from '../../models/assessment-info.model';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-commentsmfr',
@@ -46,6 +47,10 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
 })
 export class CommentsMfrComponent implements OnInit {
   response: any = null;
+
+  comments: any[] | undefined = undefined;
+  markedForReview: any[] | undefined = undefined;
+
   remarks: string;
   info: AssessmentDetail;
   loading: boolean = false;
@@ -63,7 +68,7 @@ export class CommentsMfrComponent implements OnInit {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    private titleService: Title,
+    private readonly titleService: Title,
     public maturitySvc: MaturityService,
     public tSvc: TranslocoService
   ) { }
@@ -72,6 +77,13 @@ export class CommentsMfrComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.initAsync();
+  }
+
+  /**
+   * 
+   */
+  async initAsync() {
     this.loading = true;
 
     this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
@@ -84,17 +96,28 @@ export class CommentsMfrComponent implements OnInit {
       }
     );
 
-    this.maturitySvc.getCommentsMarked().subscribe(
-      (r: any) => {
-        this.response = r;
-        // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
-        this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
-        this.aliasTranslated = this.tSvc.translate(`titles.${this.response?.information.questionsAlias.toLowerCase()}`);
+    // get comments
+    try {
+      this.response = await firstValueFrom(this.maturitySvc.getReportComments());
+      this.comments = this.response.comments;
 
-        this.loading = false;
-      },
-      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
-    );
+      this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
+      this.aliasTranslated = this.tSvc.translate(`titles.${this.response?.information.questionsAlias.toLowerCase()}`);
+      this.loading = false;
+    } catch (error) {
+      console.error('Comments Marked Report Error: ' + (<Error>error).message);
+    }
+
+    // get marked for review
+    try {
+      const respMfr: any = await firstValueFrom(this.maturitySvc.getMarkedForReview());
+      console.log('mfr response', respMfr);
+      this.markedForReview = respMfr.markedForReviewList;
+      this.loading = false;
+    } catch (error) {
+      console.error('Comments Marked Report Error: ' + (<Error>error).message);
+    }
+
 
     this.assessSvc.getOtherRemarks().subscribe((resp: any) => {
       this.remarks = resp;

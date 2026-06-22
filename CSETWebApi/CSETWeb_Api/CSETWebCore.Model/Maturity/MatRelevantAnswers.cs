@@ -41,6 +41,7 @@ namespace CSETWebCore.Model.Maturity
         public bool ShowAlt { get; set; }
     }
 
+
     public class MatAnsweredQuestionDomain
     {
         public MatAnsweredQuestionDomain()

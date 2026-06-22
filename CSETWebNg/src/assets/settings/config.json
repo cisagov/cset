@@ -131,7 +131,6 @@
       "modelId": "3",
       "questionIcons": {
         "showDetails": false,
-        "guidanceIcon": "G",
         "showReviewed": false
       }
     },
@@ -140,7 +139,6 @@
       "modelId": "4",
       "questionIcons": {
         "showDetails": false,
-        "guidanceIcon": "G",
         "showReviewed": false
       }
     },
@@ -151,7 +149,6 @@
       "showCriticalServiceDemog": false,
       "questionIcons": {
         "showDetails": false,
-        "guidanceIcon": "G",
         "showReviewed": false
       }
     },
@@ -162,7 +159,6 @@
       "hideTopLevelGroupingName": true,
       "questionIcons": {
         "showDetails": false,
-        "guidanceIcon": "G",
         "showReviewed": false
       },
       "answerOptions": [

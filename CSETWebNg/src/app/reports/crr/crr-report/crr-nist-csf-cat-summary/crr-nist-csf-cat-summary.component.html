@@ -68,17 +68,20 @@
                         <br />
                     </td>
                     <td colspan="2" class="p-0 align-top border-0">
-                        <table class="m-0 border-0">
-                            <tr *ngFor="let subCat of cat.subCats; let i = index" class="p-3 border-0"
+                        <div class="m-0">
+                            <div *ngFor="let subCat of cat.subCats; let i = index" class="d-flex p-3"
                                 [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
-                                <td class="px-1 pt-1 pb-3 border-0" style="width: 210px; font-size: 10px; ">
+
+                                <div style="width: 210px; font-size: 10px;" class="px-1 pt-1 pb-3">
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
-                                </td>
-                                <td class="align-top pb-3" style="width: 280px; border: none;">
+                                </div>
+
+                                <div style="width: 280px;" class="align-top pb-3">
                                     <div [innerHtml]="subCat.chartSubCat | safe" class="ms-1"></div>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <div *ngIf="e.function.Function.code !== 'RC'" class="break"></div>

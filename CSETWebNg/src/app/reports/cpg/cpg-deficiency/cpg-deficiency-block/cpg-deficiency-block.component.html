@@ -20,20 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<table role="presentation" class="w-100">
+<table class="w-100">
     <ng-template ngFor let-s [ngForOf]="deficiencyList">
         <tr>
-            <td class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">
+            <th class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">
                 {{s.mat.question_Title}}
-            </td>
-            <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
-            <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+            </th>
+            <th class="deficiencies-list-comment">{{s.mat.security_Practice}}</th>
+            <th style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                 <div style="width: 9rem; font-weight: bold;">
                     {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
                 </div>
-            </td>
-            <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
-                    src="assets/images/icons/MarkedFlag.png"></td>
+            </th>
+            <th class="deficiencies-list-flag"><img class="marked-flag ms-2 align-self-center" alt="marked for review" *ngIf="s.answer.mark_For_Review"
+                    src="assets/images/icons/MarkedFlag.png"></th>
         </tr>
 
         <tr *ngIf="s.answer.comment">

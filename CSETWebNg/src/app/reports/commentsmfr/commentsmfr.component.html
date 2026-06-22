@@ -21,155 +21,166 @@
   SOFTWARE.
 -------------------------->
 <div class="light-mode-wrapper" data-theme="light" data-bs-theme="light">
-<div class="report-body mb-5" *transloco="let t">
+    <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-page [assessDetail]="info" [title]="t('reports.core.rra.cmfr.report title') | uppercase" />
-    <div class="page-break"></div>
+        <app-cover-page [assessDetail]="info" [title]="t('reports.core.rra.cmfr.report title') | uppercase" />
+        <div class="page-break"></div>
 
-    <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+        <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+
+        <ng-template #mainContent>
+
+            <!-- "Comments" -->
+            <div class="ms-3 me-3 form">
+                <div class="d-flex flex-row justify-content-between align-items-end">
+                    <h1 class="page-title">
+                        {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
+                    </h1>
+                </div>
+                <hr class="page-line m-0">
+                <table class="w-100 td-align-top">
+                    <tr *ngIf="response?.comments?.length > 0">
+                        <th>{{questionAliasSingular}}</th>
+                        <th colspan="3">
+                            <p style="color: #de761c" class="d-flex justify-content-end">
+                                {{t('reports.core.rra.cmfr.marked for review',
+                                {alias: aliasTranslated})}} <img class="marked-flag ms-2 align-self-center"
+                                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+                        </th>
+                    </tr>
+                    <ng-template ngFor let-s [ngForOf]="response?.comments">
+                        <tr>
+                            <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
+                            </td>
+                            <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
+                            <td style="padding-left: 1rem; color: #555555">
+                                <div style="width: 7rem">
+                                    {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
+                                </div>
+                            </td>
+                            <td class="deficiencies-list-flag"><img class="marked-flag ms-2"
+                                    *ngIf="s.answer.mark_For_Review" alt="marked for review"
+                                    src="assets/images/icons/MarkedFlag.png">
+                            </td>
+                        </tr>
+                        <div *ngIf="s.answer.comment;then sc_comments_given"></div>
+                        <ng-template #sc_comments_given>
+                            <tr>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color: #eee">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="width: 15%; padding-right: 15px; vertical-align: top; text-align: left;">
+                                                    <b>{{t('reports.core.rra.cmfr.comment')}}:</b>
+                                                </td>
+                                                <td style="width: 85%; vertical-align: top; text-align: left;">
+                                                    {{s.answer.comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <tr>
+                            <td colspan="4">
+                                <hr class="my-2">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </table>
+
+                <div *ngIf="!response?.comments || response?.comments.length == 0" class="mt-3">
+                    {{translateNoCommentsOrMFR(response?.information.questionsAlias, 'no comments')}}
+                </div>
+            </div>
+
+
+            <!-- "Other Remarks"-->
+            <div *ngIf="remarks?.length > 0" class="ms-3 me-3 form">
+                <h1 class="page-title">{{t('reports.core.rra.cmfr.other remarks')}}</h1>
+                <hr class="page-line m-0">
+                <div class="my-3" [innerHTML]="remarks | linebreakplain">
+                </div>
+            </div>
+
+
+            <!-- "Marked for Review" -->
+            <div class="ms-3 me-3 form">
+                <div class="d-flex flex-row justify-content-between align-items-end">
+                    <h1 class="page-title">
+                        {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
+                    </h1>
+                </div>
+                <hr class="page-line m-0">
+                <table class="w-100 td-align-top">
+                    <tr *ngIf="markedForReview?.length > 0">
+                        <th>{{questionAliasSingular}}</th>
+                        <th colspan="3">
+                            <p style="color: #de761c" class="d-flex justify-content-end">
+                                {{t('reports.core.rra.cmfr.marked for review',
+                                {alias: aliasTranslated})}} <img class="marked-flag ms-2 align-self-center"
+                                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+                        </th>
+                    </tr>
+                    <ng-template ngFor let-s [ngForOf]="markedForReview">
+                        <tr>
+                            <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
+                            </td>
+                            <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
+                            <td style="padding-left: 1rem; color: #555555">
+                                <div style="width: 7rem">
+                                    {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
+                                </div>
+                            </td>
+                            <td class="deficiencies-list-flag">
+                                <img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
+                                    src="assets/images/icons/MarkedFlag.png" alt="marked for review">
+                            </td>
+                        </tr>
+                        <div *ngIf="s.answer.comment;then c_comments_given"></div>
+                        <ng-template #c_comments_given>
+                            <tr>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color: #eee">
+                                        <table>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="width: 15%; padding-right: 15px; vertical-align: top; text-align: left;">
+                                                    <b>{{t('reports.core.rra.cmfr.comment')}}:</b>
+                                                </td>
+                                                <td style="width: 85%; vertical-align: top; text-align: left;">
+                                                    {{s.answer.comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <tr>
+                            <td colspan="4">
+                                <hr class="my-2">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </table>
+
+                <div *ngIf="!markedForReview || markedForReview.length == 0" class="mt-3">
+                    {{translateNoCommentsOrMFR(response?.information.questionsAlias, 'no marked for review')}}
+                </div>
+            </div>
+
+        </ng-template>
     </div>
-
-    <ng-template #mainContent>
-
-        <!-- "Comments" -->
-        <div class="ms-3 me-3 form">
-            <div class="d-flex flex-row justify-content-between align-items-end">
-                <h1 class="page-title">
-                    {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
-                </h1>
-            </div>
-            <hr class="page-line m-0">
-            <table role="presentation" class="w-100">
-                <tr *ngIf="response?.comments?.length > 0">
-                    <th>{{questionAliasSingular}}</th>
-                    <th colspan="3">
-                        <p style="color: #de761c" class="d-flex justify-content-end">{{t('reports.core.rra.cmfr.marked for review',
-                            {alias: aliasTranslated})}} <img class="marked-flag ps-1" src="assets/images/icons/MarkedFlag.png"
-                                alt="marked for review"> </p>
-                    </th>
-                </tr>
-                <ng-template ngFor let-s [ngForOf]="response?.comments">
-                    <tr>
-                        <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
-                        </td>
-                        <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
-                        <td style="padding-left: 1rem; color: #555555">
-                            <div style="width: 7rem">
-                                {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
-                            </div>
-                        </td>
-                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
-                                src="assets/images/icons/MarkedFlag.png">
-                        </td>
-                    </tr>
-                    <div *ngIf="s.answer.comment;then sc_comments_given"></div>
-                    <ng-template #sc_comments_given>
-                        <tr>
-                            <td></td>
-                            <td colspan="4">
-                                <div class="alert alert-secondary" style="background-color: #d6d8db">
-                                    <table>
-                                        <tr>
-                                            <td
-                                                style="width: 15%; padding-right: 15px; vertical-align: top; text-align: left;">
-                                                <b>{{t('reports.core.rra.cmfr.comment')}}:</b>
-                                            </td>
-                                            <td style="width: 85%; vertical-align: top; text-align: left;">
-                                                {{s.answer.comment}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <tr>
-                        <td colspan="4">
-                            <hr class="my-2">
-                        </td>
-                    </tr>
-                </ng-template>
-            </table>
-
-            <div *ngIf="!response?.comments || response?.comments.length == 0" class="mt-3">
-                {{translateNoCommentsOrMFR(response?.information.questionsAlias, 'no comments')}}
-            </div>
-        </div>
-
-
-        <!-- "Other Remarks"-->
-        <div *ngIf="remarks?.length > 0" class="ms-3 me-3 form">
-            <h1 class="page-title">{{t('reports.core.rra.cmfr.other remarks')}}</h1>
-            <hr class="page-line m-0">
-            <div class="my-3" [innerHTML]="remarks | linebreakplain">
-            </div>
-        </div>
-
-
-        <!-- "Marked for Review" -->
-        <div class="ms-3 me-3 form">
-            <div class="d-flex flex-row justify-content-between align-items-end">
-                <h1 class="page-title">
-                    {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
-                </h1>
-            </div>
-            <hr class="page-line m-0">
-            <table role="presentation" class="w-100">
-                <tr *ngIf="response?.markedForReviewList?.length > 0">
-                    <th>{{questionAliasSingular}}</th>
-                    <th colspan="3">
-                        <p style="color: #de761c" class="d-flex justify-content-end">{{t('reports.core.rra.cmfr.marked for review',
-                            {alias: aliasTranslated})}} <img class="marked-flag ms-1" src="assets/images/icons/MarkedFlag.png"
-                                alt="marked for review"> </p>
-                    </th>
-                </tr>
-                <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
-                    <tr>
-                        <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
-                        </td>
-                        <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
-                        <td style="padding-left: 1rem; color: #555555">
-                            <div style="width: 7rem">
-                                {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
-                            </div>
-                        </td>
-                        <td class="deficiencies-list-flag"><img class="marked-flag ms-2" *ngIf="s.answer.mark_For_Review"
-                                src="assets/images/icons/MarkedFlag.png">
-                        </td>
-                    </tr>
-                    <div *ngIf="s.answer.comment;then c_comments_given"></div>
-                    <ng-template #c_comments_given>
-                        <tr>
-                            <td></td>
-                            <td colspan="4">
-                                <div class="alert alert-secondary" style="background-color: #d6d8db">
-                                    <table>
-                                        <tr>
-                                            <td
-                                                style="width: 15%; padding-right: 15px; vertical-align: top; text-align: left;">
-                                                <b>{{t('reports.core.rra.cmfr.comment')}}:</b>
-                                            </td>
-                                            <td style="width: 85%; vertical-align: top; text-align: left;">
-                                                {{s.answer.comment}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <tr>
-                        <td colspan="4">
-                            <hr class="my-2">
-                        </td>
-                    </tr>
-                </ng-template>
-            </table>
-
-            <div *ngIf="!response?.markedForReviewList || response?.markedForReviewList.length == 0" class="mt-3">
-                {{translateNoCommentsOrMFR(response?.information.questionsAlias, 'no marked for review')}}
-            </div>
-        </div>
-
-    </ng-template>
-</div>
 </div>

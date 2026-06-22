@@ -165,8 +165,8 @@
           </ng-container>
         </div>
 
-        <label class="form-label">Regulation 1</label>
-        <input class="form-control" type="text" name="reg1Other" [(ngModel)]="demographicData.reg1Other"
+        <label class="form-label" for="reg1Other">Regulation 1</label>
+        <input class="form-control" type="text" id="reg1Other" name="reg1Other" [(ngModel)]="demographicData.reg1Other"
           (change)="update($event)" />
       </div>
 
@@ -175,14 +175,14 @@
         <div class="mb-3">
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
             <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.optionValue" type="radio"
-              autocomplete="off" tabindex="2" (click)="changeRegType2(reg, $event)"
+              autocomplete="off" (click)="changeRegType2(reg, $event)"
               [checked]="demographicData.regulationType2 === reg.optionValue" />
             <label class="radio-custom-label" [for]="'regtype2-' + reg.optionValue">{{ reg.optionText }}</label>
           </ng-container>
         </div>
 
-        <label class="form-label">Regulation 2</label>
-        <input class="form-control" type="text" name="reg2Other" [(ngModel)]="demographicData.reg2Other"
+        <label class="form-label" for="reg2Other">Regulation 2</label>
+        <input class="form-control" type="text" id="reg2Other" name="reg2Other" [(ngModel)]="demographicData.reg2Other"
           (change)="update($event)" />
       </div>
     </div>

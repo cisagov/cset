@@ -160,9 +160,12 @@ namespace CSETWebCore.Business.Reports
     {
         public string ComponentName { get; set; }
         public int Component_Symbol_Id { get; set; }
-        public string Question { get; set; }
         public int QuestionId { get; set; }
+        public string Question { get; set; }
+        public int AnswerId { get; set; }
         public string Answer { get; set; }
+        public string Comment { get; set; }
+        public string Feedback { get; set; }
         public string Zone { get; set; }
         public string SAL { get; set; }
         public string LayerName { get; set; }
