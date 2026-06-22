@@ -30,6 +30,7 @@ namespace UpgradeLibrary.Upgrade
             {
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000_data2.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12404_to_13000_set_local_user_flag.sql"), conn);
 
                 ConvertSectors(conn);
