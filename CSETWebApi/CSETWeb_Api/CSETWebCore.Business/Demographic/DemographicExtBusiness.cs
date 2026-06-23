@@ -304,7 +304,7 @@ namespace CSETWebCore.Business.Demographic
         /// 
         /// </summary>
         /// <param name="demographic"></param>
-        public void SaveDemographics(DemographicExt demographic, int userid)
+        public void SaveDemographics(DemographicExt demographic)
         {
             var info = _context.INFORMATION.Where(x => x.Id == demographic.AssessmentId).FirstOrDefault();
             info.Facility_Name = demographic.OrganizationName;
@@ -350,7 +350,7 @@ namespace CSETWebCore.Business.Demographic
             _context.RemoveRange(ssg);
             _context.SaveChanges();
 
-            AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
+            AssessmentNaming.ProcessName(_context, demographic.AssessmentId);
         }
 
 

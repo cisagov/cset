@@ -111,7 +111,6 @@ export class CommentsMfrComponent implements OnInit {
     // get marked for review
     try {
       const respMfr: any = await firstValueFrom(this.maturitySvc.getMarkedForReview());
-      console.log('mfr response', respMfr);
       this.markedForReview = respMfr.markedForReviewList;
       this.loading = false;
     } catch (error) {
