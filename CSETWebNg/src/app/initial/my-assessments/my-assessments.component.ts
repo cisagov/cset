@@ -173,7 +173,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     });
 
     // initialize certain icons
-    fetch('/assets/images/icons/export-json.svg')
+    fetch('assets/images/icons/export-json.svg')
       .then(r => r.text())
       .then(svg => this.exportJsonIcon = svg);
   }
