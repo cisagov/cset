@@ -206,8 +206,6 @@ export class CpgReportComponent implements OnInit {
     hm.forEach(h => {
       this.ssgHeatmaps[h.modelId] = h.scores;
     });
-
-    console.log('ssg heatmaps', this.ssgHeatmaps);
   }
 
   /**

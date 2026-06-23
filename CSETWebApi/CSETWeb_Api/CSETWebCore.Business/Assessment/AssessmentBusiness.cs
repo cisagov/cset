@@ -663,6 +663,8 @@ namespace CSETWebCore.Business.Assessment
         {
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
+            var extBiz = new DemographicExtBusiness(_context);
+
             // Add or update the ASSESSMENTS record
             var dbAssessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
@@ -725,7 +727,11 @@ namespace CSETWebCore.Business.Assessment
 
             // add or update the INFORMATION record
             dbInformation.Assessment_Name = assessment.AssessmentName;
+
+            // keep ORG-NAME in sync with FacilityName
             dbInformation.Facility_Name = assessment.FacilityName;
+            extBiz.SaveX(assessmentId, "ORG-NAME", dbInformation.Facility_Name);
+
             dbInformation.City_Or_Site_Name = assessment.CityOrSiteName;
             dbInformation.State_Province_Or_Region = assessment.StateProvRegion;
             dbInformation.Postal_Code = assessment.PostalCode;
@@ -741,6 +747,7 @@ namespace CSETWebCore.Business.Assessment
             _context.SaveChanges();
 
 
+
             // persist maturity data
             if (assessment.UseMaturity)
             {
@@ -754,14 +761,12 @@ namespace CSETWebCore.Business.Assessment
             // No user is null here if accesskey login is used
             if (user != null)
             {
-                AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+                AssessmentNaming.ProcessName(_context, assessmentId);
             }
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
         }
-
-
 
 
         /// <summary>
@@ -788,6 +793,7 @@ namespace CSETWebCore.Business.Assessment
             return (orgTypes.OrderBy(a => a.Sequence).Select(a => new DetailsDemographicsOptionsDTO() { Text = a.OptionText, Id = a.OptionValue })).ToList();
         }
 
+
         /// <summary>
         /// Returns a boolean indicating if the current User is attached to the specified Assessment.
         /// The authentication token is automatically read and the user is determined from it.
@@ -803,6 +809,7 @@ namespace CSETWebCore.Business.Assessment
 
             return (countAC > 0);
         }
+
 
         /// <summary>
         /// Sets the assessment type title and description.
@@ -909,11 +916,13 @@ namespace CSETWebCore.Business.Assessment
             return processedSets;
         }
 
+
         public class SetInfo
         {
             public string FullName { get; set; }
             public string ShortName { get; set; }
         }
+
 
         public IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
@@ -955,6 +964,7 @@ namespace CSETWebCore.Business.Assessment
             return "";
         }
 
+
         /// <summary>
         /// Gets the userID that created the current assessment  
         /// </summary>
@@ -964,7 +974,6 @@ namespace CSETWebCore.Business.Assessment
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
             return assessment?.AssessmentCreatorId;
         }
-
 
 
         /// <summary>
@@ -990,6 +999,7 @@ namespace CSETWebCore.Business.Assessment
             _context.SaveChanges();
         }
 
+
         public void clearFirstTime(int userid, int assessment_id)
         {
             var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
@@ -999,6 +1009,7 @@ namespace CSETWebCore.Business.Assessment
                 _context.SaveChanges();
             }
         }
+
 
         public IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
@@ -1048,6 +1059,7 @@ namespace CSETWebCore.Business.Assessment
 
             return observationsPerAssessment;
         }
+
 
         public IEnumerable<MergeDocuments> GetAssessmentDocuments(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
         {
@@ -1289,7 +1301,13 @@ namespace CSETWebCore.Business.Assessment
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.AssessorMode = Convert.ToBoolean(mode);
             _context.SaveChanges();
+
+            if (assessment.AssessorMode)
+            {
+                AssessmentNaming.ProcessName(_context, assessment.Assessment_Id);
+            }
         }
+
 
         public void SetAssessmentDone(int assessmentId, bool isDone)
         {
@@ -1297,6 +1315,8 @@ namespace CSETWebCore.Business.Assessment
             assessment.Done = isDone;
             _context.SaveChanges();
         }
+
+
         public void SetAssessmentFavorite(int assessmentId, bool isFavorite)
         {
             int currentUserId = _tokenManager.GetUserId() ?? throw new UnauthorizedAccessException("User ID not found in token");

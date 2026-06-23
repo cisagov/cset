@@ -90,9 +90,7 @@ export class DemographicIodService {
   updateDemographic(demographic: DemographicsIod) {
     this.http.post(this.apiUrl, demographic, headers)
       .subscribe(() => {
-        if (this.configSvc.userIsCisaAssessor) {
-          this.assessSvc.updateAssessmentName();
-        }
+        this.assessSvc.refreshAssessmentName();
         this.demographicUpdateCompleted$.next();
       });
   }
