@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, first, firstValueFrom, Observable, Subject, take, timeout } from 'rxjs';
+import { BehaviorSubject, filter, firstValueFrom, Observable, Subject, take, timeout } from 'rxjs';
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
@@ -32,7 +32,6 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { Answer } from '../models/questions.model';
 import { ConversionService } from './conversion.service';
 import { ConstantsService } from './constants.service';
 import { parseReturnPath } from '../helpers/url-routing.helper';
@@ -80,6 +79,8 @@ export class AssessmentService {
    * when the assessment is loaded.
    */
   public assessment: AssessmentDetail;
+
+  assessment$ = new BehaviorSubject<AssessmentDetail>(null);
 
   /**
    * Stores the active assessment 'features' that the user wishes to use,
@@ -270,9 +271,7 @@ export class AssessmentService {
     // clean out properties that may contain HTML before posting.
     // The API WAF may reject to prevent XSS.
     // These properties are not user updatable.
-    const payload = JSON.parse(JSON.stringify(assessment));
-    payload.maturityModel = null;
-    payload.typeDescription = null;
+    const payload = { ...structuredClone(assessment), maturityModel: undefined, typeDescription: undefined };
 
     return this.http
       .post(
@@ -281,9 +280,7 @@ export class AssessmentService {
         headers
       )
       .subscribe(() => {
-        if (this.configSvc.userIsCisaAssessor) {
-          this.updateAssessmentName();
-        }
+        this.refreshAssessmentName();
       });
   }
 
@@ -515,9 +512,10 @@ export class AssessmentService {
   //Call this when the assessment name
   //was calculated in the backend and needs
   //to be updated here
-  updateAssessmentName() {
+  refreshAssessmentName() {
     this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
       this.assessment.assessmentName = data.assessmentName;
+      this.assessment$.next(this.assessment);
     });
   }
 
@@ -672,7 +670,7 @@ export class AssessmentService {
    * CISA Assessor Workflow's Assessment Configuration page.
    */
   isPcii() {
-    if (!!this.assessment) {
+    if (this.assessment) {
       return this.assessment.is_PCII ?? false;
     }
     return false;
@@ -697,11 +695,6 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'hasGlobalDocuments');
   }
 
-
-  updateAnswer(answer: Answer) {
-
-  }
-
   //Assessment upgrade conversion
   convertAssesment(original_id: number) {
     let queryParams = new HttpParams()
@@ -722,10 +715,12 @@ export class AssessmentService {
     this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
   }
+
   setAssesmentDone(done: boolean) {
     this.assessment.done = done;
     return this.http.post(this.apiUrl + 'setAssessmentDone', done, headers)
   }
+
   setAssessmentFavorite(isFavorite: boolean) {
     return this.http.post(this.apiUrl + 'setAssessmentFavorite', isFavorite, headers);
   }
