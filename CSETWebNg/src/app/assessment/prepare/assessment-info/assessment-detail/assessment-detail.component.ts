@@ -188,6 +188,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.assessment.assessorMode = !this.assessment.assessorMode;
     // Sets assessment level assessor mode and navigates to configuration page in assessor mode
     this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => {
+      this.assessSvc.refreshAssessmentName();
       this.navSvc.navBack('csi2');
     });
 

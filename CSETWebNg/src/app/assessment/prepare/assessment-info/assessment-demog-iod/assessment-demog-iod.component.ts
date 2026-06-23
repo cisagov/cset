@@ -27,7 +27,6 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { AuthenticationService } from '../../../../services/authentication.service';
-import { UploadExportComponent } from "../../../../dialogs/import-assessment/import-assessment.component";
 import { AssessmentService } from '../../../../services/assessment.service';
 
 
@@ -46,7 +45,7 @@ interface ImportExportData {
 
 export class AssessmentDemogIodComponent {
   unsupportedImportFile: boolean = false;
-  @ViewChild('demoIOD') demoIOD;
+  @ViewChild('demoIOD') demoIOD: any;
   eventImportExport: Subject<ImportExportData> = new Subject<ImportExportData>();
 
   constructor(
@@ -56,7 +55,7 @@ export class AssessmentDemogIodComponent {
     public assessmentSvc: AssessmentService
   ) { }
 
-  importClick(event) {
+  importClick(event: any) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
     if (event.target.files[0]?.name.endsWith(".json")) {
@@ -69,7 +68,7 @@ export class AssessmentDemogIodComponent {
     }
 
     if (!this.unsupportedImportFile) {
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(() => {
         this.demoIOD.populateDemographicsModel();
         this.assessmentSvc.refreshAssessment();
         this.demoSvc.demographicUpdateCompleted$.next();

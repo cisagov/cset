@@ -112,7 +112,7 @@ namespace CSETWebCore.Business.Demographic
             _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
             _context.SaveChanges();
             serviceDemographics.AssessmentId = dbServiceDemographics.Assessment_Id;
-            AssessmentNaming.ProcessName(_context, userid, serviceDemographics.AssessmentId);
+            AssessmentNaming.ProcessName(_context, serviceDemographics.AssessmentId);
             _assessmentUtil.TouchAssessment(dbServiceDemographics.Assessment_Id);
 
             return serviceDemographics.AssessmentId;

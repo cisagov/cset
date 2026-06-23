@@ -187,7 +187,7 @@ namespace CSETWebCore.Api.Controllers
             var userid = _token.GetCurrentUserId();
 
             var mgr = new DemographicExtBusiness(_context);
-            mgr.SaveDemographics(demographics, userid ?? 0);
+            mgr.SaveDemographics(demographics);
 
             _hooks.HookDemographicsChanged(demographics.AssessmentId);
 

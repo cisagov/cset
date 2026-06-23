@@ -168,6 +168,12 @@ export class AssessmentComponent implements OnInit {
          { passive: true }
       );
 
+      this.assessSvc.assessment$
+         .pipe(takeUntil(this.destroy$))
+         .subscribe(data => {
+            if (data) this.assessment = data;
+         });
+
       this.evaluateWindowSize();
 
       if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
@@ -214,7 +220,7 @@ export class AssessmentComponent implements OnInit {
    getAssessmentDetail() {
       this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
          this.assessment = data;
-         this.assessSvc.assessment = data;
+         this.assessSvc.assessment = structuredClone(data);
       });
    }
 
