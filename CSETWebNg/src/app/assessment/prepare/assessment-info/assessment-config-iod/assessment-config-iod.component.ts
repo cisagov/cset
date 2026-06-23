@@ -167,11 +167,11 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.assessment.assessorMode = !this.assessment.assessorMode;
     // Sets assessment level assessor mode and navigates to configuration page in non-assessor mode
     this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => {
+      this.assessSvc.refreshAssessmentName();
       this.navSvc.navBack('info2');
     });
-
-
   }
+
   setAssessmentDone() {
     this.assessment.done = !this.assessment.done;
     this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
