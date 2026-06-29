@@ -190,7 +190,6 @@ ipcMain.on('print-to-pdf', () => {
 });
 
 ipcMain.handle('return-from-diagram', async (event, { returnPath }) => {
-  console.log(returnPath);
   const win = BrowserWindow.fromWebContents(event.sender);
   if (!win) {
     log.error('return-from-diagram: no window found for IPC sender');
