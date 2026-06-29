@@ -54,10 +54,12 @@ function setupSpellCheckContextMenu(webContents) {
 
     // Add spelling suggestions if there are any
     for (const suggestion of params.dictionarySuggestions) {
-      menu.append(new MenuItem({
-        label: suggestion,
-        click: () => webContents.replaceMisspelling(suggestion)
-      }));
+      menu.append(
+        new MenuItem({
+          label: suggestion,
+          click: () => webContents.replaceMisspelling(suggestion)
+        })
+      );
     }
 
     // Add "Add to dictionary" option for misspelled words
@@ -65,10 +67,12 @@ function setupSpellCheckContextMenu(webContents) {
       if (menu.items.length > 0) {
         menu.append(new MenuItem({ type: 'separator' }));
       }
-      menu.append(new MenuItem({
-        label: 'Add to Dictionary',
-        click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
-      }));
+      menu.append(
+        new MenuItem({
+          label: 'Add to Dictionary',
+          click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+        })
+      );
     }
 
     // Add standard context menu items
@@ -99,19 +103,22 @@ function setupSpellCheckContextMenu(webContents) {
  * @param {Object} overrides - Additional options to merge in
  */
 function createBrowserWindowOptions(overrides = {}) {
-  return merge({
-    width: 900,
-    height: 700,
-    icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName,
-    webPreferences: {
-      preload: path.join(__dirname, 'main-electron-preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true,
-      webSecurity: true,
-      spellcheck: true
-    }
-  }, overrides);
+  return merge(
+    {
+      width: 900,
+      height: 700,
+      icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
+      title: appName,
+      webPreferences: {
+        preload: path.join(__dirname, 'main-electron-preload.js'),
+        nodeIntegration: false,
+        contextIsolation: true,
+        webSecurity: true,
+        spellcheck: true
+      }
+    },
+    overrides
+  );
 }
 
 /**
@@ -156,37 +163,21 @@ function setupChildWindow(childWindow) {
  */
 async function saveWindowAsPDF(window) {
   try {
-    // Get window title and sanitize for valid filename
-    const windowTitle = window.getTitle();
-    const sanitizedTitle = windowTitle.replace(/[/\\?%*:|"<>]/g, '-');
+    // Sanitize window title for use as a filename
+    const sanitizedTitle = window.getTitle().replace(/[/\\?%*:|"<>]/g, '-');
 
-    const saveDialogOptions = {
+    const filepath = dialog.showSaveDialogSync({
       title: `${appName} - Save as PDF`,
-      filters: [
-        {
-          name: 'PDF',
-          extensions: ['pdf']
-        }
-      ],
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
       defaultPath: path.join(app.getPath('downloads'), sanitizedTitle)
-    };
-
-    const filepath = dialog.showSaveDialogSync(saveDialogOptions);
+    });
 
     if (!filepath) return; // User cancelled
 
-    // Generate PDF
     const data = await window.webContents.printToPDF({ pageSize: 'Letter' });
-
-    // Save file
-    fs.writeFile(filepath, data, (error) => {
-      if (error) {
-        log.error(error);
-      }
-    });
-
+    await fs.promises.writeFile(filepath, data);
   } catch (error) {
-    log.error(error);
+    log.error('saveWindowAsPDF failed:', error);
   }
 }
 
@@ -198,6 +189,31 @@ ipcMain.on('print-to-pdf', () => {
   }
 });
 
+ipcMain.handle('return-from-diagram', async (event, { returnPath }) => {
+  console.log(returnPath);
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) {
+    log.error('return-from-diagram: no window found for IPC sender');
+    throw new Error('No window found for IPC sender');
+  }
+
+  // Validate — must be a relative path, no protocol, no traversal
+  if (typeof returnPath !== 'string' ||
+      returnPath.length > 200 ||
+      /[\\:]|\.\.|^\//.test(returnPath)) {
+    log.error('return-from-diagram: invalid returnPath:', returnPath);
+    throw new Error('Invalid returnPath: ' + returnPath);
+  }
+
+  try {
+    await win.loadFile(path.join(__dirname, 'dist', 'index.html'), {
+      search: `returnPath=${encodeURIComponent(returnPath)}`
+    });
+  } catch (err) {
+    log.error('return-from-diagram: loadFile failed:', err);
+    throw err;
+  }
+});
 
 function createWindow() {
   // Configure spell checker languages
