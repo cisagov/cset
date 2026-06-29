@@ -54,10 +54,12 @@ function setupSpellCheckContextMenu(webContents) {
 
     // Add spelling suggestions if there are any
     for (const suggestion of params.dictionarySuggestions) {
-      menu.append(new MenuItem({
-        label: suggestion,
-        click: () => webContents.replaceMisspelling(suggestion)
-      }));
+      menu.append(
+        new MenuItem({
+          label: suggestion,
+          click: () => webContents.replaceMisspelling(suggestion)
+        })
+      );
     }
 
     // Add "Add to dictionary" option for misspelled words
@@ -65,10 +67,12 @@ function setupSpellCheckContextMenu(webContents) {
       if (menu.items.length > 0) {
         menu.append(new MenuItem({ type: 'separator' }));
       }
-      menu.append(new MenuItem({
-        label: 'Add to Dictionary',
-        click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
-      }));
+      menu.append(
+        new MenuItem({
+          label: 'Add to Dictionary',
+          click: () => webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+        })
+      );
     }
 
     // Add standard context menu items
@@ -99,19 +103,22 @@ function setupSpellCheckContextMenu(webContents) {
  * @param {Object} overrides - Additional options to merge in
  */
 function createBrowserWindowOptions(overrides = {}) {
-  return merge({
-    width: 900,
-    height: 700,
-    icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName,
-    webPreferences: {
-      preload: path.join(__dirname, 'main-electron-preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true,
-      webSecurity: true,
-      spellcheck: true
-    }
-  }, overrides);
+  return merge(
+    {
+      width: 900,
+      height: 700,
+      icon: path.join(__dirname, 'dist/assets/icons/favicon_' + installationMode.toLowerCase() + '.ico'),
+      title: appName,
+      webPreferences: {
+        preload: path.join(__dirname, 'main-electron-preload.js'),
+        nodeIntegration: false,
+        contextIsolation: true,
+        webSecurity: true,
+        spellcheck: true
+      }
+    },
+    overrides
+  );
 }
 
 /**
@@ -156,38 +163,46 @@ function setupChildWindow(childWindow) {
  */
 async function saveWindowAsPDF(window) {
   try {
-    // Get window title and sanitize for valid filename
-    const windowTitle = window.getTitle();
-    const sanitizedTitle = windowTitle.replace(/[/\\?%*:|"<>]/g, '-');
+    // Sanitize window title for use as a filename
+    const sanitizedTitle = window.getTitle().replace(/[/\\?%*:|"<>]/g, '-');
 
-    const saveDialogOptions = {
+    const filepath = dialog.showSaveDialogSync({
       title: `${appName} - Save as PDF`,
-      filters: [
-        {
-          name: 'PDF',
-          extensions: ['pdf']
-        }
-      ],
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
       defaultPath: path.join(app.getPath('downloads'), sanitizedTitle)
-    };
-
-    const filepath = dialog.showSaveDialogSync(saveDialogOptions);
+    });
 
     if (!filepath) return; // User cancelled
 
-    // Generate PDF
     const data = await window.webContents.printToPDF({ pageSize: 'Letter' });
-
-    // Save file
-    fs.writeFile(filepath, data, (error) => {
-      if (error) {
-        log.error(error);
-      }
-    });
-
+    await fs.promises.writeFile(filepath, data);
   } catch (error) {
-    log.error(error);
+    log.error('saveWindowAsPDF failed:', error);
   }
+}
+
+function isDiagramUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return false;
+  }
+
+  try {
+    const parsed = new URL(rawUrl);
+    return /\/diagram(-orig)?\/src\/main\/webapp\/index\.html$/.test(parsed.pathname);
+  } catch {
+    return (
+      rawUrl.includes('/diagram/src/main/webapp/index.html') ||
+      rawUrl.includes('/diagram-orig/src/main/webapp/index.html')
+    );
+  }
+}
+
+function redactJwt(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return rawUrl;
+  }
+
+  return rawUrl.replace(/([?&]j=)[^&]*/g, '$1[redacted-jwt]');
 }
 
 // listen for the 'print-to-pdf' event from the renderer process
@@ -198,6 +213,28 @@ ipcMain.on('print-to-pdf', () => {
   }
 });
 
+ipcMain.handle('return-from-diagram', async (event, { returnPath }) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) {
+    log.error('return-from-diagram: no window found for IPC sender');
+    throw new Error('No window found for IPC sender');
+  }
+
+  // Validate — must be a relative path, no protocol, no traversal
+  if (typeof returnPath !== 'string' || returnPath.length > 200 || /[\\:]|\.\.|^\//.test(returnPath)) {
+    log.error('return-from-diagram: invalid returnPath:', returnPath);
+    throw new Error('Invalid returnPath: ' + returnPath);
+  }
+
+  try {
+    await win.loadFile(path.join(__dirname, 'dist', 'index.html'), {
+      search: `returnPath=${encodeURIComponent(returnPath)}`
+    });
+  } catch (err) {
+    log.error('return-from-diagram: loadFile failed:', err);
+    throw err;
+  }
+});
 
 function createWindow() {
   // Configure spell checker languages
@@ -455,21 +492,50 @@ function createWindow() {
   });
 
   // Load landing page if any window in app fails to load
-  mainWindow.webContents.on('did-fail-load', (event) => {
-    // This event is triggered inside diagram even when the page loads successfully.
-    // Not sure why... so we're ignoring it for now.
-    if (event.sender?.getURL().includes('diagram/src/main/webapp/index.html')) {
-      return;
-    }
+  mainWindow.webContents.on(
+    'did-fail-load',
+    (event, errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId) => {
+      const currentURL = event.sender?.getURL?.();
 
-    mainWindow.loadURL(
-      url.format({
-        pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-    );
-  });
+      const details = {
+        errorCode,
+        errorDescription,
+        validatedURL: redactJwt(validatedURL),
+        isMainFrame,
+        frameProcessId,
+        frameRoutingId,
+        currentURL: redactJwt(currentURL)
+      };
+
+      // Do not treat iframe/resource failures as app-level failures.
+      if (isMainFrame === false) {
+        return;
+      }
+
+      // -3 is ERR_ABORTED. This is commonly emitted for cancelled/replaced navigations.
+      // It should not send the user back to the Angular landing page.
+      if (errorCode === -3) {
+        return;
+      }
+
+      // Do not hide real diagram navigation issues by sending the user home.
+      // Let the diagram error surface, or handle it with a diagram-specific error page.
+      if (isDiagramUrl(validatedURL) || isDiagramUrl(currentURL)) {
+        return;
+      }
+
+      // If we get here, this was real failed load, just redirect to the home page
+      log.error('Main window load failed; redirecting to Angular index', details);
+
+      mainWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, 'dist/index.html'),
+          protocol: 'file:',
+          slashes: true
+        })
+      );
+    }
+  );
 
   // setting up logging
   try {
