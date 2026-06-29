@@ -4927,7 +4927,17 @@ App.prototype.updateButtonContainer = function () {
             btnBackToCSET.setAttribute('title', 'return to CSET');
             btnBackToCSET.innerHTML = '<img src=\'images/return_arrow.svg\' style=\'height: 1rem\'>' + ' Back to CSET';
             btnBackToCSET.onclick = function () {
-                window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/info';
+                var assessmentId = localStorage.getItem('assessmentId');
+                var returnPath = 'assessment/' + assessmentId + '/prepare/diagram/info';
+
+                if (window.electronApi && typeof window.electronApi.returnFromDiagram === 'function') {
+                    window.electronApi.returnFromDiagram(returnPath).catch(function (err) {
+                        console.error('Return from diagram failed:', err);
+                    });
+                } else {
+                    // Running in a browser — use normal URL navigation
+                    window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=' + encodeURIComponent(returnPath);
+                }
             };
 
             this.buttonContainer.replaceChildren();
