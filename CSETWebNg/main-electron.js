@@ -181,6 +181,30 @@ async function saveWindowAsPDF(window) {
   }
 }
 
+function isDiagramUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return false;
+  }
+
+  try {
+    const parsed = new URL(rawUrl);
+    return /\/diagram(-orig)?\/src\/main\/webapp\/index\.html$/.test(parsed.pathname);
+  } catch {
+    return (
+      rawUrl.includes('/diagram/src/main/webapp/index.html') ||
+      rawUrl.includes('/diagram-orig/src/main/webapp/index.html')
+    );
+  }
+}
+
+function redactJwt(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return rawUrl;
+  }
+
+  return rawUrl.replace(/([?&]j=)[^&]*/g, '$1[redacted-jwt]');
+}
+
 // listen for the 'print-to-pdf' event from the renderer process
 ipcMain.on('print-to-pdf', () => {
   const focusedWindow = BrowserWindow.getFocusedWindow();
@@ -197,9 +221,7 @@ ipcMain.handle('return-from-diagram', async (event, { returnPath }) => {
   }
 
   // Validate — must be a relative path, no protocol, no traversal
-  if (typeof returnPath !== 'string' ||
-      returnPath.length > 200 ||
-      /[\\:]|\.\.|^\//.test(returnPath)) {
+  if (typeof returnPath !== 'string' || returnPath.length > 200 || /[\\:]|\.\.|^\//.test(returnPath)) {
     log.error('return-from-diagram: invalid returnPath:', returnPath);
     throw new Error('Invalid returnPath: ' + returnPath);
   }
@@ -470,21 +492,50 @@ function createWindow() {
   });
 
   // Load landing page if any window in app fails to load
-  mainWindow.webContents.on('did-fail-load', (event) => {
-    // This event is triggered inside diagram even when the page loads successfully.
-    // Not sure why... so we're ignoring it for now.
-    if (event.sender?.getURL().includes('diagram/src/main/webapp/index.html')) {
-      return;
-    }
+  mainWindow.webContents.on(
+    'did-fail-load',
+    (event, errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId) => {
+      const currentURL = event.sender?.getURL?.();
 
-    mainWindow.loadURL(
-      url.format({
-        pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-    );
-  });
+      const details = {
+        errorCode,
+        errorDescription,
+        validatedURL: redactJwt(validatedURL),
+        isMainFrame,
+        frameProcessId,
+        frameRoutingId,
+        currentURL: redactJwt(currentURL)
+      };
+
+      // Do not treat iframe/resource failures as app-level failures.
+      if (isMainFrame === false) {
+        return;
+      }
+
+      // -3 is ERR_ABORTED. This is commonly emitted for cancelled/replaced navigations.
+      // It should not send the user back to the Angular landing page.
+      if (errorCode === -3) {
+        return;
+      }
+
+      // Do not hide real diagram navigation issues by sending the user home.
+      // Let the diagram error surface, or handle it with a diagram-specific error page.
+      if (isDiagramUrl(validatedURL) || isDiagramUrl(currentURL)) {
+        return;
+      }
+
+      // If we get here, this was real failed load, just redirect to the home page
+      log.error('Main window load failed; redirecting to Angular index', details);
+
+      mainWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, 'dist/index.html'),
+          protocol: 'file:',
+          slashes: true
+        })
+      );
+    }
+  );
 
   // setting up logging
   try {
