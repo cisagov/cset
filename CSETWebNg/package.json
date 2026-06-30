@@ -39,7 +39,7 @@
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
-    "@jsverse/transloco": "^8.2.1",
+    "@jsverse/transloco": "^8.3.0",
     "@kolkov/angular-editor": "^3.0.5",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
     "@ngstack/code-editor": "^9.0.0",
