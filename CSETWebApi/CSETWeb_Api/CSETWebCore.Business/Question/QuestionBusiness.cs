@@ -485,8 +485,8 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// Persists a single answer to the SUB_CATEGORY_ANSWERS table for the 'block answer',
-        /// and flips all of the constituent questions' answers.
+        /// Persists the subcategory answer and all constituent question answers
+        /// as a single atomic operation.
         /// </summary>
         public void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock)
         {
@@ -495,45 +495,81 @@ namespace CSETWebCore.Business.Question
                 return;
             }
 
-            // SUB_CATEGORY_ANSWERS
+            using var transaction =
+                _context.Database.BeginTransaction();
 
-            // Get the USCH so that we will know the Heading_Pair_Id
-            var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
-                                                                           && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId);
-
-            var subCatAnswer = _context.SUB_CATEGORY_ANSWERS.FirstOrDefault(sca => sca.Assessment_Id == _questionRequirement.AssessmentId
-                                                                          && sca.Heading_Pair_Id == usch.Heading_Pair_Id);
-
-            if (subCatAnswer == null)
+            try
             {
-                subCatAnswer = new SUB_CATEGORY_ANSWERS();
-                subCatAnswer.Assessment_Id = _questionRequirement.AssessmentId;
-                subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
-                subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
-                subCatAnswer.Component_Guid = new Guid().ToString();
-                _context.SUB_CATEGORY_ANSWERS.Add(subCatAnswer);
-            }
-            else
-            {
-                subCatAnswer.Assessment_Id = _questionRequirement.AssessmentId;
-                subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
-                subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
-                _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
-            }
+                var assessmentId =
+                    _questionRequirement.AssessmentId;
 
-            _context.SaveChanges();
+                var heading = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                    .FirstOrDefault(x =>
+                        x.Question_Group_Heading_Id
+                            == subCatAnswerBlock.GroupHeadingId
+                        && x.Universal_Sub_Category_Id
+                            == subCatAnswerBlock.SubCategoryId);
 
-            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
-
-            // loop and store all of the subcategory's answers
-            foreach (Answer ans in subCatAnswerBlock.Answers)
-            {
-
-                if (String.IsNullOrWhiteSpace(ans.QuestionType))
+                if (heading == null)
                 {
-                    ans.QuestionType = _questionRequirement.DetermineQuestionType(ans.Is_Requirement, ans.Is_Component, false, ans.Is_Maturity);
+                    throw new InvalidOperationException(
+                        "The requested subcategory heading does not exist.");
                 }
-                _questionRequirement.StoreAnswer(ans);
+
+                var subCategoryAnswer = _context.SUB_CATEGORY_ANSWERS
+                    .FirstOrDefault(x =>
+                        x.Assessment_Id == assessmentId
+                        && x.Heading_Pair_Id == heading.Heading_Pair_Id);
+
+                if (subCategoryAnswer == null)
+                {
+                    subCategoryAnswer = new SUB_CATEGORY_ANSWERS
+                    {
+                        Assessment_Id = assessmentId,
+                        Heading_Pair_Id = heading.Heading_Pair_Id,
+                        Answer_Text = subCatAnswerBlock.SubCategoryAnswer,
+                        Component_Guid = Guid.Empty.ToString()
+                    };
+
+                    _context.SUB_CATEGORY_ANSWERS.Add(
+                        subCategoryAnswer);
+                }
+                else
+                {
+                    subCategoryAnswer.Answer_Text =
+                        subCatAnswerBlock.SubCategoryAnswer;
+
+                    _context.SUB_CATEGORY_ANSWERS.Update(
+                        subCategoryAnswer);
+                }
+
+                _context.SaveChanges();
+
+                foreach (var answer in subCatAnswerBlock.Answers)
+                {
+                    if (string.IsNullOrWhiteSpace(answer.QuestionType))
+                    {
+                        answer.QuestionType =
+                            _questionRequirement.DetermineQuestionType(
+                                answer.Is_Requirement,
+                                answer.Is_Component,
+                                false,
+                                answer.Is_Maturity);
+                    }
+
+                    // StoreAnswer() can call SaveChanges(). Those calls still
+                    // participate in the transaction opened above.
+                    _questionRequirement.StoreAnswer(answer);
+                }
+
+                _assessmentUtil.TouchAssessment(assessmentId);
+
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
         }
 

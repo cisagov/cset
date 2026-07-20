@@ -32,6 +32,12 @@ import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 
+interface AnswerSaveState {
+  confirmedAnswer: string;
+  version: number;
+}
+
+
 /**
  * This was cloned from question-block to start a new version that is
  * not so "subcategory-centric", mainly for the new simplified
@@ -62,6 +68,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   moduleBehavior: any;
   titlePlacement: string;
+
+  private answerSaveStates =
+    new WeakMap<Question, AnswerSaveState>();
 
 
   /**
@@ -167,11 +176,36 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
+   * Gets the save state before applying an optimistic answer change.
+   */
+  private beginAnswerSave(q: Question): {
+    state: AnswerSaveState;
+    version: number;
+  } {
+    let state = this.answerSaveStates.get(q);
+
+    if (!state) {
+      state = {
+        confirmedAnswer: q.answer,
+        version: 0
+      };
+      this.answerSaveStates.set(q, state);
+    }
+
+    return {
+      state,
+      version: ++state.version
+    };
+  }
+
+  /**
    * Pushes an answer asynchronously to the API.
    * @param q
    * @param ans
    */
   storeAnswer(q: Question, newAnswerValue: string) {
+    const attempt = this.beginAnswerSave(q);
+
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = 'U';
@@ -180,6 +214,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (!!newAnswerValue) {
       q.answer = newAnswerValue;
     }
+
+    const submittedAnswer = q.answer;
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -206,19 +242,34 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     this.refreshPercentAnswered();
 
-    this.questionsSvc.storeAnswer(answer).subscribe((response: AnswerQuestionResponse) => {
-      q.answer_Id = response.answerId;
-      if (response.detailsChanged) {
-        this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
-      }
-      if (response && response.completedCount !== undefined) {
-        this.assessSvc.completionRefreshRequested$.next({
-          completedCount: response.completedCount,
-          totalCount: (response.totalMaturityQuestionsCount || 0) +
-            (response.totalDiagramQuestionsCount || 0) +
-            (response.totalStandardQuestionsCount || 0)
+    this.questionsSvc.storeAnswer(answer).subscribe({
+      next: (response: AnswerQuestionResponse) => {
+        attempt.state.confirmedAnswer = submittedAnswer;
 
-        });
+        q.answer_Id = response.answerId;
+        if (response.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+        if (response && response.completedCount !== undefined) {
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: response.completedCount,
+            totalCount: (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0)
+
+          });
+        }
+      },
+      error: error => {
+        if (attempt.state.version === attempt.version) {
+          q.answer = attempt.state.confirmedAnswer;
+          this.completionSvc.setAnswer(q.questionId, q.answer);
+          this.setJustificationVisibility(q);
+          this.refreshReviewIndicator();
+          this.refreshPercentAnswered();
+        }
+
+        console.error('Unable to save answer.', error);
       }
     });
   }

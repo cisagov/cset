@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AssessmentDetail } from '../../../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../../../models/assessment-info.model';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { User } from '../../../../models/user.model';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -41,7 +41,7 @@ import { ContactsService } from '../../../../services/contacts.service';
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
-  demographics: any = {};
+  demographics: Demographic = {};
   contacts: User[] = [];
   assessment: AssessmentDetail = {};
   IsPCII: boolean = false;
@@ -59,13 +59,13 @@ export class AssessmentConfigIodComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.demoSvc.getDemographic().subscribe((data: any) => {
+    this.demoSvc.getDemographic().subscribe((data: Demographic) => {
       this.demographics = data;
       this.assessSvc.assessment.ssgModelIds = data.ssgModelIds;
       this.demographics.techDomain ??= 'IT';
     });
 
-    this.iodDemoSvc.getDemographics().subscribe((data: any) => {
+    this.iodDemoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.iodDemographics = data;
       this.iodDemographics.techDomain ??= 'IT';
     });
@@ -145,10 +145,6 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   updateDemographics() {
     this.demoSvc.updateDemographic(this.demographics);
-  }
-
-  updateDemographicsIod() {
-    this.iodDemoSvc.updateDemographic(this.iodDemographics);
   }
 
   showCityName() {

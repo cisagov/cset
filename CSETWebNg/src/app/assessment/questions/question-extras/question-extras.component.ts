@@ -27,7 +27,7 @@ import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // eslint-disable-next-line max-len
 import { ReferenceDocLink, QuestionDetailsContentViewModel, QuestionInformationTabData, QuestionDocument } from '../../../models/question-extras.model';
-import { Answer, Question } from '../../../models/questions.model';
+import { Answer, AnswerQuestionResponse, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { ObservationsService } from '../../../services/observations.service';
@@ -335,8 +335,11 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.broadcastExtras(this.extras);
 
     this.questionsSvc.storeAnswer(this.answer).subscribe(
-      (response: number) => {
-        this.myQuestion.answer_Id = response;
+      (response: AnswerQuestionResponse) => {
+        this.myQuestion.answer_Id = response.answerId;
+        if (this.answer != null) {
+          this.answer.answerId = response.answerId;
+        }
       },
       error => console.error('Error saving response: ' + (<Error>error).message)
     );
