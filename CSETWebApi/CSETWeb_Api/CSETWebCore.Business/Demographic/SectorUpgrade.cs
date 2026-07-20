@@ -61,57 +61,88 @@ namespace CSETWebCore.Business.Demographic
         /// <param name="assessmentId"></param>
         public SectorUpdateResult UpgradeSector(int assessmentId)
         {
-            var dbSector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR");
+            var result = new SectorUpdateResult();
+            var demographicSectorChanged = false;
 
-            // do nothing if the sector is not a candidate for upgrading
-            if (dbSector == null || dbSector.IntValue == null || !HSPD7ToPPD21SectorIds.ContainsKey((int)dbSector.IntValue))
+            // Upgrade legacy sector data stored in DETAILS_DEMOGRAPHICS.
+            var demographicSector = _context.DETAILS_DEMOGRAPHICS
+                .FirstOrDefault(x =>
+                    x.Assessment_Id == assessmentId
+                    && x.DataItemName == "SECTOR");
+
+            if (demographicSector?.IntValue != null
+                && HSPD7ToPPD21SectorIds.TryGetValue(
+                    demographicSector.IntValue.Value,
+                    out var mappedDemographicSectorId))
+            {
+                demographicSector.IntValue = mappedDemographicSectorId;
+
+                result.SectorId = mappedDemographicSectorId;
+                result.Changed = true;
+                demographicSectorChanged = true;
+            }
+
+            // Upgrade legacy sector data stored in the current sector table.
+            // Legacy subsectors are cleared because there is no reliable
+            // one-to-one mapping to the current taxonomy.
+            var persistedSectors = _context.ASSESSMENT_SECTOR_SUBSECTOR
+                .Where(x => x.Assessment_Id == assessmentId)
+                .ToList();
+
+            foreach (var persistedSector in persistedSectors)
+            {
+                if (HSPD7ToPPD21SectorIds.TryGetValue(
+                    persistedSector.SectorId,
+                    out var mappedSectorId))
+                {
+                    persistedSector.SectorId = mappedSectorId;
+                    persistedSector.IndustryId = null;
+
+                    result.SectorId = mappedSectorId;
+                    result.Changed = true;
+                }
+            }
+
+            if (!result.Changed)
             {
                 return null;
             }
 
-            var resp = new SectorUpdateResult();
-
-            // update and persist sector/subsector records
-            var oldSectorId = dbSector.IntValue;
-
-            var newSectorId = GetPpd21SectorId((int)dbSector.IntValue);
-            if (newSectorId != null)
+            // Only clear the DETAILS_DEMOGRAPHICS subsector when its associated
+            // DETAILS_DEMOGRAPHICS sector was converted.  A conversion in the
+            // multi-sector table must not delete an unrelated current selection.
+            if (demographicSectorChanged)
             {
-                dbSector.IntValue = newSectorId;
-                resp.SectorId = (int)newSectorId;
-            }
+                var demographicSubsector = _context.DETAILS_DEMOGRAPHICS
+                    .FirstOrDefault(x =>
+                        x.Assessment_Id == assessmentId
+                        && x.DataItemName == "SUBSECTOR");
 
-
-            // save an ACKNOWLEDGMENT flag; let the caller know that the sector was changed
-            if (newSectorId != oldSectorId)
-            {
-                var ack = new DETAILS_DEMOGRAPHICS()
+                if (demographicSubsector != null)
                 {
-                    Assessment_Id = assessmentId,
-                    DataItemName = Constants.Constants.ACK_SECTOR_UPDATED_PPD21,
-                    BoolValue = true
-                };
-
-                if (!_context.DETAILS_DEMOGRAPHICS.Any(d =>
-                    d.Assessment_Id == assessmentId &&
-                    d.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21))
-                {
-                    _context.DETAILS_DEMOGRAPHICS.Add(ack);
+                    _context.DETAILS_DEMOGRAPHICS.Remove(demographicSubsector);
                 }
-
-                resp.Changed = true;
             }
 
+            // Notify the user that one or more sector selections were converted.
+            var acknowledgementExists = _context.DETAILS_DEMOGRAPHICS.Any(x =>
+                x.Assessment_Id == assessmentId
+                && x.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21);
 
-            var dbSubsector = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.DataItemName == "SUBSECTOR");
-            if (dbSubsector != null)
+            if (!acknowledgementExists)
             {
-                _context.Remove(dbSubsector);
+                _context.DETAILS_DEMOGRAPHICS.Add(
+                    new DETAILS_DEMOGRAPHICS
+                    {
+                        Assessment_Id = assessmentId,
+                        DataItemName = Constants.Constants.ACK_SECTOR_UPDATED_PPD21,
+                        BoolValue = true
+                    });
             }
 
             _context.SaveChanges();
 
-            return resp;
+            return result;
         }
 
 
