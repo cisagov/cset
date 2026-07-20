@@ -31,6 +31,7 @@ export interface DemographicsIod {
   organizationName?: string;
   facilityName?: string;
   businessUnit?: string;
+  cisaRegion?: number;
 
   // PPD-21 or NIPP
   sectorDirective?: string;
@@ -82,6 +83,7 @@ export interface DemographicsIod {
   listRegulationTypes?: any[];
   listShareOrgs?: any[];
   listBarriers?: any[];
+  cisaRegions?: any[];
 }
 
 export interface CisaWorkflowFieldValidationResponse {

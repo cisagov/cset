@@ -58,8 +58,8 @@
     <div class="row mb-3">
       <div class="col">
         <label for="name" class="form-label">{{t('cisa region')}}</label>
-        <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
-          [(ngModel)]="iodDemographics.cisaRegion">
+        <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographics()"
+          [(ngModel)]="demographics.cisaRegion">
           <option [ngValue]="null">-- {{t('select')}} --</option>
           <option *ngFor="let region of iodDemographics.cisaRegions" [ngValue]="region.optionValue">
             {{region.optionText}}

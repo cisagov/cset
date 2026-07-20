@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -36,17 +36,15 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // add authorization header with jwt token if available 
+    // add authorization header with jwt token if available
     // and the requestor did not provide one
     if (!request.headers.has('authorization') && !request.headers.has('noauth')) {
-      if (
-        localStorage.getItem('userToken') &&
-        localStorage.getItem('userToken').length > 1
-      ) {
-        request.headers.append('Content-Type', 'application/json');
+      const userToken = localStorage.getItem('userToken');
+
+      if (userToken?.length > 1) {
         request = request.clone({
           setHeaders: {
-            Authorization: localStorage.getItem('userToken')
+            Authorization: userToken
           }
         });
       }
@@ -54,36 +52,34 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(
-        catchError((event: any, caught: Observable<any>) => {
+        catchError((error: HttpErrorResponse) => {
+          const shouldEject =
+            error.status === 500
+            || error.status === 401
+            || error.error?.ExceptionMessage === 'JWT invalid';
 
-          if (event instanceof HttpErrorResponse) {
-            const e = <HttpErrorResponse>event;
+          if (shouldEject) {
+            console.error('HTTP authentication/server error. Logging out.');
 
-            // continue if this is a "business exception"
-            if (e.status !== 500 && e.status !== 401) {
-              throw event;
-            }
-
-
-            if (e.status === 401) {
-              console.error('Error 401! Ejecting to login page!');
-            }
-
-            if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
-              console.error('JWT Invalid. logging out.');
-            }
-
-            const userToken = localStorage.getItem('userToken')
+            const userToken = localStorage.getItem('userToken');
             // Preserve theme preference
             const savedTheme = localStorage.getItem('cset-theme');
+
             localStorage.clear();
+
             if (savedTheme) {
               localStorage.setItem('cset-theme', savedTheme);
             }
-            this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
 
-            return of({});
+            this.router.navigate(
+              ['/home/login/eject'],
+              { queryParams: { token: userToken } }
+            );
           }
+
+          // Preserve the failure so callers can report, retry, or recover from
+          // an unsuccessful request instead of treating it as a success.
+          return throwError(() => error);
         })
       );
   }

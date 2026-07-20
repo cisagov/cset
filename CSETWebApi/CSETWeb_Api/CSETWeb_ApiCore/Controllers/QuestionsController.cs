@@ -229,97 +229,120 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
+        /// Persists an answer. This includes Y/N/NA/A as well as
+        /// comments, feedback, justification and review state.
         /// </summary>
         [HttpPost]
         [Route("api/AnswerQuestion")]
         public IActionResult StoreAnswer([FromBody] Answer answer)
         {
-            int assessmentId = _token.AssessmentForUser();
+            if (answer == null)
+            {
+                return BadRequest("An answer is required.");
+            }
+
+            var assessmentId = _token.AssessmentForUser();
+            var questionType = answer.QuestionType?.Trim();
+
+            Answer savedAnswer;
+            var detailsChanged = false;
+
+            switch (questionType)
+            {
+                case "Component":
+                    {
+                        var business = new ComponentQuestionBusiness(
+                            _context,
+                            _assessmentUtil,
+                            _token,
+                            _questionRequirement);
+
+                        savedAnswer = business.StoreAnswer(answer);
+                        _hooks.HookQuestionAnswered(savedAnswer);
+                        break;
+                    }
+
+                case "Requirement":
+                    {
+                        var business = new RequirementBusiness(
+                            _assessmentUtil,
+                            _questionRequirement,
+                            _context,
+                            _token);
+
+                        savedAnswer = business.StoreAnswer(answer);
+                        _hooks.HookQuestionAnswered(savedAnswer);
+                        break;
+                    }
+
+                case "Maturity":
+                    {
+                        var business = new MaturityBusiness(
+                            _context,
+                            _assessmentUtil);
+
+                        savedAnswer = business.StoreAnswer(assessmentId, answer);
+                        detailsChanged = _hooks.HookQuestionAnswered(savedAnswer);
+                        break;
+                    }
+
+                case "Question":
+                    {
+                        var business = new QuestionBusiness(
+                            _token,
+                            _document,
+                            _htmlConverter,
+                            _questionRequirement,
+                            _assessmentUtil,
+                            _context);
+
+                        savedAnswer = business.StoreAnswer(answer);
+                        _hooks.HookQuestionAnswered(savedAnswer);
+                        break;
+                    }
+
+                default:
+                    return BadRequest(
+                        $"Unsupported question type '{answer.QuestionType}'.");
+            }
+
+            if (!savedAnswer.AnswerId.HasValue || savedAnswer.AnswerId.Value <= 0)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error(
+                    "Answer persistence returned no valid AnswerId. "
+                    + $"AssessmentId={assessmentId}, "
+                    + $"QuestionId={answer.QuestionId}, "
+                    + $"QuestionType={questionType}");
+
+                return StatusCode(
+                    Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError,
+                    "The answer could not be persisted.");
+            }
+
+            // Update last-answered state only after persistence succeeds.
+            var lastAnswered = new LastAnsweredHelper(_context);
+            lastAnswered.Save(
+                assessmentId,
+                _token.GetCurrentUserId(),
+                savedAnswer);
 
             var response = new AnswerQuestionResponse
             {
-                AnswerId = 0,
-                DetailsChanged = false
+                AnswerId = savedAnswer.AnswerId.Value,
+                DetailsChanged = detailsChanged,
+                AssessmentId = assessmentId
             };
 
-
-            if (answer == null)
-            {
-                return Ok(0);
-            }
-
-            if (String.IsNullOrWhiteSpace(answer.QuestionType))
-            {
-                if (answer.Is_Component)
-                    answer.QuestionType = "Component";
-                if (answer.Is_Maturity)
-                    answer.QuestionType = "Maturity";
-                if (answer.Is_Requirement)
-                    answer.QuestionType = "Requirement";
-                if (answer.Is_Question)
-                    answer.QuestionType = "Question";
-            }
-
-
-            // Remember the last-answered question
-            var lah = new LastAnsweredHelper(_context);
-            lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
-
-            if (answer.Is_Component)
-            {
-                var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-                var savedComponentAnswer = cb.StoreAnswer(answer);
-
-                _hooks.HookQuestionAnswered(savedComponentAnswer);
-
-                response.AnswerId = (int)savedComponentAnswer.AnswerId;
-            }
-
-
-            if (answer.Is_Requirement)
-            {
-                var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                var savedRequirementAnswer = rb.StoreAnswer(answer);
-
-                _hooks.HookQuestionAnswered(savedRequirementAnswer);
-
-
-                response.AnswerId = (int)savedRequirementAnswer.AnswerId;
-            }
-
-
-            if (answer.Is_Maturity)
-            {
-                var mb = new MaturityBusiness(_context, _assessmentUtil);
-                var savedMaturityAnswer = mb.StoreAnswer(assessmentId, answer);
-
-                var detailsChanged = _hooks.HookQuestionAnswered(savedMaturityAnswer);
-
-
-                response.AnswerId = (int)savedMaturityAnswer.AnswerId;
-                response.DetailsChanged = detailsChanged;
-            }
-
-
-            if (answer.QuestionType == "Question")
-            {
-                var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-                var savedQuestionAnswer = qb.StoreAnswer(answer);
-
-                _hooks.HookQuestionAnswered(savedQuestionAnswer);
-
-                response.AnswerId = (int)savedQuestionAnswer.AnswerId;
-            }
-
-
-            CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+            var stats = new CompletionCounter(_context).Count(assessmentId);
             if (stats != null)
             {
                 response.CompletedCount = stats.CompletedCount;
-                response.TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0;
-                response.TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0;
-                response.TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0;
+                response.TotalMaturityQuestionsCount =
+                    stats.TotalMaturityQuestionsCount ?? 0;
+                response.TotalDiagramQuestionsCount =
+                    stats.TotalDiagramQuestionsCount ?? 0;
+                response.TotalStandardQuestionsCount =
+                    stats.TotalStandardQuestionsCount ?? 0;
             }
 
             return Ok(response);

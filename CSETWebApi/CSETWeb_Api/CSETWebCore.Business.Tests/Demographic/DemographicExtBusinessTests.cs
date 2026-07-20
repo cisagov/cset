@@ -489,7 +489,8 @@ namespace CSETWebCore.Business.Tests.Demographic
                 new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 1, IndustryName = "Banking", Is_Other = false },
                 new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 2, IndustryName = "Other", Is_Other = true },
                 new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 3, IndustryName = "Insurance", Is_Other = false },
-                new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 4, IndustryName = "Other Services", Is_Other = true }
+                new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 4, IndustryName = "Other Services", Is_Other = true },
+                new SECTOR_INDUSTRY { SectorId = sectorId, IndustryId = 5, IndustryName = "Legacy NIPP", Is_NIPP = true }
             };
 
             var mockSubsectorSet = CreateMockDbSet(subsectors);
@@ -506,6 +507,7 @@ namespace CSETWebCore.Business.Tests.Demographic
             Assert.Equal("Insurance", result[1].OptionText);
             Assert.Contains("Other", result[2].OptionText);
             Assert.Contains("Other", result[3].OptionText);
+            Assert.DoesNotContain(result, x => x.OptionText == "Legacy NIPP");
         }
 
         [Fact]

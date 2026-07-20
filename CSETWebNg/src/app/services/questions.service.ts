@@ -23,11 +23,25 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// eslint-disable-next-line max-len
-import { Answer, DefaultParameter, ParameterForAnswer, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import {
+  Answer,
+  AnswerQuestionResponse,
+  Category,
+  DefaultParameter,
+  ParameterForAnswer,
+  Question,
+  QuestionResponse,
+  SubCategory,
+  SubCategoryAnswers
+} from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  firstValueFrom,
+  Observable,
+  Subject
+} from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { LinebreakPipe } from '../helpers/linebreak.pipe';
 import { tap } from 'rxjs/operators';
@@ -38,10 +52,18 @@ const headers = {
   params: new HttpParams()
 };
 
+interface CompletionCountResponse {
+  completedCount?: number;
+  totalMaturityQuestionsCount?: number;
+  totalDiagramQuestionsCount?: number;
+  totalStandardQuestionsCount?: number;
+}
+
 @Injectable()
 export class QuestionsService {
 
-  public questionOverrideSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public questionOverrideSubject =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * The TOC might make the API trip to get the questions.  If so,
@@ -67,12 +89,17 @@ export class QuestionsService {
    * Components override update subject
    */
   private componentOverrideEventSubject = new Subject<any>();
-  componentOverrideEvent$ = this.componentOverrideEventSubject.asObservable();
-
+  componentOverrideEvent$ =
+    this.componentOverrideEventSubject.asObservable();
 
   /**
+   * The tail of each answer's save queue.
    *
+   * Saves for different questions can run concurrently, while saves for the
+   * same answer identity are executed in the order they were submitted.
    */
+  private answerSaveQueues = new Map<string, Promise<void>>();
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -91,71 +118,70 @@ export class QuestionsService {
    */
   questions: QuestionResponse = null;
 
-
   /**
    * Sets the application mode of the assessment.
    */
   setMode(mode: string) {
-    return this.http.post(this.configSvc.apiUrl + 'setmode?mode=' + mode, headers)
-      .pipe(
-        tap((response: any) => {
-          if (response?.completedCount !== undefined) {
-            const totalCount =
-              (response.totalMaturityQuestionsCount || 0) +
-              (response.totalDiagramQuestionsCount || 0) +
-              (response.totalStandardQuestionsCount || 0);
-            this.assessSvc.completionRefreshRequested$.next({
-              completedCount: response.completedCount,
-              totalCount: totalCount
-            });
-          }
-        })
-      );
+    return this.http.post(
+      this.configSvc.apiUrl + 'setmode?mode=' + mode,
+      headers
+    ).pipe(
+      tap((response: any) => {
+        this.publishCompletionCounts(response);
+      })
+    );
   }
+
   /**
    * Retrieves the list of questions.
    */
   getQuestionsList() {
-    return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
+    return this.http.get(
+      this.configSvc.apiUrl + 'questionlist',
+      headers
+    );
   }
 
-  /**
-   *
-   */
   getComponentQuestionsList(): Observable<QuestionResponse> {
-    return this.http.get<QuestionResponse>(this.configSvc.apiUrl + 'componentquestionlist', headers);
+    return this.http.get<QuestionResponse>(
+      this.configSvc.apiUrl + 'componentquestionlist',
+      headers
+    );
   }
 
-  /**
-   *
-   */
   getQuestionListOverridesOnly() {
-    return this.http.get(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', headers);
+    return this.http.get(
+      this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly',
+      headers
+    );
   }
 
   /**
-   * Grab all the child question's answers for a specific parent question.
-   * Currently set up for use in an ISE assessment.
-  */
+   * Gets all child-question answers for a parent question.
+   */
   getChildAnswers(parentId: number) {
-    headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
+    const options = {
+      ...headers,
+      params: headers.params.set('parentId', parentId)
+    };
+
+    return this.http.get(
+      this.configSvc.apiUrl + 'GetChildAnswers',
+      options
+    );
   }
 
   /**
-   * Analyzes the current 'auto load supplemental' preference and the maturity model
+   * Determines whether supplemental content should load automatically.
    */
   autoLoadSupplemental(modelId?: any) {
-    // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
     }
 
-    // find the configuration for the model
-    const moduleBehavior = this.configSvc.getModuleBehavior(modelId);
+    const moduleBehavior =
+      this.configSvc.getModuleBehavior(modelId);
 
-
-    // standards (modelid is null) - check the checkbox state
     if (!moduleBehavior) {
       return this.autoLoadSuppCheckboxState;
     }
@@ -164,160 +190,360 @@ export class QuestionsService {
   }
 
   /**
-   * Posts an Answer to the API.
-   * @param answer
+   * Queues an answer for persistence.
+   *
+   * Calls for the same answer identity are serialized. This prevents an older
+   * extras request from completing after a newer answer-value request and
+   * overwriting the newer value.
    */
-  storeAnswer(answer: Answer) {
-    answer.questionType = localStorage.getItem('questionSet');
-    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers).pipe(
-      tap((response: any) => {
-        if (response?.completedCount !== undefined) {
-          // Find whichever count has a value (only one will)
-          const totalCount =
-            (response.totalMaturityQuestionsCount || 0) +
-            (response.totalDiagramQuestionsCount || 0) +
-            (response.totalStandardQuestionsCount || 0);
-          this.assessSvc.completionRefreshRequested$.next({
-            completedCount: response.completedCount,
-            totalCount: totalCount
-          });
-        }
+  storeAnswer(
+    answer: Answer
+  ): Observable<AnswerQuestionResponse> {
+
+    // All Answer properties are primitives, so a shallow copy is sufficient.
+    // The snapshot prevents later UI mutations from changing a queued request.
+    const snapshot: Answer = { ...answer };
+    const queueKey = this.buildAnswerQueueKey(snapshot);
+
+    return new Observable<AnswerQuestionResponse>(subscriber => {
+      const previousTail =
+        this.answerSaveQueues.get(queueKey) ?? Promise.resolve();
+
+      let currentTail: Promise<void>;
+
+      currentTail = previousTail
+        // A failed save must not permanently block later saves.
+        .catch(() => undefined)
+        .then(async () => {
+          try {
+            const response = await firstValueFrom(
+              this.postAnswer(snapshot)
+            );
+
+            if (!subscriber.closed) {
+              subscriber.next(response);
+              subscriber.complete();
+            }
+          } catch (error) {
+            if (!subscriber.closed) {
+              subscriber.error(error);
+            }
+          }
+        })
+        .finally(() => {
+          // Only the current tail may remove this queue. A newer request may
+          // already have replaced it.
+          if (this.answerSaveQueues.get(queueKey) === currentTail) {
+            this.answerSaveQueues.delete(queueKey);
+          }
+        });
+
+      this.answerSaveQueues.set(queueKey, currentTail);
+    });
+  }
+
+  /**
+   * Performs the actual HTTP request after the queued request reaches the
+   * front of its answer-specific queue.
+   */
+  private postAnswer(
+    answer: Answer
+  ): Observable<AnswerQuestionResponse> {
+
+    return this.http.post<AnswerQuestionResponse>(
+      this.configSvc.apiUrl + 'answerquestion',
+      answer,
+      headers
+    ).pipe(
+      tap((response: AnswerQuestionResponse) => {
+        this.publishCompletionCounts(response);
       })
     );
   }
 
   /**
+   * Builds the natural identity used for client-side save ordering.
+   *
+   * Assessment ID is included because this service can remain alive while
+   * navigating between assessments.
+   */
+  private buildAnswerQueueKey(answer: Answer): string {
+    return [
+      this.assessSvc.id() ?? '',
+      answer.questionType?.trim() ?? '',
+      answer.questionId,
+      answer.componentGuid ?? '',
+      answer.optionId ?? ''
+    ].join('|');
+  }
+
+  /**
+   * Publishes completion-count changes returned by answer endpoints.
+   */
+  private publishCompletionCounts(response: CompletionCountResponse): void {
+    if (response?.completedCount === undefined) {
+      return;
+    }
+
+    const totalCount =
+      (response.totalMaturityQuestionsCount || 0) +
+      (response.totalDiagramQuestionsCount || 0) +
+      (response.totalStandardQuestionsCount || 0);
+
+    this.assessSvc.completionRefreshRequested$.next({
+      completedCount: response.completedCount,
+      totalCount
+    });
+  }
+
+  /**
    * Posts a block of answers to the API.
    */
-  storeSubCategoryAnswers(answers: SubCategoryAnswers) {
-    return this.http.post(this.configSvc.apiUrl + 'answersubcategory', answers, headers)
-      .pipe(
-        tap((response: any) => {
-          if (response?.completedCount !== undefined) {
-            // Find whichever count has a value (only one will)
-            const totalCount =
-              (response.totalMaturityQuestionsCount || 0) +
-              (response.totalDiagramQuestionsCount || 0) +
-              (response.totalStandardQuestionsCount || 0);
-            this.assessSvc.completionRefreshRequested$.next({
-              completedCount: response.completedCount,
-              totalCount: totalCount
-            });
+  storeSubCategoryAnswers(
+    answers: SubCategoryAnswers
+  ): Observable<CompletionCountResponse> {
+    // Snapshot the request because the same answer objects may continue to be
+    // edited while this save is waiting for earlier requests to finish.
+    const snapshot: SubCategoryAnswers = {
+      ...answers,
+      answers: (answers.answers ?? []).map(answer => ({ ...answer }))
+    };
+
+    const queueKeys = Array.from(new Set(
+      snapshot.answers.map(answer => this.buildAnswerQueueKey(answer))
+    )).sort();
+
+    // A subcategory with no answer rows still needs its own serialization key.
+    if (queueKeys.length === 0) {
+      queueKeys.push([
+        'subcategory',
+        this.assessSvc.id() ?? '',
+        snapshot.groupHeadingId,
+        snapshot.subCategoryId
+      ].join('|'));
+    }
+
+    return new Observable<CompletionCountResponse>(subscriber => {
+      // Capture every current tail before publishing this request as the next
+      // tail for all affected answers. Later individual saves will then wait
+      // until the complete subcategory save finishes.
+      const previousTails = queueKeys.map(queueKey =>
+        this.answerSaveQueues.get(queueKey) ?? Promise.resolve()
+      );
+
+      let currentTail: Promise<void>;
+
+      currentTail = Promise.all(
+        previousTails.map(previousTail =>
+          previousTail.catch(() => undefined)
+        )
+      )
+        .then(async () => {
+          try {
+            const response = await firstValueFrom(
+              this.postSubCategoryAnswers(snapshot)
+            );
+
+            if (!subscriber.closed) {
+              subscriber.next(response);
+              subscriber.complete();
+            }
+          } catch (error) {
+            if (!subscriber.closed) {
+              subscriber.error(error);
+            }
           }
         })
-      );
+        .finally(() => {
+          queueKeys.forEach(queueKey => {
+            if (this.answerSaveQueues.get(queueKey) === currentTail) {
+              this.answerSaveQueues.delete(queueKey);
+            }
+          });
+        });
+
+      queueKeys.forEach(queueKey => {
+        this.answerSaveQueues.set(queueKey, currentTail);
+      });
+    });
   }
+
   /**
-   * Retrieves the extra detail content for the question.
-   * @param questionId
+   * Performs the subcategory HTTP request after all affected answer queues
+   * have reached this request.
    */
-  getDetails(questionId: number, questionType: string): any {
-    return this.http.post(this.configSvc.apiUrl
+  private postSubCategoryAnswers(
+    answers: SubCategoryAnswers
+  ): Observable<CompletionCountResponse> {
+    return this.http.post(
+      this.configSvc.apiUrl + 'answersubcategory',
+      answers,
+      headers
+    ).pipe(
+      tap((response: CompletionCountResponse) => {
+        this.publishCompletionCounts(response);
+      })
+    );
+  }
+
+  /**
+   * Retrieves extra detail content for a question.
+   */
+  getDetails(
+    questionId: number,
+    questionType: string
+  ): any {
+    return this.http.post(
+      this.configSvc.apiUrl
       + 'details?questionid=' + questionId
-      + '&&questionType=' + questionType
-      , headers);
+      + '&&questionType=' + questionType,
+      headers
+    );
   }
 
   /**
    * Renames a document.
    */
   renameDocument(id: number, title: string) {
-    return this.http.post(this.configSvc.apiUrl + 'renamedocument?id=' + id + '&title=' + title, headers);
+    return this.http.post(
+      this.configSvc.apiUrl
+      + 'renamedocument?id=' + id
+      + '&title=' + title,
+      headers
+    );
   }
 
   toggleShared(id: number, isShared: boolean) {
-    return this.http.post(this.configSvc.apiUrl + 'doc/toggleshared?id=' + id + '&isShared=' + isShared, headers);
+    return this.http.post(
+      this.configSvc.apiUrl
+      + 'doc/toggleshared?id=' + id
+      + '&isShared=' + isShared,
+      headers
+    );
   }
 
   /**
    * Deletes a document.
    */
   deleteDocument(id: number, questionId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId, headers);
+    return this.http.post(
+      this.configSvc.apiUrl
+      + 'deletedocument?id=' + id
+      + '&questionId=' + questionId,
+      headers
+    );
   }
 
-  /**
-   *
-   */
   getQuestionsForDocument(id: number) {
-    return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
+    return this.http.get(
+      this.configSvc.apiUrl
+      + 'questionsfordocument?id=' + id,
+      headers
+    );
   }
 
-  /**
-   *
-   */
   getDefaultParametersForAssessment() {
-    return this.http.get(this.configSvc.apiUrl + 'ParametersForAssessment', headers);
+    return this.http.get(
+      this.configSvc.apiUrl + 'ParametersForAssessment',
+      headers
+    );
   }
 
   /**
-   * Stores an assessment-specific (global) parameter value override.
+   * Stores an assessment-wide parameter override.
    */
   storeAssessmentParameter(p: DefaultParameter) {
-    return this.http.post(this.configSvc.apiUrl + 'SaveAssessmentParameter',
+    return this.http.post(
+      this.configSvc.apiUrl + 'SaveAssessmentParameter',
       {
         id: p.parameterId,
         token: p.parameterName,
         substitution: p.parameterValue
       },
-      headers);
+      headers
+    );
   }
 
   /**
-   * Stores an answer-specific (in-line) parameter value override.
-   * @param answerParm
+   * Stores an answer-specific parameter override.
    */
   storeAnswerParameter(answerParm: ParameterForAnswer) {
-    return this.http.post(this.configSvc.apiUrl + 'SaveAnswerParameter',
+    return this.http.post(
+      this.configSvc.apiUrl + 'SaveAnswerParameter',
       {
         requirementId: answerParm.requirementId,
         id: answerParm.parameterId,
         answerId: answerParm.answerId,
         substitution: answerParm.parameterValue
       },
-      headers);
+      headers
+    );
   }
 
-  /**
-   *
-   */
-  getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
-    return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
-      subGroups + '&modelId=' + modelId, headers);
+  getSubGroupingQuestionCount(
+    subGroups: string[],
+    modelId: number
+  ) {
+    return this.http.get(
+      this.configSvc.apiUrl
+      + 'SubGroupingQuestionCount?subGroups='
+      + subGroups
+      + '&modelId='
+      + modelId,
+      headers
+    );
   }
 
-  /**
-   *
-   */
-  getOverrideQuestions(questionId, Component_Symbol_Id) {
+  getOverrideQuestions(
+    questionId: number,
+    componentSymbolId: number
+  ) {
     let params = new HttpParams();
-    params = params.append('question_id', questionId);
-    params = params.append('Component_Symbol_Id', Component_Symbol_Id);
-    return this.http.get(this.configSvc.apiUrl + 'GetOverrideQuestions', { params: params });
+
+    params = params.append(
+      'question_id',
+      questionId
+    );
+
+    params = params.append(
+      'Component_Symbol_Id',
+      componentSymbolId
+    );
+
+    return this.http.get(
+      this.configSvc.apiUrl + 'GetOverrideQuestions',
+      { params }
+    );
   }
 
   /**
-   * Finds the question in the master collection and updates its answer.
-   * This function was built specifically for Component Overrides,
-   * so it's currently limited to those.  But it could be expanded if there was
-   * a general need to update answers anywhre in the master structure.
+   * Updates an answer in the master Component Overrides structure.
    */
-  setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
+  setAnswerInQuestionList(
+    questionId: number,
+    answerId: number,
+    answerText: string
+  ) {
     this.questions.categories.forEach((group: Category) => {
-      if (group.standardShortName === 'Component Overrides') {
-        group.subCategories.forEach((sc: SubCategory) => {
-          sc.questions.forEach((q: Question) => {
-            if (q.questionId === questionId && q.answer_Id === answerId) {
-              q.answer = answerText;
-            }
-          });
-        });
+      if (group.standardShortName !== 'Component Overrides') {
+        return;
       }
+
+      group.subCategories.forEach((sc: SubCategory) => {
+        sc.questions.forEach((q: Question) => {
+          if (
+            q.questionId === questionId
+            && q.answer_Id === answerId
+          ) {
+            q.answer = answerText;
+          }
+        });
+      });
     });
   }
 
   /**
-   * Save the answer with the Marked for Review flag flipped.
+   * Saves an answer with its Marked for Review flag flipped.
    */
   saveMFR(q: Question) {
     q.markForReview = !q.markForReview;
@@ -340,178 +566,228 @@ export class QuestionsService {
       componentGuid: q.componentGuid
     };
 
-    this.storeAnswer(newAnswer).subscribe();
+    /*
+     * This retains the existing fire-and-forget behavior. A stronger design
+     * would return this Observable and let the component display or recover
+     * from an error.
+     */
+    this.storeAnswer(newAnswer).subscribe({
+      error: error => {
+        q.markForReview = !q.markForReview;
+        console.error(
+          'Unable to save Marked for Review state.',
+          error
+        );
+      }
+    });
   }
 
-  /**
-   * The service can emit the question extras object that is given to it.
-   * This was originally built to broadcast changes to documents/artifacts
-   * but could be expanded for other changes as well.
-   */
-  extrasChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
+  extrasChanged$: BehaviorSubject<number> =
+    new BehaviorSubject(0);
+
   broadcastExtras(qe: any) {
     this.extrasChanged$.next(qe);
   }
 
+  private detailsChangedSubject =
+    new BehaviorSubject<number>(0);
 
-  /**
-   * If you need to refresh extras from the API, use this subject
-   */
-  private detailsChangedSubject = new BehaviorSubject<number>(0);
-  detailsChanged$ = this.detailsChangedSubject.asObservable();
+  detailsChanged$ =
+    this.detailsChangedSubject.asObservable();
+
   emitRefreshQuestionDetails(questionId: number) {
     this.detailsChangedSubject.next(questionId);
   }
 
-
-  /**
-   *
-   */
   buildNavTargetID(target: any): string {
     if (!target) {
       return '';
     }
+
     if (target.hasOwnProperty('parent')) {
-      return target.parent.toLowerCase().replace(/ /g, '-') + '-' + target.categoryID;
+      return target.parent
+        .toLowerCase()
+        .replace(/ /g, '-')
+        + '-'
+        + target.categoryID;
     }
+
     return '';
   }
 
-  /**
-   * Finds the button definition and return its CSS
-   */
-  answerOptionCss(modelName: string, answerCode: string) {
-    return this.findAnsDefinition(modelName, answerCode).buttonCss;
+  answerOptionCss(
+    modelName: string,
+    answerCode: string
+  ) {
+    return this.findAnsDefinition(
+      modelName,
+      answerCode
+    ).buttonCss;
   }
 
-  /**
-   * Finds the button definition and returns its label
-   */
-  answerButtonLabel(modelName: string, answerCode: string): string {
-    const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate('answer-options.button-labels.' + def.buttonLabelKey.toLowerCase());
+  answerButtonLabel(
+    modelName: string,
+    answerCode: string
+  ): string {
+    const definition = this.findAnsDefinition(
+      modelName,
+      answerCode
+    );
+
+    return this.tSvc.translate(
+      'answer-options.button-labels.'
+      + definition.buttonLabelKey.toLowerCase()
+    );
   }
 
-  /**
-   * Finds the button definition and returns its tooltip, if defined.
-   * If a tooltip is not defined, the button label is returned.
-   */
-  answerButtonTooltip(modelName: string, answerCode: string): string {
-    var def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate('answer-options.button-tooltips.' + def.buttonLabelKey.toLowerCase());
+  answerButtonTooltip(
+    modelName: string,
+    answerCode: string
+  ): string {
+    const definition = this.findAnsDefinition(
+      modelName,
+      answerCode
+    );
+
+    return this.tSvc.translate(
+      'answer-options.button-tooltips.'
+      + definition.buttonLabelKey.toLowerCase()
+    );
   }
 
-  /**
-   * Finds the button definition and returns its full label
-   */
-  answerDisplayLabel(modelName: string, answerCode: string) {
-    const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate('answer-options.labels.' + def.buttonLabelKey.toLowerCase());
+  answerDisplayLabel(
+    modelName: string,
+    answerCode: string
+  ) {
+    const definition = this.findAnsDefinition(
+      modelName,
+      answerCode
+    );
+
+    return this.tSvc.translate(
+      'answer-options.labels.'
+      + definition.buttonLabelKey.toLowerCase()
+    );
   }
 
-  /**
-   * Finds the answer in the default object or the model-specific object.
-   * Standards questions screen pass '0' for the modelId.
-   */
-  findAnsDefinition(model: string, answerCode: string) {
-    let ansDef;
+  findAnsDefinition(
+    model: string,
+    answerCode: string
+  ) {
+    let answerDefinition;
 
-    // assume unanswered if null or undefined
     if (!answerCode) {
       answerCode = 'U';
     }
 
-    // look for model-specific answer options
-    if (!!model && String(model).trim().length > 0) {
+    if (model && String(model).trim().length > 0) {
+      const moduleBehavior =
+        this.configSvc.getModuleBehavior(model);
 
-      // first try to find the model configuration using its model name
-      let modelConfiguration = this.configSvc.getModuleBehavior(model);
+      if (moduleBehavior) {
+        answerDefinition =
+          moduleBehavior.answerOptions?.find(option =>
+            option.code === answerCode
+            && option.skin === this.configSvc.installationMode
+          );
 
-      if (!!modelConfiguration) {
-        // first look for a skin-specific answer option
-        ansDef = modelConfiguration.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
-        if (ansDef) {
-          return ansDef;
+        if (answerDefinition) {
+          return answerDefinition;
         }
 
-        // or the general version of the answer option for the model
-        ansDef = modelConfiguration.answerOptions?.find(o => o.code == answerCode && !o.skin);
-        if (ansDef) {
-          return ansDef;
+        answerDefinition =
+          moduleBehavior.answerOptions?.find(option =>
+            option.code === answerCode
+            && !option.skin
+          );
+
+        if (answerDefinition) {
+          return answerDefinition;
         }
       }
     }
 
-    // fallback to default options for standard-based or model-based
-    ansDef = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);
-    if (ansDef) {
-      return ansDef;
+    answerDefinition =
+      this.configSvc.config.answerOptionsDefault.find(
+        option => option.code === answerCode
+      );
+
+    if (answerDefinition) {
+      return answerDefinition;
     }
 
-    // return a dummy definition to help us spot holes in the lookup
     return {
-      buttonLabelKey: "X",
-      buttonCss: "btn-yes"
+      buttonLabelKey: 'X',
+      buttonCss: 'btn-yes'
     };
   }
 
-
-  /**
-   * If there are any parameters in the text defined by double curly braces
-   * format them to look like the published standard.  No substitution is
-   * performed by this function, just formatting.
-   */
   formatParameters(text: string) {
-    text = text.replace(/{{/g, '[<em>').replace(/}}/g, '</em>]');
-    return text;
+    return text
+      .replace(/{{/g, '[<em>')
+      .replace(/}}/g, '</em>]');
   }
 
-  /**
-   * Replace parameter placeholders in the question text template with any overridden values.
-   * @param q
-   */
   applyTokensToText(q: Question) {
     let text = q.questionText;
-
-    //text = this.linebreakPipe.transform(text);
 
     if (!q.parmSubs) {
       return text;
     }
 
-    // Substitute the longer tokens first, to avoid substituting a nested token
-    // and leave the outer token untouched.  We currently only support the outer tokens.
     q.parmSubs.sort((a, b) => {
-      if (a.token.length > b.token.length) return -1;
-      if (a.token.length < b.token.length) return 1;
+      if (a.token.length > b.token.length) {
+        return -1;
+      }
+
+      if (a.token.length < b.token.length) {
+        return 1;
+      }
+
       return 0;
     });
 
-    q.parmSubs.forEach(t => {
-      if (t.substitution == null) {
-        // uncustomized
-        text = this.replaceAll(text, `{{${t.token}}}`, "[<span class='sub-me fst-italic pid-" + t.id + "'>" + t.token + "</span>]");
+    q.parmSubs.forEach(token => {
+      if (token.substitution == null) {
+        text = this.replaceAll(
+          text,
+          `{{${token.token}}}`,
+          '[<span class=\'sub-me fst-italic pid-'
+          + token.id
+          + '\'>'
+          + token.token
+          + '</span>]'
+        );
       } else {
-        // customized
-        text = this.replaceAll(text, `{{${t.token}}}`, "<span class='sub-me pid-" + t.id + "'>" + t.substitution + "</span>");
+        text = this.replaceAll(
+          text,
+          `{{${token.token}}}`,
+          '<span class=\'sub-me pid-'
+          + token.id
+          + '\'>'
+          + token.substitution
+          + '</span>'
+        );
       }
     });
 
     return text;
   }
 
-  /**
-   *
-   * @param origString
-   * @param searchStr
-   * @param replaceStr
-   * @returns
-   */
-  replaceAll(origString: string, searchStr: string, replaceStr: string) {
-    // escape regexp special characters in search string
-    searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  replaceAll(
+    original: string,
+    search: string,
+    replacement: string
+  ) {
+    search = search.replace(
+      /[-\/\\^$*+?.()|[\]{}]/g,
+      '\\$&'
+    );
 
-    return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
+    return original.replace(
+      new RegExp(search, 'gi'),
+      replacement
+    );
   }
 
   emitComponentOverrideEvent(data: any) {
