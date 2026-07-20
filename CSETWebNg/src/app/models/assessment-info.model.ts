@@ -115,6 +115,8 @@ export interface AssessmentContactsResponse {
 export interface Demographic {
     assessment_Id?: number;
 
+    cisaRegion?: number;
+
     // PPD-21 or NIPP
     sectorDirective?: string;
 
