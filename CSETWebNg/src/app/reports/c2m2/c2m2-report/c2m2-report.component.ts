@@ -22,6 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { AssessmentService } from '../../../services/assessment.service';
 import { ReportService } from '../../../services/report.service';
 
 @Component({
@@ -44,10 +47,17 @@ export class C2m2ReportComponent implements OnInit {
   loading: boolean = true;
 
   constructor(
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private assessSvc: AssessmentService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    this.assessSvc.getAssessmentDetail().subscribe((r: AssessmentDetail) => {
+      const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+      this.titleService.setTitle(`C2M2 Report - ${assessmentTitle}`);
+    });
+
     this.reportSvc.getC2M2Donuts().subscribe(
       (data: any) => {
         this.donutData = data;

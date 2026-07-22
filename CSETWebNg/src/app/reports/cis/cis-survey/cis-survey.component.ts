@@ -69,6 +69,8 @@ export class CisSurveyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`Survey Report - ${assessmentTitle}`);
       }
     );
 
