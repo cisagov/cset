@@ -110,6 +110,16 @@ body {
   .noprint {
     visibility: hidden;
   }
+
+  thead {
+    display: table-header-group;
+  }
+
+  thead,
+  tbody tr:first-child {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
 }
 
 
