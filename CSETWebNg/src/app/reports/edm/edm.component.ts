@@ -26,7 +26,7 @@ import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { DemographicService } from '../../services/demographic.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
-import { Demographic } from '../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { ReportService } from '../../services/report.service';
 import { saveAs } from "file-saver";
 import { AssessmentService } from '../../services/assessment.service';
@@ -67,7 +67,10 @@ export class EdmComponent implements OnInit, AfterContentInit {
    *
    */
   ngOnInit(): void {
-    this.titleService.setTitle("Report - EDM");
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.titleService.setTitle(`EDM Report - ${assessmentTitle}`);
+    });
     this.currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     this.currentTimeZone = this.currentTimeZone.replace("_", " ")
     this.currentDate = new Date();

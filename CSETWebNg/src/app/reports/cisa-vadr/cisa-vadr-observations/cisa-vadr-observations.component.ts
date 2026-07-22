@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
@@ -55,7 +56,8 @@ export class CisaVadrObservationsComponent implements OnInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public reportSvc: ReportService,
-    public observationSvc: ObservationsService
+    public observationSvc: ObservationsService,
+    private titleService: Title
   ) { }
 
   /**
@@ -66,6 +68,8 @@ export class CisaVadrObservationsComponent implements OnInit {
       (r: AssessmentDetail) => {
         this.response = r;
         this.assessSvc.assessment = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`CISA VADR Observations Report - ${assessmentTitle}`);
       }
     );
 

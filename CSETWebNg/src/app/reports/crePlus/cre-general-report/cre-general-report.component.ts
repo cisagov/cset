@@ -79,13 +79,13 @@ export class CreGeneralReportComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     const titleKey = 'core.cre.charts.general.title';
-    this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(t => {
-      this.title = t;
-      this.titleService.setTitle(this.title);
-    });
-
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
       this.info = assessmentDetail;
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(reportTitle => {
+        this.title = reportTitle;
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
+      });
     });
 
     this.distribCoreDomainMil = await this.buildAllDistrib([22, 23, 24]);

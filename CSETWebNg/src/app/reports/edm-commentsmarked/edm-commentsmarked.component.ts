@@ -25,8 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
-import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import { TranslocoService } from '@jsverse/transloco';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
@@ -47,20 +47,22 @@ export class EdmCommentsmarkedComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService,
     private titleService: Title,
+    public tSvc: TranslocoService,
     public maturitySvc: MaturityService,
-    private sanitizer: DomSanitizer,
     public assessSvc: AssessmentService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments Report - CISA EDM");
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.edm.4.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
     this.maturitySvc.getReportComments().subscribe(

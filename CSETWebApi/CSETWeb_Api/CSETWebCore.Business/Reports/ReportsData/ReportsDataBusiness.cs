@@ -373,10 +373,20 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         private List<MatRelevantAnswers> ConvertParentsToChildren(int assessmentId, List<MatRelevantAnswers> parentQuestions)
         {
+            var techDomain = new DemographicExtBusiness(_context)
+                .GetX(assessmentId, "TECH-DOMAIN")?.ToString();
+
+            var outOfScopeIds = new QuestionScopeAnalyzer(
+                assessmentId, _context, techDomain)
+                .DetermineScopeForTechnologyDomain(techDomain);
+
             var parentIds = parentQuestions.Select(a => a.ANSWER.Question_Or_Requirement_Id).ToList();
 
             var allChildQuestions = _context.MATURITY_QUESTIONS
-                .Where(q => q.Parent_Question_Id != null && parentIds.Contains((int)q.Parent_Question_Id))
+                .Where(q => 
+                    q.Parent_Question_Id != null 
+                    && parentIds.Contains((int)q.Parent_Question_Id)
+                    && !outOfScopeIds.Contains(q.Mat_Question_Id))
                 .Join(_context.ANSWER,
                     q => q.Mat_Question_Id,
                     a => a.Question_Or_Requirement_Id,
@@ -400,11 +410,14 @@ namespace CSETWebCore.Business.Reports
                     {
                         var newQ = new MatRelevantAnswers();
                         MATURITY_QUESTIONS mq = new();
+                        mq.Maturity_Model_Id = child.Question.Maturity_Model_Id;
+                        mq.Mat_Question_Id = child.Question.Mat_Question_Id;
                         mq.Question_Title = child.Question.Question_Title;
                         mq.Question_Text = $"{parentQText} - {child.Question.Question_Text}";
                         newQ.Mat = mq;
 
                         ANSWER ans = new();
+                        ans.Question_Or_Requirement_Id = child.Answer.Question_Or_Requirement_Id;
                         ans.Answer_Text = child.Answer.Answer_Text;
                         ans.Mark_For_Review = child.Answer.Mark_For_Review;
                         ans.Comment = parent.ANSWER.Comment;

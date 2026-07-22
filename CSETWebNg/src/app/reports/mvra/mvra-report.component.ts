@@ -53,11 +53,11 @@ export class MvraReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("MVRA Report - " + this.configSvc.behaviors.defaultTitle);
-
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`MVRA Report - ${assessmentTitle}`);
       }
     );
 

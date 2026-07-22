@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
@@ -60,7 +59,6 @@ export class RraDeficiencyComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
-    public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
@@ -73,11 +71,6 @@ export class RraDeficiencyComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-
-    this.tSvc.selectTranslate('core.rra.rra deficiency report', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
 
     this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
       (r: any) => {
@@ -121,6 +114,9 @@ export class RraDeficiencyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('core.rra.rra deficiency report', {}, { scope: 'reports' })
+          .subscribe(reportTitle => this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
   }

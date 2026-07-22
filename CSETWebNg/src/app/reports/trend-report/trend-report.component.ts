@@ -82,8 +82,11 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.titleService.setTitle("Trend Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
+    this.aggregationSvc.getAggregation().subscribe((aggregation: any) => {
+      const aggregationTitle = aggregation.aggregationName || `aggregation-${aggId}`;
+      this.titleService.setTitle(`Trend Report - ${aggregationTitle}`);
+    });
     this.reportSvc.getAggReport('trend-report', aggId).subscribe(
       (r: any) => {
         this.response = r;

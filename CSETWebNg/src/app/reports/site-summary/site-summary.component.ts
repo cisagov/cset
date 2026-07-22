@@ -92,10 +92,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.tSvc.selectTranslate('core.site summary.report title', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
 
     this.reportSvc.getReport('sitesummary').subscribe(
@@ -137,6 +133,10 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('core.site summary.report title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
   }
