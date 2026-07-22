@@ -74,7 +74,6 @@ export class SdOwnerDeficiencyComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Deficiency Report");
     this.loading = true;
 
     this.getAssessmentDetails();
@@ -84,6 +83,8 @@ export class SdOwnerDeficiencyComponent {
   getAssessmentDetails() {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
       this.info = assessmentDetail;
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.titleService.setTitle(`Deficiency Report - ${assessmentTitle}`);
     });
   }
 

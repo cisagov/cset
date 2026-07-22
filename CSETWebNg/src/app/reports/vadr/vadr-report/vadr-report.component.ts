@@ -142,9 +142,6 @@ export class VadrReportComponent implements OnInit {
       this.createQuestionReferenceTable(r);
     });
 
-
-    this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
-
     this.vadrDataSvc.getReport('vadrmain').subscribe(
       (r: any) => {
         this.mainResponse = r;
@@ -155,6 +152,8 @@ export class VadrReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`Validated Architecture Design Review Report - VADR - ${assessmentTitle}`);
       }
     );
   }

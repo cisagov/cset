@@ -25,7 +25,7 @@ import { CmuReportModel } from './../../../models/reports.model';
 import { CmuService } from './../../../services/cmu.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@jsverse/transloco';
 import { QuestionsService } from '../../../services/questions.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 
@@ -51,21 +51,24 @@ export class CrrCommentsMarkedComponent implements OnInit {
   markedForReviewList = [];
 
   constructor(
-    public configSvc: ConfigService,
     private titleService: Title,
+    public tSvc: TranslocoService,
     private cmuSvc: CmuService,
     public questionsSvc: QuestionsService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle('Comments Report - CISA CRR');
     this.keyToCategory = this.cmuSvc.keyToCategory;
 
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {
         this.crrModel = r;
         this.info = r.assessmentDetails;
+        const assessmentTitle = this.info.assessmentName || `assessment-${this.info.id}`;
+        this.tSvc.selectTranslate('launch.crr.3.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
         const commentsCategories = [];
 
         // Build up comments list

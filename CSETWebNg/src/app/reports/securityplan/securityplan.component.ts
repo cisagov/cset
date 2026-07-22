@@ -71,11 +71,6 @@ export class SecurityplanComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.tSvc.selectTranslate('core.security plan.report title', {}, { scope: 'reports' })
-      .subscribe(title => {
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
-      });
-
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {
         this.response = r;
@@ -103,6 +98,10 @@ export class SecurityplanComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('core.security plan.report title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
   }

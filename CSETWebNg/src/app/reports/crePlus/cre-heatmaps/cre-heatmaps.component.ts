@@ -29,6 +29,7 @@ import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cre-heatmaps',
@@ -66,6 +67,11 @@ export class CreHeatmapsComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.titleService.setTitle(`CRE+ Heatmaps Report - ${assessmentTitle}`);
+    });
+
     this.reportSvc.getHeatmap(22).subscribe((x) => {
       this.heatmapModel22 = x;
     });

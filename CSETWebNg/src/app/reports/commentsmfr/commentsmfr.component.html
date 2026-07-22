@@ -39,7 +39,7 @@
                         {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
                     </h1>
                 </div>
-                <hr class="page-line m-0">
+
                 <table class="w-100 td-align-top">
                     <tr *ngIf="response?.comments?.length > 0">
                         <th>{{questionAliasSingular}}</th>
@@ -106,7 +106,7 @@
             <!-- "Other Remarks"-->
             <div *ngIf="remarks?.length > 0" class="ms-3 me-3 form">
                 <h1 class="page-title">{{t('reports.core.rra.cmfr.other remarks')}}</h1>
-                <hr class="page-line m-0">
+
                 <div class="my-3" [innerHTML]="remarks | linebreakplain">
                 </div>
             </div>
@@ -119,7 +119,7 @@
                         {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
                     </h1>
                 </div>
-                <hr class="page-line m-0">
+
                 <table class="w-100 td-align-top">
                     <tr *ngIf="markedForReview?.length > 0">
                         <th>{{questionAliasSingular}}</th>

@@ -203,6 +203,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         sortable: true,
         filter: true,
         flex: 2,
+        minWidth: 250,
         cellRenderer: (params: any) => {
           return `
     <button class="btn btn-link tw:text-left tw:justify-start tw:h-full tw:w-full tw:text-text-primary"
