@@ -175,10 +175,10 @@
       <mat-sidenav-content class="d-flex flex-column flex-11a oy-auto">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
           <div
-            class="assessment-header tw:flex tw:justify-between tw:items-center tw:gap-3 tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3"
+            class="assessment-header tw:flex tw:flex-col tw:items-stretch tw:gap-3 tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3"
           >
             <!-- Assessment Name -->
-            <div class="tw:flex-[1_1_18rem] tw:min-w-[16rem]">
+            <div class="tw:w-full tw:flex-none tw:min-w-0">
               <h6
                 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate"
                 [matTooltip]="assessment?.assessmentName"
@@ -187,7 +187,7 @@
               </h6>
             </div>
 
-            <div class="tw:flex tw:flex-[0_1_auto] tw:min-w-0 tw:items-center tw:gap-2 tw:lg:gap-4">
+            <div class="tw:flex tw:w-full tw:flex-none tw:min-w-0 tw:justify-start tw:items-center tw:gap-2 tw:lg:gap-4">
               <!-- Progress Section -->
               <div class="tw:flex tw:min-w-[5.25rem] tw:items-center tw:gap-2 tw:lg:gap-3" *ngIf="assessment?.maturityModel?.modelName !== 'CIS'">
                 <progress
@@ -200,17 +200,17 @@
               </div>
 
               <!-- Divider -->
-              <div class="tw:hidden tw:lg:block tw:shrink-0 tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
+              <div class="tw:hidden tw:shrink-0 tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
               <!-- CISA-only JSON upload indicator -->
-              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:flex tw:items-center tw:gap-2">
-                <label for="jsonUploadedSwitch" class="tw:hidden tw:lg:inline tw:text-sm tw:font-medium tw:whitespace-nowrap"
+              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:flex tw:flex-none tw:items-center tw:gap-2">
+                <label for="jsonUploadedSwitch" class="tw:inline tw:text-sm tw:font-medium tw:whitespace-nowrap"
                   >JSON export uploaded</label
                 >
                 <input
                   type="checkbox"
                   id="jsonUploadedSwitch"
-                  class="tw:toggle"
+                  class="tw:toggle tw:shrink-0"
                   aria-label="JSON export uploaded"
                   matTooltip="JSON export uploaded"
                   [(ngModel)]="jsonUploaded"
@@ -219,15 +219,15 @@
               </div>
 
               <!-- Divider -->
-              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:hidden tw:lg:block tw:shrink-0 tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
+              <div *ngIf="configSvc.userIsCisaAssessor" class="tw:hidden tw:shrink-0 tw:w-px tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700"></div>
 
-              <div class="tw:flex tw:items-center tw:gap-3">
-                <label for="assessmentDoneSwitch" class="tw:hidden tw:lg:inline tw:text-sm tw:font-medium tw:whitespace-nowrap"
+              <div class="tw:flex tw:flex-none tw:items-center tw:gap-3">
+                <label for="assessmentDoneSwitch" class="tw:inline tw:text-sm tw:font-medium tw:whitespace-nowrap"
                   >Mark Assessment Done</label
                 >
                 <input
                   type="checkbox"
-                  class="tw:toggle"
+                  class="tw:toggle tw:shrink-0"
                   id="assessmentDoneSwitch"
                   aria-label="Mark Assessment Done"
                   matTooltip="Mark Assessment Done"
