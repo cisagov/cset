@@ -24,8 +24,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
-import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import { TranslocoService } from '@jsverse/transloco';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
@@ -44,7 +44,8 @@ export class CisCommentsmarkedComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
-    public configSvc: ConfigService,
+    private titleService: Title,
+    public tSvc: TranslocoService,
     public maturitySvc: MaturityService,
     public assessSvc: AssessmentService
   ) { }
@@ -55,6 +56,10 @@ export class CisCommentsmarkedComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.cis.4.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
     this.maturitySvc.getReportComments().subscribe(
