@@ -547,8 +547,8 @@ label[required]::after {
 
 .white-panel-controls {
   background-color: $gray-50;
-  margin: 1em 1em 0em 1em;
-  padding: 1.5em 2em .5em 2em;
+  margin: 0 1em;
+  padding: .5em 2em 0 2em;
   overflow-y: auto;
   overflow-x: hidden;
   border-top-left-radius: 8px;
