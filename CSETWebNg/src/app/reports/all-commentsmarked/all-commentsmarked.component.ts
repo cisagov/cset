@@ -24,7 +24,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
-import { ConfigService } from '../../services/config.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 import { AssessmentService } from '../../services/assessment.service';
@@ -52,7 +51,6 @@ export class AllCommentsmarkedComponent {
     public reportSvc: ReportService,
     public titleService: Title,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService,
     public assessSvc: AssessmentService
   ) { }
 
@@ -60,13 +58,14 @@ export class AllCommentsmarkedComponent {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        const reportTitle = this.tSvc.translate('reports.all.cmfr.report title');
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
       }
     );
     this.reportSvc.getStandardCommentsAndMfr().subscribe(
       (r: any) => {
-
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.cmfr.report title'));
       }
     );
   }
