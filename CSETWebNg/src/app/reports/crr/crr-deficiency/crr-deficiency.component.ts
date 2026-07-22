@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CmuReportModel } from '../../../models/reports.model';
-import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { CmuService } from './../../../services/cmu.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
@@ -50,7 +49,6 @@ export class CrrDeficiencyComponent implements OnInit {
   info: AssessmentDetail;
 
   constructor(
-    public configSvc: ConfigService,
     private titleService: Title,
     private cmuSvc: CmuService,
     public questionsSvc: QuestionsService
@@ -58,13 +56,14 @@ export class CrrDeficiencyComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.titleService.setTitle('Deficiency Report - CRR');
     this.keyToCategory = this.cmuSvc.keyToCategory;
 
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {
         this.crrModel = r;
         this.info = r.assessmentDetails;
+        const assessmentTitle = this.info.assessmentName || `assessment-${this.info.id}`;
+        this.titleService.setTitle(`Deficiency Report - CRR - ${assessmentTitle}`);
         const categories = [];
 
         // Build up deficiencies list
