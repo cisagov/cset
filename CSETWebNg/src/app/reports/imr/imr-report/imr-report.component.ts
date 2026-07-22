@@ -64,9 +64,10 @@ export class ImrReportComponent implements OnInit {
       conf !== 'None' ? (this.confidentiality = conf) : (this.confidentiality = '');
     }
 
-    this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
     this.reportSvc.getAssessmentInfoForReport().subscribe((resp: any) => {
       this.model.assessmentDetails = resp;
+      const assessmentTitle = resp.assessmentName || `assessment-${resp.id}`;
+      this.titleSvc.setTitle(`IMR Report - ${assessmentTitle}`);
     });
 
     this.reportSvc.getModelContent('').subscribe(

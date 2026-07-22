@@ -70,13 +70,14 @@ export class CreFinalReportComponent implements OnInit {
   ngOnInit(): void {
     this.modelId = +this.route.snapshot.params['m'];
 
-    setTimeout(() => {
-      this.title = this.tSvc.translate(`reports.core.cre.final reports.${this.modelId}.title`);
-      this.titleService.setTitle(this.title);
-    }, 500);
-
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
-      this.info = assessmentDetail
+      this.info = assessmentDetail;
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.tSvc.selectTranslate(`core.cre.final reports.${this.modelId}.title`, {}, { scope: 'reports' })
+        .subscribe(reportTitle => {
+          this.title = reportTitle;
+          this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
+        });
     });
   }
 

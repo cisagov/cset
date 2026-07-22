@@ -85,10 +85,6 @@ export class SiteDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tSvc.selectTranslate('core.site detail report.report title', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {
         this.response = r;
@@ -119,6 +115,10 @@ export class SiteDetailComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('core.site detail report.report title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
   }

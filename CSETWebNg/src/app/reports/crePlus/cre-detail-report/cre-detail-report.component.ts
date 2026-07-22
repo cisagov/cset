@@ -80,13 +80,13 @@ export class CreDetailReportComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     const titleKey = 'core.cre.charts.detail.title';
-    this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(t => {
-      this.title = t;
-      this.titleService.setTitle(this.title);
-    });
-
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessDetail = assessmentDetail
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.assessDetail = assessmentDetail;
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(reportTitle => {
+        this.title = reportTitle;
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
+      });
     });
 
     this.domainList22 = await this.getFullModel(22);

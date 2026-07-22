@@ -83,11 +83,6 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngOnInit() {
-
-    this.tSvc.selectTranslate('executive summary', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
     this.targetLevel = 0;
     this.reportSvc.getReport('executivematurity').subscribe(
       (r: any) => {
@@ -100,6 +95,10 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.cmmc2.1.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
 
