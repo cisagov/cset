@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
-import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
@@ -67,7 +66,6 @@ export class CommentsMfrComponent implements OnInit {
     public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService,
     private readonly titleService: Title,
     public maturitySvc: MaturityService,
     public tSvc: TranslocoService
@@ -86,13 +84,13 @@ export class CommentsMfrComponent implements OnInit {
   async initAsync() {
     this.loading = true;
 
-    this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
+          .subscribe(reportTitle => this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
 
