@@ -64,8 +64,6 @@
     </Column>
   </Table>
   
-  <Table name="DETAILS_DEMOGRAPHICS" />
-  
   <Table name="ASSESSMENT_SECTOR_SUBSECTOR" />
 
   <Table name="CIS_CSI_SERVICE_COMPOSITION"/>
