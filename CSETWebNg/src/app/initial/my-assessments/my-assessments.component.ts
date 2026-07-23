@@ -55,6 +55,7 @@ import { FileExportService } from '../../services/file-export.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { HostListener } from '@angular/core';
 import { MyAssessmentsActionsRendererComponent } from './my-assessments-actions-renderer.component';
+import { MyAssessmentsStatusRendererComponent } from './my-assessments-status-renderer.component';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -192,6 +193,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
 
   initializeColumnDefs() {
     const actionsColumnWidth = this.showColumn('export json') ? 220 : 100;
+    const showPrimaryAssessor = this.showColumn('primary-assessor');
+    const statusColumnMinWidth = showPrimaryAssessor ? 150 : 250;
 
     this.columnDefs = [
       {
@@ -219,6 +222,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         sortable: true,
         filter: true,
         flex: 1,
+        minWidth: 100,
         cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm tw:text-text-primary">${params.value}</div>`
       },
       {
@@ -226,6 +230,7 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         headerName: this.tSvc.translate('last modified'),
         sortable: true,
         flex: 1,
+        minWidth: 100,
         valueFormatter: (params) => {
           if (!params.value) return '';
 
@@ -258,54 +263,19 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
         headerName: this.tSvc.translate('primary assessor'),
         sortable: true,
         flex: 1,
-        hide: !this.showColumn('primary-assessor'),
+        minWidth: 100,
+        hide: !showPrimaryAssessor,
         valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim(),
         cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm tw:text-text-primary">${params.value}</div>`
       },
       {
         headerName: this.tSvc.translate('status'),
         width: 250,
-        cellRenderer: (params: any) => {
-          const assessment = params.data;
-          const percentage = this.getCompletionPercentage(assessment);
-          const favoriteIconClass = assessment.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star';
-          const favoriteClass = assessment.favorite ? 'star-favorite' : 'star-inactive';
-          const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
-          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
-          const tooltipText = this.getProgressTooltip(assessment);
-          const isCIS = assessment?.selectedMaturityModel === 'CIS';
-
-          const progressBarHtml = isCIS ? '' : `
-      <div class="tw:flex-1 tw:min-w-0">
-        <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
-                  value="${percentage}"
-                  max="100"
-                  title="${tooltipText}"></progress>
-      </div>
-      <span class="tw:text-sm tw:text-text-secondary tw:min-w-fit tw:font-medium">
-        ${percentage}%
-      </span>
-    `;
-          return `
-          <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
-            <button class="btn btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
-                    data-action="toggleFavorite"
-                    data-assessment-id="${assessment.assessmentId}"
-                    title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-              <i class="${favoriteIconClass} ${favoriteClass}"></i>
-            </button>
-
-            <span class="cursor-pointer cset-icons-flag-dark tw:text-md p-1 pt-2 ${flagClass}"
-                  title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
-            </span>
-             ${progressBarHtml}
-
-          </div>
-        `;
-        },
+        cellRenderer: MyAssessmentsStatusRendererComponent,
         sortable: false,
         filter: false,
-        flex: 2
+        flex: 2,
+        minWidth: statusColumnMinWidth
       },
       {
         headerName: this.tSvc.translate('actions'),
@@ -677,16 +647,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   /**
    *
    */
-  getCompletionPercentage(assessment: UserAssessment): number {
-    if (!assessment.totalAvailableQuestionsCount || assessment.totalAvailableQuestionsCount === 0) {
-      return 0;
-    }
-    return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
-  }
-
-  /**
-   *
-   */
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     if (this.sortedAssessments) {
@@ -697,21 +657,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.calculateGridHeight();
     }, 50);
-  }
-
-  /**
-   *
-   */
-  getProgressTooltip(assessment: UserAssessment): string {
-    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
-      return this.tSvc.translate('welcome page.blank assessment');
-    }
-
-    if (assessment.totalAvailableQuestionsCount > 0) {
-      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
-    }
-
-    return this.tSvc.translate('welcome page.blank assessment');
   }
 
   /**

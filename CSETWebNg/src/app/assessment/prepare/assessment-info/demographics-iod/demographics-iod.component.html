@@ -155,8 +155,10 @@
       </p>
 
       <div>
-        <div class="mb-3">
-          <label class="form-label">Regulation Type 1</label>
+        <label id="regtype1-label" class="form-label">Regulation Type 1</label>
+        <div class="form-control mb-3" role="radiogroup" aria-labelledby="regtype1-label" aria-required="true"
+          [attr.aria-invalid]="!demographicData.regulationType1"
+          [ngClass]="{ 'is-invalid' : !demographicData.regulationType1 }">
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
             <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.optionValue" type="radio"
               autocomplete="off" tabindex="0" (click)="changeRegType1(reg, $event)"
@@ -171,8 +173,10 @@
       </div>
 
       <div>
-        <label class="form-label">Regulation Type 2</label>
-        <div class="mb-3">
+        <label id="regtype2-label" class="form-label">Regulation Type 2</label>
+        <div class="form-control mb-3" role="radiogroup" aria-labelledby="regtype2-label" aria-required="true"
+          [attr.aria-invalid]="!demographicData.regulationType2"
+          [ngClass]="{ 'is-invalid' : !demographicData.regulationType2 }">
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
             <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.optionValue" type="radio"
               autocomplete="off" (click)="changeRegType2(reg, $event)"
