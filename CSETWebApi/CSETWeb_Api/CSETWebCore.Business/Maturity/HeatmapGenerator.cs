@@ -216,6 +216,11 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private string CustomizeTitle(Model.Nested.Question q, int modelId)
         {
+            if (modelId == Constants.Constants.Model_CPG)
+            {
+                return q.DisplayNumber;   // "1.A", "2.H", etc.
+            }
+
             if (modelId == Constants.Constants.Model_CPG2)
             {
                 // create labels for OT/IT followups in CPG2
