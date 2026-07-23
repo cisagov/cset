@@ -121,7 +121,6 @@ namespace CSETWebCore.Business.Reports
                               && mq.Maturity_Model_Id == targetModelId
                               && a.Question_Type == "Maturity"
                               && !this.OutOfScopeQuestions.Contains(mq.Mat_Question_Id)
-                        orderby mq.Grouping_Id, mq.Maturity_Level_Id, mq.Mat_Question_Id ascending
                         select new MatRelevantAnswers()
                         {
                             ANSWER = a,
@@ -188,7 +187,132 @@ namespace CSETWebCore.Business.Reports
             }
 
 
-            return responseList;
+            return OrderByMaturityModelSequence(responseList, targetModelId);
+        }
+
+
+        /// <summary>
+        /// Orders a flat list of maturity answers in the same sequence as the model structure.
+        /// Grouping and question sequence values are scoped to their siblings, so the model must
+        /// be traversed recursively rather than sorted by identifiers or sequence values alone.
+        /// </summary>
+        private List<MatRelevantAnswers> OrderByMaturityModelSequence(List<MatRelevantAnswers> responseList, int modelId)
+        {
+            var groupings = _context.MATURITY_GROUPINGS
+                .AsNoTracking()
+                .Where(x => x.Maturity_Model_Id == modelId)
+                .ToList();
+
+            var questions = _context.MATURITY_QUESTIONS
+                .AsNoTracking()
+                .Where(x => x.Maturity_Model_Id == modelId)
+                .ToList();
+
+            var questionIds = questions.Select(x => x.Mat_Question_Id).ToList();
+            var options = _context.MATURITY_ANSWER_OPTIONS
+                .AsNoTracking()
+                .Where(x => questionIds.Contains(x.Mat_Question_Id))
+                .ToList();
+
+            var childGroupings = groupings.ToLookup(x => x.Parent_Id ?? 0);
+            var questionsByGrouping = questions.ToLookup(x => x.Grouping_Id ?? 0);
+            var directFollowups = questions
+                .Where(x => x.Parent_Question_Id != null && x.Parent_Option_Id == null)
+                .ToLookup(x => x.Parent_Question_Id.Value);
+            var optionFollowups = questions
+                .Where(x => x.Parent_Option_Id != null)
+                .ToLookup(x => x.Parent_Option_Id.Value);
+            var optionsByQuestion = options.ToLookup(x => x.Mat_Question_Id);
+
+            var questionOrder = new Dictionary<int, int>();
+            var visitedGroupings = new HashSet<int>();
+            var visitedQuestions = new HashSet<int>();
+            var nextOrdinal = 0;
+
+            void AddQuestion(MATURITY_QUESTIONS question)
+            {
+                if (!visitedQuestions.Add(question.Mat_Question_Id))
+                {
+                    return;
+                }
+
+                questionOrder[question.Mat_Question_Id] = nextOrdinal++;
+
+                foreach (var option in optionsByQuestion[question.Mat_Question_Id]
+                    .OrderBy(x => x.Answer_Sequence)
+                    .ThenBy(x => x.Mat_Option_Id))
+                {
+                    foreach (var followup in optionFollowups[option.Mat_Option_Id]
+                        .OrderBy(x => x.Sequence)
+                        .ThenBy(x => x.Mat_Question_Id))
+                    {
+                        AddQuestion(followup);
+                    }
+                }
+
+                foreach (var followup in directFollowups[question.Mat_Question_Id]
+                    .OrderBy(x => x.Sequence)
+                    .ThenBy(x => x.Mat_Question_Id))
+                {
+                    AddQuestion(followup);
+                }
+            }
+
+            void AddGrouping(MATURITY_GROUPINGS grouping)
+            {
+                if (!visitedGroupings.Add(grouping.Grouping_Id))
+                {
+                    return;
+                }
+
+                foreach (var question in questionsByGrouping[grouping.Grouping_Id]
+                    .Where(x => x.Parent_Question_Id == null && x.Parent_Option_Id == null)
+                    .OrderBy(x => x.Sequence)
+                    .ThenBy(x => x.Mat_Question_Id))
+                {
+                    AddQuestion(question);
+                }
+
+                foreach (var childGrouping in childGroupings[grouping.Grouping_Id]
+                    .OrderBy(x => x.Sequence)
+                    .ThenBy(x => x.Grouping_Id))
+                {
+                    AddGrouping(childGrouping);
+                }
+            }
+
+            foreach (var grouping in childGroupings[0]
+                .OrderBy(x => x.Sequence)
+                .ThenBy(x => x.Grouping_Id))
+            {
+                AddGrouping(grouping);
+            }
+
+            // Keep malformed or orphaned model records deterministic without allowing them
+            // to disrupt the defined hierarchy order.
+            foreach (var grouping in groupings
+                .Where(x => !visitedGroupings.Contains(x.Grouping_Id))
+                .OrderBy(x => x.Sequence)
+                .ThenBy(x => x.Grouping_Id))
+            {
+                AddGrouping(grouping);
+            }
+
+            foreach (var question in questions
+                .Where(x => !visitedQuestions.Contains(x.Mat_Question_Id))
+                .OrderBy(x => x.Sequence)
+                .ThenBy(x => x.Mat_Question_Id))
+            {
+                AddQuestion(question);
+            }
+
+            return responseList
+                .OrderBy(x => x.Mat != null && questionOrder.TryGetValue(x.Mat.Mat_Question_Id, out var ordinal)
+                    ? ordinal
+                    : int.MaxValue)
+                .ThenBy(x => x.Mat?.Sequence ?? int.MaxValue)
+                .ThenBy(x => x.Mat?.Mat_Question_Id ?? int.MaxValue)
+                .ToList();
         }
 
 
