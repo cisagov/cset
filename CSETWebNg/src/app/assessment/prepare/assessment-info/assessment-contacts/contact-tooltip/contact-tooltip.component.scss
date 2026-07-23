@@ -1,18 +1,9 @@
 .contact-tooltip {
-    padding: 10px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    position: absolute; /* Make it positionable */
-    z-index: 1000; /* Ensure it appears above other elements */
+    min-width: 12rem;
 
     :host-context(.dark-theme) &,
     :host-context([data-theme="dark"]) &,
     :host-context([data-bs-theme="dark"]) & {
-      background-color: #1a1a1a;
-      border-color: #444;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       color: var(--text-primary);
     }
   }

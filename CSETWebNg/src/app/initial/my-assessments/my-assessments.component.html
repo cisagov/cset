@@ -236,6 +236,14 @@
                 matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                 <span class="cset-icons-export-up fs-base-2"></span>
               </button>
+              <button *ngIf="showColumn('export json')" tabindex="0"
+                class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                (click)="clickDownloadLink(assessment.assessmentId, true)"
+                [matTooltip]="t('tooltip.export assessment json icon')">
+                <img class="tw:relative tw:w-[27px] tw:min-w-[27px] tw:shrink-0"
+                  src="assets/images/icons/export-json.svg"
+                  alt="">
+              </button>
             </td>
           </tr>
         </table>
