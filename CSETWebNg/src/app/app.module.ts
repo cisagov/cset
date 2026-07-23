@@ -184,6 +184,7 @@ import { LocalizeDatePipe } from './helpers/date-localize.pipe';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { MyAssessmentsActionsRendererComponent } from './initial/my-assessments/my-assessments-actions-renderer.component';
+import { MyAssessmentsStatusRendererComponent } from './initial/my-assessments/my-assessments-status-renderer.component';
 import { LoginComponent } from './initial/login/login.component';
 import { RegisterComponent } from './initial/register/register.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
@@ -608,6 +609,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         LoginComponent,
         MyAssessmentsComponent,
         MyAssessmentsActionsRendererComponent,
+        MyAssessmentsStatusRendererComponent,
         AssessmentComponent,
         ContactItemComponent,
         PrepareComponent,
