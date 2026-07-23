@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChildren } from "@angular/core";
+import { finalize } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { TranslocoService } from "@jsverse/transloco";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
@@ -173,35 +174,40 @@ export class AssessmentContactsComponent implements OnInit {
   saveNewContact(contact: EditableUser) {
     this.contacts[this.contacts.length - 1] = contact;
 
-    this.assessSvc.createContact(contact).subscribe(
-      (response: { contactList: User[] }) => {
-        const returnContact = response.contactList[0];
-        contact.contactId = returnContact.contactId;
-        contact.userId = returnContact.userId;
-        contact.assessmentContactId = returnContact.assessmentContactId;
-        contact.assessmentId = returnContact.assessmentId;
-        contact.contactId = returnContact.contactId;
+    this.assessSvc.createContact(contact)
+      .pipe(
+        finalize(() => {
+          // Always runs after success or error
+          this.editInProgress = false;
 
-        this.sortContactsWithCreatorFirst();
-        this.refreshContacts();
-      },
-      error => {
-        this.dialog
-          .open(AlertComponent, {
-            data: "Error adding assessment contact: " + error
-          })
-          .afterClosed()
-          .subscribe();
-        console.error(
-          "Error adding assessment contact: " + JSON.stringify(contact)
-        );
-      }
-    );
-    
-    this.editInProgress = false;
+          // done adding - show the contacts' controls
+          this.contactItems.forEach(x => x.enableMyControls = true);
+        })
+      )
+      .subscribe(
+        (response: { contactList: User[] }) => {
+          const returnContact = response.contactList[0];
+          contact.contactId = returnContact.contactId;
+          contact.userId = returnContact.userId;
+          contact.assessmentContactId = returnContact.assessmentContactId;
+          contact.assessmentId = returnContact.assessmentId;
+          contact.contactId = returnContact.contactId;
 
-    // done adding - show the contacts' controls
-    this.contactItems.forEach(x => x.enableMyControls = true);
+          this.sortContactsWithCreatorFirst();
+          this.refreshContacts();
+        },
+        error => {
+          this.dialog
+            .open(AlertComponent, {
+              data: "Error adding assessment contact: " + error
+            })
+            .afterClosed()
+            .subscribe();
+          console.error(
+            "Error adding assessment contact: " + JSON.stringify(contact)
+          );
+        }
+      );
   }
 
   /**
@@ -270,23 +276,30 @@ export class AssessmentContactsComponent implements OnInit {
           return;
         }
 
-        this.assessSvc.updateContact(contact).subscribe({
-          next: (data: any) => {
-            if (data && data.userId != contact.userId) {
-              // Update the userId in case changing email linked to new user in backend
-              const found = this.contacts.find(x => x.userId === contact.userId);
-              if (found != null) {
-                found.userId = data.userId;
+        this.assessSvc.updateContact(contact)
+          .pipe(
+            finalize(() => {
+              // Always runs after success or error
+              this.editInProgress = false;
+            })
+          )
+          .subscribe({
+            next: (data: any) => {
+              if (data && data.userId != contact.userId) {
+                // Update the userId in case changing email linked to new user in backend
+                const found = this.contacts.find(x => x.userId === contact.userId);
+                if (found != null) {
+                  found.userId = data.userId;
+                }
               }
+              this.contactItems.forEach(x => x.enableMyControls = true);
+              this.sortContactsWithCreatorFirst();
+              this.refreshContacts();
+            },
+            error: (error: any) => {
+              console.error(error);
             }
-            this.contactItems.forEach(x => x.enableMyControls = true);
-            this.sortContactsWithCreatorFirst();
-            this.refreshContacts();
-          },
-          error: (error: any) => {
-            console.error(error);
-          }
-        });
+          });
       });
   }
 

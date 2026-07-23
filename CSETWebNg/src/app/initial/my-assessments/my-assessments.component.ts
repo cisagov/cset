@@ -54,6 +54,7 @@ import { DemographicService } from '../../services/demographic.service';
 import { FileExportService } from '../../services/file-export.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { HostListener } from '@angular/core';
+import { MyAssessmentsActionsRendererComponent } from './my-assessments-actions-renderer.component';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -122,8 +123,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   private langChangeSubscription!: Subscription;
   private cisaWorkflowSubscription!: Subscription;
 
-  private exportJsonIcon: string = '';
-
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -172,10 +171,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       this.updateGridTranslations();
     });
 
-    // initialize certain icons
-    fetch('assets/images/icons/export-json.svg')
-      .then(r => r.text())
-      .then(svg => this.exportJsonIcon = svg);
   }
 
   ngOnDestroy(): void {
@@ -196,6 +191,8 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
   }
 
   initializeColumnDefs() {
+    const actionsColumnWidth = this.showColumn('export json') ? 220 : 100;
+
     this.columnDefs = [
       {
         field: 'assessmentName',
@@ -312,12 +309,16 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       },
       {
         headerName: this.tSvc.translate('actions'),
-        cellRenderer: this.actionsRenderer.bind(this),
+        cellRenderer: MyAssessmentsActionsRendererComponent,
+        cellRendererParams: {
+          showExport: this.showColumn('export'),
+          showExportJson: this.showColumn('export json')
+        },
         sortable: false,
         filter: false,
-        minWidth: this.showColumn('export json') ? 250 : 120,  // minimum before buttons start clipping
-        maxWidth: this.showColumn('export json') ? 250 : 120,  // cap for wide viewports
-        width: this.showColumn('export json') ? 250 : 120,
+        minWidth: actionsColumnWidth,
+        maxWidth: actionsColumnWidth,
+        width: actionsColumnWidth,
         pinned: 'right'
       }
     ];
@@ -681,72 +682,6 @@ export class MyAssessmentsComponent implements OnInit, OnDestroy {
       return 0;
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
-  }
-
-  /**
-   * Actions cell with delete and export buttons
-   */
-  actionsRenderer(params: any): string {
-    const assessment = params.data;
-    const assessmentId = assessment.assessmentId;
-    const rowIndex = params.rowIndex;
-    const labelRemove = this.tSvc.translate('buttons.remove');
-    const labelExport = this.tSvc.translate('buttons.export');
-    const labelExportJson = this.tSvc.translate('buttons.export json');
-
-    let buttons = `
-    <button class="btn hover:btn-error"
-            data-action="delete"
-            data-assessment-id="${assessmentId}"
-            data-row-index="${rowIndex}"
-            title="Remove assessment">
-      <span class="cset-icons-trash-x"></span>
-    </button>
-  `;
-
-    if (this.showColumn('export')) {
-      buttons += `
-      <button class="btn btn-ghost"
-              data-action="export"
-              data-assessment-id="${assessmentId}"
-              title="Export assessment">
-        <span class="cset-icons-export-up"></span>
-      </button>
-    `;
-    }
-
-    if (this.showColumn('export json')) {
-      buttons += `
-        <button class="btn btn-ghost"
-                data-action="exportJson"
-                data-assessment-id="${assessmentId}"
-                title="Export assessment JSON">
-          ${this.exportJsonIcon}
-        </button>
-    `;
-    }
-
-    let jsonIndicator = '';
-    if (this.showColumn('export json')) {
-      const uploaded = !!assessment.jsonUploaded;
-      jsonIndicator = `
-        <div class="tw:flex tw:items-center tw:border-l tw:border-base-300 tw:ps-2" title="Mark as submitted to CISA">
-          <input type="checkbox"
-                id="json-uploaded-${assessmentId}"
-                ${uploaded ? 'checked' : ''}
-                class="checkbox-custom tw:sr-only"
-                data-action="toggleJsonUploaded"
-                data-assessment-id="${assessmentId}">
-          <label for="json-uploaded-${assessmentId}"
-                class="checkbox-custom-label tw:my-0 tw:items-center"
-                title="Mark as submitted to CISA">
-            CISA
-          </label>
-        </div>
-      `;
-    }
-
-    return `<div class="tw:flex tw:h-full tw:gap-0">${buttons}${jsonIndicator}</div>`;
   }
 
   /**

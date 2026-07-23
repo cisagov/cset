@@ -30,8 +30,17 @@
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
         <div class="d-flex">
           <span> {{contact.firstName}} {{contact.lastName}} </span>
-          <div class="cset-icons-info-circle" style="margin-left: 5px" (mouseenter)="showTooltip = true"
-            (mouseleave)="showTooltip = false" (mousemove)="updatePosition($event)">
+          <ng-template #contactDetails>
+            <app-contact-tooltip [firstName]="contact.firstName" [lastName]="contact.lastName"
+              [email]="contact.primaryEmail" [phone]="contact.phone"
+              [assessmentRoleId]="contact.assessmentRoleId" [assessmentRole]="contact.role" [title]="contact.title"
+              [organizationName]="contact.organizationName" [siteName]="contact.siteName" [cell]="contact.cellPhone"
+              [ecp]="contact.emergencyCommunicationsProtocol" [POC]="contact.isPrimaryPoc">
+            </app-contact-tooltip>
+          </ng-template>
+          <div class="cset-icons-info-circle" style="margin-left: 5px" [ngbPopover]="contactDetails"
+            triggers="mouseenter:mouseleave focus:blur" placement="auto" container="body" tabindex="0"
+            [attr.aria-label]="t('contact.details')">
           </div>
         </div>
         <div><em>{{getRoleName(contact.assessmentRoleId)}}</em></div>
@@ -42,12 +51,6 @@
           <ng-template #Editor>{{t('contact.editor')}}</ng-template>
         </div>
 
-        <app-contact-tooltip *ngIf="showTooltip" [firstName]="contact.firstName" [lastName]="contact.lastName"
-          [email]="contact.primaryEmail" [phone]="contact.phone" [assessmentRoleId]="contact.assessmentRoleId"
-          [assessmentRole]="contact.role" [title]="contact.title" [organizationName]="contact.organizationName"
-          [siteName]="contact.siteName" [cell]="contact.cellPhone" [ecp]="contact.emergencyCommunicationsProtocol"
-          [POC]="contact.isPrimaryPoc" [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
-        </app-contact-tooltip>
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
         <div *ngIf="contact.primaryEmail"> {{contact.primaryEmail}} </div>
