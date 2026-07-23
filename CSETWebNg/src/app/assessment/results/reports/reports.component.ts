@@ -39,6 +39,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { FileExportService } from '../../../services/file-export.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
@@ -201,12 +202,13 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   /**
    *
    */
-  clickExport(jsonOnly: boolean = false) {
+  async clickExport(jsonOnly: boolean = false) {
     let ext = '.csetw';
+    const encryption = await firstValueFrom(this.assessSvc.getEncryptPreference()).catch(() => false);
 
-    if (jsonOnly) {
+    if (encryption || jsonOnly) {
       let dialogRef = this.dialog.open(ExportAssessmentComponent, {
-        data: { jsonOnly }
+        data: { jsonOnly, encryption }
       });
 
       dialogRef.afterClosed().subscribe(result => {
