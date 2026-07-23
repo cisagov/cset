@@ -516,8 +516,8 @@ label[required]::after {
 
 .white-panel {
   background-color: $gray-50;
-  margin: 1em 1em 1em 1em;
-  padding: 2em;
+  margin: 0 1em 1em;
+  padding: .5em 2em 2em;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
