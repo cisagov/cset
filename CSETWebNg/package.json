@@ -86,6 +86,6 @@
     "tailwindcss": "^4.2.2",
     "webpack": "^5.105.4",
     "webpack-cli": "^7.0.2",
-    "webpack-dev-server": "^5.2.5"
+    "webpack-dev-server": "^5.2.6"
   }
 }
