@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: actions/setup-dotnet@v5
         with:
@@ -31,7 +31,7 @@ jobs:
         run: dotnet build CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln -c Release --no-restore
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.35.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           format: sarif
           output: trivy-dotnet-results.sarif
@@ -52,10 +52,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.35.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           format: sarif
           output: trivy-nodejs-results.sarif
