@@ -1,0 +1,47 @@
+<!----------------------
+
+   Copyright 2026 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *transloco="let t" class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
+  <button class="btn btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
+    data-action="toggleFavorite"
+    [attr.data-assessment-id]="assessment.assessmentId"
+    [matTooltip]="t(assessment.favorite ? 'tooltip.remove from favorites' : 'tooltip.add to favorites')">
+    <i [class]="(assessment.favorite ? 'fa-solid fa-star star-favorite' : 'fa-regular fa-star star-inactive')"></i>
+  </button>
+
+  <span class="cursor-pointer cset-icons-flag-dark tw:text-md p-1 pt-2"
+    [ngClass]="reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400'"
+    [matTooltip]="t(reviewFlag ? 'tooltip.assessment requires review' : 'tooltip.no review required')">
+  </span>
+
+  <ng-container *ngIf="showProgress">
+    <div class="tw:flex-1 tw:min-w-0">
+      <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
+        [value]="percentage"
+        max="100"
+        [matTooltip]="t(progressTooltipKey, progressTooltipParams)"></progress>
+    </div>
+    <span class="tw:text-sm tw:text-text-secondary tw:min-w-fit tw:font-medium">
+      {{ percentage }}%
+    </span>
+  </ng-container>
+</div>

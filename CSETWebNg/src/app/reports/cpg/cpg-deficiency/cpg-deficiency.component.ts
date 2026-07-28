@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
-import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { SsgService } from '../../../services/ssg.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -70,7 +69,6 @@ export class CpgDeficiencyComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
     public ssgSvc: SsgService,
-    public configSvc: ConfigService,
     public tSvc: TranslocoService
   ) { }
 
@@ -78,17 +76,16 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, { scope: 'reports' })
-      .subscribe(title => {
-        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
-      });
-
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.loadingCpg = true;
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
 
       this.assessSvc.assessment = assessmentDetail;
       this.info = assessmentDetail;
+
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, { scope: 'reports' })
+        .subscribe(reportTitle => this.titleSvc.setTitle(`${reportTitle} - ${assessmentTitle}`));
 
       // get the deficient answers for the CPG model
       const assessment = this.assessSvc.assessment;

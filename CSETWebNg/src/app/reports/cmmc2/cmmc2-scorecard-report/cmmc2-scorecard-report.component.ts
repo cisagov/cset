@@ -69,14 +69,13 @@ export class Cmmc2ScorecardReportComponent {
    * 
    */
   ngOnInit(): void {
-    this.tSvc.selectTranslate('scorecard report', {}, { scope: 'reports' })
-      .subscribe(title => {
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
-      });
-
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.cmmc2.2.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
 

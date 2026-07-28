@@ -98,9 +98,6 @@ export class OpenEndedQuestionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadQuestions();
-    this.titleService.setTitle(
-      "Validated Architecture Design Review Report - VADR"
-    );
     this.maturitySvc.getMaturityDeficiency("VADR").subscribe((r: any) => {
       this.response = r;
       // this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
@@ -108,6 +105,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`VADR Open-Ended Questions Report - ${assessmentTitle}`);
       }
     );
   }

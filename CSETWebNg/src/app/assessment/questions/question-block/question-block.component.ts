@@ -35,6 +35,19 @@ import { MalcolmService } from '../../../services/malcolm.service';
 import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 
 
+interface AnswerSaveState {
+  confirmedAnswer: string;
+  version: number;
+}
+
+interface AnswerSaveAttempt {
+  question: Question;
+  state: AnswerSaveState;
+  version: number;
+  submittedAnswer: string;
+}
+
+
 /**
  * Represents the display container of a single subcategory with its member questions.
  */
@@ -67,6 +80,11 @@ export class QuestionBlockComponent implements OnInit {
   titlePlacement = 'top';
 
   showQuestionIds = false;
+
+  private answerSaveStates =
+    new WeakMap<Question, AnswerSaveState>();
+
+  private subCategorySaveState?: AnswerSaveState;
 
 
   /**
@@ -232,12 +250,66 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
+   * Starts an optimistic save while retaining the last server-confirmed value.
+   */
+  private beginAnswerSave(q: Question): AnswerSaveAttempt {
+    let state = this.answerSaveStates.get(q);
+
+    if (!state) {
+      state = {
+        confirmedAnswer: q.answer,
+        version: 0
+      };
+      this.answerSaveStates.set(q, state);
+    }
+
+    return {
+      question: q,
+      state,
+      version: ++state.version,
+      submittedAnswer: q.answer
+    };
+  }
+
+  /**
+   * Restores the confirmed value only if no newer save has been submitted.
+   */
+  private rollbackAnswer(attempt: AnswerSaveAttempt): boolean {
+    if (attempt.state.version !== attempt.version) {
+      return false;
+    }
+
+    attempt.question.answer = attempt.state.confirmedAnswer;
+    this.completionSvc.setAnswer(
+      attempt.question.questionId,
+      attempt.question.answer
+    );
+    this.setJustificationVisibility(attempt.question);
+
+    return true;
+  }
+
+  private getSubCategorySaveState(): AnswerSaveState {
+    if (!this.subCategorySaveState) {
+      this.subCategorySaveState = {
+        confirmedAnswer: this.mySubCategory.subCategoryAnswer,
+        version: 0
+      };
+    }
+
+    return this.subCategorySaveState;
+  }
+
+  /**
    * Send a block of answers to the API for all my questions.
    * This is used when selecting "N" or "NA" at the subcategory
    * level.  All of the subcategory questions are answered en masse.
    * @param ans
    */
   setBlockAnswer(ans: string) {
+    const subCategoryState = this.getSubCategorySaveState();
+    const subCategoryVersion = ++subCategoryState.version;
+
     // if they clicked on the same answer that was previously set, "un-set" it
     if (this.mySubCategory.subCategoryAnswer === ans) {
       ans = "U";
@@ -252,13 +324,19 @@ export class QuestionBlockComponent implements OnInit {
       answers: []
     };
 
+    const answerAttempts: AnswerSaveAttempt[] = [];
+
     // Bundle all of the member questions for this subcategory into the request
     this.mySubCategory.questions.forEach(q => {
+      const attempt = this.beginAnswerSave(q);
 
       // set all questions' answers if N or NA or U
       if (ans === 'N' || ans === 'NA' || ans === 'U') {
         q.answer = ans;
       }
+
+      attempt.submittedAnswer = q.answer;
+      answerAttempts.push(attempt);
 
       const answer: Answer = {
         answerId: q.answer_Id,
@@ -278,6 +356,7 @@ export class QuestionBlockComponent implements OnInit {
       };
 
       this.completionSvc.setAnswer(q.questionId, q.answer);
+      this.setJustificationVisibility(q);
 
       subCatAnswers.answers.push(answer);
     });
@@ -287,7 +366,41 @@ export class QuestionBlockComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeSubCategoryAnswers(subCatAnswers)
-      .subscribe();
+      .subscribe({
+        next: () => {
+          subCategoryState.confirmedAnswer =
+            subCatAnswers.subCategoryAnswer;
+
+          answerAttempts.forEach(attempt => {
+            attempt.state.confirmedAnswer =
+              attempt.submittedAnswer;
+          });
+        },
+        error: error => {
+          if (subCategoryState.version === subCategoryVersion) {
+            this.mySubCategory.subCategoryAnswer =
+              subCategoryState.confirmedAnswer;
+          }
+
+          let answerRolledBack = false;
+
+          answerAttempts.forEach(attempt => {
+            answerRolledBack =
+              this.rollbackAnswer(attempt)
+              || answerRolledBack;
+          });
+
+          if (answerRolledBack) {
+            this.refreshReviewIndicator();
+            this.refreshPercentAnswered();
+          }
+
+          console.error(
+            'Unable to save subcategory answers.',
+            error
+          );
+        }
+      });
   }
 
   /**
@@ -308,6 +421,8 @@ export class QuestionBlockComponent implements OnInit {
    * @param ans
    */
   storeAnswer(q: Question, newAnswerValue: string) {
+    const attempt = this.beginAnswerSave(q);
+
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
@@ -316,6 +431,8 @@ export class QuestionBlockComponent implements OnInit {
     if (!!newAnswerValue) {
       q.answer = newAnswerValue;
     }
+
+    attempt.submittedAnswer = q.answer;
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -343,21 +460,33 @@ export class QuestionBlockComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((resp: AnswerQuestionResponse) => {
-        q.answer_Id = resp.answerId;
-        if (resp.detailsChanged) {
-          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
-        }
-        if (resp && resp.completedCount !== undefined) {
-          this.assessSvc.completionRefreshRequested$.next({
-            completedCount: resp.completedCount,
-            totalCount: (resp.totalMaturityQuestionsCount || 0) +
-              (resp.totalDiagramQuestionsCount || 0) +
-              (resp.totalStandardQuestionsCount || 0)
-          });
+      .subscribe({
+        next: (resp: AnswerQuestionResponse) => {
+          attempt.state.confirmedAnswer =
+            attempt.submittedAnswer;
+
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
+          if (resp && resp.completedCount !== undefined) {
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: resp.completedCount,
+              totalCount: (resp.totalMaturityQuestionsCount || 0) +
+                (resp.totalDiagramQuestionsCount || 0) +
+                (resp.totalStandardQuestionsCount || 0)
+            });
+          }
+        },
+        error: error => {
+          if (this.rollbackAnswer(attempt)) {
+            this.refreshReviewIndicator();
+            this.refreshPercentAnswered();
+          }
+
+          console.error('Unable to save answer.', error);
         }
       });
-
   }
 
   /**
