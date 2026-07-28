@@ -109,6 +109,10 @@ export class CpgReportComponent implements OnInit {
       this.assessSvc.assessment = assessmentDetail;
       this.modelId = this.assessSvc.assessment.maturityModel?.modelId ?? 0;
 
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
+        .subscribe(reportTitle => this.titleSvc.setTitle(`${reportTitle} - ${assessmentTitle}`));
+
       this.initialize();
     });
   }
@@ -131,11 +135,6 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initialize() {
-    this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
-      .subscribe(title => {
-        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
-      });
-
     let demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
     this.assessSvc.assessment.ssgModelIds = demog.ssgModelIds;

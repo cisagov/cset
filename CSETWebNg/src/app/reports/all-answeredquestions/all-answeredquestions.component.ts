@@ -60,13 +60,15 @@ export class AllAnsweredquestionsComponent implements OnInit {
     this.reportSvc.getStandardAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
       }
     );
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        const reportTitle = this.tSvc.translate('reports.all.answered statements.tab title');
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
       }
     );
   }

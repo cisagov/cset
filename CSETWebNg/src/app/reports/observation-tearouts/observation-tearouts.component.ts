@@ -63,15 +63,15 @@ export class ObservationTearoutsComponent implements OnInit {
     this.reportSvc.getReport('observations/tearout').subscribe(
       (r: any) => {
         this.response = r;
-
-        var title = this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle });
-        this.titleService.setTitle(title);
       },
       error => console.error('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
     );
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        const reportTitle = this.tSvc.translate('reports.observations tear-out sheets.report title');
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
       }
     );
   }

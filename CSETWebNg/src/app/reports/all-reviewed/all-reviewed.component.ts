@@ -60,12 +60,14 @@ export class AllReviewedComponent {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        const reportTitle = this.tSvc.translate('reports.all.reviewed questions.report title');
+        this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`);
       }
     );
     this.reportSvc.getReviewedQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
     );
   }

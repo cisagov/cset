@@ -224,7 +224,15 @@ namespace CSETWebCore.Business.Analytics
         /// <returns></returns>
         public List<SectorsAndSamples> GetSectorsAndSampleSizes(int assessmentId, string lang)
         {
-            var sectors = _context.SECTOR.ToList();
+            new SectorUpgradePpd21(_context).UpgradeSector(assessmentId);
+
+            var sectors = _context.SECTOR
+                .Where(x => !x.Is_NIPP)
+                .ToList();
+
+            var currentSectorIds = sectors
+                .Select(x => x.SectorId)
+                .ToHashSet();
 
             TranslationOverlay _overlay = new TranslationOverlay();
 
@@ -236,10 +244,15 @@ namespace CSETWebCore.Business.Analytics
             List<int> mySectorIds = [];
 
             var ass = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence);
-            mySectorIds.AddRange(ass.Select(x => x.SectorId));
+            mySectorIds.AddRange(
+            ass.Select(x => x.SectorId)
+                .Where(currentSectorIds.Contains));
 
             var ass2 = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR");
-            mySectorIds.AddRange(ass2.Select(x => (int)x.IntValue));
+            mySectorIds.AddRange(
+            ass2.Where(x => x.IntValue.HasValue)
+                .Select(x => x.IntValue.Value)
+                .Where(currentSectorIds.Contains));
 
 
             // Get assessment counts for the target assessments' sectors

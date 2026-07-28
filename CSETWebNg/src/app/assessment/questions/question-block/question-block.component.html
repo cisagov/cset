@@ -146,7 +146,7 @@
             <div *ngIf="q.showJustificationField">
               <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
                 [placeholder]="t('answer-options.placeholders.alt justification')" [(ngModel)]="q.altAnswerText"
-                (ngModelChange)="storeAnswer(q, null)" tabindex="0"></textarea>
+                (change)="storeAnswer(q, null)" tabindex="0"></textarea>
             </div>
 
             <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null
@@ -197,7 +197,7 @@
             <div *ngIf="q.showJustificationField">
               <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
                 [placeholder]="t('answer-options.placeholders.alt justification')" [(ngModel)]="q.altAnswerText"
-                (ngModelChange)="storeAnswert(q, null)" tabindex="0"></textarea>
+                (change)="storeAnswer(q, null)" tabindex="0"></textarea>
             </div>
           </div>
 

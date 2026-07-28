@@ -257,6 +257,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             var genericImporter = new GenericImporter(assessmentId);
             genericImporter.SetManualIdentityMaps(this.mapIdentity);
             genericImporter.SaveFromJson(jsonObject, context);
+
+            ImportDetailsDemographics(assessmentId);
         }
 
 
@@ -297,36 +299,50 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 _context.SaveChanges();
             }
+        }
 
+        private void ImportDetailsDemographics(int assessmentId)
+        {
+            var demographicExtBiz = new DemographicExtBusiness(_context);
             foreach (var demographics in _model.jDETAILS_DEMOGRAPHICS)
             {
-                var _demographicExtBiz = new DemographicExtBusiness(_context);
+                if (string.IsNullOrWhiteSpace(demographics.DataItemName))
+                {
+                    continue;
+                }
+
                 if (demographics.StringValue != null)
                 {
                     var value = demographics.StringValue;
-                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
                 }
                 else if (demographics.IntValue != null)
                 {
                     var value = demographics.IntValue;
-                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
                 }
                 else if (demographics.FloatValue != null)
                 {
                     var value = demographics.FloatValue;
-                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
                 }
                 else if (demographics.BoolValue != null)
                 {
                     var value = demographics.BoolValue;
-                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
                 }
                 else if (demographics.DateTimeValue != null)
                 {
                     var value = demographics.DateTimeValue;
-                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+                else
+                {
+                    demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, null);
                 }
             }
+
+            _context.SaveChanges();
         }
     }
 }

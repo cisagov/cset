@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
@@ -44,7 +45,8 @@ export class CisaVadrReportComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private titleService: Title
   ) { }
 
   /**
@@ -54,6 +56,8 @@ export class CisaVadrReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`CISA VADR Report - ${assessmentTitle}`);
       }
     );
 

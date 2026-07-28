@@ -53,11 +53,12 @@ export class TsaSdComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleService.setTitle("Deficiency Report - Pipeline SD02 Series");
     this.loading = true;
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.info = assessmentDetail;
+      const assessmentTitle = assessmentDetail.assessmentName || `assessment-${assessmentDetail.id}`;
+      this.titleService.setTitle(`Deficiency Report - Pipeline SD02 Series - ${assessmentTitle}`);
     });
 
     this.maturitySvc.getMaturityDeficiencySd().subscribe(

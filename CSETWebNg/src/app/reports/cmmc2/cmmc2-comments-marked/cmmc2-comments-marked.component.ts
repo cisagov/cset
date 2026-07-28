@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
@@ -47,7 +46,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
   markedForReviewList = [];
 
   constructor(
-    public configSvc: ConfigService,
     private titleService: Title,
     private maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
@@ -60,12 +58,12 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.cmmc2.3.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
-
-    this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;

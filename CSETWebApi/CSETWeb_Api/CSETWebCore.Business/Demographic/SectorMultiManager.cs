@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +34,21 @@ namespace CSETWebCore.Business.Demographic
         {
             var resp = new List<SectorSubsector>();
 
-            var ss = _context.ASSESSMENT_SECTOR_SUBSECTOR.Where(x => x.Assessment_Id == assessmentId).ToList();
+            // Normalize legacy HSPD-7 values before reading either storage format.
+            // This keeps every caller consistent, regardless of which endpoint is
+            // the first one used to load the assessment.
+            new SectorUpgradePpd21(_context).UpgradeSector(assessmentId);
+
+            var currentSectorIds = _context.SECTOR
+                .Where(x => !x.Is_NIPP)
+                .Select(x => x.SectorId)
+                .ToHashSet();
+
+            var ss = _context.ASSESSMENT_SECTOR_SUBSECTOR
+                .Where(x => x.Assessment_Id == assessmentId)
+                .ToList()
+                .Where(x => currentSectorIds.Contains(x.SectorId));
+
             foreach (var sectorSubsector in ss)
             {
                 var x = new SectorSubsector() { SectorId = sectorSubsector.SectorId, SubsectorId = sectorSubsector.IndustryId, Sequence = sectorSubsector.Sequence };
@@ -69,15 +84,14 @@ namespace CSETWebCore.Business.Demographic
         /// <returns></returns>
         private List<ListItem2> GetSubsectorList(int sectorId)
         {
-            var resp = new List<ListItem2>();
-            var gg = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == sectorId).ToList();
-            foreach (var g in gg)
+            return _context.SECTOR_INDUSTRY
+            .Where(x => x.SectorId == sectorId && !x.Is_NIPP)
+            .Select(x => new ListItem2
             {
-                var li = new ListItem2() { OptionValue = g.IndustryId, OptionText = g.IndustryName };
-                resp.Add(li);
-            }
-
-            return resp;
+                OptionValue = x.IndustryId,
+                OptionText = x.IndustryName
+            })
+            .ToList();
         }
 
 
@@ -92,13 +106,20 @@ namespace CSETWebCore.Business.Demographic
             var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR").FirstOrDefault();
             var ddSubsector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SUBSECTOR").FirstOrDefault();
 
-            if (ddSector != null && ddSector.IntValue != null)
+            if (ddSector?.IntValue != null
+                && _context.SECTOR.Any(x =>
+                    x.SectorId == ddSector.IntValue.Value
+                    && !x.Is_NIPP))
             {
                 SectorSubsector resp;
                 resp = new SectorSubsector() { SectorId = ddSector.IntValue, Sequence = 1 };
                 resp.SubsectorList = GetSubsectorList((int)resp.SectorId);
 
-                if (ddSubsector != null)
+                if (ddSubsector?.IntValue != null
+                    && _context.SECTOR_INDUSTRY.Any(x =>
+                        x.IndustryId == ddSubsector.IntValue.Value
+                        && x.SectorId == ddSector.IntValue.Value
+                        && !x.Is_NIPP))
                 {
                     resp.SubsectorId = ddSubsector.IntValue;
                 }
@@ -141,39 +162,67 @@ namespace CSETWebCore.Business.Demographic
         public void Save(int assessmentId, SectorSubsector requestSector)
         {
             var dbTarget = _context.ASSESSMENT_SECTOR_SUBSECTOR
-                .Where(x => x.Assessment_Id == assessmentId && x.Sequence == requestSector.Sequence).FirstOrDefault();
+                .FirstOrDefault(x =>
+                    x.Assessment_Id == assessmentId
+                    && x.Sequence == requestSector.Sequence);
 
-
-            if (requestSector.SectorId == null)
+            if (!requestSector.SectorId.HasValue)
             {
-                _context.ASSESSMENT_SECTOR_SUBSECTOR.Remove(dbTarget);
+                if (dbTarget != null)
+                {
+                    _context.ASSESSMENT_SECTOR_SUBSECTOR.Remove(dbTarget);
+                    _context.SaveChanges();
+                }
+
+                return;
             }
 
-            if (requestSector.SectorId.HasValue)
+            var sectorId = requestSector.SectorId.Value;
+
+            if (!_context.SECTOR.Any(x =>
+                x.SectorId == sectorId && !x.Is_NIPP))
             {
-                if (dbTarget == null)
+                throw new ArgumentException(
+                    "The selected sector is not supported.",
+                    nameof(requestSector));
+            }
+
+            var sectorChanged = dbTarget != null && dbTarget.SectorId != sectorId;
+
+            if (!sectorChanged
+                && requestSector.SubsectorId.HasValue
+                && !_context.SECTOR_INDUSTRY.Any(x =>
+                    x.IndustryId == requestSector.SubsectorId.Value
+                    && x.SectorId == sectorId
+                    && !x.Is_NIPP))
+            {
+                throw new ArgumentException(
+                    "The selected subsector is not supported for this sector.",
+                    nameof(requestSector));
+            }
+
+            if (dbTarget == null)
+            {
+                dbTarget = new ASSESSMENT_SECTOR_SUBSECTOR()
                 {
-                    dbTarget = new ASSESSMENT_SECTOR_SUBSECTOR()
-                    {
-                        Assessment_Id = assessmentId,
-                        SectorId = (int)requestSector.SectorId,
-                        IndustryId = requestSector.SubsectorId,
-                        Sequence = requestSector.Sequence
-                    };
-                    _context.ASSESSMENT_SECTOR_SUBSECTOR.Add(dbTarget);
+                    Assessment_Id = assessmentId,
+                    SectorId = sectorId,
+                    IndustryId = requestSector.SubsectorId,
+                    Sequence = requestSector.Sequence
+                };
+                _context.ASSESSMENT_SECTOR_SUBSECTOR.Add(dbTarget);
+            }
+            else
+            {
+                // if they changed the sector, null the subsector
+                if (sectorChanged)
+                {
+                    dbTarget.SectorId = sectorId;
+                    dbTarget.IndustryId = null;
                 }
                 else
                 {
-                    // if they changed the sector, null the subsector
-                    if (dbTarget.SectorId != requestSector.SectorId)
-                    {
-                        dbTarget.SectorId = (int)requestSector.SectorId;
-                        dbTarget.IndustryId = null;
-                    }
-                    else
-                    {
-                        dbTarget.IndustryId = requestSector.SubsectorId;
-                    }
+                    dbTarget.IndustryId = requestSector.SubsectorId;
                 }
             }
 

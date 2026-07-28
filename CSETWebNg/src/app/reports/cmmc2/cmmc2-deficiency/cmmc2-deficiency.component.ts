@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AssessmentService } from '../../../services/assessment.service';
@@ -50,7 +49,6 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   deficienciesList = [];
 
   constructor(
-    public configSvc: ConfigService,
     private titleService: Title,
     private maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
@@ -60,11 +58,12 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC 2.0 Deficiency Report - " + this.configSvc.behaviors.defaultTitle);
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`CMMC 2.0 Deficiency Report - ${assessmentTitle}`);
       }
     );
 

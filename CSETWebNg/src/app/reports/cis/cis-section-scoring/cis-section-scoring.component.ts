@@ -73,6 +73,10 @@ export class CisSectionScoringComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.response = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.tSvc.selectTranslate('launch.cis.2.title', {}, { scope: 'reports' })
+          .subscribe(reportTitle =>
+            this.titleService.setTitle(`${reportTitle} - ${assessmentTitle}`));
       }
     );
 

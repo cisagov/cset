@@ -61,9 +61,10 @@ export class CrrReportComponent implements OnInit {
       conf !== 'None' ? (this.confidentiality = conf) : (this.confidentiality = '');
     }
 
-    this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
     this.cmuSvc.getCmuModel().subscribe(
       (data: CmuReportModel) => {
+        const assessmentTitle = data.assessmentDetails.assessmentName || `assessment-${data.assessmentDetails.id}`;
+        this.titleSvc.setTitle(`CRR Report - ${assessmentTitle}`);
         data.structure.Model.Domain.forEach((d) => {
           d.Goal.forEach((g) => {
             // The Question object needs to be an array for the template to work.

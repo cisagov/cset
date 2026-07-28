@@ -24,7 +24,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
-import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -56,7 +55,6 @@ export class GeneralDeficiencyComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
-    public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     private titleService: Title,
     public maturitySvc: MaturityService,
@@ -73,11 +71,11 @@ export class GeneralDeficiencyComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.moduleName = params.m;
 
-      this.titleService.setTitle("Deficiency Report - " + this.moduleName);
-
       this.assessSvc.getAssessmentDetail().subscribe(
         (r: AssessmentDetail) => {
           this.info = r;
+          const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+          this.titleService.setTitle(`Deficiency Report - ${this.moduleName} - ${assessmentTitle}`);
         }
       );
       this.maturitySvc.getMaturityDeficiency(this.moduleName).subscribe(

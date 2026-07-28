@@ -15,6 +15,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Question;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -231,9 +232,15 @@ namespace CSETWebCore.Api.Controllers
                     response.TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0;
                 }
             }
+            catch (ArgumentException exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Warn($"Invalid sector selection: {exc}");
+                return BadRequest(exc.Message);
+            }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return Ok(response);

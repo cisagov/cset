@@ -51,16 +51,16 @@ namespace CSETWebCore.Business.Demographic
             d.FacilityName = info.Facility_Name;
 
 
-            // update sector if the assessment was built with the old HSPD-7 list
-            var sectorUp = new SectorUpgradePpd21(_context);
-            var newSectorInfo = sectorUp.UpgradeSector(assessmentId);
-
-            // get sectors
+            // Get sectors.  SectorMultiManager normalizes any legacy HSPD-7 values.
             var smm = new SectorMultiManager(_context);
             d.SectorSubsectors = smm.Get(assessmentId);
 
             // see if the sector list had been upgraded to notify the user
-            d.Acknowledgement = myDD.Find(z => z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)?.BoolValue;
+            d.Acknowledgement = _context.DETAILS_DEMOGRAPHICS
+                .FirstOrDefault(z =>
+                    z.Assessment_Id == assessmentId
+                    && z.DataItemName == Constants.Constants.ACK_SECTOR_UPDATED_PPD21)
+                ?.BoolValue;
 
 
             d.CisaRegion = myDD.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
@@ -178,7 +178,7 @@ namespace CSETWebCore.Business.Demographic
             }).ToList();
 
 
-            // No more HSPD-7 list support (Is_NIPP = true) - only the PPD-21 list of 18 sectors supported now
+            // No more HSPD-7 list support (Is_NIPP = true) - only the PPD-21 list of 16 sectors supported now
             var availableSectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
             d.ListSectors = new List<ListItem2>();
@@ -201,7 +201,8 @@ namespace CSETWebCore.Business.Demographic
         /// <returns></returns>
         public List<ListItem2> GetSubsectors(int sectorId)
         {
-            var list = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == sectorId)
+            var list = _context.SECTOR_INDUSTRY.Where(x =>
+                x.SectorId == sectorId && !x.Is_NIPP)
                .OrderBy(a => a.IndustryName).ToList();
 
             var otherItems = list.Where(x => x.Is_Other).ToList();

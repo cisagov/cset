@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
@@ -61,7 +60,6 @@ export class VadrDeficiencyComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
     public assessSvc: AssessmentService
@@ -69,7 +67,6 @@ export class VadrDeficiencyComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
 
     this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
       (r: any) => {
@@ -84,6 +81,8 @@ export class VadrDeficiencyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
         this.info = r;
+        const assessmentTitle = r.assessmentName || `assessment-${r.id}`;
+        this.titleService.setTitle(`Validated Architecture Design Review Report - VADR - ${assessmentTitle}`);
       }
     );
   }

@@ -204,21 +204,28 @@
         <table aria-label="assessments" matSort (matSortChange)="sortData($event)"
           class="assessment-summary" style="overflow-x: auto">
           <tr>
-            <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%">
+            <th class="tw:rounded-tl-lg" aria-label="assessment name" mat-sort-header="assessment"
+              style="width: 25%; padding-top: 14px; padding-bottom: 14px; font-size: 14px; font-weight: 700; --mat-sort-arrow-color: currentColor">
               {{ t('assessment name') }}
             </th>
-            <th aria-label="date" mat-sort-header="date" style="width: 15%">{{ t('last modified') }}</th>
-            <th [aria-label]="tSvc.translate('actions')" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+            <th aria-label="date" mat-sort-header="date"
+              style="width: 15%; padding-top: 14px; padding-bottom: 14px; font-size: 14px; font-weight: 700; --mat-sort-arrow-color: currentColor">
+              {{ t('last modified') }}
+            </th>
+            <th class="tw:rounded-tr-lg" [aria-label]="tSvc.translate('actions')"
+              style="width: 5%; padding-top: 14px; padding-bottom: 14px; font-size: 14px; font-weight: 700"
+              *ngIf="layoutSvc.hp"></th>
           </tr>
           <tr *ngFor="let assessment of filteredAssessments; let i = index">
             <td>
               <button tabindex="0"
-                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
+                class="btn btn-link tw:text-left tw:justify-start tw:h-full tw:w-full tw:text-text-primary"
+                style="text-align: left; justify-content: flex-start;"
                 (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
                 {{ assessment.assessmentName }}
               </button>
             </td>
-            <td>{{ systemTimeTranslator(assessment.lastModifiedDate, 'med') }}</td>
+            <td>{{ systemTimeTranslator(assessment.lastModifiedDate, 'short') }}</td>
             <td class="text-nowrap ps-1">
               <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                 (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">
@@ -228,6 +235,14 @@
                 (click)="clickDownloadLink(assessment.assessmentId)"
                 matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                 <span class="cset-icons-export-up fs-base-2"></span>
+              </button>
+              <button *ngIf="showColumn('export json')" tabindex="0"
+                class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                (click)="clickDownloadLink(assessment.assessmentId, true)"
+                [matTooltip]="t('tooltip.export assessment json icon')">
+                <img class="tw:relative tw:w-[27px] tw:min-w-[27px] tw:shrink-0"
+                  src="assets/images/icons/export-json.svg"
+                  alt="">
               </button>
             </td>
           </tr>
