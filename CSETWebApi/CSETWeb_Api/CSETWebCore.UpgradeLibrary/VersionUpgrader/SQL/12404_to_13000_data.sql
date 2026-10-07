@@ -6201,371 +6201,6 @@ DELETE FROM [dbo].[GALLERY_GROUP_DETAILS] WHERE [Group_Detail_Id] = 6249
 DELETE FROM [dbo].[GALLERY_GROUP_DETAILS] WHERE [Group_Detail_Id] = 7257
 PRINT(N'Operation applied to 71 rows out of 71')
 
-PRINT(N'Delete rows from [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2000 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2001 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2002 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2003 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2004 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2005 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2006 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2007 AND [Question_Group] = N'Manage IT and OT Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2008 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2009 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2010 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2011 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2012 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2013 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2014 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2015 AND [Question_Group] = N'Manage Information Asset Inventory'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2016 AND [Question_Group] = N'Manage IT and OT Asset Configurations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2017 AND [Question_Group] = N'Manage IT and OT Asset Configurations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2018 AND [Question_Group] = N'Manage IT and OT Asset Configurations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2019 AND [Question_Group] = N'Manage IT and OT Asset Configurations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2020 AND [Question_Group] = N'Manage IT and OT Asset Configurations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2021 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2022 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2023 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2024 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2025 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2026 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2027 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2028 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2029 AND [Question_Group] = N'Manage Changes to IT and OT Assets'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2030 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2031 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2032 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2033 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2034 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2035 AND [Question_Group] = N'Management Activities for the ASSET domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2036 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2037 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2038 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2039 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2040 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2041 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2042 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2043 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2044 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2045 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2046 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2047 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2048 AND [Question_Group] = N'Reduce Cybersecurity Vulnerabilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2049 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2050 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2051 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2052 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2053 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2054 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2055 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2056 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2057 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2058 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2059 AND [Question_Group] = N'Respond to Threats and Share Threat Information'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2060 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2061 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2062 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2063 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2064 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2065 AND [Question_Group] = N'Management Activities for the THREAT domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2066 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2067 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2068 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2069 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2070 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2071 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2072 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2073 AND [Question_Group] = N'Establish and Maintain Cyber Risk Management Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2074 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2075 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2076 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2077 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2078 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2079 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2080 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2081 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2082 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2083 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2084 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2085 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2086 AND [Question_Group] = N'Identify Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2087 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2088 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2089 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2090 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2091 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2092 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2093 AND [Question_Group] = N'Analyze Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2094 AND [Question_Group] = N'Respond to Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2095 AND [Question_Group] = N'Respond to Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2096 AND [Question_Group] = N'Respond to Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2097 AND [Question_Group] = N'Respond to Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2098 AND [Question_Group] = N'Respond to Cyber Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2099 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2100 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2101 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2102 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2103 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2104 AND [Question_Group] = N'Management Activities for the RISK domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2105 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2106 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2107 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2108 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2109 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2110 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2111 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2112 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2113 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2114 AND [Question_Group] = N'Establish Identities and Manage Authentication'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2115 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2116 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2117 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2118 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2119 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2120 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2121 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2122 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2123 AND [Question_Group] = N'Control Logical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2124 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2125 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2126 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2127 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2128 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2129 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2130 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2131 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2132 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2133 AND [Question_Group] = N'Control Physical Access'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2134 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2135 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2136 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2137 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2138 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2139 AND [Question_Group] = N'Management Activities for the ACCESS domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2140 AND [Question_Group] = N'Perform Logging'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2141 AND [Question_Group] = N'Perform Logging'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2142 AND [Question_Group] = N'Perform Logging'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2143 AND [Question_Group] = N'Perform Logging'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2144 AND [Question_Group] = N'Perform Logging'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2145 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2146 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2147 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2148 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2149 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2150 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2151 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2152 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2153 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2154 AND [Question_Group] = N'Perform Monitoring'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2155 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2156 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2157 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2158 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2159 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2160 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2161 AND [Question_Group] = N'Establish and Maintain Situational Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2162 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2163 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2164 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2165 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2166 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2167 AND [Question_Group] = N'Management Activities for the SITUATION domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2168 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2169 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2170 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2171 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2172 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2173 AND [Question_Group] = N'Detect Cybersecurity Events'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2174 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2175 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2176 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2177 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2178 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2179 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2180 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2181 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2182 AND [Question_Group] = N'Analyze Cybersecurity Events and Declare Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2183 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2184 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2185 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2186 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2187 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2188 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2189 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2190 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2191 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2192 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2193 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2194 AND [Question_Group] = N'Respond to Cybersecurity Incidents'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2195 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2196 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2197 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2198 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2199 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2200 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2201 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2202 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2203 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2204 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2205 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2206 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2207 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2208 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2209 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2210 AND [Question_Group] = N'Address Cybersecurity in Continuity of Operations'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2211 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2212 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2213 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2214 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2215 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2216 AND [Question_Group] = N'Management Activities for the RESPONSE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2217 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2218 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2219 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2220 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2221 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2222 AND [Question_Group] = N'Identify and Prioritize Third Parties'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2223 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2224 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2225 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2226 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2227 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2228 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2229 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2230 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2231 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2232 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2233 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2234 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2235 AND [Question_Group] = N'Manage Third-Party Risk'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2236 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2237 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2238 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2239 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2240 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2241 AND [Question_Group] = N'Management Activities for the THIRD-PARTIES domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2242 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2243 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2244 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2245 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2246 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2247 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2248 AND [Question_Group] = N'Implement Workforce Controls'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2249 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2250 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2251 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2252 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2253 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2254 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2255 AND [Question_Group] = N'Increase Cybersecurity Awareness'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2256 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2257 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2258 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2259 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2260 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2261 AND [Question_Group] = N'Assign Cybersecurity Responsibilities'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2262 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2263 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2264 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2265 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2266 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2267 AND [Question_Group] = N'Develop Cybersecurity Workforce'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2268 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2269 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2270 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2271 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2272 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2273 AND [Question_Group] = N'Management Activities for the WORKFORCE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2274 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2275 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2276 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2277 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2278 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2279 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2280 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2281 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2282 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2283 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2284 AND [Question_Group] = N'Establish and Maintain Cybersecurity Architecture Strategy and Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2285 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2286 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2287 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2288 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2289 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2290 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2291 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2292 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2293 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2294 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2295 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2296 AND [Question_Group] = N'Implement Network Protections as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2297 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2298 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2299 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2300 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2301 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2302 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2303 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2304 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2305 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2306 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2307 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2308 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2309 AND [Question_Group] = N'Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2310 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2311 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2312 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2313 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2314 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2315 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2316 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2317 AND [Question_Group] = N'Implement Software Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2318 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2319 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2320 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2321 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2322 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2323 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2324 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2325 AND [Question_Group] = N'Implement Data Security as an Element of the Cybersecurity Architecture'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2326 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2327 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2328 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2329 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2330 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2331 AND [Question_Group] = N'Management Activities for the ARCHITECTURE domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2332 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2333 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2334 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2335 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2336 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2337 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2338 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2339 AND [Question_Group] = N'Establish Cybersecurity Program Strategy'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2340 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2341 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2342 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2343 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2344 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2345 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2346 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2347 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2348 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2349 AND [Question_Group] = N'Establish and Maintain Cybersecurity Program'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2350 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2351 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2352 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2353 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2354 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 12 AND [Maturity_Question_Id] = 2355 AND [Question_Group] = N'Management Activities for the PROGRAM domain'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8544 AND [Question_Group] = N'Identify'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8549 AND [Question_Group] = N'Protect'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8569 AND [Question_Group] = N'Protect'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8571 AND [Question_Group] = N'Detect'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8573 AND [Question_Group] = N'Respond'
-DELETE FROM [dbo].[ANALYTICS_MATURITY_GROUPINGS] WHERE [Maturity_Model_Id] = 21 AND [Maturity_Question_Id] = 8574 AND [Question_Group] = N'Recover'
-PRINT(N'Operation applied to 362 rows out of 362')
-
 PRINT(N'Delete rows from [dbo].[SETS]')
 DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'CMMC'
 DELETE FROM [dbo].[SETS] WHERE [Set_Name] = N'ISA_62443_4_1'
@@ -18382,9 +18017,6 @@ UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17397
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17398
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17399
 UPDATE [dbo].[NEW_QUESTION] SET [Std_Ref]=N'FAAv2' WHERE [Question_Id] = 17400
-PRINT(N'Operation applied to 1970 rows out of 1970')
-
-PRINT(N'Update rows in [dbo].[NEW_QUESTION]')
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=9 WHERE [Question_Id] = 17635
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=10 WHERE [Question_Id] = 17636
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=15 WHERE [Question_Id] = 17637
@@ -18418,8 +18050,7 @@ UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=26 WHERE [Question_Id] = 17664
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=32 WHERE [Question_Id] = 17665
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=6 WHERE [Question_Id] = 17666
 UPDATE [dbo].[NEW_QUESTION] SET [Ranking]=33 WHERE [Question_Id] = 17667
-PRINT(N'Operation applied to 33 rows out of 33')
-
+PRINT(N'Operation applied to 2003 rows out of 2003')
 
 PRINT(N'Update row in [dbo].[MATURITY_LEVELS]')
 UPDATE [dbo].[MATURITY_LEVELS] SET [Level_Name]=N'Level 1' WHERE [Maturity_Level_Id] = 24
@@ -18520,11 +18151,13 @@ UPDATE [dbo].[MATURITY_GROUPINGS] SET [Sequence]=3 WHERE [Grouping_Id] = 761
 PRINT(N'Operation applied to 92 rows out of 92')
 
 PRINT(N'Update rows in [dbo].[GALLERY_GROUP_DETAILS]')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=1 WHERE [Group_Detail_Id] = 15
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=2 WHERE [Group_Detail_Id] = 46
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 48
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=7 WHERE [Group_Detail_Id] = 97
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=6 WHERE [Group_Detail_Id] = 98
-PRINT(N'Operation applied to 4 rows out of 4')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 103
+PRINT(N'Operation applied to 6 rows out of 6')
 
 PRINT(N'Update rows in [dbo].[SETS]')
 UPDATE [dbo].[SETS] SET [Full_Name]=N'American Water Works Association v3.0', [Short_Name]=N'AWWA 3.0', [Standard_ToolTip]=N'American Water Works Association (AWWA) assessment tool questions (v3.0) in conjunction with additional questions from CSET.' WHERE [Set_Name] = N'AWWA'
@@ -19999,7 +19632,8 @@ UPDATE [dbo].[GALLERY_ITEM] SET [Title]=N'Land Mobile Radio Rapid Assessment (LM
 UPDATE [dbo].[GALLERY_ITEM] SET [Title]=N'NIST SP 800-161 Rev. 1', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '3ec1234b-7fde-4b85-a2a8-7ffb888438fd'
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'The CISA Validated Architecture Design Review (VADR) module provides a standardized framework for evaluating and measuring the cybersecurity resilience of OT/ICS networks. Through guided interviews and network analysis, the module facilitates structured discoveries by assessing access controls, system configurations, and data flows. It identifies vulnerabilities and risks, such as insufficient OT-specific governance, while offering actionable recommendations to mitigate issues and enhance security.', [Title]=N'CISA Validated Architecture Design Reviews (VADR)', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = 'a430c6cd-edac-42f7-bc67-8b544d7ea4f8'
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'<p>NIST SP 800-171 Rev. 3 - Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</p><p>This publication provides agencies with recommended security requirements for protecting the confidentiality of Controlled Unclassified Information (CUI) when the information is resident in nonfederal systems and organizations; when the nonfederal organization is not collecting or maintaining information on behalf of a federal agency or using or operating a system on behalf of an agency; and where there are no specific safeguarding requirements for protecting the confidentiality of CUI prescribed by the authorizing law, regulation, or governmentwide policy for the CUI category listed in the CUI Registry. The requirements apply to all components of nonfederal systems and organizations that process, store, and/or transmit CUI, or that provide protection for such components.</p>', [Title]=N'NIST SP 800-171 Rev. 3', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '0b740316-ddaf-464f-8bea-a91d2ff0e134'
-PRINT(N'Operation applied to 6 rows out of 6')
+UPDATE [dbo].[GALLERY_ITEM] SET [Is_Visible]=0 WHERE [Gallery_Item_Guid] = 'd7314c82-83b4-443c-a275-d5215a73220e'
+PRINT(N'Operation applied to 7 rows out of 7')
 
 PRINT(N'Update row in [dbo].[GALLERY_GROUP]')
 UPDATE [dbo].[GALLERY_GROUP] SET [Group_Title]=N'Financial' WHERE [Group_Id] = 73
@@ -20077,161 +19711,11 @@ INSERT INTO [dbo].[FILE_REF_KEYS] ([Doc_Num]) VALUES (N'PCIDSS 4.0.1')
 PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add rows to [dbo].[GALLERY_ITEM]')
+INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('1c1c5c56-3544-4059-99ee-2ba1cb5edeeb', N'nist-sp-800-53.png', N'nist-sp-800-53.png', N'{"Sets":["C800_53_R520"],"SALLevel":"Low","QuestionMode":"Questions"}', N'NIST Special Publication (SP) 800-53 Release 5.2.0, "Security and Privacy Controls for Information Systems and Organizations," is a revision that primarily focuses on enhancing the security and reliability of software updates and patches. This update responds to Executive Order 14306, which aims to strengthen national cybersecurity. SP 800-53 Release 5.2.0 addresses various aspects of the software development and deployment lifecycle, including designing for software and system resiliency, developer testing, the deployment and management of updates, and ensuring software integrity and validation. It also revises discussion sections of some existing controls to offer additional scoping and implementation examples.', NULL, N'NIST SP 800-53 Release 5.2.0', 1, '2026-04-24 14:58:27.347')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('4be4dc9b-4f82-4492-afe8-6a9e719699db', N'evci.png', N'evci.png', N'{"Sets":["EV_Charging_Infrastructure"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'This module is specifically designed for the assessment and evaluation of electric vehicle DC charging infrastructure. Use the CyberMESA (procedures, measurements, and metrics) to evaluate the charging system in conjunction with the use of this CSET module.', NULL, N'EV Charging Infrastructure Assessment & Evaluation (EVCI)', 1, '2026-02-11 10:00:23.100')
 INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES ('a7b3ba7c-83e4-450f-8429-fe749c982d2f', N'AWWA.png', N'AWWA.png', N'{"Sets":["AWWA 4.0"],"SALLevel":"Low","QuestionMode":"Requirements"}', N'American Water Works Association (AWWA) assessment tool questions (v4.0) in conjunction with additional questions from CSET.', NULL, N'American Water Works Association v4.0', 1, '2025-09-22 15:00:00.000')
-PRINT(N'Operation applied to 2 rows out of 2')
+PRINT(N'Operation applied to 3 rows out of 3')
 
-PRINT(N'Add rows to [dbo].[MATURITY_GLOBAL_SEQUENCES]')
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (702, 22, 580, 590, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (703, 22, 580, 591, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (704, 22, 580, 592, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (705, 22, 581, 593, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (706, 22, 581, 594, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (707, 22, 581, 595, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (708, 22, 582, 596, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (709, 22, 582, 597, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (710, 22, 582, 598, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (711, 22, 583, 599, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (712, 22, 583, 600, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (713, 22, 584, 601, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (714, 22, 585, 602, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (715, 22, 586, 603, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (716, 22, 587, 604, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (717, 22, 587, 605, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (718, 22, 588, 606, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (719, 22, 589, 607, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (720, 23, 700, 712, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (721, 23, 700, 710, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (722, 23, 700, 714, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (723, 23, 700, 717, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (724, 23, 700, 716, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (725, 23, 700, 715, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (726, 23, 700, 713, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (727, 23, 700, 718, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (728, 23, 701, 711, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (729, 23, 701, 719, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (730, 23, 702, 722, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (731, 23, 702, 720, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (732, 23, 702, 721, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (733, 23, 702, 723, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (734, 23, 703, 731, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (735, 23, 703, 734, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (736, 23, 703, 729, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (737, 23, 703, 725, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (738, 23, 703, 724, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (739, 23, 703, 727, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (740, 23, 703, 726, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (741, 23, 703, 730, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (742, 23, 703, 728, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (743, 23, 703, 733, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (744, 23, 703, 732, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (745, 23, 703, 735, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (746, 23, 704, 736, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (747, 23, 704, 737, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (748, 23, 704, 738, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (749, 23, 704, 739, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (750, 23, 705, 740, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (751, 23, 706, 742, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (752, 23, 706, 741, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (753, 23, 707, 746, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (754, 23, 707, 754, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (755, 23, 707, 745, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (756, 23, 707, 749, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (757, 23, 707, 750, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (758, 23, 707, 743, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (759, 23, 707, 748, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (760, 23, 707, 751, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (761, 23, 707, 744, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (762, 23, 707, 747, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (763, 23, 707, 756, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (764, 23, 707, 753, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (765, 23, 707, 755, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (766, 23, 707, 752, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (767, 23, 708, 758, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (768, 23, 708, 757, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (769, 23, 709, 759, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (770, 23, 709, 760, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (771, 23, 709, 761, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (772, 24, 770, 780, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (773, 24, 770, 781, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (774, 24, 770, 782, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (775, 24, 770, 783, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (776, 24, 771, 784, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (777, 24, 771, 785, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (778, 24, 771, 786, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (779, 24, 771, 787, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (780, 24, 772, 788, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (781, 24, 772, 789, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (782, 24, 772, 790, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (783, 24, 772, 791, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (784, 24, 773, 792, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (785, 24, 773, 793, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (786, 24, 773, 794, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (787, 24, 773, 795, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (788, 24, 774, 796, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (789, 24, 774, 797, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (790, 24, 774, 798, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (791, 24, 774, 799, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (792, 24, 775, 800, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (793, 24, 775, 801, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (794, 24, 775, 802, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (795, 24, 775, 803, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (796, 24, 776, 804, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (797, 24, 776, 805, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (798, 24, 776, 806, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (799, 24, 776, 807, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (800, 24, 777, 808, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (801, 24, 777, 809, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (802, 24, 777, 810, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (803, 24, 777, 811, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (804, 24, 778, 812, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (805, 24, 778, 813, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (806, 24, 778, 814, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (807, 24, 778, 815, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (808, 24, 779, 816, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (809, 24, 779, 817, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (810, 24, 779, 818, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (811, 24, 779, 819, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (812, 25, 641, 654, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (813, 25, 641, 655, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (814, 25, 641, 656, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (815, 25, 641, 657, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (816, 25, 641, 658, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (817, 25, 642, 659, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (818, 25, 642, 660, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (819, 25, 642, 661, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (820, 25, 642, 662, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (821, 25, 642, 663, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (822, 25, 643, 664, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (823, 25, 643, 665, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (824, 25, 643, 666, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (825, 25, 643, 667, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (826, 25, 644, 668, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (827, 25, 645, 669, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (828, 25, 645, 670, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (829, 25, 645, 671, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (830, 25, 645, 672, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (831, 25, 645, 673, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (832, 25, 646, 674, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (833, 25, 647, 675, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (834, 25, 647, 676, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (835, 25, 647, 677, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (836, 25, 647, 678, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (837, 25, 647, 679, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (838, 25, 648, 680, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (839, 25, 649, 681, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (840, 25, 649, 682, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (841, 25, 650, 683, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (842, 25, 650, 684, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (843, 25, 651, 685, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (844, 25, 651, 686, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (845, 25, 651, 687, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (846, 25, 652, 688, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (847, 25, 652, 689, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (848, 25, 652, 690, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (849, 25, 652, 691, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_GLOBAL_SEQUENCES] ([global_sequence], [Maturity_Model_Id], [g1], [g2], [g3], [g4]) VALUES (850, 25, 653, 692, NULL, NULL)
-PRINT(N'Operation applied to 149 rows out of 149')
 
 PRINT(N'Add rows to [dbo].[PARAMETERS]')
 SET IDENTITY_INSERT [dbo].[PARAMETERS] ON
@@ -20869,90 +20353,91 @@ INSERT INTO [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'TLS')
 INSERT INTO [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'asdf')
 PRINT(N'Operation applied to 26 rows out of 26')
 
-PRINT(N'Add rows to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8544, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8549, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8569, N'Detect', 4, 699, 570)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8571, N'Respond', 5, 700, 571)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8573, N'Recover', 6, 701, 572)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8574, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8575, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8576, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8577, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8578, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8579, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8580, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8581, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8582, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8583, N'Govern', 1, 696, 567)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8584, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8585, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8586, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8587, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8588, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8589, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8590, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8591, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8592, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8593, N'Identify', 2, 697, 568)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8594, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8595, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8596, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8597, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8598, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8599, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8600, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8601, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8602, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8603, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8604, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8605, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8606, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8607, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8608, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8609, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8610, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8611, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8612, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8613, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8614, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8615, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8616, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8617, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8618, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8619, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8620, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8621, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8622, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8623, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8624, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8625, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8626, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8627, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8628, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8629, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8630, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8631, N'Protect', 3, 698, 569)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8632, N'Detect', 4, 699, 570)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8633, N'Detect', 4, 699, 570)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8634, N'Detect', 4, 699, 570)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8635, N'Detect', 4, 699, 570)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8636, N'Respond', 5, 700, 571)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8637, N'Respond', 5, 700, 571)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8638, N'Respond', 5, 700, 571)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8639, N'Respond', 5, 700, 571)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8640, N'Recover', 6, 701, 572)
-INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (21, 8641, N'Recover', 6, 701, 572)
-PRINT(N'Operation applied to 73 rows out of 73')
-
 PRINT(N'Add rows to [dbo].[GALLERY_GROUP_DETAILS]')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] ON
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7260, 3, 4, 0, 'a7b3ba7c-83e4-450f-8429-fe749c982d2f')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7276, 14, 1, 0, '446b8d52-16ba-4d18-afd4-d7431d501617')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8286, 9, 8, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8287, 13, 5, 0, '4be4dc9b-4f82-4492-afe8-6a9e719699db')
+INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (8331, 6, 2, 0, '1c1c5c56-3544-4059-99ee-2ba1cb5edeeb')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
-PRINT(N'Operation applied to 4 rows out of 4')
+PRINT(N'Operation applied to 5 rows out of 5')
+
+PRINT(N'Backfill Is_Uploaded=1 on customer-uploaded GEN_FILE rows that were mis-flagged by ModuleBuilder')
+-- Pre-v13.0.0.0 ModuleBuilder uploads (RecordDocInDB) created GEN_FILE rows with Is_Uploaded
+-- defaulting to false, which excluded them from .csetw assessment exports.
+-- Rows with inline [Data] are uploads (both customer write paths populate Data); official rows
+-- ship with Data = NULL. Older upgrades that explicitly set Is_Uploaded=0 on mis-flagged official
+-- rows also set Data=NULL in the same UPDATE, so those rows are excluded by this filter.
+UPDATE [dbo].[GEN_FILE]
+SET [Is_Uploaded] = 1
+WHERE [Data] IS NOT NULL
+  AND [Is_Uploaded] = 0
+
+PRINT(N'Relocate all customer-uploaded GEN_FILE rows into the >=1,000,000 custom range')
+-- Identifies customer-uploaded rows as those that:
+--   (a) have inline binary [Data] (both ImportManager and ModuleBuilder populate this; official content ships with Data = NULL)
+--   (b) are NOT linked to any official SET via SET_FILES
+--   (c) are NOT referenced by any MATURITY_REFERENCES (maturity content is always official)
+--   (d) are NOT referenced by any REQUIREMENT_REFERENCES whose requirement belongs to an official SET
+-- The [Gen_File_Id] < 1000000 clause makes this idempotent on repeat runs.
+
+DECLARE @OldGenFileId INT, @NewGenFileId INT
+DECLARE @NextCustomGenFileId INT
+SELECT @NextCustomGenFileId = ISNULL(MAX([Gen_File_Id]), 999999) + 1 FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] >= 1000000
+IF @NextCustomGenFileId < 1000000 SET @NextCustomGenFileId = 1000000
+
+DECLARE relocate_gen_file_cursor CURSOR LOCAL FAST_FORWARD FOR
+    SELECT g.[Gen_File_Id]
+    FROM [dbo].[GEN_FILE] g
+    WHERE g.[Gen_File_Id] < 1000000
+      AND g.[Data] IS NOT NULL
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[SET_FILES] sf
+          INNER JOIN [dbo].[SETS] s ON sf.[SetName] = s.[Set_Name]
+          WHERE sf.[Gen_File_Id] = g.[Gen_File_Id] AND s.[Is_Custom] = 0
+      )
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[MATURITY_REFERENCES] mr
+          WHERE mr.[Gen_File_Id] = g.[Gen_File_Id]
+      )
+      AND NOT EXISTS (
+          SELECT 1 FROM [dbo].[REQUIREMENT_REFERENCES] rr
+          INNER JOIN [dbo].[REQUIREMENT_SETS] rs ON rr.[Requirement_Id] = rs.[Requirement_Id]
+          INNER JOIN [dbo].[SETS] s ON rs.[Set_Name] = s.[Set_Name]
+          WHERE rr.[Gen_File_Id] = g.[Gen_File_Id] AND s.[Is_Custom] = 0
+      )
+
+OPEN relocate_gen_file_cursor
+FETCH NEXT FROM relocate_gen_file_cursor INTO @OldGenFileId
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @NewGenFileId = @NextCustomGenFileId
+    SET @NextCustomGenFileId = @NextCustomGenFileId + 1
+
+    SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
+    INSERT INTO [dbo].[GEN_FILE]
+        ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language])
+    SELECT @NewGenFileId, [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language]
+    FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = @OldGenFileId
+    SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
+
+    UPDATE [dbo].[FILE_KEYWORDS]          SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[GEN_FILE_LIB_PATH_CORL] SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[MATURITY_REFERENCES]    SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+    UPDATE [dbo].[SET_FILES]              SET [Gen_File_Id] = @NewGenFileId WHERE [Gen_File_Id] = @OldGenFileId
+
+    DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = @OldGenFileId
+
+    PRINT(N'Relocated GEN_FILE Id ' + CAST(@OldGenFileId AS NVARCHAR(20)) + N' -> ' + CAST(@NewGenFileId AS NVARCHAR(20)))
+
+    FETCH NEXT FROM relocate_gen_file_cursor INTO @OldGenFileId
+END
+
+CLOSE relocate_gen_file_cursor
+DEALLOCATE relocate_gen_file_cursor
 
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
@@ -20963,6 +20448,12 @@ INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title
 INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded], [Language]) VALUES (3990, 31, N'CyberMESA EVCI Eval Procedures Measurements and Metrics.pdf', N'CyberMESA: Evaluation Procedures and Metrics for Charging Infrastructure Cybersecurity', N'CyberMESA', NULL, N'INL/RPT-25-88240', N'', NULL, N'EVCI Eval Procedures Measurements and Metrics', '2025-12-01 00:00:00.000', N'1.0', N'This document aims to aid in the vulnerability assessments of individual EVCI devices, such as Electric Vehicle Supply Equipment (EVSE), to support vendors in adopting and implementing security standards such as UL 2900, NIST SP 800-53 and Common Criteria (CC) (ISO/IEC 15408).', NULL, NULL, 0, NULL)
 SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
 PRINT(N'Operation applied to 4 rows out of 4')
+
+PRINT(N'Reseed [dbo].[GEN_FILE] IDENTITY into the >=1,000,000 custom-upload range')
+DECLARE @GenFileReseedValue INT
+SELECT @GenFileReseedValue = ISNULL(MAX([Gen_File_Id]), 0) FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] >= 1000000
+IF @GenFileReseedValue < 1000000 SET @GenFileReseedValue = 1000000
+DBCC CHECKIDENT('[dbo].[GEN_FILE]', RESEED, @GenFileReseedValue)
 
 PRINT(N'Add rows to [dbo].[MATURITY_GROUPINGS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] ON
@@ -55152,8 +54643,7 @@ PRINT(N'Operation applied to 2319 rows out of 2319')
 PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]
 
-PRINT(N'Setting existing user in USERS table IsLocalAccount column as true in the db')
-UPDATE USERS SET IsLocalAccount = 1 WHERE (SELECT COUNT(*) FROM USERS) = 1 AND PrimaryEmail NOT LIKE '%@%';
-
+PRINT(N'Rebuild [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
+EXEC [dbo].[analytics_setup_maturity_groupings]
 COMMIT TRANSACTION
 GO
