@@ -198,9 +198,13 @@ namespace UpgradeLibrary.Upgrade
                 conn.Open();
                 string compatibilityLevel = GetHighestPossibleSqlServerCompatibilityLevel(conn);
 
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = $"ALTER DATABASE {conn.Database} SET COMPATIBILITY_LEVEL = {compatibilityLevel}";
-                cmd.ExecuteNonQuery();
+                if (!string.Equals(compatibilityLevel, "Unknown", StringComparison.OrdinalIgnoreCase) &&
+                    !string.IsNullOrWhiteSpace(compatibilityLevel))
+                {
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = $"ALTER DATABASE [{conn.Database}] SET COMPATIBILITY_LEVEL = {compatibilityLevel}";
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -235,6 +239,7 @@ namespace UpgradeLibrary.Upgrade
                         WHEN 14 THEN '140'
                         WHEN 15 THEN '150'
                         WHEN 16 THEN '160'
+                        WHEN 17 THEN '170'
                         ELSE 'Unknown'
                     END";
 
