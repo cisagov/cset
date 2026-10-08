@@ -14,5 +14,5 @@ to point to your SQL Server instance, adding `User ID` and `Password` credential
 
 Example:
 ```json
-"CSET_DB": "Server=myserver;Database=CSETWeb;User ID=myuser;Password=mypassword;"
+"CSET_DB": "Server=myserver;Database=CSETWeb;User ID=myuser;Password=mypassword;Encrypt=True;TrustServerCertificate=False;Persist Security Info=False;"
 ```
