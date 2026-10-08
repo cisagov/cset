@@ -24,7 +24,7 @@
     "@angular/animations": "^20.3.25",
     "@angular/cdk": "^20.2.14",
     "@angular/cli": "^20.3.21",
-    "@angular/common": "^20.3.25",
+    "@angular/common": "^20.3.28",
     "@angular/compiler": "^20.3.25",
     "@angular/compiler-cli": "^20.3.25",
     "@angular/core": "^20.3.25",
