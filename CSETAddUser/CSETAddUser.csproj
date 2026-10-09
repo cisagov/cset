@@ -2,7 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -10,6 +13,23 @@
 	<UseWindowsForms>False</UseWindowsForms>
 	<ApplicationIcon>favicon_cset.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <SignOutput Condition="'$(SignOutput)' == ''">true</SignOutput>
+    <SignToolPath Condition="'$(SignToolPath)' == ''">C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe</SignToolPath>
+    <SignSubjectName Condition="'$(SignSubjectName)' == ''">DOE - Idaho National Laboratory</SignSubjectName>
+    <SignTimestampUrl Condition="'$(SignTimestampUrl)' == ''">http://timestamp.entrust.net/rfc3161ts2</SignTimestampUrl>
+  </PropertyGroup>
+
+  <!-- Pass -p:SignOutput=false to publish without signing -->
+  <Target Name="SignPublishedExe" AfterTargets="Publish" Condition="'$(SignOutput)' == 'true'">
+    <PropertyGroup>
+      <PublishedExe>$([MSBuild]::EnsureTrailingSlash('$(PublishDir)'))$(AssemblyName).exe</PublishedExe>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SignToolPath)')" Text="signtool.exe not found at $(SignToolPath)" />
+    <Exec Command="&quot;$(SignToolPath)&quot; sign /fd SHA256 /n &quot;$(SignSubjectName)&quot; /tr $(SignTimestampUrl) /td SHA256 &quot;$(PublishedExe)&quot;" />
+    <Exec Command="&quot;$(SignToolPath)&quot; verify /pa &quot;$(PublishedExe)&quot;" />
+  </Target>
 
   <ItemGroup>
     <None Remove="appsettings.json" />
@@ -23,11 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.27" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.CommandLine" Version="2.0.8" />
-    <PackageReference Include="System.Windows.Extensions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

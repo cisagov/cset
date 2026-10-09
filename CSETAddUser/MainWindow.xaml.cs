@@ -16,6 +16,7 @@ namespace CSETAddUser
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private ICommand someCommand;
@@ -26,7 +27,7 @@ namespace CSETAddUser
                 return someCommand
                     ?? (someCommand = new ActionCommand(() =>
                     {
-                        SetupAdd();
+                        _ = SetupAddAsync();
                     }));
             }
         }
@@ -194,43 +195,70 @@ namespace CSETAddUser
         /// <summary>
         /// 
         /// </summary>
-        private void SetupAdd()
+        private async Task SetupAddAsync()
         {
-            this.Warning.Foreground = System.Windows.Media.Brushes.Red;
-            this.Warning.Visibility = Visibility.Hidden;
+            // Enter can fire while a save is already running
+            if (!btnSave.IsEnabled)
+                return;
+
             if ((Password1.Password != Password2.Password) || string.IsNullOrWhiteSpace(Password1.Password))
             {
-                Warning.Visibility = Visibility.Visible;
+                ShowStatus("Passwords do not match", System.Windows.Media.Brushes.Red);
                 return;
             }
 
-            AddUser(new USER()
+            // read the form on the UI thread before handing off to the worker
+            var user = new USER()
             {
                 FirstName = txtFirstName.Text,
                 LastName = txtLastName.Text,
                 PrimaryEmail = txtEmail.Text,
                 Password = Password1.Password
-            });
-            this.Warning.Content = "Added Successfully";
-            this.Warning.Visibility = Visibility.Visible;
-            this.Warning.Foreground = System.Windows.Media.Brushes.Green;
-        }
+            };
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+            ShowStatus("Saving user, please wait.", System.Windows.Media.Brushes.Black);
+            SetBusy(true);
             try
             {
-                SetupAdd();
+                await Task.Run(() => AddUser(user));
+                ShowStatus("Added Successfully", System.Windows.Media.Brushes.Green);
             }
             catch (Exception ex)
             {
+                ShowStatus("Error encountered adding the user.", System.Windows.Media.Brushes.Red);
                 System.Windows.MessageBox.Show(ex.Message);
                 File.WriteAllText("AddUserLog.txt", ex.StackTrace);
             }
+            finally
+            {
+                SetBusy(false);
+            }
+        }
+
+
+        private void ShowStatus(string message, System.Windows.Media.Brush color)
+        {
+            this.Warning.Content = message;
+            this.Warning.Foreground = color;
+            this.Warning.Visibility = Visibility.Visible;
+        }
+
+
+        private void SetBusy(bool busy)
+        {
+            this.progressBar.Visibility = busy ? Visibility.Visible : Visibility.Collapsed;
+            this.btnSave.IsEnabled = !busy;
+            this.txtFirstName.IsEnabled = !busy;
+            this.txtLastName.IsEnabled = !busy;
+            this.txtEmail.IsEnabled = !busy;
+            this.Password1.IsEnabled = !busy;
+            this.Password2.IsEnabled = !busy;
+        }
+
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            await SetupAddAsync();
         }
     }
 
