@@ -37,7 +37,7 @@ jobs:
             type=raw,value=latest
             type=sha,prefix=sha-,format=short
 
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: ./CSETWebApi
           file: ./CSETWebApi/Dockerfile
@@ -87,7 +87,7 @@ jobs:
             type=raw,value=latest
             type=sha,prefix=sha-,format=short
 
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: ./CSETWebNg
           file: ./CSETWebNg/Dockerfile
