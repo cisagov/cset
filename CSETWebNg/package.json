@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@angular-devkit/schematics": "^20.3.21",
-    "@angular-eslint/schematics": "^20.7.0",
+    "@angular-eslint/schematics": "^22.0.0",
     "@angular-slider/ngx-slider": "^20.0.0",
     "@angular/animations": "^20.3.25",
     "@angular/cdk": "^20.2.14",
